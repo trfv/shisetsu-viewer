@@ -8,9 +8,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./styles/index.css";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const runtimeEnv = require("@mars/heroku-js-runtime-env");
+
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: process.env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
+    uri: runtimeEnv().REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
   }),
   cache: new InMemoryCache(),
 });
