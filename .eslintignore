@@ -1,0 +1,6 @@
+*.json
+serviceWorker.ts
+globalTypes.ts
+
+/node_modules
+/build
