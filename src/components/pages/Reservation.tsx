@@ -6,6 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
+import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
@@ -18,11 +19,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import "date-fns";
 import React, { FC, useMemo, useState } from "react";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
-import { ReservationDivision, ReservationStatus } from "../../constants/enums";
-import { getEnumLabel } from "../../utils/format";
+// eslint-disable-next-line
+import { ReservationDivision, ReservationStatus, ReservationStatusMap } from "../../constants/enums";
+import { formatDate, getEnumLabel } from "../../utils/format";
+import NoResult from "../templates/NoResult";
 
 const sortReservation = (reservation: {
   [key: string]: ReservationStatus;
@@ -159,51 +161,66 @@ const Reservation: FC = () => {
   });
 
   const renderSearchForm = useMemo(() => {
+    const minDate = new Date();
+    const maxDate = new Date();
+    maxDate.setDate(minDate.getDate() + 13);
     return (
-      <Box py="16px" display="flex" justifyContent="space-evenly">
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            disableToolbar
-            disablePast
-            label="日付"
-            variant="inline"
-            format="yyyy/MM/dd"
-            value={targetDate}
-            onChange={handleTargetDateChange}
-          />
-        </MuiPickersUtilsProvider>
-        <FormControl>
-          <FormLabel>区分</FormLabel>
-          <FormGroup row>
-            <FormControlLabel
-              control={<Checkbox checked={checkboxMorning} onChange={handleCheckboxMorning} />}
-              label="午前"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={checkboxAfternoon} onChange={handleCheckboxAfternoon} />}
-              label="午後"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={checkboxEvening} onChange={handleCheckboxEvening} />}
-              label="夜間"
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl>
-          <InputLabel>状態</InputLabel>
-          <Select
-            value={reservationStatus}
-            onChange={handleReservationStatusChange}
-            disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
-          >
-            <MenuItem value={ReservationStatus.VACANT}>空き</MenuItem>
-            <MenuItem value={ReservationStatus.OCCUPIED}>予約あり</MenuItem>
-            <MenuItem value={ReservationStatus.CLOSED}>休館日</MenuItem>
-            <MenuItem value={ReservationStatus.KEEP}>保守日</MenuItem>
-            <MenuItem value={ReservationStatus.KIKANGAI}>期間外</MenuItem>
-            <MenuItem value={ReservationStatus.SOUND}>音出予約</MenuItem>
-          </Select>
-        </FormControl>
+      <Box p="16px">
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                disableToolbar
+                label="日付"
+                variant="inline"
+                format="yyyy/M/d"
+                value={targetDate}
+                onChange={handleTargetDateChange}
+                minDate={minDate}
+                maxDate={maxDate}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl>
+              <FormLabel>区分</FormLabel>
+              <FormGroup row>
+                <FormControlLabel
+                  control={<Checkbox checked={checkboxMorning} onChange={handleCheckboxMorning} />}
+                  label="午前"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={checkboxAfternoon} onChange={handleCheckboxAfternoon} />
+                  }
+                  label="午後"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={checkboxEvening} onChange={handleCheckboxEvening} />}
+                  label="夜間"
+                />
+              </FormGroup>
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl>
+              <InputLabel>状態</InputLabel>
+              <Select
+                value={reservationStatus}
+                onChange={handleReservationStatusChange}
+                disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
+              >
+                {ReservationStatusMap.filter((option) => !option.value.includes("INVALID")).map(
+                  (option, index) => (
+                    <MenuItem key={index} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
       </Box>
     );
   }, [targetDate, checkboxMorning, checkboxAfternoon, checkboxEvening, reservationStatus]);
@@ -214,46 +231,57 @@ const Reservation: FC = () => {
     }
     return (
       <TableContainer component={Paper}>
-        <Table size="small">
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell variant="head">建物</TableCell>
-              <TableCell variant="head">施設</TableCell>
+              <TableCell variant="head">施設名</TableCell>
+              <TableCell variant="head">部屋名</TableCell>
+              <TableCell variant="head">日付</TableCell>
               <TableCell variant="head">予約状況</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {loading ? (
               <>
-                {[...Array(10)].map((index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Skeleton variant="text" height="120px" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton variant="text" height="120px" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton variant="text" height="120px" />
-                    </TableCell>
+                {[...Array(15)].map((_, index) => (
+                  <TableRow key={`row-${index}`}>
+                    {[...Array(4)].map((_, i) => (
+                      <TableCell key={`cell-${i}`} variant="body">
+                        <Skeleton variant="text" height="24px" />
+                      </TableCell>
+                    ))}
                   </TableRow>
                 ))}
               </>
             ) : (
               <>
-                {data?.reservation?.map((info) => (
-                  <TableRow key={info.id}>
-                    <TableCell>{info.building}</TableCell>
-                    <TableCell>{info.institution}</TableCell>
-                    <TableCell>
-                      {sortReservation(info.reservation).map(({ division, status }) => (
-                        <p key={division}>{`${getEnumLabel<ReservationDivision>(
-                          division
-                        )}: ${getEnumLabel<ReservationStatus>(status)}`}</p>
-                      ))}
+                {data?.reservation && data?.reservation.length > 0 ? (
+                  <>
+                    {data.reservation.map((info, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{info.building}</TableCell>
+                        <TableCell>{info.institution}</TableCell>
+                        <TableCell>{formatDate(info.date)}</TableCell>
+                        <TableCell>
+                          {sortReservation(info.reservation)
+                            .map(
+                              ({ division, status }) =>
+                                `${getEnumLabel<ReservationDivision>(division)}: ${getEnumLabel<
+                                  ReservationStatus
+                                >(status)}`
+                            )
+                            .join(" ")}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4}>
+                      <NoResult />
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </>
             )}
           </TableBody>
