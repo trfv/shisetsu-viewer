@@ -1,16 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
-import DateFnsUtils from "@date-io/date-fns";
 import Box from "@material-ui/core/Box";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import Select from "@material-ui/core/Select";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,13 +10,26 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import React, { FC, useMemo, useState } from "react";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
 // eslint-disable-next-line
-import { ReservationDivision, ReservationStatus, ReservationStatusMap } from "../../constants/enums";
+import { DayOfWeek, ReservationDivision, ReservationStatus, ReservationStatusMap } from "../../constants/enums";
 import { formatDate, getEnumLabel } from "../../utils/format";
+import Select from "../atoms/Select";
+import CheckboxGroup from "../molucules/CheckboxGroup";
+import DateRangePicker from "../molucules/DateRangePicker";
 import NoResult from "../templates/NoResult";
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    searchBox: {
+      background: theme.palette.grey[200],
+    },
+    resultTable: {
+      minWidth: 1000,
+    },
+  })
+);
 
 const sortReservation = (reservation: {
   [key: string]: ReservationStatus;
@@ -106,9 +111,18 @@ const sortReservation = (reservation: {
 };
 
 const Reservation: FC = () => {
-  const [targetDate, setTargetDate] = useState<Date | null>(new Date());
-  const handleTargetDateChange = (date: Date | null): void => {
-    setTargetDate(date);
+  const classes = useStyles();
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const handleStartDateChange = (date: Date | null): void => {
+    setStartDate(date);
+  };
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const handleEndDateChange = (date: Date | null): void => {
+    setEndDate(date);
+  };
+  const [checkboxOnlyHoliday, setCheckboxOnlyHoliday] = useState(false);
+  const handleCheckboxOnlyHoliday = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setCheckboxOnlyHoliday(event.target.checked);
   };
   const [checkboxMorning, setCheckboxMorning] = useState(false);
   const handleCheckboxMorning = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -131,7 +145,9 @@ const Reservation: FC = () => {
 
   const { loading, data, error } = useQuery<SearchQueryType.SearchQuery>(SEARCH_QUERY, {
     variables: {
-      targetDate: targetDate?.toDateString(),
+      startDate: startDate?.toDateString(),
+      endDate: endDate?.toDateString(),
+      daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
       contains1: {
         ...(checkboxMorning ? { RESERVATION_DIVISION_MORNING: reservationStatus } : {}),
         ...(checkboxAfternoon ? { RESERVATION_DIVISION_AFTERNOON: reservationStatus } : {}),
@@ -165,130 +181,139 @@ const Reservation: FC = () => {
     const maxDate = new Date();
     maxDate.setDate(minDate.getDate() + 13);
     return (
-      <Box p="16px">
+      <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar
-                label="日付"
-                variant="inline"
-                format="yyyy/M/d"
-                value={targetDate}
-                onChange={handleTargetDateChange}
-                minDate={minDate}
-                maxDate={maxDate}
-              />
-            </MuiPickersUtilsProvider>
+          <Grid item xs={5}>
+            <DateRangePicker
+              label="期間"
+              startDateProps={{
+                value: startDate,
+                onChange: handleStartDateChange,
+                minDate: minDate,
+                maxDate: endDate ?? maxDate,
+              }}
+              endDateProps={{
+                value: endDate,
+                onChange: handleEndDateChange,
+                minDate: startDate ?? minDate,
+                maxDate: maxDate,
+              }}
+            />
           </Grid>
-          <Grid item xs={4}>
-            <FormControl>
-              <FormLabel>区分</FormLabel>
-              <FormGroup row>
-                <FormControlLabel
-                  control={<Checkbox checked={checkboxMorning} onChange={handleCheckboxMorning} />}
-                  label="午前"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox checked={checkboxAfternoon} onChange={handleCheckboxAfternoon} />
-                  }
-                  label="午後"
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={checkboxEvening} onChange={handleCheckboxEvening} />}
-                  label="夜間"
-                />
-              </FormGroup>
-            </FormControl>
+          <Grid item xs={2}>
+            <CheckboxGroup
+              label="休日のみ"
+              checkboxItems={[
+                {
+                  label: "",
+                  checked: checkboxOnlyHoliday,
+                  onChange: handleCheckboxOnlyHoliday,
+                },
+              ]}
+            />
           </Grid>
-          <Grid item xs={4}>
-            <FormControl>
-              <InputLabel>状態</InputLabel>
-              <Select
-                value={reservationStatus}
-                onChange={handleReservationStatusChange}
-                disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
-              >
-                {ReservationStatusMap.filter((option) => !option.value.includes("INVALID")).map(
-                  (option, index) => (
-                    <MenuItem key={index} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  )
-                )}
-              </Select>
-            </FormControl>
+          <Grid item xs={3}>
+            <CheckboxGroup
+              label="予約区分"
+              checkboxItems={[
+                { label: "午前", checked: checkboxMorning, onChange: handleCheckboxMorning },
+                { label: "午後", checked: checkboxAfternoon, onChange: handleCheckboxAfternoon },
+                { label: "夜間", checked: checkboxEvening, onChange: handleCheckboxEvening },
+              ]}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Select
+              label="予約状況"
+              value={reservationStatus}
+              onChange={handleReservationStatusChange}
+              disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
+              selectOptions={ReservationStatusMap.filter(
+                (option) => !option.value.includes("INVALID")
+              )}
+            />
           </Grid>
         </Grid>
       </Box>
     );
-  }, [targetDate, checkboxMorning, checkboxAfternoon, checkboxEvening, reservationStatus]);
+  }, [
+    startDate,
+    endDate,
+    checkboxOnlyHoliday,
+    checkboxMorning,
+    checkboxAfternoon,
+    checkboxEvening,
+    reservationStatus,
+    classes.searchBox,
+  ]);
 
   const renderSearchResult = useMemo(() => {
     if (error) {
       return <Box>{error.message}</Box>;
     }
     return (
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell variant="head">施設名</TableCell>
-              <TableCell variant="head">部屋名</TableCell>
-              <TableCell variant="head">日付</TableCell>
-              <TableCell variant="head">予約状況</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
-              <>
-                {[...Array(15)].map((_, index) => (
-                  <TableRow key={`row-${index}`}>
-                    {[...Array(4)].map((_, i) => (
-                      <TableCell key={`cell-${i}`} variant="body">
-                        <Skeleton variant="text" height="24px" />
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </>
-            ) : (
-              <>
-                {data?.reservation && data?.reservation.length > 0 ? (
-                  <>
-                    {data.reservation.map((info, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{info.building}</TableCell>
-                        <TableCell>{info.institution}</TableCell>
-                        <TableCell>{formatDate(info.date)}</TableCell>
-                        <TableCell>
-                          {sortReservation(info.reservation)
-                            .map(
-                              ({ division, status }) =>
-                                `${getEnumLabel<ReservationDivision>(division)}: ${getEnumLabel<
-                                  ReservationStatus
-                                >(status)}`
-                            )
-                            .join(" ")}
+      <>
+        <Box my="16px">{/** TODO 検索結果ラベル */}</Box>
+        <TableContainer component={Paper}>
+          <Table className={classes.resultTable}>
+            <TableHead>
+              <TableRow>
+                <TableCell variant="head">施設名</TableCell>
+                <TableCell variant="head">部屋名</TableCell>
+                <TableCell variant="head">日付</TableCell>
+                <TableCell variant="head">予約状況</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <>
+                  {[...Array(15)].map((_, index) => (
+                    <TableRow key={`row-${index}`}>
+                      {[...Array(4)].map((_, i) => (
+                        <TableCell key={`cell-${i}`} variant="body">
+                          <Skeleton variant="text" height="24px" />
                         </TableCell>
-                      </TableRow>
-                    ))}
-                  </>
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4}>
-                      <NoResult />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                      ))}
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {data?.reservation && data?.reservation.length > 0 ? (
+                    <>
+                      {data.reservation.map((info, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{info.building}</TableCell>
+                          <TableCell>{info.institution}</TableCell>
+                          <TableCell>{formatDate(info.date)}</TableCell>
+                          <TableCell>
+                            {sortReservation(info.reservation)
+                              .map(
+                                ({ division, status }) =>
+                                  `${getEnumLabel<ReservationDivision>(division)}: ${getEnumLabel<
+                                    ReservationStatus
+                                  >(status)}`
+                              )
+                              .join(" ")}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4}>
+                        <NoResult />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
     );
-  }, [loading, data, error]);
+  }, [loading, data, error, classes.resultTable]);
 
   return (
     <Box p="16px">
