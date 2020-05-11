@@ -29,7 +29,7 @@ const Header: FC = () => {
         <Button color="inherit" onClick={navigate(routePath.reservation)}>
           予約状況
         </Button>
-        <Button color="inherit" onClick={navigate(routePath.search)}>
+        <Button color="inherit" onClick={navigate(routePath.institution)}>
           施設検索
         </Button>
       </Toolbar>

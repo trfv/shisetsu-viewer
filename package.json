@@ -2,6 +2,13 @@
   "name": "shisetsu-viewer",
   "version": "0.1.0",
   "private": false,
+  "description": "Shisetsu Viewer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trfv/shisetsu-viewer/"
+  },
+  "license": "MIT",
+  "author": "trfv",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@date-io/date-fns": "^1.3.13",

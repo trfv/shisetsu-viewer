@@ -5,12 +5,26 @@ export { SearchQuery as SearchQueryType };
 
 // TODO define type for graphql
 export const SEARCH_QUERY = gql`
-  query SearchQuery($targetDate: date, $contains1: jsonb = "", $contains2: jsonb = "") {
+  query SearchQuery(
+    $startDate: date
+    $endDate: date
+    $daysOfWeek: [String!] = null
+    $contains1: jsonb = null
+    $contains2: jsonb = null
+  ) {
     reservation(
       where: {
         _or: [
-          { date: { _eq: $targetDate }, reservation: { _contains: $contains1 } }
-          { date: { _eq: $targetDate }, reservation: { _contains: $contains2 } }
+          {
+            date: { _gte: $startDate, _lte: $endDate }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $contains1 }
+          }
+          {
+            date: { _gte: $startDate, _lte: $endDate }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $contains2 }
+          }
         ]
       }
     ) {

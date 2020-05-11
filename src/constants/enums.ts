@@ -217,7 +217,20 @@ export const TokyoWardMap = [
   },
 ];
 
-export type Enums = ReservationStatus | ReservationDivision | TokyoWard;
+export enum DayOfWeek {
+  INVALID = "DAY_OF_WEEK_INVALID",
+  SUNDAY = "DAY_OF_WEEK_SUNDAY",
+  MONDAY = "DAY_OF_WEEK_MONDAY",
+  TUESDAY = "DAY_OF_WEEK_TUESDAY",
+  WEDNESDAY = "DAY_OF_WEEK_WEDNESDAY",
+  THUESDAY = "DAY_OF_WEEK_THUESDAY",
+  FRIDAY = "DAY_OF_WEEK_FRIDAY",
+  SATURDAY = "DAY_OF_WEEK_SATURDAY",
+}
+
+// export const DayOfWeekMap = {}
+
+export type Enums = ReservationStatus | ReservationDivision | TokyoWard | DayOfWeek;
 
 export const getEnumMap = (value: string): { value: Enums; label: string }[] => {
   if (Object.values(ReservationStatus).includes(value as ReservationStatus)) {
