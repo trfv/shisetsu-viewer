@@ -11,6 +11,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
 // eslint-disable-next-line
 import { DayOfWeek, ReservationDivision, ReservationStatus, ReservationStatusMap } from "../../constants/enums";
@@ -112,6 +113,7 @@ const sortReservation = (reservation: {
 
 const Reservation: FC = () => {
   const classes = useStyles();
+  const { t } = useTranslation("reservation");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const handleStartDateChange = (date: Date | null): void => {
     setStartDate(date);
@@ -179,13 +181,13 @@ const Reservation: FC = () => {
   const renderSearchForm = useMemo(() => {
     const minDate = new Date();
     const maxDate = new Date();
-    maxDate.setDate(minDate.getDate() + 13);
+    maxDate.setDate(minDate.getDate() + 181); // 13 weeks
     return (
       <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>
           <Grid item xs={5}>
             <DateRangePicker
-              label="期間"
+              label={t("期間")}
               startDateProps={{
                 value: startDate,
                 onChange: handleStartDateChange,
@@ -202,7 +204,7 @@ const Reservation: FC = () => {
           </Grid>
           <Grid item xs={2}>
             <CheckboxGroup
-              label="休日のみ"
+              label={t("休日のみ")}
               checkboxItems={[
                 {
                   label: "",
@@ -214,17 +216,17 @@ const Reservation: FC = () => {
           </Grid>
           <Grid item xs={3}>
             <CheckboxGroup
-              label="予約区分"
+              label={t("予約区分")}
               checkboxItems={[
-                { label: "午前", checked: checkboxMorning, onChange: handleCheckboxMorning },
-                { label: "午後", checked: checkboxAfternoon, onChange: handleCheckboxAfternoon },
-                { label: "夜間", checked: checkboxEvening, onChange: handleCheckboxEvening },
+                { label: t("午前"), checked: checkboxMorning, onChange: handleCheckboxMorning },
+                { label: t("午後"), checked: checkboxAfternoon, onChange: handleCheckboxAfternoon },
+                { label: t("夜間"), checked: checkboxEvening, onChange: handleCheckboxEvening },
               ]}
             />
           </Grid>
           <Grid item xs={2}>
             <Select
-              label="予約状況"
+              label={t("予約状況")}
               value={reservationStatus}
               onChange={handleReservationStatusChange}
               disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
@@ -245,6 +247,7 @@ const Reservation: FC = () => {
     checkboxEvening,
     reservationStatus,
     classes.searchBox,
+    t,
   ]);
 
   const renderSearchResult = useMemo(() => {
@@ -258,10 +261,10 @@ const Reservation: FC = () => {
           <Table className={classes.resultTable}>
             <TableHead>
               <TableRow>
-                <TableCell variant="head">施設名</TableCell>
-                <TableCell variant="head">部屋名</TableCell>
-                <TableCell variant="head">日付</TableCell>
-                <TableCell variant="head">予約状況</TableCell>
+                <TableCell variant="head">{t("施設名")}</TableCell>
+                <TableCell variant="head">{t("部屋名")}</TableCell>
+                <TableCell variant="head">{t("日付")}</TableCell>
+                <TableCell variant="head">{t("予約状況")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -313,7 +316,7 @@ const Reservation: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, data, error, classes.resultTable]);
+  }, [loading, data, error, classes.resultTable, t]);
 
   return (
     <Box p="16px">

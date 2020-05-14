@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Institution from "./components/pages/Institution";
 import Reservation from "./components/pages/Reservation";
 import Footer from "./components/templates/Footer";
@@ -14,7 +14,7 @@ const App: FC = () => {
         <Switch>
           <Route path={routePath.reservation} component={Reservation} exact />
           <Route path={routePath.institution} component={Institution} exact />
-          <Route path={routePath.root} component={Reservation} />
+          <Redirect to={routePath.reservation} />
         </Switch>
         <Footer />
       </BrowserRouter>

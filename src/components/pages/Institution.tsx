@@ -10,6 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TokyoWard, TokyoWardMap } from "../../constants/enums";
 import { formatPrice } from "../../utils/format";
 import Select from "../atoms/Select";
@@ -57,6 +58,7 @@ const formatUsageFee = (val: string): string => {
 
 const Institution: FC = () => {
   const classes = useStyles();
+  const { t } = useTranslation("institution");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ message: string } | null>(null);
   const [data, setData] = useState<Institition[] | null>(null);
@@ -91,7 +93,7 @@ const Institution: FC = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Select
-              label="区"
+              label={t("区")}
               value={tokyoWard}
               onChange={handleTokyoWardChange}
               selectOptions={TokyoWardMap.filter((option) => !option.value.includes("INVALID"))}
@@ -100,7 +102,7 @@ const Institution: FC = () => {
         </Grid>
       </Box>
     );
-  }, [tokyoWard, classes.searchBox]);
+  }, [tokyoWard, classes.searchBox, t]);
 
   const renderSearchResult = useMemo(() => {
     if (error) {
@@ -113,19 +115,19 @@ const Institution: FC = () => {
           <Table className={classes.resultTable}>
             <TableHead>
               <TableRow>
-                <TableCell variant="head">施設名</TableCell>
-                <TableCell variant="head">部屋名</TableCell>
+                <TableCell variant="head">{t("施設名")}</TableCell>
+                <TableCell variant="head">{t("部屋名")}</TableCell>
                 <TableCell variant="head" align="right">
-                  定員
+                  {t("定員")}
                 </TableCell>
                 <TableCell variant="head" align="right">
-                  面積
+                  {t("面積")}
                 </TableCell>
-                <TableCell variant="head">利用料金</TableCell>
-                <TableCell variant="head">住所</TableCell>
-                <TableCell variant="head">使用可能楽器</TableCell>
-                <TableCell variant="head">譜面台</TableCell>
-                <TableCell variant="head">ピアノ</TableCell>
+                <TableCell variant="head">{t("利用料金")}</TableCell>
+                <TableCell variant="head">{t("住所")}</TableCell>
+                <TableCell variant="head">{t("使用可能楽器")}</TableCell>
+                <TableCell variant="head">{t("譜面台")}</TableCell>
+                <TableCell variant="head">{t("ピアノ")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -157,32 +159,36 @@ const Institution: FC = () => {
                           </TableCell>
                           <TableCell variant="body">
                             <p>
-                              {`平日 ${info.weekday_usage_fee
-                                ?.split(",")
-                                .map(formatUsageFee)
-                                .join(" ")}`}
+                              {t("平日", {
+                                利用料金: info.weekday_usage_fee
+                                  ?.split(",")
+                                  .map(formatUsageFee)
+                                  .join(" "),
+                              })}
                             </p>
                             <p>
-                              {`休日 ${info.holiday_usage_fee
-                                ?.split(",")
-                                .map(formatUsageFee)
-                                .join(" ")}`}
+                              {t("休日", {
+                                利用料金: info.holiday_usage_fee
+                                  ?.split(",")
+                                  .map(formatUsageFee)
+                                  .join(" "),
+                              })}
                             </p>
                           </TableCell>
                           <TableCell variant="body">{info.address}</TableCell>
                           <TableCell variant="body">
                             {[
-                              ...(info.is_available_strings === "true" ? ["弦楽器"] : []),
-                              ...(info.is_available_woodwind === "true" ? ["木管楽器"] : []),
-                              ...(info.is_available_brass === "true" ? ["金管楽器"] : []),
-                              ...(info.is_available_percussion === "true" ? ["打楽器"] : []),
+                              ...(info.is_available_strings === "true" ? [t("弦楽器")] : []),
+                              ...(info.is_available_woodwind === "true" ? [t("木管楽器")] : []),
+                              ...(info.is_available_brass === "true" ? [t("金管楽器")] : []),
+                              ...(info.is_available_percussion === "true" ? [t("打楽器")] : []),
                             ].join(" ")}
                           </TableCell>
                           <TableCell variant="body">
-                            {info.is_equipped_music_stand === "true" ? "あり" : "なし"}
+                            {info.is_equipped_music_stand === "true" ? t("あり") : t("なし")}
                           </TableCell>
                           <TableCell variant="body">
-                            {info.is_equipped_piano === "true" ? "あり" : "なし"}
+                            {info.is_equipped_piano === "true" ? t("あり") : t("なし")}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -201,7 +207,7 @@ const Institution: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, error, data, classes.resultTable]);
+  }, [loading, error, data, classes.resultTable, t]);
 
   return (
     <Box p="16px">
