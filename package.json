@@ -32,18 +32,25 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
     "graphql": "^15.0.0",
+    "i18next": "^19.4.4",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-i18next": "^11.4.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "source-map-explorer": "^2.4.2",
     "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "babel-plugin-i18next-extract": "^0.7.2",
+    "source-map-explorer": "^2.4.2"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "apollo:download": "apollo client:download-schema src/api/schema.json",
     "apollo:codegen": "apollo client:codegen --target=typescript --localSchemaFile=src/api/schema.json",
+    "i18next-extract": "NODE_ENV=development babel './src/**/*.{ts,tsx}'",
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "lint": "eslint --color --ignore-path .eslintignore \"./src/**/*.ts*\" --fix",
@@ -63,6 +70,18 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "presets": ["react-app"],
+    "plugins": [
+      [
+        "i18next-extract",
+        {
+          "locales": ["ja"],
+          "outputPath": "./src/locales/{{locale}}/common.json"
+        }
+      ]
     ]
   }
 }
