@@ -7,7 +7,9 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, useContext, useMemo, useState } from "react";
@@ -49,9 +51,16 @@ const Reservation: FC = () => {
   const [reservationStatus, setReservationStatus] = useState<ReservationStatus>(
     ReservationStatus.VACANT
   );
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { loading, data, error } = useQuery<SearchQueryType.SearchQuery>(SEARCH_QUERY, {
+  const { loading, data, error } = useQuery<
+    SearchQueryType.SearchQuery,
+    SearchQueryType.SearchQueryVariables
+  >(SEARCH_QUERY, {
     variables: {
+      offset: page,
+      limit: rowsPerPage,
       startDate: startDate?.toDateString(),
       endDate: endDate?.toDateString(),
       daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
@@ -90,34 +99,42 @@ const Reservation: FC = () => {
     const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
       const nextTokyoWard = event.target.value as TokyoWard;
       setTokyoWard(nextTokyoWard);
-      // TODO
+      setPage(0);
+      // FIXME
       toggleClientNamespace(nextTokyoWard === TokyoWard.KOUTOU ? "koutouClient" : "bunkyoClient");
     };
     const handleStartDateChange = (date: Date | null): void => {
       setStartDate(date);
+      setPage(0);
     };
     const handleEndDateChange = (date: Date | null): void => {
       setEndDate(date);
+      setPage(0);
     };
     const handleCheckboxOnlyHoliday = (event: React.ChangeEvent<HTMLInputElement>): void => {
       setCheckboxOnlyHoliday(event.target.checked);
+      setPage(0);
     };
     const handleCheckboxMorning = (event: React.ChangeEvent<HTMLInputElement>): void => {
       setCheckboxMorning(event.target.checked);
+      setPage(0);
     };
     const handleCheckboxAfternoon = (event: React.ChangeEvent<HTMLInputElement>): void => {
       setCheckboxAfternoon(event.target.checked);
+      setPage(0);
     };
     const handleCheckboxEvening = (event: React.ChangeEvent<HTMLInputElement>): void => {
       setCheckboxEvening(event.target.checked);
+      setPage(0);
     };
     const handleReservationStatusChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
       setReservationStatus(event.target.value as ReservationStatus);
+      setPage(0);
     };
     return (
       <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>
-          <Grid item md={1} xs={12}>
+          <Grid item md={1} sm={2} xs={12}>
             <Select
               label={t("区")}
               value={tokyoWard}
@@ -127,7 +144,7 @@ const Reservation: FC = () => {
               )}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={3} sm={10} xs={12}>
             <DateRangePicker
               label={t("期間")}
               startDateProps={{
@@ -144,7 +161,7 @@ const Reservation: FC = () => {
               }}
             />
           </Grid>
-          <Grid item md={1} xs={12}>
+          <Grid item md={1} sm={2} xs={12}>
             <CheckboxGroup
               label={t("休日のみ")}
               checkboxItems={[
@@ -156,7 +173,7 @@ const Reservation: FC = () => {
               ]}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={3} sm={7} xs={12}>
             <CheckboxGroup
               label={t("予約区分")}
               checkboxItems={[
@@ -166,7 +183,7 @@ const Reservation: FC = () => {
               ]}
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item md={1} sm={3} xs={12}>
             <Select
               label={t("予約状況")}
               value={reservationStatus}
@@ -193,6 +210,18 @@ const Reservation: FC = () => {
   ]);
 
   const renderSearchResult = useMemo(() => {
+    const handleChangePage = (
+      _: React.MouseEvent<HTMLButtonElement> | null,
+      newPage: number
+    ): void => {
+      setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ): void => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
     if (error) {
       return <Box>{error.message}</Box>;
     }
@@ -212,11 +241,11 @@ const Reservation: FC = () => {
             <TableBody>
               {loading ? (
                 <>
-                  {[...Array(15)].map((_, index) => (
+                  {[...Array(rowsPerPage)].map((_, index) => (
                     <TableRow key={`row-${index}`}>
                       {[...Array(4)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
-                          <Skeleton variant="text" height="24px" />
+                          <Skeleton variant="text" height="20px" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -254,11 +283,23 @@ const Reservation: FC = () => {
                 </>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[10, 50, 100]}
+                  count={data?.reservation_aggregate.aggregate?.count || 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       </>
     );
-  }, [loading, data, error, classes.resultTable, t]);
+  }, [loading, data, error, classes.resultTable, t, page, rowsPerPage]);
 
   return (
     <Box p="16px">

@@ -63,9 +63,6 @@ const Institution: FC = () => {
   const [error, setError] = useState<{ message: string } | null>(null);
   const [data, setData] = useState<Institition[] | null>(null);
   const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
-  const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-    setTokyoWard(event.target.value as TokyoWard);
-  };
 
   useEffect(() => {
     const fn = async (): Promise<void> => {
@@ -88,6 +85,9 @@ const Institution: FC = () => {
   }, [tokyoWard]);
 
   const renderSearchForm = useMemo(() => {
+    const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
+      setTokyoWard(event.target.value as TokyoWard);
+    };
     return (
       <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>

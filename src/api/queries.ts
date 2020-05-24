@@ -6,6 +6,8 @@ export { SearchQuery as SearchQueryType };
 // TODO define type for graphql
 export const SEARCH_QUERY = gql`
   query SearchQuery(
+    $offset: Int
+    $limit: Int
     $startDate: date
     $endDate: date
     $daysOfWeek: [String!] = null
@@ -13,6 +15,8 @@ export const SEARCH_QUERY = gql`
     $reservationStatus2: jsonb = null
   ) {
     reservation(
+      offset: $offset
+      limit: $limit
       where: {
         _or: [
           {
@@ -33,6 +37,26 @@ export const SEARCH_QUERY = gql`
       institution
       date
       reservation
+    }
+    reservation_aggregate(
+      where: {
+        _or: [
+          {
+            date: { _gte: $startDate, _lte: $endDate }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $reservationStatus1 }
+          }
+          {
+            date: { _gte: $startDate, _lte: $endDate }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $reservationStatus2 }
+          }
+        ]
+      }
+    ) {
+      aggregate {
+        count
+      }
     }
   }
 `;
