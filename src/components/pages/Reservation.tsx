@@ -55,12 +55,12 @@ const Reservation: FC = () => {
       startDate: startDate?.toDateString(),
       endDate: endDate?.toDateString(),
       daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
-      contains1: {
+      reservationStatus1: {
         ...(checkboxMorning ? { RESERVATION_DIVISION_MORNING: reservationStatus } : {}),
         ...(checkboxAfternoon ? { RESERVATION_DIVISION_AFTERNOON: reservationStatus } : {}),
         ...(checkboxEvening ? { RESERVATION_DIVISION_EVENING: reservationStatus } : {}),
       },
-      contains2: {
+      reservationStatus2: {
         ...(checkboxMorning
           ? {
               RESERVATION_DIVISION_ONE: reservationStatus,
@@ -144,7 +144,7 @@ const Reservation: FC = () => {
               }}
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item md={1} xs={12}>
             <CheckboxGroup
               label={t("休日のみ")}
               checkboxItems={[
@@ -156,7 +156,7 @@ const Reservation: FC = () => {
               ]}
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item md={4} xs={12}>
             <CheckboxGroup
               label={t("予約区分")}
               checkboxItems={[

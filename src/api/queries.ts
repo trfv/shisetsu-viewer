@@ -8,22 +8,22 @@ export const SEARCH_QUERY = gql`
   query SearchQuery(
     $startDate: date
     $endDate: date
-    $dayOfWeek: [String!] = null
-    $contains1: jsonb = null
-    $contains2: jsonb = null
+    $daysOfWeek: [String!] = null
+    $reservationStatus1: jsonb = null
+    $reservationStatus2: jsonb = null
   ) {
     reservation(
       where: {
         _or: [
           {
             date: { _gte: $startDate, _lte: $endDate }
-            day_of_week: { _in: $dayOfWeek }
-            reservation: { _contains: $contains1 }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $reservationStatus1 }
           }
           {
             date: { _gte: $startDate, _lte: $endDate }
-            day_of_week: { _in: $dayOfWeek }
-            reservation: { _contains: $contains2 }
+            day_of_week: { _in: $daysOfWeek }
+            reservation: { _contains: $reservationStatus2 }
           }
         ]
       }
