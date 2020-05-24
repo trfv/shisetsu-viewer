@@ -1,5 +1,5 @@
 import DateFnsUtils from "@date-io/date-fns";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker as MuiDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import React, { FC } from "react";
 
 export type DatePickerProps = {
@@ -17,11 +17,11 @@ const DatePicker: FC<DatePickerProps> = ({
 }: DatePickerProps) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
+      <MuiDatePicker
         disableToolbar
         autoOk
         variant="inline"
-        format="yyyy/M/d"
+        format="yyyy/MM/dd"
         value={value}
         onChange={onChange}
         minDate={minDate}

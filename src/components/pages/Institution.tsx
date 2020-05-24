@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
       background: theme.palette.grey[200],
     },
     resultTable: {
-      minWidth: 1000,
+      minWidth: 1080,
     },
   })
 );
@@ -91,7 +91,7 @@ const Institution: FC = () => {
     return (
       <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item md={12} xs={12}>
             <Select
               label={t("区")}
               value={tokyoWard}
