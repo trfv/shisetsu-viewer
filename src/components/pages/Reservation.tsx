@@ -10,12 +10,15 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
+import { ClientContext } from "../../App";
 // eslint-disable-next-line
-import { DayOfWeek, ReservationDivision, ReservationStatus, ReservationStatusMap } from "../../constants/enums";
-import { formatDate, getEnumLabel } from "../../utils/format";
+import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard, TokyoWardMap } from "../../constants/enums";
+import { getEnumLabel } from "../../utils/enums";
+import { formatDate } from "../../utils/format";
+import { getEachWardReservationStatus, sortReservation } from "../../utils/reservation";
 import Select from "../atoms/Select";
 import CheckboxGroup from "../molucules/CheckboxGroup";
 import DateRangePicker from "../molucules/DateRangePicker";
@@ -27,123 +30,25 @@ const useStyles = makeStyles((theme) =>
       background: theme.palette.grey[200],
     },
     resultTable: {
-      minWidth: 1000,
+      minWidth: 1080,
     },
   })
 );
 
-const sortReservation = (reservation: {
-  [key: string]: ReservationStatus;
-}): { division: ReservationDivision; status: ReservationStatus }[] => {
-  return [
-    ...(reservation.RESERVATION_DIVISION_MORNING
-      ? [
-          {
-            division: ReservationDivision.MORNING,
-            status: reservation.RESERVATION_DIVISION_MORNING,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_AFTERNOON
-      ? [
-          {
-            division: ReservationDivision.AFTERNOON,
-            status: reservation.RESERVATION_DIVISION_AFTERNOON,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_EVENING
-      ? [
-          {
-            division: ReservationDivision.EVENING,
-            status: reservation.RESERVATION_DIVISION_EVENING,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_ONE
-      ? [
-          {
-            division: ReservationDivision.ONE,
-            status: reservation.RESERVATION_DIVISION_ONE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_TWO
-      ? [
-          {
-            division: ReservationDivision.TWO,
-            status: reservation.RESERVATION_DIVISION_TWO,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_THREE
-      ? [
-          {
-            division: ReservationDivision.THREE,
-            status: reservation.RESERVATION_DIVISION_THREE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_FOUR
-      ? [
-          {
-            division: ReservationDivision.FOUR,
-            status: reservation.RESERVATION_DIVISION_FOUR,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_FIVE
-      ? [
-          {
-            division: ReservationDivision.FIVE,
-            status: reservation.RESERVATION_DIVISION_FIVE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_SIX
-      ? [
-          {
-            division: ReservationDivision.SIX,
-            status: reservation.RESERVATION_DIVISION_SIX,
-          },
-        ]
-      : []),
-  ];
-};
-
 const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("reservation");
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const handleStartDateChange = (date: Date | null): void => {
-    setStartDate(date);
-  };
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const handleEndDateChange = (date: Date | null): void => {
-    setEndDate(date);
-  };
+  const { toggleClientNamespace } = useContext(ClientContext);
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [checkboxOnlyHoliday, setCheckboxOnlyHoliday] = useState(false);
-  const handleCheckboxOnlyHoliday = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setCheckboxOnlyHoliday(event.target.checked);
-  };
   const [checkboxMorning, setCheckboxMorning] = useState(false);
-  const handleCheckboxMorning = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setCheckboxMorning(event.target.checked);
-  };
   const [checkboxAfternoon, setCheckboxAfternoon] = useState(false);
-  const handleCheckboxAfternoon = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setCheckboxAfternoon(event.target.checked);
-  };
   const [checkboxEvening, setCheckboxEvening] = useState(false);
-  const handleCheckboxEvening = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setCheckboxEvening(event.target.checked);
-  };
   const [reservationStatus, setReservationStatus] = useState<ReservationStatus>(
     ReservationStatus.VACANT
   );
-  const handleReservationStatusChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-    setReservationStatus(event.target.value as ReservationStatus);
-  };
 
   const { loading, data, error } = useQuery<SearchQueryType.SearchQuery>(SEARCH_QUERY, {
     variables: {
@@ -181,11 +86,48 @@ const Reservation: FC = () => {
   const renderSearchForm = useMemo(() => {
     const minDate = new Date();
     const maxDate = new Date();
-    maxDate.setDate(minDate.getDate() + 181); // 13 weeks
+    maxDate.setDate(minDate.getDate() + 181); // 26 weeks
+    const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
+      const nextTokyoWard = event.target.value as TokyoWard;
+      setTokyoWard(nextTokyoWard);
+      // TODO
+      toggleClientNamespace(nextTokyoWard === TokyoWard.KOUTOU ? "koutouClient" : "bunkyoClient");
+    };
+    const handleStartDateChange = (date: Date | null): void => {
+      setStartDate(date);
+    };
+    const handleEndDateChange = (date: Date | null): void => {
+      setEndDate(date);
+    };
+    const handleCheckboxOnlyHoliday = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setCheckboxOnlyHoliday(event.target.checked);
+    };
+    const handleCheckboxMorning = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setCheckboxMorning(event.target.checked);
+    };
+    const handleCheckboxAfternoon = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setCheckboxAfternoon(event.target.checked);
+    };
+    const handleCheckboxEvening = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setCheckboxEvening(event.target.checked);
+    };
+    const handleReservationStatusChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
+      setReservationStatus(event.target.value as ReservationStatus);
+    };
     return (
       <Box p="16px" mb="16px" className={classes.searchBox}>
         <Grid container spacing={2}>
-          <Grid item xs={5}>
+          <Grid item md={1} xs={12}>
+            <Select
+              label={t("区")}
+              value={tokyoWard}
+              onChange={handleTokyoWardChange}
+              selectOptions={TokyoWardMap.filter((option) =>
+                [TokyoWard.KOUTOU, TokyoWard.BUNKYO].includes(option.value)
+              )}
+            />
+          </Grid>
+          <Grid item md={4} xs={12}>
             <DateRangePicker
               label={t("期間")}
               startDateProps={{
@@ -202,7 +144,7 @@ const Reservation: FC = () => {
               }}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item md={2} xs={12}>
             <CheckboxGroup
               label={t("休日のみ")}
               checkboxItems={[
@@ -214,7 +156,7 @@ const Reservation: FC = () => {
               ]}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3} xs={12}>
             <CheckboxGroup
               label={t("予約区分")}
               checkboxItems={[
@@ -224,21 +166,20 @@ const Reservation: FC = () => {
               ]}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item md={2} xs={12}>
             <Select
               label={t("予約状況")}
               value={reservationStatus}
               onChange={handleReservationStatusChange}
               disabled={!checkboxMorning && !checkboxAfternoon && !checkboxEvening}
-              selectOptions={ReservationStatusMap.filter(
-                (option) => !option.value.includes("INVALID")
-              )}
+              selectOptions={getEachWardReservationStatus(tokyoWard)}
             />
           </Grid>
         </Grid>
       </Box>
     );
   }, [
+    tokyoWard,
     startDate,
     endDate,
     checkboxOnlyHoliday,
@@ -248,6 +189,7 @@ const Reservation: FC = () => {
     reservationStatus,
     classes.searchBox,
     t,
+    toggleClientNamespace,
   ]);
 
   const renderSearchResult = useMemo(() => {

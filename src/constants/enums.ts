@@ -6,6 +6,7 @@ export enum ReservationStatus {
   KEEP = "RESERVATION_STATUS_KEEP",
   KIKANGAI = "RESERVATION_STATUS_KIKANGAI",
   SOUND = "RESERVATION_STATUS_SOUND",
+  OPEN = "RESERVATION_STATUS_OPEN",
 }
 
 export const ReservationStatusMap = [
@@ -36,6 +37,10 @@ export const ReservationStatusMap = [
   {
     value: ReservationStatus.SOUND,
     label: "音出予約",
+  },
+  {
+    value: ReservationStatus.OPEN,
+    label: "個人開放",
   },
 ];
 
@@ -231,13 +236,3 @@ export enum DayOfWeek {
 // export const DayOfWeekMap = {}
 
 export type Enums = ReservationStatus | ReservationDivision | TokyoWard | DayOfWeek;
-
-export const getEnumMap = (value: string): { value: Enums; label: string }[] => {
-  if (Object.values(ReservationStatus).includes(value as ReservationStatus)) {
-    return ReservationStatusMap;
-  }
-  if (Object.values(ReservationDivision).includes(value as ReservationDivision)) {
-    return ReservationDivisionMap;
-  }
-  throw new Error(`no enum found for ${value}`);
-};

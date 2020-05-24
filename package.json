@@ -73,12 +73,16 @@
     ]
   },
   "babel": {
-    "presets": ["react-app"],
+    "presets": [
+      "react-app"
+    ],
     "plugins": [
       [
         "i18next-extract",
         {
-          "locales": ["ja"],
+          "locales": [
+            "ja"
+          ],
           "outputPath": "./src/locales/{{locale}}/common.json"
         }
       ]

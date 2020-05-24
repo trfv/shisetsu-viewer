@@ -1,13 +1,7 @@
-import { Enums, getEnumMap } from "../constants/enums";
-
-export const getEnumLabel = <T extends Enums>(value: string): string | T => {
-  return getEnumMap(value).find((val) => val.value === value)?.label || value;
-};
-
 const datetimeFormat = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric",
-  month: "numeric",
-  day: "numeric",
+  month: "2-digit",
+  day: "2-digit",
   weekday: "narrow",
 });
 
