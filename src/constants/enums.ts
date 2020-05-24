@@ -39,14 +39,6 @@ export const ReservationStatusMap = [
     label: "音出予約",
   },
   {
-    value: ReservationStatus.OK,
-    label: "予約可",
-  },
-  {
-    value: ReservationStatus.NG,
-    label: "予約不可",
-  },
-  {
     value: ReservationStatus.OPEN,
     label: "個人開放",
   },

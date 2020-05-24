@@ -1,0 +1,38 @@
+name: Node CI
+
+on:
+  push:
+    branches-ignore:
+      - master
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/npm
+          key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
+          restore-keys: |
+            ${{ runner.os }}-npm
+      - name: update npm to latest version
+        run: |
+          sudo apt update && sudo apt install npm
+      - name: npm install, unit test and build
+        run: |
+          node --version
+          npm --version
+          npm ci && npm run build
+        env:
+          CI: true
+          NODE_OPTIONS: --max-old-space-size=4096
