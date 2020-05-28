@@ -59,7 +59,7 @@ const Reservation: FC = () => {
     SearchQueryType.SearchQueryVariables
   >(SEARCH_QUERY, {
     variables: {
-      offset: page,
+      offset: page * rowsPerPage,
       limit: rowsPerPage,
       startDate: startDate?.toDateString(),
       endDate: endDate?.toDateString(),
@@ -227,7 +227,11 @@ const Reservation: FC = () => {
     }
     return (
       <>
-        <Box my="16px">{/** TODO 検索結果ラベル */}</Box>
+        <Box p="16px">
+          {t("検索結果", {
+            件数: data?.reservation_aggregate?.aggregate?.count?.toLocaleString() || "---",
+          })}
+        </Box>
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
