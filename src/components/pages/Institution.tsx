@@ -110,7 +110,7 @@ const Institution: FC = () => {
     }
     return (
       <>
-        <Box my="16px">{/** TODO 検索結果ラベル */}</Box>
+        <Box p="16px">{t("検索結果", { 件数: data?.length?.toLocaleString() || "---" })}</Box>
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
@@ -158,22 +158,26 @@ const Institution: FC = () => {
                             {`${info.area}m²`}
                           </TableCell>
                           <TableCell variant="body">
-                            <p>
-                              {t("平日", {
-                                利用料金: info.weekday_usage_fee
-                                  ?.split(",")
-                                  .map(formatUsageFee)
-                                  .join(" "),
-                              })}
-                            </p>
-                            <p>
-                              {t("休日", {
-                                利用料金: info.holiday_usage_fee
-                                  ?.split(",")
-                                  .map(formatUsageFee)
-                                  .join(" "),
-                              })}
-                            </p>
+                            {info.weekday_usage_fee && (
+                              <p>
+                                {t("平日", {
+                                  利用料金: info.weekday_usage_fee
+                                    .split(",")
+                                    .map(formatUsageFee)
+                                    .join(" "),
+                                })}
+                              </p>
+                            )}
+                            {info.holiday_usage_fee && (
+                              <p>
+                                {t("休日", {
+                                  利用料金: info.holiday_usage_fee
+                                    .split(",")
+                                    .map(formatUsageFee)
+                                    .join(" "),
+                                })}
+                              </p>
+                            )}
                           </TableCell>
                           <TableCell variant="body">{info.address}</TableCell>
                           <TableCell variant="body">
