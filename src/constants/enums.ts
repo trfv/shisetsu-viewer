@@ -7,6 +7,7 @@ export enum ReservationStatus {
   KIKANGAI = "RESERVATION_STATUS_KIKANGAI",
   SOUND = "RESERVATION_STATUS_SOUND",
   OPEN = "RESERVATION_STATUS_OPEN",
+  QUESTION = "RESERVATION_STATUS_QUESTION",
 }
 
 export const ReservationStatusMap = [
@@ -41,6 +42,10 @@ export const ReservationStatusMap = [
   {
     value: ReservationStatus.OPEN,
     label: "個人開放",
+  },
+  {
+    value: ReservationStatus.QUESTION,
+    label: "問合せ",
   },
 ];
 

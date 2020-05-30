@@ -1,52 +1,19 @@
 import { ApolloProvider } from "@apollo/react-hooks";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import ApolloClient from "apollo-client";
-import { HttpLink } from "apollo-link-http";
-import React, { createContext, FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Institution from "./components/pages/Institution";
 import Reservation from "./components/pages/Reservation";
 import Footer from "./components/templates/Footer";
 import Header from "./components/templates/Header";
+import { TokyoWard } from "./constants/enums";
 import { routePath } from "./constants/routes";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const runtimeEnv = require("@mars/heroku-js-runtime-env");
-
-const env = runtimeEnv();
-
-const koutouClient = new ApolloClient({
-  link: new HttpLink({
-    uri: env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
-  }),
-  cache: new InMemoryCache(),
-});
-
-const bunkyoClient = new ApolloClient({
-  link: new HttpLink({
-    uri: env.REACT_APP_BUNKYO_GRAPHQL_ENDPOINT,
-  }),
-  cache: new InMemoryCache(),
-});
-
-const clients = {
-  koutouClient,
-  bunkyoClient,
-};
-
-export type ClientNamespace = keyof typeof clients;
-
-export const ClientContext = createContext<{
-  clientNamespace: ClientNamespace;
-  toggleClientNamespace: (namespace: ClientNamespace) => void;
-}>({
-  clientNamespace: "koutouClient",
-  toggleClientNamespace: () => null,
-});
+import { ClientContext, ClientNamespace, clients, getClientNamespace } from "./utils/client";
+import "./utils/i18n";
 
 const App: FC = () => {
   const [clientNamespace, setClientNamespace] = useState<ClientNamespace>("koutouClient");
-  const toggleClientNamespace = (namespace: ClientNamespace): void => {
+  const toggleClientNamespace = (tokyoWard: TokyoWard): void => {
+    const namespace = getClientNamespace(tokyoWard);
     namespace !== clientNamespace && setClientNamespace(namespace);
   };
   return (
