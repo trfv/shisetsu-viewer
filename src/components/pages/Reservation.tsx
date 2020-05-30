@@ -12,12 +12,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
-import React, { FC, useContext, useMemo, useState } from "react";
+import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
-import { ClientContext } from "../../App";
 // eslint-disable-next-line
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard, TokyoWardMap } from "../../constants/enums";
+import { ClientContext } from "../../utils/client";
 import { getEnumLabel } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortReservation } from "../../utils/reservation";
@@ -100,8 +100,7 @@ const Reservation: FC = () => {
       const nextTokyoWard = event.target.value as TokyoWard;
       setTokyoWard(nextTokyoWard);
       setPage(0);
-      // FIXME
-      toggleClientNamespace(nextTokyoWard === TokyoWard.KOUTOU ? "koutouClient" : "bunkyoClient");
+      toggleClientNamespace(nextTokyoWard);
     };
     const handleStartDateChange = (date: Date | null): void => {
       setStartDate(date);
@@ -140,7 +139,7 @@ const Reservation: FC = () => {
               value={tokyoWard}
               onChange={handleTokyoWardChange}
               selectOptions={TokyoWardMap.filter((option) =>
-                [TokyoWard.KOUTOU, TokyoWard.BUNKYO].includes(option.value)
+                [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA].includes(option.value)
               )}
             />
           </Grid>
@@ -225,13 +224,10 @@ const Reservation: FC = () => {
     if (error) {
       return <Box>{error.message}</Box>;
     }
+    const count = data?.reservation_aggregate?.aggregate?.count?.toLocaleString() || "---";
     return (
       <>
-        <Box p="16px">
-          {t("検索結果", {
-            件数: data?.reservation_aggregate?.aggregate?.count?.toLocaleString() || "---",
-          })}
-        </Box>
+        <Box p="16px">{t("検索結果", { total: loading ? "---" : count })}</Box>
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
@@ -296,6 +292,10 @@ const Reservation: FC = () => {
                   page={page}
                   onChangePage={handleChangePage}
                   onChangeRowsPerPage={handleChangeRowsPerPage}
+                  labelRowsPerPage={t("表示件数")}
+                  labelDisplayedRows={({ from, to, count }): ReactNode =>
+                    t("ページ件数", { from, to, count })
+                  }
                 />
               </TableRow>
             </TableFooter>

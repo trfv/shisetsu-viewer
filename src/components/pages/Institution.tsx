@@ -108,9 +108,10 @@ const Institution: FC = () => {
     if (error) {
       return <Box>{error.message}</Box>;
     }
+    const count = data?.length?.toLocaleString() || "---";
     return (
       <>
-        <Box p="16px">{t("検索結果", { 件数: data?.length?.toLocaleString() || "---" })}</Box>
+        <Box p="16px">{t("検索結果", { total: loading ? "---" : count })}</Box>
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
@@ -161,7 +162,7 @@ const Institution: FC = () => {
                             {info.weekday_usage_fee && (
                               <p>
                                 {t("平日", {
-                                  利用料金: info.weekday_usage_fee
+                                  usageFee: info.weekday_usage_fee
                                     .split(",")
                                     .map(formatUsageFee)
                                     .join(" "),
@@ -171,7 +172,7 @@ const Institution: FC = () => {
                             {info.holiday_usage_fee && (
                               <p>
                                 {t("休日", {
-                                  利用料金: info.holiday_usage_fee
+                                  usageFee: info.holiday_usage_fee
                                     .split(",")
                                     .map(formatUsageFee)
                                     .join(" "),

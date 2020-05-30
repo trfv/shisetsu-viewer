@@ -96,6 +96,14 @@ const BUNKYO_RESERVATION_STATUS = [
   ReservationStatus.OPEN,
 ];
 
+const KITA_RESERVATION_STATUS = [
+  ReservationStatus.VACANT,
+  ReservationStatus.OCCUPIED,
+  ReservationStatus.KEEP,
+  ReservationStatus.CLOSED,
+  ReservationStatus.QUESTION,
+];
+
 export const getEachWardReservationStatus = (
   tokyoWard: TokyoWard
 ): {
@@ -110,6 +118,10 @@ export const getEachWardReservationStatus = (
     case TokyoWard.BUNKYO:
       return ReservationStatusMap.filter((option) =>
         BUNKYO_RESERVATION_STATUS.includes(option.value)
+      );
+    case TokyoWard.KITA:
+      return ReservationStatusMap.filter((option) =>
+        KITA_RESERVATION_STATUS.includes(option.value)
       );
     default:
       throw new Error(`unsupported tokyo ward: ${tokyoWard}`);
