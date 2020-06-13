@@ -13,8 +13,8 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TokyoWard, TokyoWardMap } from "../../constants/enums";
 import { formatPrice } from "../../utils/format";
-import Select from "../atoms/Select";
-import NoResult from "../templates/NoResult";
+import NoResult from "../molucules/NoResult";
+import Select from "../molucules/Select";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const runtimeEnv = require("@mars/heroku-js-runtime-env");

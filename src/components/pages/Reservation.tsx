@@ -21,10 +21,10 @@ import { ClientContext } from "../../utils/client";
 import { getEnumLabel } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortReservation } from "../../utils/reservation";
-import Select from "../atoms/Select";
 import CheckboxGroup from "../molucules/CheckboxGroup";
 import DateRangePicker from "../molucules/DateRangePicker";
-import NoResult from "../templates/NoResult";
+import NoResult from "../molucules/NoResult";
+import Select from "../molucules/Select";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
