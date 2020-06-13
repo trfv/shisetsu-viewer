@@ -7,7 +7,6 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
@@ -224,13 +223,25 @@ const Reservation: FC = () => {
     if (error) {
       return <Box>{error.message}</Box>;
     }
-    const count = data?.reservation_aggregate?.aggregate?.count?.toLocaleString() || "---";
     return (
       <>
-        <Box p="16px">{t("検索結果", { total: loading ? "---" : count })}</Box>
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[10, 50, 100]}
+                  count={data?.reservation_aggregate.aggregate?.count || 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  labelRowsPerPage={t("表示件数")}
+                  labelDisplayedRows={({ from, to, count }): ReactNode =>
+                    t("ページ件数", { from, to, count })
+                  }
+                />
+              </TableRow>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
                 <TableCell variant="head">{t("部屋名")}</TableCell>
@@ -283,22 +294,6 @@ const Reservation: FC = () => {
                 </>
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[10, 50, 100]}
-                  count={data?.reservation_aggregate.aggregate?.count || 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={handleChangePage}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
-                  labelRowsPerPage={t("表示件数")}
-                  labelDisplayedRows={({ from, to, count }): ReactNode =>
-                    t("ページ件数", { from, to, count })
-                  }
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </>
