@@ -1,10 +1,10 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import React, { FC, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import Footer from "./components/molucules/Footer";
+import Header from "./components/organisms/Header";
 import Institution from "./components/pages/Institution";
 import Reservation from "./components/pages/Reservation";
-import Footer from "./components/templates/Footer";
-import Header from "./components/templates/Header";
 import { TokyoWard } from "./constants/enums";
 import { routePath } from "./constants/routes";
 import { ClientContext, ClientNamespace, clients, getClientNamespace } from "./utils/client";
