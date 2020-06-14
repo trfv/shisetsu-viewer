@@ -104,6 +104,15 @@ const KITA_RESERVATION_STATUS = [
   ReservationStatus.QUESTION,
 ];
 
+const TOSHIMA_RESERVATION_STATUS = [
+  ReservationStatus.VACANT,
+  ReservationStatus.PARTIALLY_VACANT,
+  ReservationStatus.OCCUPIED,
+  ReservationStatus.CLOSED,
+  ReservationStatus.OUT_OF_TARGRT,
+  ReservationStatus.APPLIABLE,
+];
+
 export const getEachWardReservationStatus = (
   tokyoWard: TokyoWard
 ): {
@@ -122,6 +131,10 @@ export const getEachWardReservationStatus = (
     case TokyoWard.KITA:
       return ReservationStatusMap.filter((option) =>
         KITA_RESERVATION_STATUS.includes(option.value)
+      );
+    case TokyoWard.TOSHIMA:
+      return ReservationStatusMap.filter((option) =>
+        TOSHIMA_RESERVATION_STATUS.includes(option.value)
       );
     default:
       throw new Error(`unsupported tokyo ward: ${tokyoWard}`);

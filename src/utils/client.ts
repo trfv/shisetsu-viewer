@@ -30,10 +30,18 @@ const kitaClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const toshimaClient = new ApolloClient({
+  link: new HttpLink({
+    uri: env.REACT_APP_TOSHIMA_GRAPHQL_ENDPOINT,
+  }),
+  cache: new InMemoryCache(),
+});
+
 export const clients = {
   koutouClient,
   bunkyoClient,
   kitaClient,
+  toshimaClient,
 };
 
 export type ClientNamespace = keyof typeof clients;
@@ -54,6 +62,8 @@ export const getClientNamespace = (tokyoWard: TokyoWard): ClientNamespace => {
       return "bunkyoClient";
     case TokyoWard.KITA:
       return "kitaClient";
+    case TokyoWard.TOSHIMA:
+      return "toshimaClient";
     default:
       throw new Error(`unsupported tokyo ward: ${tokyoWard}`);
   }

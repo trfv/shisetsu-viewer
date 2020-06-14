@@ -138,7 +138,9 @@ const Reservation: FC = () => {
               value={tokyoWard}
               onChange={handleTokyoWardChange}
               selectOptions={TokyoWardMap.filter((option) =>
-                [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA].includes(option.value)
+                [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA, TokyoWard.TOSHIMA].includes(
+                  option.value
+                )
               )}
             />
           </Grid>
