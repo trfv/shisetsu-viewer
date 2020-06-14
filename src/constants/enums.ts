@@ -1,6 +1,7 @@
 export enum ReservationStatus {
   INVALID = "RESERVATION_STATUS_INVALID",
   VACANT = "RESERVATION_STATUS_VACANT",
+  PARTIALLY_VACANT = "RESERVATION_STATUS_PARTIALLY_VACANT",
   OCCUPIED = "RESERVATION_STATUS_OCCUPIED",
   CLOSED = "RESERVATION_STATUS_CLOSED",
   KEEP = "RESERVATION_STATUS_KEEP",
@@ -8,6 +9,8 @@ export enum ReservationStatus {
   SOUND = "RESERVATION_STATUS_SOUND",
   OPEN = "RESERVATION_STATUS_OPEN",
   QUESTION = "RESERVATION_STATUS_QUESTION",
+  OUT_OF_TARGRT = "RESERVATION_STATUS_OUT_OF_TARGRT",
+  APPLIABLE = "RESERVATION_STATUS_APPLIABLE",
 }
 
 export const ReservationStatusMap = [
@@ -18,6 +21,10 @@ export const ReservationStatusMap = [
   {
     value: ReservationStatus.VACANT,
     label: "空き",
+  },
+  {
+    value: ReservationStatus.PARTIALLY_VACANT,
+    label: "一部空き",
   },
   {
     value: ReservationStatus.OCCUPIED,
@@ -46,6 +53,14 @@ export const ReservationStatusMap = [
   {
     value: ReservationStatus.QUESTION,
     label: "問合せ",
+  },
+  {
+    value: ReservationStatus.OUT_OF_TARGRT,
+    label: "公開対象外",
+  },
+  {
+    value: ReservationStatus.APPLIABLE,
+    label: "抽選申込可能",
   },
 ];
 
