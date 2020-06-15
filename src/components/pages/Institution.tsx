@@ -16,9 +16,7 @@ import { formatPrice } from "../../utils/format";
 import NoResult from "../molucules/NoResult";
 import Select from "../molucules/Select";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const runtimeEnv = require("@mars/heroku-js-runtime-env");
-const ENDPOINT_URL = runtimeEnv().REACT_APP_SHISETSU_APPS_SCRIPT_ENDPOINT;
+const ENDPOINT_URL = process.env.REACT_APP_SHISETSU_APPS_SCRIPT_ENDPOINT || "";
 
 type Institition = {
   building?: string;

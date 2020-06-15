@@ -4,35 +4,30 @@ import { HttpLink } from "apollo-link-http";
 import { createContext } from "react";
 import { TokyoWard } from "../constants/enums";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const runtimeEnv = require("@mars/heroku-js-runtime-env");
-
-const env = runtimeEnv();
-
 const koutouClient = new ApolloClient({
   link: new HttpLink({
-    uri: env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
+    uri: process.env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
   }),
   cache: new InMemoryCache(),
 });
 
 const bunkyoClient = new ApolloClient({
   link: new HttpLink({
-    uri: env.REACT_APP_BUNKYO_GRAPHQL_ENDPOINT,
+    uri: process.env.REACT_APP_BUNKYO_GRAPHQL_ENDPOINT,
   }),
   cache: new InMemoryCache(),
 });
 
 const kitaClient = new ApolloClient({
   link: new HttpLink({
-    uri: env.REACT_APP_KITA_GRAPHQL_ENDPOINT,
+    uri: process.env.REACT_APP_KITA_GRAPHQL_ENDPOINT,
   }),
   cache: new InMemoryCache(),
 });
 
 const toshimaClient = new ApolloClient({
   link: new HttpLink({
-    uri: env.REACT_APP_TOSHIMA_GRAPHQL_ENDPOINT,
+    uri: process.env.REACT_APP_TOSHIMA_GRAPHQL_ENDPOINT,
   }),
   cache: new InMemoryCache(),
 });
