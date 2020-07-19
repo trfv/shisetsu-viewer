@@ -22,7 +22,7 @@ const ENDPOINT_URL = process.env.REACT_APP_SHISETSU_APPS_SCRIPT_ENDPOINT || "";
 type Institition = {
   building?: string;
   institution?: string;
-  capaciry?: string;
+  capacity?: string;
   area?: string;
   reservation_division?: string;
   weekday_usage_fee?: string;
@@ -157,7 +157,7 @@ const Institution: FC = () => {
                           <TableCell variant="body">{info.building}</TableCell>
                           <TableCell variant="body">{info.institution}</TableCell>
                           <TableCell variant="body" align="right">
-                            {`${info.capaciry}人`}
+                            {`${info.capacity}人`}
                           </TableCell>
                           <TableCell variant="body" align="right">
                             {`${info.area}m²`}
