@@ -14,10 +14,14 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
-// eslint-disable-next-line
-import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard, TokyoWardMap } from "../../constants/enums";
+import {
+  DayOfWeek,
+  ReservationDivision,
+  ReservationStatus,
+  TokyoWard,
+} from "../../constants/enums";
 import { ClientContext } from "../../utils/client";
-import { getEnumLabel } from "../../utils/enums";
+import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortReservation } from "../../utils/reservation";
 import CheckboxGroup from "../molucules/CheckboxGroup";
@@ -27,7 +31,12 @@ import Select from "../molucules/Select";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    pageBox: {
+      padding: 16,
+    },
     searchBox: {
+      padding: 16,
+      marginBottom: 16,
       background: theme.palette.grey[200],
     },
     resultTable: {
@@ -130,18 +139,14 @@ const Reservation: FC = () => {
       setPage(0);
     };
     return (
-      <Box p="16px" mb="16px" className={classes.searchBox}>
+      <Box className={classes.searchBox}>
         <Grid container spacing={2}>
           <Grid item md={1} sm={2} xs={12}>
             <Select
               label={t("区")}
               value={tokyoWard}
               onChange={handleTokyoWardChange}
-              selectOptions={TokyoWardMap.filter((option) =>
-                [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA, TokyoWard.TOSHIMA].includes(
-                  option.value
-                )
-              )}
+              selectOptions={SupportedTokyoWards}
             />
           </Grid>
           <Grid item md={3} sm={10} xs={12}>
@@ -227,23 +232,22 @@ const Reservation: FC = () => {
     }
     return (
       <>
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[10, 50, 100]}
+          count={data?.reservation_aggregate.aggregate?.count || 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          labelRowsPerPage={t("表示件数")}
+          labelDisplayedRows={({ from, to, count }): ReactNode =>
+            t("ページ件数", { from, to, count })
+          }
+        />
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[10, 50, 100]}
-                  count={data?.reservation_aggregate.aggregate?.count || 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={handleChangePage}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
-                  labelRowsPerPage={t("表示件数")}
-                  labelDisplayedRows={({ from, to, count }): ReactNode =>
-                    t("ページ件数", { from, to, count })
-                  }
-                />
-              </TableRow>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
                 <TableCell variant="head">{t("部屋名")}</TableCell>
@@ -303,7 +307,7 @@ const Reservation: FC = () => {
   }, [loading, data, error, classes.resultTable, t, page, rowsPerPage]);
 
   return (
-    <Box p="16px">
+    <Box className={classes.pageBox}>
       {renderSearchForm}
       {renderSearchResult}
     </Box>

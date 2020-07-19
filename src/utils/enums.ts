@@ -1,5 +1,12 @@
-// eslint-disable-next-line
-import { Enums, ReservationDivision, ReservationDivisionMap, ReservationStatus, ReservationStatusMap } from "../constants/enums";
+import {
+  Enums,
+  ReservationDivision,
+  ReservationDivisionMap,
+  ReservationStatus,
+  ReservationStatusMap,
+  TokyoWard,
+  TokyoWardMap,
+} from "../constants/enums";
 
 export const getEnumMap = (value: string): { value: Enums; label: string }[] => {
   if (Object.values(ReservationStatus).includes(value as ReservationStatus)) {
@@ -14,3 +21,7 @@ export const getEnumMap = (value: string): { value: Enums; label: string }[] => 
 export const getEnumLabel = <T extends Enums>(value: string): string | T => {
   return getEnumMap(value).find((val) => val.value === value)?.label || value;
 };
+
+export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
+  [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA, TokyoWard.TOSHIMA].includes(option.value)
+);

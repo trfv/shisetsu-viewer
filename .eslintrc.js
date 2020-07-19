@@ -36,6 +36,12 @@ module.exports = {
       }
     ],
     "@typescript-eslint/camelcase": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+      }
+    ]
   },
   "settings": {
     "react": {

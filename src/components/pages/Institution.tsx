@@ -11,7 +11,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TokyoWard, TokyoWardMap } from "../../constants/enums";
+import { TokyoWard } from "../../constants/enums";
+import { SupportedTokyoWards } from "../../utils/enums";
 import { formatPrice } from "../../utils/format";
 import NoResult from "../molucules/NoResult";
 import Select from "../molucules/Select";
@@ -40,7 +41,12 @@ type Institition = {
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    pageBox: {
+      padding: 16,
+    },
     searchBox: {
+      padding: 16,
+      marginBottom: 16,
       background: theme.palette.grey[200],
     },
     resultTable: {
@@ -87,14 +93,14 @@ const Institution: FC = () => {
       setTokyoWard(event.target.value as TokyoWard);
     };
     return (
-      <Box p="16px" mb="16px" className={classes.searchBox}>
+      <Box className={classes.searchBox}>
         <Grid container spacing={2}>
           <Grid item md={12} xs={12}>
             <Select
               label={t("区")}
               value={tokyoWard}
               onChange={handleTokyoWardChange}
-              selectOptions={TokyoWardMap.filter((option) => !option.value.includes("INVALID"))}
+              selectOptions={SupportedTokyoWards}
             />
           </Grid>
         </Grid>
@@ -213,7 +219,7 @@ const Institution: FC = () => {
   }, [loading, error, data, classes.resultTable, t]);
 
   return (
-    <Box p="16px">
+    <Box className={classes.pageBox}>
       {renderSearchForm}
       {renderSearchResult}
     </Box>

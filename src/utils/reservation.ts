@@ -1,5 +1,9 @@
-// eslint-disable-next-line
-import { ReservationDivision, ReservationStatus, ReservationStatusMap, TokyoWard } from "../constants/enums";
+import {
+  ReservationDivision,
+  ReservationStatus,
+  ReservationStatusMap,
+  TokyoWard,
+} from "../constants/enums";
 
 export const sortReservation = (reservation: {
   [key: string]: ReservationStatus;
