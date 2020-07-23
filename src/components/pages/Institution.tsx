@@ -130,7 +130,10 @@ const Institution: FC = () => {
                 </TableCell>
                 <TableCell variant="head">{t("利用料金")}</TableCell>
                 <TableCell variant="head">{t("住所")}</TableCell>
-                <TableCell variant="head">{t("使用可能楽器")}</TableCell>
+                <TableCell variant="head">{t("弦楽器")}</TableCell>
+                <TableCell variant="head">{t("木管楽器")}</TableCell>
+                <TableCell variant="head">{t("金管楽器")}</TableCell>
+                <TableCell variant="head">{t("打楽器")}</TableCell>
                 <TableCell variant="head">{t("譜面台")}</TableCell>
                 <TableCell variant="head">{t("ピアノ")}</TableCell>
               </TableRow>
@@ -140,7 +143,7 @@ const Institution: FC = () => {
                 <>
                   {[...Array(10)].map((_, index) => (
                     <TableRow key={`row-${index}`}>
-                      {[...Array(9)].map((_, i) => (
+                      {[...Array(12)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
                           <Skeleton variant="text" height="80px" />
                         </TableCell>
@@ -185,20 +188,12 @@ const Institution: FC = () => {
                             )}
                           </TableCell>
                           <TableCell variant="body">{info.address}</TableCell>
-                          <TableCell variant="body">
-                            {[
-                              ...(info.is_available_strings === "true" ? [t("弦楽器")] : []),
-                              ...(info.is_available_woodwind === "true" ? [t("木管楽器")] : []),
-                              ...(info.is_available_brass === "true" ? [t("金管楽器")] : []),
-                              ...(info.is_available_percussion === "true" ? [t("打楽器")] : []),
-                            ].join(" ")}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {info.is_equipped_music_stand === "true" ? t("あり") : t("なし")}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {info.is_equipped_piano === "true" ? t("あり") : t("なし")}
-                          </TableCell>
+                          <TableCell variant="body">{info.is_available_strings}</TableCell>
+                          <TableCell variant="body">{info.is_available_woodwind}</TableCell>
+                          <TableCell variant="body">{info.is_available_brass}</TableCell>
+                          <TableCell variant="body">{info.is_available_percussion}</TableCell>
+                          <TableCell variant="body">{info.is_equipped_music_stand}</TableCell>
+                          <TableCell variant="body">{info.is_equipped_piano}</TableCell>
                         </TableRow>
                       ))}
                     </>
