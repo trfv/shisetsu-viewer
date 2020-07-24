@@ -37,6 +37,10 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
+    "@graphql-codegen/cli": "^1.17.4",
+    "@graphql-codegen/typescript": "^1.17.4",
+    "@graphql-codegen/typescript-operations": "^1.17.4",
+    "@graphql-codegen/typescript-react-apollo": "^1.17.4",
     "@types/jest": "^26.0.5",
     "@types/node": "^14.0.23",
     "@types/react": "^16.9.43",
@@ -50,8 +54,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "apollo:download": "apollo client:download-schema src/api/schema.json",
-    "apollo:codegen": "apollo client:codegen --target=typescript --localSchemaFile=src/api/schema.json",
+    "generate": "graphql-codegen --config ./src/api/config.yml",
     "i18next-extract": "NODE_ENV=development babel './src/**/*.{ts,tsx}'",
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",

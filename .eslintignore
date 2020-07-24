@@ -1,6 +1,6 @@
 *.json
 serviceWorker.ts
-globalTypes.ts
+graphql-client.tsx
 
 /node_modules
 /build
