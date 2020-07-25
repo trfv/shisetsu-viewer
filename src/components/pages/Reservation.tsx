@@ -13,17 +13,24 @@ import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SearchQueryType, SEARCH_QUERY } from "../../api/queries";
+import { Link } from "react-router-dom";
+import {
+  ReservationDocument,
+  ReservationQuery,
+  ReservationQueryVariables,
+} from "../../api/graphql-client";
 import {
   DayOfWeek,
   ReservationDivision,
   ReservationStatus,
   TokyoWard,
 } from "../../constants/enums";
+import { routePath } from "../../constants/routes";
 import { ClientContext } from "../../utils/client";
+import { fromUpperSnakeToLowerKebab, isValidUUID } from "../../utils/common";
 import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
-import { getEachWardReservationStatus, sortReservation } from "../../utils/reservation";
+import { getEachWardReservationStatus, sortByReservationDivision } from "../../utils/reservation";
 import CheckboxGroup from "../molucules/CheckboxGroup";
 import DateRangePicker from "../molucules/DateRangePicker";
 import NoResult from "../molucules/NoResult";
@@ -32,10 +39,11 @@ import Select from "../molucules/Select";
 const useStyles = makeStyles((theme) =>
   createStyles({
     pageBox: {
-      padding: 16,
+      padding: 24,
     },
     searchBox: {
-      padding: 16,
+      padding: 24,
+      paddingBottom: 14,
       marginBottom: 16,
       background: theme.palette.grey[200],
     },
@@ -62,43 +70,43 @@ const Reservation: FC = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { loading, data, error } = useQuery<
-    SearchQueryType.SearchQuery,
-    SearchQueryType.SearchQueryVariables
-  >(SEARCH_QUERY, {
-    variables: {
-      offset: page * rowsPerPage,
-      limit: rowsPerPage,
-      startDate: startDate?.toDateString(),
-      endDate: endDate?.toDateString(),
-      daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
-      reservationStatus1: {
-        ...(checkboxMorning ? { RESERVATION_DIVISION_MORNING: reservationStatus } : {}),
-        ...(checkboxAfternoon ? { RESERVATION_DIVISION_AFTERNOON: reservationStatus } : {}),
-        ...(checkboxEvening ? { RESERVATION_DIVISION_EVENING: reservationStatus } : {}),
+  const { loading, data, error } = useQuery<ReservationQuery, ReservationQueryVariables>(
+    ReservationDocument,
+    {
+      variables: {
+        offset: page * rowsPerPage,
+        limit: rowsPerPage,
+        startDate: startDate?.toDateString(),
+        endDate: endDate?.toDateString(),
+        daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
+        reservationStatus1: {
+          ...(checkboxMorning ? { RESERVATION_DIVISION_MORNING: reservationStatus } : {}),
+          ...(checkboxAfternoon ? { RESERVATION_DIVISION_AFTERNOON: reservationStatus } : {}),
+          ...(checkboxEvening ? { RESERVATION_DIVISION_EVENING: reservationStatus } : {}),
+        },
+        reservationStatus2: {
+          ...(checkboxMorning
+            ? {
+                RESERVATION_DIVISION_ONE: reservationStatus,
+                RESERVATION_DIVISION_TWO: reservationStatus,
+              }
+            : {}),
+          ...(checkboxAfternoon
+            ? {
+                RESERVATION_DIVISION_THREE: reservationStatus,
+                RESERVATION_DIVISION_FOUR: reservationStatus,
+              }
+            : {}),
+          ...(checkboxEvening
+            ? {
+                RESERVATION_DIVISION_FIVE: reservationStatus,
+                RESERVATION_DIVISION_SIX: reservationStatus,
+              }
+            : {}),
+        },
       },
-      reservationStatus2: {
-        ...(checkboxMorning
-          ? {
-              RESERVATION_DIVISION_ONE: reservationStatus,
-              RESERVATION_DIVISION_TWO: reservationStatus,
-            }
-          : {}),
-        ...(checkboxAfternoon
-          ? {
-              RESERVATION_DIVISION_THREE: reservationStatus,
-              RESERVATION_DIVISION_FOUR: reservationStatus,
-            }
-          : {}),
-        ...(checkboxEvening
-          ? {
-              RESERVATION_DIVISION_FIVE: reservationStatus,
-              RESERVATION_DIVISION_SIX: reservationStatus,
-            }
-          : {}),
-      },
-    },
-  });
+    }
+  );
 
   const renderSearchForm = useMemo(() => {
     const minDate = new Date();
@@ -250,7 +258,6 @@ const Reservation: FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
-                <TableCell variant="head">{t("部屋名")}</TableCell>
                 <TableCell variant="head">{t("日付")}</TableCell>
                 <TableCell variant="head">{t("予約状況")}</TableCell>
               </TableRow>
@@ -274,13 +281,24 @@ const Reservation: FC = () => {
                     <>
                       {data.reservation.map((info, index) => (
                         <TableRow key={index}>
-                          <TableCell>{info.building}</TableCell>
-                          <TableCell>{info.institution}</TableCell>
+                          <TableCell>
+                            {isValidUUID(info.institution_id) ? (
+                              <Link
+                                to={routePath.institutionDetail
+                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":id", info.institution_id)}
+                              >
+                                {`${info.building} ${info.institution}`}
+                              </Link>
+                            ) : (
+                              `${info.building} ${info.institution}`
+                            )}
+                          </TableCell>
                           <TableCell>{formatDate(info.date)}</TableCell>
                           <TableCell>
-                            {sortReservation(info.reservation)
+                            {sortByReservationDivision(info.reservation)
                               .map(
-                                ({ division, status }) =>
+                                ([division, status]) =>
                                   `${getEnumLabel<ReservationDivision>(division)}: ${getEnumLabel<
                                     ReservationStatus
                                   >(status)}`
@@ -304,7 +322,7 @@ const Reservation: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, data, error, classes.resultTable, t, page, rowsPerPage]);
+  }, [loading, data, error, classes.resultTable, t, page, rowsPerPage, tokyoWard]);
 
   return (
     <Box className={classes.pageBox}>

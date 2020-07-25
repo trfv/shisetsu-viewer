@@ -1,5 +1,9 @@
 import {
+  AvailabilityDivision,
+  AvailabilityDivisionMap,
   Enums,
+  EquipmentDivision,
+  EquipmentDivisionMap,
   ReservationDivision,
   ReservationDivisionMap,
   ReservationStatus,
@@ -15,10 +19,22 @@ export const getEnumMap = (value: string): { value: Enums; label: string }[] => 
   if (Object.values(ReservationDivision).includes(value as ReservationDivision)) {
     return ReservationDivisionMap;
   }
+  if (Object.values(TokyoWard).includes(value as TokyoWard)) {
+    return TokyoWardMap;
+  }
+  if (Object.values(AvailabilityDivision).includes(value as AvailabilityDivision)) {
+    return AvailabilityDivisionMap;
+  }
+  if (Object.values(EquipmentDivision).includes(value as EquipmentDivision)) {
+    return EquipmentDivisionMap;
+  }
   throw new Error(`no enum found for ${value}`);
 };
 
-export const getEnumLabel = <T extends Enums>(value: string): string | T => {
+export const getEnumLabel = <T extends Enums>(value: string | undefined): string | T => {
+  if (value === undefined) {
+    return "";
+  }
   return getEnumMap(value).find((val) => val.value === value)?.label || value;
 };
 

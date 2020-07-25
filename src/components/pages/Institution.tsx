@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/react-hooks";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -7,45 +8,33 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TokyoWard } from "../../constants/enums";
-import { SupportedTokyoWards } from "../../utils/enums";
-import { formatPrice } from "../../utils/format";
+import { Link } from "react-router-dom";
+import {
+  InstitutionDocument,
+  InstitutionQuery,
+  InstitutionQueryVariables,
+} from "../../api/graphql-client";
+import { AvailabilityDivision, EquipmentDivision, TokyoWard } from "../../constants/enums";
+import { routePath } from "../../constants/routes";
+import { ClientContext } from "../../utils/client";
+import { fromUpperSnakeToLowerKebab } from "../../utils/common";
+import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
+import { formatUsageFee } from "../../utils/institution";
 import NoResult from "../molucules/NoResult";
 import Select from "../molucules/Select";
-
-const ENDPOINT_URL = process.env.REACT_APP_SHISETSU_APPS_SCRIPT_ENDPOINT || "";
-
-type Institition = {
-  building?: string;
-  institution?: string;
-  capacity?: string;
-  area?: string;
-  reservation_division?: string;
-  weekday_usage_fee?: string;
-  holiday_usage_fee?: string;
-  address?: string;
-  is_available_strings?: string;
-  is_available_woodwind?: string;
-  is_available_brass?: string;
-  is_available_percussion?: string;
-  is_equipped_music_stand?: string;
-  is_equipped_piano?: string;
-  website_url?: string;
-  layout_image_url?: string;
-  note?: string;
-};
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     pageBox: {
-      padding: 16,
+      padding: 24,
     },
     searchBox: {
-      padding: 16,
+      padding: 24,
       marginBottom: 16,
       background: theme.palette.grey[200],
     },
@@ -55,42 +44,30 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const formatUsageFee = (val: string): string => {
-  const [key, value] = val.split("=");
-  return `${key}: ${formatPrice(value)}`;
-};
-
 const Institution: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("institution");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<{ message: string } | null>(null);
-  const [data, setData] = useState<Institition[] | null>(null);
+  const { toggleClientNamespace } = useContext(ClientContext);
   const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  useEffect(() => {
-    const fn = async (): Promise<void> => {
-      setLoading(true);
-      try {
-        const url = new URL(ENDPOINT_URL);
-        url.searchParams.append("tokyoWard", tokyoWard);
-        const response = await fetch(url.toString());
-        setData((await response.json()) as Institition[]);
-      } catch (e) {
-        const error = e.message ? e : { message: String(e) };
-        console.error(`failed to fetch institutions: ${error.message}`);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fn();
-    return (): void => setData(null);
-  }, [tokyoWard]);
+  const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
+    InstitutionDocument,
+    {
+      variables: {
+        offset: page * rowsPerPage,
+        limit: rowsPerPage,
+      },
+    }
+  );
 
   const renderSearchForm = useMemo(() => {
     const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-      setTokyoWard(event.target.value as TokyoWard);
+      const newTokyoWard = event.target.value as TokyoWard;
+      setTokyoWard(newTokyoWard);
+      setPage(0);
+      toggleClientNamespace(newTokyoWard);
     };
     return (
       <Box className={classes.searchBox}>
@@ -106,22 +83,44 @@ const Institution: FC = () => {
         </Grid>
       </Box>
     );
-  }, [tokyoWard, classes.searchBox, t]);
+  }, [tokyoWard, classes.searchBox, t, toggleClientNamespace]);
 
   const renderSearchResult = useMemo(() => {
+    const handleChangePage = (
+      _: React.MouseEvent<HTMLButtonElement> | null,
+      newPage: number
+    ): void => {
+      setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ): void => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
     if (error) {
       return <Box>{error.message}</Box>;
     }
-    const count = data?.length?.toLocaleString() || "---";
     return (
       <>
-        <Box p="16px">{t("検索結果", { total: loading ? "---" : count })}</Box>
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[10, 50, 100]}
+          count={data?.institution_aggregate.aggregate?.count || 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          labelRowsPerPage={t("表示件数")}
+          labelDisplayedRows={({ from, to, count }): ReactNode =>
+            t("ページ件数", { from, to, count })
+          }
+        />
         <TableContainer component={Paper}>
           <Table className={classes.resultTable}>
             <TableHead>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
-                <TableCell variant="head">{t("部屋名")}</TableCell>
                 <TableCell variant="head" align="right">
                   {t("定員")}
                 </TableCell>
@@ -145,7 +144,7 @@ const Institution: FC = () => {
                     <TableRow key={`row-${index}`}>
                       {[...Array(12)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
-                          <Skeleton variant="text" height="80px" />
+                          <Skeleton variant="text" height="40px" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -153,47 +152,64 @@ const Institution: FC = () => {
                 </>
               ) : (
                 <>
-                  {data && data.length > 0 ? (
+                  {data?.institution && data?.institution.length > 0 ? (
                     <>
-                      {data.map((info, index) => (
+                      {data.institution.map((info, index) => (
                         <TableRow key={index}>
-                          <TableCell variant="body">{info.building}</TableCell>
-                          <TableCell variant="body">{info.institution}</TableCell>
+                          <TableCell>
+                            {info.id ? (
+                              <Link
+                                to={routePath.institutionDetail
+                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":id", info.id)}
+                              >
+                                {`${info.building} ${info.institution}`}
+                              </Link>
+                            ) : (
+                              `${info.building} ${info.institution}`
+                            )}
+                          </TableCell>
                           <TableCell variant="body" align="right">
                             {`${info.capacity}人`}
                           </TableCell>
                           <TableCell variant="body" align="right">
-                            {`${info.area}m²`}
+                            {`${info.area}m²`}a{" "}
                           </TableCell>
                           <TableCell variant="body">
                             {info.weekday_usage_fee && (
                               <p>
                                 {t("平日", {
-                                  usageFee: info.weekday_usage_fee
-                                    .split(",")
-                                    .map(formatUsageFee)
-                                    .join(" "),
+                                  usageFee: formatUsageFee(info.weekday_usage_fee),
                                 })}
                               </p>
                             )}
                             {info.holiday_usage_fee && (
                               <p>
                                 {t("休日", {
-                                  usageFee: info.holiday_usage_fee
-                                    .split(",")
-                                    .map(formatUsageFee)
-                                    .join(" "),
+                                  usageFee: formatUsageFee(info.holiday_usage_fee),
                                 })}
                               </p>
                             )}
                           </TableCell>
                           <TableCell variant="body">{info.address}</TableCell>
-                          <TableCell variant="body">{info.is_available_strings}</TableCell>
-                          <TableCell variant="body">{info.is_available_woodwind}</TableCell>
-                          <TableCell variant="body">{info.is_available_brass}</TableCell>
-                          <TableCell variant="body">{info.is_available_percussion}</TableCell>
-                          <TableCell variant="body">{info.is_equipped_music_stand}</TableCell>
-                          <TableCell variant="body">{info.is_equipped_piano}</TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<AvailabilityDivision>(info.is_available_strings)}
+                          </TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<AvailabilityDivision>(info.is_available_woodwind)}
+                          </TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<AvailabilityDivision>(info.is_available_brass)}
+                          </TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<AvailabilityDivision>(info.is_available_percussion)}
+                          </TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<EquipmentDivision>(info.is_equipped_music_stand)}
+                          </TableCell>
+                          <TableCell variant="body">
+                            {getEnumLabel<EquipmentDivision>(info.is_equipped_piano)}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </>
@@ -211,7 +227,7 @@ const Institution: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, error, data, classes.resultTable, t]);
+  }, [loading, error, data, classes.resultTable, t, page, rowsPerPage, tokyoWard]);
 
   return (
     <Box className={classes.pageBox}>

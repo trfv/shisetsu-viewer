@@ -68,6 +68,8 @@ export enum ReservationDivision {
   INVALID = "RESERVATION_DIVISION_INVALID",
   MORNING = "RESERVATION_DIVISION_MORNING",
   AFTERNOON = "RESERVATION_DIVISION_AFTERNOON",
+  AFTERNOON_ONE = "RESERVATION_DIVISION_AFTERNOON_ONE",
+  AFTERNOON_TWO = "RESERVATION_DIVISION_AFTERNOON_TWO",
   EVENING = "RESERVATION_DIVISION_EVENING",
   ONE = "RESERVATION_DIVISION_ONE",
   TWO = "RESERVATION_DIVISION_TWO",
@@ -75,6 +77,8 @@ export enum ReservationDivision {
   FOUR = "RESERVATION_DIVISION_FOUR",
   FIVE = "RESERVATION_DIVISION_FIVE",
   SIX = "RESERVATION_DIVISION_SIX",
+  ONE_HOUR = "RESERVATION_DIVISION_ONE_HOUR",
+  TWO_HOUR = "RESERVATION_DIVISION_TWO_HOUR",
 }
 
 export const ReservationDivisionMap = [
@@ -89,6 +93,14 @@ export const ReservationDivisionMap = [
   {
     value: ReservationDivision.AFTERNOON,
     label: "午後",
+  },
+  {
+    value: ReservationDivision.AFTERNOON_ONE,
+    label: "午後1",
+  },
+  {
+    value: ReservationDivision.AFTERNOON_TWO,
+    label: "午後2",
   },
   {
     value: ReservationDivision.EVENING,
@@ -117,6 +129,14 @@ export const ReservationDivisionMap = [
   {
     value: ReservationDivision.SIX,
     label: "⑥",
+  },
+  {
+    value: ReservationDivision.ONE_HOUR,
+    label: "1時間",
+  },
+  {
+    value: ReservationDivision.TWO_HOUR,
+    label: "2時間",
   },
 ];
 
@@ -255,4 +275,54 @@ export enum DayOfWeek {
 
 // export const DayOfWeekMap = {}
 
-export type Enums = ReservationStatus | ReservationDivision | TokyoWard | DayOfWeek;
+export enum AvailabilityDivision {
+  INVALID = "AVAILABILITY_DIVISION_INVALID",
+  AVAILABLE = "AVAILABILITY_DIVISION_AVAILABLE",
+  UNAVAILABLE = "AVAILABILITY_DIVISION_UNAVAILABLE",
+  UNKNOWN = "AVAILABILITY_DIVISION_UNKNOWN",
+}
+
+export const AvailabilityDivisionMap = [
+  {
+    value: AvailabilityDivision.AVAILABLE,
+    label: "利用可",
+  },
+  {
+    value: AvailabilityDivision.UNAVAILABLE,
+    label: "利用不可",
+  },
+  {
+    value: AvailabilityDivision.UNKNOWN,
+    label: "不明",
+  },
+];
+
+export enum EquipmentDivision {
+  INVALID = "EQUIPMENT_DIVISION_INVALID",
+  EQUIPPED = "EQUIPMENT_DIVISION_EQUIPPED",
+  UNEQUIPPED = "EQUIPMENT_DIVISION_UNEQUIPPED",
+  UNKNOWN = "EQUIPMENT_DIVISION_UNKNOWN",
+}
+
+export const EquipmentDivisionMap = [
+  {
+    value: EquipmentDivision.EQUIPPED,
+    label: "あり",
+  },
+  {
+    value: EquipmentDivision.UNEQUIPPED,
+    label: "なし",
+  },
+  {
+    value: EquipmentDivision.UNKNOWN,
+    label: "不明",
+  },
+];
+
+export type Enums =
+  | ReservationStatus
+  | ReservationDivision
+  | TokyoWard
+  | DayOfWeek
+  | AvailabilityDivision
+  | EquipmentDivision;

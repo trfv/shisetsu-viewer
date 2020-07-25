@@ -4,10 +4,12 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./components/molucules/Footer";
 import Header from "./components/organisms/Header";
 import Institution from "./components/pages/Institution";
+import InstitutionDetail from "./components/pages/InstitutionDetail";
 import Reservation from "./components/pages/Reservation";
+import ScrollToTop from "./components/utils/ScrollToTop";
 import { TokyoWard } from "./constants/enums";
 import { routePath } from "./constants/routes";
-import { ClientContext, ClientNamespace, clients, getClientNamespace } from "./utils/client";
+import { APPOLO_CLIENTS, ClientContext, ClientNamespace, getClientNamespace } from "./utils/client";
 import "./utils/i18n";
 
 const App: FC = () => {
@@ -18,12 +20,14 @@ const App: FC = () => {
   };
   return (
     <ClientContext.Provider value={{ clientNamespace, toggleClientNamespace }}>
-      <ApolloProvider client={clients[clientNamespace]}>
+      <ApolloProvider client={APPOLO_CLIENTS[clientNamespace]}>
         <BrowserRouter>
+          <ScrollToTop />
           <Header />
           <Switch>
             <Route path={routePath.reservation} component={Reservation} exact />
             <Route path={routePath.institution} component={Institution} exact />
+            <Route path={routePath.institutionDetail} component={InstitutionDetail} exact />
             <Redirect to={routePath.reservation} />
           </Switch>
           <Footer />

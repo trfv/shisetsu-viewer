@@ -1,0 +1,15 @@
+override: true
+schema:
+  - https://koutou-graphql.herokuapp.com/v1/graphql
+documents:
+  - ./src/api/queries/*.graphql
+generates:
+  ./src/api/graphql-client.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withComponent: false
+      withHooks: true
+      withHOC: false

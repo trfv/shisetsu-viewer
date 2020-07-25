@@ -1,0 +1,55 @@
+query reservation(
+  $offset: Int
+  $limit: Int
+  $startDate: date
+  $endDate: date
+  $daysOfWeek: [String!] = null
+  $reservationStatus1: jsonb = null
+  $reservationStatus2: jsonb = null
+) {
+  reservation(
+    offset: $offset
+    limit: $limit
+    where: {
+      _or: [
+        {
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $daysOfWeek }
+          reservation: { _contains: $reservationStatus1 }
+        }
+        {
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $daysOfWeek }
+          reservation: { _contains: $reservationStatus2 }
+        }
+      ]
+    }
+  ) {
+    id
+    institution_id
+    building
+    institution
+    date
+    reservation
+  }
+  reservation_aggregate(
+    where: {
+      _or: [
+        {
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $daysOfWeek }
+          reservation: { _contains: $reservationStatus1 }
+        }
+        {
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $daysOfWeek }
+          reservation: { _contains: $reservationStatus2 }
+        }
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

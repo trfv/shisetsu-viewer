@@ -1,0 +1,34 @@
+query institution(
+  $offset: Int
+  $limit: Int
+) {
+  institution(
+    offset: $offset
+    limit: $limit
+  ) {
+    id
+    building
+    institution
+    capacity
+    area
+    reservation_division
+    weekday_usage_fee
+    holiday_usage_fee
+    address
+    is_available_strings
+    is_available_woodwind
+    is_available_brass
+    is_available_percussion
+    is_equipped_music_stand
+    is_equipped_piano
+    website_url
+    layout_image_url
+    lottery_period
+    note
+  }
+  institution_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

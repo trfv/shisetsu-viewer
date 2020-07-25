@@ -32,14 +32,14 @@ const toshimaClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const clients = {
+export const APPOLO_CLIENTS = {
   koutouClient,
   bunkyoClient,
   kitaClient,
   toshimaClient,
 };
 
-export type ClientNamespace = keyof typeof clients;
+export type ClientNamespace = keyof typeof APPOLO_CLIENTS;
 
 export const ClientContext = createContext<{
   clientNamespace: ClientNamespace;

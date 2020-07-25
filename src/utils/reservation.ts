@@ -5,83 +5,49 @@ import {
   TokyoWard,
 } from "../constants/enums";
 
-export const sortReservation = (reservation: {
-  [key: string]: ReservationStatus;
-}): { division: ReservationDivision; status: ReservationStatus }[] => {
-  return [
-    ...(reservation.RESERVATION_DIVISION_MORNING
-      ? [
-          {
-            division: ReservationDivision.MORNING,
-            status: reservation.RESERVATION_DIVISION_MORNING,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_AFTERNOON
-      ? [
-          {
-            division: ReservationDivision.AFTERNOON,
-            status: reservation.RESERVATION_DIVISION_AFTERNOON,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_EVENING
-      ? [
-          {
-            division: ReservationDivision.EVENING,
-            status: reservation.RESERVATION_DIVISION_EVENING,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_ONE
-      ? [
-          {
-            division: ReservationDivision.ONE,
-            status: reservation.RESERVATION_DIVISION_ONE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_TWO
-      ? [
-          {
-            division: ReservationDivision.TWO,
-            status: reservation.RESERVATION_DIVISION_TWO,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_THREE
-      ? [
-          {
-            division: ReservationDivision.THREE,
-            status: reservation.RESERVATION_DIVISION_THREE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_FOUR
-      ? [
-          {
-            division: ReservationDivision.FOUR,
-            status: reservation.RESERVATION_DIVISION_FOUR,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_FIVE
-      ? [
-          {
-            division: ReservationDivision.FIVE,
-            status: reservation.RESERVATION_DIVISION_FIVE,
-          },
-        ]
-      : []),
-    ...(reservation.RESERVATION_DIVISION_SIX
-      ? [
-          {
-            division: ReservationDivision.SIX,
-            status: reservation.RESERVATION_DIVISION_SIX,
-          },
-        ]
-      : []),
-  ];
+// key に ReservationDivision を利用している Object をソートした配列で返す
+export const sortByReservationDivision = (map: { [key: string]: any }) => {
+  const res = [];
+  if (map[ReservationDivision.MORNING]) {
+    res.push([ReservationDivision.MORNING, map[ReservationDivision.MORNING]]);
+  }
+  if (map[ReservationDivision.AFTERNOON]) {
+    res.push([ReservationDivision.AFTERNOON, map[ReservationDivision.AFTERNOON]]);
+  }
+  if (map[ReservationDivision.AFTERNOON_ONE]) {
+    res.push([ReservationDivision.AFTERNOON_ONE, map[ReservationDivision.AFTERNOON_ONE]]);
+  }
+  if (map[ReservationDivision.AFTERNOON_TWO]) {
+    res.push([ReservationDivision.AFTERNOON_TWO, map[ReservationDivision.AFTERNOON_TWO]]);
+  }
+  if (map[ReservationDivision.EVENING]) {
+    res.push([ReservationDivision.EVENING, map[ReservationDivision.EVENING]]);
+  }
+  if (map[ReservationDivision.ONE]) {
+    res.push([ReservationDivision.ONE, map[ReservationDivision.ONE]]);
+  }
+  if (map[ReservationDivision.TWO]) {
+    res.push([ReservationDivision.TWO, map[ReservationDivision.TWO]]);
+  }
+  if (map[ReservationDivision.THREE]) {
+    res.push([ReservationDivision.THREE, map[ReservationDivision.THREE]]);
+  }
+  if (map[ReservationDivision.FOUR]) {
+    res.push([ReservationDivision.FOUR, map[ReservationDivision.FOUR]]);
+  }
+  if (map[ReservationDivision.FIVE]) {
+    res.push([ReservationDivision.FIVE, map[ReservationDivision.FIVE]]);
+  }
+  if (map[ReservationDivision.SIX]) {
+    res.push([ReservationDivision.SIX, map[ReservationDivision.SIX]]);
+  }
+  if (map[ReservationDivision.ONE_HOUR]) {
+    res.push([ReservationDivision.ONE_HOUR, map[ReservationDivision.ONE_HOUR]]);
+  }
+  if (map[ReservationDivision.TWO_HOUR]) {
+    res.push([ReservationDivision.TWO_HOUR, map[ReservationDivision.TWO_HOUR]]);
+  }
+  return res;
 };
 
 const KOUTOU_RESERVATION_STATUS = [
