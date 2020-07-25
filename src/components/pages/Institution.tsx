@@ -13,31 +13,28 @@ import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import {
   InstitutionDocument,
   InstitutionQuery,
   InstitutionQueryVariables,
 } from "../../api/graphql-client";
-import {
-  AvailabilityDivision,
-  EquipmentDivision,
-  ReservationDivision,
-  TokyoWard,
-} from "../../constants/enums";
+import { AvailabilityDivision, EquipmentDivision, TokyoWard } from "../../constants/enums";
+import { routePath } from "../../constants/routes";
 import { ClientContext } from "../../utils/client";
+import { fromUpperSnakeToLowerKebab } from "../../utils/common";
 import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
-import { formatPrice } from "../../utils/format";
-import { sortByReservationDivision } from "../../utils/reservation";
+import { formatUsageFee } from "../../utils/institution";
 import NoResult from "../molucules/NoResult";
 import Select from "../molucules/Select";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     pageBox: {
-      padding: 16,
+      padding: 24,
     },
     searchBox: {
-      padding: 16,
+      padding: 24,
       marginBottom: 16,
       background: theme.palette.grey[200],
     },
@@ -46,15 +43,6 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const formatUsageFee = (feeMap: { [key: string]: string }): string => {
-  if (!feeMap) {
-    return "";
-  }
-  return sortByReservationDivision(feeMap)
-    .map(([division, fee]) => `${getEnumLabel<ReservationDivision>(division)}: ${formatPrice(fee)}`)
-    .join(",");
-};
 
 const Institution: FC = () => {
   const classes = useStyles();
@@ -133,7 +121,6 @@ const Institution: FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
-                <TableCell variant="head">{t("部屋名")}</TableCell>
                 <TableCell variant="head" align="right">
                   {t("定員")}
                 </TableCell>
@@ -157,7 +144,7 @@ const Institution: FC = () => {
                     <TableRow key={`row-${index}`}>
                       {[...Array(12)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
-                          <Skeleton variant="text" height="80px" />
+                          <Skeleton variant="text" height="40px" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -169,13 +156,24 @@ const Institution: FC = () => {
                     <>
                       {data.institution.map((info, index) => (
                         <TableRow key={index}>
-                          <TableCell variant="body">{info.building}</TableCell>
-                          <TableCell variant="body">{info.institution}</TableCell>
+                          <TableCell>
+                            {info.id ? (
+                              <Link
+                                to={routePath.institutionDetail
+                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":id", info.id)}
+                              >
+                                {`${info.building} ${info.institution}`}
+                              </Link>
+                            ) : (
+                              `${info.building} ${info.institution}`
+                            )}
+                          </TableCell>
                           <TableCell variant="body" align="right">
                             {`${info.capacity}人`}
                           </TableCell>
                           <TableCell variant="body" align="right">
-                            {`${info.area}m²`}
+                            {`${info.area}m²`}a{" "}
                           </TableCell>
                           <TableCell variant="body">
                             {info.weekday_usage_fee && (
@@ -229,7 +227,7 @@ const Institution: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, error, data, classes.resultTable, t, page, rowsPerPage]);
+  }, [loading, error, data, classes.resultTable, t, page, rowsPerPage, tokyoWard]);
 
   return (
     <Box className={classes.pageBox}>

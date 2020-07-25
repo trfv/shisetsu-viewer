@@ -1,12 +1,7 @@
-query institution(
-  $offset: Int
-  $limit: Int
+query institutionDetail(
+  $id: uuid!
 ) {
-  institution(
-    offset: $offset
-    limit: $limit
-  ) {
-    id
+  institution_by_pk(id: $id) {
     building
     institution
     capacity
@@ -26,9 +21,12 @@ query institution(
     lottery_period
     note
   }
-  institution_aggregate {
-    aggregate {
-      count
+  reservation(
+    where: {
+      institution_id: { _eq: $id }
     }
+  ) {
+    date
+    reservation
   }
 }

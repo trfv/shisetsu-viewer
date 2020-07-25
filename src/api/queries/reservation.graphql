@@ -26,6 +26,7 @@ query reservation(
     }
   ) {
     id
+    institution_id
     building
     institution
     date

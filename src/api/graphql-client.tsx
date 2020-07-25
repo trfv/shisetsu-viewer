@@ -800,6 +800,22 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type InstitutionDetailQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type InstitutionDetailQuery = (
+  { __typename?: 'query_root' }
+  & { institution_by_pk?: Maybe<(
+    { __typename?: 'institution' }
+    & Pick<Institution, 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
+  )>, reservation: Array<(
+    { __typename?: 'reservation' }
+    & Pick<Reservation, 'date' | 'reservation'>
+  )> }
+);
+
 export type InstitutionQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -810,7 +826,7 @@ export type InstitutionQuery = (
   { __typename?: 'query_root' }
   & { institution: Array<(
     { __typename?: 'institution' }
-    & Pick<Institution, 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
+    & Pick<Institution, 'id' | 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
   )>, institution_aggregate: (
     { __typename?: 'institution_aggregate' }
     & { aggregate?: Maybe<(
@@ -835,7 +851,7 @@ export type ReservationQuery = (
   { __typename?: 'query_root' }
   & { reservation: Array<(
     { __typename?: 'reservation' }
-    & Pick<Reservation, 'id' | 'building' | 'institution' | 'date' | 'reservation'>
+    & Pick<Reservation, 'id' | 'institution_id' | 'building' | 'institution' | 'date' | 'reservation'>
   )>, reservation_aggregate: (
     { __typename?: 'reservation_aggregate' }
     & { aggregate?: Maybe<(
@@ -846,9 +862,64 @@ export type ReservationQuery = (
 );
 
 
+export const InstitutionDetailDocument = gql`
+    query institutionDetail($id: uuid!) {
+  institution_by_pk(id: $id) {
+    building
+    institution
+    capacity
+    area
+    reservation_division
+    weekday_usage_fee
+    holiday_usage_fee
+    address
+    is_available_strings
+    is_available_woodwind
+    is_available_brass
+    is_available_percussion
+    is_equipped_music_stand
+    is_equipped_piano
+    website_url
+    layout_image_url
+    lottery_period
+    note
+  }
+  reservation(where: {institution_id: {_eq: $id}}) {
+    date
+    reservation
+  }
+}
+    `;
+
+/**
+ * __useInstitutionDetailQuery__
+ *
+ * To run a query within a React component, call `useInstitutionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInstitutionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInstitutionDetailQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useInstitutionDetailQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+        return ApolloReactHooks.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+      }
+export function useInstitutionDetailLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+        }
+export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionDetailQuery>;
+export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
+export type InstitutionDetailQueryResult = ApolloReactCommon.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionDocument = gql`
     query institution($offset: Int, $limit: Int) {
   institution(offset: $offset, limit: $limit) {
+    id
     building
     institution
     capacity
@@ -906,6 +977,7 @@ export const ReservationDocument = gql`
     query reservation($offset: Int, $limit: Int, $startDate: date, $endDate: date, $daysOfWeek: [String!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null) {
   reservation(offset: $offset, limit: $limit, where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}) {
     id
+    institution_id
     building
     institution
     date

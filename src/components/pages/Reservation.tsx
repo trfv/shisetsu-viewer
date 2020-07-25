@@ -13,6 +13,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import {
   ReservationDocument,
   ReservationQuery,
@@ -24,7 +25,9 @@ import {
   ReservationStatus,
   TokyoWard,
 } from "../../constants/enums";
+import { routePath } from "../../constants/routes";
 import { ClientContext } from "../../utils/client";
+import { fromUpperSnakeToLowerKebab, isValidUUID } from "../../utils/common";
 import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortByReservationDivision } from "../../utils/reservation";
@@ -36,10 +39,11 @@ import Select from "../molucules/Select";
 const useStyles = makeStyles((theme) =>
   createStyles({
     pageBox: {
-      padding: 16,
+      padding: 24,
     },
     searchBox: {
-      padding: 16,
+      padding: 24,
+      paddingBottom: 14,
       marginBottom: 16,
       background: theme.palette.grey[200],
     },
@@ -254,7 +258,6 @@ const Reservation: FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
-                <TableCell variant="head">{t("部屋名")}</TableCell>
                 <TableCell variant="head">{t("日付")}</TableCell>
                 <TableCell variant="head">{t("予約状況")}</TableCell>
               </TableRow>
@@ -278,8 +281,19 @@ const Reservation: FC = () => {
                     <>
                       {data.reservation.map((info, index) => (
                         <TableRow key={index}>
-                          <TableCell>{info.building}</TableCell>
-                          <TableCell>{info.institution}</TableCell>
+                          <TableCell>
+                            {isValidUUID(info.institution_id) ? (
+                              <Link
+                                to={routePath.institutionDetail
+                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":id", info.institution_id)}
+                              >
+                                {`${info.building} ${info.institution}`}
+                              </Link>
+                            ) : (
+                              `${info.building} ${info.institution}`
+                            )}
+                          </TableCell>
                           <TableCell>{formatDate(info.date)}</TableCell>
                           <TableCell>
                             {sortByReservationDivision(info.reservation)
@@ -308,7 +322,7 @@ const Reservation: FC = () => {
         </TableContainer>
       </>
     );
-  }, [loading, data, error, classes.resultTable, t, page, rowsPerPage]);
+  }, [loading, data, error, classes.resultTable, t, page, rowsPerPage, tokyoWard]);
 
   return (
     <Box className={classes.pageBox}>

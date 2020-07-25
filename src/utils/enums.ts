@@ -31,7 +31,10 @@ export const getEnumMap = (value: string): { value: Enums; label: string }[] => 
   throw new Error(`no enum found for ${value}`);
 };
 
-export const getEnumLabel = <T extends Enums>(value: string): string | T => {
+export const getEnumLabel = <T extends Enums>(value: string | undefined): string | T => {
+  if (value === undefined) {
+    return "";
+  }
   return getEnumMap(value).find((val) => val.value === value)?.label || value;
 };
 
