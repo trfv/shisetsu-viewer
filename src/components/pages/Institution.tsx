@@ -19,11 +19,10 @@ import {
   InstitutionQuery,
   InstitutionQueryVariables,
 } from "../../api/graphql-client";
-import { AvailabilityDivision, EquipmentDivision, TokyoWard } from "../../constants/enums";
+import { TokyoWard } from "../../constants/enums";
 import { routePath } from "../../constants/routes";
-import { ClientContext } from "../../utils/client";
-import { fromUpperSnakeToLowerKebab } from "../../utils/common";
-import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
+import { ClientContext, getTokyoWard } from "../../utils/client";
+import { fromEnumToUrlTokyoWard, SupportedTokyoWards } from "../../utils/enums";
 import { formatUsageFee } from "../../utils/institution";
 import NoResult from "../molucules/NoResult";
 import Select from "../molucules/Select";
@@ -47,8 +46,8 @@ const useStyles = makeStyles((theme) =>
 const Institution: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("institution");
-  const { toggleClientNamespace } = useContext(ClientContext);
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
+  const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -122,19 +121,13 @@ const Institution: FC = () => {
               <TableRow>
                 <TableCell variant="head">{t("施設名")}</TableCell>
                 <TableCell variant="head" align="right">
-                  {t("定員")}
+                  {t("定員(人)")}
                 </TableCell>
                 <TableCell variant="head" align="right">
-                  {t("面積")}
+                  {t("面積(㎡)")}
                 </TableCell>
                 <TableCell variant="head">{t("利用料金")}</TableCell>
                 <TableCell variant="head">{t("住所")}</TableCell>
-                <TableCell variant="head">{t("弦楽器")}</TableCell>
-                <TableCell variant="head">{t("木管楽器")}</TableCell>
-                <TableCell variant="head">{t("金管楽器")}</TableCell>
-                <TableCell variant="head">{t("打楽器")}</TableCell>
-                <TableCell variant="head">{t("譜面台")}</TableCell>
-                <TableCell variant="head">{t("ピアノ")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -142,7 +135,7 @@ const Institution: FC = () => {
                 <>
                   {[...Array(10)].map((_, index) => (
                     <TableRow key={`row-${index}`}>
-                      {[...Array(12)].map((_, i) => (
+                      {[...Array(5)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
                           <Skeleton variant="text" height="40px" />
                         </TableCell>
@@ -160,7 +153,7 @@ const Institution: FC = () => {
                             {info.id ? (
                               <Link
                                 to={routePath.institutionDetail
-                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":tokyoWard", fromEnumToUrlTokyoWard(tokyoWard))
                                   .replace(":id", info.id)}
                               >
                                 {`${info.building} ${info.institution}`}
@@ -170,10 +163,10 @@ const Institution: FC = () => {
                             )}
                           </TableCell>
                           <TableCell variant="body" align="right">
-                            {`${info.capacity}人`}
+                            {info.capacity}
                           </TableCell>
                           <TableCell variant="body" align="right">
-                            {`${info.area}m²`}a{" "}
+                            {info.area}
                           </TableCell>
                           <TableCell variant="body">
                             {info.weekday_usage_fee && (
@@ -192,30 +185,12 @@ const Institution: FC = () => {
                             )}
                           </TableCell>
                           <TableCell variant="body">{info.address}</TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<AvailabilityDivision>(info.is_available_strings)}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<AvailabilityDivision>(info.is_available_woodwind)}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<AvailabilityDivision>(info.is_available_brass)}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<AvailabilityDivision>(info.is_available_percussion)}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<EquipmentDivision>(info.is_equipped_music_stand)}
-                          </TableCell>
-                          <TableCell variant="body">
-                            {getEnumLabel<EquipmentDivision>(info.is_equipped_piano)}
-                          </TableCell>
                         </TableRow>
                       ))}
                     </>
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={10}>
+                      <TableCell colSpan={5}>
                         <NoResult />
                       </TableCell>
                     </TableRow>

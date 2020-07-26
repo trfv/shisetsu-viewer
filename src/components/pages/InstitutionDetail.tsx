@@ -27,8 +27,8 @@ import {
   TokyoWard,
 } from "../../constants/enums";
 import { APPOLO_CLIENTS, getClientNamespace } from "../../utils/client";
-import { fromLowerKebabToUpperSnake, isValidUUID } from "../../utils/common";
-import { getEnumLabel } from "../../utils/enums";
+import { isValidUUID } from "../../utils/common";
+import { fromUrlToEnumTokyoWard, getEnumLabel } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { formatUsageFee } from "../../utils/institution";
 import { sortByReservationDivision } from "../../utils/reservation";
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) =>
       wordBreak: "break-all",
     },
     reservationTableContainer: {
-      maxHeight: 420,
+      maxHeight: 300,
     },
   })
 );
@@ -55,7 +55,7 @@ const InstitutionDetail: FC = () => {
     variables: {
       id,
     },
-    client: APPOLO_CLIENTS[getClientNamespace(fromLowerKebabToUpperSnake(tokyoWard) as TokyoWard)],
+    client: APPOLO_CLIENTS[getClientNamespace(fromUrlToEnumTokyoWard(tokyoWard) as TokyoWard)],
   };
 
   const { loading, data, error } = useQuery<
@@ -77,7 +77,9 @@ const InstitutionDetail: FC = () => {
   ) => {
     return (
       <Grid item md={6} xs={12}>
-        <Grid>{label}</Grid>
+        <Grid>
+          <strong>{label}</strong>
+        </Grid>
         <Grid className={classes.rowValue}>
           {loading ? <Skeleton /> : `${prefix || ""}${value}${suffix || ""}`}
         </Grid>
