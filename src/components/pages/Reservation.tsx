@@ -26,9 +26,9 @@ import {
   TokyoWard,
 } from "../../constants/enums";
 import { routePath } from "../../constants/routes";
-import { ClientContext } from "../../utils/client";
-import { fromUpperSnakeToLowerKebab, isValidUUID } from "../../utils/common";
-import { getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
+import { ClientContext, getTokyoWard } from "../../utils/client";
+import { isValidUUID } from "../../utils/common";
+import { fromEnumToUrlTokyoWard, getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortByReservationDivision } from "../../utils/reservation";
 import CheckboxGroup from "../molucules/CheckboxGroup";
@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) =>
 const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("reservation");
-  const { toggleClientNamespace } = useContext(ClientContext);
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
+  const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [checkboxOnlyHoliday, setCheckboxOnlyHoliday] = useState(false);
@@ -267,7 +267,7 @@ const Reservation: FC = () => {
                 <>
                   {[...Array(rowsPerPage)].map((_, index) => (
                     <TableRow key={`row-${index}`}>
-                      {[...Array(4)].map((_, i) => (
+                      {[...Array(3)].map((_, i) => (
                         <TableCell key={`cell-${i}`} variant="body">
                           <Skeleton variant="text" height="20px" />
                         </TableCell>
@@ -285,7 +285,7 @@ const Reservation: FC = () => {
                             {isValidUUID(info.institution_id) ? (
                               <Link
                                 to={routePath.institutionDetail
-                                  .replace(":tokyoWard", fromUpperSnakeToLowerKebab(tokyoWard))
+                                  .replace(":tokyoWard", fromEnumToUrlTokyoWard(tokyoWard))
                                   .replace(":id", info.institution_id)}
                               >
                                 {`${info.building} ${info.institution}`}
@@ -310,7 +310,7 @@ const Reservation: FC = () => {
                     </>
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={4}>
+                      <TableCell colSpan={3}>
                         <NoResult />
                       </TableCell>
                     </TableRow>

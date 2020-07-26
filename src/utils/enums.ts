@@ -41,3 +41,9 @@ export const getEnumLabel = <T extends Enums>(value: string | undefined): string
 export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
   [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA, TokyoWard.TOSHIMA].includes(option.value)
 );
+
+export const fromEnumToUrlTokyoWard = (tokyoWard: TokyoWard) =>
+  tokyoWard.split("_").pop()!.toLowerCase();
+
+export const fromUrlToEnumTokyoWard = (tokyoWard: string) =>
+  `TOKYO_WARD_${tokyoWard.toUpperCase()}`;

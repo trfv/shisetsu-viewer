@@ -88,7 +88,7 @@
           "locales": [
             "ja"
           ],
-          "outputPath": "./src/locales/{{locale}}/common.json"
+          "outputPath": "./src/locales/{{locale}}/{{ns}}.json"
         }
       ]
     ]

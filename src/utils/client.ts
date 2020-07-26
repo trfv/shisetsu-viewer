@@ -63,3 +63,18 @@ export const getClientNamespace = (tokyoWard: TokyoWard): ClientNamespace => {
       throw new Error(`unsupported tokyo ward: ${tokyoWard}`);
   }
 };
+
+export const getTokyoWard = (clientNamespace: ClientNamespace): TokyoWard => {
+  switch (clientNamespace) {
+    case "koutouClient":
+      return TokyoWard.KOUTOU;
+    case "bunkyoClient":
+      return TokyoWard.BUNKYO;
+    case "kitaClient":
+      return TokyoWard.KITA;
+    case "toshimaClient":
+      return TokyoWard.TOSHIMA;
+    default:
+      throw new Error(`unsupported clientNameSpace: ${clientNamespace}`);
+  }
+};
