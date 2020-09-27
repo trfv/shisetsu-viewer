@@ -1,16 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -31,10 +20,22 @@ import { isValidUUID } from "../../utils/common";
 import { fromEnumToUrlTokyoWard, getEnumLabel, SupportedTokyoWards } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { getEachWardReservationStatus, sortByReservationDivision } from "../../utils/reservation";
-import CheckboxGroup from "../molucules/CheckboxGroup";
-import DateRangePicker from "../molucules/DateRangePicker";
-import NoResult from "../molucules/NoResult";
-import Select from "../molucules/Select";
+import Box from "../atoms/Box";
+import Grid from "../atoms/Grid";
+import Paper from "../atoms/Paper";
+import Skeleton from "../atoms/Skeleton";
+import CheckboxGroup from "../molecules/CheckboxGroup";
+import DateRangePicker from "../molecules/DateRangePicker";
+import Select from "../molecules/Select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "../molecules/Table";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -310,9 +311,7 @@ const Reservation: FC = () => {
                     </>
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={3}>
-                        <NoResult />
-                      </TableCell>
+                      <TableCell>{t("該当するデータがありません。")}</TableCell>
                     </TableRow>
                   )}
                 </>

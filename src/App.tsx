@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import React, { FC, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Footer from "./components/molucules/Footer";
+import Footer from "./components/organisms/Footer";
 import Header from "./components/organisms/Header";
 import Institution from "./components/pages/Institution";
 import InstitutionDetail from "./components/pages/InstitutionDetail";

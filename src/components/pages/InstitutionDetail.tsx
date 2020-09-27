@@ -1,16 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
 import { createStyles, makeStyles } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -32,6 +21,19 @@ import { fromUrlToEnumTokyoWard, getEnumLabel } from "../../utils/enums";
 import { formatDate } from "../../utils/format";
 import { formatUsageFee } from "../../utils/institution";
 import { sortByReservationDivision } from "../../utils/reservation";
+import Box from "../atoms/Box";
+import Grid from "../atoms/Grid";
+import Paper from "../atoms/Paper";
+import Skeleton from "../atoms/Skeleton";
+import Container from "../molecules/Container";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "../molecules/Table";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) =>
     },
     reservationTableContainer: {
       maxHeight: 300,
+      overflowX: "scroll",
     },
   })
 );

@@ -1,7 +1,9 @@
-import Box from "@material-ui/core/Box";
-import React, { FC } from "react";
-import DatePicker, { DatePickerProps } from "../atoms/DatePicker";
+import React, { ComponentProps, FC } from "react";
+import Box from "../atoms/Box";
+import DatePicker from "../atoms/DatePicker";
 import FormLabel from "../atoms/FormLabel";
+
+type DatePickerProps = ComponentProps<typeof DatePicker>;
 
 type DateRangePickerProps = {
   label: string;
@@ -9,11 +11,7 @@ type DateRangePickerProps = {
   endDateProps: DatePickerProps;
 };
 
-const DateRangePicker: FC<DateRangePickerProps> = ({
-  label,
-  startDateProps,
-  endDateProps,
-}: DateRangePickerProps) => {
+const DateRangePicker: FC<DateRangePickerProps> = ({ label, startDateProps, endDateProps }) => {
   return (
     <>
       <FormLabel labelText={label} />
