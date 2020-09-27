@@ -12,13 +12,7 @@ type SelectProps = {
   selectOptions: { value: string; label: string }[];
 };
 
-const Select: FC<SelectProps> = ({
-  label,
-  value,
-  onChange,
-  disabled,
-  selectOptions,
-}: SelectProps) => {
+const Select: FC<SelectProps> = ({ label, value, onChange, disabled, selectOptions }) => {
   return (
     <FormControl>
       <FormLabel labelText={label} />

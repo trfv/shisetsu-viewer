@@ -1,12 +1,12 @@
-import Box from "@material-ui/core/Box";
 import React, { FC } from "react";
+import Box from "./Box";
 
 type FormLabelProps = {
   labelText: string;
   fontSize?: string;
 };
 
-const FormLabel: FC<FormLabelProps> = ({ fontSize, labelText }: FormLabelProps) => {
+const FormLabel: FC<FormLabelProps> = ({ fontSize, labelText }) => {
   return <Box fontSize={fontSize}>{labelText}</Box>;
 };
 
