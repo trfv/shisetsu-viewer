@@ -25,7 +25,7 @@ import Box from "../atoms/Box";
 import Grid from "../atoms/Grid";
 import Paper from "../atoms/Paper";
 import Skeleton from "../atoms/Skeleton";
-import Container from "../molucules/Container";
+import Container from "../molecules/Container";
 import {
   Table,
   TableBody,
@@ -33,7 +33,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "../molucules/Table";
+} from "../molecules/Table";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

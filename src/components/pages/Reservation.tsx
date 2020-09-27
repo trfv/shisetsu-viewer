@@ -24,9 +24,9 @@ import Box from "../atoms/Box";
 import Grid from "../atoms/Grid";
 import Paper from "../atoms/Paper";
 import Skeleton from "../atoms/Skeleton";
-import CheckboxGroup from "../molucules/CheckboxGroup";
-import DateRangePicker from "../molucules/DateRangePicker";
-import Select from "../molucules/Select";
+import CheckboxGroup from "../molecules/CheckboxGroup";
+import DateRangePicker from "../molecules/DateRangePicker";
+import Select from "../molecules/Select";
 import {
   Table,
   TableBody,
@@ -35,7 +35,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-} from "../molucules/Table";
+} from "../molecules/Table";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
