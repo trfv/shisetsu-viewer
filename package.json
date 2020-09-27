@@ -56,6 +56,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "babel-loader": "^8.1.0",
     "babel-plugin-i18next-extract": "^0.7.2",
+    "chromatic": "^5.2.0",
     "prettier-plugin-organize-imports": "^1.1.1",
     "react-is": "^16.13.1",
     "react-test-renderer": "^16.13.1",
