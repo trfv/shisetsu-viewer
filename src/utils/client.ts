@@ -1,34 +1,24 @@
-import { InMemoryCache } from "apollo-cache-inmemory";
-import ApolloClient from "apollo-client";
-import { HttpLink } from "apollo-link-http";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createContext } from "react";
 import { TokyoWard } from "../constants/enums";
 
 const koutouClient = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
-  }),
+  uri: process.env.REACT_APP_KOUTOU_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
 });
 
 const bunkyoClient = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.REACT_APP_BUNKYO_GRAPHQL_ENDPOINT,
-  }),
+  uri: process.env.REACT_APP_BUNKYO_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
 });
 
 const kitaClient = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.REACT_APP_KITA_GRAPHQL_ENDPOINT,
-  }),
+  uri: process.env.REACT_APP_KITA_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
 });
 
 const toshimaClient = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.REACT_APP_TOSHIMA_GRAPHQL_ENDPOINT,
-  }),
+  uri: process.env.REACT_APP_TOSHIMA_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
 });
 

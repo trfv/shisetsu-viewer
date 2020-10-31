@@ -1,8 +1,7 @@
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
-import * as ApolloReactHooks from '@apollo/react-hooks';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -907,15 +906,15 @@ export const InstitutionDetailDocument = gql`
  *   },
  * });
  */
-export function useInstitutionDetailQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
-        return ApolloReactHooks.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+export function useInstitutionDetailQuery(baseOptions?: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+        return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
       }
-export function useInstitutionDetailLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+export function useInstitutionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+          return Apollo.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
         }
 export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionDetailQuery>;
 export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
-export type InstitutionDetailQueryResult = ApolloReactCommon.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
+export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionDocument = gql`
     query institution($offset: Int, $limit: Int) {
   institution(offset: $offset, limit: $limit) {
@@ -964,18 +963,22 @@ export const InstitutionDocument = gql`
  *   },
  * });
  */
-export function useInstitutionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
-        return ApolloReactHooks.useQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
+export function useInstitutionQuery(baseOptions?: Apollo.QueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
+        return Apollo.useQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
       }
-export function useInstitutionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
+export function useInstitutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
+          return Apollo.useLazyQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
         }
 export type InstitutionQueryHookResult = ReturnType<typeof useInstitutionQuery>;
 export type InstitutionLazyQueryHookResult = ReturnType<typeof useInstitutionLazyQuery>;
-export type InstitutionQueryResult = ApolloReactCommon.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
+export type InstitutionQueryResult = Apollo.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
 export const ReservationDocument = gql`
     query reservation($offset: Int, $limit: Int, $startDate: date, $endDate: date, $daysOfWeek: [String!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null) {
-  reservation(offset: $offset, limit: $limit, where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}) {
+  reservation(
+    offset: $offset
+    limit: $limit
+    where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+  ) {
     id
     institution_id
     building
@@ -983,7 +986,9 @@ export const ReservationDocument = gql`
     date
     reservation
   }
-  reservation_aggregate(where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}) {
+  reservation_aggregate(
+    where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+  ) {
     aggregate {
       count
     }
@@ -1013,12 +1018,12 @@ export const ReservationDocument = gql`
  *   },
  * });
  */
-export function useReservationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
-        return ApolloReactHooks.useQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
+export function useReservationQuery(baseOptions?: Apollo.QueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
+        return Apollo.useQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
       }
-export function useReservationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
+export function useReservationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
+          return Apollo.useLazyQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
         }
 export type ReservationQueryHookResult = ReturnType<typeof useReservationQuery>;
 export type ReservationLazyQueryHookResult = ReturnType<typeof useReservationLazyQuery>;
-export type ReservationQueryResult = ApolloReactCommon.QueryResult<ReservationQuery, ReservationQueryVariables>;
+export type ReservationQueryResult = Apollo.QueryResult<ReservationQuery, ReservationQueryVariables>;
