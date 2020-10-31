@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";

@@ -1,4 +1,4 @@
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import React, { FC, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./components/organisms/Footer";
