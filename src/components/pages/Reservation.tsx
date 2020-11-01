@@ -54,14 +54,18 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const now = new Date();
+
 const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("reservation");
   const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
   const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
-  const [checkboxOnlyHoliday, setCheckboxOnlyHoliday] = useState(false);
+  const [startDate, setStartDate] = useState<Date | null>(now);
+  const [endDate, setEndDate] = useState<Date | null>(
+    new Date(now.getFullYear(), now.getMonth() + 1, now.getDate())
+  );
+  const [checkboxOnlyHoliday, setCheckboxOnlyHoliday] = useState(true);
   const [checkboxMorning, setCheckboxMorning] = useState(false);
   const [checkboxAfternoon, setCheckboxAfternoon] = useState(false);
   const [checkboxEvening, setCheckboxEvening] = useState(false);
