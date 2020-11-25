@@ -164,8 +164,8 @@ const InstitutionDetail: FC = () => {
               {reservation.map((info, index) => (
                 <TableRow key={index}>
                   <TableCell>{formatDate(info.date)}</TableCell>
-                  {sortByReservationDivision(info.reservation).map(([_, status]) => (
-                    <TableCell>{getEnumLabel<ReservationStatus>(status)}</TableCell>
+                  {sortByReservationDivision(info.reservation).map(([_, status], i) => (
+                    <TableCell key={i}>{getEnumLabel<ReservationStatus>(status)}</TableCell>
                   ))}
                 </TableRow>
               ))}

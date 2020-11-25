@@ -302,11 +302,11 @@ const Reservation: FC = () => {
                           <TableCell>{formatDate(info.date)}</TableCell>
                           <TableCell>
                             {sortByReservationDivision(info.reservation)
-                              .map(
-                                ([division, status]) =>
-                                  `${getEnumLabel<ReservationDivision>(division)}: ${getEnumLabel<
-                                    ReservationStatus
-                                  >(status)}`
+                              .map(([division, status]) =>
+                                [
+                                  getEnumLabel<ReservationDivision>(division),
+                                  getEnumLabel<ReservationStatus>(status),
+                                ].join(": ")
                               )
                               .join(" ")}
                           </TableCell>

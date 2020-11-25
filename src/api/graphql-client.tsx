@@ -906,7 +906,7 @@ export const InstitutionDetailDocument = gql`
  *   },
  * });
  */
-export function useInstitutionDetailQuery(baseOptions?: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+export function useInstitutionDetailQuery(baseOptions: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
         return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
       }
 export function useInstitutionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
