@@ -1,5 +1,4 @@
 *.json
-serviceWorker.ts
 graphql-client.tsx
 
 /node_modules
