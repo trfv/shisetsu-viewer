@@ -37,8 +37,8 @@
     "web-vitals": "0.2.4"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.8",
-    "@babel/core": "7.12.9",
+    "@babel/cli": "7.12.10",
+    "@babel/core": "7.12.10",
     "@graphql-codegen/cli": "1.19.2",
     "@graphql-codegen/typescript": "1.17.11",
     "@graphql-codegen/typescript-operations": "1.17.10",
@@ -55,7 +55,7 @@
     "@types/react-dom": "17.0.0",
     "@types/react-router-dom": "5.1.6",
     "@types/react-test-renderer": "17.0.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "8.2.2",
     "babel-plugin-i18next-extract": "0.8.2",
     "prettier-plugin-organize-imports": "1.1.1",
     "react-is": "17.0.1",
