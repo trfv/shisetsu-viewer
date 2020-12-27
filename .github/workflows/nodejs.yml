@@ -25,9 +25,6 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
           restore-keys: |
             ${{ runner.os }}-npm
-      - name: update npm to latest version
-        run: |
-          sudo apt update && sudo apt install npm
       - name: npm install, unit test and build
         run: |
           node --version
