@@ -4,5 +4,6 @@
   ],
   "timezone": "Asia/Tokyo",
   "schedule": ["every weekend"],
-  "automerge": true
+  "automerge": true,
+  "baseBranches": ["develop"]
 }
