@@ -60,7 +60,7 @@
     "prettier-plugin-organize-imports": "1.1.1",
     "react-is": "17.0.1",
     "react-test-renderer": "17.0.1",
-    "source-map-explorer": "2.5.1"
+    "source-map-explorer": "2.5.2"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
