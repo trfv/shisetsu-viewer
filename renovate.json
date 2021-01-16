@@ -9,4 +9,7 @@
   "minor": {
     "groupName": "all dependencies"
   }
+  "schedule": ["every weekend"],
+  "automerge": true,
+  "baseBranches": ["develop"]
 }
