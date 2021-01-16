@@ -1,13 +1,20 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
   "timezone": "Asia/Tokyo",
   "schedule": ["every weekend"],
   "automerge": true,
   "baseBranches": ["develop"],
+  "major": {
+     "automerge": false,
+     "groupName": "major update"
+  },
   "minor": {
-    "groupName": "all dependencies"
+     "automerge": true,
+     "groupName": "minor update"
+  },
+  "patch": {
+     "automerge": true,
+     "groupName": "patch update"
   }
   "schedule": ["every weekend"],
   "automerge": true,
