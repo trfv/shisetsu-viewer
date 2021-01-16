@@ -3,6 +3,12 @@
     "config:base"
   ],
   "timezone": "Asia/Tokyo",
+  "schedule": "every weekend",
+  "automerge": true,
+  "baseBranches": ["develop"],
+  "minor": {
+    "groupName": "all dependencies"
+  }
   "schedule": ["every weekend"],
   "automerge": true,
   "baseBranches": ["develop"]
