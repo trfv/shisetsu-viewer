@@ -44,11 +44,8 @@ const useStyles = makeStyles((theme) =>
     rowValue: {
       wordBreak: "break-all",
     },
-    reservationTableContainer: {
-      maxHeight: 452,
-    },
     reservationTable: {
-      minWidth: 600,
+      minWidth: 480,
       overflowX: "scroll",
     },
   })
@@ -190,7 +187,7 @@ const InstitutionDetail: FC = () => {
             </TabPanel>
             <TabPanel tabValue="institutionReservation" currentValue={tab}>
               {reservation && reservation.length > 0 && (
-                <TableContainer component={Paper} className={classes.reservationTableContainer}>
+                <TableContainer component={Paper}>
                   <Table className={classes.reservationTable}>
                     <TableHead>
                       <TableRow>
