@@ -1,18 +1,17 @@
 {
   "extends": ["config:base"],
-  "schedule": ["every weekend"],
   "automerge": true,
   "baseBranches": ["develop"],
   "major": {
      "automerge": false,
-     "groupName": "major update"
+     "groupName": "majorUpdate"
   },
   "minor": {
      "automerge": true,
-     "groupName": "minor update"
+     "groupName": "minorUpdate"
   },
   "patch": {
      "automerge": true,
-     "groupName": "patch update"
+     "groupName": "patchUpdate"
   }
 }
