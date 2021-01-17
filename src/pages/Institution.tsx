@@ -1,23 +1,18 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import React, { FC, ReactNode, useContext, useMemo, useState } from "react";
+import { ChangeEvent, FC, MouseEvent, ReactNode, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
   InstitutionDocument,
   InstitutionQuery,
   InstitutionQueryVariables,
-} from "../../api/graphql-client";
-import { TokyoWard } from "../../constants/enums";
-import { routePath } from "../../constants/routes";
-import { ClientContext, getTokyoWard } from "../../utils/client";
-import { fromEnumToUrlTokyoWard, SupportedTokyoWards } from "../../utils/enums";
-import { formatUsageFee } from "../../utils/institution";
-import Box from "../atoms/Box";
-import Grid from "../atoms/Grid";
-import Paper from "../atoms/Paper";
-import Skeleton from "../atoms/Skeleton";
-import Select from "../molecules/Select";
+} from "../api/graphql-client";
+import Box from "../components/atoms/Box";
+import Grid from "../components/atoms/Grid";
+import Paper from "../components/atoms/Paper";
+import Skeleton from "../components/atoms/Skeleton";
+import Select from "../components/molecules/Select";
 import {
   Table,
   TableBody,
@@ -26,7 +21,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-} from "../molecules/Table";
+} from "../components/molecules/Table";
+import { TokyoWard } from "../constants/enums";
+import { routePath } from "../constants/routes";
+import { ClientContext, getTokyoWard } from "../utils/client";
+import { fromEnumToUrlTokyoWard, SupportedTokyoWards } from "../utils/enums";
+import { formatUsageFee } from "../utils/institution";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -49,8 +49,8 @@ const Institution: FC = () => {
   const { t } = useTranslation("institution");
   const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
   const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
     InstitutionDocument,
@@ -63,7 +63,7 @@ const Institution: FC = () => {
   );
 
   const renderSearchForm = useMemo(() => {
-    const handleTokyoWardChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
+    const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
       const newTokyoWard = event.target.value as TokyoWard;
       setTokyoWard(newTokyoWard);
       setPage(0);
@@ -86,14 +86,11 @@ const Institution: FC = () => {
   }, [tokyoWard, classes.searchBox, t, toggleClientNamespace]);
 
   const renderSearchResult = useMemo(() => {
-    const handleChangePage = (
-      _: React.MouseEvent<HTMLButtonElement> | null,
-      newPage: number
-    ): void => {
+    const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
       setPage(newPage);
     };
     const handleChangeRowsPerPage = (
-      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ): void => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);

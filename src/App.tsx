@@ -1,14 +1,14 @@
 import { ApolloProvider } from "@apollo/client";
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./components/organisms/Footer";
 import Header from "./components/organisms/Header";
-import Institution from "./components/pages/Institution";
-import InstitutionDetail from "./components/pages/InstitutionDetail";
-import Reservation from "./components/pages/Reservation";
 import ScrollToTop from "./components/utils/ScrollToTop";
 import { TokyoWard } from "./constants/enums";
 import { routePath } from "./constants/routes";
+import Institution from "./pages/Institution";
+import InstitutionDetail from "./pages/InstitutionDetail";
+import Reservation from "./pages/Reservation";
 import { APPOLO_CLIENTS, ClientContext, ClientNamespace, getClientNamespace } from "./utils/client";
 import "./utils/i18n";
 
