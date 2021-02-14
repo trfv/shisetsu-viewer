@@ -11,12 +11,28 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  _text: any;
+  _reservation_division: any;
+  availavility_division: any;
   date: any;
+  day_of_week: any;
+  equipment_division: any;
   jsonb: any;
   timestamp: any;
-  timestamptz: any;
+  tokyo_ward: any;
   uuid: any;
+};
+
+/** expression to compare columns of type Float. All fields are combined with logical 'AND'. */
+export type Float_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Float']>;
+  _gt?: Maybe<Scalars['Float']>;
+  _gte?: Maybe<Scalars['Float']>;
+  _in?: Maybe<Array<Scalars['Float']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Float']>;
+  _lte?: Maybe<Scalars['Float']>;
+  _neq?: Maybe<Scalars['Float']>;
+  _nin?: Maybe<Array<Scalars['Float']>>;
 };
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
@@ -52,17 +68,31 @@ export type String_Comparison_Exp = {
 };
 
 
-/** expression to compare columns of type _text. All fields are combined with logical 'AND'. */
-export type _Text_Comparison_Exp = {
-  _eq?: Maybe<Scalars['_text']>;
-  _gt?: Maybe<Scalars['_text']>;
-  _gte?: Maybe<Scalars['_text']>;
-  _in?: Maybe<Array<Scalars['_text']>>;
+/** expression to compare columns of type _reservation_division. All fields are combined with logical 'AND'. */
+export type _Reservation_Division_Comparison_Exp = {
+  _eq?: Maybe<Scalars['_reservation_division']>;
+  _gt?: Maybe<Scalars['_reservation_division']>;
+  _gte?: Maybe<Scalars['_reservation_division']>;
+  _in?: Maybe<Array<Scalars['_reservation_division']>>;
   _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['_text']>;
-  _lte?: Maybe<Scalars['_text']>;
-  _neq?: Maybe<Scalars['_text']>;
-  _nin?: Maybe<Array<Scalars['_text']>>;
+  _lt?: Maybe<Scalars['_reservation_division']>;
+  _lte?: Maybe<Scalars['_reservation_division']>;
+  _neq?: Maybe<Scalars['_reservation_division']>;
+  _nin?: Maybe<Array<Scalars['_reservation_division']>>;
+};
+
+
+/** expression to compare columns of type availavility_division. All fields are combined with logical 'AND'. */
+export type Availavility_Division_Comparison_Exp = {
+  _eq?: Maybe<Scalars['availavility_division']>;
+  _gt?: Maybe<Scalars['availavility_division']>;
+  _gte?: Maybe<Scalars['availavility_division']>;
+  _in?: Maybe<Array<Scalars['availavility_division']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['availavility_division']>;
+  _lte?: Maybe<Scalars['availavility_division']>;
+  _neq?: Maybe<Scalars['availavility_division']>;
+  _nin?: Maybe<Array<Scalars['availavility_division']>>;
 };
 
 
@@ -79,27 +109,57 @@ export type Date_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['date']>>;
 };
 
+
+/** expression to compare columns of type day_of_week. All fields are combined with logical 'AND'. */
+export type Day_Of_Week_Comparison_Exp = {
+  _eq?: Maybe<Scalars['day_of_week']>;
+  _gt?: Maybe<Scalars['day_of_week']>;
+  _gte?: Maybe<Scalars['day_of_week']>;
+  _in?: Maybe<Array<Scalars['day_of_week']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['day_of_week']>;
+  _lte?: Maybe<Scalars['day_of_week']>;
+  _neq?: Maybe<Scalars['day_of_week']>;
+  _nin?: Maybe<Array<Scalars['day_of_week']>>;
+};
+
+
+/** expression to compare columns of type equipment_division. All fields are combined with logical 'AND'. */
+export type Equipment_Division_Comparison_Exp = {
+  _eq?: Maybe<Scalars['equipment_division']>;
+  _gt?: Maybe<Scalars['equipment_division']>;
+  _gte?: Maybe<Scalars['equipment_division']>;
+  _in?: Maybe<Array<Scalars['equipment_division']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['equipment_division']>;
+  _lte?: Maybe<Scalars['equipment_division']>;
+  _neq?: Maybe<Scalars['equipment_division']>;
+  _nin?: Maybe<Array<Scalars['equipment_division']>>;
+};
+
 /** columns and relationships of "institution" */
 export type Institution = {
   __typename?: 'institution';
   address: Scalars['String'];
-  area: Scalars['String'];
+  area?: Maybe<Scalars['Float']>;
   building: Scalars['String'];
-  capacity: Scalars['String'];
+  capacity?: Maybe<Scalars['Int']>;
   created_at: Scalars['timestamp'];
   holiday_usage_fee: Scalars['jsonb'];
   id: Scalars['uuid'];
   institution: Scalars['String'];
-  is_available_brass: Scalars['String'];
-  is_available_percussion: Scalars['String'];
-  is_available_strings: Scalars['String'];
-  is_available_woodwind: Scalars['String'];
-  is_equipped_music_stand: Scalars['String'];
-  is_equipped_piano: Scalars['String'];
+  is_available_brass: Scalars['availavility_division'];
+  is_available_percussion: Scalars['availavility_division'];
+  is_available_strings: Scalars['availavility_division'];
+  is_available_woodwind: Scalars['availavility_division'];
+  is_equipped_music_stand: Scalars['equipment_division'];
+  is_equipped_piano: Scalars['equipment_division'];
   layout_image_url: Scalars['String'];
   lottery_period: Scalars['String'];
   note: Scalars['String'];
-  reservation_division: Scalars['_text'];
+  reservation_division: Scalars['_reservation_division'];
+  tokyo_ward: Scalars['tokyo_ward'];
+  updated_at: Scalars['timestamp'];
   website_url: Scalars['String'];
   weekday_usage_fee: Scalars['jsonb'];
 };
@@ -126,9 +186,17 @@ export type Institution_Aggregate = {
 /** aggregate fields of "institution" */
 export type Institution_Aggregate_Fields = {
   __typename?: 'institution_aggregate_fields';
+  avg?: Maybe<Institution_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Institution_Max_Fields>;
   min?: Maybe<Institution_Min_Fields>;
+  stddev?: Maybe<Institution_Stddev_Fields>;
+  stddev_pop?: Maybe<Institution_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Institution_Stddev_Samp_Fields>;
+  sum?: Maybe<Institution_Sum_Fields>;
+  var_pop?: Maybe<Institution_Var_Pop_Fields>;
+  var_samp?: Maybe<Institution_Var_Samp_Fields>;
+  variance?: Maybe<Institution_Variance_Fields>;
 };
 
 
@@ -140,9 +208,30 @@ export type Institution_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "institution" */
 export type Institution_Aggregate_Order_By = {
+  avg?: Maybe<Institution_Avg_Order_By>;
   count?: Maybe<Order_By>;
   max?: Maybe<Institution_Max_Order_By>;
   min?: Maybe<Institution_Min_Order_By>;
+  stddev?: Maybe<Institution_Stddev_Order_By>;
+  stddev_pop?: Maybe<Institution_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Institution_Stddev_Samp_Order_By>;
+  sum?: Maybe<Institution_Sum_Order_By>;
+  var_pop?: Maybe<Institution_Var_Pop_Order_By>;
+  var_samp?: Maybe<Institution_Var_Samp_Order_By>;
+  variance?: Maybe<Institution_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Institution_Avg_Fields = {
+  __typename?: 'institution_avg_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "institution" */
+export type Institution_Avg_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "institution". All fields are combined with a logical 'AND'. */
@@ -151,23 +240,25 @@ export type Institution_Bool_Exp = {
   _not?: Maybe<Institution_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Institution_Bool_Exp>>>;
   address?: Maybe<String_Comparison_Exp>;
-  area?: Maybe<String_Comparison_Exp>;
+  area?: Maybe<Float_Comparison_Exp>;
   building?: Maybe<String_Comparison_Exp>;
-  capacity?: Maybe<String_Comparison_Exp>;
+  capacity?: Maybe<Int_Comparison_Exp>;
   created_at?: Maybe<Timestamp_Comparison_Exp>;
   holiday_usage_fee?: Maybe<Jsonb_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   institution?: Maybe<String_Comparison_Exp>;
-  is_available_brass?: Maybe<String_Comparison_Exp>;
-  is_available_percussion?: Maybe<String_Comparison_Exp>;
-  is_available_strings?: Maybe<String_Comparison_Exp>;
-  is_available_woodwind?: Maybe<String_Comparison_Exp>;
-  is_equipped_music_stand?: Maybe<String_Comparison_Exp>;
-  is_equipped_piano?: Maybe<String_Comparison_Exp>;
+  is_available_brass?: Maybe<Availavility_Division_Comparison_Exp>;
+  is_available_percussion?: Maybe<Availavility_Division_Comparison_Exp>;
+  is_available_strings?: Maybe<Availavility_Division_Comparison_Exp>;
+  is_available_woodwind?: Maybe<Availavility_Division_Comparison_Exp>;
+  is_equipped_music_stand?: Maybe<Equipment_Division_Comparison_Exp>;
+  is_equipped_piano?: Maybe<Equipment_Division_Comparison_Exp>;
   layout_image_url?: Maybe<String_Comparison_Exp>;
   lottery_period?: Maybe<String_Comparison_Exp>;
   note?: Maybe<String_Comparison_Exp>;
-  reservation_division?: Maybe<_Text_Comparison_Exp>;
+  reservation_division?: Maybe<_Reservation_Division_Comparison_Exp>;
+  tokyo_ward?: Maybe<Tokyo_Ward_Comparison_Exp>;
+  updated_at?: Maybe<Timestamp_Comparison_Exp>;
   website_url?: Maybe<String_Comparison_Exp>;
   weekday_usage_fee?: Maybe<Jsonb_Comparison_Exp>;
 };
@@ -176,21 +267,16 @@ export type Institution_Bool_Exp = {
 export type Institution_Max_Fields = {
   __typename?: 'institution_max_fields';
   address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['String']>;
+  area?: Maybe<Scalars['Float']>;
   building?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['String']>;
-  is_available_percussion?: Maybe<Scalars['String']>;
-  is_available_strings?: Maybe<Scalars['String']>;
-  is_available_woodwind?: Maybe<Scalars['String']>;
-  is_equipped_music_stand?: Maybe<Scalars['String']>;
-  is_equipped_piano?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   website_url?: Maybe<Scalars['String']>;
 };
 
@@ -203,15 +289,10 @@ export type Institution_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   institution?: Maybe<Order_By>;
-  is_available_brass?: Maybe<Order_By>;
-  is_available_percussion?: Maybe<Order_By>;
-  is_available_strings?: Maybe<Order_By>;
-  is_available_woodwind?: Maybe<Order_By>;
-  is_equipped_music_stand?: Maybe<Order_By>;
-  is_equipped_piano?: Maybe<Order_By>;
   layout_image_url?: Maybe<Order_By>;
   lottery_period?: Maybe<Order_By>;
   note?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   website_url?: Maybe<Order_By>;
 };
 
@@ -219,21 +300,16 @@ export type Institution_Max_Order_By = {
 export type Institution_Min_Fields = {
   __typename?: 'institution_min_fields';
   address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['String']>;
+  area?: Maybe<Scalars['Float']>;
   building?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['String']>;
-  is_available_percussion?: Maybe<Scalars['String']>;
-  is_available_strings?: Maybe<Scalars['String']>;
-  is_available_woodwind?: Maybe<Scalars['String']>;
-  is_equipped_music_stand?: Maybe<Scalars['String']>;
-  is_equipped_piano?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   website_url?: Maybe<Scalars['String']>;
 };
 
@@ -246,15 +322,10 @@ export type Institution_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   institution?: Maybe<Order_By>;
-  is_available_brass?: Maybe<Order_By>;
-  is_available_percussion?: Maybe<Order_By>;
-  is_available_strings?: Maybe<Order_By>;
-  is_available_woodwind?: Maybe<Order_By>;
-  is_equipped_music_stand?: Maybe<Order_By>;
-  is_equipped_piano?: Maybe<Order_By>;
   layout_image_url?: Maybe<Order_By>;
   lottery_period?: Maybe<Order_By>;
   note?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   website_url?: Maybe<Order_By>;
 };
 
@@ -278,6 +349,8 @@ export type Institution_Order_By = {
   lottery_period?: Maybe<Order_By>;
   note?: Maybe<Order_By>;
   reservation_division?: Maybe<Order_By>;
+  tokyo_ward?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   website_url?: Maybe<Order_By>;
   weekday_usage_fee?: Maybe<Order_By>;
 };
@@ -326,10 +399,105 @@ export enum Institution_Select_Column {
   /** column name */
   ReservationDivision = 'reservation_division',
   /** column name */
+  TokyoWard = 'tokyo_ward',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
   WebsiteUrl = 'website_url',
   /** column name */
   WeekdayUsageFee = 'weekday_usage_fee'
 }
+
+/** aggregate stddev on columns */
+export type Institution_Stddev_Fields = {
+  __typename?: 'institution_stddev_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "institution" */
+export type Institution_Stddev_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Institution_Stddev_Pop_Fields = {
+  __typename?: 'institution_stddev_pop_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "institution" */
+export type Institution_Stddev_Pop_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Institution_Stddev_Samp_Fields = {
+  __typename?: 'institution_stddev_samp_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "institution" */
+export type Institution_Stddev_Samp_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Institution_Sum_Fields = {
+  __typename?: 'institution_sum_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "institution" */
+export type Institution_Sum_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Institution_Var_Pop_Fields = {
+  __typename?: 'institution_var_pop_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "institution" */
+export type Institution_Var_Pop_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Institution_Var_Samp_Fields = {
+  __typename?: 'institution_var_samp_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "institution" */
+export type Institution_Var_Samp_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Institution_Variance_Fields = {
+  __typename?: 'institution_variance_fields';
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "institution" */
+export type Institution_Variance_Order_By = {
+  area?: Maybe<Order_By>;
+  capacity?: Maybe<Order_By>;
+};
 
 
 /** expression to compare columns of type jsonb. All fields are combined with logical 'AND'. */
@@ -444,13 +612,15 @@ export type Query_RootReservation_By_PkArgs = {
 export type Reservation = {
   __typename?: 'reservation';
   building: Scalars['String'];
-  created_at: Scalars['timestamptz'];
+  created_at: Scalars['timestamp'];
   date: Scalars['date'];
-  day_of_week: Scalars['String'];
+  day_of_week: Scalars['day_of_week'];
   id: Scalars['Int'];
   institution: Scalars['String'];
   institution_id: Scalars['uuid'];
   reservation: Scalars['jsonb'];
+  tokyo_ward: Scalars['tokyo_ward'];
+  updated_at: Scalars['timestamp'];
 };
 
 
@@ -521,25 +691,27 @@ export type Reservation_Bool_Exp = {
   _not?: Maybe<Reservation_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Reservation_Bool_Exp>>>;
   building?: Maybe<String_Comparison_Exp>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  created_at?: Maybe<Timestamp_Comparison_Exp>;
   date?: Maybe<Date_Comparison_Exp>;
-  day_of_week?: Maybe<String_Comparison_Exp>;
+  day_of_week?: Maybe<Day_Of_Week_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   institution?: Maybe<String_Comparison_Exp>;
   institution_id?: Maybe<Uuid_Comparison_Exp>;
   reservation?: Maybe<Jsonb_Comparison_Exp>;
+  tokyo_ward?: Maybe<Tokyo_Ward_Comparison_Exp>;
+  updated_at?: Maybe<Timestamp_Comparison_Exp>;
 };
 
 /** aggregate max on columns */
 export type Reservation_Max_Fields = {
   __typename?: 'reservation_max_fields';
   building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
-  day_of_week?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   institution?: Maybe<Scalars['String']>;
   institution_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
 };
 
 /** order by max() on columns of table "reservation" */
@@ -547,22 +719,22 @@ export type Reservation_Max_Order_By = {
   building?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   date?: Maybe<Order_By>;
-  day_of_week?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   institution?: Maybe<Order_By>;
   institution_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Reservation_Min_Fields = {
   __typename?: 'reservation_min_fields';
   building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
-  day_of_week?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   institution?: Maybe<Scalars['String']>;
   institution_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
 };
 
 /** order by min() on columns of table "reservation" */
@@ -570,10 +742,10 @@ export type Reservation_Min_Order_By = {
   building?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   date?: Maybe<Order_By>;
-  day_of_week?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   institution?: Maybe<Order_By>;
   institution_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** ordering options when selecting data from "reservation" */
@@ -586,6 +758,8 @@ export type Reservation_Order_By = {
   institution?: Maybe<Order_By>;
   institution_id?: Maybe<Order_By>;
   reservation?: Maybe<Order_By>;
+  tokyo_ward?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "reservation" */
@@ -610,7 +784,11 @@ export enum Reservation_Select_Column {
   /** column name */
   InstitutionId = 'institution_id',
   /** column name */
-  Reservation = 'reservation'
+  Reservation = 'reservation',
+  /** column name */
+  TokyoWard = 'tokyo_ward',
+  /** column name */
+  UpdatedAt = 'updated_at'
 }
 
 /** aggregate stddev on columns */
@@ -774,17 +952,17 @@ export type Timestamp_Comparison_Exp = {
 };
 
 
-/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
-export type Timestamptz_Comparison_Exp = {
-  _eq?: Maybe<Scalars['timestamptz']>;
-  _gt?: Maybe<Scalars['timestamptz']>;
-  _gte?: Maybe<Scalars['timestamptz']>;
-  _in?: Maybe<Array<Scalars['timestamptz']>>;
+/** expression to compare columns of type tokyo_ward. All fields are combined with logical 'AND'. */
+export type Tokyo_Ward_Comparison_Exp = {
+  _eq?: Maybe<Scalars['tokyo_ward']>;
+  _gt?: Maybe<Scalars['tokyo_ward']>;
+  _gte?: Maybe<Scalars['tokyo_ward']>;
+  _in?: Maybe<Array<Scalars['tokyo_ward']>>;
   _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['timestamptz']>;
-  _lte?: Maybe<Scalars['timestamptz']>;
-  _neq?: Maybe<Scalars['timestamptz']>;
-  _nin?: Maybe<Array<Scalars['timestamptz']>>;
+  _lt?: Maybe<Scalars['tokyo_ward']>;
+  _lte?: Maybe<Scalars['tokyo_ward']>;
+  _neq?: Maybe<Scalars['tokyo_ward']>;
+  _nin?: Maybe<Array<Scalars['tokyo_ward']>>;
 };
 
 
@@ -820,6 +998,7 @@ export type InstitutionDetailQuery = (
 export type InstitutionQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
+  tokyoWard?: Maybe<Scalars['tokyo_ward']>;
 }>;
 
 
@@ -840,9 +1019,10 @@ export type InstitutionQuery = (
 export type ReservationQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
+  tokyoWard?: Maybe<Scalars['tokyo_ward']>;
   startDate?: Maybe<Scalars['date']>;
   endDate?: Maybe<Scalars['date']>;
-  daysOfWeek?: Maybe<Array<Scalars['String']>>;
+  dayOfWeek?: Maybe<Array<Scalars['day_of_week']> | Scalars['day_of_week']>;
   reservationStatus1?: Maybe<Scalars['jsonb']>;
   reservationStatus2?: Maybe<Scalars['jsonb']>;
 }>;
@@ -918,8 +1098,12 @@ export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionD
 export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
 export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionDocument = gql`
-    query institution($offset: Int, $limit: Int) {
-  institution(offset: $offset, limit: $limit) {
+    query institution($offset: Int, $limit: Int, $tokyoWard: tokyo_ward) {
+  institution(
+    offset: $offset
+    limit: $limit
+    where: {tokyo_ward: {_eq: $tokyoWard}}
+  ) {
     id
     building
     institution
@@ -962,6 +1146,7 @@ export const InstitutionDocument = gql`
  *   variables: {
  *      offset: // value for 'offset'
  *      limit: // value for 'limit'
+ *      tokyoWard: // value for 'tokyoWard'
  *   },
  * });
  */
@@ -975,11 +1160,11 @@ export type InstitutionQueryHookResult = ReturnType<typeof useInstitutionQuery>;
 export type InstitutionLazyQueryHookResult = ReturnType<typeof useInstitutionLazyQuery>;
 export type InstitutionQueryResult = Apollo.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
 export const ReservationDocument = gql`
-    query reservation($offset: Int, $limit: Int, $startDate: date, $endDate: date, $daysOfWeek: [String!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null) {
+    query reservation($offset: Int, $limit: Int, $tokyoWard: tokyo_ward, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null) {
   reservation(
     offset: $offset
     limit: $limit
-    where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}]}
   ) {
     id
     institution_id
@@ -989,7 +1174,7 @@ export const ReservationDocument = gql`
     reservation
   }
   reservation_aggregate(
-    where: {_or: [{date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus1}}, {date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $daysOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}]}
   ) {
     aggregate {
       count
@@ -1012,9 +1197,10 @@ export const ReservationDocument = gql`
  *   variables: {
  *      offset: // value for 'offset'
  *      limit: // value for 'limit'
+ *      tokyoWard: // value for 'tokyoWard'
  *      startDate: // value for 'startDate'
  *      endDate: // value for 'endDate'
- *      daysOfWeek: // value for 'daysOfWeek'
+ *      dayOfWeek: // value for 'dayOfWeek'
  *      reservationStatus1: // value for 'reservationStatus1'
  *      reservationStatus2: // value for 'reservationStatus2'
  *   },

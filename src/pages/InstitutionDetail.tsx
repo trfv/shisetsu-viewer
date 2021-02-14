@@ -27,11 +27,9 @@ import {
   EquipmentDivision,
   ReservationDivision,
   ReservationStatus,
-  TokyoWard,
 } from "../constants/enums";
-import { APPOLO_CLIENTS, getClientNamespace } from "../utils/client";
 import { isValidUUID } from "../utils/common";
-import { fromUrlToEnumTokyoWard, getEnumLabel } from "../utils/enums";
+import { getEnumLabel } from "../utils/enums";
 import { formatDate } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
@@ -56,7 +54,7 @@ type Tab = "institutionInfo" | "institutionReservation";
 const InstitutionDetail: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("institution");
-  const { id, tokyoWard } = useParams<{ id: string; tokyoWard: string }>();
+  const { id } = useParams<{ id: string }>();
   const [tab, setTab] = useState<Tab>("institutionInfo");
   const handleTabChange = (_: ChangeEvent<{}>, newValue: Tab) => setTab(newValue);
 
@@ -64,7 +62,6 @@ const InstitutionDetail: FC = () => {
     variables: {
       id,
     },
-    client: APPOLO_CLIENTS[getClientNamespace(fromUrlToEnumTokyoWard(tokyoWard) as TokyoWard)],
   };
 
   const { loading, data, error } = useQuery<

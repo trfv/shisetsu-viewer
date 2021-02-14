@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { ChangeEvent, FC, MouseEvent, ReactNode, useContext, useMemo, useState } from "react";
+import { ChangeEvent, FC, MouseEvent, ReactNode, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
@@ -24,8 +24,7 @@ import {
 } from "../components/molecules/Table";
 import { TokyoWard } from "../constants/enums";
 import { routePath } from "../constants/routes";
-import { ClientContext, getTokyoWard } from "../utils/client";
-import { fromEnumToUrlTokyoWard, SupportedTokyoWards } from "../utils/enums";
+import { SupportedTokyoWards } from "../utils/enums";
 import { formatUsageFee } from "../utils/institution";
 
 const useStyles = makeStyles((theme) =>
@@ -47,8 +46,7 @@ const useStyles = makeStyles((theme) =>
 const Institution: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("institution");
-  const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -58,6 +56,7 @@ const Institution: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
+        tokyoWard,
       },
     }
   );
@@ -67,7 +66,6 @@ const Institution: FC = () => {
       const newTokyoWard = event.target.value as TokyoWard;
       setTokyoWard(newTokyoWard);
       setPage(0);
-      toggleClientNamespace(newTokyoWard);
     };
     return (
       <Box className={classes.searchBox}>
@@ -83,7 +81,7 @@ const Institution: FC = () => {
         </Grid>
       </Box>
     );
-  }, [tokyoWard, classes.searchBox, t, toggleClientNamespace]);
+  }, [tokyoWard, classes.searchBox, t]);
 
   const renderSearchResult = useMemo(() => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
@@ -149,11 +147,7 @@ const Institution: FC = () => {
                         <TableRow key={index}>
                           <TableCell>
                             {info.id ? (
-                              <Link
-                                to={routePath.institutionDetail
-                                  .replace(":tokyoWard", fromEnumToUrlTokyoWard(tokyoWard))
-                                  .replace(":id", info.id)}
-                              >
+                              <Link to={routePath.institutionDetail.replace(":id", info.id)}>
                                 {`${info.building} ${info.institution}`}
                               </Link>
                             ) : (

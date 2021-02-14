@@ -1,10 +1,14 @@
 query institution(
   $offset: Int
   $limit: Int
+  $tokyoWard: tokyo_ward
 ) {
   institution(
     offset: $offset
     limit: $limit
+    where: {
+      tokyo_ward: { _eq: $tokyoWard }
+    }
   ) {
     id
     building
