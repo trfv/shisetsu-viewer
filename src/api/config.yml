@@ -1,6 +1,6 @@
 override: true
 schema:
-  - https://koutou-graphql.herokuapp.com/v1/graphql
+  - https://shisetsu-graphql.herokuapp.com/v1/graphql
 documents:
   - ./src/api/queries/*.graphql
 generates:

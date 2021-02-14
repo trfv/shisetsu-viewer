@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
-import { ChangeEvent, FC, MouseEvent, ReactNode, useContext, useMemo, useState } from "react";
+import { ChangeEvent, FC, MouseEvent, ReactNode, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
@@ -28,9 +28,8 @@ import {
 } from "../components/molecules/Table";
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
 import { routePath } from "../constants/routes";
-import { ClientContext, getTokyoWard } from "../utils/client";
 import { isValidUUID } from "../utils/common";
-import { fromEnumToUrlTokyoWard, getEnumLabel, SupportedTokyoWards } from "../utils/enums";
+import { getEnumLabel, SupportedTokyoWards } from "../utils/enums";
 import { formatDate } from "../utils/format";
 import { getEachWardReservationStatus, sortByReservationDivision } from "../utils/reservation";
 
@@ -56,8 +55,7 @@ const now = new Date();
 const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation("reservation");
-  const { clientNamespace, toggleClientNamespace } = useContext(ClientContext);
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(getTokyoWard(clientNamespace));
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.KOUTOU);
   const [startDate, setStartDate] = useState<Date | null>(now);
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(now.getFullYear(), now.getMonth() + 1, now.getDate())
@@ -78,9 +76,10 @@ const Reservation: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
+        tokyoWard,
         startDate: startDate?.toDateString(),
         endDate: endDate?.toDateString(),
-        daysOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
+        dayOfWeek: checkboxOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
         reservationStatus1: {
           ...(checkboxMorning ? { RESERVATION_DIVISION_MORNING: reservationStatus } : {}),
           ...(checkboxAfternoon ? { RESERVATION_DIVISION_AFTERNOON: reservationStatus } : {}),
@@ -118,7 +117,6 @@ const Reservation: FC = () => {
       const nextTokyoWard = event.target.value as TokyoWard;
       setTokyoWard(nextTokyoWard);
       setPage(0);
-      toggleClientNamespace(nextTokyoWard);
     };
     const handleStartDateChange = (date: Date | null): void => {
       setStartDate(date);
@@ -223,7 +221,6 @@ const Reservation: FC = () => {
     reservationStatus,
     classes.searchBox,
     t,
-    toggleClientNamespace,
   ]);
 
   const renderSearchResult = useMemo(() => {
@@ -285,9 +282,7 @@ const Reservation: FC = () => {
                           <TableCell>
                             {isValidUUID(info.institution_id) ? (
                               <Link
-                                to={routePath.institutionDetail
-                                  .replace(":tokyoWard", fromEnumToUrlTokyoWard(tokyoWard))
-                                  .replace(":id", info.institution_id)}
+                                to={routePath.institutionDetail.replace(":id", info.institution_id)}
                               >
                                 {`${info.building} ${info.institution}`}
                               </Link>

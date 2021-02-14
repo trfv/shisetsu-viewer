@@ -1,20 +1,23 @@
 {
-  "extends": ["config:base"],
-  "automerge": true,
-  "baseBranches": ["develop"],
-  "major": {
-     "automerge": false,
-     "groupName": "majorUpdate"
-  },
-  "minor": {
-     "automerge": true,
-     "groupName": "minorUpdate"
-  },
-  "patch": {
-     "automerge": true,
-     "groupName": "patchUpdate"
-  }
-  "schedule": ["every weekend"],
-  "automerge": true,
-  "baseBranches": ["develop"]
+   "extends": [
+      "config:base"
+   ],
+   "timezone": "Asia/Tokyo",
+   "schedule": [
+      "every weekend"
+   ],
+   "labels": [
+      "renovate"
+   ],
+   "patch": {
+      "automerge": true
+   },
+   "packageRules": [
+      {
+         "depTypeList": [
+            "devDependencies"
+         ],
+         "automerge": true
+      }
+   ]
 }
