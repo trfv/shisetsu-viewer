@@ -1,13 +1,25 @@
 query institution(
   $offset: Int
   $limit: Int
-  $tokyoWard: tokyo_ward
+  $tokyoWard: tokyo_ward = null
+  $isAvailableStrings: availavility_division = null
+  $isAvailableWoodwind: availavility_division = null
+  $isAvailableBrass: availavility_division = null
+  $isAvailablePercussion: availavility_division = null
+  $isEquippedMusicStand: equipment_division = null
+  $isEquippedPiano: equipment_division = null
 ) {
   institution(
     offset: $offset
     limit: $limit
     where: {
       tokyo_ward: { _eq: $tokyoWard }
+      is_available_strings: { _eq: $isAvailableStrings }
+      is_available_woodwind: { _eq: $isAvailableWoodwind }
+      is_available_brass: { _eq: $isAvailableBrass }
+      is_available_percussion: { _eq: $isAvailablePercussion }
+      is_equipped_music_stand: { _eq: $isEquippedMusicStand }
+      is_equipped_piano: { _eq: $isEquippedPiano }
     }
   ) {
     id
@@ -30,7 +42,17 @@ query institution(
     lottery_period
     note
   }
-  institution_aggregate {
+  institution_aggregate(
+    where: {
+      tokyo_ward: { _eq: $tokyoWard }
+      is_available_strings: { _eq: $isAvailableStrings }
+      is_available_woodwind: { _eq: $isAvailableWoodwind }
+      is_available_brass: { _eq: $isAvailableBrass }
+      is_available_percussion: { _eq: $isAvailablePercussion }
+      is_equipped_music_stand: { _eq: $isEquippedMusicStand }
+      is_equipped_piano: { _eq: $isEquippedPiano }
+    }
+  ) {
     aggregate {
       count
     }

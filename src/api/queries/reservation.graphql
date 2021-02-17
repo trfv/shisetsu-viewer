@@ -1,12 +1,13 @@
 query reservation(
   $offset: Int
   $limit: Int
-  $tokyoWard: tokyo_ward
+  $tokyoWard: tokyo_ward = null
   $startDate: date
   $endDate: date
   $dayOfWeek: [day_of_week!] = null
   $reservationStatus1: jsonb = null
   $reservationStatus2: jsonb = null
+  $reservationStatus3: jsonb = null
 ) {
   reservation(
     offset: $offset
@@ -24,6 +25,12 @@ query reservation(
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus2 }
+        }
+        {
+          tokyo_ward: { _eq: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus3 }
         }
       ]
     }
@@ -49,6 +56,12 @@ query reservation(
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus2 }
+        }
+        {
+          tokyo_ward: { _eq: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus3 }
         }
       ]
     }

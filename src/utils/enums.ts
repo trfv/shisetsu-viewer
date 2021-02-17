@@ -39,5 +39,11 @@ export const getEnumLabel = <T extends Enums>(value: string | undefined): string
 };
 
 export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
-  [TokyoWard.KOUTOU, TokyoWard.BUNKYO, TokyoWard.KITA, TokyoWard.TOSHIMA].includes(option.value)
+  [
+    TokyoWard.INVALID,
+    TokyoWard.KOUTOU,
+    TokyoWard.BUNKYO,
+    TokyoWard.KITA,
+    TokyoWard.TOSHIMA,
+  ].includes(option.value)
 );
