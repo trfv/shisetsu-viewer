@@ -999,6 +999,12 @@ export type InstitutionQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   tokyoWard?: Maybe<Scalars['tokyo_ward']>;
+  isAvailableStrings?: Maybe<Scalars['availavility_division']>;
+  isAvailableWoodwind?: Maybe<Scalars['availavility_division']>;
+  isAvailableBrass?: Maybe<Scalars['availavility_division']>;
+  isAvailablePercussion?: Maybe<Scalars['availavility_division']>;
+  isEquippedMusicStand?: Maybe<Scalars['equipment_division']>;
+  isEquippedPiano?: Maybe<Scalars['equipment_division']>;
 }>;
 
 
@@ -1025,6 +1031,7 @@ export type ReservationQueryVariables = Exact<{
   dayOfWeek?: Maybe<Array<Scalars['day_of_week']> | Scalars['day_of_week']>;
   reservationStatus1?: Maybe<Scalars['jsonb']>;
   reservationStatus2?: Maybe<Scalars['jsonb']>;
+  reservationStatus3?: Maybe<Scalars['jsonb']>;
 }>;
 
 
@@ -1098,11 +1105,11 @@ export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionD
 export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
 export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionDocument = gql`
-    query institution($offset: Int, $limit: Int, $tokyoWard: tokyo_ward) {
+    query institution($offset: Int, $limit: Int, $tokyoWard: tokyo_ward = null, $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $isEquippedMusicStand: equipment_division = null, $isEquippedPiano: equipment_division = null) {
   institution(
     offset: $offset
     limit: $limit
-    where: {tokyo_ward: {_eq: $tokyoWard}}
+    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, is_equipped_music_stand: {_eq: $isEquippedMusicStand}, is_equipped_piano: {_eq: $isEquippedPiano}}
   ) {
     id
     building
@@ -1124,7 +1131,9 @@ export const InstitutionDocument = gql`
     lottery_period
     note
   }
-  institution_aggregate {
+  institution_aggregate(
+    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, is_equipped_music_stand: {_eq: $isEquippedMusicStand}, is_equipped_piano: {_eq: $isEquippedPiano}}
+  ) {
     aggregate {
       count
     }
@@ -1147,6 +1156,12 @@ export const InstitutionDocument = gql`
  *      offset: // value for 'offset'
  *      limit: // value for 'limit'
  *      tokyoWard: // value for 'tokyoWard'
+ *      isAvailableStrings: // value for 'isAvailableStrings'
+ *      isAvailableWoodwind: // value for 'isAvailableWoodwind'
+ *      isAvailableBrass: // value for 'isAvailableBrass'
+ *      isAvailablePercussion: // value for 'isAvailablePercussion'
+ *      isEquippedMusicStand: // value for 'isEquippedMusicStand'
+ *      isEquippedPiano: // value for 'isEquippedPiano'
  *   },
  * });
  */
@@ -1160,11 +1175,11 @@ export type InstitutionQueryHookResult = ReturnType<typeof useInstitutionQuery>;
 export type InstitutionLazyQueryHookResult = ReturnType<typeof useInstitutionLazyQuery>;
 export type InstitutionQueryResult = Apollo.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
 export const ReservationDocument = gql`
-    query reservation($offset: Int, $limit: Int, $tokyoWard: tokyo_ward, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null) {
+    query reservation($offset: Int, $limit: Int, $tokyoWard: tokyo_ward = null, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null) {
   reservation(
     offset: $offset
     limit: $limit
-    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}
   ) {
     id
     institution_id
@@ -1174,7 +1189,7 @@ export const ReservationDocument = gql`
     reservation
   }
   reservation_aggregate(
-    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}]}
+    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}
   ) {
     aggregate {
       count
@@ -1203,6 +1218,7 @@ export const ReservationDocument = gql`
  *      dayOfWeek: // value for 'dayOfWeek'
  *      reservationStatus1: // value for 'reservationStatus1'
  *      reservationStatus2: // value for 'reservationStatus2'
+ *      reservationStatus3: // value for 'reservationStatus3'
  *   },
  * });
  */

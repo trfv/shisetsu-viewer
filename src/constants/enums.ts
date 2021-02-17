@@ -169,6 +169,10 @@ export enum TokyoWard {
 
 export const TokyoWardMap = [
   {
+    value: TokyoWard.INVALID,
+    label: "すべて",
+  },
+  {
     value: TokyoWard.ADACHI,
     label: "足立区",
   },

@@ -8,6 +8,9 @@ export const formatUsageFee = (feeMap: { [key: string]: string }): string => {
     return "";
   }
   return sortByReservationDivision(feeMap)
-    .map(([division, fee]) => `${getEnumLabel<ReservationDivision>(division)}: ${formatPrice(fee)}`)
+    .map(
+      ([division, fee]) =>
+        `${getEnumLabel<ReservationDivision>(division)}: ${formatPrice(fee as string)}`
+    )
     .join(" ");
 };

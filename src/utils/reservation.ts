@@ -4,9 +4,10 @@ import {
   ReservationStatusMap,
   TokyoWard,
 } from "../constants/enums";
+import { getEnumLabel } from "./enums";
 
 // key に ReservationDivision を利用している Object をソートした配列で返す
-export const sortByReservationDivision = (map: { [key: string]: any }) => {
+export const sortByReservationDivision = (map: { [key: string]: string }) => {
   const res = [];
   if (map[ReservationDivision.MORNING]) {
     res.push([ReservationDivision.MORNING, map[ReservationDivision.MORNING]]);
@@ -50,6 +51,19 @@ export const sortByReservationDivision = (map: { [key: string]: any }) => {
   return res;
 };
 
+export const formatReservationMap = (map: { [key: string]: string }) =>
+  sortByReservationDivision(map)
+    .map(([division, status]) =>
+      [getEnumLabel<ReservationDivision>(division), getEnumLabel<ReservationStatus>(status)].join(
+        ": "
+      )
+    )
+    .join(" ");
+
+const ALL_RESERVATION_STATUS = Object.values(ReservationStatus).filter(
+  (v) => v !== ReservationStatus.INVALID
+);
+
 const KOUTOU_RESERVATION_STATUS = [
   ReservationStatus.VACANT,
   ReservationStatus.OCCUPIED,
@@ -90,6 +104,8 @@ export const getEachWardReservationStatus = (
   label: string;
 }[] => {
   switch (tokyoWard) {
+    case TokyoWard.INVALID:
+      return ReservationStatusMap.filter((option) => ALL_RESERVATION_STATUS.includes(option.value));
     case TokyoWard.KOUTOU:
       return ReservationStatusMap.filter((option) =>
         KOUTOU_RESERVATION_STATUS.includes(option.value)
