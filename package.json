@@ -36,9 +36,9 @@
   "devDependencies": {
     "@babel/cli": "7.12.10",
     "@babel/core": "7.12.10",
-    "@graphql-codegen/cli": "1.20.0",
-    "@graphql-codegen/typescript": "1.20.0",
-    "@graphql-codegen/typescript-operations": "1.17.13",
+    "@graphql-codegen/cli": "1.20.1",
+    "@graphql-codegen/typescript": "1.21.0",
+    "@graphql-codegen/typescript-operations": "1.17.14",
     "@graphql-codegen/typescript-react-apollo": "2.2.1",
     "@storybook/addon-actions": "6.1.18",
     "@storybook/addon-essentials": "6.1.18",
