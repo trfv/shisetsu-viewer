@@ -9,7 +9,13 @@
    "labels": [
       "renovate"
    ],
+   "baseBranches": [
+      "develop"
+   ],
    "patch": {
+      "automerge": true
+   },
+   "minor": {
       "automerge": true
    },
    "packageRules": [
