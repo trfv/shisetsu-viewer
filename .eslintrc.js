@@ -1,20 +1,13 @@
 module.exports = {
   env: {
     browser: true,
+    node: true,
     es6: true,
   },
-  extends: ["plugin:prettier/recommended", "prettier/@typescript-eslint", "prettier/react"],
-  plugins: ["react", "@typescript-eslint"],
-  globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
-  },
+  extends: ["prettier"],
+  plugins: ["prettier"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2018,
     sourceType: "module",
   },
   rules: {
@@ -35,10 +28,5 @@ module.exports = {
         patterns: ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"],
       },
     ],
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
   },
 };
