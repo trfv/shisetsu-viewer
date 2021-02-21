@@ -991,7 +991,7 @@ export type InstitutionDetailQuery = (
     & Pick<Institution, 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
   )>, reservation: Array<(
     { __typename?: 'reservation' }
-    & Pick<Reservation, 'date' | 'reservation'>
+    & Pick<Reservation, 'date' | 'reservation' | 'updated_at'>
   )> }
 );
 
@@ -1012,7 +1012,7 @@ export type InstitutionQuery = (
   { __typename?: 'query_root' }
   & { institution: Array<(
     { __typename?: 'institution' }
-    & Pick<Institution, 'id' | 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
+    & Pick<Institution, 'id' | 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note' | 'updated_at'>
   )>, institution_aggregate: (
     { __typename?: 'institution_aggregate' }
     & { aggregate?: Maybe<(
@@ -1039,7 +1039,7 @@ export type ReservationQuery = (
   { __typename?: 'query_root' }
   & { reservation: Array<(
     { __typename?: 'reservation' }
-    & Pick<Reservation, 'id' | 'institution_id' | 'building' | 'institution' | 'date' | 'reservation'>
+    & Pick<Reservation, 'id' | 'institution_id' | 'building' | 'institution' | 'date' | 'reservation' | 'updated_at'>
   )>, reservation_aggregate: (
     { __typename?: 'reservation_aggregate' }
     & { aggregate?: Maybe<(
@@ -1075,6 +1075,7 @@ export const InstitutionDetailDocument = gql`
   reservation(where: {institution_id: {_eq: $id}}) {
     date
     reservation
+    updated_at
   }
 }
     `;
@@ -1130,6 +1131,7 @@ export const InstitutionDocument = gql`
     layout_image_url
     lottery_period
     note
+    updated_at
   }
   institution_aggregate(
     where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, is_equipped_music_stand: {_eq: $isEquippedMusicStand}, is_equipped_piano: {_eq: $isEquippedPiano}}
@@ -1180,6 +1182,7 @@ export const ReservationDocument = gql`
     offset: $offset
     limit: $limit
     where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}
+    order_by: {date: asc}
   ) {
     id
     institution_id
@@ -1187,6 +1190,7 @@ export const ReservationDocument = gql`
     institution
     date
     reservation
+    updated_at
   }
   reservation_aggregate(
     where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}

@@ -3,7 +3,7 @@ import MuiPaper from "@material-ui/core/Paper";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   InstitutionDocument,
   InstitutionQuery,
@@ -25,7 +25,13 @@ import {
 } from "../components/Table";
 import { AvailabilityDivision, EquipmentDivision, TokyoWard } from "../constants/enums";
 import { routePath } from "../constants/routes";
-import { SupportedTokyoWards } from "../utils/enums";
+import { ROW_PER_PAGE_OPTION } from "../constants/search";
+import {
+  convertTokyoWardToUrlParam,
+  getTokyoWardFromUrlParam,
+  SupportedTokyoWards,
+} from "../utils/enums";
+import { formatDatetime } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
 
 const useStyles = makeStyles((theme) =>
@@ -47,15 +53,78 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const getAvailableInstrumentFromUrlParam = (availableInstruments: string[]): string[] => {
+  return availableInstruments
+    .map((a) => {
+      if (a === "s") {
+        return "strings";
+      }
+      if (a === "w") {
+        return "woodwind";
+      }
+      if (a === "b") {
+        return "brass";
+      }
+      if (a === "e") {
+        return "percussion";
+      }
+      return "";
+    })
+    .filter((f) => !!f);
+};
+
+const convertAvailableInstrumentToUrlParam = (availableInstrument: string): string => {
+  return availableInstrument.slice(0, 1);
+};
+
+const getEquipmentFromUrlParam = (equipments: string[]): string[] => {
+  return equipments
+    .map((e) => {
+      if (e === "m") {
+        return "musicstand";
+      }
+      if (e === "p") {
+        return "piano";
+      }
+      return "";
+    })
+    .filter((f) => !!f);
+};
+
+const convertEquipmentToUrlParam = (equipment: string): string => {
+  return equipment.slice(0, 1);
+};
+
+const getPageFromUrlParam = (page: string | null | undefined) => {
+  return parseInt(page ?? "0", 10);
+};
+
+const getRowPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
+  if (!rowPerPage) {
+    return 10;
+  }
+  const tmp = parseInt(rowPerPage, 10);
+  return ROW_PER_PAGE_OPTION.includes(tmp) ? tmp : 10;
+};
+
 export const Institution: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
 
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.INVALID);
-  const [availableInstruments, setAvailableInstruments] = useState<string[]>([]);
-  const [equipments, setEquipments] = useState<string[]>([]);
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(
+    getTokyoWardFromUrlParam(searchParams.get("w"))
+  );
+  const [availableInstruments, setAvailableInstruments] = useState<string[]>(
+    getAvailableInstrumentFromUrlParam(searchParams.getAll("a"))
+  );
+  const [equipments, setEquipments] = useState<string[]>(
+    getEquipmentFromUrlParam(searchParams.getAll("e"))
+  );
+
+  const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
+  const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
 
   const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
     InstitutionDocument,
@@ -90,24 +159,35 @@ export const Institution: FC = () => {
 
   const renderSearchForm = useMemo(() => {
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      setTokyoWard(event.target.value as TokyoWard);
+      const value = event.target.value as TokyoWard;
+      setTokyoWard(value);
       setPage(0);
+      searchParams.delete("p");
+      const urlParam = convertTokyoWardToUrlParam(value);
+      urlParam ? searchParams.set("w", urlParam) : searchParams.delete("w");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleAvailableInstrumentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      setAvailableInstruments((prev) =>
-        event.target.checked
-          ? [...prev, event.target.value]
-          : prev.filter((v) => v !== event.target.value)
-      );
+      const next = event.target.checked
+        ? [...availableInstruments, event.target.value]
+        : availableInstruments.filter((v) => v !== event.target.value);
+      setAvailableInstruments(next);
+      searchParams.delete("a");
+      next.forEach((a) => searchParams.append("a", convertAvailableInstrumentToUrlParam(a)));
       setPage(0);
+      searchParams.delete("p");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleEquipmentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      setEquipments((prev) =>
-        event.target.checked
-          ? [...prev, event.target.value]
-          : prev.filter((v) => v !== event.target.value)
-      );
+      const next = event.target.checked
+        ? [...equipments, event.target.value]
+        : equipments.filter((v) => v !== event.target.value);
+      setEquipments(next);
+      searchParams.delete("e");
+      next.forEach((e) => searchParams.append("e", convertEquipmentToUrlParam(e)));
       setPage(0);
+      searchParams.delete("p");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
 
     return (
@@ -146,12 +226,17 @@ export const Institution: FC = () => {
   const renderSearchResult = useMemo(() => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
       setPage(newPage);
+      searchParams.set("p", String(newPage));
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleChangeRowsPerPage = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ): void => {
       setRowsPerPage(parseInt(event.target.value, 10));
+      searchParams.set("r", event.target.value);
       setPage(0);
+      searchParams.set("p", "0");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
 
     if (error) {
@@ -164,8 +249,8 @@ export const Institution: FC = () => {
       <BaseBox className={classes.resultBox}>
         <TablePagination
           component="div"
-          rowsPerPageOptions={[10, 50, 100]}
-          count={data?.institution_aggregate.aggregate?.count || 0}
+          rowsPerPageOptions={ROW_PER_PAGE_OPTION}
+          count={data?.institution_aggregate.aggregate?.count ?? 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -188,7 +273,7 @@ export const Institution: FC = () => {
                     {t("面積(㎡)")}
                   </TableCell>
                   <TableCell variant="head">{t("利用料金")}</TableCell>
-                  <TableCell variant="head">{t("住所")}</TableCell>
+                  <TableCell variant="head">{t("更新日時")}</TableCell>
                 </TableRow>
               </TableHead>
             )}
@@ -227,17 +312,17 @@ export const Institution: FC = () => {
                         </div>
                       )}
                     </TableCell>
-                    <TableCell variant="body">{info.address}</TableCell>
+                    <TableCell variant="body">{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>
                 ))}
               {!existsData && (
                 <>
                   {loading ? (
-                    [...Array(rowsPerPage)].map((_, index) => (
+                    [...Array(rowsPerPage + 1)].map((_, index) => (
                       <TableRow key={`skeleton-row-${index}`}>
                         {[...Array(5)].map((_, i) => (
                           <TableCell key={`skeleton-cell-${i}`} variant="body">
-                            <Skeleton variant="text" height="40px" />
+                            <Skeleton variant="text" height={index === 0 ? "20px" : "40px"} />
                           </TableCell>
                         ))}
                       </TableRow>

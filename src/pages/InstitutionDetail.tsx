@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core";
-import MuiGrid from "@material-ui/core/Grid";
 import MuiPaper from "@material-ui/core/Paper";
 import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,7 +28,7 @@ import {
 } from "../constants/enums";
 import { isValidUUID } from "../utils/common";
 import { getEnumLabel } from "../utils/enums";
-import { formatDate } from "../utils/format";
+import { formatDate, formatDatetime } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
 
@@ -78,17 +77,17 @@ export const InstitutionDetail: FC = () => {
     return null;
   }
 
-  const { institution_by_pk, reservation } = data || {};
+  const { institution_by_pk, reservation } = data ?? {};
 
   const renderInstitutionRow = useCallback(
     (label: string, value: string | JSX.Element | undefined) => {
       return (
-        <MuiGrid item md={6} xs={12}>
-          <MuiGrid>
+        <BaseBox width="calc(50% - 32px)" padding="4px">
+          <BaseBox>
             <strong>{label}</strong>
-          </MuiGrid>
-          <MuiGrid>{loading ? <Skeleton /> : value}</MuiGrid>
-        </MuiGrid>
+          </BaseBox>
+          <BaseBox>{loading ? <Skeleton /> : value}</BaseBox>
+        </BaseBox>
       );
     },
     [institution_by_pk]
@@ -105,7 +104,7 @@ export const InstitutionDetail: FC = () => {
         <Tab value="reservation" label={t("予約状況")} disabled={!reservation?.length} />
       </Tabs>
       <TabPanel className={classes.infoTabPanel} tabValue="info" currentValue={tab}>
-        <MuiGrid container spacing={2}>
+        <BaseBox display="flex" flexWrap="wrap">
           {renderInstitutionRow(t("建物名"), institution_by_pk?.building)}
           {renderInstitutionRow(t("施設名"), institution_by_pk?.institution)}
           {renderInstitutionRow(
@@ -177,7 +176,7 @@ export const InstitutionDetail: FC = () => {
           )}
           {renderInstitutionRow(t("抽選期間"), institution_by_pk?.lottery_period)}
           {renderInstitutionRow(t("備考"), institution_by_pk?.note)}
-        </MuiGrid>
+        </BaseBox>
       </TabPanel>
       <TabPanel className={classes.reservationTabPanel} tabValue="reservation" currentValue={tab}>
         {reservation && reservation.length > 0 && (
@@ -191,6 +190,7 @@ export const InstitutionDetail: FC = () => {
                       {getEnumLabel<ReservationDivision>(division)}
                     </TableCell>
                   ))}
+                  <TableCell variant="head">{t("更新日時")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -200,6 +200,7 @@ export const InstitutionDetail: FC = () => {
                     {sortByReservationDivision(info.reservation).map(([_, status], i) => (
                       <TableCell key={i}>{getEnumLabel<ReservationStatus>(status)}</TableCell>
                     ))}
+                    <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

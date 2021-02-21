@@ -34,6 +34,9 @@ query reservation(
         }
       ]
     }
+    order_by: {
+      date: asc
+    }
   ) {
     id
     institution_id
@@ -41,6 +44,7 @@ query reservation(
     institution
     date
     reservation
+    updated_at
   }
   reservation_aggregate(
     where: {
