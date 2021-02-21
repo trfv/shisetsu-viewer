@@ -41,6 +41,7 @@ query institution(
     layout_image_url
     lottery_period
     note
+    updated_at
   }
   institution_aggregate(
     where: {

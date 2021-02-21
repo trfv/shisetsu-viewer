@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client";
 import MuiPaper from "@material-ui/core/Paper";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { isAfter, isBefore } from "date-fns";
+import { addDays, addMonths, isAfter, isBefore, isValid } from "date-fns";
 import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   ReservationDocument,
   ReservationQuery,
@@ -27,9 +27,14 @@ import {
 } from "../components/Table";
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
 import { routePath } from "../constants/routes";
+import { ROW_PER_PAGE_OPTION } from "../constants/search";
 import { isValidUUID } from "../utils/common";
-import { SupportedTokyoWards } from "../utils/enums";
-import { formatDate } from "../utils/format";
+import {
+  convertTokyoWardToUrlParam,
+  getTokyoWardFromUrlParam,
+  SupportedTokyoWards,
+} from "../utils/enums";
+import { formatDate, formatDatetime } from "../utils/format";
 import { formatReservationMap } from "../utils/reservation";
 
 const useStyles = makeStyles((theme) =>
@@ -52,18 +57,74 @@ const useStyles = makeStyles((theme) =>
 );
 
 const now = new Date();
+const minDate = now;
+const maxDate = addDays(now, 181);
+
+const getInitialDateFromUrlParam = (date: string | null | undefined): Date | null => {
+  if (!date || !isValid(new Date(date))) {
+    return null;
+  }
+  const tmp = new Date(date);
+  return isBefore(tmp, minDate) || isAfter(tmp, maxDate) ? null : tmp;
+};
+
+const getFilterFromUrlParam = (filters: string[]): string[] => {
+  return filters
+    .map((f) => {
+      if (f === "oh") {
+        return "onlyHoliday";
+      }
+      if (f === "m") {
+        return ReservationDivision.MORNING;
+      }
+      if (f === "a") {
+        return ReservationDivision.AFTERNOON;
+      }
+      if (f === "e") {
+        return ReservationDivision.EVENING;
+      }
+      return "";
+    })
+    .filter((f) => !!f);
+};
+
+const convertFilterToUrlParam = (filter: string): string => {
+  return filter === "onlyHoliday"
+    ? "oh"
+    : filter.replace("RESERVATION_DIVISION_", "").slice(0, 1).toLowerCase();
+};
+
+const getPageFromUrlParam = (page: string | null | undefined) => {
+  return parseInt(page ?? "0", 10);
+};
+
+const getRowPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
+  if (!rowPerPage) {
+    return 10;
+  }
+  const tmp = parseInt(rowPerPage, 10);
+  return ROW_PER_PAGE_OPTION.includes(tmp) ? tmp : 10;
+};
 
 export const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(TokyoWard.INVALID);
-  const [startDate, setStartDate] = useState<Date | null>(now);
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date(now.getFullYear(), now.getMonth() + 1, now.getDate())
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
+  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(
+    getTokyoWardFromUrlParam(searchParams.get("w"))
   );
-  const [filter, setFilter] = useState<(string | ReservationDivision)[]>([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [startDate, setStartDate] = useState<Date | null>(
+    getInitialDateFromUrlParam(searchParams.get("df")) ?? now
+  );
+  const [endDate, setEndDate] = useState<Date | null>(
+    getInitialDateFromUrlParam(searchParams.get("dt")) ?? addMonths(now, 1)
+  );
+  const [filter, setFilter] = useState<(string | ReservationDivision)[]>(
+    getFilterFromUrlParam(searchParams.getAll("f"))
+  );
+  const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
+  const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
 
   const { loading, data, error } = useQuery<ReservationQuery, ReservationQueryVariables>(
     ReservationDocument,
@@ -135,30 +196,47 @@ export const Reservation: FC = () => {
   );
 
   const renderSearchForm = useMemo(() => {
-    const minDate = new Date();
-    const maxDate = new Date();
-    maxDate.setDate(minDate.getDate() + 181); // 26 weeks
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      setTokyoWard(event.target.value as TokyoWard);
+      const value = event.target.value as TokyoWard;
+      setTokyoWard(value);
       setPage(0);
+      searchParams.delete("p");
+      const urlParam = convertTokyoWardToUrlParam(value);
+      urlParam ? searchParams.set("w", urlParam) : searchParams.delete("w");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleStartDateChange = (date: Date | null): void => {
       setStartDate(date);
-      date && endDate && isAfter(date, endDate) && setEndDate(date);
       setPage(0);
+      searchParams.delete("p");
+      date ? searchParams.set("df", date.toLocaleDateString()) : searchParams.delete("df");
+      if (date && endDate && isAfter(date, endDate)) {
+        setEndDate(date);
+        searchParams.set("dt", date.toLocaleDateString());
+      }
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleEndDateChange = (date: Date | null): void => {
       setEndDate(date);
-      date && startDate && isBefore(date, startDate) && setStartDate(date);
       setPage(0);
+      searchParams.delete("p");
+      date ? searchParams.set("dt", date.toLocaleDateString()) : searchParams.delete("dt");
+      if (date && startDate && isBefore(date, startDate)) {
+        setStartDate(date);
+        searchParams.set("df", date.toLocaleDateString());
+      }
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      setFilter((prev) =>
-        event.target.checked
-          ? [...prev, event.target.value]
-          : prev.filter((v) => v !== event.target.value)
-      );
+      const next = event.target.checked
+        ? [...filter, event.target.value]
+        : filter.filter((v) => v !== event.target.value);
+      setFilter(next);
+      searchParams.delete("f");
+      next.forEach((f) => searchParams.append("f", convertFilterToUrlParam(f)));
       setPage(0);
+      searchParams.delete("p");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     return (
       <BaseBox className={classes.searchBox} display="flex" justifyContent="space-around">
@@ -201,12 +279,17 @@ export const Reservation: FC = () => {
   const renderSearchResult = useMemo(() => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
       setPage(newPage);
+      searchParams.set("p", String(newPage));
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleChangeRowsPerPage = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ): void => {
       setRowsPerPage(parseInt(event.target.value, 10));
+      searchParams.set("r", event.target.value);
       setPage(0);
+      searchParams.delete("p");
+      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     if (error) {
       return <BaseBox>{error.message}</BaseBox>;
@@ -218,8 +301,8 @@ export const Reservation: FC = () => {
       <BaseBox className={classes.resultBox}>
         <TablePagination
           component="div"
-          rowsPerPageOptions={[10, 50, 100]}
-          count={data?.reservation_aggregate.aggregate?.count || 0}
+          rowsPerPageOptions={ROW_PER_PAGE_OPTION}
+          count={data?.reservation_aggregate.aggregate?.count ?? 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -237,13 +320,14 @@ export const Reservation: FC = () => {
                   <TableCell variant="head">{t("施設名")}</TableCell>
                   <TableCell variant="head">{t("日付")}</TableCell>
                   <TableCell variant="head">{t("予約状況")}</TableCell>
+                  <TableCell variant="head">{t("更新日時")}</TableCell>
                 </TableRow>
               </TableHead>
             )}
             <TableBody>
               {existsData &&
                 data?.reservation.map((info) => (
-                  <TableRow key={`${info.institution_id}-${info.date}`}>
+                  <TableRow key={info.id}>
                     <TableCell>
                       {isValidUUID(info.institution_id) ? (
                         <Link to={routePath.institutionDetail.replace(":id", info.institution_id)}>
@@ -255,16 +339,17 @@ export const Reservation: FC = () => {
                     </TableCell>
                     <TableCell>{formatDate(info.date)}</TableCell>
                     <TableCell>{formatReservationMap(info.reservation)}</TableCell>
+                    <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>
                 ))}
               {!existsData && (
                 <>
                   {loading ? (
-                    [...Array(rowsPerPage)].map((_, index) => (
+                    [...Array(rowsPerPage + 1)].map((_, index) => (
                       <TableRow key={`skeleton-row-${index}`}>
                         {[...Array(5)].map((_, i) => (
                           <TableCell key={`skeleton-cell-${i}`} variant="body">
-                            <Skeleton variant="text" height="40px" />
+                            <Skeleton variant="text" height="20px" />
                           </TableCell>
                         ))}
                       </TableRow>

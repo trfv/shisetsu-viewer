@@ -35,7 +35,7 @@ export const getEnumLabel = <T extends Enums>(value: string | undefined): string
   if (value === undefined) {
     return "";
   }
-  return getEnumMap(value).find((val) => val.value === value)?.label || value;
+  return getEnumMap(value).find((val) => val.value === value)?.label ?? value;
 };
 
 export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
@@ -47,3 +47,24 @@ export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
     TokyoWard.TOSHIMA,
   ].includes(option.value)
 );
+
+export const getTokyoWardFromUrlParam = (param: string | null | undefined): TokyoWard => {
+  switch (param) {
+    case "koutou":
+      return TokyoWard.KOUTOU;
+    case "bunkyo":
+      return TokyoWard.BUNKYO;
+    case "kita":
+      return TokyoWard.KITA;
+    case "toshima":
+      return TokyoWard.TOSHIMA;
+    default:
+      return TokyoWard.INVALID;
+  }
+};
+
+export const convertTokyoWardToUrlParam = (tokyoWard: TokyoWard): string | null => {
+  return tokyoWard === TokyoWard.INVALID
+    ? null
+    : tokyoWard.replace("TOKYO_WARD_", "").toLowerCase();
+};

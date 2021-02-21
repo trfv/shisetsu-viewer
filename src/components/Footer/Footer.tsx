@@ -6,10 +6,10 @@ const useStyles = makeStyles(() =>
   createStyles({
     appBar: {
       width: "100%",
-      minWidth: 1240,
+      minWidth: "1200px",
       top: "auto",
       bottom: 0,
-      padding: 16,
+      padding: "16px 0",
       textAlign: "center",
     },
   })

@@ -28,5 +28,6 @@ query institutionDetail(
   ) {
     date
     reservation
+    updated_at
   }
 }
