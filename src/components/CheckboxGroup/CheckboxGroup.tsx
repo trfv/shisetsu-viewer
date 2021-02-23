@@ -31,13 +31,7 @@ const mapChildren = (
   });
 };
 
-export const CheckboxGroup: FC<Props> = ({
-  label,
-  values,
-  onChange,
-  size = "middle",
-  children,
-}) => {
+export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto", children }) => {
   const Box = box(size);
   return (
     <Box display="flex" flexDirection="column">

@@ -1110,7 +1110,7 @@ export const InstitutionDocument = gql`
   institution(
     offset: $offset
     limit: $limit
-    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, is_equipped_music_stand: {_eq: $isEquippedMusicStand}, is_equipped_piano: {_eq: $isEquippedPiano}}
+    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
   ) {
     id
     building
@@ -1134,7 +1134,7 @@ export const InstitutionDocument = gql`
     updated_at
   }
   institution_aggregate(
-    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, is_equipped_music_stand: {_eq: $isEquippedMusicStand}, is_equipped_piano: {_eq: $isEquippedPiano}}
+    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
   ) {
     aggregate {
       count

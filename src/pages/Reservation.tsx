@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
-import MuiPaper from "@material-ui/core/Paper";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { addDays, addMonths, isAfter, isBefore, isValid } from "date-fns";
 import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,12 +21,13 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from "../components/Table";
+import { TablePagination } from "../components/TablePagination";
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
-import { routePath } from "../constants/routes";
+import { ROUTES } from "../constants/routes";
 import { ROW_PER_PAGE_OPTION } from "../constants/search";
+import { COLORS, CONTAINER_WIDTH } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
 import {
   convertTokyoWardToUrlParam,
@@ -37,24 +37,25 @@ import {
 import { formatDate, formatDatetime } from "../utils/format";
 import { formatReservationMap } from "../utils/reservation";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    pageBox: {
-      width: "100%",
-      minWidth: 1200,
+const useStyles = makeStyles(() => ({
+  pageBox: {
+    width: "100%",
+    minWidth: CONTAINER_WIDTH,
+  },
+  searchBox: {
+    margin: "40px auto 0",
+    width: CONTAINER_WIDTH,
+    background: COLORS.GRAY,
+    borderRadius: "4px",
+    "& > *": {
+      margin: "24px",
     },
-    searchBox: {
-      margin: "40px auto 0",
-      padding: "24px 0",
-      width: 1200,
-      background: theme.palette.grey[200],
-    },
-    resultBox: {
-      margin: "24px auto 40px",
-      width: 1200,
-    },
-  })
-);
+  },
+  resultBox: {
+    margin: "24px auto 40px",
+    width: CONTAINER_WIDTH,
+  },
+}));
 
 const now = new Date();
 const minDate = now;
@@ -239,10 +240,11 @@ export const Reservation: FC = () => {
       history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     return (
-      <BaseBox className={classes.searchBox} display="flex" justifyContent="space-around">
+      <BaseBox className={classes.searchBox} display="flex">
         <Select
           label={t("区")}
           value={tokyoWard}
+          size="small"
           onChange={handleTokyoWardChange}
           selectOptions={SupportedTokyoWards}
         />
@@ -261,12 +263,7 @@ export const Reservation: FC = () => {
             maxDate,
           }}
         />
-        <CheckboxGroup
-          label={t("絞り込み")}
-          values={filter}
-          onChange={handleFilterChange}
-          size="large"
-        >
+        <CheckboxGroup label={t("絞り込み")} values={filter} onChange={handleFilterChange}>
           <Checkbox label={t("休日のみ")} value="onlyHoliday" />
           <Checkbox label={t("午前空き")} value={ReservationDivision.MORNING} />
           <Checkbox label={t("午後空き")} value={ReservationDivision.AFTERNOON} />
@@ -291,8 +288,9 @@ export const Reservation: FC = () => {
       searchParams.delete("p");
       history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
+
     if (error) {
-      return <BaseBox>{error.message}</BaseBox>;
+      throw new Error(error.message);
     }
 
     const existsData = !loading && !!data?.reservation.length;
@@ -300,19 +298,14 @@ export const Reservation: FC = () => {
     return (
       <BaseBox className={classes.resultBox}>
         <TablePagination
-          component="div"
-          rowsPerPageOptions={ROW_PER_PAGE_OPTION}
           count={data?.reservation_aggregate.aggregate?.count ?? 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-          labelRowsPerPage={t("表示件数")}
-          labelDisplayedRows={({ from, to, count }) =>
-            t("{{ from }}-{{ to }} / {{ count }}", { from, to, count })
-          }
+          loading={loading}
         />
-        <TableContainer component={MuiPaper}>
+        <TableContainer>
           <Table>
             {existsData && (
               <TableHead>
@@ -330,7 +323,7 @@ export const Reservation: FC = () => {
                   <TableRow key={info.id}>
                     <TableCell>
                       {isValidUUID(info.institution_id) ? (
-                        <Link to={routePath.institutionDetail.replace(":id", info.institution_id)}>
+                        <Link to={ROUTES.institutionDetail.replace(":id", info.institution_id)}>
                           {`${info.building} ${info.institution}`}
                         </Link>
                       ) : (
@@ -345,19 +338,24 @@ export const Reservation: FC = () => {
               {!existsData && (
                 <>
                   {loading ? (
-                    [...Array(rowsPerPage + 1)].map((_, index) => (
-                      <TableRow key={`skeleton-row-${index}`}>
-                        {[...Array(5)].map((_, i) => (
-                          <TableCell key={`skeleton-cell-${i}`} variant="body">
+                    <>
+                      <TableRow>
+                        <TableCell variant="head" colSpan={5}>
+                          <Skeleton variant="text" height="24px" />
+                        </TableCell>
+                      </TableRow>
+                      {[...Array(rowsPerPage)].map((_, index) => (
+                        <TableRow key={`skeleton-row-${index}`}>
+                          <TableCell variant="body" colSpan={5}>
                             <Skeleton variant="text" height="20px" />
                           </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
+                        </TableRow>
+                      ))}
+                    </>
                   ) : (
                     <TableRow>
-                      <TableCell>
-                        <TableCell>{t("該当するデータがありません。")}</TableCell>
+                      <TableCell variant="body" colSpan={5}>
+                        {t("該当するデータがありません。")}
                       </TableCell>
                     </TableRow>
                   )}

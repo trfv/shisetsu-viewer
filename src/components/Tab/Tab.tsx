@@ -1,17 +1,17 @@
 import MuiTab from "@material-ui/core/Tab";
-import MuiTabs from "@material-ui/core/Tabs";
-import { ComponentProps, ReactNode } from "react";
-import { BaseBox } from "../Box";
+import { ComponentProps } from "react";
 
-export const Tab = MuiTab;
-export const Tabs = MuiTabs;
-
-type TabPanelProps<TabValue> = ComponentProps<typeof BaseBox> & {
-  tabValue: TabValue;
-  currentValue: TabValue;
-  children: ReactNode;
+type Props = Omit<ComponentProps<typeof MuiTab>, "value"> & {
+  value: string;
 };
 
-export const TabPanel = <T,>({ tabValue, currentValue, children, className }: TabPanelProps<T>) => {
-  return tabValue !== currentValue ? null : <BaseBox className={className}>{children}</BaseBox>;
-};
+function a11yProps(value: string) {
+  return {
+    id: `tab-${value}`,
+    "aria-controls": `tabpanel-${value}`,
+  };
+}
+
+export const Tab = (props: Props) => (
+  <MuiTab {...props} {...a11yProps(props.value)} style={{ minWidth: "0px" }} /> // min-width: 0px is for clear default style.
+);

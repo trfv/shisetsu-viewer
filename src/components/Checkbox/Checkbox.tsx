@@ -1,7 +1,7 @@
 import MuiCheckbox from "@material-ui/core/Checkbox";
 import React, { ChangeEvent, FC } from "react";
 import { box, BoxSize } from "../Box";
-import { MiddleLabel } from "../Label";
+import { MediumLabel } from "../Label";
 
 type Props = {
   label: string;
@@ -17,7 +17,7 @@ export const Checkbox: FC<Props> = ({
   label,
   value,
   noLeftMargin,
-  size = "middle",
+  size = "auto",
   checked,
   onChange,
 }) => {
@@ -29,8 +29,8 @@ export const Checkbox: FC<Props> = ({
       alignItems="center"
       marginLeft={noLeftMargin ? "-12px" : "0px"}
     >
-      <MuiCheckbox value={value} checked={checked} onChange={onChange} disableRipple={true} />
-      <MiddleLabel label={label} />
+      <MuiCheckbox value={value} checked={checked} onChange={onChange} />
+      <MediumLabel label={label} />
     </Box>
   );
 };

@@ -1,61 +1,78 @@
-import MuiButton from "@material-ui/core/Button";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import MuiTypography from "@material-ui/core/Typography";
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
-import { routePath } from "../../constants/routes";
+import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
+import { COLORS, CONTAINER_WIDTH } from "../../constants/styles";
 import { BaseBox } from "../Box";
+import { ToggleButton } from "../ToggleButton";
+import { ToggleButtonGroup } from "../ToggleButtonGroup";
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     appBar: {
       width: "100%",
-      minWidth: "1200px",
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.primary.main,
+      minWidth: CONTAINER_WIDTH,
+      color: COLORS.WHITE,
+      backgroundColor: COLORS.PRIMARY,
     },
     toolbar: {
       margin: "0 auto",
-      width: "1200px",
+      width: CONTAINER_WIDTH,
       padding: "16px 0",
     },
     typography: {
+      margin: 0,
+      fontSize: "18px",
+      lineHeight: "36px",
       flexGrow: 1,
     },
-    button: {
+    toggleButtonGroup: {
       flexGrow: 0,
-      marginLeft: "16px",
+    },
+    toggleButton: {
+      borderColor: COLORS.WHITE,
+      "& > *": {
+        color: COLORS.WHITE,
+        width: 120,
+      },
     },
   })
 );
 
 export const Header: FC = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
+  const location = useLocation();
 
   return (
     <BaseBox className={classes.appBar} component="header">
       <BaseBox className={classes.toolbar} display="flex">
-        <MuiTypography variant="h6" className={classes.typography}>
+        <BaseBox className={classes.typography} component="h6">
           Shisetsu Viewer
-        </MuiTypography>
-        <MuiButton
-          className={classes.button}
-          variant="outlined"
-          color="inherit"
-          component={Link}
-          to={routePath.reservation}
-        >
-          予約状況
-        </MuiButton>
-        <MuiButton
-          className={classes.button}
-          variant="outlined"
-          color="inherit"
-          component={Link}
-          to={routePath.institution}
-        >
-          施設検索
-        </MuiButton>
+        </BaseBox>
+        <ToggleButtonGroup className={classes.toggleButtonGroup}>
+          <ToggleButton
+            value="reservation"
+            className={classes.toggleButton}
+            size="small"
+            selected={location.pathname === ROUTES.reservation}
+            component={Link}
+            to={ROUTES.reservation}
+          >
+            {t("予約検索")}
+          </ToggleButton>
+          <ToggleButton
+            value="institution"
+            className={classes.toggleButton}
+            size="small"
+            selected={location.pathname === ROUTES.institution}
+            component={Link}
+            to={ROUTES.institution}
+          >
+            {t("施設検索")}
+          </ToggleButton>
+        </ToggleButtonGroup>
       </BaseBox>
     </BaseBox>
   );

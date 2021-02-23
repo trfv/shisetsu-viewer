@@ -1,4 +1,4 @@
-export const routePath = {
+export const ROUTES = {
   root: "/",
   reservation: "/reservation",
   institution: "/institution",
