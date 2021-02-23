@@ -9,7 +9,7 @@ type Props = {
   checkbox: ComponentProps<typeof Checkbox>;
 };
 
-export const CheckboxLabel: FC<Props> = ({ label, size = "middle", checkbox }) => {
+export const CheckboxLabel: FC<Props> = ({ label, size = "auto", checkbox }) => {
   const Box = box(size);
   return (
     <Box display="flex" flexDirection="column">

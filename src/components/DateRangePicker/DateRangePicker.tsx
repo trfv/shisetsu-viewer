@@ -1,7 +1,8 @@
 import React, { ComponentProps, FC } from "react";
-import { BaseBox, MiddleBox } from "../Box";
+import { BaseBox, MediumBox } from "../Box";
 import { DatePicker } from "../DatePicker";
 import { SmallLabel } from "../Label";
+import { Spacer } from "../Spacer";
 
 type DatePickerProps = ComponentProps<typeof DatePicker>;
 
@@ -13,16 +14,17 @@ type Props = {
 
 export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps }) => {
   return (
-    <MiddleBox display="flex" flexDirection="column">
+    <MediumBox display="flex" flexDirection="column">
       <SmallLabel label={label} />
-      <MiddleBox display="flex" alignItems="center">
+      <Spacer size={4} axis="vertical" />
+      <MediumBox display="flex" alignItems="center">
         <DatePicker {...startDateProps} />
         <BaseBox component="span" mx="4px">
           〜
         </BaseBox>
         <DatePicker {...endDateProps} />
-      </MiddleBox>
-    </MiddleBox>
+      </MediumBox>
+    </MediumBox>
   );
 };
 

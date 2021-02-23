@@ -14,3 +14,7 @@ export const formatUsageFee = (feeMap: { [key: string]: string }): string => {
     )
     .join(" ");
 };
+
+export const getGoogleMapLink = (address: string): string => {
+  return `https://www.google.com/maps/search/?api=1&query=${address}`;
+};

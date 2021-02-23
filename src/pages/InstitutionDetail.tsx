@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { createStyles, makeStyles } from "@material-ui/core";
-import MuiPaper from "@material-ui/core/Paper";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -11,7 +10,8 @@ import {
 } from "../api/graphql-client";
 import { BaseBox } from "../components/Box";
 import { Skeleton } from "../components/Skeleton";
-import { Tab, TabPanel, Tabs } from "../components/Tab";
+import { Tab } from "../components/Tab";
+import { TabGroup, TabPanel } from "../components/TabGroup";
 import {
   Table,
   TableBody,
@@ -26,29 +26,30 @@ import {
   ReservationDivision,
   ReservationStatus,
 } from "../constants/enums";
+import { CONTAINER_WIDTH } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
 import { getEnumLabel } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
-import { formatUsageFee } from "../utils/institution";
+import { formatUsageFee, getGoogleMapLink } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
 
 const useStyles = makeStyles(() =>
   createStyles({
     pageBox: {
       width: "100%",
-      minWidth: 1200,
+      minWidth: CONTAINER_WIDTH,
     },
-    tabs: {
+    tabGroup: {
       margin: "24px auto 0",
-      width: 1200,
+      width: CONTAINER_WIDTH,
     },
     infoTabPanel: {
       margin: "24px auto 40px",
-      width: 1200,
+      width: CONTAINER_WIDTH,
     },
     reservationTabPanel: {
       margin: "24px auto 40px",
-      width: 1200,
+      width: CONTAINER_WIDTH,
     },
   })
 );
@@ -82,11 +83,11 @@ export const InstitutionDetail: FC = () => {
   const renderInstitutionRow = useCallback(
     (label: string, value: string | JSX.Element | undefined) => {
       return (
-        <BaseBox width="calc(50% - 32px)" padding="4px">
-          <BaseBox>
+        <BaseBox width="calc(50% - 32px)" padding="8px">
+          <BaseBox component="label">
             <strong>{label}</strong>
           </BaseBox>
-          <BaseBox>{loading ? <Skeleton /> : value}</BaseBox>
+          <BaseBox component="div">{loading ? <Skeleton /> : value}</BaseBox>
         </BaseBox>
       );
     },
@@ -94,15 +95,15 @@ export const InstitutionDetail: FC = () => {
   );
 
   if (error) {
-    return <BaseBox>{error.message}</BaseBox>;
+    throw new Error(error.message);
   }
 
   return (
     <BaseBox className={classes.pageBox}>
-      <Tabs className={classes.tabs} value={tab} onChange={handleTabChange}>
+      <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
         <Tab value="info" label={t("施設情報")} />
         <Tab value="reservation" label={t("予約状況")} disabled={!reservation?.length} />
-      </Tabs>
+      </TabGroup>
       <TabPanel className={classes.infoTabPanel} tabValue="info" currentValue={tab}>
         <BaseBox display="flex" flexWrap="wrap">
           {renderInstitutionRow(t("建物名"), institution_by_pk?.building)}
@@ -129,7 +130,18 @@ export const InstitutionDetail: FC = () => {
             t("利用料金（休日）"),
             formatUsageFee(institution_by_pk?.holiday_usage_fee)
           )}
-          {renderInstitutionRow(t("住所"), institution_by_pk?.address)}
+          {renderInstitutionRow(
+            t("住所"),
+            institution_by_pk?.address ? (
+              <a
+                href={getGoogleMapLink(institution_by_pk.address)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {institution_by_pk.address}
+              </a>
+            ) : undefined
+          )}
           {renderInstitutionRow(
             t("弦楽器"),
             getEnumLabel<AvailabilityDivision>(institution_by_pk?.is_available_strings)
@@ -180,7 +192,7 @@ export const InstitutionDetail: FC = () => {
       </TabPanel>
       <TabPanel className={classes.reservationTabPanel} tabValue="reservation" currentValue={tab}>
         {reservation && reservation.length > 0 && (
-          <TableContainer component={MuiPaper}>
+          <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>

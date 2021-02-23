@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import MuiPaper from "@material-ui/core/Paper";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,12 +19,13 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from "../components/Table";
-import { AvailabilityDivision, EquipmentDivision, TokyoWard } from "../constants/enums";
-import { routePath } from "../constants/routes";
+import { TablePagination } from "../components/TablePagination";
+import { AvailabilityDivision, TokyoWard } from "../constants/enums";
+import { ROUTES } from "../constants/routes";
 import { ROW_PER_PAGE_OPTION } from "../constants/search";
+import { COLORS, CONTAINER_WIDTH } from "../constants/styles";
 import {
   convertTokyoWardToUrlParam,
   getTokyoWardFromUrlParam,
@@ -34,21 +34,24 @@ import {
 import { formatDatetime } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     pageBox: {
       width: "100%",
-      minWidth: 1200,
+      minWidth: CONTAINER_WIDTH,
     },
     searchBox: {
       margin: "40px auto 0",
-      padding: "24px 0",
-      width: 1200,
-      background: theme.palette.grey[200],
+      width: CONTAINER_WIDTH,
+      background: COLORS.GRAY,
+      borderRadius: "4px",
+      "& > *": {
+        margin: "24px",
+      },
     },
     resultBox: {
       margin: "24px auto 40px",
-      width: 1200,
+      width: CONTAINER_WIDTH,
     },
   })
 );
@@ -119,9 +122,6 @@ export const Institution: FC = () => {
   const [availableInstruments, setAvailableInstruments] = useState<string[]>(
     getAvailableInstrumentFromUrlParam(searchParams.getAll("a"))
   );
-  const [equipments, setEquipments] = useState<string[]>(
-    getEquipmentFromUrlParam(searchParams.getAll("e"))
-  );
 
   const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
   const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
@@ -149,10 +149,6 @@ export const Institution: FC = () => {
         ...(availableInstruments.includes("percussion")
           ? { isAvailablePercussion: AvailabilityDivision.AVAILABLE }
           : {}),
-        ...(equipments.includes("musicstand")
-          ? { isEquippedMusicStand: EquipmentDivision.EQUIPPED }
-          : {}),
-        ...(equipments.includes("piano") ? { isEquippedPiano: EquipmentDivision.EQUIPPED } : {}),
       },
     }
   );
@@ -168,34 +164,26 @@ export const Institution: FC = () => {
       history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
     const handleAvailableInstrumentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      const next = event.target.checked
-        ? [...availableInstruments, event.target.value]
-        : availableInstruments.filter((v) => v !== event.target.value);
+      const { value, checked } = event.target;
+
+      const next = checked
+        ? [...availableInstruments, value]
+        : availableInstruments.filter((v) => v !== value);
       setAvailableInstruments(next);
       searchParams.delete("a");
       next.forEach((a) => searchParams.append("a", convertAvailableInstrumentToUrlParam(a)));
-      setPage(0);
-      searchParams.delete("p");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
-    };
-    const handleEquipmentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      const next = event.target.checked
-        ? [...equipments, event.target.value]
-        : equipments.filter((v) => v !== event.target.value);
-      setEquipments(next);
-      searchParams.delete("e");
-      next.forEach((e) => searchParams.append("e", convertEquipmentToUrlParam(e)));
+
       setPage(0);
       searchParams.delete("p");
       history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
     };
 
     return (
-      <BaseBox className={classes.searchBox} display="flex" justifyContent="space-around">
+      <BaseBox className={classes.searchBox} display="flex">
         <Select
           label={t("区")}
           value={tokyoWard}
-          size="middle"
+          size="small"
           onChange={handleTokyoWardChange}
           selectOptions={SupportedTokyoWards}
         />
@@ -203,25 +191,15 @@ export const Institution: FC = () => {
           label={t("利用可能楽器")}
           values={availableInstruments}
           onChange={handleAvailableInstrumentsChange}
-          size="large"
         >
           <Checkbox label={t("弦楽器")} value="strings" />
           <Checkbox label={t("木管楽器")} value="woodwind" />
           <Checkbox label={t("金管楽器")} value="brass" />
           <Checkbox label={t("打楽器")} value="percussion" />
         </CheckboxGroup>
-        <CheckboxGroup
-          label={t("付帯設備")}
-          values={equipments}
-          onChange={handleEquipmentsChange}
-          size="middle"
-        >
-          <Checkbox label={t("譜面台")} value="musicstand" />
-          <Checkbox label={t("ピアノ")} value="piano" />
-        </CheckboxGroup>
       </BaseBox>
     );
-  }, [tokyoWard, availableInstruments, equipments]);
+  }, [tokyoWard, availableInstruments]);
 
   const renderSearchResult = useMemo(() => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
@@ -240,7 +218,7 @@ export const Institution: FC = () => {
     };
 
     if (error) {
-      return <BaseBox>{error.message}</BaseBox>;
+      throw new Error(error.message);
     }
 
     const existsData = !loading && !!data?.institution.length;
@@ -248,19 +226,14 @@ export const Institution: FC = () => {
     return (
       <BaseBox className={classes.resultBox}>
         <TablePagination
-          component="div"
-          rowsPerPageOptions={ROW_PER_PAGE_OPTION}
           count={data?.institution_aggregate.aggregate?.count ?? 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-          labelRowsPerPage={t("表示件数")}
-          labelDisplayedRows={({ from, to, count }) =>
-            t("{{ from }}-{{ to }} / {{ count }}", { from, to, count })
-          }
+          loading={loading}
         />
-        <TableContainer component={MuiPaper}>
+        <TableContainer>
           <Table>
             {existsData && (
               <TableHead>
@@ -283,7 +256,7 @@ export const Institution: FC = () => {
                   <TableRow key={info.id}>
                     <TableCell>
                       {info.id ? (
-                        <Link to={routePath.institutionDetail.replace(":id", info.id)}>
+                        <Link to={ROUTES.institutionDetail.replace(":id", info.id)}>
                           {`${info.building} ${info.institution}`}
                         </Link>
                       ) : (
@@ -318,19 +291,24 @@ export const Institution: FC = () => {
               {!existsData && (
                 <>
                   {loading ? (
-                    [...Array(rowsPerPage + 1)].map((_, index) => (
-                      <TableRow key={`skeleton-row-${index}`}>
-                        {[...Array(5)].map((_, i) => (
-                          <TableCell key={`skeleton-cell-${i}`} variant="body">
-                            <Skeleton variant="text" height={index === 0 ? "20px" : "40px"} />
-                          </TableCell>
-                        ))}
+                    <>
+                      <TableRow>
+                        <TableCell variant="head" colSpan={5}>
+                          <Skeleton variant="text" height="24px" />
+                        </TableCell>
                       </TableRow>
-                    ))
+                      {[...Array(rowsPerPage)].map((_, index) => (
+                        <TableRow key={`skeleton-row-${index}`}>
+                          <TableCell variant="body" colSpan={5}>
+                            <Skeleton variant="text" height="40px" />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
                   ) : (
                     <TableRow>
-                      <TableCell>
-                        <TableCell>{t("該当するデータがありません。")}</TableCell>
+                      <TableCell variant="body" colSpan={5}>
+                        {t("該当するデータがありません。")}
                       </TableCell>
                     </TableRow>
                   )}

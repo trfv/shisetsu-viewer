@@ -1,3 +1,3 @@
 export { LargeLabel } from "./LargeLabel";
-export { MiddleLabel } from "./MiddleLabel";
+export { MediumLabel } from "./MediumLabel";
 export { SmallLabel } from "./SmallLabel";

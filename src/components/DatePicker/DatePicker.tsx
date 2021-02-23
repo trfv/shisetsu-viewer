@@ -16,13 +16,13 @@ export const DatePicker: FC<DatePickerProps> = ({ value, onChange, minDate, maxD
       <SmallBox>
         <MuiDatePicker
           disableToolbar
-          autoOk
           variant="inline"
           format="yyyy/MM/dd"
           value={value}
           onChange={onChange}
           minDate={minDate}
           maxDate={maxDate}
+          error={false}
         />
       </SmallBox>
     </MuiPickersUtilsProvider>

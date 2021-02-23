@@ -18,8 +18,6 @@ query institution(
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
       is_available_percussion: { _eq: $isAvailablePercussion }
-      is_equipped_music_stand: { _eq: $isEquippedMusicStand }
-      is_equipped_piano: { _eq: $isEquippedPiano }
     }
   ) {
     id
@@ -50,8 +48,6 @@ query institution(
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
       is_available_percussion: { _eq: $isAvailablePercussion }
-      is_equipped_music_stand: { _eq: $isEquippedMusicStand }
-      is_equipped_piano: { _eq: $isEquippedPiano }
     }
   ) {
     aggregate {
