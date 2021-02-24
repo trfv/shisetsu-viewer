@@ -1,6 +1,8 @@
+import React, { FC } from "react";
+
 type Props = { size: number; axis: "vertical" | "horizontal" };
 
-export const Spacer = ({ size, axis }: Props) => {
+export const Spacer: FC<Props> = ({ size, axis }) => {
   const width = axis === "vertical" ? 1 : size;
   const height = axis === "horizontal" ? 1 : size;
   return (

@@ -1,5 +1,5 @@
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { FC } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { CONTAINER_WIDTH } from "../../constants/styles";
 import { BaseBox } from "../Box";

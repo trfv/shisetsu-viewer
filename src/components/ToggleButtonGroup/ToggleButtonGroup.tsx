@@ -1,5 +1,5 @@
 import MuiToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import { ComponentProps } from "react";
+import React, { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof MuiToggleButtonGroup>;
 
