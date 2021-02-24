@@ -8,6 +8,7 @@ export const BREAKPOINTS = {
 };
 
 export const CONTAINER_WIDTH = BREAKPOINTS.LG;
+export const INNER_WIDTH = BREAKPOINTS.LG - 32;
 
 export const COLORS = {
   PRIMARY: "#3f51b5",

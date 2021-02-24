@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { COLORS, CONTAINER_WIDTH } from "../../constants/styles";
+import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../../constants/styles";
 import { BaseBox } from "../Box";
 import { ToggleButton } from "../ToggleButton";
 import { ToggleButtonGroup } from "../ToggleButtonGroup";
@@ -18,8 +18,8 @@ const useStyles = makeStyles(() =>
     },
     toolbar: {
       margin: "0 auto",
-      width: CONTAINER_WIDTH,
       padding: "16px 0",
+      width: INNER_WIDTH,
     },
     typography: {
       margin: 0,
