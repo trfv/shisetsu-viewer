@@ -27,7 +27,7 @@ import { TablePagination } from "../components/TablePagination";
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
 import { ROW_PER_PAGE_OPTION } from "../constants/search";
-import { COLORS, CONTAINER_WIDTH } from "../constants/styles";
+import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
 import {
   convertTokyoWardToUrlParam,
@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
   },
   searchBox: {
     margin: "40px auto 0",
-    width: CONTAINER_WIDTH,
+    width: INNER_WIDTH,
     background: COLORS.GRAY,
     borderRadius: "4px",
     "& > *": {
@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
   },
   resultBox: {
     margin: "24px auto 40px",
-    width: CONTAINER_WIDTH,
+    width: INNER_WIDTH,
   },
 }));
 

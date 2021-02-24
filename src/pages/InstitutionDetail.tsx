@@ -26,7 +26,7 @@ import {
   ReservationDivision,
   ReservationStatus,
 } from "../constants/enums";
-import { CONTAINER_WIDTH } from "../constants/styles";
+import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
 import { getEnumLabel } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
@@ -41,15 +41,15 @@ const useStyles = makeStyles(() =>
     },
     tabGroup: {
       margin: "24px auto 0",
-      width: CONTAINER_WIDTH,
+      width: INNER_WIDTH,
     },
     infoTabPanel: {
       margin: "24px auto 40px",
-      width: CONTAINER_WIDTH,
+      width: INNER_WIDTH,
     },
     reservationTabPanel: {
       margin: "24px auto 40px",
-      width: CONTAINER_WIDTH,
+      width: INNER_WIDTH,
     },
   })
 );
@@ -81,9 +81,9 @@ export const InstitutionDetail: FC = () => {
   const { institution_by_pk, reservation } = data ?? {};
 
   const renderInstitutionRow = useCallback(
-    (label: string, value: string | JSX.Element | undefined) => {
+    (label: string, value: string | JSX.Element | undefined, width = "50%") => {
       return (
-        <BaseBox width="calc(50% - 32px)" padding="8px">
+        <BaseBox width={width} padding="8px 0">
           <BaseBox component="label">
             <strong>{label}</strong>
           </BaseBox>
@@ -117,30 +117,12 @@ export const InstitutionDetail: FC = () => {
             institution_by_pk?.area ? `${institution_by_pk.area}${t("㎡")}` : undefined
           )}
           {renderInstitutionRow(
-            t("時間帯"),
-            institution_by_pk?.reservation_division
-              ?.map((div: ReservationDivision) => getEnumLabel<ReservationDivision>(div))
-              .join(",")
-          )}
-          {renderInstitutionRow(
             t("利用料金（平日）"),
             formatUsageFee(institution_by_pk?.weekday_usage_fee)
           )}
           {renderInstitutionRow(
             t("利用料金（休日）"),
             formatUsageFee(institution_by_pk?.holiday_usage_fee)
-          )}
-          {renderInstitutionRow(
-            t("住所"),
-            institution_by_pk?.address ? (
-              <a
-                href={getGoogleMapLink(institution_by_pk.address)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {institution_by_pk.address}
-              </a>
-            ) : undefined
           )}
           {renderInstitutionRow(
             t("弦楽器"),
@@ -186,8 +168,20 @@ export const InstitutionDetail: FC = () => {
               </a>
             ) : undefined
           )}
+          {renderInstitutionRow(
+            t("住所"),
+            institution_by_pk?.address ? (
+              <a
+                href={getGoogleMapLink(institution_by_pk.address)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {institution_by_pk.address}
+              </a>
+            ) : undefined
+          )}
           {renderInstitutionRow(t("抽選期間"), institution_by_pk?.lottery_period)}
-          {renderInstitutionRow(t("備考"), institution_by_pk?.note)}
+          {renderInstitutionRow(t("備考"), institution_by_pk?.note, "100%")}
         </BaseBox>
       </TabPanel>
       <TabPanel className={classes.reservationTabPanel} tabValue="reservation" currentValue={tab}>
