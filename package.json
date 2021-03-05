@@ -53,7 +53,7 @@
     "eslint": "7.21.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-prettier": "3.3.1",
-    "i18next": "19.9.0",
+    "i18next": "19.9.1",
     "prettier": "2.2.1",
     "prettier-plugin-organize-imports": "1.1.1"
   },
