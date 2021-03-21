@@ -45,6 +45,7 @@ export const SupportedTokyoWards = TokyoWardMap.filter((option) =>
     TokyoWard.BUNKYO,
     TokyoWard.KITA,
     TokyoWard.TOSHIMA,
+    TokyoWard.EDOGAWA,
   ].includes(option.value)
 );
 
@@ -58,6 +59,8 @@ export const getTokyoWardFromUrlParam = (param: string | null | undefined): Toky
       return TokyoWard.KITA;
     case "toshima":
       return TokyoWard.TOSHIMA;
+    case "edogawa":
+      return TokyoWard.EDOGAWA;
     default:
       return TokyoWard.INVALID;
   }

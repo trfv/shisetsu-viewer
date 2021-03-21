@@ -11,6 +11,7 @@ export enum ReservationStatus {
   QUESTION = "RESERVATION_STATUS_QUESTION",
   OUT_OF_TARGRT = "RESERVATION_STATUS_OUT_OF_TARGRT",
   APPLIABLE = "RESERVATION_STATUS_APPLIABLE",
+  CANCELED = "RESERVATION_STATUS_CANCELED",
 }
 
 export const ReservationStatusMap = [
@@ -62,6 +63,10 @@ export const ReservationStatusMap = [
     value: ReservationStatus.APPLIABLE,
     label: "抽選申込可能",
   },
+  {
+    value: ReservationStatus.CANCELED,
+    label: "使用中止",
+  },
 ];
 
 export enum ReservationDivision {
@@ -71,6 +76,8 @@ export enum ReservationDivision {
   AFTERNOON_ONE = "RESERVATION_DIVISION_AFTERNOON_ONE",
   AFTERNOON_TWO = "RESERVATION_DIVISION_AFTERNOON_TWO",
   EVENING = "RESERVATION_DIVISION_EVENING",
+  EVENING_ONE = "RESERVATION_DIVISION_EVENING_ONE",
+  EVENING_TWO = "RESERVATION_DIVISION_EVENING_TWO",
   ONE = "RESERVATION_DIVISION_ONE",
   TWO = "RESERVATION_DIVISION_TWO",
   THREE = "RESERVATION_DIVISION_THREE",
@@ -133,6 +140,14 @@ export const ReservationDivisionMap = [
     label: "夜間",
   },
   {
+    value: ReservationDivision.EVENING_ONE,
+    label: "夜間1",
+  },
+  {
+    value: ReservationDivision.EVENING_TWO,
+    label: "夜間2",
+  },
+  {
     value: ReservationDivision.ONE,
     label: "①",
   },
@@ -163,6 +178,110 @@ export const ReservationDivisionMap = [
   {
     value: ReservationDivision.TWO_HOUR,
     label: "2時間",
+  },
+  {
+    value: ReservationDivision.NINE_TO_NINE_HALF,
+    label: "09:00-09:30",
+  },
+  {
+    value: ReservationDivision.NINE_HALF_TO_TEN,
+    label: "09:30-10:00",
+  },
+  {
+    value: ReservationDivision.TEN_TO_TEN_HALF,
+    label: "10:00-10:30",
+  },
+  {
+    value: ReservationDivision.TEN_HALF_TO_EVELEN,
+    label: "10:30-11:00",
+  },
+  {
+    value: ReservationDivision.ELEVEN_TO_ELEVEN_HALF,
+    label: "11:00-11:30",
+  },
+  {
+    value: ReservationDivision.ELEVEN_HALF_TO_TWELVE,
+    label: "11:30-12:00",
+  },
+  {
+    value: ReservationDivision.TWELVE_TO_TWELVE_HALF,
+    label: "12:00-12:30",
+  },
+  {
+    value: ReservationDivision.TWELVE_HALF_TO_THIRTEEN,
+    label: "12:30-13:00",
+  },
+  {
+    value: ReservationDivision.THIRTEEN_TO_THIRTEEN_HALF,
+    label: "13:00-13:30",
+  },
+  {
+    value: ReservationDivision.THIRTEEN_HALF_TO_FOURTEEN,
+    label: "13:30-14:00",
+  },
+  {
+    value: ReservationDivision.FOURTEEN_TO_FOURTEEN_HALF,
+    label: "14:00-14:30",
+  },
+  {
+    value: ReservationDivision.FOURTEEN_HALF_TO_FIFTEEN,
+    label: "14:30-15:00",
+  },
+  {
+    value: ReservationDivision.FIFTEEN_TO_FIFTEEN_HALF,
+    label: "15:00-15:30",
+  },
+  {
+    value: ReservationDivision.FIFTEEN_HALF_TO_SIXTEEN,
+    label: "15:30-16:00",
+  },
+  {
+    value: ReservationDivision.SIXTEEN_TO_SIXTEEN_HALF,
+    label: "16:00-16:30",
+  },
+  {
+    value: ReservationDivision.SIXTEEN_HALF_TO_SEVENTEEN,
+    label: "16:30-17:00",
+  },
+  {
+    value: ReservationDivision.SEVENTEEN_TO_SEVENTEEN_HALF,
+    label: "17:00-17:30",
+  },
+  {
+    value: ReservationDivision.SEVENTEEN_HALF_TO_EIGHTEEN,
+    label: "17:30-18:00",
+  },
+  {
+    value: ReservationDivision.EIGHTEEN_TO_EIGHTEEN_HALF,
+    label: "18:00-18:30",
+  },
+  {
+    value: ReservationDivision.EIGHTEEN_HALF_TO_NINETEEN,
+    label: "18:30-19:00",
+  },
+  {
+    value: ReservationDivision.NINETEEN_TO_NINETEEN_HALF,
+    label: "19:00-19:30",
+  },
+  {
+    value: ReservationDivision.NINETEEN_HALF_TO_TWENTY,
+    label: "19:30-20:00",
+  },
+  {
+    value: ReservationDivision.TWENTY_TO_TWENTY_HALF,
+    label: "20:00-20:30",
+  },
+  {
+    value: ReservationDivision.TWENTY_HALF_TO_TWENTY_ONE,
+    label: "20:30-21:00",
+  },
+  {
+    value: ReservationDivision.TWENTY_ONE_TO_TWENTY_ONE_HALF,
+    label: "21:00-21:30",
+  },
+  {
+    value: ReservationDivision.TWENTY_ONE_HALF_TO_TWENTY_TWO,
+    label: "21:30-22:00",
   },
 ];
 

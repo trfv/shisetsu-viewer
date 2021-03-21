@@ -1,13 +1,15 @@
 query reservation(
   $offset: Int
   $limit: Int
-  $tokyoWard: tokyo_ward = null
+  $tokyoWard: [tokyo_ward!] = null
   $startDate: date
   $endDate: date
   $dayOfWeek: [day_of_week!] = null
   $reservationStatus1: jsonb = null
   $reservationStatus2: jsonb = null
   $reservationStatus3: jsonb = null
+  $reservationStatus4: jsonb = null
+  $reservationStatus5: jsonb = null
 ) {
   reservation(
     offset: $offset
@@ -15,22 +17,34 @@ query reservation(
     where: {
       _or: [
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus1 }
         }
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus2 }
         }
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus3 }
+        }
+        {
+          tokyo_ward: { _in: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus4 }
+        }
+        {
+          tokyo_ward: { _in: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus5 }
         }
       ]
     }
@@ -50,22 +64,34 @@ query reservation(
     where: {
       _or: [
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus1 }
         }
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus2 }
         }
         {
-          tokyo_ward: { _eq: $tokyoWard }
+          tokyo_ward: { _in: $tokyoWard }
           date: { _gte: $startDate, _lte: $endDate }
           day_of_week: { _in: $dayOfWeek }
           reservation: { _contains: $reservationStatus3 }
+        }
+        {
+          tokyo_ward: { _in: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus4 }
+        }
+        {
+          tokyo_ward: { _in: $tokyoWard }
+          date: { _gte: $startDate, _lte: $endDate }
+          day_of_week: { _in: $dayOfWeek }
+          reservation: { _contains: $reservationStatus5 }
         }
       ]
     }

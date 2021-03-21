@@ -1,7 +1,7 @@
 query institution(
   $offset: Int
   $limit: Int
-  $tokyoWard: tokyo_ward = null
+  $tokyoWard: [tokyo_ward!] = null
   $isAvailableStrings: availavility_division = null
   $isAvailableWoodwind: availavility_division = null
   $isAvailableBrass: availavility_division = null
@@ -13,7 +13,7 @@ query institution(
     offset: $offset
     limit: $limit
     where: {
-      tokyo_ward: { _eq: $tokyoWard }
+      tokyo_ward: { _in: $tokyoWard }
       is_available_strings: { _eq: $isAvailableStrings }
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
@@ -43,7 +43,7 @@ query institution(
   }
   institution_aggregate(
     where: {
-      tokyo_ward: { _eq: $tokyoWard }
+      tokyo_ward: { _in: $tokyoWard }
       is_available_strings: { _eq: $isAvailableStrings }
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }

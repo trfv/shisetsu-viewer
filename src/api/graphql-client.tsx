@@ -4,6 +4,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -617,7 +618,7 @@ export type Reservation = {
   day_of_week: Scalars['day_of_week'];
   id: Scalars['Int'];
   institution: Scalars['String'];
-  institution_id: Scalars['uuid'];
+  institution_id?: Maybe<Scalars['uuid']>;
   reservation: Scalars['jsonb'];
   tokyo_ward: Scalars['tokyo_ward'];
   updated_at: Scalars['timestamp'];
@@ -998,7 +999,7 @@ export type InstitutionDetailQuery = (
 export type InstitutionQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  tokyoWard?: Maybe<Scalars['tokyo_ward']>;
+  tokyoWard?: Maybe<Array<Scalars['tokyo_ward']> | Scalars['tokyo_ward']>;
   isAvailableStrings?: Maybe<Scalars['availavility_division']>;
   isAvailableWoodwind?: Maybe<Scalars['availavility_division']>;
   isAvailableBrass?: Maybe<Scalars['availavility_division']>;
@@ -1025,13 +1026,15 @@ export type InstitutionQuery = (
 export type ReservationQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  tokyoWard?: Maybe<Scalars['tokyo_ward']>;
+  tokyoWard?: Maybe<Array<Scalars['tokyo_ward']> | Scalars['tokyo_ward']>;
   startDate?: Maybe<Scalars['date']>;
   endDate?: Maybe<Scalars['date']>;
   dayOfWeek?: Maybe<Array<Scalars['day_of_week']> | Scalars['day_of_week']>;
   reservationStatus1?: Maybe<Scalars['jsonb']>;
   reservationStatus2?: Maybe<Scalars['jsonb']>;
   reservationStatus3?: Maybe<Scalars['jsonb']>;
+  reservationStatus4?: Maybe<Scalars['jsonb']>;
+  reservationStatus5?: Maybe<Scalars['jsonb']>;
 }>;
 
 
@@ -1097,20 +1100,22 @@ export const InstitutionDetailDocument = gql`
  * });
  */
 export function useInstitutionDetailQuery(baseOptions: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
-        return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
       }
 export function useInstitutionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
-          return Apollo.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
         }
 export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionDetailQuery>;
 export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
 export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionDocument = gql`
-    query institution($offset: Int, $limit: Int, $tokyoWard: tokyo_ward = null, $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $isEquippedMusicStand: equipment_division = null, $isEquippedPiano: equipment_division = null) {
+    query institution($offset: Int, $limit: Int, $tokyoWard: [tokyo_ward!] = null, $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $isEquippedMusicStand: equipment_division = null, $isEquippedPiano: equipment_division = null) {
   institution(
     offset: $offset
     limit: $limit
-    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
+    where: {tokyo_ward: {_in: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
   ) {
     id
     building
@@ -1134,7 +1139,7 @@ export const InstitutionDocument = gql`
     updated_at
   }
   institution_aggregate(
-    where: {tokyo_ward: {_eq: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
+    where: {tokyo_ward: {_in: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
   ) {
     aggregate {
       count
@@ -1168,20 +1173,22 @@ export const InstitutionDocument = gql`
  * });
  */
 export function useInstitutionQuery(baseOptions?: Apollo.QueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
-        return Apollo.useQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, options);
       }
 export function useInstitutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionQuery, InstitutionQueryVariables>) {
-          return Apollo.useLazyQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InstitutionQuery, InstitutionQueryVariables>(InstitutionDocument, options);
         }
 export type InstitutionQueryHookResult = ReturnType<typeof useInstitutionQuery>;
 export type InstitutionLazyQueryHookResult = ReturnType<typeof useInstitutionLazyQuery>;
 export type InstitutionQueryResult = Apollo.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
 export const ReservationDocument = gql`
-    query reservation($offset: Int, $limit: Int, $tokyoWard: tokyo_ward = null, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null) {
+    query reservation($offset: Int, $limit: Int, $tokyoWard: [tokyo_ward!] = null, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null, $reservationStatus5: jsonb = null) {
   reservation(
     offset: $offset
     limit: $limit
-    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}
+    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus5}}]}
     order_by: {date: asc}
   ) {
     id
@@ -1193,7 +1200,7 @@ export const ReservationDocument = gql`
     updated_at
   }
   reservation_aggregate(
-    where: {_or: [{tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_eq: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}]}
+    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus5}}]}
   ) {
     aggregate {
       count
@@ -1223,14 +1230,18 @@ export const ReservationDocument = gql`
  *      reservationStatus1: // value for 'reservationStatus1'
  *      reservationStatus2: // value for 'reservationStatus2'
  *      reservationStatus3: // value for 'reservationStatus3'
+ *      reservationStatus4: // value for 'reservationStatus4'
+ *      reservationStatus5: // value for 'reservationStatus5'
  *   },
  * });
  */
 export function useReservationQuery(baseOptions?: Apollo.QueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
-        return Apollo.useQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, options);
       }
 export function useReservationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReservationQuery, ReservationQueryVariables>) {
-          return Apollo.useLazyQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReservationQuery, ReservationQueryVariables>(ReservationDocument, options);
         }
 export type ReservationQueryHookResult = ReturnType<typeof useReservationQuery>;
 export type ReservationLazyQueryHookResult = ReturnType<typeof useReservationLazyQuery>;

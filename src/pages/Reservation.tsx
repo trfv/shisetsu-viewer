@@ -133,11 +133,8 @@ export const Reservation: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
-        ...(tokyoWard !== TokyoWard.INVALID
-          ? {
-              tokyoWard,
-            }
-          : {}),
+        tokyoWard:
+          tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards.map((w) => w.value) : [tokyoWard],
         startDate: startDate?.toDateString(),
         endDate: endDate?.toDateString(),
         dayOfWeek: filter.includes("onlyHoliday") ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
@@ -177,6 +174,25 @@ export const Reservation: FC = () => {
         reservationStatus3: {
           ...(filter.includes(ReservationDivision.MORNING)
             ? {
+                [ReservationDivision.ONE]: ReservationStatus.VACANT,
+              }
+            : {}),
+          ...(filter.includes(ReservationDivision.AFTERNOON)
+            ? {
+                [ReservationDivision.TWO]: ReservationStatus.VACANT,
+                [ReservationDivision.THREE]: ReservationStatus.VACANT,
+              }
+            : {}),
+          ...(filter.includes(ReservationDivision.EVENING)
+            ? {
+                [ReservationDivision.FOUR]: ReservationStatus.VACANT,
+                [ReservationDivision.FIVE]: ReservationStatus.VACANT,
+              }
+            : {}),
+        },
+        reservationStatus4: {
+          ...(filter.includes(ReservationDivision.MORNING)
+            ? {
                 [ReservationDivision.MORNING]: ReservationStatus.VACANT,
               }
             : {}),
@@ -189,6 +205,25 @@ export const Reservation: FC = () => {
           ...(filter.includes(ReservationDivision.EVENING)
             ? {
                 [ReservationDivision.EVENING]: ReservationStatus.VACANT,
+              }
+            : {}),
+        },
+        reservationStatus5: {
+          ...(filter.includes(ReservationDivision.MORNING)
+            ? {
+                [ReservationDivision.MORNING]: ReservationStatus.VACANT,
+              }
+            : {}),
+          ...(filter.includes(ReservationDivision.AFTERNOON)
+            ? {
+                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
+              }
+            : {}),
+          ...(filter.includes(ReservationDivision.EVENING)
+            ? {
+                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
               }
             : {}),
         },
@@ -331,7 +366,9 @@ export const Reservation: FC = () => {
                       )}
                     </TableCell>
                     <TableCell>{formatDate(info.date)}</TableCell>
-                    <TableCell>{formatReservationMap(info.reservation)}</TableCell>
+                    <TableCell style={{ whiteSpace: "pre-line" }}>
+                      {formatReservationMap(info.reservation)}
+                    </TableCell>
                     <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>
                 ))}

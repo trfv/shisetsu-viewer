@@ -132,11 +132,8 @@ export const Institution: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
-        ...(tokyoWard !== TokyoWard.INVALID
-          ? {
-              tokyoWard,
-            }
-          : {}),
+        tokyoWard:
+          tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards.map((w) => w.value) : [tokyoWard],
         ...(availableInstruments.includes("strings")
           ? { isAvaliableStrings: AvailabilityDivision.AVAILABLE }
           : {}),
