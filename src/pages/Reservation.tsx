@@ -406,7 +406,7 @@ export const Reservation: FC = () => {
   }, [loading, data, error]);
 
   return (
-    <BaseBox className={classes.pageBox}>
+    <BaseBox className={classes.pageBox} component="main">
       {renderSearchForm}
       {renderSearchResult}
     </BaseBox>

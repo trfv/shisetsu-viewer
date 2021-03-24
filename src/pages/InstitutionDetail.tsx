@@ -99,7 +99,7 @@ export const InstitutionDetail: FC = () => {
   }
 
   return (
-    <BaseBox className={classes.pageBox}>
+    <BaseBox className={classes.pageBox} component="main">
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
         <Tab value="info" label={t("施設情報")} />
         <Tab value="reservation" label={t("予約状況")} disabled={!reservation?.length} />
