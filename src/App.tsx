@@ -1,4 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -15,22 +16,29 @@ import "./utils/i18n";
 
 const App = () => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <ErrorBoundary>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Header />
-          <Switch>
-            <Route path={ROUTES.waiting} component={Waiting} exact />
-            <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
-            <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
-            <AuthGuardRoute path={ROUTES.institutionDetail} component={InstitutionDetail} exact />
-            <Redirect to={ROUTES.reservation} />
-          </Switch>
-          <Footer />
-        </BrowserRouter>
-      </ErrorBoundary>
-    </ApolloProvider>
+    <Auth0Provider
+      domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ""}
+      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ""}
+    >
+      <ApolloProvider client={apolloClient}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Header />
+            <Switch>
+              <Route path={ROUTES.waiting} component={Waiting} />
+              <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
+              <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
+              <AuthGuardRoute path={ROUTES.institutionDetail} component={InstitutionDetail} exact />
+              <Route path={ROUTES.root}>
+                <Redirect to={ROUTES.reservation} />
+              </Route>
+            </Switch>
+            <Footer />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </ApolloProvider>
+    </Auth0Provider>
   );
 };
 
