@@ -80,24 +80,6 @@ const convertAvailableInstrumentToUrlParam = (availableInstrument: string): stri
   return availableInstrument.slice(0, 1);
 };
 
-const getEquipmentFromUrlParam = (equipments: string[]): string[] => {
-  return equipments
-    .map((e) => {
-      if (e === "m") {
-        return "musicstand";
-      }
-      if (e === "p") {
-        return "piano";
-      }
-      return "";
-    })
-    .filter((f) => !!f);
-};
-
-const convertEquipmentToUrlParam = (equipment: string): string => {
-  return equipment.slice(0, 1);
-};
-
 const getPageFromUrlParam = (page: string | null | undefined) => {
   return parseInt(page ?? "0", 10);
 };

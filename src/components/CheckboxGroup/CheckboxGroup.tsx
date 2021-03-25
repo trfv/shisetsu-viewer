@@ -16,6 +16,7 @@ const mapChildren = (
   values: Props["values"],
   onChange: Props["onChange"]
 ): ReactNode => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Children.map(children, (child: any) => {
     if (child) {
       if (child?.props?.children) {

@@ -61,7 +61,7 @@ export const InstitutionDetail: FC = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [tab, setTab] = useState<Tab>("info");
-  const handleTabChange = (_: ChangeEvent<{}>, newValue: Tab) => setTab(newValue);
+  const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
 
   const options = {
     variables: {
@@ -191,7 +191,7 @@ export const InstitutionDetail: FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell variant="head">{t("日付")}</TableCell>
-                  {sortByReservationDivision(reservation[0].reservation).map(([division, _]) => (
+                  {sortByReservationDivision(reservation[0].reservation).map(([division]) => (
                     <TableCell key={division} variant="head">
                       {getEnumLabel<ReservationDivision>(division)}
                     </TableCell>
@@ -203,7 +203,7 @@ export const InstitutionDetail: FC = () => {
                 {reservation.map((info, index) => (
                   <TableRow key={index}>
                     <TableCell>{formatDate(info.date)}</TableCell>
-                    {sortByReservationDivision(info.reservation).map(([_, status], i) => (
+                    {sortByReservationDivision(info.reservation).map(([, status], i) => (
                       <TableCell key={i}>{getEnumLabel<ReservationStatus>(status)}</TableCell>
                     ))}
                     <TableCell>{formatDatetime(info.updated_at)}</TableCell>

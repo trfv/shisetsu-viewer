@@ -4,14 +4,27 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: ["prettier"],
-  plugins: ["prettier"],
-  parser: "@typescript-eslint/parser",
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+  ],
+  plugins: ["react", "@typescript-eslint"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   parserOptions: {
-    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   rules: {
     semi: ["error", "always"],
+    "react/prop-types": "off",
     "prettier/prettier": [
       "error",
       {
@@ -22,6 +35,7 @@ module.exports = {
       },
     ],
     "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-restricted-imports": [
       "error",
       {

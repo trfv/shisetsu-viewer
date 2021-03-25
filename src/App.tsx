@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { Auth0Provider } from "@auth0/auth0-react";
+import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
