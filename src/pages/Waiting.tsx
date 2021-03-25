@@ -7,10 +7,10 @@ import { ROUTES } from "../constants/routes";
 export const Waiting: FC = () => {
   const { isLoading, isAuthenticated } = useAuth0();
   const history = useHistory();
+  const next = new URLSearchParams(history.location.search).get("next");
   useEffect(() => {
-    console.log({ isAuthenticated });
     if (isAuthenticated) {
-      history.push(ROUTES.root);
+      history.push(next ?? ROUTES.root);
     }
   }, [isAuthenticated]);
   return isLoading ? <Loading /> : <Redirect to={ROUTES.root} />;

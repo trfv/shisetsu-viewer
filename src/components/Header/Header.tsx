@@ -79,7 +79,9 @@ export const Header: FC = () => {
                 {t("施設検索")}
               </ToggleButton>
             </ToggleButtonGroup>
-            <LogoutButton onClick={logout} />
+            <LogoutButton
+              onClick={() => logout({ returnTo: `${window.location.origin}${ROUTES.root}` })}
+            />
           </>
         )}
       </BaseBox>
