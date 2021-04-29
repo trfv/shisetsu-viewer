@@ -25,6 +25,9 @@ query institutionDetail(
     where: {
       institution_id: { _eq: $id }
     }
+    order_by: {
+      date: asc
+    }
   ) {
     date
     reservation
