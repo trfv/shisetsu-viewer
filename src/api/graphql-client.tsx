@@ -1075,7 +1075,7 @@ export const InstitutionDetailDocument = gql`
     lottery_period
     note
   }
-  reservation(where: {institution_id: {_eq: $id}}) {
+  reservation(where: {institution_id: {_eq: $id}}, order_by: {date: asc}) {
     date
     reservation
     updated_at
