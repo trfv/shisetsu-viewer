@@ -4,13 +4,13 @@ import "fontsource-roboto/500-normal.css";
 import "fontsource-roboto/700-normal.css";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Maintenance from "./Maintenance";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.css";
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <Maintenance />
   </StrictMode>,
   document.getElementById("root")
 );
