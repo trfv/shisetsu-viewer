@@ -2,6 +2,7 @@ query institutionDetail(
   $id: uuid!
 ) {
   institution_by_pk(id: $id) {
+    tokyo_ward
     building
     institution
     capacity
