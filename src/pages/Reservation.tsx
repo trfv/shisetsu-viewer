@@ -348,7 +348,7 @@ export const Reservation: FC = () => {
                     </TableCell>
                     <TableCell>{formatDate(info.date)}</TableCell>
                     <TableCell style={{ whiteSpace: "pre-line" }}>
-                      {formatReservationMap(tokyoWard, info.reservation)}
+                      {formatReservationMap(info.tokyo_ward, info.reservation)}
                     </TableCell>
                     <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>

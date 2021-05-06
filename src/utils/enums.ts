@@ -157,7 +157,7 @@ const TOSHIMA_RESERVATION_STATUS: Record<string, string> = {
   [ReservationStatus.STATUS_3]: "申込期間外",
   [ReservationStatus.STATUS_4]: "休館",
   [ReservationStatus.STATUS_5]: "なし",
-  [ReservationStatus.STATUS_6]: "＊",
+  [ReservationStatus.STATUS_6]: "公開対象外",
   [ReservationStatus.STATUS_7]: "抽選",
 };
 

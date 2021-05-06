@@ -1041,7 +1041,7 @@ export type ReservationQuery = (
   { __typename?: 'query_root' }
   & { reservation: Array<(
     { __typename?: 'reservation' }
-    & Pick<Reservation, 'id' | 'institution_id' | 'building' | 'institution' | 'date' | 'reservation' | 'updated_at'>
+    & Pick<Reservation, 'id' | 'institution_id' | 'tokyo_ward' | 'building' | 'institution' | 'date' | 'reservation' | 'updated_at'>
   )>, reservation_aggregate: (
     { __typename?: 'reservation_aggregate' }
     & { aggregate?: Maybe<(
@@ -1193,6 +1193,7 @@ export const ReservationDocument = gql`
   ) {
     id
     institution_id
+    tokyo_ward
     building
     institution
     date
