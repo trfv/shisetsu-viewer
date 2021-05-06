@@ -1,16 +1,18 @@
-import { ReservationDivision } from "../constants/enums";
-import { getEnumLabel } from "./enums";
+import { ReservationDivisionMap, SupportedTokyoWard } from "./enums";
 import { formatPrice } from "./format";
 import { sortByReservationDivision } from "./reservation";
 
-export const formatUsageFee = (feeMap: { [key: string]: string }): string => {
+export const formatUsageFee = (
+  tokyoWard: SupportedTokyoWard,
+  feeMap: Record<string, string>
+): string => {
   if (!feeMap) {
     return "";
   }
   return sortByReservationDivision(feeMap)
     .map(
       ([division, fee]) =>
-        `${getEnumLabel<ReservationDivision>(division)}: ${formatPrice(fee as string)}`
+        `${ReservationDivisionMap[tokyoWard]?.[division] ?? ""}: ${formatPrice(fee)}`
     )
     .join(" ");
 };

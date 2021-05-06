@@ -20,15 +20,10 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
-import {
-  AvailabilityDivision,
-  EquipmentDivision,
-  ReservationDivision,
-  ReservationStatus,
-} from "../constants/enums";
+import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../constants/enums";
 import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
-import { getEnumLabel } from "../utils/enums";
+import { ReservationDivisionMap, ReservationStatusMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { formatUsageFee, getGoogleMapLink } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
@@ -118,35 +113,35 @@ export const InstitutionDetail: FC = () => {
           )}
           {renderInstitutionRow(
             t("利用料金（平日）"),
-            formatUsageFee(institution_by_pk?.weekday_usage_fee)
+            formatUsageFee(institution_by_pk?.tokyo_ward, institution_by_pk?.weekday_usage_fee)
           )}
           {renderInstitutionRow(
             t("利用料金（休日）"),
-            formatUsageFee(institution_by_pk?.holiday_usage_fee)
+            formatUsageFee(institution_by_pk?.tokyo_ward, institution_by_pk?.holiday_usage_fee)
           )}
           {renderInstitutionRow(
             t("弦楽器"),
-            getEnumLabel<AvailabilityDivision>(institution_by_pk?.is_available_strings)
+            AvailabilityDivisionMap[institution_by_pk?.is_available_strings]
           )}
           {renderInstitutionRow(
             "木管楽器",
-            getEnumLabel<AvailabilityDivision>(institution_by_pk?.is_available_woodwind)
+            AvailabilityDivisionMap[institution_by_pk?.is_available_woodwind]
           )}
           {renderInstitutionRow(
             t("金管楽器"),
-            getEnumLabel<AvailabilityDivision>(institution_by_pk?.is_available_brass)
+            AvailabilityDivisionMap[institution_by_pk?.is_available_brass]
           )}
           {renderInstitutionRow(
             t("打楽器"),
-            getEnumLabel<AvailabilityDivision>(institution_by_pk?.is_available_percussion)
+            AvailabilityDivisionMap[institution_by_pk?.is_available_percussion]
           )}
           {renderInstitutionRow(
             t("譜面台"),
-            getEnumLabel<EquipmentDivision>(institution_by_pk?.is_equipped_music_stand)
+            EquipmentDivisionMap[institution_by_pk?.is_equipped_music_stand]
           )}
           {renderInstitutionRow(
             t("ピアノ"),
-            getEnumLabel<EquipmentDivision>(institution_by_pk?.is_equipped_piano)
+            EquipmentDivisionMap[institution_by_pk?.is_equipped_piano]
           )}
           {renderInstitutionRow(
             t("公式サイト"),
@@ -193,7 +188,7 @@ export const InstitutionDetail: FC = () => {
                   <TableCell variant="head">{t("日付")}</TableCell>
                   {sortByReservationDivision(reservation[0].reservation).map(([division]) => (
                     <TableCell key={division} variant="head">
-                      {getEnumLabel<ReservationDivision>(division)}
+                      {ReservationDivisionMap[institution_by_pk?.tokyo_ward]?.[division]}
                     </TableCell>
                   ))}
                   <TableCell variant="head">{t("更新日時")}</TableCell>
@@ -204,7 +199,9 @@ export const InstitutionDetail: FC = () => {
                   <TableRow key={index}>
                     <TableCell>{formatDate(info.date)}</TableCell>
                     {sortByReservationDivision(info.reservation).map(([, status], i) => (
-                      <TableCell key={i}>{getEnumLabel<ReservationStatus>(status)}</TableCell>
+                      <TableCell key={i}>
+                        {ReservationStatusMap[institution_by_pk?.tokyo_ward]?.[status]}
+                      </TableCell>
                     ))}
                     <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>

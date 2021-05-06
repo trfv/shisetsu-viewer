@@ -989,7 +989,7 @@ export type InstitutionDetailQuery = (
   { __typename?: 'query_root' }
   & { institution_by_pk?: Maybe<(
     { __typename?: 'institution' }
-    & Pick<Institution, 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
+    & Pick<Institution, 'tokyo_ward' | 'building' | 'institution' | 'capacity' | 'area' | 'reservation_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
   )>, reservation: Array<(
     { __typename?: 'reservation' }
     & Pick<Reservation, 'date' | 'reservation' | 'updated_at'>
@@ -1034,7 +1034,6 @@ export type ReservationQueryVariables = Exact<{
   reservationStatus2?: Maybe<Scalars['jsonb']>;
   reservationStatus3?: Maybe<Scalars['jsonb']>;
   reservationStatus4?: Maybe<Scalars['jsonb']>;
-  reservationStatus5?: Maybe<Scalars['jsonb']>;
 }>;
 
 
@@ -1056,6 +1055,7 @@ export type ReservationQuery = (
 export const InstitutionDetailDocument = gql`
     query institutionDetail($id: uuid!) {
   institution_by_pk(id: $id) {
+    tokyo_ward
     building
     institution
     capacity
@@ -1184,11 +1184,11 @@ export type InstitutionQueryHookResult = ReturnType<typeof useInstitutionQuery>;
 export type InstitutionLazyQueryHookResult = ReturnType<typeof useInstitutionLazyQuery>;
 export type InstitutionQueryResult = Apollo.QueryResult<InstitutionQuery, InstitutionQueryVariables>;
 export const ReservationDocument = gql`
-    query reservation($offset: Int, $limit: Int, $tokyoWard: [tokyo_ward!] = null, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null, $reservationStatus5: jsonb = null) {
+    query reservation($offset: Int, $limit: Int, $tokyoWard: [tokyo_ward!] = null, $startDate: date, $endDate: date, $dayOfWeek: [day_of_week!] = null, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
   reservation(
     offset: $offset
     limit: $limit
-    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus5}}]}
+    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}]}
     order_by: {date: asc}
   ) {
     id
@@ -1200,7 +1200,7 @@ export const ReservationDocument = gql`
     updated_at
   }
   reservation_aggregate(
-    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus5}}]}
+    where: {_or: [{tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus1}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus2}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus3}}, {tokyo_ward: {_in: $tokyoWard}, date: {_gte: $startDate, _lte: $endDate}, day_of_week: {_in: $dayOfWeek}, reservation: {_contains: $reservationStatus4}}]}
   ) {
     aggregate {
       count
@@ -1231,7 +1231,6 @@ export const ReservationDocument = gql`
  *      reservationStatus2: // value for 'reservationStatus2'
  *      reservationStatus3: // value for 'reservationStatus3'
  *      reservationStatus4: // value for 'reservationStatus4'
- *      reservationStatus5: // value for 'reservationStatus5'
  *   },
  * });
  */

@@ -29,7 +29,9 @@ import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import {
   convertTokyoWardToUrlParam,
   getTokyoWardFromUrlParam,
+  SupportedTokyoWard,
   SupportedTokyoWards,
+  TokyoWardOptions,
 } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
@@ -98,7 +100,7 @@ export const Institution: FC = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(
+  const [tokyoWard, setTokyoWard] = useState<SupportedTokyoWard>(
     getTokyoWardFromUrlParam(searchParams.get("w"))
   );
   const [availableInstruments, setAvailableInstruments] = useState<string[]>(
@@ -114,8 +116,7 @@ export const Institution: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
-        tokyoWard:
-          tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards.map((w) => w.value) : [tokyoWard],
+        tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
         ...(availableInstruments.includes("strings")
           ? { isAvaliableStrings: AvailabilityDivision.AVAILABLE }
           : {}),
@@ -134,7 +135,7 @@ export const Institution: FC = () => {
 
   const renderSearchForm = useMemo(() => {
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      const value = event.target.value as TokyoWard;
+      const value = event.target.value as SupportedTokyoWard;
       setTokyoWard(value);
       setPage(0);
       searchParams.delete("p");
@@ -164,7 +165,7 @@ export const Institution: FC = () => {
           value={tokyoWard}
           size="small"
           onChange={handleTokyoWardChange}
-          selectOptions={SupportedTokyoWards}
+          selectOptions={TokyoWardOptions}
         />
         <CheckboxGroup
           label={t("利用可能楽器")}
@@ -252,14 +253,14 @@ export const Institution: FC = () => {
                       {info.weekday_usage_fee && (
                         <div>
                           {t("平日 {{ usageFee }}", {
-                            usageFee: formatUsageFee(info.weekday_usage_fee),
+                            usageFee: formatUsageFee(tokyoWard, info.weekday_usage_fee),
                           })}
                         </div>
                       )}
                       {info.holiday_usage_fee && (
                         <div>
                           {t("休日 {{ usageFee }}", {
-                            usageFee: formatUsageFee(info.holiday_usage_fee),
+                            usageFee: formatUsageFee(tokyoWard, info.holiday_usage_fee),
                           })}
                         </div>
                       )}

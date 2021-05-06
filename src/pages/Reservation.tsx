@@ -28,11 +28,12 @@ import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "..
 import { ROUTES } from "../constants/routes";
 import { ROW_PER_PAGE_OPTION } from "../constants/search";
 import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
-import { isValidUUID } from "../utils/common";
 import {
   convertTokyoWardToUrlParam,
   getTokyoWardFromUrlParam,
+  SupportedTokyoWard,
   SupportedTokyoWards,
+  TokyoWardOptions,
 } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { formatReservationMap } from "../utils/reservation";
@@ -112,7 +113,7 @@ export const Reservation: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const [tokyoWard, setTokyoWard] = useState<TokyoWard>(
+  const [tokyoWard, setTokyoWard] = useState<SupportedTokyoWard>(
     getTokyoWardFromUrlParam(searchParams.get("w"))
   );
   const [startDate, setStartDate] = useState<Date | null>(
@@ -133,8 +134,7 @@ export const Reservation: FC = () => {
       variables: {
         offset: page * rowsPerPage,
         limit: rowsPerPage,
-        tokyoWard:
-          tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards.map((w) => w.value) : [tokyoWard],
+        tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
         startDate: startDate?.toDateString(),
         endDate: endDate?.toDateString(),
         dayOfWeek: filter.includes("onlyHoliday") ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
@@ -154,39 +154,39 @@ export const Reservation: FC = () => {
         reservationStatus2: {
           ...(filter.includes(ReservationDivision.MORNING)
             ? {
-                [ReservationDivision.ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.TWO]: ReservationStatus.VACANT,
+                [ReservationDivision.MORNING_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.MORNING_TWO]: ReservationStatus.VACANT,
               }
             : {}),
           ...(filter.includes(ReservationDivision.AFTERNOON)
             ? {
-                [ReservationDivision.THREE]: ReservationStatus.VACANT,
-                [ReservationDivision.FOUR]: ReservationStatus.VACANT,
+                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
               }
             : {}),
           ...(filter.includes(ReservationDivision.EVENING)
             ? {
-                [ReservationDivision.FIVE]: ReservationStatus.VACANT,
-                [ReservationDivision.SIX]: ReservationStatus.VACANT,
+                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
               }
             : {}),
         },
         reservationStatus3: {
           ...(filter.includes(ReservationDivision.MORNING)
             ? {
-                [ReservationDivision.ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.MORNING]: ReservationStatus.VACANT,
               }
             : {}),
           ...(filter.includes(ReservationDivision.AFTERNOON)
             ? {
-                [ReservationDivision.TWO]: ReservationStatus.VACANT,
-                [ReservationDivision.THREE]: ReservationStatus.VACANT,
+                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
               }
             : {}),
           ...(filter.includes(ReservationDivision.EVENING)
             ? {
-                [ReservationDivision.FOUR]: ReservationStatus.VACANT,
-                [ReservationDivision.FIVE]: ReservationStatus.VACANT,
+                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
+                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
               }
             : {}),
         },
@@ -208,32 +208,13 @@ export const Reservation: FC = () => {
               }
             : {}),
         },
-        reservationStatus5: {
-          ...(filter.includes(ReservationDivision.MORNING)
-            ? {
-                [ReservationDivision.MORNING]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.AFTERNOON)
-            ? {
-                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.EVENING)
-            ? {
-                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-        },
       },
     }
   );
 
   const renderSearchForm = useMemo(() => {
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      const value = event.target.value as TokyoWard;
+      const value = event.target.value as SupportedTokyoWard;
       setTokyoWard(value);
       setPage(0);
       searchParams.delete("p");
@@ -281,7 +262,7 @@ export const Reservation: FC = () => {
           value={tokyoWard}
           size="small"
           onChange={handleTokyoWardChange}
-          selectOptions={SupportedTokyoWards}
+          selectOptions={TokyoWardOptions}
         />
         <DateRangePicker
           label={t("期間指定")}
@@ -357,7 +338,7 @@ export const Reservation: FC = () => {
                 data?.reservation.map((info) => (
                   <TableRow key={info.id}>
                     <TableCell>
-                      {isValidUUID(info.institution_id) ? (
+                      {info.institution_id ? (
                         <Link to={ROUTES.institutionDetail.replace(":id", info.institution_id)}>
                           {`${info.building} ${info.institution}`}
                         </Link>
@@ -367,7 +348,7 @@ export const Reservation: FC = () => {
                     </TableCell>
                     <TableCell>{formatDate(info.date)}</TableCell>
                     <TableCell style={{ whiteSpace: "pre-line" }}>
-                      {formatReservationMap(info.reservation)}
+                      {formatReservationMap(tokyoWard, info.reservation)}
                     </TableCell>
                     <TableCell>{formatDatetime(info.updated_at)}</TableCell>
                   </TableRow>
