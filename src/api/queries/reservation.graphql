@@ -47,6 +47,7 @@ query reservation(
   ) {
     id
     institution_id
+    tokyo_ward
     building
     institution
     date
