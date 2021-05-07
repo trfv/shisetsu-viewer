@@ -1,0 +1,55 @@
+import { FeeDivision, ReservationDivision, ReservationStatus } from "./enums";
+
+export const EDOGAWA_RESERVATION_STATUS: Readonly<Record<string, string>> = {
+  [ReservationStatus.VACANT]: "空き",
+  [ReservationStatus.STATUS_1]: "予約済",
+  [ReservationStatus.STATUS_2]: "×",
+  [ReservationStatus.STATUS_3]: "使用中止",
+  [ReservationStatus.STATUS_4]: "休館日",
+  [ReservationStatus.STATUS_5]: "工事",
+  [ReservationStatus.STATUS_6]: "保守",
+  [ReservationStatus.STATUS_7]: "清掃",
+};
+
+export const EDOGAWA_RESERVATION_DIVISION: Readonly<Record<string, string>> = {
+  [ReservationDivision.MORNING]: "午前",
+  [ReservationDivision.AFTERNOON]: "午後",
+  [ReservationDivision.AFTERNOON_ONE]: "午後1",
+  [ReservationDivision.AFTERNOON_TWO]: "午後2",
+  [ReservationDivision.EVENING]: "夜間",
+  [ReservationDivision.EVENING_ONE]: "夜間1",
+  [ReservationDivision.EVENING_TWO]: "夜間2",
+  [ReservationDivision.DIVISION_1]: "0900-0930",
+  [ReservationDivision.DIVISION_2]: "0930-1000",
+  [ReservationDivision.DIVISION_3]: "1000-1030",
+  [ReservationDivision.DIVISION_4]: "1030-1100",
+  [ReservationDivision.DIVISION_5]: "1100-1130",
+  [ReservationDivision.DIVISION_6]: "1130-1200",
+  [ReservationDivision.DIVISION_7]: "1200-1230",
+  [ReservationDivision.DIVISION_8]: "1230-1300",
+  [ReservationDivision.DIVISION_9]: "1300-1330",
+  [ReservationDivision.DIVISION_10]: "1330-1400",
+  [ReservationDivision.DIVISION_11]: "1400-1430",
+  [ReservationDivision.DIVISION_12]: "1430-1500",
+  [ReservationDivision.DIVISION_13]: "1500-1530",
+  [ReservationDivision.DIVISION_14]: "1530-1600",
+  [ReservationDivision.DIVISION_15]: "1600-1630",
+  [ReservationDivision.DIVISION_16]: "1630-1700",
+  [ReservationDivision.DIVISION_17]: "1700-1730",
+  [ReservationDivision.DIVISION_18]: "1730-1800",
+  [ReservationDivision.DIVISION_19]: "1800-1830",
+  [ReservationDivision.DIVISION_20]: "1830-1900",
+  [ReservationDivision.DIVISION_21]: "1900-1930",
+  [ReservationDivision.DIVISION_22]: "1930-2000",
+  [ReservationDivision.DIVISION_23]: "2000-2030",
+  [ReservationDivision.DIVISION_24]: "2030-2100",
+  [ReservationDivision.DIVISION_25]: "2100-2130",
+  [ReservationDivision.DIVISION_26]: "2130-2200",
+};
+
+export const EDOGAWA_FEE_DIVISION: Readonly<Record<string, string>> = {
+  [FeeDivision.MORNING]: "午前",
+  [FeeDivision.AFTERNOON]: "午後",
+  [FeeDivision.EVENING]: "夜間",
+  [FeeDivision.ONE_HOUR]: "1時間",
+};

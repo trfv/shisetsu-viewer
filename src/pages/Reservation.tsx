@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { addDays, addMonths, isAfter, isBefore, isValid } from "date-fns";
+import { addMonths, endOfMonth, isAfter, isBefore, isValid } from "date-fns";
 import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(() => ({
 
 const now = new Date();
 const minDate = now;
-const maxDate = addDays(now, 181);
+const maxDate = addMonths(endOfMonth(now), 6);
 
 const getInitialDateFromUrlParam = (date: string | null | undefined): Date | null => {
   if (!date || !isValid(new Date(date))) {
