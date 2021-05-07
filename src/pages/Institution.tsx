@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, FC, MouseEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -22,19 +22,23 @@ import {
   TableRow,
 } from "../components/Table";
 import { TablePagination } from "../components/TablePagination";
-import { AvailabilityDivision, TokyoWard } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { ROW_PER_PAGE_OPTION } from "../constants/search";
+import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
 import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
-import {
-  convertTokyoWardToUrlParam,
-  getTokyoWardFromUrlParam,
-  SupportedTokyoWard,
-  SupportedTokyoWards,
-  TokyoWardOptions,
-} from "../utils/enums";
+import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
-import { formatUsageFee } from "../utils/institution";
+import {
+  AvailableInstrument,
+  AVAILABLE_INSTRUMENTS,
+  BRASS,
+  formatUsageFee,
+  PERCUSSION,
+  STRINGS,
+  toInstitutionQueryVariables,
+  toInstitutionSearchParams,
+  WOODWIND,
+} from "../utils/institution";
+import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -58,104 +62,60 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const getAvailableInstrumentFromUrlParam = (availableInstruments: string[]): string[] => {
-  return availableInstruments
-    .map((a) => {
-      if (a === "s") {
-        return "strings";
-      }
-      if (a === "w") {
-        return "woodwind";
-      }
-      if (a === "b") {
-        return "brass";
-      }
-      if (a === "e") {
-        return "percussion";
-      }
-      return "";
-    })
-    .filter((f) => !!f);
-};
-
-const convertAvailableInstrumentToUrlParam = (availableInstrument: string): string => {
-  return availableInstrument.slice(0, 1);
-};
-
-const getPageFromUrlParam = (page: string | null | undefined) => {
-  return parseInt(page ?? "0", 10);
-};
-
-const getRowPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
-  if (!rowPerPage) {
-    return 10;
-  }
-  const tmp = parseInt(rowPerPage, 10);
-  return ROW_PER_PAGE_OPTION.includes(tmp) ? tmp : 10;
-};
-
 export const Institution: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
 
-  const [tokyoWard, setTokyoWard] = useState<SupportedTokyoWard>(
-    getTokyoWardFromUrlParam(searchParams.get("w"))
+  const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
+
+  const [institutionSearchParams, setInstitutionSearchParams] = useState(
+    toInstitutionSearchParams(urlSearchParams.current)
   );
-  const [availableInstruments, setAvailableInstruments] = useState<string[]>(
-    getAvailableInstrumentFromUrlParam(searchParams.getAll("a"))
-  );
-
-  const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
-  const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
-
   const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
     InstitutionDocument,
     {
-      variables: {
-        offset: page * rowsPerPage,
-        limit: rowsPerPage,
-        tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
-        ...(availableInstruments.includes("strings")
-          ? { isAvaliableStrings: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("woodwind")
-          ? { isAvailableWoodwind: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("brass")
-          ? { isAvailableBrass: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("percussion")
-          ? { isAvailablePercussion: AvailabilityDivision.AVAILABLE }
-          : {}),
-      },
+      variables: toInstitutionQueryVariables(institutionSearchParams),
     }
   );
 
-  const renderSearchForm = useMemo(() => {
+  const { page, rowsPerPage, tokyoWard, availableInstruments } = institutionSearchParams;
+
+  const renderSearchForm = () => {
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
       const value = event.target.value as SupportedTokyoWard;
-      setTokyoWard(value);
-      setPage(0);
-      searchParams.delete("p");
-      const urlParam = convertTokyoWardToUrlParam(value);
-      urlParam ? searchParams.set("w", urlParam) : searchParams.delete("w");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      setInstitutionSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleAvailableInstrumentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
-
       const next = checked
-        ? [...availableInstruments, value]
+        ? availableInstruments.concat(value as AvailableInstrument)
         : availableInstruments.filter((v) => v !== value);
-      setAvailableInstruments(next);
-      searchParams.delete("a");
-      next.forEach((a) => searchParams.append("a", convertAvailableInstrumentToUrlParam(a)));
-
-      setPage(0);
-      searchParams.delete("p");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      setInstitutionSearchParams((prevState) => ({
+        ...prevState,
+        page: 0,
+        availableInstruments: next,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        next.map((f) => [AVAILABLE_INSTRUMENTS, f]),
+        [PAGE, AVAILABLE_INSTRUMENTS]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
 
     return (
@@ -172,29 +132,51 @@ export const Institution: FC = () => {
           values={availableInstruments}
           onChange={handleAvailableInstrumentsChange}
         >
-          <Checkbox label={t("弦楽器")} value="strings" />
-          <Checkbox label={t("木管楽器")} value="woodwind" />
-          <Checkbox label={t("金管楽器")} value="brass" />
-          <Checkbox label={t("打楽器")} value="percussion" />
+          <Checkbox label={t("弦楽器")} value={STRINGS} />
+          <Checkbox label={t("木管楽器")} value={WOODWIND} />
+          <Checkbox label={t("金管楽器")} value={BRASS} />
+          <Checkbox label={t("打楽器")} value={PERCUSSION} />
         </CheckboxGroup>
       </BaseBox>
     );
-  }, [tokyoWard, availableInstruments]);
+  };
 
-  const renderSearchResult = useMemo(() => {
+  const renderSearchResult = () => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-      setPage(newPage);
-      searchParams.set("p", String(newPage));
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      setInstitutionSearchParams((prevState) => ({
+        ...prevState,
+        page: newPage,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[PAGE, String(newPage)]],
+        []
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleChangeRowsPerPage = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ): void => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      searchParams.set("r", event.target.value);
-      setPage(0);
-      searchParams.set("p", "0");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      const value = event.target.value;
+      setInstitutionSearchParams((prevState) => ({
+        ...prevState,
+        rowsPerPage: parseInt(value, 10),
+        page: 0,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[ROWS_PER_PAGE, value]],
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
 
     if (error) {
@@ -299,12 +281,12 @@ export const Institution: FC = () => {
         </TableContainer>
       </BaseBox>
     );
-  }, [loading, error, data]);
+  };
 
   return (
     <BaseBox className={classes.pageBox} component="main">
-      {renderSearchForm}
-      {renderSearchResult}
+      {renderSearchForm()}
+      {renderSearchResult()}
     </BaseBox>
   );
 };

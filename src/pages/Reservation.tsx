@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { addMonths, endOfMonth, isAfter, isBefore, isValid } from "date-fns";
-import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
+import { addMonths, endOfMonth, isAfter, isBefore } from "date-fns";
+import React, { ChangeEvent, FC, MouseEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -24,19 +24,23 @@ import {
   TableRow,
 } from "../components/Table";
 import { TablePagination } from "../components/TablePagination";
-import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { ROW_PER_PAGE_OPTION } from "../constants/search";
+import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
 import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
-import {
-  convertTokyoWardToUrlParam,
-  getTokyoWardFromUrlParam,
-  SupportedTokyoWard,
-  SupportedTokyoWards,
-  TokyoWardOptions,
-} from "../utils/enums";
+import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
-import { formatReservationMap } from "../utils/reservation";
+import {
+  formatReservationMap,
+  IS_ONLY_AFTERNOON_VACANT,
+  IS_ONLY_EVENING_VACANT,
+  IS_ONLY_HOLIDAY,
+  IS_ONLY_MORNING_VACANT,
+  ReservationSearchFilter,
+  RESERVATION_SEARCH_FILTER,
+  toReservationQueryVariables,
+  toReservationSearchParams,
+} from "../utils/reservation";
+import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
 
 const useStyles = makeStyles(() => ({
   pageBox: {
@@ -58,203 +62,110 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const now = new Date();
-const minDate = now;
-const maxDate = addMonths(endOfMonth(now), 6);
-
-const getInitialDateFromUrlParam = (date: string | null | undefined): Date | null => {
-  if (!date || !isValid(new Date(date))) {
-    return null;
-  }
-  const tmp = new Date(date);
-  return isBefore(tmp, minDate) || isAfter(tmp, maxDate) ? null : tmp;
-};
-
-const getFilterFromUrlParam = (filters: string[]): string[] => {
-  return filters
-    .map((f) => {
-      if (f === "oh") {
-        return "onlyHoliday";
-      }
-      if (f === "m") {
-        return ReservationDivision.MORNING;
-      }
-      if (f === "a") {
-        return ReservationDivision.AFTERNOON;
-      }
-      if (f === "e") {
-        return ReservationDivision.EVENING;
-      }
-      return "";
-    })
-    .filter((f) => !!f);
-};
-
-const convertFilterToUrlParam = (filter: string): string => {
-  return filter === "onlyHoliday"
-    ? "oh"
-    : filter.replace("RESERVATION_DIVISION_", "").slice(0, 1).toLowerCase();
-};
-
-const getPageFromUrlParam = (page: string | null | undefined) => {
-  return parseInt(page ?? "0", 10);
-};
-
-const getRowPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
-  if (!rowPerPage) {
-    return 10;
-  }
-  const tmp = parseInt(rowPerPage, 10);
-  return ROW_PER_PAGE_OPTION.includes(tmp) ? tmp : 10;
-};
+const minDate = new Date();
+const maxDate = addMonths(endOfMonth(new Date()), 6);
 
 export const Reservation: FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
-  const [tokyoWard, setTokyoWard] = useState<SupportedTokyoWard>(
-    getTokyoWardFromUrlParam(searchParams.get("w"))
-  );
-  const [startDate, setStartDate] = useState<Date | null>(
-    getInitialDateFromUrlParam(searchParams.get("df")) ?? now
-  );
-  const [endDate, setEndDate] = useState<Date | null>(
-    getInitialDateFromUrlParam(searchParams.get("dt")) ?? addMonths(now, 1)
-  );
-  const [filter, setFilter] = useState<(string | ReservationDivision)[]>(
-    getFilterFromUrlParam(searchParams.getAll("f"))
-  );
-  const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
-  const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
 
+  const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
+  const [resevationSearchParams, setReservationSearchParams] = useState(
+    toReservationSearchParams(urlSearchParams.current, minDate, maxDate)
+  );
   const { loading, data, error } = useQuery<ReservationQuery, ReservationQueryVariables>(
     ReservationDocument,
     {
-      variables: {
-        offset: page * rowsPerPage,
-        limit: rowsPerPage,
-        tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
-        startDate: startDate?.toDateString(),
-        endDate: endDate?.toDateString(),
-        dayOfWeek: filter.includes("onlyHoliday") ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
-        reservationStatus1: {
-          ...(filter.includes(ReservationDivision.MORNING)
-            ? { [ReservationDivision.MORNING]: ReservationStatus.VACANT }
-            : {}),
-          ...(filter.includes(ReservationDivision.AFTERNOON)
-            ? {
-                [ReservationDivision.AFTERNOON]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.EVENING)
-            ? { [ReservationDivision.EVENING]: ReservationStatus.VACANT }
-            : {}),
-        },
-        reservationStatus2: {
-          ...(filter.includes(ReservationDivision.MORNING)
-            ? {
-                [ReservationDivision.MORNING_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.MORNING_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.AFTERNOON)
-            ? {
-                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.EVENING)
-            ? {
-                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-        },
-        reservationStatus3: {
-          ...(filter.includes(ReservationDivision.MORNING)
-            ? {
-                [ReservationDivision.MORNING]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.AFTERNOON)
-            ? {
-                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.EVENING)
-            ? {
-                [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-        },
-        reservationStatus4: {
-          ...(filter.includes(ReservationDivision.MORNING)
-            ? {
-                [ReservationDivision.MORNING]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.AFTERNOON)
-            ? {
-                [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-                [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-              }
-            : {}),
-          ...(filter.includes(ReservationDivision.EVENING)
-            ? {
-                [ReservationDivision.EVENING]: ReservationStatus.VACANT,
-              }
-            : {}),
-        },
-      },
+      variables: toReservationQueryVariables(resevationSearchParams),
     }
   );
 
-  const renderSearchForm = useMemo(() => {
+  const { page, rowsPerPage, tokyoWard, startDate, endDate, filter } = resevationSearchParams;
+
+  const renderSearchForm = () => {
     const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
       const value = event.target.value as SupportedTokyoWard;
-      setTokyoWard(value);
-      setPage(0);
-      searchParams.delete("p");
-      const urlParam = convertTokyoWardToUrlParam(value);
-      urlParam ? searchParams.set("w", urlParam) : searchParams.delete("w");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      setReservationSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleStartDateChange = (date: Date | null): void => {
-      setStartDate(date);
-      setPage(0);
-      searchParams.delete("p");
-      date ? searchParams.set("df", date.toLocaleDateString()) : searchParams.delete("df");
-      if (date && endDate && isAfter(date, endDate)) {
-        setEndDate(date);
-        searchParams.set("dt", date.toLocaleDateString());
-      }
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      const needsUpdateEndDate = date && endDate && isAfter(date, endDate);
+      setReservationSearchParams((prevState) => ({
+        ...prevState,
+        page: 0,
+        startDate: date,
+        ...(needsUpdateEndDate ? { endDate: date } : {}),
+      }));
+      const appendParams: [string, string | undefined][] = [
+        [START_DATE, date?.toLocaleDateString()],
+      ];
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        needsUpdateEndDate
+          ? appendParams.concat([END_DATE, date?.toLocaleDateString()])
+          : appendParams,
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleEndDateChange = (date: Date | null): void => {
-      setEndDate(date);
-      setPage(0);
-      searchParams.delete("p");
-      date ? searchParams.set("dt", date.toLocaleDateString()) : searchParams.delete("dt");
-      if (date && startDate && isBefore(date, startDate)) {
-        setStartDate(date);
-        searchParams.set("df", date.toLocaleDateString());
-      }
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      const needsUpdateStartDate = date && startDate && isBefore(date, startDate);
+      setReservationSearchParams((prevState) => ({
+        ...prevState,
+        page: 0,
+        endDate: date,
+        ...(needsUpdateStartDate ? { endDate: date } : {}),
+      }));
+      const appendParams: [string, string | undefined][] = [[END_DATE, date?.toLocaleDateString()]];
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        needsUpdateStartDate
+          ? appendParams.concat([START_DATE, date?.toLocaleDateString()])
+          : appendParams,
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
-      const next = event.target.checked
-        ? [...filter, event.target.value]
-        : filter.filter((v) => v !== event.target.value);
-      setFilter(next);
-      searchParams.delete("f");
-      next.forEach((f) => searchParams.append("f", convertFilterToUrlParam(f)));
-      setPage(0);
-      searchParams.delete("p");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      const { value, checked } = event.target;
+      const next = checked
+        ? filter.concat(value as ReservationSearchFilter)
+        : filter.filter((v) => v !== value);
+      setReservationSearchParams((prevState) => ({
+        ...prevState,
+        page: 0,
+        filter: next,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        next.map((f) => [RESERVATION_SEARCH_FILTER, f]),
+        [PAGE, RESERVATION_SEARCH_FILTER]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
+
     return (
       <BaseBox className={classes.searchBox} display="flex">
         <Select
@@ -280,29 +191,51 @@ export const Reservation: FC = () => {
           }}
         />
         <CheckboxGroup label={t("絞り込み")} values={filter} onChange={handleFilterChange}>
-          <Checkbox label={t("休日のみ")} value="onlyHoliday" />
-          <Checkbox label={t("午前空き")} value={ReservationDivision.MORNING} />
-          <Checkbox label={t("午後空き")} value={ReservationDivision.AFTERNOON} />
-          <Checkbox label={t("夜間空き")} value={ReservationDivision.EVENING} />
+          <Checkbox label={t("休日のみ")} value={IS_ONLY_HOLIDAY} />
+          <Checkbox label={t("午前空き")} value={IS_ONLY_MORNING_VACANT} />
+          <Checkbox label={t("午後空き")} value={IS_ONLY_AFTERNOON_VACANT} />
+          <Checkbox label={t("夜間空き")} value={IS_ONLY_EVENING_VACANT} />
         </CheckboxGroup>
       </BaseBox>
     );
-  }, [tokyoWard, startDate, endDate, filter]);
+  };
 
-  const renderSearchResult = useMemo(() => {
+  const renderSearchResult = () => {
     const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-      setPage(newPage);
-      searchParams.set("p", String(newPage));
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      setReservationSearchParams((prevState) => ({
+        ...prevState,
+        page: newPage,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[PAGE, String(newPage)]],
+        []
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
     const handleChangeRowsPerPage = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ): void => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      searchParams.set("r", event.target.value);
-      setPage(0);
-      searchParams.delete("p");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
+      const value = event.target.value;
+      setReservationSearchParams((prevState) => ({
+        ...prevState,
+        rowsPerPage: parseInt(value, 10),
+        page: 0,
+      }));
+      const nextUrlSearchParams = setUrlSearchParams(
+        urlSearchParams.current,
+        [[ROWS_PER_PAGE, value]],
+        [PAGE]
+      );
+      history.replace({
+        pathname: history.location.pathname,
+        search: nextUrlSearchParams.toString(),
+      });
+      urlSearchParams.current = nextUrlSearchParams;
     };
 
     if (error) {
@@ -384,12 +317,12 @@ export const Reservation: FC = () => {
         </TableContainer>
       </BaseBox>
     );
-  }, [loading, data, error]);
+  };
 
   return (
     <BaseBox className={classes.pageBox} component="main">
-      {renderSearchForm}
-      {renderSearchResult}
+      {renderSearchForm()}
+      {renderSearchResult()}
     </BaseBox>
   );
 };

@@ -1,7 +1,7 @@
 import MuiTablePagination from "@material-ui/core/TablePagination";
 import React, { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
-import { ROW_PER_PAGE_OPTION } from "../../constants/search";
+import { ROWS_PER_PAGE_OPTION } from "../../constants/search";
 import { BaseBox } from "../Box";
 import { Skeleton } from "../Skeleton";
 
@@ -24,7 +24,7 @@ export const TablePagination = ({
   return (
     <MuiTablePagination
       component="div"
-      rowsPerPageOptions={ROW_PER_PAGE_OPTION}
+      rowsPerPageOptions={ROWS_PER_PAGE_OPTION}
       count={count}
       rowsPerPage={rowsPerPage}
       page={page}
