@@ -25,7 +25,7 @@ query institution(
     institution
     capacity
     area
-    reservation_division
+    fee_division
     weekday_usage_fee
     holiday_usage_fee
     address
