@@ -21,11 +21,11 @@ query institution(
     }
   ) {
     id
+    tokyo_ward
     building
     institution
     capacity
     area
-    fee_division
     weekday_usage_fee
     holiday_usage_fee
     address

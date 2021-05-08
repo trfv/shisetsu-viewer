@@ -147,7 +147,7 @@ export type Institution = {
   building_system_name?: Maybe<Scalars['String']>;
   capacity?: Maybe<Scalars['Int']>;
   created_at: Scalars['timestamp'];
-  fee_division?: Maybe<Scalars['_fee_division']>;
+  fee_division: Scalars['_fee_division'];
   holiday_usage_fee: Scalars['jsonb'];
   id: Scalars['uuid'];
   institution: Scalars['String'];
@@ -1010,7 +1010,7 @@ export type InstitutionDetailQuery = (
     & Pick<Institution, 'tokyo_ward' | 'building' | 'institution' | 'capacity' | 'area' | 'fee_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
   )>, reservation: Array<(
     { __typename?: 'reservation' }
-    & Pick<Reservation, 'date' | 'reservation' | 'updated_at'>
+    & Pick<Reservation, 'id' | 'date' | 'reservation' | 'updated_at'>
   )> }
 );
 
@@ -1031,7 +1031,7 @@ export type InstitutionQuery = (
   { __typename?: 'query_root' }
   & { institution: Array<(
     { __typename?: 'institution' }
-    & Pick<Institution, 'id' | 'building' | 'institution' | 'capacity' | 'area' | 'fee_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note' | 'updated_at'>
+    & Pick<Institution, 'id' | 'tokyo_ward' | 'building' | 'institution' | 'capacity' | 'area' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note' | 'updated_at'>
   )>, institution_aggregate: (
     { __typename?: 'institution_aggregate' }
     & { aggregate?: Maybe<(
@@ -1094,6 +1094,7 @@ export const InstitutionDetailDocument = gql`
     note
   }
   reservation(where: {institution_id: {_eq: $id}}, order_by: {date: asc}) {
+    id
     date
     reservation
     updated_at
@@ -1136,11 +1137,11 @@ export const InstitutionDocument = gql`
     where: {tokyo_ward: {_in: $tokyoWard}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
   ) {
     id
+    tokyo_ward
     building
     institution
     capacity
     area
-    fee_division
     weekday_usage_fee
     holiday_usage_fee
     address

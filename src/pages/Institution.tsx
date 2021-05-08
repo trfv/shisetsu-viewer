@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import React, { ChangeEvent, FC, MouseEvent, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useHistory } from "react-router-dom";
+import { GridCellParams } from "@material-ui/data-grid";
+import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   InstitutionDocument,
   InstitutionQuery,
@@ -11,32 +11,34 @@ import {
 import { BaseBox } from "../components/Box";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
+import {
+  DataGrid,
+  GridColumns,
+  GridPageChangeParams,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "../components/DataGrid";
 import { Select } from "../components/Select";
-import { Skeleton } from "../components/Skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "../components/Table";
-import { TablePagination } from "../components/TablePagination";
-import { AvailabilityDivision, TokyoWard } from "../constants/enums";
+import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { ROW_PER_PAGE_OPTION } from "../constants/search";
-import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
-import {
-  convertTokyoWardToUrlParam,
-  getTokyoWardFromUrlParam,
-  SupportedTokyoWard,
-  SupportedTokyoWards,
-  TokyoWardOptions,
-} from "../utils/enums";
+import { PAGE, ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, TOKYO_WARD } from "../constants/search";
+import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
+import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
-import { formatUsageFee } from "../utils/institution";
+import {
+  AvailableInstrument,
+  AVAILABLE_INSTRUMENTS,
+  BRASS,
+  formatUsageFee,
+  PERCUSSION,
+  STRINGS,
+  toInstitutionQueryVariables,
+  toInstitutionSearchParams,
+  WOODWIND,
+} from "../utils/institution";
+import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(({ palette, shape }) =>
   createStyles({
     pageBox: {
       width: "100%",
@@ -44,267 +46,305 @@ const useStyles = makeStyles(() =>
     },
     searchBox: {
       margin: "40px auto 0",
+      display: "flex",
       width: INNER_WIDTH,
-      background: COLORS.GRAY,
-      borderRadius: "4px",
+      background: palette.grey[300],
+      borderRadius: shape.borderRadius,
       "& > *": {
         margin: "24px",
       },
     },
     resultBox: {
-      margin: "24px auto 40px",
+      margin: "40px auto 0",
       width: INNER_WIDTH,
+      height: 640,
+      "& .MuiDataGrid-row:hover": {
+        cursor: "pointer",
+      },
+      "& .MuiDataGrid-cell:focus-within": {
+        outline: "none",
+      },
     },
   })
 );
 
-const getAvailableInstrumentFromUrlParam = (availableInstruments: string[]): string[] => {
-  return availableInstruments
-    .map((a) => {
-      if (a === "s") {
-        return "strings";
-      }
-      if (a === "w") {
-        return "woodwind";
-      }
-      if (a === "b") {
-        return "brass";
-      }
-      if (a === "e") {
-        return "percussion";
-      }
-      return "";
-    })
-    .filter((f) => !!f);
-};
-
-const convertAvailableInstrumentToUrlParam = (availableInstrument: string): string => {
-  return availableInstrument.slice(0, 1);
-};
-
-const getPageFromUrlParam = (page: string | null | undefined) => {
-  return parseInt(page ?? "0", 10);
-};
-
-const getRowPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
-  if (!rowPerPage) {
-    return 10;
-  }
-  const tmp = parseInt(rowPerPage, 10);
-  return ROW_PER_PAGE_OPTION.includes(tmp) ? tmp : 10;
-};
+const COLUMNS: GridColumns = [
+  {
+    field: "building_and_institution",
+    headerName: "施設名",
+    width: 360,
+    flex: 0,
+    valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
+  },
+  {
+    field: "tokyo_ward",
+    headerName: "東京都区",
+    width: 120,
+    flex: 0,
+    hide: true,
+    valueFormatter: (params: GridValueFormatterParams) => TokyoWardMap[params.value as string],
+  },
+  { field: "capacity", headerName: "定員（人）", type: "number", width: 140, flex: 0 },
+  { field: "area", headerName: "面積（㎡）", type: "number", width: 140, flex: 0 },
+  {
+    field: "weekday_usage_fee",
+    headerName: "利用料金（平日）",
+    width: 480,
+    flex: 0,
+    hide: true,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      formatUsageFee(params.row.tokyo_ward, params.row.weekday_usage_fee),
+  },
+  {
+    field: "holiday_usage_fee",
+    headerName: "利用料金（休日）",
+    width: 480,
+    flex: 0,
+    hide: true,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      formatUsageFee(params.row.tokyo_ward, params.row.holiday_usage_fee),
+  },
+  { field: "address", headerName: "住所", width: 240, flex: 0, hide: true },
+  {
+    field: "is_available_strings",
+    headerName: "弦楽器",
+    width: 100,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      AvailabilityDivisionMap[params.value as string],
+  },
+  {
+    field: "is_available_woodwind",
+    headerName: "木管楽器",
+    width: 100,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      AvailabilityDivisionMap[params.value as string],
+  },
+  {
+    field: "is_available_brass",
+    headerName: "金管楽器",
+    width: 100,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      AvailabilityDivisionMap[params.value as string],
+  },
+  {
+    field: "is_available_percussion",
+    headerName: "打楽器",
+    width: 100,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      AvailabilityDivisionMap[params.value as string],
+  },
+  {
+    field: "is_equipped_music_stand",
+    headerName: "譜面台",
+    width: 100,
+    flex: 0,
+    hide: true,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      EquipmentDivisionMap[params.value as string],
+  },
+  {
+    field: "is_equipped_piano",
+    headerName: "ピアノ",
+    width: 100,
+    flex: 0,
+    hide: true,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) =>
+      EquipmentDivisionMap[params.value as string],
+  },
+  {
+    field: "website_url",
+    headerName: "公式サイト",
+    width: 160,
+    flex: 0,
+    hide: true,
+    disableClickEventBubbling: true,
+    // eslint-disable-next-line react/display-name
+    renderCell: (params: GridCellParams) => {
+      const href = params.value as string;
+      return href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {href}
+        </a>
+      ) : (
+        <></>
+      );
+    },
+  },
+  {
+    field: "layout_image_url",
+    headerName: "レイアウト図",
+    width: 160,
+    flex: 0,
+    hide: true,
+    disableClickEventBubbling: true,
+    // eslint-disable-next-line react/display-name
+    renderCell: (params: GridCellParams) => {
+      const href = params.value as string;
+      return href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {href}
+        </a>
+      ) : (
+        <></>
+      );
+    },
+  },
+  { field: "lottery_period", headerName: "抽選期間", width: 240, flex: 0, hide: true },
+  { field: "note", headerName: "備考", width: 240, flex: 0, hide: true },
+  {
+    field: "updated_at",
+    headerName: "更新日時",
+    width: 200,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) => formatDatetime(params.value as string),
+  },
+];
 
 export const Institution: FC = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
 
-  const [tokyoWard, setTokyoWard] = useState<SupportedTokyoWard>(
-    getTokyoWardFromUrlParam(searchParams.get("w"))
+  const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
+
+  const [institutionSearchParams, setInstitutionSearchParams] = useState(
+    toInstitutionSearchParams(urlSearchParams.current)
   );
-  const [availableInstruments, setAvailableInstruments] = useState<string[]>(
-    getAvailableInstrumentFromUrlParam(searchParams.getAll("a"))
-  );
-
-  const [page, setPage] = useState(getPageFromUrlParam(searchParams.get("p")));
-  const [rowsPerPage, setRowsPerPage] = useState(getRowPerPageFromUrlParam(searchParams.get("r")));
-
   const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
     InstitutionDocument,
     {
-      variables: {
-        offset: page * rowsPerPage,
-        limit: rowsPerPage,
-        tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
-        ...(availableInstruments.includes("strings")
-          ? { isAvaliableStrings: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("woodwind")
-          ? { isAvailableWoodwind: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("brass")
-          ? { isAvailableBrass: AvailabilityDivision.AVAILABLE }
-          : {}),
-        ...(availableInstruments.includes("percussion")
-          ? { isAvailablePercussion: AvailabilityDivision.AVAILABLE }
-          : {}),
-      },
+      variables: toInstitutionQueryVariables(institutionSearchParams),
     }
   );
 
-  const renderSearchForm = useMemo(() => {
-    const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      const value = event.target.value as SupportedTokyoWard;
-      setTokyoWard(value);
-      setPage(0);
-      searchParams.delete("p");
-      const urlParam = convertTokyoWardToUrlParam(value);
-      urlParam ? searchParams.set("w", urlParam) : searchParams.delete("w");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
-    };
-    const handleAvailableInstrumentsChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const { page, rowsPerPage, tokyoWard, availableInstruments } = institutionSearchParams;
+
+  const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
+    history.replace({
+      pathname: history.location.pathname,
+      search: nextUrlSearchParams.toString(),
+    });
+    urlSearchParams.current = nextUrlSearchParams;
+  }, []);
+
+  const handleTokyoWardChange = useCallback((event: ChangeEvent<{ value: unknown }>): void => {
+    const value = event.target.value as SupportedTokyoWard;
+    setInstitutionSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+    updateUrlSearchParams(
+      setUrlSearchParams(
+        urlSearchParams.current,
+        [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
+        [PAGE]
+      )
+    );
+  }, []);
+
+  const handleAvailableInstrumentsChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
-
       const next = checked
-        ? [...availableInstruments, value]
+        ? availableInstruments.concat(value as AvailableInstrument)
         : availableInstruments.filter((v) => v !== value);
-      setAvailableInstruments(next);
-      searchParams.delete("a");
-      next.forEach((a) => searchParams.append("a", convertAvailableInstrumentToUrlParam(a)));
+      setInstitutionSearchParams((prevState) => ({
+        ...prevState,
+        page: 0,
+        availableInstruments: next,
+      }));
+      updateUrlSearchParams(
+        setUrlSearchParams(
+          urlSearchParams.current,
+          next.map((f) => [AVAILABLE_INSTRUMENTS, f]),
+          [PAGE]
+        )
+      );
+    },
+    [availableInstruments]
+  );
 
-      setPage(0);
-      searchParams.delete("p");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
-    };
+  const handleChangePage = useCallback((params: GridPageChangeParams): void => {
+    setInstitutionSearchParams((prevState) => ({
+      ...prevState,
+      page: params.page,
+    }));
+    updateUrlSearchParams(
+      setUrlSearchParams(urlSearchParams.current, [[PAGE, String(params.page)]], [PAGE])
+    );
+  }, []);
 
-    return (
-      <BaseBox className={classes.searchBox} display="flex">
+  const handleChangeRowsPerPage = useCallback((params: GridPageChangeParams): void => {
+    setInstitutionSearchParams((prevState) => ({
+      ...prevState,
+      rowsPerPage: params.pageSize,
+      page: 0,
+    }));
+    updateUrlSearchParams(
+      setUrlSearchParams(
+        urlSearchParams.current,
+        [[ROWS_PER_PAGE, String(params.pageSize)]],
+        [PAGE, ROWS_PER_PAGE]
+      )
+    );
+  }, []);
+
+  return (
+    <main className={classes.pageBox}>
+      <BaseBox className={classes.searchBox}>
         <Select
-          label={t("区")}
+          label="区"
           value={tokyoWard}
           size="small"
           onChange={handleTokyoWardChange}
           selectOptions={TokyoWardOptions}
         />
         <CheckboxGroup
-          label={t("利用可能楽器")}
+          label="利用可能楽器"
           values={availableInstruments}
           onChange={handleAvailableInstrumentsChange}
         >
-          <Checkbox label={t("弦楽器")} value="strings" />
-          <Checkbox label={t("木管楽器")} value="woodwind" />
-          <Checkbox label={t("金管楽器")} value="brass" />
-          <Checkbox label={t("打楽器")} value="percussion" />
+          <Checkbox label="弦楽器" value={STRINGS} />
+          <Checkbox label="木管楽器" value={WOODWIND} />
+          <Checkbox label="金管楽器" value={BRASS} />
+          <Checkbox label="打楽器" value={PERCUSSION} />
         </CheckboxGroup>
       </BaseBox>
-    );
-  }, [tokyoWard, availableInstruments]);
-
-  const renderSearchResult = useMemo(() => {
-    const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-      setPage(newPage);
-      searchParams.set("p", String(newPage));
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
-    };
-    const handleChangeRowsPerPage = (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ): void => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      searchParams.set("r", event.target.value);
-      setPage(0);
-      searchParams.set("p", "0");
-      history.replace({ pathname: history.location.pathname, search: searchParams.toString() });
-    };
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    const existsData = !loading && !!data?.institution.length;
-
-    return (
       <BaseBox className={classes.resultBox}>
-        <TablePagination
-          count={data?.institution_aggregate.aggregate?.count ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+        <DataGrid
+          rows={data?.institution ?? []}
+          columns={COLUMNS}
+          error={error}
           loading={loading}
+          onRowClick={(params) =>
+            history.push(ROUTES.institutionDetail.replace(":id", params.row.id))
+          }
+          paginationMode="server"
+          rowCount={data?.institution_aggregate.aggregate?.count ?? undefined}
+          page={page}
+          pageSize={rowsPerPage}
+          pagination={true}
+          onPageChange={handleChangePage}
+          onPageSizeChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          // components={{
+          //   Toolbar: CustomToolbar,
+          // }}
+          disableColumnMenu={true}
+          disableSelectionOnClick={true}
+          density="compact"
         />
-        <TableContainer>
-          <Table>
-            {existsData && (
-              <TableHead>
-                <TableRow>
-                  <TableCell variant="head">{t("施設名")}</TableCell>
-                  <TableCell variant="head" align="right">
-                    {t("定員(人)")}
-                  </TableCell>
-                  <TableCell variant="head" align="right">
-                    {t("面積(㎡)")}
-                  </TableCell>
-                  <TableCell variant="head">{t("利用料金")}</TableCell>
-                  <TableCell variant="head">{t("更新日時")}</TableCell>
-                </TableRow>
-              </TableHead>
-            )}
-            <TableBody>
-              {existsData &&
-                data?.institution.map((info) => (
-                  <TableRow key={info.id}>
-                    <TableCell>
-                      {info.id ? (
-                        <Link to={ROUTES.institutionDetail.replace(":id", info.id)}>
-                          {`${info.building} ${info.institution}`}
-                        </Link>
-                      ) : (
-                        `${info.building} ${info.institution}`
-                      )}
-                    </TableCell>
-                    <TableCell variant="body" align="right">
-                      {info.capacity}
-                    </TableCell>
-                    <TableCell variant="body" align="right">
-                      {info.area}
-                    </TableCell>
-                    <TableCell variant="body">
-                      {info.weekday_usage_fee && (
-                        <div>
-                          {t("平日 {{ usageFee }}", {
-                            usageFee: formatUsageFee(tokyoWard, info.weekday_usage_fee),
-                          })}
-                        </div>
-                      )}
-                      {info.holiday_usage_fee && (
-                        <div>
-                          {t("休日 {{ usageFee }}", {
-                            usageFee: formatUsageFee(tokyoWard, info.holiday_usage_fee),
-                          })}
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell variant="body">{formatDatetime(info.updated_at)}</TableCell>
-                  </TableRow>
-                ))}
-              {!existsData && (
-                <>
-                  {loading ? (
-                    <>
-                      <TableRow>
-                        <TableCell variant="head" colSpan={5}>
-                          <Skeleton variant="text" height="24px" />
-                        </TableCell>
-                      </TableRow>
-                      {[...Array(rowsPerPage)].map((_, index) => (
-                        <TableRow key={`skeleton-row-${index}`}>
-                          <TableCell variant="body" colSpan={5}>
-                            <Skeleton variant="text" height="40px" />
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </>
-                  ) : (
-                    <TableRow>
-                      <TableCell variant="body" colSpan={5}>
-                        {t("該当するデータがありません。")}
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
       </BaseBox>
-    );
-  }, [loading, error, data]);
-
-  return (
-    <BaseBox className={classes.pageBox} component="main">
-      {renderSearchForm}
-      {renderSearchResult}
-    </BaseBox>
+    </main>
   );
 };

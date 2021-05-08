@@ -40,22 +40,6 @@ export const TokyoWardOptions = Object.entries(TokyoWardMap)
   .filter(([k]) => SupportedTokyoWards.some((w) => w === k))
   .map(([k, v]) => ({ value: k, label: v }));
 
-const TOKTO_WARD_URL_PARAMS: Readonly<Record<string, SupportedTokyoWard>> = {
-  koutou: TokyoWard.KOUTOU,
-  bunkyo: TokyoWard.BUNKYO,
-  kita: TokyoWard.KITA,
-  toshima: TokyoWard.TOSHIMA,
-  edogawa: TokyoWard.EDOGAWA,
-};
-
-export const getTokyoWardFromUrlParam = (param: string | null | undefined): SupportedTokyoWard => {
-  return param ? TOKTO_WARD_URL_PARAMS[param] : TokyoWard.INVALID;
-};
-
-export const convertTokyoWardToUrlParam = (tokyoWard: SupportedTokyoWard): string => {
-  return tokyoWard === TokyoWard.INVALID ? "" : tokyoWard.replace("TOKYO_WARD_", "").toLowerCase();
-};
-
 export const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = {
   [TokyoWard.KOUTOU]: KOUTOU_RESERVATION_DIVISION,
   [TokyoWard.BUNKYO]: BUNKYO_RESERVATION_DIVISION,

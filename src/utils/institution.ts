@@ -1,6 +1,13 @@
-import { FeeDivision } from "../constants/enums";
-import { FeeDivisionMap, SupportedTokyoWard } from "./enums";
+import { InstitutionQueryVariables } from "../api/graphql-client";
+import { AvailabilityDivision, FeeDivision, TokyoWard } from "../constants/enums";
+import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
+import { FeeDivisionMap, SupportedTokyoWard, SupportedTokyoWards } from "./enums";
 import { formatPrice } from "./format";
+import {
+  getPageFromUrlParam,
+  getRowsPerPageFromUrlParam,
+  getTokyoWardFromUrlParam,
+} from "./search";
 
 const FEE_DIVISION_ORDER = {
   [FeeDivision.INVALID]: 0,
@@ -50,4 +57,65 @@ export const formatUsageFee = (
 
 export const getGoogleMapLink = (address: string): string => {
   return `https://www.google.com/maps/search/?api=1&query=${address}`;
+};
+
+export const AVAILABLE_INSTRUMENTS = "a";
+
+export const STRINGS = "s";
+export const WOODWIND = "w";
+export const BRASS = "b";
+export const PERCUSSION = "p";
+
+export const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as const;
+export type AvailableInstrument = typeof AvailableInstruments[number];
+
+const getAvailableInstrumentFromUrlParam = (
+  availableInstruments: string[]
+): AvailableInstrument[] => {
+  return availableInstruments.filter((instrument) =>
+    AvailableInstruments.some((i) => instrument === i)
+  ) as AvailableInstrument[];
+};
+
+export type InstitutionSearchParams = {
+  page: number;
+  rowsPerPage: number;
+  tokyoWard: SupportedTokyoWard;
+  availableInstruments: AvailableInstrument[];
+};
+
+export const toInstitutionSearchParams = (
+  urlSearchParams: URLSearchParams
+): InstitutionSearchParams => {
+  return {
+    page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
+    rowsPerPage: getRowsPerPageFromUrlParam(urlSearchParams.get(ROWS_PER_PAGE)),
+    tokyoWard: getTokyoWardFromUrlParam(urlSearchParams.get(TOKYO_WARD)),
+    availableInstruments: getAvailableInstrumentFromUrlParam(
+      urlSearchParams.getAll(AVAILABLE_INSTRUMENTS)
+    ),
+  };
+};
+
+export const toInstitutionQueryVariables = ({
+  page,
+  rowsPerPage,
+  tokyoWard,
+  availableInstruments,
+}: InstitutionSearchParams): InstitutionQueryVariables => {
+  const [isAvailableStrings, isAvailableWoodwind, isAvailableBrass, isAvailablePercussion] = [
+    availableInstruments.includes(STRINGS),
+    availableInstruments.includes(WOODWIND),
+    availableInstruments.includes(BRASS),
+    availableInstruments.includes(PERCUSSION),
+  ];
+  return {
+    offset: page * rowsPerPage,
+    limit: rowsPerPage,
+    tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
+    isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
+    isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
+  };
 };

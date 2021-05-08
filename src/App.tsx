@@ -1,5 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Footer } from "./components/Footer";
@@ -13,7 +15,7 @@ import { InstitutionDetail } from "./pages/InstitutionDetail";
 import { Reservation } from "./pages/Reservation";
 import { Waiting } from "./pages/Waiting";
 import { apolloClient } from "./utils/client";
-import "./utils/i18n";
+import { theme } from "./utils/theme";
 
 const App = () => {
   return (
@@ -22,22 +24,30 @@ const App = () => {
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ""}
     >
       <ApolloProvider client={apolloClient}>
-        <ErrorBoundary>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Header />
-            <Switch>
-              <Route path={ROUTES.waiting} component={Waiting} />
-              <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
-              <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
-              <AuthGuardRoute path={ROUTES.institutionDetail} component={InstitutionDetail} exact />
-              <Route path={ROUTES.root}>
-                <Redirect to={ROUTES.reservation} />
-              </Route>
-            </Switch>
-            <Footer />
-          </BrowserRouter>
-        </ErrorBoundary>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ErrorBoundary>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Header />
+              <Switch>
+                <Route path={ROUTES.waiting} component={Waiting} />
+                <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
+                <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
+                <AuthGuardRoute
+                  path={ROUTES.institutionDetail}
+                  component={InstitutionDetail}
+                  exact
+                />
+                {/* TODO <Route path={ROUTES.top} component={Top} exact /> */}
+                <Route path={ROUTES.top}>
+                  <Redirect to={ROUTES.reservation} />
+                </Route>
+              </Switch>
+              <Footer />
+            </BrowserRouter>
+          </ErrorBoundary>
+        </ThemeProvider>
       </ApolloProvider>
     </Auth0Provider>
   );
