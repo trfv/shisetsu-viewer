@@ -1,9 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import { addMonths, endOfMonth, isAfter, isBefore } from "date-fns";
-import React, { ChangeEvent, FC, MouseEvent, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useHistory } from "react-router-dom";
+import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   ReservationDocument,
   ReservationQuery,
@@ -12,21 +11,26 @@ import {
 import { BaseBox } from "../components/Box";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
+import {
+  DataGrid,
+  GridColumns,
+  GridPageChangeParams,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "../components/DataGrid";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select } from "../components/Select";
-import { Skeleton } from "../components/Skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "../components/Table";
-import { TablePagination } from "../components/TablePagination";
+import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
-import { COLORS, CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
+import {
+  END_DATE,
+  PAGE,
+  ROWS_PER_PAGE,
+  ROWS_PER_PAGE_OPTIONS,
+  START_DATE,
+  TOKYO_WARD,
+} from "../constants/search";
+import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import {
@@ -42,32 +46,87 @@ import {
 } from "../utils/reservation";
 import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette, shape }) => ({
   pageBox: {
     width: "100%",
     minWidth: CONTAINER_WIDTH,
   },
   searchBox: {
     margin: "40px auto 0",
+    display: "flex",
     width: INNER_WIDTH,
-    background: COLORS.GRAY,
-    borderRadius: "4px",
+    background: palette.grey[300],
+    borderRadius: shape.borderRadius,
     "& > *": {
       margin: "24px",
     },
   },
   resultBox: {
-    margin: "24px auto 40px",
+    margin: "40px auto 0",
     width: INNER_WIDTH,
+    height: 640,
+    "& .MuiDataGrid-row:hover": {
+      cursor: "pointer",
+    },
+    "& .MuiDataGrid-cell:focus-within": {
+      outline: "none",
+    },
   },
 }));
 
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
+const COLUMNS: GridColumns = [
+  {
+    field: "building_and_institution",
+    headerName: "施設名",
+    width: 360,
+    flex: 0,
+    valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
+  },
+  {
+    field: "tokyo_ward",
+    headerName: "東京都区",
+    width: 120,
+    flex: 0,
+    hide: true,
+    valueFormatter: (params: GridValueFormatterParams) => TokyoWardMap[params.value as string],
+  },
+  {
+    field: "date",
+    headerName: "日付",
+    width: 160,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) => formatDate(params.value as string),
+  },
+  {
+    field: "reservation",
+    headerName: "予約状況",
+    width: 520,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const tokyoWard = params.row.tokyo_ward;
+      const obj = params.row.reservation;
+      return formatReservationMap(tokyoWard, obj);
+    },
+    /** TODO hover したときに中身がすべて表示されるように修正する */
+  },
+  {
+    field: "updated_at",
+    headerName: "更新日時",
+    width: 200,
+    flex: 0,
+    sortable: false,
+    valueFormatter: (params: GridValueFormatterParams) => formatDatetime(params.value as string),
+  },
+];
+
 export const Reservation: FC = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const history = useHistory();
 
   const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
@@ -83,68 +142,68 @@ export const Reservation: FC = () => {
 
   const { page, rowsPerPage, tokyoWard, startDate, endDate, filter } = resevationSearchParams;
 
-  const renderSearchForm = () => {
-    const handleTokyoWardChange = (event: ChangeEvent<{ value: unknown }>): void => {
-      const value = event.target.value as SupportedTokyoWard;
-      setReservationSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
-      const nextUrlSearchParams = setUrlSearchParams(
+  const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
+    history.replace({
+      pathname: history.location.pathname,
+      search: nextUrlSearchParams.toString(),
+    });
+    urlSearchParams.current = nextUrlSearchParams;
+  }, []);
+
+  const handleTokyoWardChange = useCallback((event: ChangeEvent<{ value: unknown }>): void => {
+    const value = event.target.value as SupportedTokyoWard;
+    setReservationSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+    updateUrlSearchParams(
+      setUrlSearchParams(
         urlSearchParams.current,
         [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
         [PAGE]
-      );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
-    const handleStartDateChange = (date: Date | null): void => {
-      const needsUpdateEndDate = date && endDate && isAfter(date, endDate);
-      setReservationSearchParams((prevState) => ({
-        ...prevState,
-        page: 0,
-        startDate: date,
-        ...(needsUpdateEndDate ? { endDate: date } : {}),
-      }));
-      const appendParams: [string, string | undefined][] = [
-        [START_DATE, date?.toLocaleDateString()],
-      ];
-      const nextUrlSearchParams = setUrlSearchParams(
+      )
+    );
+  }, []);
+
+  const handleStartDateChange = useCallback((date: Date | null): void => {
+    const needsUpdateEndDate = date && endDate && isAfter(date, endDate);
+    setReservationSearchParams((prevState) => ({
+      ...prevState,
+      page: 0,
+      startDate: date,
+      ...(needsUpdateEndDate ? { endDate: date } : {}),
+    }));
+    const appendParams: [string, string | undefined][] = [[START_DATE, date?.toLocaleDateString()]];
+    updateUrlSearchParams(
+      setUrlSearchParams(
         urlSearchParams.current,
         needsUpdateEndDate
           ? appendParams.concat([END_DATE, date?.toLocaleDateString()])
           : appendParams,
         [PAGE]
-      );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
-    const handleEndDateChange = (date: Date | null): void => {
-      const needsUpdateStartDate = date && startDate && isBefore(date, startDate);
-      setReservationSearchParams((prevState) => ({
-        ...prevState,
-        page: 0,
-        endDate: date,
-        ...(needsUpdateStartDate ? { endDate: date } : {}),
-      }));
-      const appendParams: [string, string | undefined][] = [[END_DATE, date?.toLocaleDateString()]];
-      const nextUrlSearchParams = setUrlSearchParams(
+      )
+    );
+  }, []);
+
+  const handleEndDateChange = useCallback((date: Date | null): void => {
+    const needsUpdateStartDate = date && startDate && isBefore(date, startDate);
+    setReservationSearchParams((prevState) => ({
+      ...prevState,
+      page: 0,
+      endDate: date,
+      ...(needsUpdateStartDate ? { endDate: date } : {}),
+    }));
+    const appendParams: [string, string | undefined][] = [[END_DATE, date?.toLocaleDateString()]];
+    updateUrlSearchParams(
+      setUrlSearchParams(
         urlSearchParams.current,
         needsUpdateStartDate
           ? appendParams.concat([START_DATE, date?.toLocaleDateString()])
           : appendParams,
-        [PAGE]
-      );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
-    const handleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        []
+      )
+    );
+  }, []);
+
+  const handleFilterChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
       const next = checked
         ? filter.concat(value as ReservationSearchFilter)
@@ -154,29 +213,54 @@ export const Reservation: FC = () => {
         page: 0,
         filter: next,
       }));
-      const nextUrlSearchParams = setUrlSearchParams(
-        urlSearchParams.current,
-        next.map((f) => [RESERVATION_SEARCH_FILTER, f]),
-        [PAGE, RESERVATION_SEARCH_FILTER]
+      updateUrlSearchParams(
+        setUrlSearchParams(
+          urlSearchParams.current,
+          next.map((f) => [RESERVATION_SEARCH_FILTER, f]),
+          [PAGE]
+        )
       );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
+    },
+    [filter]
+  );
 
-    return (
-      <BaseBox className={classes.searchBox} display="flex">
+  const handleChangePage = useCallback((params: GridPageChangeParams): void => {
+    setReservationSearchParams((prevState) => ({
+      ...prevState,
+      page: params.page,
+    }));
+    updateUrlSearchParams(
+      setUrlSearchParams(urlSearchParams.current, [[PAGE, String(params.page)]], [PAGE])
+    );
+  }, []);
+
+  const handleChangeRowsPerPage = useCallback((params: GridPageChangeParams): void => {
+    setReservationSearchParams((prevState) => ({
+      ...prevState,
+      rowsPerPage: params.pageSize,
+      page: 0,
+    }));
+    updateUrlSearchParams(
+      setUrlSearchParams(
+        urlSearchParams.current,
+        [[ROWS_PER_PAGE, String(params.pageSize)]],
+        [PAGE, ROWS_PER_PAGE]
+      )
+    );
+  }, []);
+
+  return (
+    <main className={classes.pageBox}>
+      <BaseBox className={classes.searchBox}>
         <Select
-          label={t("区")}
+          label="区"
           value={tokyoWard}
           size="small"
           onChange={handleTokyoWardChange}
           selectOptions={TokyoWardOptions}
         />
         <DateRangePicker
-          label={t("期間指定")}
+          label="期間指定"
           startDateProps={{
             value: startDate,
             onChange: handleStartDateChange,
@@ -190,139 +274,38 @@ export const Reservation: FC = () => {
             maxDate,
           }}
         />
-        <CheckboxGroup label={t("絞り込み")} values={filter} onChange={handleFilterChange}>
-          <Checkbox label={t("休日のみ")} value={IS_ONLY_HOLIDAY} />
-          <Checkbox label={t("午前空き")} value={IS_ONLY_MORNING_VACANT} />
-          <Checkbox label={t("午後空き")} value={IS_ONLY_AFTERNOON_VACANT} />
-          <Checkbox label={t("夜間空き")} value={IS_ONLY_EVENING_VACANT} />
+        <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
+          <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
+          <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
+          <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
+          <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
         </CheckboxGroup>
       </BaseBox>
-    );
-  };
-
-  const renderSearchResult = () => {
-    const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-      setReservationSearchParams((prevState) => ({
-        ...prevState,
-        page: newPage,
-      }));
-      const nextUrlSearchParams = setUrlSearchParams(
-        urlSearchParams.current,
-        [[PAGE, String(newPage)]],
-        []
-      );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
-    const handleChangeRowsPerPage = (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ): void => {
-      const value = event.target.value;
-      setReservationSearchParams((prevState) => ({
-        ...prevState,
-        rowsPerPage: parseInt(value, 10),
-        page: 0,
-      }));
-      const nextUrlSearchParams = setUrlSearchParams(
-        urlSearchParams.current,
-        [[ROWS_PER_PAGE, value]],
-        [PAGE]
-      );
-      history.replace({
-        pathname: history.location.pathname,
-        search: nextUrlSearchParams.toString(),
-      });
-      urlSearchParams.current = nextUrlSearchParams;
-    };
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    const existsData = !loading && !!data?.reservation.length;
-
-    return (
       <BaseBox className={classes.resultBox}>
-        <TablePagination
-          count={data?.reservation_aggregate.aggregate?.count ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+        <DataGrid
+          rows={data?.reservation ?? []}
+          columns={COLUMNS}
+          error={error}
           loading={loading}
+          onRowClick={(params) =>
+            history.push(ROUTES.institutionDetail.replace(":id", params.row.institution_id))
+          }
+          paginationMode="server"
+          rowCount={data?.reservation_aggregate.aggregate?.count ?? undefined}
+          page={page}
+          pageSize={rowsPerPage}
+          pagination={true}
+          onPageChange={handleChangePage}
+          onPageSizeChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          // components={{
+          //   Toolbar: CustomToolbar,
+          // }}
+          disableColumnMenu={true}
+          disableSelectionOnClick={true}
+          density="compact"
         />
-        <TableContainer>
-          <Table>
-            {existsData && (
-              <TableHead>
-                <TableRow>
-                  <TableCell variant="head">{t("施設名")}</TableCell>
-                  <TableCell variant="head">{t("日付")}</TableCell>
-                  <TableCell variant="head">{t("予約状況")}</TableCell>
-                  <TableCell variant="head">{t("更新日時")}</TableCell>
-                </TableRow>
-              </TableHead>
-            )}
-            <TableBody>
-              {existsData &&
-                data?.reservation.map((info) => (
-                  <TableRow key={info.id}>
-                    <TableCell>
-                      {info.institution_id ? (
-                        <Link to={ROUTES.institutionDetail.replace(":id", info.institution_id)}>
-                          {`${info.building} ${info.institution}`}
-                        </Link>
-                      ) : (
-                        `${info.building} ${info.institution}`
-                      )}
-                    </TableCell>
-                    <TableCell>{formatDate(info.date)}</TableCell>
-                    <TableCell style={{ whiteSpace: "pre-line" }}>
-                      {formatReservationMap(info.tokyo_ward, info.reservation)}
-                    </TableCell>
-                    <TableCell>{formatDatetime(info.updated_at)}</TableCell>
-                  </TableRow>
-                ))}
-              {!existsData && (
-                <>
-                  {loading ? (
-                    <>
-                      <TableRow>
-                        <TableCell variant="head" colSpan={5}>
-                          <Skeleton variant="text" height="24px" />
-                        </TableCell>
-                      </TableRow>
-                      {[...Array(rowsPerPage)].map((_, index) => (
-                        <TableRow key={`skeleton-row-${index}`}>
-                          <TableCell variant="body" colSpan={5}>
-                            <Skeleton variant="text" height="20px" />
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </>
-                  ) : (
-                    <TableRow>
-                      <TableCell variant="body" colSpan={5}>
-                        {t("該当するデータがありません。")}
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
       </BaseBox>
-    );
-  };
-
-  return (
-    <BaseBox className={classes.pageBox} component="main">
-      {renderSearchForm()}
-      {renderSearchResult()}
-    </BaseBox>
+    </main>
   );
 };

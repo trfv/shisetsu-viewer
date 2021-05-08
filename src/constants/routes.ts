@@ -1,5 +1,5 @@
 export const ROUTES = {
-  root: "/",
+  top: "/",
   waiting: "/waiting",
   waitingWithNext: "/waiting/:next",
   reservation: "/reservation",

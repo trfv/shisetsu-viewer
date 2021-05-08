@@ -9,10 +9,18 @@ export const Waiting: FC = () => {
   const { isLoading, isAuthenticated } = useAuth0();
   const history = useHistory();
   const next = new URLSearchParams(history.location.search).get(NEXT);
+
   useEffect(() => {
     if (isAuthenticated) {
-      history.push(next ?? ROUTES.root);
+      history.push(next ?? ROUTES.top);
     }
   }, [isAuthenticated]);
-  return isLoading ? <Loading /> : <Redirect to={ROUTES.root} />;
+
+  return isLoading ? (
+    <main>
+      <Loading />
+    </main>
+  ) : (
+    <Redirect to={ROUTES.top} />
+  );
 };

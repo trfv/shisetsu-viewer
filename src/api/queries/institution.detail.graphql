@@ -30,6 +30,7 @@ query institutionDetail(
       date: asc
     }
   ) {
+    id
     date
     reservation
     updated_at

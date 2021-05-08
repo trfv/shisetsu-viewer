@@ -1,1 +1,1 @@
-export { LogoutButton } from "./LogoutButton";
+export { LoginButton as LogoutButton } from "./LogoutButton";

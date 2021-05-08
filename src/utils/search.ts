@@ -1,6 +1,6 @@
 import { isAfter, isBefore, isValid } from "date-fns";
 import { TokyoWard } from "../constants/enums";
-import { ROWS_PER_PAGE_OPTION } from "../constants/search";
+import { ROWS_PER_PAGE_OPTIONS } from "../constants/search";
 import { SupportedTokyoWard } from "./enums";
 
 export const getPageFromUrlParam = (page: string | null | undefined) => {
@@ -12,10 +12,10 @@ export const getPageFromUrlParam = (page: string | null | undefined) => {
 
 export const getRowsPerPageFromUrlParam = (rowPerPage: string | null | undefined) => {
   if (!rowPerPage) {
-    return ROWS_PER_PAGE_OPTION[0];
+    return ROWS_PER_PAGE_OPTIONS[2];
   }
   const tmp = parseInt(rowPerPage, 10);
-  return ROWS_PER_PAGE_OPTION.includes(tmp) ? tmp : ROWS_PER_PAGE_OPTION[0];
+  return ROWS_PER_PAGE_OPTIONS.includes(tmp) ? tmp : ROWS_PER_PAGE_OPTIONS[2];
 };
 
 export const getDateFromUrlParam = (
@@ -53,7 +53,7 @@ export const setUrlSearchParams = (
 ) => {
   deleteKeys.forEach((key) => urlSearchParams.delete(key));
   appendParams.forEach(([key, value]) => {
-    value ? urlSearchParams.append(key, value) : urlSearchParams.delete(key);
+    value ? urlSearchParams.set(key, value) : urlSearchParams.delete(key);
   });
   return urlSearchParams;
 };

@@ -1,8 +1,0 @@
-@import url('./normalize.css');
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  background-color: #f8fafc;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}

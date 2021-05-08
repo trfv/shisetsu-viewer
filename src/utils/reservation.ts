@@ -70,9 +70,12 @@ export const sortByReservationDivision = (obj: Record<string, string>): [string,
 };
 
 export const formatReservationMap = (
-  tokyoWard: SupportedTokyoWard,
-  obj: Record<string, string>
+  tokyoWard: SupportedTokyoWard = TokyoWard.INVALID,
+  obj: Record<string, string> | undefined
 ): string => {
+  if (tokyoWard === TokyoWard.INVALID || !obj) {
+    return "";
+  }
   const sorted = sortByReservationDivision(obj);
   const parts = new Array(Math.ceil(sorted.length / 3)).fill([]).map(() => sorted.splice(0, 3));
 
