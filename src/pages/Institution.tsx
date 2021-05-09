@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { GridCellParams } from "@material-ui/data-grid";
 import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
@@ -8,11 +7,11 @@ import {
   InstitutionQuery,
   InstitutionQueryVariables,
 } from "../api/graphql-client";
-import { BaseBox } from "../components/Box";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import {
   DataGrid,
+  GridCellParams,
   GridColumns,
   GridPageChangeParams,
   GridValueFormatterParams,
@@ -21,7 +20,7 @@ import {
 import { Select } from "../components/Select";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { PAGE, ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, TOKYO_WARD } from "../constants/search";
+import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
@@ -46,18 +45,27 @@ const useStyles = makeStyles(({ palette, shape }) =>
     },
     searchBox: {
       margin: "40px auto 0",
-      display: "flex",
+      padding: 24,
       width: INNER_WIDTH,
-      background: palette.grey[300],
+      background: palette.grey[300], // TODO dark mode
       borderRadius: shape.borderRadius,
-      "& > *": {
-        margin: "24px",
-      },
     },
+    searchBoxForm: {
+      display: "flex",
+      gap: 40,
+    },
+    // searchBoxButtons: {
+    //   marginTop: 16,
+    //   display: "flex",
+    //   gap: 16,
+    // },
     resultBox: {
       margin: "40px auto 0",
       width: INNER_WIDTH,
       height: 640,
+      "& .MuiDataGrid-colCell:focus": {
+        outline: "none",
+      },
       "& .MuiDataGrid-row:hover": {
         cursor: "pointer",
       },
@@ -74,12 +82,13 @@ const COLUMNS: GridColumns = [
     headerName: "施設名",
     width: 360,
     flex: 0,
+    sortable: false,
     valueGetter: (params: GridValueGetterParams) =>
       `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
     field: "tokyo_ward",
-    headerName: "東京都区",
+    headerName: "区",
     width: 120,
     flex: 0,
     hide: true,
@@ -230,7 +239,7 @@ export const Institution: FC = () => {
     }
   );
 
-  const { page, rowsPerPage, tokyoWard, availableInstruments } = institutionSearchParams;
+  const { page, tokyoWard, availableInstruments } = institutionSearchParams;
 
   const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
     history.replace({
@@ -284,43 +293,38 @@ export const Institution: FC = () => {
     );
   }, []);
 
-  const handleChangeRowsPerPage = useCallback((params: GridPageChangeParams): void => {
-    setInstitutionSearchParams((prevState) => ({
-      ...prevState,
-      rowsPerPage: params.pageSize,
-      page: 0,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        [[ROWS_PER_PAGE, String(params.pageSize)]],
-        [PAGE, ROWS_PER_PAGE]
-      )
-    );
-  }, []);
-
   return (
     <main className={classes.pageBox}>
-      <BaseBox className={classes.searchBox}>
-        <Select
-          label="区"
-          value={tokyoWard}
-          size="small"
-          onChange={handleTokyoWardChange}
-          selectOptions={TokyoWardOptions}
-        />
-        <CheckboxGroup
-          label="利用可能楽器"
-          values={availableInstruments}
-          onChange={handleAvailableInstrumentsChange}
-        >
-          <Checkbox label="弦楽器" value={STRINGS} />
-          <Checkbox label="木管楽器" value={WOODWIND} />
-          <Checkbox label="金管楽器" value={BRASS} />
-          <Checkbox label="打楽器" value={PERCUSSION} />
-        </CheckboxGroup>
-      </BaseBox>
-      <BaseBox className={classes.resultBox}>
+      <div className={classes.searchBox}>
+        <div className={classes.searchBoxForm}>
+          <Select
+            label="区"
+            value={tokyoWard}
+            size="small"
+            onChange={handleTokyoWardChange}
+            selectOptions={TokyoWardOptions}
+          />
+          {/* <Input label="定員下限（人）" defaultValue="" size="small" /> */}
+          {/* <Input label="面積下限（㎡）" defaultValue="" size="small" /> */}
+          <CheckboxGroup
+            label="利用可能楽器"
+            values={availableInstruments}
+            onChange={handleAvailableInstrumentsChange}
+          >
+            <Checkbox label="弦楽器" value={STRINGS} />
+            <Checkbox label="木管楽器" value={WOODWIND} />
+            <Checkbox label="金管楽器" value={BRASS} />
+            <Checkbox label="打楽器" value={PERCUSSION} />
+          </CheckboxGroup>
+        </div>
+        {/* <div className={classes.searchBoxButtons}>
+          <SmallButton color="primary" variant="contained">
+            検索
+          </SmallButton>
+          <SmallButton>クリア</SmallButton>
+        </div> */}
+      </div>
+      <div className={classes.resultBox}>
         <DataGrid
           rows={data?.institution ?? []}
           columns={COLUMNS}
@@ -332,11 +336,11 @@ export const Institution: FC = () => {
           paginationMode="server"
           rowCount={data?.institution_aggregate.aggregate?.count ?? undefined}
           page={page}
-          pageSize={rowsPerPage}
+          pageSize={ROWS_PER_PAGE}
           pagination={true}
           onPageChange={handleChangePage}
-          onPageSizeChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          onPageSizeChange={undefined}
+          rowsPerPageOptions={[]}
           // components={{
           //   Toolbar: CustomToolbar,
           // }}
@@ -344,7 +348,7 @@ export const Institution: FC = () => {
           disableSelectionOnClick={true}
           density="compact"
         />
-      </BaseBox>
+      </div>
     </main>
   );
 };

@@ -1,10 +1,14 @@
-import MuiButton from "@material-ui/core/Button";
+import MuiButton, { ButtonProps } from "@material-ui/core/Button";
+import React from "react";
 import { AutoButton } from "./AutoButton";
 import { LargeButton } from "./LargeButton";
 import { MediumButton } from "./MediumButton";
 import { SmallButton } from "./SmallButton";
 
-export const BaseButton = MuiButton;
+// TODO restrict button usage
+export const BaseButton = (props: ButtonProps) => (
+  <MuiButton color="inherit" variant="outlined" {...props} />
+);
 
 export type ButtonSize = "small" | "medium" | "large" | "auto";
 

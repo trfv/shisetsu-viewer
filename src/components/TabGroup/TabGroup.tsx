@@ -4,9 +4,7 @@ import { BaseBox } from "../Box";
 
 type Props = ComponentProps<typeof MuiTabs>;
 
-export const TabGroup = (props: Props) => (
-  <MuiTabs {...props} indicatorColor="primary" variant="standard" />
-);
+export const TabGroup = (props: Props) => <MuiTabs {...props} variant="standard" />;
 
 type TabPanelProps<TabValue> = ComponentProps<typeof BaseBox> & {
   tabValue: TabValue;

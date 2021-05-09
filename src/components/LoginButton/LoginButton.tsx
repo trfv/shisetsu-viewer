@@ -26,9 +26,5 @@ export const LoginButton: FC = () => {
           }),
       ];
 
-  return (
-    <SmallButton color="inherit" variant="outlined" onClick={onClick}>
-      {text}
-    </SmallButton>
-  );
+  return <SmallButton onClick={onClick}>{text}</SmallButton>;
 };

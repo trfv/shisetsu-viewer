@@ -3,11 +3,7 @@ import { AvailabilityDivision, FeeDivision, TokyoWard } from "../constants/enums
 import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
 import { FeeDivisionMap, SupportedTokyoWard, SupportedTokyoWards } from "./enums";
 import { formatPrice } from "./format";
-import {
-  getPageFromUrlParam,
-  getRowsPerPageFromUrlParam,
-  getTokyoWardFromUrlParam,
-} from "./search";
+import { getPageFromUrlParam, getTokyoWardFromUrlParam } from "./search";
 
 const FEE_DIVISION_ORDER = {
   [FeeDivision.INVALID]: 0,
@@ -79,7 +75,6 @@ const getAvailableInstrumentFromUrlParam = (
 
 export type InstitutionSearchParams = {
   page: number;
-  rowsPerPage: number;
   tokyoWard: SupportedTokyoWard;
   availableInstruments: AvailableInstrument[];
 };
@@ -89,7 +84,6 @@ export const toInstitutionSearchParams = (
 ): InstitutionSearchParams => {
   return {
     page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
-    rowsPerPage: getRowsPerPageFromUrlParam(urlSearchParams.get(ROWS_PER_PAGE)),
     tokyoWard: getTokyoWardFromUrlParam(urlSearchParams.get(TOKYO_WARD)),
     availableInstruments: getAvailableInstrumentFromUrlParam(
       urlSearchParams.getAll(AVAILABLE_INSTRUMENTS)
@@ -99,7 +93,6 @@ export const toInstitutionSearchParams = (
 
 export const toInstitutionQueryVariables = ({
   page,
-  rowsPerPage,
   tokyoWard,
   availableInstruments,
 }: InstitutionSearchParams): InstitutionQueryVariables => {
@@ -110,8 +103,8 @@ export const toInstitutionQueryVariables = ({
     availableInstruments.includes(PERCUSSION),
   ];
   return {
-    offset: page * rowsPerPage,
-    limit: rowsPerPage,
+    offset: page * ROWS_PER_PAGE,
+    limit: ROWS_PER_PAGE,
     tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,

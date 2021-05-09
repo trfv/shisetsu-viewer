@@ -8,6 +8,6 @@ module.exports = {
   ],
   babel: (options) => ({
     ...options,
-    plugins: [...options.plugins, '@babel/plugin-transform-react-jsx'],
+    plugins: [...options.plugins, ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]],
   }),
 }

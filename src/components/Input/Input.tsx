@@ -11,16 +11,16 @@ type Props = InputProps & {
   loading?: boolean;
 };
 
-export const Input: FC<Props> = ({ label, size = "auto", loading, ...rest }: Props) => {
+export const Input: FC<Props> = ({ label, size = "auto", loading, value, ...rest }: Props) => {
   const Box = box(size);
   return (
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer size={4} axis="vertical" />
       {loading ? (
-        <Skeleton height={29} />
+        <Skeleton height={32} />
       ) : (
-        <MuiInput {...rest} margin="dense" fullWidth={size === "full"} />
+        <MuiInput {...rest} value={value || ""} fullWidth={size === "full"} />
       )}
     </Box>
   );

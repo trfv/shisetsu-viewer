@@ -15,9 +15,12 @@ import { InstitutionDetail } from "./pages/InstitutionDetail";
 import { Reservation } from "./pages/Reservation";
 import { Waiting } from "./pages/Waiting";
 import { apolloClient } from "./utils/client";
-import { theme } from "./utils/theme";
+import { lightTheme as theme } from "./utils/theme";
 
 const App = () => {
+  // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  // const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode]);
+
   return (
     <Auth0Provider
       domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ""}
