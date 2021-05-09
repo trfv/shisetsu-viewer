@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../../constants/styles";
 import { BaseBox } from "../Box";
-import { LogoutButton } from "../LogoutButton";
+import { LoginButton } from "../LoginButton";
 import { ToggleButton } from "../ToggleButton";
 import { ToggleButtonGroup } from "../ToggleButtonGroup";
 
@@ -31,13 +31,16 @@ const useStyles = makeStyles(({ palette }) =>
     },
     toggleButtonGroup: {
       flexGrow: 0,
-      marginRight: 8,
+      marginRight: 24,
     },
     toggleButton: {
       borderColor: palette.common.white,
-      "& > *": {
+      width: WIDTHS.small,
+      "& .MuiToggleButton-label": {
         color: palette.common.white,
-        width: WIDTHS.small,
+      },
+      "&.Mui-selected .MuiToggleButton-label": {
+        fontWeight: "bold",
       },
     },
   })
@@ -80,7 +83,7 @@ export const Header: FC = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         )}
-        <LogoutButton />
+        <LoginButton />
       </BaseBox>
     </BaseBox>
   );

@@ -9,6 +9,7 @@ function a11yProps(value: string) {
   return {
     id: `tab-${value}`,
     "aria-controls": `tabpanel-${value}`,
+    tabIndex: 0,
   };
 }
 

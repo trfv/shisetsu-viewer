@@ -7,7 +7,6 @@ import {
   InstitutionDetailQuery,
   InstitutionDetailQueryVariables,
 } from "../api/graphql-client";
-import { BaseBox, LargeBox } from "../components/Box";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
 import { Tab } from "../components/Tab";
@@ -51,20 +50,24 @@ const useStyles = makeStyles(({ palette, shape }) =>
       justifyContent: "space-between",
     },
     infoLeftArea: {
-      marginBottom: -24,
+      width: 840,
+    },
+    infoRow: {
       display: "flex",
-      flexWrap: "wrap",
-      width: 960,
-      "& > *": {
-        marginRight: 48,
-        marginBottom: 24,
+      gap: 40,
+      "& + &": {
+        marginTop: 24,
       },
     },
-    infoRightArea: {}, // TODO
+    infoRightArea: {
+      width: 384,
+    },
     tableContainer: {
       overflowX: "auto",
       height: 640,
-      border: `1px solid ${palette.grey[300]}`,
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: palette.grey[300], // TODO dark mode
       borderRadius: shape.borderRadius,
     },
     tableCell: {
@@ -100,134 +103,153 @@ export const InstitutionDetail: FC = () => {
 
   return (
     <main className={classes.pageBox}>
-      <BaseBox className={classes.title}>
+      <div className={classes.title}>
         {loading ? (
           <Skeleton width={WIDTHS.large} height={30} />
         ) : (
           <h2>{`${institution_by_pk?.building ?? ""} ${institution_by_pk?.institution ?? ""}`}</h2>
         )}
-      </BaseBox>
+      </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
         <Tab value="info" label="施設情報" />
         <Tab value="reservation" label="予約状況" disabled={!reservation?.length} />
       </TabGroup>
       <TabPanel className={classes.tabPanel} tabValue="info" currentValue={tab}>
-        <BaseBox className={classes.infoContainer}>
-          <BaseBox className={classes.infoLeftArea}>
-            <Input
-              label="定員"
-              size="small"
-              value={institution_by_pk?.capacity && `${institution_by_pk.capacity}人`}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="面積"
-              size="small"
-              value={institution_by_pk?.area && `${institution_by_pk.area}㎡`}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="利用料金（平日）"
-              size="full"
-              value={formatUsageFee(
-                institution_by_pk?.tokyo_ward,
-                institution_by_pk?.weekday_usage_fee
-              )}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="利用料金（休日）"
-              size="full"
-              value={formatUsageFee(
-                institution_by_pk?.tokyo_ward,
-                institution_by_pk?.holiday_usage_fee
-              )}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="弦楽器"
-              size="small"
-              value={AvailabilityDivisionMap[institution_by_pk?.is_available_strings]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="管楽器"
-              size="small"
-              value={AvailabilityDivisionMap[institution_by_pk?.is_available_woodwind]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="金管楽器"
-              size="small"
-              value={AvailabilityDivisionMap[institution_by_pk?.is_available_brass]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="打楽器"
-              size="small"
-              value={AvailabilityDivisionMap[institution_by_pk?.is_available_percussion]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="譜面台"
-              size="small"
-              value={EquipmentDivisionMap[institution_by_pk?.is_equipped_music_stand]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="ピアノ"
-              size="small"
-              value={EquipmentDivisionMap[institution_by_pk?.is_equipped_piano]}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="公式サイト"
-              size="full"
-              value={institution_by_pk?.website_url}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="レイアウト図"
-              size="full"
-              value={institution_by_pk?.layout_image_url}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="住所"
-              size="medium"
-              value={institution_by_pk?.address}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              label="抽選期間"
-              size="large"
-              value={institution_by_pk?.lottery_period}
-              loading={loading}
-              readOnly={true}
-            />
-            <Input
-              size="full"
-              label="備考"
-              value={institution_by_pk?.note}
-              loading={loading}
-              readOnly={true}
-            />
-          </BaseBox>
-          <LargeBox className={classes.infoRightArea}>{/** TODO */}</LargeBox>
-        </BaseBox>
+        <div className={classes.infoContainer}>
+          <div className={classes.infoLeftArea}>
+            <div className={classes.infoRow}>
+              <Input
+                label="定員（人）"
+                size="small"
+                value={institution_by_pk?.capacity}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="面積（㎡）"
+                size="small"
+                value={institution_by_pk?.area}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="利用料金（平日）"
+                size="full"
+                value={formatUsageFee(
+                  institution_by_pk?.tokyo_ward,
+                  institution_by_pk?.weekday_usage_fee
+                )}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="利用料金（休日）"
+                size="full"
+                value={formatUsageFee(
+                  institution_by_pk?.tokyo_ward,
+                  institution_by_pk?.holiday_usage_fee
+                )}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="弦楽器"
+                size="small"
+                value={AvailabilityDivisionMap[institution_by_pk?.is_available_strings]}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="木管楽器"
+                size="small"
+                value={AvailabilityDivisionMap[institution_by_pk?.is_available_woodwind]}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="金管楽器"
+                size="small"
+                value={AvailabilityDivisionMap[institution_by_pk?.is_available_brass]}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="打楽器"
+                size="small"
+                value={AvailabilityDivisionMap[institution_by_pk?.is_available_percussion]}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="譜面台"
+                size="small"
+                value={EquipmentDivisionMap[institution_by_pk?.is_equipped_music_stand]}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="ピアノ"
+                size="small"
+                value={EquipmentDivisionMap[institution_by_pk?.is_equipped_piano]}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="公式サイト"
+                size="full"
+                value={institution_by_pk?.website_url}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="レイアウト図"
+                size="full"
+                value={institution_by_pk?.layout_image_url}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                label="住所"
+                size="medium"
+                value={institution_by_pk?.address}
+                loading={loading}
+                readOnly={true}
+              />
+              <Input
+                label="抽選期間"
+                size="large"
+                value={institution_by_pk?.lottery_period}
+                loading={loading}
+                readOnly={true}
+              />
+            </div>
+            <div className={classes.infoRow}>
+              <Input
+                size="full"
+                label="備考"
+                value={institution_by_pk?.note}
+                loading={loading}
+                readOnly={true}
+                multiline={true}
+              />
+            </div>
+          </div>
+          <div className={classes.infoRightArea}>{/** TODO */}</div>
+        </div>
       </TabPanel>
       <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
         {!!reservation?.length && (

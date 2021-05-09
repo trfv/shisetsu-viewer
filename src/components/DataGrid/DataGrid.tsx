@@ -7,6 +7,7 @@ import {
 import React from "react";
 export { DataGrid } from "@material-ui/data-grid";
 export type {
+  GridCellParams,
   GridColumns,
   GridPageChangeParams,
   GridValueFormatterParams,

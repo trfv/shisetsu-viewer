@@ -3,14 +3,14 @@ import { DatePicker as MuiDatePicker, MuiPickersUtilsProvider } from "@material-
 import React, { FC } from "react";
 import { SmallBox } from "../Box";
 
-type DatePickerProps = {
+type Props = {
   value: Date | null;
   onChange: (date: Date | null) => void;
   minDate?: Date | null;
   maxDate?: Date | null;
 };
 
-export const DatePicker: FC<DatePickerProps> = ({ value, onChange, minDate, maxDate }) => {
+export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <SmallBox>

@@ -1,0 +1,28 @@
+env:
+  browser: true
+  node: true
+  es6: true
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: ./tsconfig.json
+  ecmaFeatures:
+    jsx: true
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:prettier/recommended
+  - prettier
+plugins:
+  - react
+  - '@typescript-eslint'
+settings:
+  react:
+    version: detect
+rules:
+  "react/display-name": "off"
+  "react/prop-types": "off"
+  "@typescript-eslint/explicit-module-boundary-types": "off"
+  "prettier/prettier":
+    - error
+    - { printWidth: 100, tabWidth: 2, singleQuote: false, trailingComma: "es5" }

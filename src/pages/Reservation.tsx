@@ -8,7 +8,6 @@ import {
   ReservationQuery,
   ReservationQueryVariables,
 } from "../api/graphql-client";
-import { BaseBox } from "../components/Box";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import {
@@ -22,14 +21,7 @@ import { DateRangePicker } from "../components/DateRangePicker";
 import { Select } from "../components/Select";
 import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import {
-  END_DATE,
-  PAGE,
-  ROWS_PER_PAGE,
-  ROWS_PER_PAGE_OPTIONS,
-  START_DATE,
-  TOKYO_WARD,
-} from "../constants/search";
+import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
 import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
@@ -53,18 +45,22 @@ const useStyles = makeStyles(({ palette, shape }) => ({
   },
   searchBox: {
     margin: "40px auto 0",
-    display: "flex",
+    padding: 24,
     width: INNER_WIDTH,
-    background: palette.grey[300],
+    background: palette.grey[300], // TODO dark mode
     borderRadius: shape.borderRadius,
-    "& > *": {
-      margin: "24px",
-    },
+  },
+  searchBoxForm: {
+    display: "flex",
+    gap: 40,
   },
   resultBox: {
     margin: "40px auto 0",
     width: INNER_WIDTH,
     height: 640,
+    "& .MuiDataGrid-colCell:focus": {
+      outline: "none",
+    },
     "& .MuiDataGrid-row:hover": {
       cursor: "pointer",
     },
@@ -83,12 +79,13 @@ const COLUMNS: GridColumns = [
     headerName: "施設名",
     width: 360,
     flex: 0,
+    sortable: false,
     valueGetter: (params: GridValueGetterParams) =>
       `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
     field: "tokyo_ward",
-    headerName: "東京都区",
+    headerName: "区",
     width: 120,
     flex: 0,
     hide: true,
@@ -140,7 +137,7 @@ export const Reservation: FC = () => {
     }
   );
 
-  const { page, rowsPerPage, tokyoWard, startDate, endDate, filter } = resevationSearchParams;
+  const { page, tokyoWard, startDate, endDate, filter } = resevationSearchParams;
 
   const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
     history.replace({
@@ -234,54 +231,41 @@ export const Reservation: FC = () => {
     );
   }, []);
 
-  const handleChangeRowsPerPage = useCallback((params: GridPageChangeParams): void => {
-    setReservationSearchParams((prevState) => ({
-      ...prevState,
-      rowsPerPage: params.pageSize,
-      page: 0,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        [[ROWS_PER_PAGE, String(params.pageSize)]],
-        [PAGE, ROWS_PER_PAGE]
-      )
-    );
-  }, []);
-
   return (
     <main className={classes.pageBox}>
-      <BaseBox className={classes.searchBox}>
-        <Select
-          label="区"
-          value={tokyoWard}
-          size="small"
-          onChange={handleTokyoWardChange}
-          selectOptions={TokyoWardOptions}
-        />
-        <DateRangePicker
-          label="期間指定"
-          startDateProps={{
-            value: startDate,
-            onChange: handleStartDateChange,
-            minDate,
-            maxDate,
-          }}
-          endDateProps={{
-            value: endDate,
-            onChange: handleEndDateChange,
-            minDate,
-            maxDate,
-          }}
-        />
-        <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
-          <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
-          <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
-          <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
-          <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
-        </CheckboxGroup>
-      </BaseBox>
-      <BaseBox className={classes.resultBox}>
+      <div className={classes.searchBox}>
+        <div className={classes.searchBoxForm}>
+          <Select
+            label="区"
+            value={tokyoWard}
+            size="small"
+            onChange={handleTokyoWardChange}
+            selectOptions={TokyoWardOptions}
+          />
+          <DateRangePicker
+            label="期間指定"
+            startDateProps={{
+              value: startDate,
+              onChange: handleStartDateChange,
+              minDate,
+              maxDate,
+            }}
+            endDateProps={{
+              value: endDate,
+              onChange: handleEndDateChange,
+              minDate,
+              maxDate,
+            }}
+          />
+          <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
+            <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
+            <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
+            <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
+            <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
+          </CheckboxGroup>
+        </div>
+      </div>
+      <div className={classes.resultBox}>
         <DataGrid
           rows={data?.reservation ?? []}
           columns={COLUMNS}
@@ -293,11 +277,11 @@ export const Reservation: FC = () => {
           paginationMode="server"
           rowCount={data?.reservation_aggregate.aggregate?.count ?? undefined}
           page={page}
-          pageSize={rowsPerPage}
+          pageSize={ROWS_PER_PAGE}
           pagination={true}
           onPageChange={handleChangePage}
-          onPageSizeChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          onPageSizeChange={undefined}
+          rowsPerPageOptions={[]}
           // components={{
           //   Toolbar: CustomToolbar,
           // }}
@@ -305,7 +289,7 @@ export const Reservation: FC = () => {
           disableSelectionOnClick={true}
           density="compact"
         />
-      </BaseBox>
+      </div>
     </main>
   );
 };

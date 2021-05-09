@@ -8,12 +8,7 @@ import {
   SupportedTokyoWard,
   SupportedTokyoWards,
 } from "./enums";
-import {
-  getDateFromUrlParam,
-  getPageFromUrlParam,
-  getRowsPerPageFromUrlParam,
-  getTokyoWardFromUrlParam,
-} from "./search";
+import { getDateFromUrlParam, getPageFromUrlParam, getTokyoWardFromUrlParam } from "./search";
 
 const RESERVATION_DIVISION_ORDER = {
   [ReservationDivision.INVALID]: 0,
@@ -119,7 +114,6 @@ export const getResevationSearchFilterFromUrlParam = (
 
 export type ReservationSearchParams = {
   page: number;
-  rowsPerPage: number;
   tokyoWard: SupportedTokyoWard;
   startDate: Date | null;
   endDate: Date | null;
@@ -133,7 +127,6 @@ export const toReservationSearchParams = (
 ): ReservationSearchParams => {
   return {
     page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
-    rowsPerPage: getRowsPerPageFromUrlParam(urlSearchParams.get(ROWS_PER_PAGE)),
     tokyoWard: getTokyoWardFromUrlParam(urlSearchParams.get(TOKYO_WARD)),
     startDate: getDateFromUrlParam(urlSearchParams.get(START_DATE), minDate, maxDate) ?? minDate,
     endDate:
@@ -146,7 +139,6 @@ export const toReservationSearchParams = (
 
 export const toReservationQueryVariables = ({
   page,
-  rowsPerPage,
   tokyoWard,
   startDate,
   endDate,
@@ -159,8 +151,8 @@ export const toReservationQueryVariables = ({
     filter.includes(IS_ONLY_EVENING_VACANT),
   ];
   return {
-    offset: page * rowsPerPage,
-    limit: rowsPerPage,
+    offset: page * ROWS_PER_PAGE,
+    limit: ROWS_PER_PAGE,
     tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
