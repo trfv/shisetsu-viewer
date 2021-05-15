@@ -9,6 +9,7 @@ const useStyles = makeStyles(() =>
     appBar: {
       width: "100%",
       minWidth: CONTAINER_WIDTH,
+      height: 84,
       top: "auto",
       bottom: 0,
       padding: "32px 0",

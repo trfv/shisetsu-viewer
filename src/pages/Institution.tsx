@@ -21,7 +21,7 @@ import { Select } from "../components/Select";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
 import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
-import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
+import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
 import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
 import {
@@ -40,11 +40,16 @@ import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search"
 const useStyles = makeStyles(({ palette, shape }) =>
   createStyles({
     pageBox: {
+      paddingTop: 40,
+      display: "flex",
+      flexDirection: "column",
+      gap: 40,
       width: "100%",
       minWidth: CONTAINER_WIDTH,
+      height: MAIN_HEIGHT,
     },
     searchBox: {
-      margin: "40px auto 0",
+      marginInline: "auto",
       padding: 24,
       width: INNER_WIDTH,
       background: palette.grey[300], // TODO dark mode
@@ -60,9 +65,9 @@ const useStyles = makeStyles(({ palette, shape }) =>
     //   gap: 16,
     // },
     resultBox: {
-      margin: "40px auto 0",
+      marginInline: "auto",
       width: INNER_WIDTH,
-      height: 640,
+      height: "100%",
       "& .MuiDataGrid-colCell:focus": {
         outline: "none",
       },
@@ -255,7 +260,7 @@ export const Institution: FC = () => {
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,
-        [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
+        { [TOKYO_WARD]: convertTokyoWardToUrlParam(value) },
         [PAGE]
       )
     );
@@ -273,11 +278,7 @@ export const Institution: FC = () => {
         availableInstruments: next,
       }));
       updateUrlSearchParams(
-        setUrlSearchParams(
-          urlSearchParams.current,
-          next.map((f) => [AVAILABLE_INSTRUMENTS, f]),
-          [PAGE]
-        )
+        setUrlSearchParams(urlSearchParams.current, { [AVAILABLE_INSTRUMENTS]: next }, [PAGE])
       );
     },
     [availableInstruments]
@@ -289,7 +290,7 @@ export const Institution: FC = () => {
       page: params.page,
     }));
     updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, [[PAGE, String(params.page)]], [PAGE])
+      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(params.page) }, [PAGE])
     );
   }, []);
 

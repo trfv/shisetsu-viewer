@@ -15,3 +15,7 @@ export const WIDTHS = {
   medium: 240,
   large: 480,
 };
+
+export const HEADER_HEIGHT = 72;
+export const FOOTER_HEIGHT = 84;
+export const MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + FOOTER_HEIGHT}px)`;

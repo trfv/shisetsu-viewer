@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { addMonths, endOfMonth, isAfter, isBefore } from "date-fns";
+import { addMonths, endOfMonth } from "date-fns";
 import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
@@ -22,7 +22,7 @@ import { Select } from "../components/Select";
 import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
 import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
-import { CONTAINER_WIDTH, INNER_WIDTH } from "../constants/styles";
+import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
 import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import {
@@ -40,11 +40,16 @@ import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search"
 
 const useStyles = makeStyles(({ palette, shape }) => ({
   pageBox: {
+    paddingTop: 40,
+    display: "flex",
+    flexDirection: "column",
+    gap: 40,
     width: "100%",
     minWidth: CONTAINER_WIDTH,
+    height: MAIN_HEIGHT,
   },
   searchBox: {
-    margin: "40px auto 0",
+    marginInline: "auto",
     padding: 24,
     width: INNER_WIDTH,
     background: palette.grey[300], // TODO dark mode
@@ -55,9 +60,9 @@ const useStyles = makeStyles(({ palette, shape }) => ({
     gap: 40,
   },
   resultBox: {
-    margin: "40px auto 0",
+    marginInline: "auto",
     width: INNER_WIDTH,
-    height: 640,
+    height: "100%",
     "& .MuiDataGrid-colCell:focus": {
       outline: "none",
     },
@@ -153,49 +158,35 @@ export const Reservation: FC = () => {
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,
-        [[TOKYO_WARD, convertTokyoWardToUrlParam(value)]],
+        { [TOKYO_WARD]: convertTokyoWardToUrlParam(value) },
         [PAGE]
       )
     );
   }, []);
 
   const handleStartDateChange = useCallback((date: Date | null): void => {
-    const needsUpdateEndDate = date && endDate && isAfter(date, endDate);
     setReservationSearchParams((prevState) => ({
       ...prevState,
       page: 0,
       startDate: date,
-      ...(needsUpdateEndDate ? { endDate: date } : {}),
     }));
-    const appendParams: [string, string | undefined][] = [[START_DATE, date?.toLocaleDateString()]];
     updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        needsUpdateEndDate
-          ? appendParams.concat([END_DATE, date?.toLocaleDateString()])
-          : appendParams,
-        [PAGE]
-      )
+      setUrlSearchParams(urlSearchParams.current, { [START_DATE]: date?.toLocaleDateString() }, [
+        PAGE,
+      ])
     );
   }, []);
 
   const handleEndDateChange = useCallback((date: Date | null): void => {
-    const needsUpdateStartDate = date && startDate && isBefore(date, startDate);
     setReservationSearchParams((prevState) => ({
       ...prevState,
       page: 0,
       endDate: date,
-      ...(needsUpdateStartDate ? { endDate: date } : {}),
     }));
-    const appendParams: [string, string | undefined][] = [[END_DATE, date?.toLocaleDateString()]];
     updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        needsUpdateStartDate
-          ? appendParams.concat([START_DATE, date?.toLocaleDateString()])
-          : appendParams,
-        []
-      )
+      setUrlSearchParams(urlSearchParams.current, { [END_DATE]: date?.toLocaleDateString() }, [
+        PAGE,
+      ])
     );
   }, []);
 
@@ -211,11 +202,10 @@ export const Reservation: FC = () => {
         filter: next,
       }));
       updateUrlSearchParams(
-        setUrlSearchParams(
-          urlSearchParams.current,
-          next.map((f) => [RESERVATION_SEARCH_FILTER, f]),
-          [PAGE]
-        )
+        setUrlSearchParams(urlSearchParams.current, { [RESERVATION_SEARCH_FILTER]: next }, [
+          PAGE,
+          RESERVATION_SEARCH_FILTER,
+        ])
       );
     },
     [filter]
@@ -227,7 +217,7 @@ export const Reservation: FC = () => {
       page: params.page,
     }));
     updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, [[PAGE, String(params.page)]], [PAGE])
+      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(params.page) }, [PAGE])
     );
   }, []);
 

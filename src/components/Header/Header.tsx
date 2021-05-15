@@ -14,6 +14,7 @@ const useStyles = makeStyles(({ palette }) =>
     appBar: {
       width: "100%",
       minWidth: CONTAINER_WIDTH,
+      height: 72,
       color: palette.common.white,
       backgroundColor: palette.primary.main,
     },

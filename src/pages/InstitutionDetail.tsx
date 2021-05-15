@@ -64,7 +64,6 @@ const useStyles = makeStyles(({ palette, shape }) =>
     },
     tableContainer: {
       overflowX: "auto",
-      height: 640,
       borderWidth: 1,
       borderStyle: "solid",
       borderColor: palette.grey[300], // TODO dark mode

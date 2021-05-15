@@ -39,12 +39,17 @@ export const convertTokyoWardToUrlParam = (tokyoWard: SupportedTokyoWard): strin
 
 export const setUrlSearchParams = (
   urlSearchParams: URLSearchParams,
-  appendParams: [string, string | undefined][],
+  setParams: { [key: string]: string | undefined | (string | undefined)[] },
   deleteKeys: string[]
 ) => {
   deleteKeys.forEach((key) => urlSearchParams.delete(key));
-  appendParams.forEach(([key, value]) => {
-    value ? urlSearchParams.set(key, value) : urlSearchParams.delete(key);
+  Object.entries(setParams).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      urlSearchParams.delete(key);
+      value.forEach((v) => v && urlSearchParams.append(key, v));
+    } else {
+      value ? urlSearchParams.set(key, value) : urlSearchParams.delete(key);
+    }
   });
   return urlSearchParams;
 };
