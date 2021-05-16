@@ -19,6 +19,7 @@ import {
 } from "../components/DataGrid";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select } from "../components/Select";
+import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
 import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
@@ -139,6 +140,11 @@ export const Reservation: FC = () => {
     ReservationDocument,
     {
       variables: toReservationQueryVariables(resevationSearchParams),
+      context: {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      },
     }
   );
 

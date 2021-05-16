@@ -19,6 +19,7 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
+import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../constants/enums";
 import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../constants/styles";
 import { isValidUUID } from "../utils/common";
@@ -88,6 +89,11 @@ export const InstitutionDetail: FC = () => {
     InstitutionDetailQueryVariables
   >(InstitutionDetailDocument, {
     variables: { id },
+    context: {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    },
   });
 
   if (!isValidUUID(id)) {
