@@ -91,7 +91,7 @@ export const InstitutionDetail: FC = () => {
     variables: { id },
     context: {
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
       },
     },
   });
