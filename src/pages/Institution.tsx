@@ -244,7 +244,7 @@ export const Institution: FC = () => {
       variables: toInstitutionQueryVariables(institutionSearchParams),
       context: {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
         },
       },
     }

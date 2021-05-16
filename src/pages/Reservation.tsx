@@ -142,7 +142,7 @@ export const Reservation: FC = () => {
       variables: toReservationQueryVariables(resevationSearchParams),
       context: {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
         },
       },
     }
