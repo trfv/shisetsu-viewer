@@ -19,8 +19,8 @@ const useStyles = makeStyles(() => ({
 export const Loading: FC = () => {
   const classes = useStyles();
   return (
-    <div className={classes.main}>
+    <main className={classes.main}>
       <CircularProgress size={60} />
-    </div>
+    </main>
   );
 };

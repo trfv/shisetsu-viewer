@@ -1,9 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { FC, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import { Loading } from "../components/utils/Loading";
 import { ROUTES } from "../constants/routes";
 import { NEXT } from "../constants/search";
+import { Loading } from "./Loading";
 
 export const Waiting: FC = () => {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -16,11 +16,5 @@ export const Waiting: FC = () => {
     }
   }, [isAuthenticated]);
 
-  return isLoading ? (
-    <main>
-      <Loading />
-    </main>
-  ) : (
-    <Redirect to={ROUTES.top} />
-  );
+  return isLoading ? <Loading /> : <Redirect to={ROUTES.top} />;
 };

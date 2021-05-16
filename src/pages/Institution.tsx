@@ -18,6 +18,7 @@ import {
   GridValueGetterParams,
 } from "../components/DataGrid";
 import { Select } from "../components/Select";
+import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
 import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
@@ -241,6 +242,11 @@ export const Institution: FC = () => {
     InstitutionDocument,
     {
       variables: toInstitutionQueryVariables(institutionSearchParams),
+      context: {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      },
     }
   );
 
