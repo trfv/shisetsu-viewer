@@ -94,7 +94,7 @@ export enum FeeDivision {
 export enum TokyoWard {
   INVALID = "TOKYO_WARD_INVALID",
   ADACHI = "TOKYO_WARD_ADACHI",
-  ARAWAKA = "TOKYO_WARD_ARAWAKA",
+  ARAKAWA = "TOKYO_WARD_ARAKAWA",
   ITABASHI = "TOKYO_WARD_ITABASHI",
   EDOGAWA = "TOKYO_WARD_EDOGAWA",
   OTA = "TOKYO_WARD_OTA",
@@ -121,7 +121,7 @@ export enum TokyoWard {
 export const TokyoWardMap: Record<string, string> = {
   [TokyoWard.INVALID]: "すべて",
   [TokyoWard.ADACHI]: "足立区",
-  [TokyoWard.ARAWAKA]: "荒川区",
+  [TokyoWard.ARAKAWA]: "荒川区",
   [TokyoWard.ITABASHI]: "板橋区",
   [TokyoWard.EDOGAWA]: "江戸川区",
   [TokyoWard.OTA]: "大田区",

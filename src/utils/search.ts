@@ -27,6 +27,7 @@ const TOKTO_WARD_URL_PARAMS: Readonly<Record<string, SupportedTokyoWard>> = {
   kita: TokyoWard.KITA,
   toshima: TokyoWard.TOSHIMA,
   edogawa: TokyoWard.EDOGAWA,
+  arakawa: TokyoWard.ARAKAWA,
 };
 
 export const getTokyoWardFromUrlParam = (param: string | null | undefined): SupportedTokyoWard => {
