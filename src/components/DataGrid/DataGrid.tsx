@@ -1,7 +1,7 @@
 import {
-  GridColumnsToolbarButton,
-  GridDensitySelector,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
+  GridToolbarDensitySelector,
   GridToolbarExport,
 } from "@material-ui/data-grid";
 import React from "react";
@@ -17,8 +17,8 @@ export type {
 export const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridColumnsToolbarButton />
-      <GridDensitySelector />
+      <GridToolbarColumnsButton />
+      <GridToolbarDensitySelector />
     </GridToolbarContainer>
   );
 };
