@@ -1,7 +1,7 @@
-import "fontsource-roboto/300-normal.css";
-import "fontsource-roboto/400-normal.css";
-import "fontsource-roboto/500-normal.css";
-import "fontsource-roboto/700-normal.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";

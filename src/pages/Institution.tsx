@@ -185,7 +185,7 @@ const COLUMNS: GridColumns = [
     width: 160,
     flex: 0,
     hide: true,
-    disableClickEventBubbling: true,
+    // disableClickEventBubbling: true,
     // eslint-disable-next-line react/display-name
     renderCell: (params: GridCellParams) => {
       const href = params.value as string;
@@ -204,7 +204,7 @@ const COLUMNS: GridColumns = [
     width: 160,
     flex: 0,
     hide: true,
-    disableClickEventBubbling: true,
+    // disableClickEventBubbling: true,
     // eslint-disable-next-line react/display-name
     renderCell: (params: GridCellParams) => {
       const href = params.value as string;
