@@ -2,7 +2,6 @@ import { getGridLocalization, GridLocaleText } from "@material-ui/data-grid";
 
 // https://github.com/mui-org/material-ui-x/blob/master/packages/grid/_modules_/grid/locales/jaJP.ts
 const jaJPGrid: Partial<GridLocaleText> = {
-  rootGridLabel: "grid",
   noRowsLabel: "表示するデータがありません。",
   noResultsOverlayLabel: "表示するデータがありません。",
   errorOverlayDefaultLabel: "エラーが発生しました。",
