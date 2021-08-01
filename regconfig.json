@@ -14,7 +14,7 @@
     },
     "reg-keygen-git-hash-plugin": {},
     "reg-publish-s3-plugin": {
-      "bucketName": "reg-publish-bucket-fcbe929c-e655-4e5b-b55c-928fc4ab39fe"
+      "bucketName": "trfv-reg-suit"
     }
   }
 }
