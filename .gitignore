@@ -26,3 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 build-storybook.log
+.reg
+__screenshots__
