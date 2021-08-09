@@ -13,7 +13,6 @@ import {
   DataGrid,
   GridCellParams,
   GridColumns,
-  GridPageChangeParams,
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "../components/DataGrid";
@@ -69,7 +68,10 @@ const useStyles = makeStyles(({ palette, shape }) =>
       marginInline: "auto",
       width: INNER_WIDTH,
       height: "100%",
-      "& .MuiDataGrid-colCell:focus": {
+      "& .MuiDataGrid-columnHeader:focus": {
+        outline: "none",
+      },
+      "& .MuiDataGrid-columnHeader:focus-within": {
         outline: "none",
       },
       "& .MuiDataGrid-row:hover": {
@@ -290,13 +292,13 @@ export const Institution: FC = () => {
     [availableInstruments]
   );
 
-  const handleChangePage = useCallback((params: GridPageChangeParams): void => {
+  const handleChangePage = useCallback((page: number): void => {
     setInstitutionSearchParams((prevState) => ({
       ...prevState,
-      page: params.page,
+      page,
     }));
     updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(params.page) }, [PAGE])
+      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(page) }, [PAGE])
     );
   }, []);
 
@@ -346,7 +348,6 @@ export const Institution: FC = () => {
           pageSize={ROWS_PER_PAGE}
           pagination={true}
           onPageChange={handleChangePage}
-          onPageSizeChange={undefined}
           rowsPerPageOptions={[]}
           // components={{
           //   Toolbar: CustomToolbar,
