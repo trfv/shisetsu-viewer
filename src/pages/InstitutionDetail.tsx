@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React, { ChangeEvent, FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -27,59 +26,11 @@ import { ReservationDivisionMap, ReservationStatusMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { formatUsageFee } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
-
-const useStyles = makeStyles(({ palette, shape }) =>
-  createStyles({
-    pageBox: {
-      width: "100%",
-      minWidth: CONTAINER_WIDTH,
-    },
-    title: {
-      margin: "40px auto 0",
-      width: INNER_WIDTH,
-    },
-    tabGroup: {
-      margin: "24px auto 0",
-      width: INNER_WIDTH,
-    },
-    tabPanel: {
-      margin: "40px auto 0",
-      width: INNER_WIDTH,
-    },
-    infoContainer: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    infoLeftArea: {
-      width: 840,
-    },
-    infoRow: {
-      display: "flex",
-      gap: 40,
-      "& + &": {
-        marginTop: 24,
-      },
-    },
-    infoRightArea: {
-      width: 384,
-    },
-    tableContainer: {
-      overflowX: "auto",
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: palette.grey[300], // TODO dark mode
-      borderRadius: shape.borderRadius,
-    },
-    tableCell: {
-      whiteSpace: "nowrap",
-    },
-  })
-);
+import { styled } from "../utils/theme";
 
 type Tab = "info" | "reservation";
 
 export const InstitutionDetail: FC = () => {
-  const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const [tab, setTab] = useState<Tab>("info");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
@@ -107,10 +58,10 @@ export const InstitutionDetail: FC = () => {
   }
 
   return (
-    <main className={classes.pageBox}>
+    <StyledInstitutionDetail className={classes.pageBox}>
       <div className={classes.title}>
         {loading ? (
-          <Skeleton width={WIDTHS.large} height={30} />
+          <Skeleton width={WIDTHS.large} height={36} />
         ) : (
           <h2>{`${institution_by_pk?.building ?? ""} ${institution_by_pk?.institution ?? ""}`}</h2>
         )}
@@ -259,7 +210,7 @@ export const InstitutionDetail: FC = () => {
       <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
         {!!reservation?.length && (
           <TableContainer className={classes.tableContainer}>
-            <Table stickyHeader={true}>
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.tableCell} variant="head" size="small">
@@ -301,52 +252,66 @@ export const InstitutionDetail: FC = () => {
           </TableContainer>
         )}
       </TabPanel>
-    </main>
+    </StyledInstitutionDetail>
   );
 };
 
-// <DataGrid
-// rows={data.reservation}
-// columns={[
-//   {
-//     field: "date",
-//     headerName: "日付",
-//     width: 160,
-//     flex: 0,
-//     valueFormatter: (params: GridValueFormatterParams) =>
-//       formatDate(params.value as string),
-//   },
-//   ...sortByReservationDivision(data.reservation[0].reservation).map(
-//     ([division], i) => ({
-//       field: division,
-//       headerName: ReservationDivisionMap[institution_by_pk?.tokyo_ward]?.[division],
-//       width: 140,
-//       flex: 0,
-//       sortable: false,
-//       valueGetter: (params: GridValueGetterParams) => {
-//         return ReservationStatusMap[institution_by_pk?.tokyo_ward]?.[
-//           sortByReservationDivision(params.row.reservation)[i][1]
-//         ];
-//       },
-//     })
-//   ),
-//   {
-//     field: "updated_at",
-//     headerName: "更新日時",
-//     width: 200,
-//     flex: 0,
-//     sortable: false,
-//     valueFormatter: (params: GridValueFormatterParams) =>
-//       formatDatetime(params.value as string),
-//   },
-// ]}
-// error={error}
-// loading={loading}
-// components={{
-//   Toolbar: ExportToolbar,
-// }}
-// disableColumnMenu={true}
-// disableSelectionOnClick={true}
-// density="compact"
-// paginationMode="client"
-// />
+const PREFIX = "InstitutionDetail";
+const classes = {
+  pageBox: `${PREFIX}-pageBox`,
+  title: `${PREFIX}-title`,
+  tabGroup: `${PREFIX}-tabGroup`,
+  tabPanel: `${PREFIX}-tabPanel`,
+  infoContainer: `${PREFIX}-infoContainer`,
+  infoLeftArea: `${PREFIX}-infoLeftArea`,
+  infoRow: `${PREFIX}-infoRow`,
+  infoRightArea: `${PREFIX}-infoRightArea`,
+  tableContainer: `${PREFIX}-tableContainer`,
+  tableCell: `${PREFIX}-tableCell`,
+};
+
+const StyledInstitutionDetail = styled("main")(({ theme }) => ({
+  [`&.${classes.pageBox}`]: {
+    width: "100%",
+    minWidth: CONTAINER_WIDTH,
+  },
+  [`.${classes.title}`]: {
+    margin: "40px auto 0",
+    width: INNER_WIDTH,
+  },
+  [`.${classes.tabGroup}`]: {
+    margin: "24px auto 0",
+    width: INNER_WIDTH,
+  },
+  [`.${classes.tabPanel}`]: {
+    margin: "40px auto 0",
+    width: INNER_WIDTH,
+  },
+  [`.${classes.infoContainer}`]: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  [`.${classes.infoLeftArea}`]: {
+    width: 840,
+  },
+  [`.${classes.infoRow}`]: {
+    display: "flex",
+    gap: 40,
+    [`+ .${classes.infoRow}`]: {
+      marginTop: 24,
+    },
+  },
+  [`.${classes.infoRightArea}`]: {
+    width: 384,
+  },
+  [`.${classes.tableContainer}`]: {
+    overflowX: "auto",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: theme.palette.grey[300], // TODO dark mode
+    borderRadius: theme.shape.borderRadius,
+  },
+  [`.${classes.tableCell}`]: {
+    whiteSpace: "nowrap",
+  },
+}));

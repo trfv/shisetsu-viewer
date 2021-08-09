@@ -1,15 +1,17 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import MuiSelect from "@material-ui/core/Select";
-import React, { ChangeEvent, FC } from "react";
+import MuiSelect, { SelectChangeEvent as MuiSelectChangeEvent } from "@material-ui/core/Select";
+import React, { FC } from "react";
 import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
+
+export type SelectChangeEvent<T> = MuiSelectChangeEvent<T>;
 
 type Props = {
   label: string;
   value: string;
   size?: BoxSize;
-  onChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onChange: (event: SelectChangeEvent<unknown>) => void;
   selectOptions: { value: string; label: string }[];
 };
 

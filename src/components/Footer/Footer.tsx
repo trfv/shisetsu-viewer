@@ -1,25 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React, { FC } from "react";
 import { CONTAINER_WIDTH } from "../../constants/styles";
-import { BaseBox } from "../Box";
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    appBar: {
-      width: "100%",
-      minWidth: CONTAINER_WIDTH,
-      height: 84,
-      top: "auto",
-      bottom: 0,
-      padding: "32px 0",
-      textAlign: "center",
-    },
-  })
-);
+import { styled } from "../../utils/theme";
 
 export const Footer: FC = () => {
-  const classes = useStyles();
   const { isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) {
@@ -27,8 +11,25 @@ export const Footer: FC = () => {
   }
 
   return (
-    <BaseBox className={classes.appBar} component="footer">
+    <StyledFooter className={classes.appBar}>
       Copyright © 2021 trfv All Rights Reserved.
-    </BaseBox>
+    </StyledFooter>
   );
 };
+
+const PREFIX = "Footer";
+const classes = {
+  appBar: `${PREFIX}-appBar`,
+};
+
+const StyledFooter = styled("footer")(() => ({
+  [`&.${classes.appBar}`]: {
+    width: "100%",
+    minWidth: CONTAINER_WIDTH,
+    height: 84,
+    top: "auto",
+    bottom: 0,
+    padding: "32px 0",
+    textAlign: "center",
+  },
+}));

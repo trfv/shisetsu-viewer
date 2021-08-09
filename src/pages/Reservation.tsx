@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { makeStyles } from "@material-ui/core/styles";
 import { addMonths, endOfMonth } from "date-fns";
 import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -17,7 +16,7 @@ import {
   GridValueGetterParams,
 } from "../components/DataGrid";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { Select } from "../components/Select";
+import { Select, SelectChangeEvent } from "../components/Select";
 import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
@@ -37,46 +36,7 @@ import {
   toReservationSearchParams,
 } from "../utils/reservation";
 import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
-
-const useStyles = makeStyles(({ palette, shape }) => ({
-  pageBox: {
-    paddingTop: 40,
-    display: "flex",
-    flexDirection: "column",
-    gap: 40,
-    width: "100%",
-    minWidth: CONTAINER_WIDTH,
-    height: MAIN_HEIGHT,
-  },
-  searchBox: {
-    marginInline: "auto",
-    padding: 24,
-    width: INNER_WIDTH,
-    background: palette.grey[300], // TODO dark mode
-    borderRadius: shape.borderRadius,
-  },
-  searchBoxForm: {
-    display: "flex",
-    gap: 40,
-  },
-  resultBox: {
-    marginInline: "auto",
-    width: INNER_WIDTH,
-    height: "100%",
-    "& .MuiDataGrid-columnHeader:focus": {
-      outline: "none",
-    },
-    "& .MuiDataGrid-columnHeader:focus-within": {
-      outline: "none",
-    },
-    "& .MuiDataGrid-row:hover": {
-      cursor: "pointer",
-    },
-    "& .MuiDataGrid-cell:focus-within": {
-      outline: "none",
-    },
-  },
-}));
+import { styled } from "../utils/theme";
 
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
@@ -131,7 +91,6 @@ const COLUMNS: GridColumns = [
 ];
 
 export const Reservation: FC = () => {
-  const classes = useStyles();
   const history = useHistory();
 
   const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
@@ -160,7 +119,7 @@ export const Reservation: FC = () => {
     urlSearchParams.current = nextUrlSearchParams;
   }, []);
 
-  const handleTokyoWardChange = useCallback((event: ChangeEvent<{ value: unknown }>): void => {
+  const handleTokyoWardChange = useCallback((event: SelectChangeEvent<unknown>): void => {
     const value = event.target.value as SupportedTokyoWard;
     setReservationSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
     updateUrlSearchParams(
@@ -230,7 +189,7 @@ export const Reservation: FC = () => {
   }, []);
 
   return (
-    <main className={classes.pageBox}>
+    <StyledReservation className={classes.pageBox}>
       <div className={classes.searchBox}>
         <div className={classes.searchBoxForm}>
           <Select
@@ -288,6 +247,54 @@ export const Reservation: FC = () => {
           density="compact"
         />
       </div>
-    </main>
+    </StyledReservation>
   );
 };
+
+const PREFIX = "Reservation";
+const classes = {
+  pageBox: `${PREFIX}-pageBox`,
+  searchBox: `${PREFIX}-searchBox`,
+  searchBoxForm: `${PREFIX}-searchBoxForm`,
+  resultBox: `${PREFIX}-resultBox`,
+};
+
+const StyledReservation = styled("main")(({ theme }) => ({
+  [`&.${classes.pageBox}`]: {
+    paddingTop: 40,
+    display: "flex",
+    flexDirection: "column",
+    gap: 40,
+    width: "100%",
+    minWidth: CONTAINER_WIDTH,
+    height: MAIN_HEIGHT,
+  },
+  [`.${classes.searchBox}`]: {
+    marginInline: "auto",
+    padding: 24,
+    width: INNER_WIDTH,
+    background: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
+  },
+  [`.${classes.searchBoxForm}`]: {
+    display: "flex",
+    gap: 40,
+  },
+  [`.${classes.resultBox}`]: {
+    marginInline: "auto",
+    width: INNER_WIDTH,
+    height: "100%",
+    ".MuiDataGrid-columnHeader:focus": {
+      outline: "none",
+    },
+    ".MuiDataGrid-columnHeader:focus-within": {
+      outline: "none",
+    },
+    ".MuiDataGrid-row:hover": {
+      cursor: "pointer",
+    },
+    ".MuiDataGrid-cell:focus-within": {
+      outline: "none",
+    },
+  },
+}));

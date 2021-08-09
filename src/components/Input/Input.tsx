@@ -5,7 +5,7 @@ import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
 
-type Props = InputProps & {
+type Props = Omit<InputProps, "size"> & {
   label: string;
   size?: BoxSize;
   loading?: boolean;

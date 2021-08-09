@@ -25,7 +25,7 @@ export const CustomToolbar = () => {
 export const ExportToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport innerRef={null} buttonRef={null} />
     </GridToolbarContainer>
   );
 };
