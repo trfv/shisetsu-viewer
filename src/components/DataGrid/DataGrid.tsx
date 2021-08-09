@@ -9,7 +9,6 @@ export { DataGrid } from "@material-ui/data-grid";
 export type {
   GridCellParams,
   GridColumns,
-  GridPageChangeParams,
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "@material-ui/data-grid";
