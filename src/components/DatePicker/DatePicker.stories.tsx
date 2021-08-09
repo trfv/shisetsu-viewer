@@ -12,4 +12,5 @@ export const Basic = (args: Props) => <DatePicker {...args} />;
 
 Basic.args = {
   label: "label",
+  value: new Date(2021, 0, 1),
 };
