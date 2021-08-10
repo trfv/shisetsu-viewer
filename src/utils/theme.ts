@@ -1,7 +1,9 @@
 import { grey, indigo, red } from "@material-ui/core/colors";
-import { createMuiTheme, ThemeOptions } from "@material-ui/core/styles";
+import { createTheme, styled as muiStyled, ThemeOptions } from "@material-ui/core/styles";
 import { jaJP } from "../constants/datagrid";
 import { BREAKPOINTS } from "../constants/styles";
+
+export const styled = muiStyled;
 
 const COLORS = {
   white: "#ffffff",
@@ -15,23 +17,16 @@ const COMMON_THEME_OPTION: ThemeOptions = {
   breakpoints: {
     values: BREAKPOINTS,
   },
-  // overrides: {
-  //   MuiCssBaseline: {
-  //     "@global": {
-  //       "*::-webkit-scrollbar": {
-  //         display: "none", // https://github.com/mui-org/material-ui-x/issues/1613
-  //       },
-  //     },
-  //   },
-  // },
+  typography: {
+    fontFamily: 'Roboto, "Noto Sans JP", "Hiragino Sans", Meiryo, sans-serif',
+  },
 };
 
-export const lightTheme = createMuiTheme(
+export const lightTheme = createTheme(
   {
     ...COMMON_THEME_OPTION,
     palette: {
-      ...COMMON_THEME_OPTION.palette,
-      type: "light",
+      mode: "light",
       primary: {
         main: indigo[500],
         contrastText: COLORS.white,
@@ -41,7 +36,7 @@ export const lightTheme = createMuiTheme(
         contrastText: COLORS.white,
       },
       background: {
-        default: grey[100],
+        default: grey[50],
       },
       common: {
         black: COLORS.black,
@@ -52,11 +47,11 @@ export const lightTheme = createMuiTheme(
   jaJP
 );
 
-export const darkTheme = createMuiTheme(
+export const darkTheme = createTheme(
   {
     ...COMMON_THEME_OPTION,
     palette: {
-      type: "dark",
+      mode: "dark",
       primary: {
         main: grey[800],
         contrastText: COLORS.white,

@@ -1,9 +1,22 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
 import React, { FC } from "react";
+import { styled } from "../utils/theme";
 
-const useStyles = makeStyles(() => ({
-  main: {
+export const Loading: FC = () => {
+  return (
+    <StyledLoading className={classes.main}>
+      <CircularProgress size={60} />
+    </StyledLoading>
+  );
+};
+
+const PREFIX = Loading.displayName;
+const classes = {
+  main: `${PREFIX}-main`,
+};
+
+const StyledLoading = styled("main")(() => ({
+  [`&.${classes.main}`]: {
     position: "fixed",
     top: 0,
     left: 0,
@@ -15,12 +28,3 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
   },
 }));
-
-export const Loading: FC = () => {
-  const classes = useStyles();
-  return (
-    <main className={classes.main}>
-      <CircularProgress size={60} />
-    </main>
-  );
-};

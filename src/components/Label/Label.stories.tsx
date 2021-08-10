@@ -15,10 +15,13 @@ export const Large = (args: ComponentProps<typeof LargeLabel>) => <LargeLabel {.
 
 Small.args = {
   label: "small",
+  color: "inherit",
 };
 Medium.args = {
   label: "medium",
+  color: "inherit",
 };
 Large.args = {
   label: "large",
+  color: "inherit",
 };

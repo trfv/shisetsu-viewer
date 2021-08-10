@@ -1,30 +1,33 @@
-import DateFnsUtils from "@date-io/date-fns";
-import { DatePicker as MuiDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MuiTextField from "@material-ui/core/TextField";
+import { DatePicker as MuiDatePicker } from "@material-ui/lab";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+import locale from "date-fns/locale/ja";
 import React, { FC } from "react";
-import { SmallBox } from "../Box";
+import { MediumBox } from "../Box";
 
 type Props = {
   value: Date | null;
   onChange: (date: Date | null) => void;
-  minDate?: Date | null;
-  maxDate?: Date | null;
+  minDate?: Date | undefined;
+  maxDate?: Date | undefined;
 };
 
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <SmallBox>
+    <LocalizationProvider dateAdapter={AdapterDateFns} locale={locale}>
+      <MediumBox>
         <MuiDatePicker
-          disableToolbar
-          variant="inline"
-          format="yyyy/MM/dd"
+          views={["day"]}
+          mask="yyyy/MM/dd"
           value={value}
-          onChange={onChange}
           minDate={minDate}
           maxDate={maxDate}
-          error={false}
+          onChange={onChange}
+          renderInput={(props) => <MuiTextField {...props} variant="standard" />}
+          showDaysOutsideCurrentMonth={true}
         />
-      </SmallBox>
-    </MuiPickersUtilsProvider>
+      </MediumBox>
+    </LocalizationProvider>
   );
 };
