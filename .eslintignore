@@ -3,3 +3,4 @@ graphql-client.tsx
 
 /node_modules
 /build
+vite.config.ts

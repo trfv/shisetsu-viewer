@@ -12,7 +12,7 @@ type TabPanelProps<TabValue> = ComponentProps<typeof BaseBox> & {
   children: ReactNode;
 };
 
-export const TabPanel = <TabValue,>({
+export const TabPanel = <TabValue extends string>({
   tabValue,
   currentValue,
   children,
