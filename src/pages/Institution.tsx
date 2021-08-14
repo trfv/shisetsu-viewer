@@ -300,7 +300,7 @@ export const Institution: FC = () => {
           pageSize={ROWS_PER_PAGE}
           pagination={true}
           onPageChange={handleChangePage}
-          rowsPerPageOptions={[]}
+          rowsPerPageOptions={[ROWS_PER_PAGE]}
           // components={{
           //   Toolbar: CustomToolbar,
           // }}
