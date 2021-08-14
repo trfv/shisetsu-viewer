@@ -1,6 +1,6 @@
 import MuiTextField from "@material-ui/core/TextField";
-import { DatePicker as MuiDatePicker } from "@material-ui/lab";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import MuiDatePicker from "@material-ui/lab/DatePicker";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import locale from "date-fns/locale/ja";
 import React, { FC } from "react";
@@ -19,13 +19,14 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
       <MediumBox>
         <MuiDatePicker
           views={["day"]}
-          mask="yyyy/MM/dd"
+          mask="____/__/__"
           value={value}
           minDate={minDate}
           maxDate={maxDate}
           onChange={onChange}
           renderInput={(props) => <MuiTextField {...props} variant="standard" />}
           showDaysOutsideCurrentMonth={true}
+          ignoreInvalidInputs={true}
         />
       </MediumBox>
     </LocalizationProvider>

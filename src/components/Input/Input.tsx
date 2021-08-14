@@ -1,8 +1,8 @@
 import MuiInput, { InputProps } from "@material-ui/core/Input";
-import Skeleton from "@material-ui/lab/Skeleton";
 import React, { FC } from "react";
 import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
+import { Skeleton } from "../Skeleton";
 import { Spacer } from "../Spacer";
 
 type Props = Omit<InputProps, "size"> & {
