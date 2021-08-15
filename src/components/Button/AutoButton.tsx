@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { BaseButton } from "./BaseButton";
 
 type Props = ComponentProps<typeof BaseButton>;

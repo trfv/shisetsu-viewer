@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   InstitutionDetailDocument,
@@ -30,7 +30,7 @@ import { styled } from "../utils/theme";
 
 type Tab = "info" | "reservation";
 
-export const InstitutionDetail: FC = () => {
+export default () => {
   const { id } = useParams<{ id: string }>();
   const [tab, setTab] = useState<Tab>("info");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);

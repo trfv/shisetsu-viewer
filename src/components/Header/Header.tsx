@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../../constants/styles";

@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { DateRangePicker } from "./DateRangePicker";
 
 type Props = ComponentProps<typeof DateRangePicker>;

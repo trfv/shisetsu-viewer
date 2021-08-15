@@ -1,5 +1,5 @@
 import MuiInput, { InputProps } from "@material-ui/core/Input";
-import React, { FC } from "react";
+import { FC } from "react";
 import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Skeleton } from "../Skeleton";

@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { FC } from "react";
+import { FC } from "react";
 import { CONTAINER_WIDTH } from "../../constants/styles";
 import { styled } from "../../utils/theme";
 

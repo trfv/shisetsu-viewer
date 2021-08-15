@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { WIDTHS } from "../../constants/styles";
 import { BaseButton } from "./BaseButton";
 

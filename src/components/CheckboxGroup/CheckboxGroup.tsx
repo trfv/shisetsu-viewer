@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Children, cloneElement, FC, ReactNode } from "react";
+import { ChangeEvent, Children, cloneElement, FC, ReactNode } from "react";
 import { box, BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
 import { SmallLabel } from "../Label";

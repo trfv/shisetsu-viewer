@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { Select } from "./Select";
 
 type Props = ComponentProps<typeof Select>;
