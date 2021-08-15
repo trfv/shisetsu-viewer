@@ -3,7 +3,7 @@ import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import MuiDatePicker from "@material-ui/lab/DatePicker";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import locale from "date-fns/locale/ja";
-import React, { FC } from "react";
+import { FC } from "react";
 import { MediumBox } from "../Box";
 
 type Props = {

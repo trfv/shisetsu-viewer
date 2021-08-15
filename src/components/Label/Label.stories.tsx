@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { BaseLabel as Label } from "./BaseLabel";
 import { LargeLabel } from "./LargeLabel";
 import { MediumLabel } from "./MediumLabel";

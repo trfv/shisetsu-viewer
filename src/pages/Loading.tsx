@@ -1,5 +1,5 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
-import React, { FC } from "react";
+import { FC } from "react";
 import { styled } from "../utils/theme";
 
 export const Loading: FC = () => {

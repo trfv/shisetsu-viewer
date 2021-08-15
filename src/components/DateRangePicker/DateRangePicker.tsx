@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC } from "react";
+import { ComponentProps, FC } from "react";
 import { BaseBox, LargeBox } from "../Box";
 import { DatePicker } from "../DatePicker";
 import { SmallLabel } from "../Label";

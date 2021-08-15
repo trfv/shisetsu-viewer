@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC } from "react";
+import { ComponentProps, FC } from "react";
 import { box, BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
 import { SmallLabel } from "../Label";

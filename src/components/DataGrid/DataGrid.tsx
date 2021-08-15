@@ -4,7 +4,6 @@ import {
   GridToolbarDensitySelector,
   GridToolbarExport,
 } from "@material-ui/data-grid";
-import React from "react";
 export { DataGrid } from "@material-ui/data-grid";
 export type {
   GridCellParams,

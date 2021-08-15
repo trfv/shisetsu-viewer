@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { NEXT } from "../constants/search";

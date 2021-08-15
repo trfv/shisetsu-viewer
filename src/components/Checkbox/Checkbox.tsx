@@ -1,5 +1,5 @@
 import MuiCheckbox from "@material-ui/core/Checkbox";
-import React, { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { box, BoxSize } from "../Box";
 import { MediumLabel } from "../Label";
 

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { addMonths, endOfMonth } from "date-fns";
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   ReservationDocument,
@@ -90,7 +90,7 @@ const COLUMNS: GridColumns = [
   },
 ];
 
-export const Reservation: FC = () => {
+export default () => {
   const history = useHistory();
 
   const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   InstitutionDocument,
@@ -184,7 +184,7 @@ const COLUMNS: GridColumns = [
   },
 ];
 
-export const Institution: FC = () => {
+export default () => {
   const history = useHistory();
 
   const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));

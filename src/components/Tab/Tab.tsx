@@ -1,5 +1,5 @@
 import MuiTab from "@material-ui/core/Tab";
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 
 type Props = Omit<ComponentProps<typeof MuiTab>, "value"> & {
   value: string;

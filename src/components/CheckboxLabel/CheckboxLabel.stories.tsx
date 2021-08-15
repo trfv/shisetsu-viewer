@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentProps, useState } from "react";
+import { ChangeEvent, ComponentProps, useState } from "react";
 import { CheckboxLabel } from "./CheckboxLabel";
 
 type Props = ComponentProps<typeof CheckboxLabel>;

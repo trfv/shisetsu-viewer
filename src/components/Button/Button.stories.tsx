@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { BaseButton as Button } from "./BaseButton";
 import { LargeButton } from "./LargeButton";
 import { MediumButton } from "./MediumButton";

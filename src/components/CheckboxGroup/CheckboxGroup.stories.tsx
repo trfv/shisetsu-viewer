@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentProps, useState } from "react";
+import { ChangeEvent, ComponentProps, useState } from "react";
 import { Checkbox } from "../Checkbox";
 import { CheckboxGroup } from "./CheckboxGroup";
 
