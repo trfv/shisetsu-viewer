@@ -14,7 +14,7 @@ export const Basic: Story<ComponentProps<typeof YearMonthSelection>> = (args) =>
 };
 
 Basic.args = {
-  buttonsProps: {
+  yearMonthChips: {
     1: { value: "2021-08", label: "2021年08月" },
     2: { value: "2021-09", label: "2021年09月" },
     3: { value: "2021-10", label: "2021年10月" },

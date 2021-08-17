@@ -1,11 +1,11 @@
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { FC } from "react";
+import { Spinner } from "../components/Spinner";
 import { styled } from "../utils/theme";
 
 export const Loading: FC = () => {
   return (
     <StyledLoading className={classes.main}>
-      <CircularProgress size={60} />
+      <Spinner size={60} />
     </StyledLoading>
   );
 };

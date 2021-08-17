@@ -1,4 +1,4 @@
-import { addMonths } from "date-fns";
+import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns";
 import { ReservationQueryVariables } from "../api/graphql-client";
 import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
 import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
@@ -224,4 +224,23 @@ export const toReservationQueryVariables = ({
         : {}),
     },
   };
+};
+
+export const toYearMonthChips = (minDate: Date, maxDate: Date) => {
+  let targetDate = startOfMonth(minDate);
+  const max = endOfMonth(maxDate);
+  const chips = [];
+  while (isBefore(targetDate, max)) {
+    const year = targetDate.getFullYear();
+    const month = String(targetDate.getMonth() + 1).padStart(2, "0");
+    chips.push({
+      value: `${year}-${month}`,
+      label: `${year}年${month}月`,
+    });
+    targetDate = addMonths(targetDate, 1);
+  }
+  return chips.reduce<Record<number, { value: string; label: string }>>((accum, curr, index) => {
+    accum[index + 1] = curr;
+    return accum;
+  }, {});
 };

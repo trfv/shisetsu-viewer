@@ -10,11 +10,15 @@ type ButtonProps = { value: string; label: string };
 
 type Props = {
   page: number;
-  buttonsProps: Record<number, ButtonProps>;
+  yearMonthChips: Record<number, ButtonProps>;
   handleChange: (nextPage: number) => void;
 };
 
-export const YearMonthSelection: FC<Props> = ({ page, buttonsProps, handleChange }) => {
+export const YearMonthSelection: FC<Props> = ({
+  page,
+  yearMonthChips: buttonsProps,
+  handleChange,
+}) => {
   const { items } = usePagination({
     boundaryCount: 0,
     count: Object.keys(buttonsProps).length,
