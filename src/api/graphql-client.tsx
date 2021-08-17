@@ -224,6 +224,18 @@ export type Institution_Aggregate_Order_By = {
   variance?: Maybe<Institution_Variance_Order_By>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Institution_Append_Input = {
+  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
+  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
+};
+
+/** input type for inserting array relation for remote table "institution" */
+export type Institution_Arr_Rel_Insert_Input = {
+  data: Array<Institution_Insert_Input>;
+  on_conflict?: Maybe<Institution_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Institution_Avg_Fields = {
   __typename?: 'institution_avg_fields';
@@ -266,6 +278,64 @@ export type Institution_Bool_Exp = {
   updated_at?: Maybe<Timestamp_Comparison_Exp>;
   website_url?: Maybe<String_Comparison_Exp>;
   weekday_usage_fee?: Maybe<Jsonb_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "institution" */
+export enum Institution_Constraint {
+  /** unique or primary key constraint */
+  InstitutionPkey = 'institution_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Institution_Delete_At_Path_Input = {
+  holiday_usage_fee?: Maybe<Array<Maybe<Scalars['String']>>>;
+  weekday_usage_fee?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Institution_Delete_Elem_Input = {
+  holiday_usage_fee?: Maybe<Scalars['Int']>;
+  weekday_usage_fee?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Institution_Delete_Key_Input = {
+  holiday_usage_fee?: Maybe<Scalars['String']>;
+  weekday_usage_fee?: Maybe<Scalars['String']>;
+};
+
+/** input type for incrementing integer column in table "institution" */
+export type Institution_Inc_Input = {
+  area?: Maybe<Scalars['Float']>;
+  capacity?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "institution" */
+export type Institution_Insert_Input = {
+  address?: Maybe<Scalars['String']>;
+  area?: Maybe<Scalars['Float']>;
+  building?: Maybe<Scalars['String']>;
+  building_system_name?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  fee_division?: Maybe<Scalars['_fee_division']>;
+  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
+  id?: Maybe<Scalars['uuid']>;
+  institution?: Maybe<Scalars['String']>;
+  institution_system_name?: Maybe<Scalars['String']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
+  layout_image_url?: Maybe<Scalars['String']>;
+  lottery_period?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
+  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  website_url?: Maybe<Scalars['String']>;
+  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
 };
 
 /** aggregate max on columns */
@@ -342,6 +412,28 @@ export type Institution_Min_Order_By = {
   website_url?: Maybe<Order_By>;
 };
 
+/** response of any mutation on the table "institution" */
+export type Institution_Mutation_Response = {
+  __typename?: 'institution_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Institution>;
+};
+
+/** input type for inserting object relation for remote table "institution" */
+export type Institution_Obj_Rel_Insert_Input = {
+  data: Institution_Insert_Input;
+  on_conflict?: Maybe<Institution_On_Conflict>;
+};
+
+/** on conflict condition type for table "institution" */
+export type Institution_On_Conflict = {
+  constraint: Institution_Constraint;
+  update_columns: Array<Institution_Update_Column>;
+  where?: Maybe<Institution_Bool_Exp>;
+};
+
 /** ordering options when selecting data from "institution" */
 export type Institution_Order_By = {
   address?: Maybe<Order_By>;
@@ -373,6 +465,12 @@ export type Institution_Order_By = {
 /** primary key columns input for table: "institution" */
 export type Institution_Pk_Columns_Input = {
   id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Institution_Prepend_Input = {
+  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
+  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "institution" */
@@ -427,6 +525,34 @@ export enum Institution_Select_Column {
   WeekdayUsageFee = 'weekday_usage_fee'
 }
 
+/** input type for updating data in table "institution" */
+export type Institution_Set_Input = {
+  address?: Maybe<Scalars['String']>;
+  area?: Maybe<Scalars['Float']>;
+  building?: Maybe<Scalars['String']>;
+  building_system_name?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  fee_division?: Maybe<Scalars['_fee_division']>;
+  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
+  id?: Maybe<Scalars['uuid']>;
+  institution?: Maybe<Scalars['String']>;
+  institution_system_name?: Maybe<Scalars['String']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
+  layout_image_url?: Maybe<Scalars['String']>;
+  lottery_period?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
+  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  website_url?: Maybe<Scalars['String']>;
+  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
+};
+
 /** aggregate stddev on columns */
 export type Institution_Stddev_Fields = {
   __typename?: 'institution_stddev_fields';
@@ -478,6 +604,58 @@ export type Institution_Sum_Order_By = {
   area?: Maybe<Order_By>;
   capacity?: Maybe<Order_By>;
 };
+
+/** update columns of table "institution" */
+export enum Institution_Update_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  Area = 'area',
+  /** column name */
+  Building = 'building',
+  /** column name */
+  BuildingSystemName = 'building_system_name',
+  /** column name */
+  Capacity = 'capacity',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FeeDivision = 'fee_division',
+  /** column name */
+  HolidayUsageFee = 'holiday_usage_fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Institution = 'institution',
+  /** column name */
+  InstitutionSystemName = 'institution_system_name',
+  /** column name */
+  IsAvailableBrass = 'is_available_brass',
+  /** column name */
+  IsAvailablePercussion = 'is_available_percussion',
+  /** column name */
+  IsAvailableStrings = 'is_available_strings',
+  /** column name */
+  IsAvailableWoodwind = 'is_available_woodwind',
+  /** column name */
+  IsEquippedMusicStand = 'is_equipped_music_stand',
+  /** column name */
+  IsEquippedPiano = 'is_equipped_piano',
+  /** column name */
+  LayoutImageUrl = 'layout_image_url',
+  /** column name */
+  LotteryPeriod = 'lottery_period',
+  /** column name */
+  Note = 'note',
+  /** column name */
+  TokyoWard = 'tokyo_ward',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  WebsiteUrl = 'website_url',
+  /** column name */
+  WeekdayUsageFee = 'weekday_usage_fee'
+}
 
 /** aggregate var_pop on columns */
 export type Institution_Var_Pop_Fields = {
@@ -542,6 +720,191 @@ export type Jsonb_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['jsonb']>>;
 };
 
+/** mutation root */
+export type Mutation_Root = {
+  __typename?: 'mutation_root';
+  /** delete data from the table: "institution" */
+  delete_institution?: Maybe<Institution_Mutation_Response>;
+  /** delete single row from the table: "institution" */
+  delete_institution_by_pk?: Maybe<Institution>;
+  /** delete data from the table: "reservation" */
+  delete_reservation?: Maybe<Reservation_Mutation_Response>;
+  /** delete single row from the table: "reservation" */
+  delete_reservation_by_pk?: Maybe<Reservation>;
+  /** delete data from the table: "users" */
+  delete_users?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "users" */
+  delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "institution" */
+  insert_institution?: Maybe<Institution_Mutation_Response>;
+  /** insert a single row into the table: "institution" */
+  insert_institution_one?: Maybe<Institution>;
+  /** insert data into the table: "reservation" */
+  insert_reservation?: Maybe<Reservation_Mutation_Response>;
+  /** insert a single row into the table: "reservation" */
+  insert_reservation_one?: Maybe<Reservation>;
+  /** insert data into the table: "users" */
+  insert_users?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "users" */
+  insert_users_one?: Maybe<Users>;
+  /** update data of the table: "institution" */
+  update_institution?: Maybe<Institution_Mutation_Response>;
+  /** update single row of the table: "institution" */
+  update_institution_by_pk?: Maybe<Institution>;
+  /** update data of the table: "reservation" */
+  update_reservation?: Maybe<Reservation_Mutation_Response>;
+  /** update single row of the table: "reservation" */
+  update_reservation_by_pk?: Maybe<Reservation>;
+  /** update data of the table: "users" */
+  update_users?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  update_users_by_pk?: Maybe<Users>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_InstitutionArgs = {
+  where: Institution_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Institution_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ReservationArgs = {
+  where: Reservation_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Reservation_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UsersArgs = {
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Users_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_InstitutionArgs = {
+  objects: Array<Institution_Insert_Input>;
+  on_conflict?: Maybe<Institution_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Institution_OneArgs = {
+  object: Institution_Insert_Input;
+  on_conflict?: Maybe<Institution_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ReservationArgs = {
+  objects: Array<Reservation_Insert_Input>;
+  on_conflict?: Maybe<Reservation_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Reservation_OneArgs = {
+  object: Reservation_Insert_Input;
+  on_conflict?: Maybe<Reservation_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_UsersArgs = {
+  objects: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Users_OneArgs = {
+  object: Users_Insert_Input;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_InstitutionArgs = {
+  _append?: Maybe<Institution_Append_Input>;
+  _delete_at_path?: Maybe<Institution_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Institution_Delete_Elem_Input>;
+  _delete_key?: Maybe<Institution_Delete_Key_Input>;
+  _inc?: Maybe<Institution_Inc_Input>;
+  _prepend?: Maybe<Institution_Prepend_Input>;
+  _set?: Maybe<Institution_Set_Input>;
+  where: Institution_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Institution_By_PkArgs = {
+  _append?: Maybe<Institution_Append_Input>;
+  _delete_at_path?: Maybe<Institution_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Institution_Delete_Elem_Input>;
+  _delete_key?: Maybe<Institution_Delete_Key_Input>;
+  _inc?: Maybe<Institution_Inc_Input>;
+  _prepend?: Maybe<Institution_Prepend_Input>;
+  _set?: Maybe<Institution_Set_Input>;
+  pk_columns: Institution_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ReservationArgs = {
+  _append?: Maybe<Reservation_Append_Input>;
+  _delete_at_path?: Maybe<Reservation_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Reservation_Delete_Elem_Input>;
+  _delete_key?: Maybe<Reservation_Delete_Key_Input>;
+  _inc?: Maybe<Reservation_Inc_Input>;
+  _prepend?: Maybe<Reservation_Prepend_Input>;
+  _set?: Maybe<Reservation_Set_Input>;
+  where: Reservation_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Reservation_By_PkArgs = {
+  _append?: Maybe<Reservation_Append_Input>;
+  _delete_at_path?: Maybe<Reservation_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Reservation_Delete_Elem_Input>;
+  _delete_key?: Maybe<Reservation_Delete_Key_Input>;
+  _inc?: Maybe<Reservation_Inc_Input>;
+  _prepend?: Maybe<Reservation_Prepend_Input>;
+  _set?: Maybe<Reservation_Set_Input>;
+  pk_columns: Reservation_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in the ascending order, nulls last */
@@ -573,6 +936,12 @@ export type Query_Root = {
   reservation_aggregate: Reservation_Aggregate;
   /** fetch data from the table: "reservation" using primary key columns */
   reservation_by_pk?: Maybe<Reservation>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 
@@ -625,6 +994,32 @@ export type Query_RootReservation_AggregateArgs = {
 /** query root */
 export type Query_RootReservation_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 /** columns and relationships of "reservation" */
@@ -693,6 +1088,17 @@ export type Reservation_Aggregate_Order_By = {
   variance?: Maybe<Reservation_Variance_Order_By>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Reservation_Append_Input = {
+  reservation?: Maybe<Scalars['jsonb']>;
+};
+
+/** input type for inserting array relation for remote table "reservation" */
+export type Reservation_Arr_Rel_Insert_Input = {
+  data: Array<Reservation_Insert_Input>;
+  on_conflict?: Maybe<Reservation_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Reservation_Avg_Fields = {
   __typename?: 'reservation_avg_fields';
@@ -719,6 +1125,46 @@ export type Reservation_Bool_Exp = {
   reservation?: Maybe<Jsonb_Comparison_Exp>;
   tokyo_ward?: Maybe<Tokyo_Ward_Comparison_Exp>;
   updated_at?: Maybe<Timestamp_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "reservation" */
+export enum Reservation_Constraint {
+  /** unique or primary key constraint */
+  ReservationPkey = 'reservation_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Reservation_Delete_At_Path_Input = {
+  reservation?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Reservation_Delete_Elem_Input = {
+  reservation?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Reservation_Delete_Key_Input = {
+  reservation?: Maybe<Scalars['String']>;
+};
+
+/** input type for incrementing integer column in table "reservation" */
+export type Reservation_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "reservation" */
+export type Reservation_Insert_Input = {
+  building?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  date?: Maybe<Scalars['date']>;
+  day_of_week?: Maybe<Scalars['day_of_week']>;
+  id?: Maybe<Scalars['Int']>;
+  institution?: Maybe<Scalars['String']>;
+  institution_id?: Maybe<Scalars['uuid']>;
+  reservation?: Maybe<Scalars['jsonb']>;
+  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
 };
 
 /** aggregate max on columns */
@@ -767,6 +1213,28 @@ export type Reservation_Min_Order_By = {
   updated_at?: Maybe<Order_By>;
 };
 
+/** response of any mutation on the table "reservation" */
+export type Reservation_Mutation_Response = {
+  __typename?: 'reservation_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Reservation>;
+};
+
+/** input type for inserting object relation for remote table "reservation" */
+export type Reservation_Obj_Rel_Insert_Input = {
+  data: Reservation_Insert_Input;
+  on_conflict?: Maybe<Reservation_On_Conflict>;
+};
+
+/** on conflict condition type for table "reservation" */
+export type Reservation_On_Conflict = {
+  constraint: Reservation_Constraint;
+  update_columns: Array<Reservation_Update_Column>;
+  where?: Maybe<Reservation_Bool_Exp>;
+};
+
 /** ordering options when selecting data from "reservation" */
 export type Reservation_Order_By = {
   building?: Maybe<Order_By>;
@@ -784,6 +1252,11 @@ export type Reservation_Order_By = {
 /** primary key columns input for table: "reservation" */
 export type Reservation_Pk_Columns_Input = {
   id: Scalars['Int'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Reservation_Prepend_Input = {
+  reservation?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "reservation" */
@@ -809,6 +1282,20 @@ export enum Reservation_Select_Column {
   /** column name */
   UpdatedAt = 'updated_at'
 }
+
+/** input type for updating data in table "reservation" */
+export type Reservation_Set_Input = {
+  building?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  date?: Maybe<Scalars['date']>;
+  day_of_week?: Maybe<Scalars['day_of_week']>;
+  id?: Maybe<Scalars['Int']>;
+  institution?: Maybe<Scalars['String']>;
+  institution_id?: Maybe<Scalars['uuid']>;
+  reservation?: Maybe<Scalars['jsonb']>;
+  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+};
 
 /** aggregate stddev on columns */
 export type Reservation_Stddev_Fields = {
@@ -853,6 +1340,30 @@ export type Reservation_Sum_Fields = {
 export type Reservation_Sum_Order_By = {
   id?: Maybe<Order_By>;
 };
+
+/** update columns of table "reservation" */
+export enum Reservation_Update_Column {
+  /** column name */
+  Building = 'building',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Date = 'date',
+  /** column name */
+  DayOfWeek = 'day_of_week',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Institution = 'institution',
+  /** column name */
+  InstitutionId = 'institution_id',
+  /** column name */
+  Reservation = 'reservation',
+  /** column name */
+  TokyoWard = 'tokyo_ward',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
 
 /** aggregate var_pop on columns */
 export type Reservation_Var_Pop_Fields = {
@@ -902,6 +1413,12 @@ export type Subscription_Root = {
   reservation_aggregate: Reservation_Aggregate;
   /** fetch data from the table: "reservation" using primary key columns */
   reservation_by_pk?: Maybe<Reservation>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 
@@ -957,6 +1474,32 @@ export type Subscription_RootReservation_By_PkArgs = {
 };
 
 
+/** subscription root */
+export type Subscription_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 /** expression to compare columns of type timestamp. All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamp']>;
@@ -984,6 +1527,176 @@ export type Tokyo_Ward_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['tokyo_ward']>>;
 };
 
+/** columns and relationships of "users" */
+export type Users = {
+  __typename?: 'users';
+  created_at: Scalars['timestamp'];
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  updated_at: Scalars['timestamp'];
+};
+
+/** aggregated selection of "users" */
+export type Users_Aggregate = {
+  __typename?: 'users_aggregate';
+  aggregate?: Maybe<Users_Aggregate_Fields>;
+  nodes: Array<Users>;
+};
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_Fields = {
+  __typename?: 'users_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Users_Max_Fields>;
+  min?: Maybe<Users_Min_Fields>;
+};
+
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Users_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Max_Order_By>;
+  min?: Maybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export type Users_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  _not?: Maybe<Users_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  created_at?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamp_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "users" */
+export enum Users_Constraint {
+  /** unique or primary key constraint */
+  UsersPkey = 'users_pkey'
+}
+
+/** input type for inserting data into table "users" */
+export type Users_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+};
+
+/** aggregate max on columns */
+export type Users_Max_Fields = {
+  __typename?: 'users_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Users_Min_Fields = {
+  __typename?: 'users_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "users" */
+export type Users_Mutation_Response = {
+  __typename?: 'users_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Users>;
+};
+
+/** input type for inserting object relation for remote table "users" */
+export type Users_Obj_Rel_Insert_Input = {
+  data: Users_Insert_Input;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+/** on conflict condition type for table "users" */
+export type Users_On_Conflict = {
+  constraint: Users_Constraint;
+  update_columns: Array<Users_Update_Column>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "users" */
+export type Users_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "users" */
+export type Users_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "users" */
+export enum Users_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "users" */
+export type Users_Set_Input = {
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+};
+
+/** update columns of table "users" */
+export enum Users_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 
 /** expression to compare columns of type uuid. All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -998,21 +1711,12 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type InstitutionDetailQueryVariables = Exact<{
+export type DetailQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type InstitutionDetailQuery = (
-  { __typename?: 'query_root' }
-  & { institution_by_pk?: Maybe<(
-    { __typename?: 'institution' }
-    & Pick<Institution, 'tokyo_ward' | 'building' | 'institution' | 'capacity' | 'area' | 'fee_division' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note'>
-  )>, reservation: Array<(
-    { __typename?: 'reservation' }
-    & Pick<Reservation, 'id' | 'date' | 'reservation' | 'updated_at'>
-  )> }
-);
+export type DetailQuery = { __typename?: 'query_root', institution_by_pk?: Maybe<{ __typename?: 'institution', tokyo_ward: any, building: string, institution: string, capacity?: Maybe<number>, area?: Maybe<number>, fee_division: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string }>, reservation: Array<{ __typename?: 'reservation', id: number, date: any, reservation: any, updated_at: any }> };
 
 export type InstitutionQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
@@ -1027,19 +1731,7 @@ export type InstitutionQueryVariables = Exact<{
 }>;
 
 
-export type InstitutionQuery = (
-  { __typename?: 'query_root' }
-  & { institution: Array<(
-    { __typename?: 'institution' }
-    & Pick<Institution, 'id' | 'tokyo_ward' | 'building' | 'institution' | 'capacity' | 'area' | 'weekday_usage_fee' | 'holiday_usage_fee' | 'address' | 'is_available_strings' | 'is_available_woodwind' | 'is_available_brass' | 'is_available_percussion' | 'is_equipped_music_stand' | 'is_equipped_piano' | 'website_url' | 'layout_image_url' | 'lottery_period' | 'note' | 'updated_at'>
-  )>, institution_aggregate: (
-    { __typename?: 'institution_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'institution_aggregate_fields' }
-      & Pick<Institution_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type InstitutionQuery = { __typename?: 'query_root', institution: Array<{ __typename?: 'institution', id: any, tokyo_ward: any, building: string, institution: string, capacity?: Maybe<number>, area?: Maybe<number>, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string, updated_at: any }>, institution_aggregate: { __typename?: 'institution_aggregate', aggregate?: Maybe<{ __typename?: 'institution_aggregate_fields', count?: Maybe<number> }> } };
 
 export type ReservationQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
@@ -1055,23 +1747,11 @@ export type ReservationQueryVariables = Exact<{
 }>;
 
 
-export type ReservationQuery = (
-  { __typename?: 'query_root' }
-  & { reservation: Array<(
-    { __typename?: 'reservation' }
-    & Pick<Reservation, 'id' | 'institution_id' | 'tokyo_ward' | 'building' | 'institution' | 'date' | 'reservation' | 'updated_at'>
-  )>, reservation_aggregate: (
-    { __typename?: 'reservation_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'reservation_aggregate_fields' }
-      & Pick<Reservation_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type ReservationQuery = { __typename?: 'query_root', reservation: Array<{ __typename?: 'reservation', id: number, institution_id?: Maybe<any>, tokyo_ward: any, building: string, institution: string, date: any, reservation: any, updated_at: any }>, reservation_aggregate: { __typename?: 'reservation_aggregate', aggregate?: Maybe<{ __typename?: 'reservation_aggregate_fields', count?: Maybe<number> }> } };
 
 
-export const InstitutionDetailDocument = gql`
-    query institutionDetail($id: uuid!) {
+export const DetailDocument = gql`
+    query detail($id: uuid!) {
   institution_by_pk(id: $id) {
     tokyo_ward
     building
@@ -1103,32 +1783,32 @@ export const InstitutionDetailDocument = gql`
     `;
 
 /**
- * __useInstitutionDetailQuery__
+ * __useDetailQuery__
  *
- * To run a query within a React component, call `useInstitutionDetailQuery` and pass it any options that fit your needs.
- * When your component renders, `useInstitutionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useInstitutionDetailQuery({
+ * const { data, loading, error } = useDetailQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useInstitutionDetailQuery(baseOptions: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+export function useDetailQuery(baseOptions: Apollo.QueryHookOptions<DetailQuery, DetailQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
+        return Apollo.useQuery<DetailQuery, DetailQueryVariables>(DetailDocument, options);
       }
-export function useInstitutionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+export function useDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DetailQuery, DetailQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
+          return Apollo.useLazyQuery<DetailQuery, DetailQueryVariables>(DetailDocument, options);
         }
-export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionDetailQuery>;
-export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
-export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
+export type DetailQueryHookResult = ReturnType<typeof useDetailQuery>;
+export type DetailLazyQueryHookResult = ReturnType<typeof useDetailLazyQuery>;
+export type DetailQueryResult = Apollo.QueryResult<DetailQuery, DetailQueryVariables>;
 export const InstitutionDocument = gql`
     query institution($offset: Int, $limit: Int, $tokyoWard: [tokyo_ward!] = null, $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $isEquippedMusicStand: equipment_division = null, $isEquippedPiano: equipment_division = null) {
   institution(

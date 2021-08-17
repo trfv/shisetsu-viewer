@@ -1,4 +1,4 @@
-query institutionDetail(
+query detail(
   $id: uuid!
 ) {
   institution_by_pk(id: $id) {

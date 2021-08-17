@@ -1,11 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  InstitutionDetailDocument,
-  InstitutionDetailQuery,
-  InstitutionDetailQueryVariables,
-} from "../api/graphql-client";
+import { DetailDocument, DetailQuery, DetailQueryVariables } from "../api/graphql-client";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
 import { Tab } from "../components/Tab";
@@ -21,9 +17,9 @@ import {
 import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../constants/enums";
 import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../constants/styles";
-import { isValidUUID } from "../utils/common";
 import { ReservationDivisionMap, ReservationStatusMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
+import { isValidUUID } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import { sortByReservationDivision } from "../utils/reservation";
 import { styled } from "../utils/theme";
@@ -35,10 +31,7 @@ export default () => {
   const [tab, setTab] = useState<Tab>("info");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
 
-  const { loading, data, error } = useQuery<
-    InstitutionDetailQuery,
-    InstitutionDetailQueryVariables
-  >(InstitutionDetailDocument, {
+  const { loading, data, error } = useQuery<DetailQuery, DetailQueryVariables>(DetailDocument, {
     variables: { id },
     context: {
       headers: {

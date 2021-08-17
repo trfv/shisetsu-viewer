@@ -1,14 +1,21 @@
-import { ComponentProps } from "react";
+import type { Meta, Story } from "@storybook/react";
+import type { ComponentProps } from "react";
 import { Input } from "./Input";
 
 export default {
   title: "Input",
   component: Input,
-};
+} as Meta;
 
-export const Small = (args: ComponentProps<typeof Input>) => <Input {...args} size="small" />;
-export const Medium = (args: ComponentProps<typeof Input>) => <Input {...args} size="medium" />;
-export const Large = (args: ComponentProps<typeof Input>) => <Input {...args} size="large" />;
+export const Small: Story<ComponentProps<typeof Input>> = (args) => (
+  <Input {...args} size="small" />
+);
+export const Medium: Story<ComponentProps<typeof Input>> = (args) => (
+  <Input {...args} size="medium" />
+);
+export const Large: Story<ComponentProps<typeof Input>> = (args) => (
+  <Input {...args} size="large" />
+);
 
 Small.args = {
   label: "small",

@@ -1,7 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { CssBaseline } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/core/styles";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Footer } from "./components/Footer";
@@ -13,10 +12,10 @@ import { ROUTES } from "./constants/routes";
 import { Loading } from "./pages/Loading";
 import { Waiting } from "./pages/Waiting";
 import { apolloClient } from "./utils/client";
-import { lightTheme as theme } from "./utils/theme";
+import { lightTheme as theme, ThemeProvider } from "./utils/theme";
 
 const Institution = lazy(() => import("./pages/Institution"));
-const InstitutionDetail = lazy(() => import("./pages/InstitutionDetail"));
+const Detail = lazy(() => import("./pages/Detail"));
 const Reservation = lazy(() => import("./pages/Reservation"));
 
 const App = () => {
@@ -27,6 +26,7 @@ const App = () => {
     <Auth0Provider
       domain={import.meta.env.VITE_AUTH0_DOMAIN as string}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID as string}
+      useRefreshTokens={true}
     >
       <ApolloProvider client={apolloClient}>
         <ThemeProvider theme={theme}>
@@ -35,23 +35,19 @@ const App = () => {
             <BrowserRouter>
               <ScrollToTop />
               <Header />
-              <Suspense fallback={Loading}>
+              <Suspense fallback={<Loading />}>
                 <Switch>
                   <Route path={ROUTES.waiting} component={Waiting} />
                   <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
                   <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
-                  <AuthGuardRoute
-                    path={ROUTES.institutionDetail}
-                    component={InstitutionDetail}
-                    exact
-                  />
+                  <AuthGuardRoute path={ROUTES.detail} component={Detail} exact />
                   {/* TODO <Route path={ROUTES.top} component={Top} exact /> */}
                   <Route path={ROUTES.top}>
                     <Redirect to={ROUTES.reservation} />
                   </Route>
                 </Switch>
+                <Footer />
               </Suspense>
-              <Footer />
             </BrowserRouter>
           </ErrorBoundary>
         </ThemeProvider>

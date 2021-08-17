@@ -1,15 +1,15 @@
-import { ChangeEvent, ComponentProps, useState } from "react";
+import type { Meta, Story } from "@storybook/react";
+import type { ChangeEvent, ComponentProps } from "react";
+import { useState } from "react";
 import { Checkbox } from "../Checkbox";
 import { CheckboxGroup } from "./CheckboxGroup";
-
-type Props = ComponentProps<typeof CheckboxGroup>;
 
 export default {
   title: "CheckboxGroup",
   component: CheckboxGroup,
-};
+} as Meta;
 
-export const Basic = ({ label }: Props) => {
+export const Basic: Story<ComponentProps<typeof CheckboxGroup>> = ({ label }) => {
   const [values, setValues] = useState<string[]>([]);
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) =>

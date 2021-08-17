@@ -1,9 +1,15 @@
 import { grey, indigo, red } from "@material-ui/core/colors";
-import { createTheme, styled as muiStyled, ThemeOptions } from "@material-ui/core/styles";
+import {
+  createTheme,
+  styled as muiStyled,
+  ThemeOptions,
+  ThemeProvider as MuiThemeProvider,
+} from "@material-ui/core/styles";
 import { jaJP } from "../constants/datagrid";
 import { BREAKPOINTS } from "../constants/styles";
 
 export const styled = muiStyled;
+export const ThemeProvider = MuiThemeProvider;
 
 const COLORS = {
   white: "#ffffff",

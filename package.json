@@ -63,7 +63,7 @@
     "web-vitals": "2.1.0"
   },
   "scripts": {
-    "generate": "graphql-codegen --config ./src/api/config.yml",
+    "generate": "DOTENV_CONFIG_PATH=.env.local graphql-codegen -r dotenv/config --config ./src/api/config.yml",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "serve": "vite preview --port 3000",

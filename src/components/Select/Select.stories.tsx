@@ -1,14 +1,13 @@
-import { ComponentProps } from "react";
+import type { Meta, Story } from "@storybook/react";
+import type { ComponentProps } from "react";
 import { Select } from "./Select";
-
-type Props = ComponentProps<typeof Select>;
 
 export default {
   title: "Select",
   component: Select,
-};
+} as Meta;
 
-export const Basic = (args: Props) => (
+export const Basic: Story<ComponentProps<typeof Select>> = (args) => (
   <Select
     {...args}
     selectOptions={[

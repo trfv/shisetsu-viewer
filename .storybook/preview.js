@@ -1,5 +1,6 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom';
+import { lightTheme as theme, ThemeProvider } from "../src/utils/theme";
 import "../src/index.css";
 
 export const parameters = {
@@ -9,6 +10,8 @@ export const parameters = {
 
 export const decorators = [
     story => (
-      <MemoryRouter>{story()}</MemoryRouter>
+      <ThemeProvider theme={theme}>
+        <MemoryRouter>{story()}</MemoryRouter>
+      </ThemeProvider>
     ),
 ];

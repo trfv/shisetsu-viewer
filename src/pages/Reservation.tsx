@@ -230,7 +230,7 @@ export default () => {
           loading={loading}
           onRowClick={(params) =>
             params.row.institution_id &&
-            history.push(ROUTES.institutionDetail.replace(":id", params.row.institution_id))
+            history.push(ROUTES.detail.replace(":id", params.row.institution_id))
           }
           paginationMode="server"
           rowCount={data?.reservation_aggregate.aggregate?.count ?? undefined}

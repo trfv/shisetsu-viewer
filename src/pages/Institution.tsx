@@ -291,9 +291,7 @@ export default () => {
           columns={COLUMNS}
           error={error}
           loading={loading}
-          onRowClick={(params) =>
-            history.push(ROUTES.institutionDetail.replace(":id", params.row.id))
-          }
+          onRowClick={(params) => history.push(ROUTES.detail.replace(":id", params.row.id))}
           paginationMode="server"
           rowCount={data?.institution_aggregate.aggregate?.count ?? undefined}
           page={page}

@@ -1,16 +1,14 @@
-import { ComponentProps } from "react";
+import type { Meta, Story } from "@storybook/react";
+import type { ComponentProps } from "react";
 import { DatePicker } from "./DatePicker";
-
-type Props = ComponentProps<typeof DatePicker>;
 
 export default {
   title: "DatePicker",
   component: DatePicker,
-};
+} as Meta;
 
-export const Basic = (args: Props) => <DatePicker {...args} />;
+export const Basic: Story<ComponentProps<typeof DatePicker>> = (args) => <DatePicker {...args} />;
 
 Basic.args = {
-  label: "label",
   value: new Date(2021, 0, 1),
 };
