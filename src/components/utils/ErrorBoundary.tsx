@@ -14,7 +14,8 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   handleClick() {
-    this.setState({ error: null, errorInfo: null });
+    // this.setState({ error: null, errorInfo: null });
+    window.location.reload();
   }
 
   render() {

@@ -1,0 +1,20 @@
+query detail_reservation(
+  $id: uuid!
+  $startDate: date
+  $endDate: date
+) {
+  reservation(
+    where: {
+      institution_id: { _eq: $id }
+      date: { _gte: $startDate, _lte: $endDate }
+    }
+    order_by: {
+      date: asc
+    }
+  ) {
+    id
+    date
+    reservation
+    updated_at
+  }
+}

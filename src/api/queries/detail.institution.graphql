@@ -1,4 +1,4 @@
-query detail(
+query detail_institution(
   $id: uuid!
 ) {
   institution_by_pk(id: $id) {
@@ -22,17 +22,15 @@ query detail(
     lottery_period
     note
   }
-  reservation(
-    where: {
-      institution_id: { _eq: $id }
+  reservation_aggregate(where: {institution_id: {_eq: $id}}) {
+    aggregate {
+      count
+      max {
+        date
+      }
+      min {
+        date
+      }
     }
-    order_by: {
-      date: asc
-    }
-  ) {
-    id
-    date
-    reservation
-    updated_at
   }
 }
