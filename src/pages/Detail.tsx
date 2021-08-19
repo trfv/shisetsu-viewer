@@ -26,7 +26,7 @@ import {
 import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { YearMonthSelection } from "../components/YearMonthSelection";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWard } from "../constants/enums";
-import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../constants/styles";
+import { CONTAINER_WIDTH, DETAIL_TABLE_HEIGHT, INNER_WIDTH, WIDTHS } from "../constants/styles";
 import { ReservationDivisionMap, ReservationStatusMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { isValidUUID } from "../utils/id";
@@ -384,7 +384,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   },
   [`.${classes.reservationContainer}`]: {
     marginTop: 20,
-    height: 520,
+    height: DETAIL_TABLE_HEIGHT,
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: theme.palette.grey[300], // TODO dark mode
@@ -398,7 +398,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     justifyContent: "center",
   },
   [`.${classes.reservationTableContainer}`]: {
-    maxHeight: 516,
+    maxHeight: DETAIL_TABLE_HEIGHT,
     overflowX: "auto",
   },
   [`.${classes.reservationTableCell}`]: {

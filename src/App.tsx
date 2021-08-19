@@ -8,6 +8,7 @@ import { Header } from "./components/Header";
 import { AuthGuardRoute } from "./components/utils/AuthGuardRoute";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
 import { ROUTES } from "./constants/routes";
 import { Loading } from "./pages/Loading";
 import { Waiting } from "./pages/Waiting";
@@ -23,11 +24,7 @@ const App = () => {
   // const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode]);
 
   return (
-    <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN as string}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID as string}
-      useRefreshTokens={true}
-    >
+    <Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENT_ID} useRefreshTokens={true}>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
