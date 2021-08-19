@@ -15,12 +15,8 @@ jobs:
           fetch-depth:  0
       - name: Set Node.js
         uses: actions/setup-node@v2
-      - uses: actions/cache@v2
         with:
-          path: ~/.cache/npm
-          key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
-          restore-keys: |
-            ${{ runner.os }}-npm
+          cache: 'npm'
       - name: npm install
         run: npm install
       - name: workaround for detached HEAD
