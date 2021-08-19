@@ -19,3 +19,4 @@ export const WIDTHS = {
 export const HEADER_HEIGHT = 72;
 export const FOOTER_HEIGHT = 84;
 export const MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + FOOTER_HEIGHT}px)`;
+export const DETAIL_TABLE_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + FOOTER_HEIGHT + 256}px)`;
