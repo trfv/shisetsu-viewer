@@ -55,8 +55,20 @@ const COLUMNS: GridColumns = [
     hide: true,
     valueFormatter: (params: GridValueFormatterParams) => TokyoWardMap[params.value as string],
   },
-  { field: "capacity", headerName: "定員（人）", type: "number", width: 140, flex: 0 },
-  { field: "area", headerName: "面積（㎡）", type: "number", width: 140, flex: 0 },
+  {
+    field: "capacity",
+    headerName: "定員（人）",
+    type: "number",
+    width: 140,
+    flex: 0,
+  },
+  {
+    field: "area",
+    headerName: "面積（㎡）",
+    type: "number",
+    width: 140,
+    flex: 0,
+  },
   {
     field: "weekday_usage_fee",
     headerName: "利用料金（平日）",
@@ -172,7 +184,13 @@ const COLUMNS: GridColumns = [
       );
     },
   },
-  { field: "lottery_period", headerName: "抽選期間", width: 240, flex: 0, hide: true },
+  {
+    field: "lottery_period",
+    headerName: "抽選期間",
+    width: 240,
+    flex: 0,
+    hide: true,
+  },
   { field: "note", headerName: "備考", width: 240, flex: 0, hide: true },
   {
     field: "updated_at",
@@ -216,7 +234,11 @@ export default () => {
 
   const handleTokyoWardChange = useCallback((event: SelectChangeEvent<unknown>): void => {
     const value = event.target.value as SupportedTokyoWard;
-    setInstitutionSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+    setInstitutionSearchParams((prevState) => ({
+      ...prevState,
+      page: 0,
+      tokyoWard: value,
+    }));
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,

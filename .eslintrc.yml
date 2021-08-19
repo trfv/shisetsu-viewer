@@ -11,7 +11,6 @@ extends:
   - eslint:recommended
   - plugin:react/recommended
   - plugin:@typescript-eslint/recommended
-  - plugin:prettier/recommended
   - prettier
 plugins:
   - react
@@ -24,6 +23,3 @@ rules:
   "react/prop-types": "off"
   "react/react-in-jsx-scope": "off"
   "@typescript-eslint/explicit-module-boundary-types": "off"
-  "prettier/prettier":
-    - error
-    - { printWidth: 100, tabWidth: 2, singleQuote: false, trailingComma: "es5" }

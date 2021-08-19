@@ -25,7 +25,10 @@ const mapChildren = (
         });
       }
       if (child?.type?.displayName === Checkbox.displayName) {
-        return cloneElement(child, { checked: values.includes(child.props.value), onChange });
+        return cloneElement(child, {
+          checked: values.includes(child.props.value),
+          onChange,
+        });
       }
     }
     return null;

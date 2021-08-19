@@ -121,7 +121,11 @@ export default () => {
 
   const handleTokyoWardChange = useCallback((event: SelectChangeEvent<unknown>): void => {
     const value = event.target.value as SupportedTokyoWard;
-    setReservationSearchParams((prevState) => ({ ...prevState, page: 0, tokyoWard: value }));
+    setReservationSearchParams((prevState) => ({
+      ...prevState,
+      page: 0,
+      tokyoWard: value,
+    }));
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,
