@@ -1,30 +1,32 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ReactNode } from "react";
 
 type Props = { children: ReactNode };
-type State = {
-  error: Error | null;
-  errorInfo: ErrorInfo | null;
-};
+type State = { error?: unknown };
 
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null, errorInfo: null };
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+  }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: unknown) {
     return { error };
   }
 
-  handleClick() {
-    // this.setState({ error: null, errorInfo: null });
-    window.location.reload();
+  override componentDidCatch(error: unknown, errorInfo: unknown) {
+    console.error(error, errorInfo);
   }
 
-  render() {
-    if (this.state.error) {
+  override render() {
+    if (this.state.error !== undefined) {
       return (
-        <div style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
-          <h2>エラーが発生しました。以下のボタンを押して再実行してください。</h2>
-          <button onClick={this.handleClick}>再実行する</button>
-          <details style={{ marginTop: "40px" }}>{this.state.error?.message}</details>
+        <div style={{ maxWidth: 800, margin: "auto", padding: "20px" }}>
+          <h2>エラーが発生しました。</h2>
+          <p>
+            以下のボタンを押して再実行してください。何度も発生する場合は管理者にお問い合わせください。
+          </p>
+          <button onClick={() => window.location.reload()}>再実行する</button>
+          <details style={{ marginTop: "40px" }}>{String(this.state.error)}</details>
         </div>
       );
     }
