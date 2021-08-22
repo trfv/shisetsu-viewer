@@ -1,12 +1,7 @@
-import { useQuery } from "@apollo/client";
 import { addMonths, endOfMonth } from "date-fns";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  ReservationDocument,
-  ReservationQuery,
-  ReservationQueryVariables,
-} from "../api/graphql-client";
+import { useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import {
@@ -18,12 +13,15 @@ import {
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { TOKEN } from "../components/utils/AuthGuardRoute";
-import { TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
+import { END_DATE, MUNICIPALITY, PAGE, ROWS_PER_PAGE, START_DATE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
-import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
+import {
+  MunicipalityOptions,
+  SupportedMunicipality,
+  SupportedMunicipalityMap,
+} from "../utils/municipality";
 import {
   formatReservationMap,
   IS_ONLY_AFTERNOON_VACANT,
@@ -35,7 +33,7 @@ import {
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
-import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
+import { convertMunicipalityToUrlParam, setUrlSearchParams } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const minDate = new Date();
@@ -49,15 +47,16 @@ const COLUMNS: GridColumns = [
     flex: 0,
     sortable: false,
     valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
+      `${params.row.building_system_name ?? ""} ${params.row.institution_system_name ?? ""}`,
   },
   {
-    field: "tokyo_ward",
+    field: "municipality",
     headerName: "区",
     width: 120,
     flex: 0,
     hide: true,
-    valueFormatter: (params: GridValueFormatterParams) => TokyoWardMap[params.value as string],
+    valueFormatter: (params: GridValueFormatterParams) =>
+      SupportedMunicipalityMap[params.value as string],
   },
   {
     field: "date",
@@ -74,15 +73,15 @@ const COLUMNS: GridColumns = [
     flex: 0,
     sortable: false,
     valueFormatter: (params: GridValueFormatterParams) => {
-      const tokyoWard = params.row.tokyo_ward;
+      const municipality = params.row.municipality;
       const obj = params.row.reservation;
-      return formatReservationMap(tokyoWard, obj);
+      return formatReservationMap(municipality, obj);
     },
     /** TODO hover したときに中身がすべて表示されるように修正する */
   },
   {
-    field: "updated_at",
-    headerName: "更新日時",
+    field: "created_at",
+    headerName: "取得日時",
     width: 200,
     flex: 0,
     sortable: false,
@@ -97,19 +96,16 @@ export default () => {
   const [resevationSearchParams, setReservationSearchParams] = useState(
     toReservationSearchParams(urlSearchParams.current, minDate, maxDate)
   );
-  const { loading, data, error } = useQuery<ReservationQuery, ReservationQueryVariables>(
-    ReservationDocument,
-    {
-      variables: toReservationQueryVariables(resevationSearchParams),
-      context: {
-        headers: {
-          Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-        },
+  const { loading, data, error } = useReservationsQuery({
+    variables: toReservationQueryVariables(resevationSearchParams),
+    context: {
+      headers: {
+        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
       },
-    }
-  );
+    },
+  });
 
-  const { page, tokyoWard, startDate, endDate, filter } = resevationSearchParams;
+  const { page, municipality, startDate, endDate, filter } = resevationSearchParams;
 
   const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
     history.replace({
@@ -119,17 +115,17 @@ export default () => {
     urlSearchParams.current = nextUrlSearchParams;
   }, []);
 
-  const handleTokyoWardChange = useCallback((event: SelectChangeEvent<unknown>): void => {
-    const value = event.target.value as SupportedTokyoWard;
+  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<unknown>): void => {
+    const value = event.target.value as SupportedMunicipality;
     setReservationSearchParams((prevState) => ({
       ...prevState,
       page: 0,
-      tokyoWard: value,
+      municipality: value,
     }));
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,
-        { [TOKYO_WARD]: convertTokyoWardToUrlParam(value) },
+        { [MUNICIPALITY]: convertMunicipalityToUrlParam(value) ?? undefined },
         [PAGE]
       )
     );
@@ -198,10 +194,10 @@ export default () => {
         <div className={classes.searchBoxForm}>
           <Select
             label="区"
-            value={tokyoWard}
+            value={municipality}
             size="small"
-            onChange={handleTokyoWardChange}
-            selectOptions={TokyoWardOptions}
+            onChange={handleMunicipalityChange}
+            selectOptions={MunicipalityOptions}
           />
           <DateRangePicker
             label="期間指定"
@@ -228,7 +224,7 @@ export default () => {
       </div>
       <div className={classes.resultBox}>
         <DataGrid
-          rows={data?.reservation ?? []}
+          rows={data?.reservations ?? []}
           columns={COLUMNS}
           error={error}
           loading={loading}
@@ -237,15 +233,12 @@ export default () => {
             history.push(ROUTES.detail.replace(":id", params.row.institution_id))
           }
           paginationMode="server"
-          rowCount={data?.reservation_aggregate.aggregate?.count ?? undefined}
+          rowCount={data?.reservations_aggregate.aggregate?.count ?? undefined}
           page={page}
           pageSize={ROWS_PER_PAGE}
           pagination={true}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[ROWS_PER_PAGE]}
-          // components={{
-          //   Toolbar: CustomToolbar,
-          // }}
           disableColumnMenu={true}
           disableSelectionOnClick={true}
           density="compact"

@@ -1,6 +1,5 @@
 import { isAfter, isBefore, isValid } from "date-fns";
-import { TokyoWard } from "../constants/enums";
-import { SupportedTokyoWard } from "./enums";
+import { SupportedMunicipality } from "./municipality";
 
 export const getPageFromUrlParam = (page: string | null | undefined) => {
   if (isNaN(Number(page))) {
@@ -21,21 +20,25 @@ export const getDateFromUrlParam = (
   return isBefore(tmp, min) || isAfter(tmp, max) ? null : tmp;
 };
 
-const TOKTO_WARD_URL_PARAMS: Readonly<Record<string, SupportedTokyoWard>> = {
-  koutou: TokyoWard.KOUTOU,
-  bunkyo: TokyoWard.BUNKYO,
-  kita: TokyoWard.KITA,
-  toshima: TokyoWard.TOSHIMA,
-  edogawa: TokyoWard.EDOGAWA,
-  arakawa: TokyoWard.ARAKAWA,
+const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
+  koutou: "MUNICIPALITY_KOUTOU",
+  bunkyo: "MUNICIPALITY_BUNKYO",
+  kita: "MUNICIPALITY_KITA",
+  toshima: "MUNICIPALITY_TOSHIMA",
+  edogawa: "MUNICIPALITY_EDOGAWA",
+  arakawa: "MUNICIPALITY_ARAKAWA",
 };
 
-export const getTokyoWardFromUrlParam = (param: string | null | undefined): SupportedTokyoWard => {
-  return param ? TOKTO_WARD_URL_PARAMS[param] ?? TokyoWard.INVALID : TokyoWard.INVALID;
+export const getMunicipalityFromUrlParam = (
+  param: string | null | undefined
+): SupportedMunicipality | null => {
+  return param ? MUNICIPALITY_URL_PARAMS[param] ?? null : null;
 };
 
-export const convertTokyoWardToUrlParam = (tokyoWard: SupportedTokyoWard): string => {
-  return tokyoWard === TokyoWard.INVALID ? "" : tokyoWard.replace("TOKYO_WARD_", "").toLowerCase();
+export const convertMunicipalityToUrlParam = (
+  municipality: string | null | undefined
+): string | null => {
+  return municipality?.replace("MUNICIPALITY_", "").toLowerCase() ?? null;
 };
 
 export const setUrlSearchParams = (

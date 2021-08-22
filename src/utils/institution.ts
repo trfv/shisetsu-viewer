@@ -1,9 +1,9 @@
-import { InstitutionQueryVariables } from "../api/graphql-client";
-import { AvailabilityDivision, FeeDivision, TokyoWard } from "../constants/enums";
-import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
-import { FeeDivisionMap, SupportedTokyoWard, SupportedTokyoWards } from "./enums";
+import { InstitutionsQueryVariables } from "../api/graphql-client";
+import { AvailabilityDivision, FeeDivision } from "../constants/enums";
+import { MUNICIPALITY, PAGE, ROWS_PER_PAGE, SELECT_OPTION_ALL } from "../constants/search";
 import { formatPrice } from "./format";
-import { getPageFromUrlParam, getTokyoWardFromUrlParam } from "./search";
+import { FeeDivisionMap, SupportedMunicipality } from "./municipality";
+import { getMunicipalityFromUrlParam, getPageFromUrlParam } from "./search";
 
 const FEE_DIVISION_ORDER = {
   [FeeDivision.INVALID]: 0,
@@ -40,14 +40,17 @@ export const sortByFeeDivision = (obj: Record<string, string>): [string, string]
 };
 
 export const formatUsageFee = (
-  tokyoWard: SupportedTokyoWard,
-  feeMap: Record<string, string>
+  municipality: string | undefined,
+  usageFee: { division: string; fee: string }[] | undefined
 ): string => {
-  if (!feeMap) {
+  if (!municipality || !usageFee?.length) {
     return "";
   }
-  return sortByFeeDivision(feeMap)
-    .map(([division, fee]) => `${FeeDivisionMap[tokyoWard]?.[division] ?? ""}: ${formatPrice(fee)}`)
+  return usageFee
+    .map(
+      ({ division, fee }) =>
+        `${FeeDivisionMap[municipality]?.[division] ?? ""}: ${formatPrice(fee)}`
+    )
     .join(" ");
 };
 
@@ -75,7 +78,7 @@ const getAvailableInstrumentFromUrlParam = (
 
 export type InstitutionSearchParams = {
   page: number;
-  tokyoWard: SupportedTokyoWard;
+  municipality: SupportedMunicipality | typeof SELECT_OPTION_ALL;
   availableInstruments: AvailableInstrument[];
 };
 
@@ -84,7 +87,8 @@ export const toInstitutionSearchParams = (
 ): InstitutionSearchParams => {
   return {
     page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
-    tokyoWard: getTokyoWardFromUrlParam(urlSearchParams.get(TOKYO_WARD)),
+    municipality:
+      getMunicipalityFromUrlParam(urlSearchParams.get(MUNICIPALITY)) ?? SELECT_OPTION_ALL,
     availableInstruments: getAvailableInstrumentFromUrlParam(
       urlSearchParams.getAll(AVAILABLE_INSTRUMENTS)
     ),
@@ -93,9 +97,9 @@ export const toInstitutionSearchParams = (
 
 export const toInstitutionQueryVariables = ({
   page,
-  tokyoWard,
+  municipality,
   availableInstruments,
-}: InstitutionSearchParams): InstitutionQueryVariables => {
+}: InstitutionSearchParams): InstitutionsQueryVariables => {
   const [isAvailableStrings, isAvailableWoodwind, isAvailableBrass, isAvailablePercussion] = [
     availableInstruments.includes(STRINGS),
     availableInstruments.includes(WOODWIND),
@@ -105,7 +109,7 @@ export const toInstitutionQueryVariables = ({
   return {
     offset: page * ROWS_PER_PAGE,
     limit: ROWS_PER_PAGE,
-    tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
+    municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,

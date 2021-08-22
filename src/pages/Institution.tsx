@@ -1,11 +1,6 @@
-import { useQuery } from "@apollo/client";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  InstitutionDocument,
-  InstitutionQuery,
-  InstitutionQueryVariables,
-} from "../api/graphql-client";
+import { useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import {
@@ -17,11 +12,10 @@ import {
 } from "../components/DataGrid";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { TOKEN } from "../components/utils/AuthGuardRoute";
-import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWardMap } from "../constants/enums";
 import { ROUTES } from "../constants/routes";
-import { PAGE, ROWS_PER_PAGE, TOKYO_WARD } from "../constants/search";
+import { MUNICIPALITY, PAGE, ROWS_PER_PAGE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
-import { SupportedTokyoWard, TokyoWardOptions } from "../utils/enums";
+import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
 import {
   AvailableInstrument,
@@ -34,7 +28,12 @@ import {
   toInstitutionSearchParams,
   WOODWIND,
 } from "../utils/institution";
-import { convertTokyoWardToUrlParam, setUrlSearchParams } from "../utils/search";
+import {
+  MunicipalityOptions,
+  SupportedMunicipality,
+  SupportedMunicipalityMap,
+} from "../utils/municipality";
+import { convertMunicipalityToUrlParam, setUrlSearchParams } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const COLUMNS: GridColumns = [
@@ -48,12 +47,13 @@ const COLUMNS: GridColumns = [
       `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
-    field: "tokyo_ward",
+    field: "municipality",
     headerName: "区",
     width: 120,
     flex: 0,
     hide: true,
-    valueFormatter: (params: GridValueFormatterParams) => TokyoWardMap[params.value as string],
+    valueFormatter: (params: GridValueFormatterParams) =>
+      SupportedMunicipalityMap[params.value as string],
   },
   {
     field: "capacity",
@@ -210,19 +210,16 @@ export default () => {
   const [institutionSearchParams, setInstitutionSearchParams] = useState(
     toInstitutionSearchParams(urlSearchParams.current)
   );
-  const { loading, data, error } = useQuery<InstitutionQuery, InstitutionQueryVariables>(
-    InstitutionDocument,
-    {
-      variables: toInstitutionQueryVariables(institutionSearchParams),
-      context: {
-        headers: {
-          Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-        },
+  const { loading, data, error } = useInstitutionsQuery({
+    variables: toInstitutionQueryVariables(institutionSearchParams),
+    context: {
+      headers: {
+        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
       },
-    }
-  );
+    },
+  });
 
-  const { page, tokyoWard, availableInstruments } = institutionSearchParams;
+  const { page, municipality, availableInstruments } = institutionSearchParams;
 
   const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
     history.replace({
@@ -232,17 +229,17 @@ export default () => {
     urlSearchParams.current = nextUrlSearchParams;
   }, []);
 
-  const handleTokyoWardChange = useCallback((event: SelectChangeEvent<unknown>): void => {
-    const value = event.target.value as SupportedTokyoWard;
+  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<unknown>): void => {
+    const value = event.target.value as SupportedMunicipality;
     setInstitutionSearchParams((prevState) => ({
       ...prevState,
       page: 0,
-      tokyoWard: value,
+      municipality: value,
     }));
     updateUrlSearchParams(
       setUrlSearchParams(
         urlSearchParams.current,
-        { [TOKYO_WARD]: convertTokyoWardToUrlParam(value) },
+        { [MUNICIPALITY]: convertMunicipalityToUrlParam(value) ?? undefined },
         [PAGE]
       )
     );
@@ -282,10 +279,10 @@ export default () => {
         <div className={classes.searchBoxForm}>
           <Select
             label="区"
-            value={tokyoWard}
+            value={municipality}
             size="small"
-            onChange={handleTokyoWardChange}
-            selectOptions={TokyoWardOptions}
+            onChange={handleMunicipalityChange}
+            selectOptions={MunicipalityOptions}
           />
           {/* <Input label="定員下限（人）" defaultValue="" size="small" /> */}
           {/* <Input label="面積下限（㎡）" defaultValue="" size="small" /> */}
@@ -309,13 +306,13 @@ export default () => {
       </div>
       <div className={classes.resultBox}>
         <DataGrid
-          rows={data?.institution ?? []}
+          rows={data?.institutions ?? []}
           columns={COLUMNS}
           error={error}
           loading={loading}
           onRowClick={(params) => history.push(ROUTES.detail.replace(":id", params.row.id))}
           paginationMode="server"
-          rowCount={data?.institution_aggregate.aggregate?.count ?? undefined}
+          rowCount={data?.institutions_aggregate.aggregate?.count ?? undefined}
           page={page}
           pageSize={ROWS_PER_PAGE}
           pagination={true}

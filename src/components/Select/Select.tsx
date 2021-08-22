@@ -11,7 +11,7 @@ type Props = {
   label: string;
   value: string;
   size?: BoxSize;
-  onChange: (event: SelectChangeEvent<unknown>) => void;
+  onChange: (event: SelectChangeEvent<string>) => void;
   selectOptions: { value: string; label: string }[];
 };
 
