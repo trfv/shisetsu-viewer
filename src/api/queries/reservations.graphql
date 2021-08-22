@@ -15,35 +15,17 @@ query reservations(
     offset: $offset
     limit: $limit
     where: {
+      _and: {
+        prefecture: { _eq: $prefecture }
+        municipality: { _in: $municipality }
+        date: { _gte: $startDate, _lte: $endDate }
+        is_holiday: { _eq: $isHoliday }
+      }
       _or: [
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus1 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus2 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus3 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus4 }
-        }
+        { reservation: { _contains: $reservationStatus1 } }
+        { reservation: { _contains: $reservationStatus2 } }
+        { reservation: { _contains: $reservationStatus3 } }
+        { reservation: { _contains: $reservationStatus4 } }
       ]
     }
     order_by: { date: asc }
@@ -59,35 +41,17 @@ query reservations(
   }
   reservations_aggregate(
     where: {
+      _and: {
+        prefecture: { _eq: $prefecture }
+        municipality: { _in: $municipality }
+        date: { _gte: $startDate, _lte: $endDate }
+        is_holiday: { _eq: $isHoliday }
+      }
       _or: [
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus1 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus2 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus3 }
-        }
-        {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          date: { _gte: $startDate, _lte: $endDate }
-          is_holiday: { _eq: $isHoliday }
-          reservation: { _contains: $reservationStatus4 }
-        }
+        { reservation: { _contains: $reservationStatus1 } }
+        { reservation: { _contains: $reservationStatus2 } }
+        { reservation: { _contains: $reservationStatus3 } }
+        { reservation: { _contains: $reservationStatus4 } }
       ]
     }
   ) {

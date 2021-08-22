@@ -16,14 +16,12 @@ export type Scalars = {
   availavility_division: any;
   bigint: any;
   date: any;
-  day_of_week: any;
   equipment_division: any;
   jsonb: any;
   numeric: any;
   prefecture: any;
   timestamp: any;
   timestamptz: any;
-  tokyo_ward: any;
   uuid: any;
 };
 
@@ -141,20 +139,6 @@ export type Date_Comparison_Exp = {
   _lte?: Maybe<Scalars['date']>;
   _neq?: Maybe<Scalars['date']>;
   _nin?: Maybe<Array<Scalars['date']>>;
-};
-
-
-/** Boolean expression to compare columns of type "day_of_week". All fields are combined with logical 'AND'. */
-export type Day_Of_Week_Comparison_Exp = {
-  _eq?: Maybe<Scalars['day_of_week']>;
-  _gt?: Maybe<Scalars['day_of_week']>;
-  _gte?: Maybe<Scalars['day_of_week']>;
-  _in?: Maybe<Array<Scalars['day_of_week']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['day_of_week']>;
-  _lte?: Maybe<Scalars['day_of_week']>;
-  _neq?: Maybe<Scalars['day_of_week']>;
-  _nin?: Maybe<Array<Scalars['day_of_week']>>;
 };
 
 
@@ -367,453 +351,6 @@ export type Holidays_Var_Samp_Fields = {
 export type Holidays_Variance_Fields = {
   __typename?: 'holidays_variance_fields';
   id?: Maybe<Scalars['Float']>;
-};
-
-/** columns and relationships of "institution" */
-export type Institution = {
-  __typename?: 'institution';
-  address: Scalars['String'];
-  area?: Maybe<Scalars['numeric']>;
-  building: Scalars['String'];
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at: Scalars['timestamp'];
-  fee_division: Scalars['_fee_division'];
-  holiday_usage_fee: Scalars['jsonb'];
-  id: Scalars['uuid'];
-  institution: Scalars['String'];
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass: Scalars['availavility_division'];
-  is_available_percussion: Scalars['availavility_division'];
-  is_available_strings: Scalars['availavility_division'];
-  is_available_woodwind: Scalars['availavility_division'];
-  is_equipped_music_stand: Scalars['equipment_division'];
-  is_equipped_piano: Scalars['equipment_division'];
-  layout_image_url: Scalars['String'];
-  lottery_period: Scalars['String'];
-  note: Scalars['String'];
-  tokyo_ward: Scalars['tokyo_ward'];
-  updated_at: Scalars['timestamp'];
-  website_url: Scalars['String'];
-  weekday_usage_fee: Scalars['jsonb'];
-};
-
-
-/** columns and relationships of "institution" */
-export type InstitutionHoliday_Usage_FeeArgs = {
-  path?: Maybe<Scalars['String']>;
-};
-
-
-/** columns and relationships of "institution" */
-export type InstitutionWeekday_Usage_FeeArgs = {
-  path?: Maybe<Scalars['String']>;
-};
-
-/** aggregated selection of "institution" */
-export type Institution_Aggregate = {
-  __typename?: 'institution_aggregate';
-  aggregate?: Maybe<Institution_Aggregate_Fields>;
-  nodes: Array<Institution>;
-};
-
-/** aggregate fields of "institution" */
-export type Institution_Aggregate_Fields = {
-  __typename?: 'institution_aggregate_fields';
-  avg?: Maybe<Institution_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Institution_Max_Fields>;
-  min?: Maybe<Institution_Min_Fields>;
-  stddev?: Maybe<Institution_Stddev_Fields>;
-  stddev_pop?: Maybe<Institution_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Institution_Stddev_Samp_Fields>;
-  sum?: Maybe<Institution_Sum_Fields>;
-  var_pop?: Maybe<Institution_Var_Pop_Fields>;
-  var_samp?: Maybe<Institution_Var_Samp_Fields>;
-  variance?: Maybe<Institution_Variance_Fields>;
-};
-
-
-/** aggregate fields of "institution" */
-export type Institution_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Institution_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type Institution_Append_Input = {
-  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
-  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
-};
-
-/** aggregate avg on columns */
-export type Institution_Avg_Fields = {
-  __typename?: 'institution_avg_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "institution". All fields are combined with a logical 'AND'. */
-export type Institution_Bool_Exp = {
-  _and?: Maybe<Array<Institution_Bool_Exp>>;
-  _not?: Maybe<Institution_Bool_Exp>;
-  _or?: Maybe<Array<Institution_Bool_Exp>>;
-  address?: Maybe<String_Comparison_Exp>;
-  area?: Maybe<Numeric_Comparison_Exp>;
-  building?: Maybe<String_Comparison_Exp>;
-  building_system_name?: Maybe<String_Comparison_Exp>;
-  capacity?: Maybe<Int_Comparison_Exp>;
-  created_at?: Maybe<Timestamp_Comparison_Exp>;
-  fee_division?: Maybe<_Fee_Division_Comparison_Exp>;
-  holiday_usage_fee?: Maybe<Jsonb_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
-  institution?: Maybe<String_Comparison_Exp>;
-  institution_system_name?: Maybe<String_Comparison_Exp>;
-  is_available_brass?: Maybe<Availavility_Division_Comparison_Exp>;
-  is_available_percussion?: Maybe<Availavility_Division_Comparison_Exp>;
-  is_available_strings?: Maybe<Availavility_Division_Comparison_Exp>;
-  is_available_woodwind?: Maybe<Availavility_Division_Comparison_Exp>;
-  is_equipped_music_stand?: Maybe<Equipment_Division_Comparison_Exp>;
-  is_equipped_piano?: Maybe<Equipment_Division_Comparison_Exp>;
-  layout_image_url?: Maybe<String_Comparison_Exp>;
-  lottery_period?: Maybe<String_Comparison_Exp>;
-  note?: Maybe<String_Comparison_Exp>;
-  tokyo_ward?: Maybe<Tokyo_Ward_Comparison_Exp>;
-  updated_at?: Maybe<Timestamp_Comparison_Exp>;
-  website_url?: Maybe<String_Comparison_Exp>;
-  weekday_usage_fee?: Maybe<Jsonb_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "institution" */
-export enum Institution_Constraint {
-  /** unique or primary key constraint */
-  InstitutionPkey = 'institution_pkey'
-}
-
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Institution_Delete_At_Path_Input = {
-  holiday_usage_fee?: Maybe<Array<Scalars['String']>>;
-  weekday_usage_fee?: Maybe<Array<Scalars['String']>>;
-};
-
-/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Institution_Delete_Elem_Input = {
-  holiday_usage_fee?: Maybe<Scalars['Int']>;
-  weekday_usage_fee?: Maybe<Scalars['Int']>;
-};
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Institution_Delete_Key_Input = {
-  holiday_usage_fee?: Maybe<Scalars['String']>;
-  weekday_usage_fee?: Maybe<Scalars['String']>;
-};
-
-/** input type for incrementing numeric columns in table "institution" */
-export type Institution_Inc_Input = {
-  area?: Maybe<Scalars['numeric']>;
-  capacity?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "institution" */
-export type Institution_Insert_Input = {
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  fee_division?: Maybe<Scalars['_fee_division']>;
-  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['availavility_division']>;
-  is_available_percussion?: Maybe<Scalars['availavility_division']>;
-  is_available_strings?: Maybe<Scalars['availavility_division']>;
-  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
-  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
-  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
-  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
-};
-
-/** aggregate max on columns */
-export type Institution_Max_Fields = {
-  __typename?: 'institution_max_fields';
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Institution_Min_Fields = {
-  __typename?: 'institution_min_fields';
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "institution" */
-export type Institution_Mutation_Response = {
-  __typename?: 'institution_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Institution>;
-};
-
-/** on conflict condition type for table "institution" */
-export type Institution_On_Conflict = {
-  constraint: Institution_Constraint;
-  update_columns?: Array<Institution_Update_Column>;
-  where?: Maybe<Institution_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "institution". */
-export type Institution_Order_By = {
-  address?: Maybe<Order_By>;
-  area?: Maybe<Order_By>;
-  building?: Maybe<Order_By>;
-  building_system_name?: Maybe<Order_By>;
-  capacity?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  fee_division?: Maybe<Order_By>;
-  holiday_usage_fee?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  institution?: Maybe<Order_By>;
-  institution_system_name?: Maybe<Order_By>;
-  is_available_brass?: Maybe<Order_By>;
-  is_available_percussion?: Maybe<Order_By>;
-  is_available_strings?: Maybe<Order_By>;
-  is_available_woodwind?: Maybe<Order_By>;
-  is_equipped_music_stand?: Maybe<Order_By>;
-  is_equipped_piano?: Maybe<Order_By>;
-  layout_image_url?: Maybe<Order_By>;
-  lottery_period?: Maybe<Order_By>;
-  note?: Maybe<Order_By>;
-  tokyo_ward?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-  website_url?: Maybe<Order_By>;
-  weekday_usage_fee?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: institution */
-export type Institution_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Institution_Prepend_Input = {
-  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
-  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
-};
-
-/** select columns of table "institution" */
-export enum Institution_Select_Column {
-  /** column name */
-  Address = 'address',
-  /** column name */
-  Area = 'area',
-  /** column name */
-  Building = 'building',
-  /** column name */
-  BuildingSystemName = 'building_system_name',
-  /** column name */
-  Capacity = 'capacity',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  FeeDivision = 'fee_division',
-  /** column name */
-  HolidayUsageFee = 'holiday_usage_fee',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Institution = 'institution',
-  /** column name */
-  InstitutionSystemName = 'institution_system_name',
-  /** column name */
-  IsAvailableBrass = 'is_available_brass',
-  /** column name */
-  IsAvailablePercussion = 'is_available_percussion',
-  /** column name */
-  IsAvailableStrings = 'is_available_strings',
-  /** column name */
-  IsAvailableWoodwind = 'is_available_woodwind',
-  /** column name */
-  IsEquippedMusicStand = 'is_equipped_music_stand',
-  /** column name */
-  IsEquippedPiano = 'is_equipped_piano',
-  /** column name */
-  LayoutImageUrl = 'layout_image_url',
-  /** column name */
-  LotteryPeriod = 'lottery_period',
-  /** column name */
-  Note = 'note',
-  /** column name */
-  TokyoWard = 'tokyo_ward',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  WebsiteUrl = 'website_url',
-  /** column name */
-  WeekdayUsageFee = 'weekday_usage_fee'
-}
-
-/** input type for updating data in table "institution" */
-export type Institution_Set_Input = {
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  fee_division?: Maybe<Scalars['_fee_division']>;
-  holiday_usage_fee?: Maybe<Scalars['jsonb']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['availavility_division']>;
-  is_available_percussion?: Maybe<Scalars['availavility_division']>;
-  is_available_strings?: Maybe<Scalars['availavility_division']>;
-  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
-  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
-  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
-  weekday_usage_fee?: Maybe<Scalars['jsonb']>;
-};
-
-/** aggregate stddev on columns */
-export type Institution_Stddev_Fields = {
-  __typename?: 'institution_stddev_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Institution_Stddev_Pop_Fields = {
-  __typename?: 'institution_stddev_pop_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Institution_Stddev_Samp_Fields = {
-  __typename?: 'institution_stddev_samp_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate sum on columns */
-export type Institution_Sum_Fields = {
-  __typename?: 'institution_sum_fields';
-  area?: Maybe<Scalars['numeric']>;
-  capacity?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "institution" */
-export enum Institution_Update_Column {
-  /** column name */
-  Address = 'address',
-  /** column name */
-  Area = 'area',
-  /** column name */
-  Building = 'building',
-  /** column name */
-  BuildingSystemName = 'building_system_name',
-  /** column name */
-  Capacity = 'capacity',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  FeeDivision = 'fee_division',
-  /** column name */
-  HolidayUsageFee = 'holiday_usage_fee',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Institution = 'institution',
-  /** column name */
-  InstitutionSystemName = 'institution_system_name',
-  /** column name */
-  IsAvailableBrass = 'is_available_brass',
-  /** column name */
-  IsAvailablePercussion = 'is_available_percussion',
-  /** column name */
-  IsAvailableStrings = 'is_available_strings',
-  /** column name */
-  IsAvailableWoodwind = 'is_available_woodwind',
-  /** column name */
-  IsEquippedMusicStand = 'is_equipped_music_stand',
-  /** column name */
-  IsEquippedPiano = 'is_equipped_piano',
-  /** column name */
-  LayoutImageUrl = 'layout_image_url',
-  /** column name */
-  LotteryPeriod = 'lottery_period',
-  /** column name */
-  Note = 'note',
-  /** column name */
-  TokyoWard = 'tokyo_ward',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  WebsiteUrl = 'website_url',
-  /** column name */
-  WeekdayUsageFee = 'weekday_usage_fee'
-}
-
-/** aggregate var_pop on columns */
-export type Institution_Var_Pop_Fields = {
-  __typename?: 'institution_var_pop_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Institution_Var_Samp_Fields = {
-  __typename?: 'institution_var_samp_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Institution_Variance_Fields = {
-  __typename?: 'institution_variance_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
 };
 
 /** columns and relationships of "institutions" */
@@ -1307,18 +844,10 @@ export type Mutation_Root = {
   delete_holidays?: Maybe<Holidays_Mutation_Response>;
   /** delete single row from the table: "holidays" */
   delete_holidays_by_pk?: Maybe<Holidays>;
-  /** delete data from the table: "institution" */
-  delete_institution?: Maybe<Institution_Mutation_Response>;
-  /** delete single row from the table: "institution" */
-  delete_institution_by_pk?: Maybe<Institution>;
   /** delete data from the table: "institutions" */
   delete_institutions?: Maybe<Institutions_Mutation_Response>;
   /** delete single row from the table: "institutions" */
   delete_institutions_by_pk?: Maybe<Institutions>;
-  /** delete data from the table: "reservation" */
-  delete_reservation?: Maybe<Reservation_Mutation_Response>;
-  /** delete single row from the table: "reservation" */
-  delete_reservation_by_pk?: Maybe<Reservation>;
   /** delete data from the table: "reservations" */
   delete_reservations?: Maybe<Reservations_Mutation_Response>;
   /** delete single row from the table: "reservations" */
@@ -1327,18 +856,10 @@ export type Mutation_Root = {
   insert_holidays?: Maybe<Holidays_Mutation_Response>;
   /** insert a single row into the table: "holidays" */
   insert_holidays_one?: Maybe<Holidays>;
-  /** insert data into the table: "institution" */
-  insert_institution?: Maybe<Institution_Mutation_Response>;
-  /** insert a single row into the table: "institution" */
-  insert_institution_one?: Maybe<Institution>;
   /** insert data into the table: "institutions" */
   insert_institutions?: Maybe<Institutions_Mutation_Response>;
   /** insert a single row into the table: "institutions" */
   insert_institutions_one?: Maybe<Institutions>;
-  /** insert data into the table: "reservation" */
-  insert_reservation?: Maybe<Reservation_Mutation_Response>;
-  /** insert a single row into the table: "reservation" */
-  insert_reservation_one?: Maybe<Reservation>;
   /** insert data into the table: "reservations" */
   insert_reservations?: Maybe<Reservations_Mutation_Response>;
   /** insert a single row into the table: "reservations" */
@@ -1347,18 +868,10 @@ export type Mutation_Root = {
   update_holidays?: Maybe<Holidays_Mutation_Response>;
   /** update single row of the table: "holidays" */
   update_holidays_by_pk?: Maybe<Holidays>;
-  /** update data of the table: "institution" */
-  update_institution?: Maybe<Institution_Mutation_Response>;
-  /** update single row of the table: "institution" */
-  update_institution_by_pk?: Maybe<Institution>;
   /** update data of the table: "institutions" */
   update_institutions?: Maybe<Institutions_Mutation_Response>;
   /** update single row of the table: "institutions" */
   update_institutions_by_pk?: Maybe<Institutions>;
-  /** update data of the table: "reservation" */
-  update_reservation?: Maybe<Reservation_Mutation_Response>;
-  /** update single row of the table: "reservation" */
-  update_reservation_by_pk?: Maybe<Reservation>;
   /** update data of the table: "reservations" */
   update_reservations?: Maybe<Reservations_Mutation_Response>;
   /** update single row of the table: "reservations" */
@@ -1379,18 +892,6 @@ export type Mutation_RootDelete_Holidays_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_InstitutionArgs = {
-  where: Institution_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Institution_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_InstitutionsArgs = {
   where: Institutions_Bool_Exp;
 };
@@ -1399,18 +900,6 @@ export type Mutation_RootDelete_InstitutionsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Institutions_By_PkArgs = {
   id: Scalars['uuid'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_ReservationArgs = {
-  where: Reservation_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Reservation_By_PkArgs = {
-  id: Scalars['Int'];
 };
 
 
@@ -1441,20 +930,6 @@ export type Mutation_RootInsert_Holidays_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_InstitutionArgs = {
-  objects: Array<Institution_Insert_Input>;
-  on_conflict?: Maybe<Institution_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Institution_OneArgs = {
-  object: Institution_Insert_Input;
-  on_conflict?: Maybe<Institution_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_InstitutionsArgs = {
   objects: Array<Institutions_Insert_Input>;
   on_conflict?: Maybe<Institutions_On_Conflict>;
@@ -1465,20 +940,6 @@ export type Mutation_RootInsert_InstitutionsArgs = {
 export type Mutation_RootInsert_Institutions_OneArgs = {
   object: Institutions_Insert_Input;
   on_conflict?: Maybe<Institutions_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_ReservationArgs = {
-  objects: Array<Reservation_Insert_Input>;
-  on_conflict?: Maybe<Reservation_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Reservation_OneArgs = {
-  object: Reservation_Insert_Input;
-  on_conflict?: Maybe<Reservation_On_Conflict>;
 };
 
 
@@ -1513,32 +974,6 @@ export type Mutation_RootUpdate_Holidays_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_InstitutionArgs = {
-  _append?: Maybe<Institution_Append_Input>;
-  _delete_at_path?: Maybe<Institution_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Institution_Delete_Elem_Input>;
-  _delete_key?: Maybe<Institution_Delete_Key_Input>;
-  _inc?: Maybe<Institution_Inc_Input>;
-  _prepend?: Maybe<Institution_Prepend_Input>;
-  _set?: Maybe<Institution_Set_Input>;
-  where: Institution_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Institution_By_PkArgs = {
-  _append?: Maybe<Institution_Append_Input>;
-  _delete_at_path?: Maybe<Institution_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Institution_Delete_Elem_Input>;
-  _delete_key?: Maybe<Institution_Delete_Key_Input>;
-  _inc?: Maybe<Institution_Inc_Input>;
-  _prepend?: Maybe<Institution_Prepend_Input>;
-  _set?: Maybe<Institution_Set_Input>;
-  pk_columns: Institution_Pk_Columns_Input;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_InstitutionsArgs = {
   _append?: Maybe<Institutions_Append_Input>;
   _delete_at_path?: Maybe<Institutions_Delete_At_Path_Input>;
@@ -1561,32 +996,6 @@ export type Mutation_RootUpdate_Institutions_By_PkArgs = {
   _prepend?: Maybe<Institutions_Prepend_Input>;
   _set?: Maybe<Institutions_Set_Input>;
   pk_columns: Institutions_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_ReservationArgs = {
-  _append?: Maybe<Reservation_Append_Input>;
-  _delete_at_path?: Maybe<Reservation_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Reservation_Delete_Elem_Input>;
-  _delete_key?: Maybe<Reservation_Delete_Key_Input>;
-  _inc?: Maybe<Reservation_Inc_Input>;
-  _prepend?: Maybe<Reservation_Prepend_Input>;
-  _set?: Maybe<Reservation_Set_Input>;
-  where: Reservation_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Reservation_By_PkArgs = {
-  _append?: Maybe<Reservation_Append_Input>;
-  _delete_at_path?: Maybe<Reservation_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Reservation_Delete_Elem_Input>;
-  _delete_key?: Maybe<Reservation_Delete_Key_Input>;
-  _inc?: Maybe<Reservation_Inc_Input>;
-  _prepend?: Maybe<Reservation_Prepend_Input>;
-  _set?: Maybe<Reservation_Set_Input>;
-  pk_columns: Reservation_Pk_Columns_Input;
 };
 
 
@@ -1667,24 +1076,12 @@ export type Query_Root = {
   holidays_aggregate: Holidays_Aggregate;
   /** fetch data from the table: "holidays" using primary key columns */
   holidays_by_pk?: Maybe<Holidays>;
-  /** fetch data from the table: "institution" */
-  institution: Array<Institution>;
-  /** fetch aggregated fields from the table: "institution" */
-  institution_aggregate: Institution_Aggregate;
-  /** fetch data from the table: "institution" using primary key columns */
-  institution_by_pk?: Maybe<Institution>;
   /** fetch data from the table: "institutions" */
   institutions: Array<Institutions>;
   /** fetch aggregated fields from the table: "institutions" */
   institutions_aggregate: Institutions_Aggregate;
   /** fetch data from the table: "institutions" using primary key columns */
   institutions_by_pk?: Maybe<Institutions>;
-  /** fetch data from the table: "reservation" */
-  reservation: Array<Reservation>;
-  /** fetch aggregated fields from the table: "reservation" */
-  reservation_aggregate: Reservation_Aggregate;
-  /** fetch data from the table: "reservation" using primary key columns */
-  reservation_by_pk?: Maybe<Reservation>;
   /** fetch data from the table: "reservations" */
   reservations: Array<Reservations>;
   /** fetch aggregated fields from the table: "reservations" */
@@ -1717,29 +1114,6 @@ export type Query_RootHolidays_By_PkArgs = {
 };
 
 
-export type Query_RootInstitutionArgs = {
-  distinct_on?: Maybe<Array<Institution_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Institution_Order_By>>;
-  where?: Maybe<Institution_Bool_Exp>;
-};
-
-
-export type Query_RootInstitution_AggregateArgs = {
-  distinct_on?: Maybe<Array<Institution_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Institution_Order_By>>;
-  where?: Maybe<Institution_Bool_Exp>;
-};
-
-
-export type Query_RootInstitution_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
 export type Query_RootInstitutionsArgs = {
   distinct_on?: Maybe<Array<Institutions_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1763,29 +1137,6 @@ export type Query_RootInstitutions_By_PkArgs = {
 };
 
 
-export type Query_RootReservationArgs = {
-  distinct_on?: Maybe<Array<Reservation_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Reservation_Order_By>>;
-  where?: Maybe<Reservation_Bool_Exp>;
-};
-
-
-export type Query_RootReservation_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reservation_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Reservation_Order_By>>;
-  where?: Maybe<Reservation_Bool_Exp>;
-};
-
-
-export type Query_RootReservation_By_PkArgs = {
-  id: Scalars['Int'];
-};
-
-
 export type Query_RootReservationsArgs = {
   distinct_on?: Maybe<Array<Reservations_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1806,293 +1157,6 @@ export type Query_RootReservations_AggregateArgs = {
 
 export type Query_RootReservations_By_PkArgs = {
   id: Scalars['bigint'];
-};
-
-/** columns and relationships of "reservation" */
-export type Reservation = {
-  __typename?: 'reservation';
-  building: Scalars['String'];
-  created_at: Scalars['timestamp'];
-  date: Scalars['date'];
-  day_of_week: Scalars['day_of_week'];
-  id: Scalars['Int'];
-  institution: Scalars['String'];
-  institution_id?: Maybe<Scalars['uuid']>;
-  reservation: Scalars['jsonb'];
-  tokyo_ward: Scalars['tokyo_ward'];
-  updated_at: Scalars['timestamp'];
-};
-
-
-/** columns and relationships of "reservation" */
-export type ReservationReservationArgs = {
-  path?: Maybe<Scalars['String']>;
-};
-
-/** aggregated selection of "reservation" */
-export type Reservation_Aggregate = {
-  __typename?: 'reservation_aggregate';
-  aggregate?: Maybe<Reservation_Aggregate_Fields>;
-  nodes: Array<Reservation>;
-};
-
-/** aggregate fields of "reservation" */
-export type Reservation_Aggregate_Fields = {
-  __typename?: 'reservation_aggregate_fields';
-  avg?: Maybe<Reservation_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Reservation_Max_Fields>;
-  min?: Maybe<Reservation_Min_Fields>;
-  stddev?: Maybe<Reservation_Stddev_Fields>;
-  stddev_pop?: Maybe<Reservation_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Reservation_Stddev_Samp_Fields>;
-  sum?: Maybe<Reservation_Sum_Fields>;
-  var_pop?: Maybe<Reservation_Var_Pop_Fields>;
-  var_samp?: Maybe<Reservation_Var_Samp_Fields>;
-  variance?: Maybe<Reservation_Variance_Fields>;
-};
-
-
-/** aggregate fields of "reservation" */
-export type Reservation_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Reservation_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type Reservation_Append_Input = {
-  reservation?: Maybe<Scalars['jsonb']>;
-};
-
-/** aggregate avg on columns */
-export type Reservation_Avg_Fields = {
-  __typename?: 'reservation_avg_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "reservation". All fields are combined with a logical 'AND'. */
-export type Reservation_Bool_Exp = {
-  _and?: Maybe<Array<Reservation_Bool_Exp>>;
-  _not?: Maybe<Reservation_Bool_Exp>;
-  _or?: Maybe<Array<Reservation_Bool_Exp>>;
-  building?: Maybe<String_Comparison_Exp>;
-  created_at?: Maybe<Timestamp_Comparison_Exp>;
-  date?: Maybe<Date_Comparison_Exp>;
-  day_of_week?: Maybe<Day_Of_Week_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  institution?: Maybe<String_Comparison_Exp>;
-  institution_id?: Maybe<Uuid_Comparison_Exp>;
-  reservation?: Maybe<Jsonb_Comparison_Exp>;
-  tokyo_ward?: Maybe<Tokyo_Ward_Comparison_Exp>;
-  updated_at?: Maybe<Timestamp_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "reservation" */
-export enum Reservation_Constraint {
-  /** unique or primary key constraint */
-  ReservationPkey = 'reservation_pkey'
-}
-
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Reservation_Delete_At_Path_Input = {
-  reservation?: Maybe<Array<Scalars['String']>>;
-};
-
-/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Reservation_Delete_Elem_Input = {
-  reservation?: Maybe<Scalars['Int']>;
-};
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Reservation_Delete_Key_Input = {
-  reservation?: Maybe<Scalars['String']>;
-};
-
-/** input type for incrementing numeric columns in table "reservation" */
-export type Reservation_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "reservation" */
-export type Reservation_Insert_Input = {
-  building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  day_of_week?: Maybe<Scalars['day_of_week']>;
-  id?: Maybe<Scalars['Int']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  reservation?: Maybe<Scalars['jsonb']>;
-  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-};
-
-/** aggregate max on columns */
-export type Reservation_Max_Fields = {
-  __typename?: 'reservation_max_fields';
-  building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  id?: Maybe<Scalars['Int']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-};
-
-/** aggregate min on columns */
-export type Reservation_Min_Fields = {
-  __typename?: 'reservation_min_fields';
-  building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  id?: Maybe<Scalars['Int']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-};
-
-/** response of any mutation on the table "reservation" */
-export type Reservation_Mutation_Response = {
-  __typename?: 'reservation_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Reservation>;
-};
-
-/** on conflict condition type for table "reservation" */
-export type Reservation_On_Conflict = {
-  constraint: Reservation_Constraint;
-  update_columns?: Array<Reservation_Update_Column>;
-  where?: Maybe<Reservation_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "reservation". */
-export type Reservation_Order_By = {
-  building?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
-  date?: Maybe<Order_By>;
-  day_of_week?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  institution?: Maybe<Order_By>;
-  institution_id?: Maybe<Order_By>;
-  reservation?: Maybe<Order_By>;
-  tokyo_ward?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: reservation */
-export type Reservation_Pk_Columns_Input = {
-  id: Scalars['Int'];
-};
-
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Reservation_Prepend_Input = {
-  reservation?: Maybe<Scalars['jsonb']>;
-};
-
-/** select columns of table "reservation" */
-export enum Reservation_Select_Column {
-  /** column name */
-  Building = 'building',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Date = 'date',
-  /** column name */
-  DayOfWeek = 'day_of_week',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Institution = 'institution',
-  /** column name */
-  InstitutionId = 'institution_id',
-  /** column name */
-  Reservation = 'reservation',
-  /** column name */
-  TokyoWard = 'tokyo_ward',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "reservation" */
-export type Reservation_Set_Input = {
-  building?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  day_of_week?: Maybe<Scalars['day_of_week']>;
-  id?: Maybe<Scalars['Int']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  reservation?: Maybe<Scalars['jsonb']>;
-  tokyo_ward?: Maybe<Scalars['tokyo_ward']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-};
-
-/** aggregate stddev on columns */
-export type Reservation_Stddev_Fields = {
-  __typename?: 'reservation_stddev_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Reservation_Stddev_Pop_Fields = {
-  __typename?: 'reservation_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Reservation_Stddev_Samp_Fields = {
-  __typename?: 'reservation_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate sum on columns */
-export type Reservation_Sum_Fields = {
-  __typename?: 'reservation_sum_fields';
-  id?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "reservation" */
-export enum Reservation_Update_Column {
-  /** column name */
-  Building = 'building',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Date = 'date',
-  /** column name */
-  DayOfWeek = 'day_of_week',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Institution = 'institution',
-  /** column name */
-  InstitutionId = 'institution_id',
-  /** column name */
-  Reservation = 'reservation',
-  /** column name */
-  TokyoWard = 'tokyo_ward',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** aggregate var_pop on columns */
-export type Reservation_Var_Pop_Fields = {
-  __typename?: 'reservation_var_pop_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Reservation_Var_Samp_Fields = {
-  __typename?: 'reservation_var_samp_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Reservation_Variance_Fields = {
-  __typename?: 'reservation_variance_fields';
-  id?: Maybe<Scalars['Float']>;
 };
 
 /** columns and relationships of "reservations" */
@@ -2392,24 +1456,12 @@ export type Subscription_Root = {
   holidays_aggregate: Holidays_Aggregate;
   /** fetch data from the table: "holidays" using primary key columns */
   holidays_by_pk?: Maybe<Holidays>;
-  /** fetch data from the table: "institution" */
-  institution: Array<Institution>;
-  /** fetch aggregated fields from the table: "institution" */
-  institution_aggregate: Institution_Aggregate;
-  /** fetch data from the table: "institution" using primary key columns */
-  institution_by_pk?: Maybe<Institution>;
   /** fetch data from the table: "institutions" */
   institutions: Array<Institutions>;
   /** fetch aggregated fields from the table: "institutions" */
   institutions_aggregate: Institutions_Aggregate;
   /** fetch data from the table: "institutions" using primary key columns */
   institutions_by_pk?: Maybe<Institutions>;
-  /** fetch data from the table: "reservation" */
-  reservation: Array<Reservation>;
-  /** fetch aggregated fields from the table: "reservation" */
-  reservation_aggregate: Reservation_Aggregate;
-  /** fetch data from the table: "reservation" using primary key columns */
-  reservation_by_pk?: Maybe<Reservation>;
   /** fetch data from the table: "reservations" */
   reservations: Array<Reservations>;
   /** fetch aggregated fields from the table: "reservations" */
@@ -2442,29 +1494,6 @@ export type Subscription_RootHolidays_By_PkArgs = {
 };
 
 
-export type Subscription_RootInstitutionArgs = {
-  distinct_on?: Maybe<Array<Institution_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Institution_Order_By>>;
-  where?: Maybe<Institution_Bool_Exp>;
-};
-
-
-export type Subscription_RootInstitution_AggregateArgs = {
-  distinct_on?: Maybe<Array<Institution_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Institution_Order_By>>;
-  where?: Maybe<Institution_Bool_Exp>;
-};
-
-
-export type Subscription_RootInstitution_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
 export type Subscription_RootInstitutionsArgs = {
   distinct_on?: Maybe<Array<Institutions_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -2485,29 +1514,6 @@ export type Subscription_RootInstitutions_AggregateArgs = {
 
 export type Subscription_RootInstitutions_By_PkArgs = {
   id: Scalars['uuid'];
-};
-
-
-export type Subscription_RootReservationArgs = {
-  distinct_on?: Maybe<Array<Reservation_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Reservation_Order_By>>;
-  where?: Maybe<Reservation_Bool_Exp>;
-};
-
-
-export type Subscription_RootReservation_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reservation_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Reservation_Order_By>>;
-  where?: Maybe<Reservation_Bool_Exp>;
-};
-
-
-export type Subscription_RootReservation_By_PkArgs = {
-  id: Scalars['Int'];
 };
 
 
@@ -2559,20 +1565,6 @@ export type Timestamptz_Comparison_Exp = {
   _lte?: Maybe<Scalars['timestamptz']>;
   _neq?: Maybe<Scalars['timestamptz']>;
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
-};
-
-
-/** Boolean expression to compare columns of type "tokyo_ward". All fields are combined with logical 'AND'. */
-export type Tokyo_Ward_Comparison_Exp = {
-  _eq?: Maybe<Scalars['tokyo_ward']>;
-  _gt?: Maybe<Scalars['tokyo_ward']>;
-  _gte?: Maybe<Scalars['tokyo_ward']>;
-  _in?: Maybe<Array<Scalars['tokyo_ward']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['tokyo_ward']>;
-  _lte?: Maybe<Scalars['tokyo_ward']>;
-  _neq?: Maybe<Scalars['tokyo_ward']>;
-  _nin?: Maybe<Array<Scalars['tokyo_ward']>>;
 };
 
 
@@ -2811,7 +1803,7 @@ export const ReservationsDocument = gql`
   reservations(
     offset: $offset
     limit: $limit
-    where: {_or: [{prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus1}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus2}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus3}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus4}}]}
+    where: {_and: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
     order_by: {date: asc}
   ) {
     id
@@ -2824,7 +1816,7 @@ export const ReservationsDocument = gql`
     created_at
   }
   reservations_aggregate(
-    where: {_or: [{prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus1}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus2}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus3}}, {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}, reservation: {_contains: $reservationStatus4}}]}
+    where: {_and: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
   ) {
     aggregate {
       count
