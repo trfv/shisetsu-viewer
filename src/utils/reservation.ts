@@ -1,14 +1,20 @@
 import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns";
-import { ReservationQueryVariables } from "../api/graphql-client";
-import { DayOfWeek, ReservationDivision, ReservationStatus, TokyoWard } from "../constants/enums";
-import { END_DATE, PAGE, ROWS_PER_PAGE, START_DATE, TOKYO_WARD } from "../constants/search";
+import { ReservationsQueryVariables } from "../api/graphql-client";
+import { ReservationDivision, ReservationStatus } from "../constants/enums";
+import {
+  END_DATE,
+  MUNICIPALITY,
+  PAGE,
+  ROWS_PER_PAGE,
+  SELECT_OPTION_ALL,
+  START_DATE,
+} from "../constants/search";
 import {
   ReservationDivisionMap,
   ReservationStatusMap,
-  SupportedTokyoWard,
-  SupportedTokyoWards,
-} from "./enums";
-import { getDateFromUrlParam, getPageFromUrlParam, getTokyoWardFromUrlParam } from "./search";
+  SupportedMunicipality,
+} from "./municipality";
+import { getDateFromUrlParam, getMunicipalityFromUrlParam, getPageFromUrlParam } from "./search";
 
 const RESERVATION_DIVISION_ORDER = {
   [ReservationDivision.INVALID]: 0,
@@ -65,10 +71,10 @@ export const sortByReservationDivision = (obj: Record<string, string>): [string,
 };
 
 export const formatReservationMap = (
-  tokyoWard: SupportedTokyoWard = TokyoWard.INVALID,
+  municipality: SupportedMunicipality | undefined,
   obj: Record<string, string> | undefined
 ): string => {
-  if (tokyoWard === TokyoWard.INVALID || !obj) {
+  if (!municipality || !obj) {
     return "";
   }
   const sorted = sortByReservationDivision(obj);
@@ -79,8 +85,8 @@ export const formatReservationMap = (
       part
         .map(([division, status]) =>
           [
-            ReservationDivisionMap[tokyoWard]?.[division],
-            ReservationStatusMap[tokyoWard]?.[status],
+            ReservationDivisionMap[municipality]?.[division],
+            ReservationStatusMap[municipality]?.[status],
           ].join(": ")
         )
         .join(" ")
@@ -114,7 +120,7 @@ export const getResevationSearchFilterFromUrlParam = (
 
 export type ReservationSearchParams = {
   page: number;
-  tokyoWard: SupportedTokyoWard;
+  municipality: SupportedMunicipality | typeof SELECT_OPTION_ALL;
   startDate: Date | null;
   endDate: Date | null;
   filter: ReservationSearchFilter[];
@@ -127,7 +133,8 @@ export const toReservationSearchParams = (
 ): ReservationSearchParams => {
   return {
     page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
-    tokyoWard: getTokyoWardFromUrlParam(urlSearchParams.get(TOKYO_WARD)),
+    municipality:
+      getMunicipalityFromUrlParam(urlSearchParams.get(MUNICIPALITY)) ?? SELECT_OPTION_ALL,
     startDate: getDateFromUrlParam(urlSearchParams.get(START_DATE), minDate, maxDate) ?? minDate,
     endDate:
       getDateFromUrlParam(urlSearchParams.get(END_DATE), minDate, maxDate) ?? addMonths(minDate, 1),
@@ -139,11 +146,11 @@ export const toReservationSearchParams = (
 
 export const toReservationQueryVariables = ({
   page,
-  tokyoWard,
+  municipality,
   startDate,
   endDate,
   filter,
-}: ReservationSearchParams): ReservationQueryVariables => {
+}: ReservationSearchParams): ReservationsQueryVariables => {
   const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
     filter.includes(IS_ONLY_HOLIDAY),
     filter.includes(IS_ONLY_MORNING_VACANT),
@@ -153,10 +160,10 @@ export const toReservationQueryVariables = ({
   return {
     offset: page * ROWS_PER_PAGE,
     limit: ROWS_PER_PAGE,
-    tokyoWard: tokyoWard === TokyoWard.INVALID ? SupportedTokyoWards : [tokyoWard],
+    municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
-    dayOfWeek: isOnlyHoliday ? [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY] : null,
+    isHoliday: isOnlyHoliday ? true : null,
     reservationStatus1: {
       ...(isOnlyMorningVacant ? { [ReservationDivision.MORNING]: ReservationStatus.VACANT } : {}),
       ...(isOnlyAfternoonVacant

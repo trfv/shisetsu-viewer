@@ -1,3 +1,4 @@
+// TODO auto generate from database enums
 export enum ReservationStatus {
   INVALID = "RESERVATION_STATUS_INVALID",
   VACANT = "RESERVATION_STATUS_VACANT",
@@ -91,71 +92,6 @@ export enum FeeDivision {
   DIVISION_10 = "FEE_DIVISION_DIVISION_10",
 }
 
-export enum TokyoWard {
-  INVALID = "TOKYO_WARD_INVALID",
-  ADACHI = "TOKYO_WARD_ADACHI",
-  ARAKAWA = "TOKYO_WARD_ARAKAWA",
-  ITABASHI = "TOKYO_WARD_ITABASHI",
-  EDOGAWA = "TOKYO_WARD_EDOGAWA",
-  OTA = "TOKYO_WARD_OTA",
-  KATSUSHIKA = "TOKYO_WARD_KATSUSHIKA",
-  KITA = "TOKYO_WARD_KITA",
-  KOUTOU = "TOKYO_WARD_KOUTOU",
-  SHINAGAWA = "TOKYO_WARD_SHINAGAWA",
-  SHIBUYA = "TOKYO_WARD_SHIBUYA",
-  SHINJUKU = "TOKYO_WARD_SHINJUKU",
-  SUGINAMI = "TOKYO_WARD_SUGINAMI",
-  SUMIDA = "TOKYO_WARD_SUMIDA",
-  SETAGAYA = "TOKYO_WARD_SETAGAYA",
-  TAITO = "TOKYO_WARD_TAITO",
-  CHUO = "TOKYO_WARD_CHUO",
-  CHIYODA = "TOKYO_WARD_CHIYODA",
-  TOSHIMA = "TOKYO_WARD_TOSHIMA",
-  NAKANO = "TOKYO_WARD_NAKANO",
-  NERIMA = "TOKYO_WARD_NERIMA",
-  BUNKYO = "TOKYO_WARD_BUNKYO",
-  MINATO = "TOKYO_WARD_MINATO",
-  MEGURO = "TOKYO_WARD_MEGURO",
-}
-
-export const TokyoWardMap: Record<string, string> = {
-  [TokyoWard.INVALID]: "すべて",
-  [TokyoWard.ADACHI]: "足立区",
-  [TokyoWard.ARAKAWA]: "荒川区",
-  [TokyoWard.ITABASHI]: "板橋区",
-  [TokyoWard.EDOGAWA]: "江戸川区",
-  [TokyoWard.OTA]: "大田区",
-  [TokyoWard.KATSUSHIKA]: "葛飾区",
-  [TokyoWard.KITA]: "北区",
-  [TokyoWard.KOUTOU]: "江東区",
-  [TokyoWard.SHINAGAWA]: "品川区",
-  [TokyoWard.SHIBUYA]: "渋谷区",
-  [TokyoWard.SHINJUKU]: "新宿区",
-  [TokyoWard.SUGINAMI]: "杉並区",
-  [TokyoWard.SUMIDA]: "墨田区",
-  [TokyoWard.SETAGAYA]: "世田谷区",
-  [TokyoWard.TAITO]: "台東区",
-  [TokyoWard.CHUO]: "中央区",
-  [TokyoWard.CHIYODA]: "千代田区",
-  [TokyoWard.TOSHIMA]: "豊島区",
-  [TokyoWard.NAKANO]: "中野区",
-  [TokyoWard.NERIMA]: "練馬区",
-  [TokyoWard.BUNKYO]: "文京区",
-  [TokyoWard.MINATO]: "港区",
-  [TokyoWard.MEGURO]: "目黒区",
-};
-
-export enum DayOfWeek {
-  INVALID = "DAY_OF_WEEK_INVALID",
-  SUNDAY = "DAY_OF_WEEK_SUNDAY",
-  MONDAY = "DAY_OF_WEEK_MONDAY",
-  TUESDAY = "DAY_OF_WEEK_TUESDAY",
-  WEDNESDAY = "DAY_OF_WEEK_WEDNESDAY",
-  THUESDAY = "DAY_OF_WEEK_THUESDAY",
-  FRIDAY = "DAY_OF_WEEK_FRIDAY",
-  SATURDAY = "DAY_OF_WEEK_SATURDAY",
-}
-
 export enum AvailabilityDivision {
   INVALID = "AVAILABILITY_DIVISION_INVALID",
   AVAILABLE = "AVAILABILITY_DIVISION_AVAILABLE",
@@ -163,21 +99,9 @@ export enum AvailabilityDivision {
   UNKNOWN = "AVAILABILITY_DIVISION_UNKNOWN",
 }
 
-export const AvailabilityDivisionMap: Record<string, string> = {
-  [AvailabilityDivision.AVAILABLE]: "利用可",
-  [AvailabilityDivision.UNAVAILABLE]: "利用不可",
-  [AvailabilityDivision.UNKNOWN]: "不明",
-};
-
 export enum EquipmentDivision {
   INVALID = "EQUIPMENT_DIVISION_INVALID",
   EQUIPPED = "EQUIPMENT_DIVISION_EQUIPPED",
   UNEQUIPPED = "EQUIPMENT_DIVISION_UNEQUIPPED",
   UNKNOWN = "EQUIPMENT_DIVISION_UNKNOWN",
 }
-
-export const EquipmentDivisionMap: Record<string, string> = {
-  [EquipmentDivision.EQUIPPED]: "あり",
-  [EquipmentDivision.UNEQUIPPED]: "なし",
-  [EquipmentDivision.UNKNOWN]: "不明",
-};

@@ -1,84 +1,91 @@
-query reservation(
+query reservations(
   $offset: Int
   $limit: Int
-  $tokyoWard: [tokyo_ward!] = null
+  $prefecture: prefecture = "PREFECTURE_TOKYO"
+  $municipality: [String!]
   $startDate: date
   $endDate: date
-  $dayOfWeek: [day_of_week!] = null
+  $isHoliday: Boolean
   $reservationStatus1: jsonb = null
   $reservationStatus2: jsonb = null
   $reservationStatus3: jsonb = null
   $reservationStatus4: jsonb = null
 ) {
-  reservation(
+  reservations(
     offset: $offset
     limit: $limit
     where: {
       _or: [
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus1 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus2 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus3 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus4 }
         }
       ]
     }
-    order_by: {
-      date: asc
-    }
+    order_by: { date: asc }
   ) {
     id
     institution_id
-    tokyo_ward
-    building
-    institution
+    municipality
+    building_system_name
+    institution_system_name
     date
     reservation
-    updated_at
+    created_at
   }
-  reservation_aggregate(
+  reservations_aggregate(
     where: {
       _or: [
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus1 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus2 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus3 }
         }
         {
-          tokyo_ward: { _in: $tokyoWard }
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
           date: { _gte: $startDate, _lte: $endDate }
-          day_of_week: { _in: $dayOfWeek }
+          is_holiday: { _eq: $isHoliday }
           reservation: { _contains: $reservationStatus4 }
         }
       ]

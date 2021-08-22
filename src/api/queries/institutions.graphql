@@ -1,19 +1,17 @@
-query institution(
+query institutions(
   $offset: Int
   $limit: Int
-  $tokyoWard: [tokyo_ward!] = null
+  $municipality: [String!]
   $isAvailableStrings: availavility_division = null
   $isAvailableWoodwind: availavility_division = null
   $isAvailableBrass: availavility_division = null
   $isAvailablePercussion: availavility_division = null
-  $isEquippedMusicStand: equipment_division = null
-  $isEquippedPiano: equipment_division = null
 ) {
-  institution(
+  institutions(
     offset: $offset
     limit: $limit
     where: {
-      tokyo_ward: { _in: $tokyoWard }
+      municipality: { _in: $municipality }
       is_available_strings: { _eq: $isAvailableStrings }
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
@@ -21,29 +19,20 @@ query institution(
     }
   ) {
     id
-    tokyo_ward
+    municipality
     building
     institution
     capacity
     area
-    weekday_usage_fee
-    holiday_usage_fee
-    address
     is_available_strings
     is_available_woodwind
     is_available_brass
     is_available_percussion
-    is_equipped_music_stand
-    is_equipped_piano
-    website_url
-    layout_image_url
-    lottery_period
-    note
     updated_at
   }
-  institution_aggregate(
+  institutions_aggregate(
     where: {
-      tokyo_ward: { _in: $tokyoWard }
+      municipality: { _in: $municipality }
       is_available_strings: { _eq: $isAvailableStrings }
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }

@@ -1,4 +1,4 @@
-import { FeeDivision, ReservationDivision, ReservationStatus } from "./enums";
+import { FeeDivision, ReservationDivision, ReservationStatus } from "../enums";
 
 export const TOSHIMA_RESERVATION_STATUS: Readonly<Record<string, string>> = {
   [ReservationStatus.VACANT]: "空き",

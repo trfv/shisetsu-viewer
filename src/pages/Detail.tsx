@@ -1,14 +1,10 @@
-import { useQuery } from "@apollo/client";
 import { endOfMonth } from "date-fns/esm";
 import { ChangeEvent, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Detail_InstitutionDocument,
   Detail_InstitutionQuery,
-  Detail_InstitutionQueryVariables,
-  Detail_ReservationDocument,
-  Detail_ReservationQuery,
-  Detail_ReservationQueryVariables,
+  useDetail_InstitutionQuery,
+  useDetail_ReservationsQuery,
 } from "../api/graphql-client";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
@@ -25,12 +21,12 @@ import {
 } from "../components/Table";
 import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { YearMonthSelection } from "../components/YearMonthSelection";
-import { AvailabilityDivisionMap, EquipmentDivisionMap, TokyoWard } from "../constants/enums";
 import { CONTAINER_WIDTH, DETAIL_TABLE_HEIGHT, INNER_WIDTH, WIDTHS } from "../constants/styles";
-import { ReservationDivisionMap, ReservationStatusMap } from "../utils/enums";
+import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { isValidUUID } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
+import { ReservationDivisionMap, ReservationStatusMap } from "../utils/municipality";
 import { sortByReservationDivision, toYearMonthChips } from "../utils/reservation";
 import { styled } from "../utils/theme";
 
@@ -38,7 +34,7 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution: Detail_InstitutionQuery["institution_by_pk"] | undefined;
+  institution: Detail_InstitutionQuery["institutions_by_pk"] | undefined;
   loading: boolean;
 }) => {
   return (
@@ -64,7 +60,7 @@ const InstitutionTab = ({
           <Input
             label="利用料金（平日）"
             size="full"
-            value={formatUsageFee(institution?.tokyo_ward, institution?.weekday_usage_fee)}
+            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
             loading={loading}
             readOnly={true}
           />
@@ -73,7 +69,7 @@ const InstitutionTab = ({
           <Input
             label="利用料金（休日）"
             size="full"
-            value={formatUsageFee(institution?.tokyo_ward, institution?.holiday_usage_fee)}
+            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
             loading={loading}
             readOnly={true}
           />
@@ -178,12 +174,12 @@ const today = new Date();
 
 const ReservationTab = ({
   id,
-  tokyoWard,
+  municipality,
   minDate,
   maxDate,
 }: {
   id: string;
-  tokyoWard: TokyoWard | undefined;
+  municipality: string | undefined;
   minDate: string | undefined;
   maxDate: string | undefined;
 }) => {
@@ -195,10 +191,7 @@ const ReservationTab = ({
   const startDate = `${yearMonthChips[page].value}-01`;
   const endDate = endOfMonth(new Date(startDate));
 
-  const { loading, data, error } = useQuery<
-    Detail_ReservationQuery,
-    Detail_ReservationQueryVariables
-  >(Detail_ReservationDocument, {
+  const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
     context: {
       headers: {
@@ -211,7 +204,7 @@ const ReservationTab = ({
     throw new Error(error.message);
   }
 
-  const { reservation } = data || {};
+  const { reservations } = data || {};
 
   return (
     <>
@@ -221,7 +214,7 @@ const ReservationTab = ({
           <div className={classes.reservationNoData}>
             <Spinner />
           </div>
-        ) : !tokyoWard || !reservation?.length ? (
+        ) : !municipality || !reservations?.length ? (
           <div className={classes.reservationNoData} />
         ) : (
           <TableContainer className={classes.reservationTableContainer}>
@@ -231,14 +224,14 @@ const ReservationTab = ({
                   <TableCell className={classes.reservationTableCell} variant="head" size="small">
                     日付
                   </TableCell>
-                  {sortByReservationDivision(reservation[0]?.reservation).map(([division]) => (
+                  {sortByReservationDivision(reservations[0]?.reservation).map(([division]) => (
                     <TableCell
                       key={division}
                       className={classes.reservationTableCell}
                       variant="head"
                       size="small"
                     >
-                      {ReservationDivisionMap[tokyoWard]?.[division]}
+                      {ReservationDivisionMap[municipality]?.[division]}
                     </TableCell>
                   ))}
                   <TableCell className={classes.reservationTableCell} variant="head" size="small">
@@ -247,18 +240,18 @@ const ReservationTab = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {reservation.map((row, index) => (
+                {reservations.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell className={classes.reservationTableCell} size="small">
                       {formatDate(row.date)}
                     </TableCell>
                     {sortByReservationDivision(row.reservation).map(([, status], i) => (
                       <TableCell className={classes.reservationTableCell} key={i} size="small">
-                        {ReservationStatusMap[tokyoWard]?.[status]}
+                        {ReservationStatusMap[municipality]?.[status]}
                       </TableCell>
                     ))}
                     <TableCell className={classes.reservationTableCell} size="small">
-                      {formatDatetime(row.updated_at)}
+                      {formatDatetime(row.created_at)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -278,10 +271,7 @@ export default () => {
   const [tab, setTab] = useState<Tab>("institution");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
 
-  const { loading, data, error } = useQuery<
-    Detail_InstitutionQuery,
-    Detail_InstitutionQueryVariables
-  >(Detail_InstitutionDocument, {
+  const { loading, data, error } = useDetail_InstitutionQuery({
     variables: { id },
     context: {
       headers: {
@@ -298,7 +288,7 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { institution_by_pk, reservation_aggregate } = data || {};
+  const { institutions_by_pk, reservations_aggregate } = data || {};
 
   return (
     <StyledInstitutionDetail className={classes.pageBox}>
@@ -306,7 +296,9 @@ export default () => {
         {loading ? (
           <Skeleton width={WIDTHS.large} height={36} />
         ) : (
-          <h2>{`${institution_by_pk?.building ?? ""} ${institution_by_pk?.institution ?? ""}`}</h2>
+          <h2>{`${institutions_by_pk?.building ?? ""} ${
+            institutions_by_pk?.institution ?? ""
+          }`}</h2>
         )}
       </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
@@ -314,18 +306,18 @@ export default () => {
         <Tab
           value="reservation"
           label="予約状況"
-          disabled={!reservation_aggregate?.aggregate?.count}
+          disabled={!reservations_aggregate?.aggregate?.count}
         />
       </TabGroup>
       <TabPanel className={classes.tabPanel} tabValue="institution" currentValue={tab}>
-        <InstitutionTab institution={institution_by_pk} loading={loading} />
+        <InstitutionTab institution={institutions_by_pk} loading={loading} />
       </TabPanel>
       <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
         <ReservationTab
           id={id}
-          tokyoWard={institution_by_pk?.tokyo_ward}
-          minDate={reservation_aggregate?.aggregate?.min?.date}
-          maxDate={reservation_aggregate?.aggregate?.max?.date}
+          municipality={institutions_by_pk?.municipality}
+          minDate={reservations_aggregate?.aggregate?.min?.date}
+          maxDate={reservations_aggregate?.aggregate?.max?.date}
         />
       </TabPanel>
     </StyledInstitutionDetail>

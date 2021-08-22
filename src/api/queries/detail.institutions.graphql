@@ -1,13 +1,12 @@
-query detail_institution(
-  $id: uuid!
-) {
-  institution_by_pk(id: $id) {
-    tokyo_ward
+query detail_institution($id: uuid!) {
+  institutions_by_pk(id: $id) {
+    prefecture
+    municipality
     building
     institution
     capacity
     area
-    fee_division
+    fee_divisions
     weekday_usage_fee
     holiday_usage_fee
     address
@@ -22,7 +21,7 @@ query detail_institution(
     lottery_period
     note
   }
-  reservation_aggregate(where: {institution_id: {_eq: $id}}) {
+  reservations_aggregate(where: { institution_id: { _eq: $id } }) {
     aggregate {
       count
       max {
