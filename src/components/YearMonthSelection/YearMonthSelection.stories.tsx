@@ -8,7 +8,7 @@ export default {
   component: YearMonthSelection,
 } as Meta;
 
-export const Basic: Story<ComponentProps<typeof YearMonthSelection>> = (args) => {
+export const Basic: Story = (args: ComponentProps<typeof YearMonthSelection>) => {
   const [page, setPage] = useState(1);
   return <YearMonthSelection {...args} page={page} handleChange={setPage} />;
 };
