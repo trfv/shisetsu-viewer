@@ -7,7 +7,7 @@ export default {
   component: DateRangePicker,
 } as Meta;
 
-export const Basic: Story<ComponentProps<typeof DateRangePicker>> = (args) => (
+export const Basic: Story = (args: ComponentProps<typeof DateRangePicker>) => (
   <DateRangePicker {...args} />
 );
 
