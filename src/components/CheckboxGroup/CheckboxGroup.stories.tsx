@@ -9,7 +9,7 @@ export default {
   component: CheckboxGroup,
 } as Meta;
 
-export const Basic: Story = ({ label }: ComponentProps<typeof CheckboxGroup>) => {
+export const Basic: Story<ComponentProps<typeof CheckboxGroup>> = ({ label }) => {
   const [values, setValues] = useState<string[]>([]);
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) =>

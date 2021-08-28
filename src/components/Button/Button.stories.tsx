@@ -10,11 +10,11 @@ export default {
   component: Button,
 } as Meta;
 
-export const Small: Story = (args: ComponentProps<typeof SmallButton>) => <SmallButton {...args} />;
-export const Medium: Story = (args: ComponentProps<typeof MediumButton>) => (
+export const Small: Story<ComponentProps<typeof SmallButton>> = (args) => <SmallButton {...args} />;
+export const Medium: Story<ComponentProps<typeof MediumButton>> = (args) => (
   <MediumButton {...args} />
 );
-export const Large: Story = (args: ComponentProps<typeof LargeButton>) => <LargeButton {...args} />;
+export const Large: Story<ComponentProps<typeof LargeButton>> = (args) => <LargeButton {...args} />;
 
 Small.args = {
   children: "small",

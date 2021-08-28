@@ -1,4 +1,4 @@
-export { CustomToolbar, DataGrid } from "./DataGrid";
+export { CustomToolbar, DataGrid, ExportToolbar } from "./DataGrid";
 export type {
   GridCellParams,
   GridColumns,

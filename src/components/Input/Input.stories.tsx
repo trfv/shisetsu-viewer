@@ -7,13 +7,13 @@ export default {
   component: Input,
 } as Meta;
 
-export const Small: Story = (args: ComponentProps<typeof Input>) => (
+export const Small: Story<ComponentProps<typeof Input>> = (args) => (
   <Input {...args} size="small" />
 );
-export const Medium: Story = (args: ComponentProps<typeof Input>) => (
+export const Medium: Story<ComponentProps<typeof Input>> = (args) => (
   <Input {...args} size="medium" />
 );
-export const Large: Story = (args: ComponentProps<typeof Input>) => (
+export const Large: Story<ComponentProps<typeof Input>> = (args) => (
   <Input {...args} size="large" />
 );
 
