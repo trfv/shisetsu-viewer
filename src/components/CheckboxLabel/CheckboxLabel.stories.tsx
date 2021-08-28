@@ -8,7 +8,7 @@ export default {
   component: CheckboxLabel,
 } as Meta;
 
-export const Basic: Story = ({ label }: ComponentProps<typeof CheckboxLabel>) => {
+export const Basic: Story<ComponentProps<typeof CheckboxLabel>> = ({ label }) => {
   const [checked, setChecked] = useState(false);
   const onChange = (event: ChangeEvent<HTMLInputElement>) => setChecked(event.target.checked);
   return (

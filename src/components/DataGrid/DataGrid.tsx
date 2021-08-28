@@ -2,6 +2,7 @@ import {
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
+  GridToolbarExport,
 } from "@material-ui/data-grid";
 export { DataGrid } from "@material-ui/data-grid";
 export type {
@@ -20,10 +21,10 @@ export const CustomToolbar = () => {
   );
 };
 
-// export const ExportToolbar = () => {
-//   return (
-//     <GridToolbarContainer>
-//       <GridToolbarExport innerRef={null} buttonRef={null} />
-//     </GridToolbarContainer>
-//   );
-// };
+export const ExportToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport innerRef={null} buttonRef={null} />
+    </GridToolbarContainer>
+  );
+};
