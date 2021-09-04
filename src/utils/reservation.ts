@@ -1,20 +1,15 @@
-import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns";
+import { isAfter, isSameDay } from "date-fns";
+import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns/esm";
 import { ReservationsQueryVariables } from "../api/graphql-client";
+import { ROWS_PER_PAGE } from "../constants/datagrid";
 import { ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
-  END_DATE,
-  MUNICIPALITY,
-  PAGE,
-  ROWS_PER_PAGE,
-  SELECT_OPTION_ALL,
-  START_DATE,
-} from "../constants/search";
-import {
+  getMunicipalityFromUrlParam,
   ReservationDivisionMap,
   ReservationStatusMap,
+  SELECT_OPTION_ALL,
   SupportedMunicipality,
 } from "./municipality";
-import { getDateFromUrlParam, getMunicipalityFromUrlParam, getPageFromUrlParam } from "./search";
 
 const RESERVATION_DIVISION_ORDER = {
   [ReservationDivision.INVALID]: 0,
@@ -94,8 +89,6 @@ export const formatReservationMap = (
     .join("\n");
 };
 
-export const RESERVATION_SEARCH_FILTER = "f";
-
 export const IS_ONLY_HOLIDAY = "h";
 export const IS_ONLY_MORNING_VACANT = "m";
 export const IS_ONLY_AFTERNOON_VACANT = "a";
@@ -111,36 +104,46 @@ const ReservationSearchFilters = [
 export type ReservationSearchFilter = typeof ReservationSearchFilters[number];
 
 export const getResevationSearchFilterFromUrlParam = (
-  filters: string[]
+  filters: string[] | null | undefined
 ): ReservationSearchFilter[] => {
-  return filters.filter((filter) =>
+  return (filters ?? []).filter((filter) =>
     ReservationSearchFilters.some((f) => f === filter)
   ) as ReservationSearchFilter[];
 };
 
 export type ReservationSearchParams = {
   page: number;
-  municipality: SupportedMunicipality | typeof SELECT_OPTION_ALL;
-  startDate: Date | null;
-  endDate: Date | null;
-  filter: ReservationSearchFilter[];
+  municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
+  startDate: Date;
+  endDate: Date;
+  filter: ReturnType<typeof getResevationSearchFilterFromUrlParam>;
 };
 
 export const toReservationSearchParams = (
-  urlSearchParams: URLSearchParams,
+  p: number | null | undefined,
+  m: string | null | undefined,
+  df: Date | null | undefined,
+  dt: Date | null | undefined,
+  f: string[] | null | undefined,
   minDate: Date,
   maxDate: Date
 ): ReservationSearchParams => {
   return {
-    page: getPageFromUrlParam(urlSearchParams.get(PAGE)),
-    municipality:
-      getMunicipalityFromUrlParam(urlSearchParams.get(MUNICIPALITY)) ?? SELECT_OPTION_ALL,
-    startDate: getDateFromUrlParam(urlSearchParams.get(START_DATE), minDate, maxDate) ?? minDate,
+    page: p ?? 0,
+    municipality: getMunicipalityFromUrlParam(m),
+    startDate:
+      df &&
+      (isSameDay(df, minDate) || isAfter(df, minDate)) &&
+      (isSameDay(df, maxDate) || isBefore(df, maxDate))
+        ? df
+        : minDate,
     endDate:
-      getDateFromUrlParam(urlSearchParams.get(END_DATE), minDate, maxDate) ?? addMonths(minDate, 1),
-    filter: getResevationSearchFilterFromUrlParam(
-      urlSearchParams.getAll(RESERVATION_SEARCH_FILTER)
-    ),
+      dt &&
+      (isSameDay(dt, minDate) || isAfter(dt, minDate)) &&
+      (isSameDay(dt, maxDate) || isBefore(dt, maxDate))
+        ? dt
+        : addMonths(minDate, 1),
+    filter: getResevationSearchFilterFromUrlParam(f),
   };
 };
 

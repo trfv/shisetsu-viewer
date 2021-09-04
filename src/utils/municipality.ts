@@ -28,7 +28,6 @@ import {
   TOSHIMA_RESERVATION_DIVISION,
   TOSHIMA_RESERVATION_STATUS,
 } from "../constants/municipality/toshima";
-import { SELECT_OPTION_ALL } from "../constants/search";
 
 export const SupportedMunicipalities = [
   "MUNICIPALITY_KOUTOU",
@@ -49,6 +48,8 @@ export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_KOUTOU: "江東区",
   MUNICIPALITY_TOSHIMA: "豊島区",
 };
+
+export const SELECT_OPTION_ALL = "all";
 
 export const MunicipalityOptions: { value: string; label: string }[] = [
   { value: SELECT_OPTION_ALL, label: "すべて" },
@@ -84,4 +85,25 @@ export const ReservationStatusMap: Readonly<Record<string, Record<string, string
   MUNICIPALITY_TOSHIMA: TOSHIMA_RESERVATION_STATUS,
   MUNICIPALITY_EDOGAWA: EDOGAWA_RESERVATION_STATUS,
   MUNICIPALITY_ARAKAWA: ARAKAWA_RESERVATION_STATUS,
+};
+
+const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
+  koutou: "MUNICIPALITY_KOUTOU",
+  bunkyo: "MUNICIPALITY_BUNKYO",
+  kita: "MUNICIPALITY_KITA",
+  toshima: "MUNICIPALITY_TOSHIMA",
+  edogawa: "MUNICIPALITY_EDOGAWA",
+  arakawa: "MUNICIPALITY_ARAKAWA",
+};
+
+export const getMunicipalityFromUrlParam = (
+  param: string | null | undefined
+): SupportedMunicipality | typeof SELECT_OPTION_ALL => {
+  return param ? MUNICIPALITY_URL_PARAMS[param] ?? SELECT_OPTION_ALL : SELECT_OPTION_ALL;
+};
+
+export const convertMunicipalityToUrlParam = (
+  municipality: string | null | undefined
+): string | null => {
+  return municipality?.replace("MUNICIPALITY_", "").toLowerCase() ?? null;
 };

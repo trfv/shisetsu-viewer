@@ -1,4 +1,5 @@
 import { jaJP as MuiJaJp } from "@mui/x-data-grid";
+export const ROWS_PER_PAGE = 100;
 
 // https://github.com/mui-org/material-ui-x/blob/master/packages/grid/_modules_/grid/locales/jaJP.ts
 // const jaJPGrid: Partial<GridLocaleText> = {

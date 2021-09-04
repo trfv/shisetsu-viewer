@@ -1,12 +1,10 @@
 import { FC } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { NEXT, ROUTES } from "../constants/routes";
+import { Redirect } from "react-router-dom";
+import { ROUTES } from "../constants/routes";
 import { useAuth0 } from "../utils/auth0";
 import { Loading } from "./Loading";
 
 export const Waiting: FC = () => {
   const { isLoading } = useAuth0();
-  const history = useHistory();
-  const next = new URLSearchParams(history.location.search).get(NEXT) ?? ROUTES.top;
-  return isLoading ? <Loading /> : <Redirect to={next} />;
+  return isLoading ? <Loading /> : <Redirect to={ROUTES.top} />;
 };

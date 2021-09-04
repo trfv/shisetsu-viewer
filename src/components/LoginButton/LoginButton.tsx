@@ -15,14 +15,14 @@ export const LoginButton: FC = () => {
         "ログアウト",
         () =>
           logout({
-            returnTo: `${window.location.origin}${ROUTES.top}`,
+            returnTo: `${location.origin}${ROUTES.top}`,
           }),
       ]
     : [
         "ログイン",
         () =>
           login({
-            redirectUri: `${window.location.origin}${ROUTES.waiting}`,
+            redirectUri: `${location.origin}${ROUTES.waiting}`,
           }),
       ];
 
