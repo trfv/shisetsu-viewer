@@ -1,16 +1,16 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { FC } from "react";
 import { ROUTES } from "../../constants/routes";
+import { useAuth0 } from "../../utils/auth0";
 import { SmallButton } from "../Button";
 
 export const LoginButton: FC = () => {
-  const { isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isLoading, token, login, logout } = useAuth0();
 
   if (isLoading) {
     return null;
   }
 
-  const [text, onClick] = isAuthenticated
+  const [text, onClick] = token
     ? [
         "ログアウト",
         () =>
@@ -21,7 +21,7 @@ export const LoginButton: FC = () => {
     : [
         "ログイン",
         () =>
-          loginWithRedirect({
+          login({
             redirectUri: `${window.location.origin}${ROUTES.waiting}`,
           }),
       ];
