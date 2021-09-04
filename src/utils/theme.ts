@@ -1,12 +1,11 @@
-import { grey, indigo, red } from "@material-ui/core/colors";
+import { grey, indigo, red } from "@mui/material/colors";
 import {
   createTheme,
   styled as muiStyled,
   ThemeOptions,
   ThemeProvider as MuiThemeProvider,
-} from "@material-ui/core/styles";
+} from "@mui/material/styles";
 import { jaJP } from "../constants/datagrid";
-import { BREAKPOINTS } from "../constants/styles";
 
 export const styled = muiStyled;
 export const ThemeProvider = MuiThemeProvider;
@@ -17,12 +16,6 @@ const COLORS = {
 };
 
 const COMMON_THEME_OPTION: ThemeOptions = {
-  shape: {
-    borderRadius: 4,
-  },
-  breakpoints: {
-    values: BREAKPOINTS,
-  },
   typography: {
     fontFamily: 'Roboto, "Noto Sans JP", "Hiragino Sans", Meiryo, sans-serif',
   },

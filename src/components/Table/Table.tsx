@@ -1,9 +1,9 @@
-import MuiTable from "@material-ui/core/Table";
-import MuiTableBody from "@material-ui/core/TableBody";
-import MuiTableCell from "@material-ui/core/TableCell";
-import MuiTableContainer from "@material-ui/core/TableContainer";
-import MuiTableHead from "@material-ui/core/TableHead";
-import MuiTableRow from "@material-ui/core/TableRow";
+import MuiTable from "@mui/material/Table";
+import MuiTableBody from "@mui/material/TableBody";
+import MuiTableCell from "@mui/material/TableCell";
+import MuiTableContainer from "@mui/material/TableContainer";
+import MuiTableHead from "@mui/material/TableHead";
+import MuiTableRow from "@mui/material/TableRow";
 
 export const Table = MuiTable;
 export const TableBody = MuiTableBody;

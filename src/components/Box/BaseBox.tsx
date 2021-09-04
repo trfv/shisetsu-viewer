@@ -1,4 +1,4 @@
-import MuiBox from "@material-ui/core/Box";
+import MuiBox from "@mui/material/Box";
 import { AutoBox } from "./AutoBox";
 import { FullBox } from "./FullBox";
 import { LargeBox } from "./LargeBox";

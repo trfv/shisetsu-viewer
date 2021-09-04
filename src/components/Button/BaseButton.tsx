@@ -1,4 +1,4 @@
-import MuiButton, { ButtonProps } from "@material-ui/core/Button";
+import MuiButton, { ButtonProps } from "@mui/material/Button";
 import { AutoButton } from "./AutoButton";
 import { LargeButton } from "./LargeButton";
 import { MediumButton } from "./MediumButton";

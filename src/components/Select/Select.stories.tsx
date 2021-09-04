@@ -7,7 +7,7 @@ export default {
   component: Select,
 } as Meta;
 
-export const Basic: Story = (args: ComponentProps<typeof Select>) => (
+export const Basic: Story<ComponentProps<typeof Select>> = (args) => (
   <Select
     {...args}
     selectOptions={[

@@ -1,3 +1,3 @@
-import MuiToggleButton from "@material-ui/core/ToggleButton";
+import MuiToggleButton from "@mui/material/ToggleButton";
 
 export const ToggleButton = MuiToggleButton;

@@ -1,8 +1,8 @@
-import Chip from "@material-ui/core/Chip";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { usePagination } from "@material-ui/lab";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { usePagination } from "@mui/lab";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
 import { FC, useCallback } from "react";
 import { AutoBox } from "../Box";
 
