@@ -1,21 +1,11 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Footer } from "./components/Footer";
+import { BrowserRouter } from "react-router-dom";
 import { Header } from "./components/Header";
-import { AuthGuardRoute } from "./components/utils/AuthGuardRoute";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
-import { ROUTES } from "./constants/routes";
-import { Loading } from "./pages/Loading";
-import { Top } from "./pages/Top";
-import { Waiting } from "./pages/Waiting";
+import { Maintenance } from "./pages/Maintenance";
 import { useAuth0 } from "./utils/auth0";
 import { apolloClient, ApolloProvider } from "./utils/client";
 import { CssBaseline, lightTheme as theme, ThemeProvider } from "./utils/theme";
-
-const Institution = lazy(() => import("./pages/Institution"));
-const Detail = lazy(() => import("./pages/Detail"));
-const Reservation = lazy(() => import("./pages/Reservation"));
 
 const App = () => {
   // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -31,16 +21,7 @@ const App = () => {
           <BrowserRouter>
             <ScrollToTop />
             <Header />
-            <Suspense fallback={<Loading />}>
-              <Switch>
-                <Route path={ROUTES.waiting} component={Waiting} />
-                <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
-                <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
-                <AuthGuardRoute path={ROUTES.detail} component={Detail} exact />
-                <Route path={ROUTES.top} component={Top} exact />
-              </Switch>
-              <Footer />
-            </Suspense>
+            <Maintenance />
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>
