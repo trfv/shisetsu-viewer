@@ -5,5 +5,3 @@ export const ROUTES = {
   institution: "/institution",
   detail: "/institution/:id",
 };
-
-export const NEXT = "next";

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
@@ -11,14 +11,14 @@ import {
   GridValueGetterParams,
 } from "../components/DataGrid";
 import { Select, SelectChangeEvent } from "../components/Select";
+import { ROWS_PER_PAGE } from "../constants/datagrid";
 import { ROUTES } from "../constants/routes";
-import { MUNICIPALITY, PAGE, ROWS_PER_PAGE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
+import { NumberParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime } from "../utils/format";
 import {
   AvailableInstrument,
-  AVAILABLE_INSTRUMENTS,
   BRASS,
   formatUsageFee,
   PERCUSSION,
@@ -28,11 +28,10 @@ import {
   WOODWIND,
 } from "../utils/institution";
 import {
+  convertMunicipalityToUrlParam,
   MunicipalityOptions,
-  SupportedMunicipality,
   SupportedMunicipalityMap,
 } from "../utils/municipality";
-import { convertMunicipalityToUrlParam, setUrlSearchParams } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const COLUMNS: GridColumns = [
@@ -204,39 +203,21 @@ const COLUMNS: GridColumns = [
 export default () => {
   const history = useHistory();
 
-  const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
+  const [values, setQueryParams] = useQueryParams(history, {
+    p: NumberParam,
+    m: StringParam,
+    a: StringsParam,
+  });
 
-  const [institutionSearchParams, setInstitutionSearchParams] = useState(
-    toInstitutionSearchParams(urlSearchParams.current)
-  );
+  const institutionSearchParams = toInstitutionSearchParams(values.p, values.m, values.a);
   const { loading, data, error } = useInstitutionsQuery({
     variables: toInstitutionQueryVariables(institutionSearchParams),
   });
 
   const { page, municipality, availableInstruments } = institutionSearchParams;
 
-  const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
-    history.replace({
-      pathname: history.location.pathname,
-      search: nextUrlSearchParams.toString(),
-    });
-    urlSearchParams.current = nextUrlSearchParams;
-  }, []);
-
-  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<unknown>): void => {
-    const value = event.target.value as SupportedMunicipality;
-    setInstitutionSearchParams((prevState) => ({
-      ...prevState,
-      page: 0,
-      municipality: value,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        { [MUNICIPALITY]: convertMunicipalityToUrlParam(value) ?? undefined },
-        [PAGE]
-      )
-    );
+  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
+    setQueryParams({ p: 0, m: convertMunicipalityToUrlParam(event.target.value) });
   }, []);
 
   const handleAvailableInstrumentsChange = useCallback(
@@ -245,26 +226,13 @@ export default () => {
       const next = checked
         ? availableInstruments.concat(value as AvailableInstrument)
         : availableInstruments.filter((v) => v !== value);
-      setInstitutionSearchParams((prevState) => ({
-        ...prevState,
-        page: 0,
-        availableInstruments: next,
-      }));
-      updateUrlSearchParams(
-        setUrlSearchParams(urlSearchParams.current, { [AVAILABLE_INSTRUMENTS]: next }, [PAGE])
-      );
+      setQueryParams({ p: 0, a: next });
     },
     [availableInstruments]
   );
 
   const handleChangePage = useCallback((page: number): void => {
-    setInstitutionSearchParams((prevState) => ({
-      ...prevState,
-      page,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(page) }, [PAGE])
-    );
+    setQueryParams({ p: page });
   }, []);
 
   return (

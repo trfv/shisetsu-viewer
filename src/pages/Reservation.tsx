@@ -1,5 +1,6 @@
-import { addMonths, endOfMonth } from "date-fns";
-import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { max, min } from "date-fns";
+import { addMonths, endOfMonth } from "date-fns/esm";
+import { ChangeEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
@@ -12,13 +13,20 @@ import {
 } from "../components/DataGrid";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select, SelectChangeEvent } from "../components/Select";
+import { ROWS_PER_PAGE } from "../constants/datagrid";
 import { ROUTES } from "../constants/routes";
-import { END_DATE, MUNICIPALITY, PAGE, ROWS_PER_PAGE, START_DATE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
+import {
+  DateParam,
+  NumberParam,
+  StringParam,
+  StringsParam,
+  useQueryParams,
+} from "../hooks/useQueryParams";
 import { formatDate, formatDatetime } from "../utils/format";
 import {
+  convertMunicipalityToUrlParam,
   MunicipalityOptions,
-  SupportedMunicipality,
   SupportedMunicipalityMap,
 } from "../utils/municipality";
 import {
@@ -28,11 +36,9 @@ import {
   IS_ONLY_HOLIDAY,
   IS_ONLY_MORNING_VACANT,
   ReservationSearchFilter,
-  RESERVATION_SEARCH_FILTER,
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
-import { convertMunicipalityToUrlParam, setUrlSearchParams } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const minDate = new Date();
@@ -91,9 +97,22 @@ const COLUMNS: GridColumns = [
 export default () => {
   const history = useHistory();
 
-  const urlSearchParams = useRef<URLSearchParams>(new URLSearchParams(history.location.search));
-  const [resevationSearchParams, setReservationSearchParams] = useState(
-    toReservationSearchParams(urlSearchParams.current, minDate, maxDate)
+  const [values, setQueryParams] = useQueryParams(history, {
+    p: NumberParam,
+    m: StringParam,
+    df: DateParam,
+    dt: DateParam,
+    f: StringsParam,
+  });
+
+  const resevationSearchParams = toReservationSearchParams(
+    values.p,
+    values.m,
+    values.df,
+    values.dt,
+    values.f,
+    minDate,
+    maxDate
   );
   const { loading, data, error } = useReservationsQuery({
     variables: toReservationQueryVariables(resevationSearchParams),
@@ -101,55 +120,23 @@ export default () => {
 
   const { page, municipality, startDate, endDate, filter } = resevationSearchParams;
 
-  const updateUrlSearchParams = useCallback((nextUrlSearchParams: URLSearchParams) => {
-    history.replace({
-      pathname: history.location.pathname,
-      search: nextUrlSearchParams.toString(),
-    });
-    urlSearchParams.current = nextUrlSearchParams;
+  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
+    setQueryParams({ p: 0, m: convertMunicipalityToUrlParam(event.target.value) });
   }, []);
 
-  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<unknown>): void => {
-    const value = event.target.value as SupportedMunicipality;
-    setReservationSearchParams((prevState) => ({
-      ...prevState,
-      page: 0,
-      municipality: value,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(
-        urlSearchParams.current,
-        { [MUNICIPALITY]: convertMunicipalityToUrlParam(value) ?? undefined },
-        [PAGE]
-      )
-    );
-  }, []);
+  const handleStartDateChange = useCallback(
+    (date: Date | null): void => {
+      setQueryParams({ p: 0, df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
+    },
+    [maxDate, endDate]
+  );
 
-  const handleStartDateChange = useCallback((date: Date | null): void => {
-    setReservationSearchParams((prevState) => ({
-      ...prevState,
-      page: 0,
-      startDate: date,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, { [START_DATE]: date?.toLocaleDateString() }, [
-        PAGE,
-      ])
-    );
-  }, []);
-
-  const handleEndDateChange = useCallback((date: Date | null): void => {
-    setReservationSearchParams((prevState) => ({
-      ...prevState,
-      page: 0,
-      endDate: date,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, { [END_DATE]: date?.toLocaleDateString() }, [
-        PAGE,
-      ])
-    );
-  }, []);
+  const handleEndDateChange = useCallback(
+    (date: Date | null): void => {
+      setQueryParams({ p: 0, df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
+    },
+    [minDate, startDate]
+  );
 
   const handleFilterChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
@@ -157,29 +144,13 @@ export default () => {
       const next = checked
         ? filter.concat(value as ReservationSearchFilter)
         : filter.filter((v) => v !== value);
-      setReservationSearchParams((prevState) => ({
-        ...prevState,
-        page: 0,
-        filter: next,
-      }));
-      updateUrlSearchParams(
-        setUrlSearchParams(urlSearchParams.current, { [RESERVATION_SEARCH_FILTER]: next }, [
-          PAGE,
-          RESERVATION_SEARCH_FILTER,
-        ])
-      );
+      setQueryParams({ p: 0, f: next });
     },
     [filter]
   );
 
   const handleChangePage = useCallback((page: number): void => {
-    setReservationSearchParams((prevState) => ({
-      ...prevState,
-      page,
-    }));
-    updateUrlSearchParams(
-      setUrlSearchParams(urlSearchParams.current, { [PAGE]: String(page) }, [PAGE])
-    );
+    setQueryParams({ p: page });
   }, []);
 
   return (

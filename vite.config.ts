@@ -22,7 +22,6 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
           "@mui/x-data-grid": ["@mui/x-data-grid"],
           "@mui/icons-material": ["@mui/icons-material"],
           "@mui/lab": ["@mui/lab"],
-          "@mui/styles": ["@mui/styles"],
           "markdown-to-jsx": ["markdown-to-jsx"]
         },
         chunkFileNames: mode === "production" ? "assets/[hash].js" : "assets/[name]-[hash].js",
