@@ -11,7 +11,6 @@ import {
   GridValueGetterParams,
 } from "../components/DataGrid";
 import { Select, SelectChangeEvent } from "../components/Select";
-import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { ROUTES } from "../constants/routes";
 import { MUNICIPALITY, PAGE, ROWS_PER_PAGE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
@@ -212,11 +211,6 @@ export default () => {
   );
   const { loading, data, error } = useInstitutionsQuery({
     variables: toInstitutionQueryVariables(institutionSearchParams),
-    context: {
-      headers: {
-        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-      },
-    },
   });
 
   const { page, municipality, availableInstruments } = institutionSearchParams;

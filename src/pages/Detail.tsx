@@ -19,7 +19,6 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
-import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { YearMonthSelection } from "../components/YearMonthSelection";
 import { CONTAINER_WIDTH, DETAIL_TABLE_HEIGHT, INNER_WIDTH, WIDTHS } from "../constants/styles";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
@@ -193,11 +192,6 @@ const ReservationTab = ({
 
   const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
-    context: {
-      headers: {
-        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-      },
-    },
   });
 
   if (error) {
@@ -273,11 +267,6 @@ export default () => {
 
   const { loading, data, error } = useDetail_InstitutionQuery({
     variables: { id },
-    context: {
-      headers: {
-        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-      },
-    },
   });
 
   if (!isValidUUID(id)) {

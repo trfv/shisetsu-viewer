@@ -12,7 +12,6 @@ import {
 } from "../components/DataGrid";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select, SelectChangeEvent } from "../components/Select";
-import { TOKEN } from "../components/utils/AuthGuardRoute";
 import { ROUTES } from "../constants/routes";
 import { END_DATE, MUNICIPALITY, PAGE, ROWS_PER_PAGE, START_DATE } from "../constants/search";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
@@ -98,11 +97,6 @@ export default () => {
   );
   const { loading, data, error } = useReservationsQuery({
     variables: toReservationQueryVariables(resevationSearchParams),
-    context: {
-      headers: {
-        Authorization: TOKEN ? `Bearer ${TOKEN}` : "",
-      },
-    },
   });
 
   const { page, municipality, startDate, endDate, filter } = resevationSearchParams;

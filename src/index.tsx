@@ -1,12 +1,23 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
+import { ROUTES } from "./constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { Auth0Provider } from "./utils/auth0";
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <Auth0Provider
+      domain={AUTH0_DOMAIN}
+      client_id={AUTH0_CLIENT_ID}
+      redirect_uri={`${window.location.origin}${ROUTES.waiting}`}
+      useRefreshTokens={true}
+      legacySameSiteCookie={false}
+    >
+      <App />
+    </Auth0Provider>
   </StrictMode>,
   document.getElementById("root")
 );

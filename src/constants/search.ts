@@ -1,4 +1,3 @@
-export const NEXT = "next";
 export const PAGE = "p";
 export const MUNICIPALITY = "m";
 export const START_DATE = "df";

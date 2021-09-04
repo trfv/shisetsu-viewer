@@ -1,12 +1,12 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { FC } from "react";
 import { CONTAINER_WIDTH } from "../../constants/styles";
+import { useAuth0 } from "../../utils/auth0";
 import { styled } from "../../utils/theme";
 
 export const Footer: FC = () => {
-  const { isAuthenticated } = useAuth0();
+  const { token } = useAuth0();
 
-  if (!isAuthenticated) {
+  if (!token) {
     return null;
   }
 

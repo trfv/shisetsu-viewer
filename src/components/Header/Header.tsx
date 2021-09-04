@@ -1,8 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, INNER_WIDTH, WIDTHS } from "../../constants/styles";
+import { useAuth0 } from "../../utils/auth0";
 import { styled } from "../../utils/theme";
 import { BaseBox } from "../Box";
 import { LoginButton } from "../LoginButton";
@@ -11,16 +11,16 @@ import { ToggleButtonGroup } from "../ToggleButtonGroup";
 
 export const Header: FC = () => {
   const location = useLocation();
-  const { isAuthenticated } = useAuth0();
+  const { token } = useAuth0();
 
   return (
     <StyledHeader className={classes.appBar}>
       <BaseBox className={classes.toolbar}>
         <BaseBox className={classes.toolbarLeft}>
           <BaseBox className={classes.typography} component="h1">
-            Shisetsu Viewer
+            <Link to={ROUTES.top}>Shisetsu Viewer</Link>
           </BaseBox>
-          {isAuthenticated && (
+          {token && (
             <ToggleButtonGroup className={classes.toggleButtonGroup}>
               <ToggleButton
                 value="reservation"
@@ -29,7 +29,7 @@ export const Header: FC = () => {
                 selected={location.pathname === ROUTES.reservation}
                 component={Link}
                 to={ROUTES.reservation}
-                disabled={!isAuthenticated}
+                disabled={!token}
               >
                 予約検索
               </ToggleButton>
@@ -40,7 +40,7 @@ export const Header: FC = () => {
                 selected={location.pathname === ROUTES.institution}
                 component={Link}
                 to={ROUTES.institution}
-                disabled={!isAuthenticated}
+                disabled={!token}
               >
                 施設検索
               </ToggleButton>
@@ -85,6 +85,10 @@ const StyledHeader = styled("header")(({ theme }) => ({
     margin: 0,
     fontSize: "20px",
     lineHeight: "40px",
+    ["> a"]: {
+      color: theme.palette.common.white,
+      textDecoration: "none",
+    },
   },
   [`.${classes.toggleButtonGroup}`]: {
     marginLeft: 24,
