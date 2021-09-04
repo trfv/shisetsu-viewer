@@ -10,11 +10,11 @@ export default {
   component: Label,
 } as Meta;
 
-export const Small: Story = (args: ComponentProps<typeof SmallLabel>) => <SmallLabel {...args} />;
-export const Medium: Story = (args: ComponentProps<typeof MediumLabel>) => (
+export const Small: Story<ComponentProps<typeof SmallLabel>> = (args) => <SmallLabel {...args} />;
+export const Medium: Story<ComponentProps<typeof MediumLabel>> = (args) => (
   <MediumLabel {...args} />
 );
-export const Large: Story = (args: ComponentProps<typeof LargeLabel>) => <LargeLabel {...args} />;
+export const Large: Story<ComponentProps<typeof LargeLabel>> = (args) => <LargeLabel {...args} />;
 
 Small.args = {
   label: "small",
