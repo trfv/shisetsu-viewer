@@ -5,7 +5,6 @@ module.exports = {
     builder: "storybook-builder-vite",
   },
   async viteFinal(config) {
-    console.log(config.esbuild);
     return {
       ...config,
       esbuild: {
