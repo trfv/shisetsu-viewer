@@ -1,3 +1,3 @@
-import MuiSkeleton from "@material-ui/core/Skeleton";
+import MuiSkeleton from "@mui/material/Skeleton";
 
 export const Skeleton = MuiSkeleton;

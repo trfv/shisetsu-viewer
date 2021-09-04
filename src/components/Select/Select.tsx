@@ -1,5 +1,5 @@
-import MenuItem from "@material-ui/core/MenuItem";
-import MuiSelect, { SelectChangeEvent as MuiSelectChangeEvent } from "@material-ui/core/Select";
+import MenuItem from "@mui/material/MenuItem";
+import MuiSelect, { SelectChangeEvent as MuiSelectChangeEvent } from "@mui/material/Select";
 import { FC } from "react";
 import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";

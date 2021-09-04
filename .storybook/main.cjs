@@ -1,13 +1,16 @@
 module.exports = {
-  stories: [
-    "../src/components/**/*.stories.tsx"
-  ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-  ],
-  babel: (options) => ({
-    ...options,
-    plugins: [...options.plugins, ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]],
-  }),
-}
+  stories: ["../src/components/**/*.stories.tsx"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  core: {
+    builder: "storybook-builder-vite",
+  },
+  async viteFinal(config) {
+    console.log(config.esbuild);
+    return {
+      ...config,
+      esbuild: {
+        jsxInject: `import React from "react"`,
+      },
+    };
+  },
+};

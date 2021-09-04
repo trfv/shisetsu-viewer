@@ -1,4 +1,4 @@
-import MuiTabs from "@material-ui/core/Tabs";
+import MuiTabs from "@mui/material/Tabs";
 import { ComponentProps, ReactNode } from "react";
 import { BaseBox } from "../Box";
 
