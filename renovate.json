@@ -18,11 +18,13 @@
    "minor": {
       "automerge": true
    },
+   "separateMultipleMajor": true,
    "packageRules": [
       {
-         "depTypeList": [
+         "matchDepTypes": [
             "devDependencies"
          ],
+         "groupName": "devDependencies",
          "automerge": true
       }
    ]
