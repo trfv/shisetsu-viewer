@@ -2,9 +2,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { usePagination } from "@mui/lab";
 import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
 import { FC, useCallback } from "react";
 import { AutoBox } from "../Box";
+import { IconButton } from "../IconButton";
 
 type ButtonProps = { value: string; label: string };
 

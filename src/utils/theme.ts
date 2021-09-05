@@ -1,4 +1,5 @@
-export { CssBaseline } from "@mui/material";
+export { default as CssBaseline } from "@mui/material/CssBaseline";
+export { default as useMediaQuery } from "@mui/material/useMediaQuery";
 import { grey, indigo, red } from "@mui/material/colors";
 import {
   createTheme,
@@ -6,7 +7,6 @@ import {
   ThemeOptions,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
-import { jaJP } from "../constants/datagrid";
 
 export const styled = muiStyled;
 export const ThemeProvider = MuiThemeProvider;
@@ -22,49 +22,42 @@ const COMMON_THEME_OPTION: ThemeOptions = {
   },
 };
 
-export const lightTheme = createTheme(
-  {
-    ...COMMON_THEME_OPTION,
-    palette: {
-      mode: "light",
-      primary: {
-        main: indigo[500],
-        contrastText: COLORS.white,
-      },
-      secondary: {
-        main: red[500],
-        contrastText: COLORS.white,
-      },
-      background: {
-        default: grey[50],
-      },
-      common: {
-        black: COLORS.black,
-        white: COLORS.white,
-      },
+export const lightTheme = createTheme({
+  ...COMMON_THEME_OPTION,
+  palette: {
+    mode: "light",
+    primary: {
+      main: indigo[500],
+    },
+    secondary: {
+      main: red[500],
+    },
+    background: {
+      default: grey[100],
+    },
+    common: {
+      black: COLORS.black,
+      white: COLORS.white,
     },
   },
-  jaJP
-);
+});
 
-export const darkTheme = createTheme(
-  {
-    ...COMMON_THEME_OPTION,
-    palette: {
-      mode: "dark",
-      primary: {
-        main: grey[800],
-        contrastText: COLORS.white,
-      },
-      secondary: {
-        main: grey[500],
-        contrastText: COLORS.white,
-      },
-      common: {
-        black: COLORS.black,
-        white: COLORS.white,
-      },
+export const darkTheme = createTheme({
+  ...COMMON_THEME_OPTION,
+  palette: {
+    mode: "dark",
+    primary: {
+      main: grey[800],
+    },
+    secondary: {
+      main: grey[500],
+    },
+    background: {
+      default: grey[900],
+    },
+    common: {
+      black: COLORS.black,
+      white: COLORS.white,
     },
   },
-  jaJP
-);
+});

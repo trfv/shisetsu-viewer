@@ -1,21 +1,21 @@
 import { max, min } from "date-fns";
 import { addMonths, endOfMonth } from "date-fns/esm";
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import {
-  DataGrid,
-  GridColumns,
-  GridValueFormatterParams,
-  GridValueGetterParams,
-} from "../components/DataGrid";
+import { Columns, DataTable } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { Select, SelectChangeEvent } from "../components/Select";
-import { ROWS_PER_PAGE } from "../constants/datagrid";
+import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
+import {
+  CONTAINER_WIDTH,
+  INNER_WIDTH,
+  MAIN_HEIGHT,
+  SEARCH_TABLE_HEIGHT,
+} from "../constants/styles";
 import {
   DateParam,
   NumberParam,
@@ -23,10 +23,10 @@ import {
   StringsParam,
   useQueryParams,
 } from "../hooks/useQueryParams";
-import { formatDate, formatDatetime } from "../utils/format";
 import {
   convertMunicipalityToUrlParam,
   MunicipalityOptions,
+  SupportedMunicipality,
   SupportedMunicipalityMap,
 } from "../utils/municipality";
 import {
@@ -44,42 +44,37 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-const COLUMNS: GridColumns = [
+const COLUMNS: Columns = [
   {
     field: "building_and_institution",
     headerName: "施設名",
     width: 360,
-    flex: 0,
-    sortable: false,
-    valueGetter: (params: GridValueGetterParams) =>
+    type: "getter",
+    valueGetter: (params) =>
       `${params.row.building_system_name ?? ""} ${params.row.institution_system_name ?? ""}`,
   },
   {
     field: "municipality",
-    headerName: "区",
+    headerName: "地区",
     width: 120,
-    flex: 0,
     hide: true,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      SupportedMunicipalityMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
   },
   {
     field: "date",
     headerName: "日付",
     width: 160,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) => formatDate(params.value as string),
+    type: "date",
   },
   {
     field: "reservation",
     headerName: "予約状況",
     width: 520,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) => {
-      const municipality = params.row.municipality;
-      const obj = params.row.reservation;
+    type: "getter",
+    valueGetter: (params) => {
+      const municipality = params.row.municipality as SupportedMunicipality;
+      const obj = params.row.reservation as Record<string, string>;
       return formatReservationMap(municipality, obj);
     },
     /** TODO hover したときに中身がすべて表示されるように修正する */
@@ -88,9 +83,7 @@ const COLUMNS: GridColumns = [
     field: "created_at",
     headerName: "取得日時",
     width: 200,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) => formatDatetime(params.value as string),
+    type: "datetime",
   },
 ];
 
@@ -117,6 +110,10 @@ export default () => {
   const { loading, data, error } = useReservationsQuery({
     variables: toReservationQueryVariables(resevationSearchParams),
   });
+
+  if (error) {
+    throw new Error(error.message);
+  }
 
   const { page, municipality, startDate, endDate, filter } = resevationSearchParams;
 
@@ -149,9 +146,12 @@ export default () => {
     [filter]
   );
 
-  const handleChangePage = useCallback((page: number): void => {
-    setQueryParams({ p: page });
-  }, []);
+  const handleChangePage = useCallback(
+    (_: MouseEvent<HTMLButtonElement> | null, page: number): void => {
+      setQueryParams({ p: page });
+    },
+    []
+  );
 
   return (
     <StyledReservation className={classes.pageBox}>
@@ -188,26 +188,25 @@ export default () => {
         </div>
       </div>
       <div className={classes.resultBox}>
-        <DataGrid
-          rows={data?.reservations ?? []}
-          columns={COLUMNS}
-          error={error}
-          loading={loading}
-          onRowClick={(params) =>
-            params.row.institution_id &&
-            history.push(ROUTES.detail.replace(":id", params.row.institution_id))
-          }
-          paginationMode="server"
-          rowCount={data?.reservations_aggregate.aggregate?.count ?? undefined}
-          page={page}
-          pageSize={ROWS_PER_PAGE}
-          pagination={true}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[ROWS_PER_PAGE]}
-          disableColumnMenu={true}
-          disableSelectionOnClick={true}
-          density="compact"
-        />
+        {loading ? (
+          <div className={classes.resultBoxNoData}>
+            <Spinner />
+          </div>
+        ) : !municipality || !data?.reservations?.length ? (
+          <div className={classes.resultBoxNoData} />
+        ) : (
+          <DataTable
+            rows={data.reservations}
+            columns={COLUMNS}
+            onRowClick={(params) =>
+              params.row.institution_id &&
+              history.push(ROUTES.detail.replace(":id", params.row.institution_id as string))
+            }
+            rowCount={data?.reservations_aggregate.aggregate?.count ?? 0}
+            page={page}
+            onPageChange={handleChangePage}
+          />
+        )}
       </div>
     </StyledReservation>
   );
@@ -219,6 +218,7 @@ const classes = {
   searchBox: `${PREFIX}-searchBox`,
   searchBoxForm: `${PREFIX}-searchBoxForm`,
   resultBox: `${PREFIX}-resultBox`,
+  resultBoxNoData: `${PREFIX}-resultBoxNoData`,
 };
 
 const StyledReservation = styled("main")(({ theme }) => ({
@@ -246,17 +246,15 @@ const StyledReservation = styled("main")(({ theme }) => ({
     marginInline: "auto",
     width: INNER_WIDTH,
     height: "100%",
-    ".MuiDataGrid-columnHeader:focus": {
-      outline: "none",
+    ".MuiTableContainer-root": {
+      maxHeight: SEARCH_TABLE_HEIGHT,
     },
-    ".MuiDataGrid-columnHeader:focus-within": {
-      outline: "none",
-    },
-    ".MuiDataGrid-row:hover": {
-      cursor: "pointer",
-    },
-    ".MuiDataGrid-cell:focus-within": {
-      outline: "none",
-    },
+  },
+  [`.${classes.resultBoxNoData}`]: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
