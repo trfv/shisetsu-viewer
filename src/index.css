@@ -3,6 +3,7 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: local(""), url("./fonts/roboto-v27-latin-regular.woff2") format("woff2"); /* Chrome 26+, Opera 23+, Firefox 39+ */
 }
 /* roboto-700 - latin */
@@ -10,6 +11,7 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
+  font-display: swap;
   src: local(""), url("./fonts/roboto-v27-latin-700.woff2") format("woff2"); /* Chrome 26+, Opera 23+, Firefox 39+ */
 }
 /* noto-sans-jp-regular - latin_japanese */
@@ -17,6 +19,7 @@
   font-family: "Noto Sans JP";
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: local(""), url("./fonts/noto-sans-jp-v28-latin_japanese-regular.woff2") format("woff2"); /* Chrome 26+, Opera 23+, Firefox 39+ */
 }
 /* noto-sans-jp-700 - latin_japanese */
@@ -24,5 +27,6 @@
   font-family: "Noto Sans JP";
   font-style: normal;
   font-weight: 700;
+  font-display: swap;
   src: local(""), url("./fonts/noto-sans-jp-v28-latin_japanese-700.woff2") format("woff2"); /* Chrome 26+, Opera 23+, Firefox 39+ */
 }
