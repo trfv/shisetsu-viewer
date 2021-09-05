@@ -29,7 +29,7 @@ export const Checkbox: FC<Props> = ({
       alignItems="center"
       marginLeft={noLeftMargin ? "-12px" : "0px"}
     >
-      <MuiCheckbox value={value} checked={checked} onChange={onChange} />
+      <MuiCheckbox value={value} checked={checked} onChange={onChange} color="default" />
       <MediumLabel label={label} />
     </Box>
   );
