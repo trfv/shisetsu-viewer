@@ -33,7 +33,8 @@ export const lightTheme = createTheme({
       main: red[500],
     },
     background: {
-      default: grey[100],
+      default: grey[50],
+      paper: grey[200],
     },
     common: {
       black: COLORS.black,
@@ -54,6 +55,7 @@ export const darkTheme = createTheme({
     },
     background: {
       default: grey[900],
+      paper: grey[800],
     },
     common: {
       black: COLORS.black,
