@@ -1,9 +1,8 @@
 import Markdown from "markdown-to-jsx";
-import { FC } from "react";
 import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
 import { styled } from "../utils/theme";
 
-export const Top: FC = () => {
+export default () => {
   return (
     <StyledTop className={classes.pageBox}>
       <div className={classes.contentBox}>
