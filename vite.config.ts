@@ -20,10 +20,7 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
           "date-fns": ["date-fns"],
           "@emotion/react": ["@emotion/react"],
           "@emotion/styled": ["@emotion/styled"],
-          "@material-ui/core": ["@material-ui/core"],
-          "@material-ui/styles": ["@material-ui/styles"],
           "@mui/material": ["@mui/material"],
-          "@mui/x-data-grid": ["@mui/x-data-grid"],
           "@mui/icons-material": ["@mui/icons-material"],
           "@mui/lab": ["@mui/lab"],
           "markdown-to-jsx": ["markdown-to-jsx"]

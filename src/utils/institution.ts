@@ -1,5 +1,5 @@
 import { InstitutionsQueryVariables } from "../api/graphql-client";
-import { ROWS_PER_PAGE } from "../constants/datagrid";
+import { ROWS_PER_PAGE } from "../constants/datatable";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import { FeeDivisionMap, getMunicipalityFromUrlParam, SELECT_OPTION_ALL } from "./municipality";

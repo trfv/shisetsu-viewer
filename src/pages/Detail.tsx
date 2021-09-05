@@ -1,3 +1,4 @@
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { endOfMonth } from "date-fns/esm";
 import { ChangeEvent, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -6,6 +7,7 @@ import {
   useDetail_InstitutionQuery,
   useDetail_ReservationsQuery,
 } from "../api/graphql-client";
+import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
 import { Spinner } from "../components/Spinner";
@@ -115,15 +117,6 @@ const InstitutionTab = ({
             label="ピアノ"
             size="small"
             value={EquipmentDivisionMap[institution?.is_equipped_piano]}
-            loading={loading}
-            readOnly={true}
-          />
-        </div>
-        <div className={classes.institutionRow}>
-          <Input
-            label="公式サイト"
-            size="full"
-            value={institution?.website_url}
             loading={loading}
             readOnly={true}
           />
@@ -283,11 +276,18 @@ export default () => {
     <StyledInstitutionDetail className={classes.pageBox}>
       <div className={classes.title}>
         {loading ? (
-          <Skeleton width={WIDTHS.large} height={36} />
+          <Skeleton width={WIDTHS.large} height={40} />
         ) : (
-          <h2>{`${institutions_by_pk?.building ?? ""} ${
-            institutions_by_pk?.institution ?? ""
-          }`}</h2>
+          <>
+            <h2>
+              {`${institutions_by_pk?.building ?? ""} ${institutions_by_pk?.institution ?? ""}`}
+              {institutions_by_pk?.website_url && (
+                <IconButton href={institutions_by_pk?.website_url} target="_blank">
+                  <OpenInNewIcon />
+                </IconButton>
+              )}
+            </h2>
+          </>
         )}
       </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
@@ -329,7 +329,7 @@ const classes = {
   reservationTableCell: `${PREFIX}-reservationTableCell`,
 };
 
-const StyledInstitutionDetail = styled("main")(({ theme }) => ({
+const StyledInstitutionDetail = styled("main")(() => ({
   [`&.${classes.pageBox}`]: {
     width: "100%",
     minWidth: CONTAINER_WIDTH,
@@ -366,10 +366,6 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   [`.${classes.reservationContainer}`]: {
     marginTop: 20,
     height: DETAIL_TABLE_HEIGHT,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: theme.palette.grey[300], // TODO dark mode
-    borderRadius: theme.shape.borderRadius,
   },
   [`.${classes.reservationNoData}`]: {
     width: "100%",

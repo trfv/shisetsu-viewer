@@ -1,22 +1,20 @@
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import {
-  DataGrid,
-  GridCellParams,
-  GridColumns,
-  GridValueFormatterParams,
-  GridValueGetterParams,
-} from "../components/DataGrid";
+import { Columns, DataTable } from "../components/DataTable";
 import { Select, SelectChangeEvent } from "../components/Select";
-import { ROWS_PER_PAGE } from "../constants/datagrid";
+import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
+import {
+  CONTAINER_WIDTH,
+  INNER_WIDTH,
+  MAIN_HEIGHT,
+  SEARCH_TABLE_HEIGHT,
+} from "../constants/styles";
 import { NumberParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
-import { formatDatetime } from "../utils/format";
 import {
   AvailableInstrument,
   BRASS,
@@ -34,169 +32,114 @@ import {
 } from "../utils/municipality";
 import { styled } from "../utils/theme";
 
-const COLUMNS: GridColumns = [
+const COLUMNS: Columns = [
   {
     field: "building_and_institution",
     headerName: "施設名",
     width: 360,
-    flex: 0,
-    sortable: false,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
+
+    type: "getter",
+    valueGetter: (params) => `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
     field: "municipality",
     headerName: "区",
     width: 120,
-    flex: 0,
+
     hide: true,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      SupportedMunicipalityMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
   },
   {
     field: "capacity",
     headerName: "定員（人）",
-    type: "number",
     width: 140,
-    flex: 0,
+
+    type: "number",
   },
   {
     field: "area",
     headerName: "面積（㎡）",
-    type: "number",
     width: 140,
-    flex: 0,
+
+    type: "number",
   },
   {
     field: "weekday_usage_fee",
     headerName: "利用料金（平日）",
     width: 480,
-    flex: 0,
+
     hide: true,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      formatUsageFee(params.row.tokyo_ward, params.row.weekday_usage_fee),
+    type: "getter",
+    valueGetter: (params) =>
+      formatUsageFee(
+        params.row.municipality as string,
+        params.value as { division: string; fee: string }[]
+      ),
   },
   {
     field: "holiday_usage_fee",
     headerName: "利用料金（休日）",
     width: 480,
-    flex: 0,
+
     hide: true,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      formatUsageFee(params.row.tokyo_ward, params.row.holiday_usage_fee),
+    type: "getter",
+    valueGetter: (params) =>
+      formatUsageFee(
+        params.row.municipality as string,
+        params.value as { division: string; fee: string }[]
+      ),
   },
-  { field: "address", headerName: "住所", width: 240, flex: 0, hide: true },
+  { field: "address", headerName: "住所", width: 240, hide: true, type: "string" },
   {
     field: "is_available_strings",
     headerName: "弦楽器",
     width: 100,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      AvailabilityDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_woodwind",
     headerName: "木管楽器",
     width: 100,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      AvailabilityDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_brass",
     headerName: "金管楽器",
     width: 100,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      AvailabilityDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_percussion",
     headerName: "打楽器",
     width: 100,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      AvailabilityDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_equipped_music_stand",
     headerName: "譜面台",
     width: 100,
-    flex: 0,
     hide: true,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      EquipmentDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => EquipmentDivisionMap[params.value as string],
   },
   {
     field: "is_equipped_piano",
     headerName: "ピアノ",
     width: 100,
-    flex: 0,
     hide: true,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) =>
-      EquipmentDivisionMap[params.value as string],
+    type: "getter",
+    valueGetter: (params) => EquipmentDivisionMap[params.value as string],
   },
-  {
-    field: "website_url",
-    headerName: "公式サイト",
-    width: 160,
-    flex: 0,
-    hide: true,
-    // disableClickEventBubbling: true,
-    // eslint-disable-next-line react/display-name
-    renderCell: (params: GridCellParams) => {
-      const href = params.value as string;
-      return href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer">
-          {href}
-        </a>
-      ) : (
-        <></>
-      );
-    },
-  },
-  {
-    field: "layout_image_url",
-    headerName: "レイアウト図",
-    width: 160,
-    flex: 0,
-    hide: true,
-    // disableClickEventBubbling: true,
-    // eslint-disable-next-line react/display-name
-    renderCell: (params: GridCellParams) => {
-      const href = params.value as string;
-      return href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer">
-          {href}
-        </a>
-      ) : (
-        <></>
-      );
-    },
-  },
-  {
-    field: "lottery_period",
-    headerName: "抽選期間",
-    width: 240,
-    flex: 0,
-    hide: true,
-  },
-  { field: "note", headerName: "備考", width: 240, flex: 0, hide: true },
   {
     field: "updated_at",
     headerName: "更新日時",
     width: 200,
-    flex: 0,
-    sortable: false,
-    valueFormatter: (params: GridValueFormatterParams) => formatDatetime(params.value as string),
+    type: "datetime",
   },
 ];
 
@@ -213,6 +156,10 @@ export default () => {
   const { loading, data, error } = useInstitutionsQuery({
     variables: toInstitutionQueryVariables(institutionSearchParams),
   });
+
+  if (error) {
+    throw new Error(error.message);
+  }
 
   const { page, municipality, availableInstruments } = institutionSearchParams;
 
@@ -231,9 +178,12 @@ export default () => {
     [availableInstruments]
   );
 
-  const handleChangePage = useCallback((page: number): void => {
-    setQueryParams({ p: page });
-  }, []);
+  const handleChangePage = useCallback(
+    (_: MouseEvent<HTMLButtonElement> | null, page: number): void => {
+      setQueryParams({ p: page });
+    },
+    []
+  );
 
   return (
     <StyledInstitution className={classes.pageBox}>
@@ -267,26 +217,24 @@ export default () => {
         </div> */}
       </div>
       <div className={classes.resultBox}>
-        <DataGrid
-          rows={data?.institutions ?? []}
-          columns={COLUMNS}
-          error={error}
-          loading={loading}
-          onRowClick={(params) => history.push(ROUTES.detail.replace(":id", params.row.id))}
-          paginationMode="server"
-          rowCount={data?.institutions_aggregate.aggregate?.count ?? undefined}
-          page={page}
-          pageSize={ROWS_PER_PAGE}
-          pagination={true}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[ROWS_PER_PAGE]}
-          // components={{
-          //   Toolbar: CustomToolbar,
-          // }}
-          disableColumnMenu={true}
-          disableSelectionOnClick={true}
-          density="compact"
-        />
+        {loading ? (
+          <div className={classes.resultBoxNoData}>
+            <Spinner />
+          </div>
+        ) : !municipality || !data?.institutions?.length ? (
+          <div className={classes.resultBoxNoData} />
+        ) : (
+          <DataTable
+            rows={data?.institutions ?? []}
+            columns={COLUMNS}
+            onRowClick={(params) =>
+              params.row.id && history.push(ROUTES.detail.replace(":id", params.row.id as string))
+            }
+            rowCount={data?.institutions_aggregate.aggregate?.count ?? 0}
+            page={page}
+            onPageChange={handleChangePage}
+          />
+        )}
       </div>
     </StyledInstitution>
   );
@@ -298,6 +246,7 @@ const classes = {
   searchBox: `${PREFIX}-searchBox`,
   searchBoxForm: `${PREFIX}-searchBoxForm`,
   resultBox: `${PREFIX}-resultBox`,
+  resultBoxNoData: `${PREFIX}-resultBoxNoData`,
 };
 
 const StyledInstitution = styled("main")(({ theme }) => ({
@@ -325,17 +274,15 @@ const StyledInstitution = styled("main")(({ theme }) => ({
     marginInline: "auto",
     width: INNER_WIDTH,
     height: "100%",
-    ".MuiDataGrid-columnHeader:focus": {
-      outline: "none",
+    ".MuiTableContainer-root": {
+      maxHeight: SEARCH_TABLE_HEIGHT,
     },
-    ".MuiDataGrid-columnHeader:focus-within": {
-      outline: "none",
-    },
-    ".MuiDataGrid-row:hover": {
-      cursor: "pointer",
-    },
-    ".MuiDataGrid-cell:focus-within": {
-      outline: "none",
-    },
+  },
+  [`.${classes.resultBoxNoData}`]: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
