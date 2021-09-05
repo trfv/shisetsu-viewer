@@ -7,8 +7,6 @@ import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
 import { ROUTES } from "./constants/routes";
 import { Loading } from "./pages/Loading";
-import { Top } from "./pages/Top";
-import { Waiting } from "./pages/Waiting";
 import { useAuth0 } from "./utils/auth0";
 import { apolloClient, ApolloProvider } from "./utils/client";
 import { CssBaseline, lightTheme as theme, ThemeProvider } from "./utils/theme";
@@ -16,6 +14,8 @@ import { CssBaseline, lightTheme as theme, ThemeProvider } from "./utils/theme";
 const Institution = lazy(() => import("./pages/Institution"));
 const Detail = lazy(() => import("./pages/Detail"));
 const Reservation = lazy(() => import("./pages/Reservation"));
+const Waiting = lazy(() => import("./pages/Waiting"));
+const Top = lazy(() => import("./pages/Top"));
 
 const App = () => {
   // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

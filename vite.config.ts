@@ -4,9 +4,11 @@ import reactRefresh from "@vitejs/plugin-react-refresh";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => ({
   build: {
+    sourcemap: mode !== "production",
     outDir: "build",
     rollupOptions: {
       output: {
+        esModule: true,
         manualChunks: {
           "react": ["react"],
           "react-dom": ["react-dom"],
@@ -18,14 +20,16 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
           "date-fns": ["date-fns"],
           "@emotion/react": ["@emotion/react"],
           "@emotion/styled": ["@emotion/styled"],
+          "@material-ui/core": ["@material-ui/core"],
+          "@material-ui/styles": ["@material-ui/styles"],
           "@mui/material": ["@mui/material"],
           "@mui/x-data-grid": ["@mui/x-data-grid"],
           "@mui/icons-material": ["@mui/icons-material"],
           "@mui/lab": ["@mui/lab"],
           "markdown-to-jsx": ["markdown-to-jsx"]
         },
-        chunkFileNames: mode === "production" ? "assets/[hash].js" : "assets/[name]-[hash].js",
-        assetFileNames: mode === "production" ? "assets/[hash][extname]" : "assets/[name]-[hash][extname]",
+        chunkFileNames: "assets/[hash].js",
+        assetFileNames: (info) => info.name.includes("woff") ? "assets/[name][extname]" : "assets/[hash][extname]",
       }
     }
   },
