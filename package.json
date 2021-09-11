@@ -75,7 +75,7 @@
     "lint:all": "npm run lint:fix \"./src/**/*.ts*\"",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "storycap": "storycap --serverCmd \"start-storybook -p 6006\" http://localhost:6006 --serverTimeout 600000",
+    "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static\"",
     "reg-suit": "reg-suit run",
     "prepare": "husky install"
   },
