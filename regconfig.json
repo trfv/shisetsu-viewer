@@ -2,8 +2,8 @@
   "core": {
     "workingDir": ".reg",
     "actualDir": "__screenshots__",
-    "thresholdRate": 0,
-    "addIgnore": false,
+    "thresholdRate": 0.05,
+    "addIgnore": true,
     "ximgdiff": {
       "invocationType": "client"
     }

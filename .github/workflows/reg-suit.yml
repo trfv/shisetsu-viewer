@@ -20,9 +20,11 @@ jobs:
         run: npm install --force
       - name: workaround for detached HEAD
         run: |
-           git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
       - name: run storycap
-        run: npm run storycap
+        run:  |
+          npm run build-storybook
+          npm run storycap
       - name: run reg-suit
         env:
           REG_NOTICE_CLIENT_ID: ${{ secrets.REG_NOTICE_CLIENT_ID }}
