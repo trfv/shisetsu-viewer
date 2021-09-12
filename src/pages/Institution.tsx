@@ -7,12 +7,7 @@ import { Columns, DataTable } from "../components/DataTable";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import {
-  CONTAINER_WIDTH,
-  INNER_WIDTH,
-  MAIN_HEIGHT,
-  SEARCH_TABLE_HEIGHT,
-} from "../constants/styles";
+import { CONTAINER_WIDTH, MAIN_HEIGHT, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { NumberParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
@@ -37,7 +32,6 @@ const COLUMNS: Columns = [
     field: "building_and_institution",
     headerName: "施設名",
     width: 360,
-
     type: "getter",
     valueGetter: (params) => `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
@@ -45,7 +39,6 @@ const COLUMNS: Columns = [
     field: "municipality",
     headerName: "区",
     width: 120,
-
     hide: true,
     type: "getter",
     valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
@@ -54,21 +47,18 @@ const COLUMNS: Columns = [
     field: "capacity",
     headerName: "定員（人）",
     width: 140,
-
     type: "number",
   },
   {
     field: "area",
     headerName: "面積（㎡）",
     width: 140,
-
     type: "number",
   },
   {
     field: "weekday_usage_fee",
     headerName: "利用料金（平日）",
     width: 480,
-
     hide: true,
     type: "getter",
     valueGetter: (params) =>
@@ -81,7 +71,6 @@ const COLUMNS: Columns = [
     field: "holiday_usage_fee",
     headerName: "利用料金（休日）",
     width: 480,
-
     hide: true,
     type: "getter",
     valueGetter: (params) =>
@@ -222,7 +211,7 @@ export default () => {
             <Spinner />
           </div>
         ) : !municipality || !data?.institutions?.length ? (
-          <div className={classes.resultBoxNoData} />
+          <div className={classes.resultBoxNoData} /> // TODO
         ) : (
           <DataTable
             rows={data?.institutions ?? []}
@@ -251,31 +240,46 @@ const classes = {
 
 const StyledInstitution = styled("main")(({ theme }) => ({
   [`&.${classes.pageBox}`]: {
-    paddingTop: 40,
+    padding: theme.spacing(5, 0),
     display: "flex",
     flexDirection: "column",
-    gap: 40,
+    gap: theme.spacing(5),
     width: "100%",
-    minWidth: CONTAINER_WIDTH,
     height: MAIN_HEIGHT,
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(3, 0),
+    },
   },
   [`.${classes.searchBox}`]: {
     marginInline: "auto",
-    padding: 24,
-    width: INNER_WIDTH,
+    padding: theme.spacing(3),
+    width: "100%",
+    maxWidth: CONTAINER_WIDTH,
     background: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.down("sm")]: {
+      marginInline: 0,
+      padding: theme.spacing(2),
+      borderRadius: 0,
+    },
   },
   [`.${classes.searchBoxForm}`]: {
     display: "flex",
-    gap: 40,
+    flexWrap: "wrap",
+    gap: theme.spacing(3, 5),
+    [theme.breakpoints.down("sm")]: {
+      gap: theme.spacing(2, 3),
+    },
   },
   [`.${classes.resultBox}`]: {
     marginInline: "auto",
-    width: INNER_WIDTH,
-    height: "100%",
+    width: "100%",
+    maxWidth: CONTAINER_WIDTH,
     ".MuiTableContainer-root": {
       maxHeight: SEARCH_TABLE_HEIGHT,
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginInline: 0,
     },
   },
   [`.${classes.resultBoxNoData}`]: {

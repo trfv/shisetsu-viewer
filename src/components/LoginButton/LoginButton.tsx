@@ -1,30 +1,47 @@
-import { FC } from "react";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useMemo } from "react";
 import { ROUTES } from "../../constants/routes";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import { useAuth0 } from "../../utils/auth0";
 import { SmallButton } from "../Button";
+import { IconButton } from "../IconButton";
 
-export const LoginButton: FC = () => {
+export const LoginButton = () => {
   const { isLoading, token, login, logout } = useAuth0();
+  const isMobile = useIsMobile();
+
+  const [text, Icon, onClick] = useMemo(
+    () =>
+      token
+        ? [
+            "ログアウト",
+            LogoutIcon,
+            () =>
+              logout({
+                returnTo: `${location.origin}${ROUTES.top}`,
+              }),
+          ]
+        : [
+            "ログイン",
+            LoginIcon,
+            () =>
+              login({
+                redirectUri: `${location.origin}${ROUTES.waiting}`,
+              }),
+          ],
+    [token]
+  );
 
   if (isLoading) {
     return null;
   }
 
-  const [text, onClick] = token
-    ? [
-        "ログアウト",
-        () =>
-          logout({
-            returnTo: `${location.origin}${ROUTES.top}`,
-          }),
-      ]
-    : [
-        "ログイン",
-        () =>
-          login({
-            redirectUri: `${location.origin}${ROUTES.waiting}`,
-          }),
-      ];
-
-  return <SmallButton onClick={onClick}>{text}</SmallButton>;
+  return isMobile ? (
+    <IconButton onClick={onClick}>
+      <Icon htmlColor="white" />
+    </IconButton>
+  ) : (
+    <SmallButton onClick={onClick}>{text}</SmallButton>
+  );
 };

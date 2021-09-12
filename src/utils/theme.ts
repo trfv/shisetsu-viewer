@@ -1,15 +1,9 @@
 export { default as CssBaseline } from "@mui/material/CssBaseline";
+export { styled, ThemeProvider, useTheme } from "@mui/material/styles";
 export { default as useMediaQuery } from "@mui/material/useMediaQuery";
 import { grey, indigo, red } from "@mui/material/colors";
-import {
-  createTheme,
-  styled as muiStyled,
-  ThemeOptions,
-  ThemeProvider as MuiThemeProvider,
-} from "@mui/material/styles";
-
-export const styled = muiStyled;
-export const ThemeProvider = MuiThemeProvider;
+import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { BREAKPOINTS } from "../constants/styles";
 
 const COLORS = {
   white: "#ffffff",
@@ -19,6 +13,9 @@ const COLORS = {
 const COMMON_THEME_OPTION: ThemeOptions = {
   typography: {
     fontFamily: 'Roboto, "Noto Sans JP", "Hiragino Sans", Meiryo, sans-serif',
+  },
+  breakpoints: {
+    values: BREAKPOINTS,
   },
 };
 

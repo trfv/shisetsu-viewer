@@ -4,7 +4,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MuiTextField from "@mui/material/TextField";
 import locale from "date-fns/locale/ja";
 import { FC } from "react";
-import { MediumBox } from "../Box";
+import { SmallBox } from "../Box";
 
 type Props = {
   value: Date | null;
@@ -16,7 +16,7 @@ type Props = {
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={locale}>
-      <MediumBox>
+      <SmallBox>
         <MuiDatePicker
           views={["day"]}
           mask="____/__/__"
@@ -28,7 +28,7 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           showDaysOutsideCurrentMonth={true}
           ignoreInvalidInputs={true}
         />
-      </MediumBox>
+      </SmallBox>
     </LocalizationProvider>
   );
 };

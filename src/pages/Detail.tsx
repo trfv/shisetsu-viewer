@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "../components/Table";
 import { YearMonthSelection } from "../components/YearMonthSelection";
-import { CONTAINER_WIDTH, DETAIL_TABLE_HEIGHT, INNER_WIDTH, WIDTHS } from "../constants/styles";
+import { CONTAINER_WIDTH, DETAIL_PANEL_HEIGHT, WIDTHS } from "../constants/styles";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
 import { isValidUUID } from "../utils/id";
@@ -117,15 +117,6 @@ const InstitutionTab = ({
             label="ピアノ"
             size="small"
             value={EquipmentDivisionMap[institution?.is_equipped_piano]}
-            loading={loading}
-            readOnly={true}
-          />
-        </div>
-        <div className={classes.institutionRow}>
-          <Input
-            label="レイアウト図"
-            size="full"
-            value={institution?.layout_image_url}
             loading={loading}
             readOnly={true}
           />
@@ -329,29 +320,46 @@ const classes = {
   reservationTableCell: `${PREFIX}-reservationTableCell`,
 };
 
-const StyledInstitutionDetail = styled("main")(() => ({
+const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   [`&.${classes.pageBox}`]: {
+    padding: theme.spacing(5, 0),
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
-    minWidth: CONTAINER_WIDTH,
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(3, 0),
+    },
   },
   [`.${classes.title}`]: {
-    margin: "40px auto 0",
-    width: INNER_WIDTH,
+    marginInline: "auto",
+    padding: theme.spacing(0, 3),
+    width: "100%",
+    maxWidth: CONTAINER_WIDTH,
   },
   [`.${classes.tabGroup}`]: {
-    margin: "24px auto 0",
-    width: INNER_WIDTH,
+    marginInline: "auto",
+    padding: theme.spacing(0, 3),
+    width: "100%",
+    maxWidth: CONTAINER_WIDTH,
   },
   [`.${classes.tabPanel}`]: {
-    margin: "40px auto 0",
-    width: INNER_WIDTH,
+    marginTop: theme.spacing(5),
+    marginInline: "auto",
+    padding: theme.spacing(0, 3),
+    width: "100%",
+    maxWidth: CONTAINER_WIDTH,
   },
   [`.${classes.institutionContainer}`]: {
     display: "flex",
     justifyContent: "space-between",
+    height: DETAIL_PANEL_HEIGHT,
+    overflow: "auto",
   },
   [`.${classes.institutionLeftArea}`]: {
-    width: 840,
+    maxWidth: 840,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
   [`.${classes.institutionRow}`]: {
     display: "flex",
@@ -362,10 +370,13 @@ const StyledInstitutionDetail = styled("main")(() => ({
   },
   [`.${classes.institutionRightArea}`]: {
     width: 384,
+    [theme.breakpoints.down("sm")]: {
+      width: 0, // TODO
+    },
   },
   [`.${classes.reservationContainer}`]: {
     marginTop: 20,
-    height: DETAIL_TABLE_HEIGHT,
+    height: DETAIL_PANEL_HEIGHT,
   },
   [`.${classes.reservationNoData}`]: {
     width: "100%",
@@ -375,10 +386,7 @@ const StyledInstitutionDetail = styled("main")(() => ({
     justifyContent: "center",
   },
   [`.${classes.reservationTableContainer}`]: {
-    maxHeight: DETAIL_TABLE_HEIGHT,
+    maxHeight: DETAIL_PANEL_HEIGHT,
     overflowX: "auto",
-  },
-  [`.${classes.reservationTableCell}`]: {
-    whiteSpace: "nowrap",
   },
 }));

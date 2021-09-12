@@ -6,5 +6,5 @@ type Props = {
 };
 
 export const LargeLabel: FC<Props> = ({ label }) => {
-  return <BaseLabel label={label} fontSize="20px" lineHeight="32px" />;
+  return <BaseLabel label={label} size="large" />;
 };

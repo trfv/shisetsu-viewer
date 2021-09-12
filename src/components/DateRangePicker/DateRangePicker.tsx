@@ -1,5 +1,5 @@
 import { ComponentProps, FC } from "react";
-import { BaseBox, LargeBox } from "../Box";
+import { AutoBox, BaseBox } from "../Box";
 import { DatePicker } from "../DatePicker";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
@@ -14,17 +14,17 @@ type Props = {
 
 export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps }) => {
   return (
-    <LargeBox display="flex" flexDirection="column">
+    <AutoBox display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer size={4} axis="vertical" />
-      <LargeBox display="flex" alignItems="center">
+      <AutoBox display="flex" alignItems="center">
         <DatePicker {...startDateProps} />
-        <BaseBox component="span" mr="16px">
+        <BaseBox component="span" mx="16px">
           〜
         </BaseBox>
         <DatePicker {...endDateProps} />
-      </LargeBox>
-    </LargeBox>
+      </AutoBox>
+    </AutoBox>
   );
 };
 
