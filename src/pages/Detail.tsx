@@ -24,7 +24,7 @@ import {
 import { YearMonthSelection } from "../components/YearMonthSelection";
 import { CONTAINER_WIDTH, DETAIL_PANEL_HEIGHT, WIDTHS } from "../constants/styles";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
-import { formatDate, formatDatetime } from "../utils/format";
+import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUUID } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import { ReservationDivisionMap, ReservationStatusMap } from "../utils/municipality";
@@ -221,7 +221,7 @@ const ReservationTab = ({
                 {reservations.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell className={classes.reservationTableCell} size="small">
-                      {formatDate(row.date)}
+                      {formatMonthDate(row.date)}
                     </TableCell>
                     {sortByReservationDivision(row.reservation).map(([, status], i) => (
                       <TableCell className={classes.reservationTableCell} key={i} size="small">
@@ -334,6 +334,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     marginInline: "auto",
     padding: theme.spacing(0, 3),
     width: "100%",
+    minHeight: 80,
     maxWidth: CONTAINER_WIDTH,
   },
   [`.${classes.tabGroup}`]: {
@@ -388,5 +389,8 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   [`.${classes.reservationTableContainer}`]: {
     maxHeight: DETAIL_PANEL_HEIGHT,
     overflowX: "auto",
+  },
+  [`.${classes.reservationTableCell}`]: {
+    whiteSpace: "nowrap",
   },
 }));

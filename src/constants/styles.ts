@@ -18,5 +18,5 @@ export const WIDTHS = {
 
 export const HEADER_HEIGHT = 72;
 export const MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT}px)`;
-export const SEARCH_TABLE_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + 320}px)`;
-export const DETAIL_PANEL_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + 320}px)`;
+export const SEARCH_TABLE_HEIGHT = `calc(max(100vh - ${HEADER_HEIGHT + 280}px, 500px))`;
+export const DETAIL_PANEL_HEIGHT = `calc(max(100vh - ${HEADER_HEIGHT + 320}px, 500px))`;

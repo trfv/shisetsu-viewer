@@ -55,7 +55,11 @@ export const DataTable = <T extends Row>({
 
   return (
     <>
-      <TableContainer>
+      <TableContainer
+        sx={{
+          overscrollBehavior: "none",
+        }}
+      >
         <Table stickyHeader={true}>
           <TableHead>
             <TableRow>

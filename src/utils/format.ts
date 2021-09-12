@@ -1,3 +1,17 @@
+const monthDateFormat = new Intl.DateTimeFormat("ja-JP", {
+  month: "long",
+  day: "numeric",
+  weekday: "narrow",
+});
+
+export const formatMonthDate = (date: string | Date): string => {
+  if (!date) {
+    console.error("invalid date");
+    return date;
+  }
+  return monthDateFormat.format(typeof date === "string" ? new Date(date) : date);
+};
+
 const dateFormat = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric",
   month: "2-digit",
