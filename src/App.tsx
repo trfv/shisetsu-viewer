@@ -1,6 +1,5 @@
 import { lazy, Suspense, useMemo } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { AuthGuardRoute } from "./components/utils/AuthGuardRoute";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
@@ -39,7 +38,6 @@ const App = () => {
                 <AuthGuardRoute path={ROUTES.detail} component={Detail} exact />
                 <Route path={ROUTES.top} component={Top} exact />
               </Switch>
-              <Footer />
             </Suspense>
           </BrowserRouter>
         </ErrorBoundary>

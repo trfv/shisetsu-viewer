@@ -1,3 +1,7 @@
+body {
+  height: 100%;
+}
+
 /* roboto-regular - latin */
 @font-face {
   font-family: "Roboto";

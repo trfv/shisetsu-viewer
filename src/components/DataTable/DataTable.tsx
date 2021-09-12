@@ -66,6 +66,12 @@ export const DataTable = <T extends Row>({
                   size="small"
                   width={col.width}
                   align={col.type === "number" ? "right" : "left"}
+                  sx={{
+                    maxWidth: col.width,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
                 >
                   {col.headerName}
                 </TableCell>
@@ -96,6 +102,8 @@ export const DataTable = <T extends Row>({
                         cellValue = col.valueGetter?.({ ...rowParams, value }) ?? "";
                         break;
                       case "number":
+                        cellValue = isNaN(parseFloat(String(value))) ? "" : String(value);
+                        break;
                       case "string":
                       default:
                         cellValue = String(value);
@@ -107,6 +115,12 @@ export const DataTable = <T extends Row>({
                         variant="body"
                         size="small"
                         align={col.type === "number" ? "right" : "left"}
+                        sx={{
+                          maxWidth: col.width,
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
                       >
                         {cellValue}
                       </TableCell>

@@ -1,5 +1,5 @@
 import Markdown from "markdown-to-jsx";
-import { CONTAINER_WIDTH, INNER_WIDTH, MAIN_HEIGHT } from "../constants/styles";
+import { CONTAINER_WIDTH } from "../constants/styles";
 import { styled } from "../utils/theme";
 
 export default () => {
@@ -8,6 +8,7 @@ export default () => {
       <div className={classes.contentBox}>
         <Markdown>{CONTENT}</Markdown>
       </div>
+      <div className={classes.copyright}>Copyright © 2021 trfv All Rights Reserved.</div>
     </StyledTop>
   );
 };
@@ -16,18 +17,22 @@ const PREFIX = "Top";
 const classes = {
   pageBox: `${PREFIX}-pageBox`,
   contentBox: `${PREFIX}-contentBox`,
+  copyright: `${PREFIX}-copyright`,
 };
 
-const StyledTop = styled("main")(() => ({
+const StyledTop = styled("main")(({ theme }) => ({
   [`&.${classes.pageBox}`]: {
     width: "100%",
-    minWidth: CONTAINER_WIDTH,
-    height: MAIN_HEIGHT,
   },
   [`.${classes.contentBox}`]: {
     marginInline: "auto",
-    padding: 24,
-    width: INNER_WIDTH,
+    padding: theme.spacing(3),
+    maxWidth: CONTAINER_WIDTH,
+  },
+  [`.${classes.copyright}`]: {
+    padding: theme.spacing(3, 0),
+    width: "100%",
+    textAlign: "center",
   },
 }));
 
