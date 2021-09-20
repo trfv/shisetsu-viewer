@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "../components/Table";
 import { YearMonthSelection } from "../components/YearMonthSelection";
-import { CONTAINER_WIDTH, DETAIL_PANEL_HEIGHT, WIDTHS } from "../constants/styles";
+import { CONTAINER_WIDTH, WIDTHS } from "../constants/styles";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUUID } from "../utils/id";
@@ -193,9 +193,9 @@ const ReservationTab = ({
             <Spinner />
           </div>
         ) : !municipality || !reservations?.length ? (
-          <div className={classes.reservationNoData} />
+          <div className={classes.reservationNoData}>表示するデータが存在しません</div>
         ) : (
-          <TableContainer className={classes.reservationTableContainer}>
+          <TableContainer>
             <Table stickyHeader={true}>
               <TableHead>
                 <TableRow>
@@ -271,7 +271,7 @@ export default () => {
         ) : (
           <>
             <h2>
-              {`${institutions_by_pk?.building ?? ""} ${institutions_by_pk?.institution ?? ""}`}
+              {`${institutions_by_pk?.building ?? ""}\n${institutions_by_pk?.institution ?? ""}`}
               {institutions_by_pk?.website_url && (
                 <IconButton href={institutions_by_pk?.website_url} target="_blank">
                   <OpenInNewIcon />
@@ -316,7 +316,6 @@ const classes = {
   institutionRightArea: `${PREFIX}-institutionRightArea`,
   reservationContainer: `${PREFIX}-reservationContainer`,
   reservationNoData: `${PREFIX}-reservationNoData`,
-  reservationTableContainer: `${PREFIX}-reservationTableContainer`,
   reservationTableCell: `${PREFIX}-reservationTableCell`,
 };
 
@@ -336,6 +335,9 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     width: "100%",
     minHeight: 80,
     maxWidth: CONTAINER_WIDTH,
+    [theme.breakpoints.down("sm")]: {
+      whiteSpace: "pre-line",
+    },
   },
   [`.${classes.tabGroup}`]: {
     marginInline: "auto",
@@ -349,12 +351,13 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     padding: theme.spacing(0, 3),
     width: "100%",
     maxWidth: CONTAINER_WIDTH,
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(3),
+    },
   },
   [`.${classes.institutionContainer}`]: {
     display: "flex",
     justifyContent: "space-between",
-    height: DETAIL_PANEL_HEIGHT,
-    overflow: "auto",
   },
   [`.${classes.institutionLeftArea}`]: {
     maxWidth: 840,
@@ -364,9 +367,10 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   },
   [`.${classes.institutionRow}`]: {
     display: "flex",
-    gap: 40,
+    gap: theme.spacing(5),
     [`+ .${classes.institutionRow}`]: {
       marginTop: 24,
+      gap: theme.spacing(3),
     },
   },
   [`.${classes.institutionRightArea}`]: {
@@ -376,8 +380,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     },
   },
   [`.${classes.reservationContainer}`]: {
-    marginTop: 20,
-    height: DETAIL_PANEL_HEIGHT,
+    marginTop: theme.spacing(3),
   },
   [`.${classes.reservationNoData}`]: {
     width: "100%",
@@ -385,10 +388,6 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  [`.${classes.reservationTableContainer}`]: {
-    maxHeight: DETAIL_PANEL_HEIGHT,
-    overflowX: "auto",
   },
   [`.${classes.reservationTableCell}`]: {
     whiteSpace: "nowrap",

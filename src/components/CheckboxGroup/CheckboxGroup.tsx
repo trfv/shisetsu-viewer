@@ -40,7 +40,7 @@ export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto
   return (
     <Box display="flex" flexDirection="column">
       <SmallLabel label={label} />
-      <Box component="div" display="flex" marginLeft="-12px">
+      <Box component="div" display="flex" flexWrap="wrap" marginLeft="-12px">
         {mapChildren(children, values, onChange)}
       </Box>
     </Box>

@@ -4,10 +4,15 @@ import { useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Columns, DataTable } from "../components/DataTable";
+import { SearchForm } from "../components/SearchForm";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, MAIN_HEIGHT, SEARCH_TABLE_HEIGHT } from "../constants/styles";
+import {
+  CONTAINER_WIDTH,
+  SEARCH_TABLE_HEIGHT,
+  SEARCH_TABLE_HEIGHT_MOBILE,
+} from "../constants/styles";
 import { NumberParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
@@ -178,32 +183,28 @@ export default () => {
     <StyledInstitution className={classes.pageBox}>
       <div className={classes.searchBox}>
         <div className={classes.searchBoxForm}>
-          <Select
-            label="区"
-            value={municipality}
-            size="small"
-            onChange={handleMunicipalityChange}
-            selectOptions={MunicipalityOptions}
-          />
-          {/* <Input label="定員下限（人）" defaultValue="" size="small" /> */}
-          {/* <Input label="面積下限（㎡）" defaultValue="" size="small" /> */}
-          <CheckboxGroup
-            label="利用可能楽器"
-            values={availableInstruments}
-            onChange={handleAvailableInstrumentsChange}
-          >
-            <Checkbox label="弦楽器" value={STRINGS} />
-            <Checkbox label="木管楽器" value={WOODWIND} />
-            <Checkbox label="金管楽器" value={BRASS} />
-            <Checkbox label="打楽器" value={PERCUSSION} />
-          </CheckboxGroup>
+          <SearchForm>
+            <Select
+              label="区"
+              value={municipality}
+              size="small"
+              onChange={handleMunicipalityChange}
+              selectOptions={MunicipalityOptions}
+            />
+            {/* <Input label="定員下限（人）" defaultValue="" size="small" /> */}
+            {/* <Input label="面積下限（㎡）" defaultValue="" size="small" /> */}
+            <CheckboxGroup
+              label="利用可能楽器"
+              values={availableInstruments}
+              onChange={handleAvailableInstrumentsChange}
+            >
+              <Checkbox label="弦楽器" value={STRINGS} />
+              <Checkbox label="木管楽器" value={WOODWIND} />
+              <Checkbox label="金管楽器" value={BRASS} />
+              <Checkbox label="打楽器" value={PERCUSSION} />
+            </CheckboxGroup>
+          </SearchForm>
         </div>
-        {/* <div className={classes.searchBoxButtons}>
-          <SmallButton color="primary" variant="contained">
-            検索
-          </SmallButton>
-          <SmallButton>クリア</SmallButton>
-        </div> */}
       </div>
       <div className={classes.resultBox}>
         {loading ? (
@@ -211,7 +212,7 @@ export default () => {
             <Spinner />
           </div>
         ) : !municipality || !data?.institutions?.length ? (
-          <div className={classes.resultBoxNoData} /> // TODO
+          <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             rows={data?.institutions ?? []}
@@ -245,7 +246,6 @@ const StyledInstitution = styled("main")(({ theme }) => ({
     flexDirection: "column",
     gap: theme.spacing(5),
     width: "100%",
-    height: MAIN_HEIGHT,
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(3, 0),
     },
@@ -259,27 +259,29 @@ const StyledInstitution = styled("main")(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       borderRadius: 0,
     },
   },
   [`.${classes.searchBoxForm}`]: {
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     gap: theme.spacing(3, 5),
-    [theme.breakpoints.down("sm")]: {
-      gap: theme.spacing(2, 3),
-    },
   },
   [`.${classes.resultBox}`]: {
     marginInline: "auto",
     width: "100%",
+    height: SEARCH_TABLE_HEIGHT,
     maxWidth: CONTAINER_WIDTH,
     ".MuiTableContainer-root": {
       maxHeight: SEARCH_TABLE_HEIGHT,
     },
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,
+      height: SEARCH_TABLE_HEIGHT_MOBILE,
+      ".MuiTableContainer-root": {
+        maxHeight: SEARCH_TABLE_HEIGHT_MOBILE,
+      },
     },
   },
   [`.${classes.resultBoxNoData}`]: {

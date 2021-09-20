@@ -1,7 +1,6 @@
 import MenuItem from "@mui/material/MenuItem";
 import MuiSelect, { SelectChangeEvent as MuiSelectChangeEvent } from "@mui/material/Select";
 import { FC } from "react";
-import { useIsMobile } from "../../hooks/useIsMobile";
 import { box, BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
@@ -18,14 +17,13 @@ type Props = {
 
 export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selectOptions }) => {
   const Box = box(size);
-  const isMobile = useIsMobile();
   return (
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer size={4} axis="vertical" />
       <MuiSelect value={value} onChange={onChange} variant="standard">
         {selectOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value} dense={isMobile}>
+          <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
