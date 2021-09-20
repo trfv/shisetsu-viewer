@@ -4,6 +4,10 @@ export { default as useMediaQuery } from "@mui/material/useMediaQuery";
 import { grey, indigo, red } from "@mui/material/colors";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 import { BREAKPOINTS } from "../constants/styles";
+import NotoSansJpBold from "../fonts/noto-sans-jp-v28-latin_japanese-700.woff2";
+import NotoSansJpRegular from "../fonts/noto-sans-jp-v28-latin_japanese-regular.woff2";
+import RobotoBold from "../fonts/roboto-v27-latin-700.woff2";
+import RobotoRegular from "../fonts/roboto-v27-latin-regular.woff2";
 
 const COLORS = {
   white: "#ffffff",
@@ -16,6 +20,40 @@ const COMMON_THEME_OPTION: ThemeOptions = {
   },
   breakpoints: {
     values: BREAKPOINTS,
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: local("Roboto"), url(${RobotoRegular}) format("woff2"); 
+        }
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 700;
+          font-display: swap;
+          src: local("Roboto"), url(${RobotoBold}) format("woff2"); 
+        }
+        @font-face {
+          font-family: "Noto Sans JP";
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: local("Noto Sans JP"), url(${NotoSansJpRegular}) format("woff2"); 
+        }
+        @font-face {
+          font-family: "Noto Sans JP";
+          font-style: normal;
+          font-weight: 700;
+          font-display: swap;
+          src: local("Noto Sans JP"), url(${NotoSansJpBold}) format("woff2"); 
+        }
+      `,
+    },
   },
 };
 

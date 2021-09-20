@@ -1,5 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Drawer from "@mui/material/Drawer";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
@@ -18,10 +18,10 @@ export const HeaderMenuButton = () => {
       <IconButton onClick={toggleDrawer}>
         <MenuIcon htmlColor="white" />
       </IconButton>
-      <SwipeableDrawer anchor="top" onOpen={toggleDrawer} onClose={toggleDrawer} open={isOpen}>
+      <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
         <StyledMenu>
-          <IconButton>
-            <MenuIcon onClick={toggleDrawer} />
+          <IconButton onClick={toggleDrawer}>
+            <MenuIcon />
           </IconButton>
           <Link to={ROUTES.reservation} onClick={toggleDrawer}>
             予約検索
@@ -30,7 +30,7 @@ export const HeaderMenuButton = () => {
             施設検索
           </Link>
         </StyledMenu>
-      </SwipeableDrawer>
+      </Drawer>
     </>
   );
 };

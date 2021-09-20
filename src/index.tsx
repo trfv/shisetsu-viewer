@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
 import { ROUTES } from "./constants/routes";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "./utils/auth0";
 

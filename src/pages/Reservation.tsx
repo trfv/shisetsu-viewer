@@ -7,10 +7,15 @@ import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Columns, DataTable } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
+import { SearchForm } from "../components/SearchForm";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
+import {
+  CONTAINER_WIDTH,
+  SEARCH_TABLE_HEIGHT,
+  SEARCH_TABLE_HEIGHT_MOBILE,
+} from "../constants/styles";
 import {
   DateParam,
   NumberParam,
@@ -152,34 +157,36 @@ export default () => {
     <StyledReservation className={classes.pageBox}>
       <div className={classes.searchBox}>
         <div className={classes.searchBoxForm}>
-          <Select
-            label="区"
-            value={municipality}
-            size="small"
-            onChange={handleMunicipalityChange}
-            selectOptions={MunicipalityOptions}
-          />
-          <DateRangePicker
-            label="期間指定"
-            startDateProps={{
-              value: startDate,
-              onChange: handleStartDateChange,
-              minDate,
-              maxDate,
-            }}
-            endDateProps={{
-              value: endDate,
-              onChange: handleEndDateChange,
-              minDate,
-              maxDate,
-            }}
-          />
-          <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
-            <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
-            <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
-            <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
-            <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
-          </CheckboxGroup>
+          <SearchForm>
+            <Select
+              label="区"
+              value={municipality}
+              size="small"
+              onChange={handleMunicipalityChange}
+              selectOptions={MunicipalityOptions}
+            />
+            <DateRangePicker
+              label="期間指定"
+              startDateProps={{
+                value: startDate,
+                onChange: handleStartDateChange,
+                minDate,
+                maxDate,
+              }}
+              endDateProps={{
+                value: endDate,
+                onChange: handleEndDateChange,
+                minDate,
+                maxDate,
+              }}
+            />
+            <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
+              <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
+              <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
+              <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
+              <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
+            </CheckboxGroup>
+          </SearchForm>
         </div>
       </div>
       <div className={classes.resultBox}>
@@ -188,7 +195,7 @@ export default () => {
             <Spinner />
           </div>
         ) : !municipality || !data?.reservations?.length ? (
-          <div className={classes.resultBoxNoData} /> // TODO
+          <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             rows={data.reservations}
@@ -236,27 +243,29 @@ const StyledReservation = styled("main")(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       borderRadius: 0,
     },
   },
   [`.${classes.searchBoxForm}`]: {
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     gap: theme.spacing(3, 5),
-    [theme.breakpoints.down("sm")]: {
-      gap: theme.spacing(2, 3),
-    },
   },
   [`.${classes.resultBox}`]: {
     marginInline: "auto",
     width: "100%",
+    height: SEARCH_TABLE_HEIGHT,
     maxWidth: CONTAINER_WIDTH,
     ".MuiTableContainer-root": {
       maxHeight: SEARCH_TABLE_HEIGHT,
     },
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,
+      height: SEARCH_TABLE_HEIGHT_MOBILE,
+      ".MuiTableContainer-root": {
+        maxHeight: SEARCH_TABLE_HEIGHT_MOBILE,
+      },
     },
   },
   [`.${classes.resultBoxNoData}`]: {
