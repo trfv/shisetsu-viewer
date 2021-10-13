@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, HEADER_HEIGHT } from "../../constants/styles";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useAuth0 } from "../../utils/auth0";
 import { styled } from "../../utils/theme";
 import { BaseBox } from "../Box";
 import { HeaderMenuButton } from "../HeaderMenuButton";
@@ -9,13 +10,13 @@ import { LoginButton } from "../LoginButton";
 
 export const Header = () => {
   const isMobile = useIsMobile();
+  const { token } = useAuth0();
+
   return (
     <StyledHeader className={classes.appBar}>
       <BaseBox className={classes.toolbar}>
         {isMobile && (
-          <BaseBox className={classes.menuButton}>
-            <HeaderMenuButton />
-          </BaseBox>
+          <BaseBox className={classes.menuButton}>{token && <HeaderMenuButton />}</BaseBox>
         )}
         <BaseBox className={classes.logoAndMenu}>
           <BaseBox className={classes.logoWrapper} component="h1">
@@ -23,7 +24,7 @@ export const Header = () => {
               <img className={classes.logo} src="/logo.svg" alt="Shisetsu Viewer" />
             </Link>
           </BaseBox>
-          {!isMobile && (
+          {!isMobile && token && (
             <BaseBox className={classes.menu}>
               <Link to={ROUTES.reservation}>予約検索</Link>
               <Link to={ROUTES.institution}>施設検索</Link>

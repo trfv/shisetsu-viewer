@@ -1,6 +1,6 @@
 override: true
 schema:
-  - https://shisetsu-graphql.herokuapp.com/v1/graphql:
+  - ${GRAPHQL_ENDPOINT}:
       headers:
         x-hasura-admin-secret: ${ADMIN_SECRET}
 documents:
