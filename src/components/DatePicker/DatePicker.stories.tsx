@@ -11,4 +11,5 @@ export const Basic: Story<ComponentProps<typeof DatePicker>> = (args) => <DatePi
 
 Basic.args = {
   value: new Date(2021, 0, 1),
+  onChange: () => null,
 };
