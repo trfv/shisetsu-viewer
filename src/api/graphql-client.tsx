@@ -21,10 +21,8 @@ export type Scalars = {
   numeric: any;
   prefecture: any;
   timestamp: any;
-  timestamptz: any;
   uuid: any;
 };
-
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_Comparison_Exp = {
@@ -85,7 +83,6 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
-
 /** Boolean expression to compare columns of type "_fee_division". All fields are combined with logical 'AND'. */
 export type _Fee_Division_Comparison_Exp = {
   _eq?: Maybe<Scalars['_fee_division']>;
@@ -98,7 +95,6 @@ export type _Fee_Division_Comparison_Exp = {
   _neq?: Maybe<Scalars['_fee_division']>;
   _nin?: Maybe<Array<Scalars['_fee_division']>>;
 };
-
 
 /** Boolean expression to compare columns of type "availavility_division". All fields are combined with logical 'AND'. */
 export type Availavility_Division_Comparison_Exp = {
@@ -113,7 +109,6 @@ export type Availavility_Division_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['availavility_division']>>;
 };
 
-
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
   _eq?: Maybe<Scalars['bigint']>;
@@ -127,7 +122,6 @@ export type Bigint_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['bigint']>>;
 };
 
-
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
   _eq?: Maybe<Scalars['date']>;
@@ -140,7 +134,6 @@ export type Date_Comparison_Exp = {
   _neq?: Maybe<Scalars['date']>;
   _nin?: Maybe<Array<Scalars['date']>>;
 };
-
 
 /** Boolean expression to compare columns of type "equipment_division". All fields are combined with logical 'AND'. */
 export type Equipment_Division_Comparison_Exp = {
@@ -158,7 +151,7 @@ export type Equipment_Division_Comparison_Exp = {
 /** columns and relationships of "holidays" */
 export type Holidays = {
   __typename?: 'holidays';
-  created_at: Scalars['timestamptz'];
+  created_at: Scalars['timestamp'];
   date: Scalars['date'];
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -205,7 +198,7 @@ export type Holidays_Bool_Exp = {
   _and?: Maybe<Array<Holidays_Bool_Exp>>;
   _not?: Maybe<Holidays_Bool_Exp>;
   _or?: Maybe<Array<Holidays_Bool_Exp>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  created_at?: Maybe<Timestamp_Comparison_Exp>;
   date?: Maybe<Date_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
@@ -226,7 +219,7 @@ export type Holidays_Inc_Input = {
 
 /** input type for inserting data into table "holidays" */
 export type Holidays_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -235,7 +228,7 @@ export type Holidays_Insert_Input = {
 /** aggregate max on columns */
 export type Holidays_Max_Fields = {
   __typename?: 'holidays_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -244,7 +237,7 @@ export type Holidays_Max_Fields = {
 /** aggregate min on columns */
 export type Holidays_Min_Fields = {
   __typename?: 'holidays_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -293,7 +286,7 @@ export enum Holidays_Select_Column {
 
 /** input type for updating data in table "holidays" */
 export type Holidays_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -472,8 +465,6 @@ export type Institutions_Bool_Exp = {
 
 /** unique or primary key constraints on table "institutions" */
 export enum Institutions_Constraint {
-  /** unique or primary key constraint */
-  InstitutionsIdKey = 'institutions_id_key',
   /** unique or primary key constraint */
   InstitutionsPkey = 'institutions_pkey'
 }
@@ -813,7 +804,6 @@ export type Institutions_Variance_Fields = {
   capacity?: Maybe<Scalars['Float']>;
 };
 
-
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
   /** is the column contained in the given json value */
@@ -1024,7 +1014,6 @@ export type Mutation_RootUpdate_Reservations_By_PkArgs = {
   pk_columns: Reservations_Pk_Columns_Input;
 };
 
-
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export type Numeric_Comparison_Exp = {
   _eq?: Maybe<Scalars['numeric']>;
@@ -1053,7 +1042,6 @@ export enum Order_By {
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
-
 
 /** Boolean expression to compare columns of type "prefecture". All fields are combined with logical 'AND'. */
 export type Prefecture_Comparison_Exp = {
@@ -1168,7 +1156,7 @@ export type Reservations = {
   id: Scalars['bigint'];
   institution_id?: Maybe<Scalars['uuid']>;
   institution_system_name: Scalars['String'];
-  is_holiday?: Maybe<Scalars['Boolean']>;
+  is_holiday: Scalars['Boolean'];
   municipality: Scalars['String'];
   prefecture: Scalars['prefecture'];
   reservation: Scalars['jsonb'];
@@ -1240,8 +1228,6 @@ export type Reservations_Bool_Exp = {
 
 /** unique or primary key constraints on table "reservations" */
 export enum Reservations_Constraint {
-  /** unique or primary key constraint */
-  ReservationsIdKey = 'reservations_id_key',
   /** unique or primary key constraint */
   ReservationsPkey = 'reservations_pkey'
 }
@@ -1539,7 +1525,6 @@ export type Subscription_RootReservations_By_PkArgs = {
   id: Scalars['bigint'];
 };
 
-
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamp']>;
@@ -1552,21 +1537,6 @@ export type Timestamp_Comparison_Exp = {
   _neq?: Maybe<Scalars['timestamp']>;
   _nin?: Maybe<Array<Scalars['timestamp']>>;
 };
-
-
-/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
-export type Timestamptz_Comparison_Exp = {
-  _eq?: Maybe<Scalars['timestamptz']>;
-  _gt?: Maybe<Scalars['timestamptz']>;
-  _gte?: Maybe<Scalars['timestamptz']>;
-  _in?: Maybe<Array<Scalars['timestamptz']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['timestamptz']>;
-  _lte?: Maybe<Scalars['timestamptz']>;
-  _neq?: Maybe<Scalars['timestamptz']>;
-  _nin?: Maybe<Array<Scalars['timestamptz']>>;
-};
-
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
