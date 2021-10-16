@@ -3,6 +3,7 @@ schema:
   - ${GRAPHQL_ENDPOINT}:
       headers:
         x-hasura-admin-secret: ${ADMIN_SECRET}
+        x-hasura-role: user
 documents:
   - ./src/api/queries/*.graphql
 generates:

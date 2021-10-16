@@ -6,6 +6,6 @@ query detail_reservations($id: uuid!, $startDate: date, $endDate: date) {
     id
     date
     reservation
-    created_at
+    updated_at
   }
 }

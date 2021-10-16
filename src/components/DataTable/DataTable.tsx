@@ -13,31 +13,31 @@ import {
 
 type Row = { id: string } & { [key: string]: unknown };
 
-type RowParams = {
+export type RowParams<T> = {
   id: string;
   value: unknown;
-  row: Row;
-  columns: Columns;
+  row: T;
+  columns: Columns<T>;
 };
 
 type ColumnType = "string" | "number" | "date" | "datetime" | "getter";
 
-type Column = {
+type Column<T> = {
   field: string;
   headerName: string;
   type: ColumnType;
   description?: string;
   width: number;
   hide?: boolean;
-  valueGetter?: (row: RowParams) => string; // type = getter の時に設定する
+  valueGetter?: (row: RowParams<T>) => string; // type = getter の時に設定する
 };
 
-export type Columns = Column[];
+export type Columns<T> = Column<T>[];
 
 type Props<T> = {
-  columns: Columns;
+  columns: Columns<T>;
   rows: T[];
-  onRowClick?: (params: RowParams) => void;
+  onRowClick?: (params: RowParams<T>) => void;
   rowCount: number;
   page: number;
   onPageChange: (event: MouseEvent<HTMLButtonElement> | null, page: number) => void;

@@ -2,7 +2,7 @@ import { max, min } from "date-fns";
 import { addMonths, endOfMonth } from "date-fns/esm";
 import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useReservationsQuery } from "../api/graphql-client";
+import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Columns, DataTable } from "../components/DataTable";
@@ -44,14 +44,14 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-const COLUMNS: Columns = [
+const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
     width: 360,
     type: "getter",
     valueGetter: (params) =>
-      `${params.row.building_system_name ?? ""} ${params.row.institution_system_name ?? ""}`,
+      `${params.row.institution?.building ?? ""} ${params.row.institution?.institution ?? ""}`,
   },
   {
     field: "municipality",
@@ -73,14 +73,14 @@ const COLUMNS: Columns = [
     width: 520,
     type: "getter",
     valueGetter: (params) => {
-      const municipality = params.row.municipality as SupportedMunicipality;
+      const municipality = params.row.institution?.municipality as SupportedMunicipality;
       const obj = params.row.reservation as Record<string, string>;
       return formatReservationMap(municipality, obj);
     },
     /** TODO hover したときに中身がすべて表示されるように修正する */
   },
   {
-    field: "created_at",
+    field: "updated_at",
     headerName: "取得日時",
     width: 200,
     type: "datetime",
@@ -201,8 +201,8 @@ export default () => {
             rows={data.reservations}
             columns={COLUMNS}
             onRowClick={(params) =>
-              params.row.institution_id &&
-              history.push(ROUTES.detail.replace(":id", params.row.institution_id as string))
+              params.row.institution?.id &&
+              history.push(ROUTES.detail.replace(":id", params.row.institution.id as string))
             }
             rowCount={data?.reservations_aggregate.aggregate?.count ?? 0}
             page={page}
