@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useInstitutionsQuery } from "../api/graphql-client";
+import { InstitutionsQuery, useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Columns, DataTable } from "../components/DataTable";
@@ -32,7 +32,7 @@ import {
 } from "../utils/municipality";
 import { styled } from "../utils/theme";
 
-const COLUMNS: Columns = [
+const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",

@@ -38,7 +38,7 @@ Basic.args = {
       type: "date",
     },
     {
-      field: "created_at",
+      field: "updated_at",
       headerName: "取得日時",
       width: 200,
       type: "datetime",
@@ -50,7 +50,7 @@ Basic.args = {
     institution_system_name: `institution${i + 1}`,
     municipality: `municipality${i + 1}`,
     date: `2021-01-${String(i + 1).padStart(2, "0")}`,
-    created_at: `2021-01-${String(i + 1).padStart(2, "0")}`,
+    updated_at: `2021-01-${String(i + 1).padStart(2, "0")}`,
   })),
   page: 0,
   rowCount: 20,

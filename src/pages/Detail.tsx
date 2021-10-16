@@ -229,7 +229,7 @@ const ReservationTab = ({
                       </TableCell>
                     ))}
                     <TableCell className={classes.reservationTableCell} size="small">
-                      {formatDatetime(row.created_at)}
+                      {formatDatetime(row.updated_at)}
                     </TableCell>
                   </TableRow>
                 ))}

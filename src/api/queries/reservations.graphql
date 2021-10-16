@@ -16,8 +16,7 @@ query reservations(
     limit: $limit
     where: {
       _and: {
-        prefecture: { _eq: $prefecture }
-        municipality: { _in: $municipality }
+        institution: { prefecture: { _eq: $prefecture }, municipality: { _in: $municipality } }
         date: { _gte: $startDate, _lte: $endDate }
         is_holiday: { _eq: $isHoliday }
       }
@@ -31,19 +30,20 @@ query reservations(
     order_by: { date: asc }
   ) {
     id
-    institution_id
-    municipality
-    building_system_name
-    institution_system_name
     date
     reservation
-    created_at
+    updated_at
+    institution {
+      id
+      municipality
+      building
+      institution
+    }
   }
   reservations_aggregate(
     where: {
       _and: {
-        prefecture: { _eq: $prefecture }
-        municipality: { _in: $municipality }
+        institution: { prefecture: { _eq: $prefecture }, municipality: { _in: $municipality } }
         date: { _gte: $startDate, _lte: $endDate }
         is_holiday: { _eq: $isHoliday }
       }
