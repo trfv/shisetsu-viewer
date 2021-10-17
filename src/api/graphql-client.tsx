@@ -561,17 +561,13 @@ export type Query_RootReservations_By_PkArgs = {
 /** columns and relationships of "reservations" */
 export type Reservations = {
   __typename?: 'reservations';
-  building_system_name: Scalars['String'];
   created_at: Scalars['timestamp'];
   date: Scalars['date'];
   id: Scalars['bigint'];
   /** An object relationship */
   institution?: Maybe<Institutions>;
   institution_id?: Maybe<Scalars['uuid']>;
-  institution_system_name: Scalars['String'];
   is_holiday: Scalars['Boolean'];
-  municipality: Scalars['String'];
-  prefecture: Scalars['prefecture'];
   reservation: Scalars['jsonb'];
   updated_at: Scalars['timestamp'];
 };
@@ -623,16 +619,12 @@ export type Reservations_Bool_Exp = {
   _and?: Maybe<Array<Reservations_Bool_Exp>>;
   _not?: Maybe<Reservations_Bool_Exp>;
   _or?: Maybe<Array<Reservations_Bool_Exp>>;
-  building_system_name?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamp_Comparison_Exp>;
   date?: Maybe<Date_Comparison_Exp>;
   id?: Maybe<Bigint_Comparison_Exp>;
   institution?: Maybe<Institutions_Bool_Exp>;
   institution_id?: Maybe<Uuid_Comparison_Exp>;
-  institution_system_name?: Maybe<String_Comparison_Exp>;
   is_holiday?: Maybe<Boolean_Comparison_Exp>;
-  municipality?: Maybe<String_Comparison_Exp>;
-  prefecture?: Maybe<Prefecture_Comparison_Exp>;
   reservation?: Maybe<Jsonb_Comparison_Exp>;
   updated_at?: Maybe<Timestamp_Comparison_Exp>;
 };
@@ -640,49 +632,37 @@ export type Reservations_Bool_Exp = {
 /** aggregate max on columns */
 export type Reservations_Max_Fields = {
   __typename?: 'reservations_max_fields';
-  building_system_name?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['bigint']>;
   institution_id?: Maybe<Scalars['uuid']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  municipality?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamp']>;
 };
 
 /** aggregate min on columns */
 export type Reservations_Min_Fields = {
   __typename?: 'reservations_min_fields';
-  building_system_name?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamp']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['bigint']>;
   institution_id?: Maybe<Scalars['uuid']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  municipality?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamp']>;
 };
 
 /** Ordering options when selecting data from "reservations". */
 export type Reservations_Order_By = {
-  building_system_name?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   date?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   institution?: Maybe<Institutions_Order_By>;
   institution_id?: Maybe<Order_By>;
-  institution_system_name?: Maybe<Order_By>;
   is_holiday?: Maybe<Order_By>;
-  municipality?: Maybe<Order_By>;
-  prefecture?: Maybe<Order_By>;
   reservation?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
 /** select columns of table "reservations" */
 export enum Reservations_Select_Column {
-  /** column name */
-  BuildingSystemName = 'building_system_name',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -692,13 +672,7 @@ export enum Reservations_Select_Column {
   /** column name */
   InstitutionId = 'institution_id',
   /** column name */
-  InstitutionSystemName = 'institution_system_name',
-  /** column name */
   IsHoliday = 'is_holiday',
-  /** column name */
-  Municipality = 'municipality',
-  /** column name */
-  Prefecture = 'prefecture',
   /** column name */
   Reservation = 'reservation',
   /** column name */
@@ -840,7 +814,7 @@ export type Detail_InstitutionQueryVariables = Exact<{
 }>;
 
 
-export type Detail_InstitutionQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null | undefined, area?: any | null | undefined, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null | undefined, reservations_aggregate: { __typename?: 'reservations_aggregate', aggregate?: { __typename?: 'reservations_aggregate_fields', count: number, max?: { __typename?: 'reservations_max_fields', date?: any | null | undefined } | null | undefined, min?: { __typename?: 'reservations_min_fields', date?: any | null | undefined } | null | undefined } | null | undefined } };
+export type Detail_InstitutionQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null | undefined, area?: any | null | undefined, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null | undefined, reservations_aggregate: { __typename?: 'reservations_aggregate', aggregate?: { __typename?: 'reservations_aggregate_fields', count: number, max?: { __typename?: 'reservations_max_fields', date?: any | null | undefined } | null | undefined } | null | undefined } };
 
 export type Detail_ReservationsQueryVariables = Exact<{
   id: Scalars['uuid'];
@@ -910,9 +884,6 @@ export const Detail_InstitutionDocument = gql`
     aggregate {
       count
       max {
-        date
-      }
-      min {
         date
       }
     }

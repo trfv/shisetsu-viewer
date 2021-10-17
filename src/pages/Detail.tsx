@@ -1,5 +1,5 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { endOfMonth } from "date-fns/esm";
+import { endOfMonth, formatISO } from "date-fns/esm";
 import { ChangeEvent, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -154,25 +154,28 @@ const InstitutionTab = ({
 };
 
 const today = new Date();
+const toDate = (dateString: string) => {
+  const [year, month, date] = dateString.split("-").map((p) => Number(p));
+  return new Date(year, month - 1, date);
+};
+const formatDateIso = (value: Date) => formatISO(value, { representation: "date" });
 
 const ReservationTab = ({
   id,
   municipality,
-  minDate,
   maxDate,
 }: {
   id: string;
   municipality: string | undefined;
-  minDate: string | undefined;
   maxDate: string | undefined;
 }) => {
   const yearMonthChips = useMemo(
-    () => toYearMonthChips(new Date(minDate ?? today), new Date(maxDate ?? today)),
-    [minDate, maxDate]
+    () => toYearMonthChips(today, maxDate ? toDate(maxDate) : today),
+    [maxDate]
   );
   const [page, setPage] = useState(1);
-  const startDate = `${yearMonthChips[page].value}-01`;
-  const endDate = endOfMonth(new Date(startDate));
+  const startDate = page === 1 ? formatDateIso(today) : `${yearMonthChips[page].value}-01`;
+  const endDate = formatDateIso(endOfMonth(toDate(startDate)));
 
   const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
@@ -296,7 +299,6 @@ export default () => {
         <ReservationTab
           id={id}
           municipality={institutions_by_pk?.municipality}
-          minDate={reservations_aggregate?.aggregate?.min?.date}
           maxDate={reservations_aggregate?.aggregate?.max?.date}
         />
       </TabPanel>
