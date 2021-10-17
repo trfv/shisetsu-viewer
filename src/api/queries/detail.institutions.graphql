@@ -27,9 +27,6 @@ query detail_institution($id: uuid!) {
       max {
         date
       }
-      min {
-        date
-      }
     }
   }
 }
