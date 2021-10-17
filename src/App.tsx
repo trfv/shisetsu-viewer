@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { AuthGuardRoute } from "./components/utils/AuthGuardRoute";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
+import { SetVh } from "./components/utils/SetVh";
 import { ROUTES } from "./constants/routes";
 import { Loading } from "./pages/Loading";
 import { useAuth0 } from "./utils/auth0";
@@ -28,6 +29,7 @@ const App = () => {
         <CssBaseline />
         <ErrorBoundary>
           <BrowserRouter>
+            <SetVh />
             <ScrollToTop />
             <Header />
             <Suspense fallback={<Loading />}>

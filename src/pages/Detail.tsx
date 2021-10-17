@@ -383,6 +383,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   },
   [`.${classes.reservationContainer}`]: {
     marginTop: theme.spacing(3),
+    overflowScrolling: "auto",
   },
   [`.${classes.reservationNoData}`]: {
     width: "100%",

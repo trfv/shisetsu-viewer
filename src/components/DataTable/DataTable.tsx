@@ -1,5 +1,6 @@
 import type { MouseEvent } from "react";
 import { ROWS_PER_PAGE } from "../../constants/datatable";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
 import {
   Table,
@@ -51,6 +52,8 @@ export const DataTable = <T extends Row>({
   page,
   onPageChange,
 }: Props<T>) => {
+  const isMobile = useIsMobile();
+
   const cols = columns.filter((column) => !column.hide);
 
   return (
@@ -132,16 +135,18 @@ export const DataTable = <T extends Row>({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={rowCount}
-        rowsPerPageOptions={[ROWS_PER_PAGE]}
-        rowsPerPage={ROWS_PER_PAGE}
-        page={page}
-        onPageChange={onPageChange}
-        showFirstButton={true}
-        showLastButton={true}
-      />
+      {!isMobile && (
+        <TablePagination
+          component="div"
+          count={rowCount}
+          rowsPerPageOptions={[ROWS_PER_PAGE]}
+          rowsPerPage={ROWS_PER_PAGE}
+          page={page}
+          onPageChange={onPageChange}
+          showFirstButton={true}
+          showLastButton={true}
+        />
+      )}
     </>
   );
 };
