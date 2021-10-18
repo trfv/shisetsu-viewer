@@ -36,14 +36,12 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
-    width: 360,
     type: "getter",
     valueGetter: (params) => `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
     field: "municipality",
     headerName: "区",
-    width: 120,
     hide: true,
     type: "getter",
     valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
@@ -51,19 +49,16 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "capacity",
     headerName: "定員（人）",
-    width: 140,
     type: "number",
   },
   {
     field: "area",
     headerName: "面積（㎡）",
-    width: 140,
     type: "number",
   },
   {
     field: "weekday_usage_fee",
     headerName: "利用料金（平日）",
-    width: 480,
     hide: true,
     type: "getter",
     valueGetter: (params) =>
@@ -75,7 +70,6 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "holiday_usage_fee",
     headerName: "利用料金（休日）",
-    width: 480,
     hide: true,
     type: "getter",
     valueGetter: (params) =>
@@ -84,39 +78,34 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
         params.value as { division: string; fee: string }[]
       ),
   },
-  { field: "address", headerName: "住所", width: 240, hide: true, type: "string" },
+  { field: "address", headerName: "住所", hide: true, type: "string" },
   {
     field: "is_available_strings",
     headerName: "弦楽器",
-    width: 100,
     type: "getter",
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_woodwind",
     headerName: "木管楽器",
-    width: 100,
     type: "getter",
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_brass",
     headerName: "金管楽器",
-    width: 100,
     type: "getter",
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_available_percussion",
     headerName: "打楽器",
-    width: 100,
     type: "getter",
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
   },
   {
     field: "is_equipped_music_stand",
     headerName: "譜面台",
-    width: 100,
     hide: true,
     type: "getter",
     valueGetter: (params) => EquipmentDivisionMap[params.value as string],
@@ -124,7 +113,6 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "is_equipped_piano",
     headerName: "ピアノ",
-    width: 100,
     hide: true,
     type: "getter",
     valueGetter: (params) => EquipmentDivisionMap[params.value as string],
@@ -132,7 +120,6 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   {
     field: "updated_at",
     headerName: "更新日時",
-    width: 200,
     type: "datetime",
   },
 ];

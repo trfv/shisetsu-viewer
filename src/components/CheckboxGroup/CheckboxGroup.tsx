@@ -1,3 +1,4 @@
+import FormGroup from "@mui/material/FormGroup";
 import { ChangeEvent, Children, cloneElement, FC, ReactNode } from "react";
 import { box, BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
@@ -38,11 +39,9 @@ const mapChildren = (
 export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto", children }) => {
   const Box = box(size);
   return (
-    <Box display="flex" flexDirection="column">
+    <Box>
       <SmallLabel label={label} />
-      <Box component="div" display="flex" flexWrap="wrap" marginLeft="-12px">
-        {mapChildren(children, values, onChange)}
-      </Box>
+      <FormGroup row={true}>{mapChildren(children, values, onChange)}</FormGroup>
     </Box>
   );
 };

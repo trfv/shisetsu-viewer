@@ -272,16 +272,14 @@ export default () => {
         {loading ? (
           <Skeleton width={WIDTHS.large} height={40} />
         ) : (
-          <>
-            <h2>
-              {`${institutions_by_pk?.building ?? ""}\n${institutions_by_pk?.institution ?? ""}`}
-              {institutions_by_pk?.website_url && (
-                <IconButton href={institutions_by_pk?.website_url} target="_blank">
-                  <OpenInNewIcon />
-                </IconButton>
-              )}
-            </h2>
-          </>
+          <h2>
+            {`${institutions_by_pk?.building ?? ""}\n${institutions_by_pk?.institution ?? ""}`}
+            {institutions_by_pk?.website_url && (
+              <IconButton href={institutions_by_pk?.website_url} target="_blank">
+                <OpenInNewIcon />
+              </IconButton>
+            )}
+          </h2>
         )}
       </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
