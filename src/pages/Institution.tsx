@@ -275,7 +275,6 @@ const StyledInstitution = styled("main")(({ theme }) => ({
     maxWidth: CONTAINER_WIDTH,
     ".MuiTableContainer-root": {
       maxHeight: SEARCH_TABLE_HEIGHT,
-      overflowScrolling: "auto",
     },
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,

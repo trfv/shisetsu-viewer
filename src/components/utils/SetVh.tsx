@@ -2,7 +2,6 @@ import { FC, useLayoutEffect } from "react";
 
 // https://zenn.dev/tak_dcxi/articles/2ac77656aa94c2cd40bf
 const setFillHeight = () => {
-  console.log("calc");
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
 };
