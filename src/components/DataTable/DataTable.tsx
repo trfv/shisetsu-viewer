@@ -28,7 +28,7 @@ type Column<T> = {
   headerName: string;
   type: ColumnType;
   description?: string;
-  width: number;
+  maxWidth?: number;
   hide?: boolean;
   valueGetter?: (row: RowParams<T>) => string; // type = getter の時に設定する
 };
@@ -67,10 +67,9 @@ export const DataTable = <T extends Row>({
                   key={col.field}
                   variant="head"
                   size="small"
-                  width={col.width}
                   align={col.type === "number" ? "right" : "left"}
                   sx={{
-                    maxWidth: col.width,
+                    maxWidth: col.maxWidth,
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -119,7 +118,7 @@ export const DataTable = <T extends Row>({
                         size="small"
                         align={col.type === "number" ? "right" : "left"}
                         sx={{
-                          maxWidth: col.width,
+                          maxWidth: col.maxWidth,
                           whiteSpace: "nowrap",
                           overflow: "hidden",
                           textOverflow: "ellipsis",

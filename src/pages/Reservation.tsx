@@ -48,7 +48,6 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
-    width: 360,
     type: "getter",
     valueGetter: (params) =>
       `${params.row.institution?.building ?? ""} ${params.row.institution?.institution ?? ""}`,
@@ -56,7 +55,6 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "municipality",
     headerName: "地区",
-    width: 120,
     hide: true,
     type: "getter",
     valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
@@ -64,13 +62,12 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "date",
     headerName: "日付",
-    width: 160,
     type: "date",
   },
   {
     field: "reservation",
     headerName: "予約状況",
-    width: 520,
+    maxWidth: 480,
     type: "getter",
     valueGetter: (params) => {
       const municipality = params.row.institution?.municipality as SupportedMunicipality;
@@ -82,7 +79,6 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "updated_at",
     headerName: "取得日時",
-    width: 200,
     type: "datetime",
   },
 ];

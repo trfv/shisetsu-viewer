@@ -16,7 +16,6 @@ Basic.args = {
     {
       field: "building_and_institution",
       headerName: "名称",
-      width: 360,
       type: "getter",
       valueGetter: (params) =>
         `${params.row["building_system_name"] ?? ""} ${
@@ -26,7 +25,6 @@ Basic.args = {
     {
       field: "municipality",
       headerName: "地区",
-      width: 120,
       hide: true,
       type: "getter",
       valueGetter: (params) => params.value as string,
@@ -34,13 +32,11 @@ Basic.args = {
     {
       field: "date",
       headerName: "日付",
-      width: 160,
       type: "date",
     },
     {
       field: "updated_at",
       headerName: "取得日時",
-      width: 200,
       type: "datetime",
     },
   ],
