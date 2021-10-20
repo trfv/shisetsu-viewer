@@ -1,6 +1,6 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { endOfMonth, formatISO } from "date-fns/esm";
-import { ChangeEvent, useMemo, useState } from "react";
+import { formatISO } from "date-fns/esm";
+import { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Detail_InstitutionQuery,
@@ -21,14 +21,13 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
-import { YearMonthSelection } from "../components/YearMonthSelection";
 import { CONTAINER_WIDTH, WIDTHS } from "../constants/styles";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUUID } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import { ReservationDivisionMap, ReservationStatusMap } from "../utils/municipality";
-import { sortByReservationDivision, toYearMonthChips } from "../utils/reservation";
+import { sortByReservationDivision } from "../utils/reservation";
 import { styled } from "../utils/theme";
 
 const InstitutionTab = ({
@@ -169,13 +168,8 @@ const ReservationTab = ({
   municipality: string | undefined;
   maxDate: string | undefined;
 }) => {
-  const yearMonthChips = useMemo(
-    () => toYearMonthChips(today, maxDate ? toDate(maxDate) : today),
-    [maxDate]
-  );
-  const [page, setPage] = useState(1);
-  const startDate = page === 1 ? formatDateIso(today) : `${yearMonthChips[page].value}-01`;
-  const endDate = formatDateIso(endOfMonth(toDate(startDate)));
+  const startDate = formatDateIso(today);
+  const endDate = formatDateIso(maxDate ? toDate(maxDate) : today);
 
   const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
@@ -188,60 +182,57 @@ const ReservationTab = ({
   const { reservations } = data || {};
 
   return (
-    <>
-      <YearMonthSelection page={page} yearMonthChips={yearMonthChips} handleChange={setPage} />
-      <div className={classes.reservationContainer}>
-        {loading ? (
-          <div className={classes.reservationNoData}>
-            <Spinner />
-          </div>
-        ) : !municipality || !reservations?.length ? (
-          <div className={classes.reservationNoData}>表示するデータが存在しません</div>
-        ) : (
-          <TableContainer>
-            <Table stickyHeader={true}>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.reservationTableCell} variant="head" size="small">
-                    日付
+    <div className={classes.reservationContainer}>
+      {loading ? (
+        <div className={classes.reservationNoData}>
+          <Spinner />
+        </div>
+      ) : !municipality || !reservations?.length ? (
+        <div className={classes.reservationNoData}>表示するデータが存在しません</div>
+      ) : (
+        <TableContainer>
+          <Table stickyHeader={true}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.reservationTableCell} variant="head" size="small">
+                  日付
+                </TableCell>
+                {sortByReservationDivision(reservations[0]?.reservation).map(([division]) => (
+                  <TableCell
+                    key={division}
+                    className={classes.reservationTableCell}
+                    variant="head"
+                    size="small"
+                  >
+                    {ReservationDivisionMap[municipality]?.[division]}
                   </TableCell>
-                  {sortByReservationDivision(reservations[0]?.reservation).map(([division]) => (
-                    <TableCell
-                      key={division}
-                      className={classes.reservationTableCell}
-                      variant="head"
-                      size="small"
-                    >
-                      {ReservationDivisionMap[municipality]?.[division]}
+                ))}
+                <TableCell className={classes.reservationTableCell} variant="head" size="small">
+                  取得日時
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {reservations.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell className={classes.reservationTableCell} size="small">
+                    {formatMonthDate(row.date)}
+                  </TableCell>
+                  {sortByReservationDivision(row.reservation).map(([, status], i) => (
+                    <TableCell className={classes.reservationTableCell} key={i} size="small">
+                      {ReservationStatusMap[municipality]?.[status]}
                     </TableCell>
                   ))}
-                  <TableCell className={classes.reservationTableCell} variant="head" size="small">
-                    取得日時
+                  <TableCell className={classes.reservationTableCell} size="small">
+                    {formatDatetime(row.updated_at)}
                   </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {reservations.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell className={classes.reservationTableCell} size="small">
-                      {formatMonthDate(row.date)}
-                    </TableCell>
-                    {sortByReservationDivision(row.reservation).map(([, status], i) => (
-                      <TableCell className={classes.reservationTableCell} key={i} size="small">
-                        {ReservationStatusMap[municipality]?.[status]}
-                      </TableCell>
-                    ))}
-                    <TableCell className={classes.reservationTableCell} size="small">
-                      {formatDatetime(row.updated_at)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </div>
-    </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </div>
   );
 };
 
@@ -283,8 +274,9 @@ export default () => {
         )}
       </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
-        <Tab value="institution" label="施設情報" />
+        <Tab className={classes.tab} value="institution" label="施設情報" />
         <Tab
+          className={classes.tab}
           value="reservation"
           label="予約状況"
           disabled={!reservations_aggregate?.aggregate?.count}
@@ -309,6 +301,7 @@ const classes = {
   pageBox: `${PREFIX}-pageBox`,
   title: `${PREFIX}-title`,
   tabGroup: `${PREFIX}-tabGroup`,
+  tab: `${PREFIX}-tab`,
   tabPanel: `${PREFIX}-tabPanel`,
   institutionContainer: `${PREFIX}-institutionContainer`,
   institutionLeftArea: `${PREFIX}-institutionLeftArea`,
@@ -344,11 +337,18 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     padding: theme.spacing(0, 3),
     width: "100%",
     maxWidth: CONTAINER_WIDTH,
+    [theme.breakpoints.down("sm")]: {
+      marginInline: 0,
+      padding: 0,
+      width: "100%",
+      [`.${classes.tab}`]: {
+        width: "50%",
+      },
+    },
   },
   [`.${classes.tabPanel}`]: {
     marginTop: theme.spacing(5),
     marginInline: "auto",
-    padding: theme.spacing(0, 3),
     width: "100%",
     maxWidth: CONTAINER_WIDTH,
     [theme.breakpoints.down("sm")]: {
@@ -356,6 +356,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     },
   },
   [`.${classes.institutionContainer}`]: {
+    padding: theme.spacing(0, 3),
     display: "flex",
     justifyContent: "space-between",
   },
@@ -380,7 +381,10 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     },
   },
   [`.${classes.reservationContainer}`]: {
-    marginTop: theme.spacing(3),
+    padding: theme.spacing(0, 3),
+    [theme.breakpoints.down("sm")]: {
+      padding: 0,
+    },
   },
   [`.${classes.reservationNoData}`]: {
     width: "100%",
