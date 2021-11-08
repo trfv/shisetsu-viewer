@@ -1,5 +1,5 @@
 import { ChangeEvent, MouseEvent, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { InstitutionsQuery, useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
@@ -125,9 +125,10 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
 ];
 
 export default () => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const [values, setQueryParams] = useQueryParams(history, {
+  const [values, setQueryParams] = useQueryParams(navigate, location, {
     p: NumberParam,
     m: StringParam,
     a: StringsParam,
@@ -205,7 +206,7 @@ export default () => {
             rows={data?.institutions ?? []}
             columns={COLUMNS}
             onRowClick={(params) =>
-              params.row.id && history.push(ROUTES.detail.replace(":id", params.row.id as string))
+              params.row.id && navigate(ROUTES.detail.replace(":id", params.row.id as string))
             }
             rowCount={data?.institutions_aggregate.aggregate?.count ?? 0}
             page={page}

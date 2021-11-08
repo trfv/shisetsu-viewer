@@ -1,7 +1,7 @@
 import { lazy, Suspense, useMemo } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
-import { AuthGuardRoute } from "./components/utils/AuthGuardRoute";
+import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
 import { SetVh } from "./components/utils/SetVh";
@@ -32,15 +32,54 @@ const App = () => {
             <SetVh />
             <ScrollToTop />
             <Header />
-            <Suspense fallback={<Loading />}>
-              <Switch>
-                <Route path={ROUTES.waiting} component={Waiting} />
-                <AuthGuardRoute path={ROUTES.reservation} component={Reservation} exact />
-                <AuthGuardRoute path={ROUTES.institution} component={Institution} exact />
-                <AuthGuardRoute path={ROUTES.detail} component={Detail} exact />
-                <Route path={ROUTES.top} component={Top} exact />
-              </Switch>
-            </Suspense>
+            <Routes>
+              <Route
+                path={ROUTES.waiting}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Waiting />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.reservation}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <AuthGuard>
+                      <Reservation />
+                    </AuthGuard>
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.institution}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <AuthGuard>
+                      <Institution />
+                    </AuthGuard>
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.detail}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <AuthGuard>
+                      <Detail />
+                    </AuthGuard>
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.top}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Top />
+                  </Suspense>
+                }
+              />
+            </Routes>
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>

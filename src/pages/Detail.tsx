@@ -239,7 +239,7 @@ const ReservationTab = ({
 type Tab = "institution" | "reservation";
 
 export default () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<"id">();
   const [tab, setTab] = useState<Tab>("institution");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
 
@@ -247,7 +247,7 @@ export default () => {
     variables: { id },
   });
 
-  if (!isValidUUID(id)) {
+  if (!id || !isValidUUID(id)) {
     return null;
   }
 

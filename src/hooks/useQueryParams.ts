@@ -1,6 +1,6 @@
 import { formatISO, isValid } from "date-fns/esm";
-import * as H from "history";
 import { useCallback, useState } from "react";
+import type { Location, NavigateFunction } from "react-router-dom";
 
 export const NumberParam = {
   encode: (value: number) => (!!value || value === 0 ? value.toString() : null),
@@ -69,19 +69,23 @@ const toDecodedValues = <QPM extends QueryParamsMap>(qp: URLSearchParams, qpm: Q
 };
 
 export const useQueryParams = <QPM extends QueryParamsMap>(
-  history: H.History<H.LocationState>,
+  navigate: NavigateFunction,
+  location: Location,
   qpm: QPM
 ): [DecodedValues<QPM>, (args: DecodedValues<QPM>) => void] => {
-  const [qp, setQP] = useState(new URLSearchParams(history.location.search));
+  const [qp, setQP] = useState(new URLSearchParams(location.search));
 
   const setQueryParams = useCallback(
     (dv: DecodedValues<QPM>) => {
       setQP((prev) => {
         const next = toQueryParams(dv, prev, qpm);
-        history.replace({
-          pathname: history.location.pathname,
-          search: next.toString(),
-        });
+        navigate(
+          {
+            pathname: location.pathname,
+            search: next.toString(),
+          },
+          { replace: true }
+        );
         return next;
       });
     },
