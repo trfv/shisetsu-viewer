@@ -25,7 +25,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <p>
             以下のボタンを押して再実行してください。何度も発生する場合は管理者にお問い合わせください。
           </p>
-          <button onClick={() => window.location.reload()}>再実行する</button>
+          <button onClick={() => window.location.assign(window.location.origin)}>再実行する</button>
           <details style={{ marginTop: "40px" }}>{String(this.state.error)}</details>
         </div>
       );
