@@ -1,5 +1,6 @@
 import { ConfigEnv, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => ({
@@ -10,25 +11,25 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
       output: {
         esModule: true,
         manualChunks: {
-          "react": ["react"],
-          "react-dom": ["react-dom"],
-          "react-router": ["react-router"],
-          "react-router-dom": ["react-router-dom"],
-          "@auth0/auth0-spa-js": ["@auth0/auth0-spa-js"],
-          "graphql": ["graphql"],
-          "@apollo/client": ["@apollo/client"],
-          "date-fns": ["date-fns"],
-          "@emotion/react": ["@emotion/react"],
-          "@emotion/styled": ["@emotion/styled"],
-          "@mui/material": ["@mui/material"],
-          "@mui/icons-material": ["@mui/icons-material"],
-          "@mui/lab": ["@mui/lab"],
-          "markdown-to-jsx": ["markdown-to-jsx"]
+          react: ["react", "react-dom", "react-router", "react-router-dom"],
+          mui: ["@mui/material", "@mui/icons-material", "@mui/lab"],
         },
         chunkFileNames: "assets/[hash].js",
         assetFileNames: (info) => info.name.includes("woff") ? "assets/[name][extname]" : "assets/[hash][extname]",
       }
     }
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    ...(mode === "analyze" ? [
+      visualizer(
+        {
+          open: true,
+          filename: "build/stats.html",
+          gzipSize: true,
+          brotliSize: true,
+        }
+      )
+    ] : []),
+  ],
 }))
