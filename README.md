@@ -1,5 +1,5 @@
 # Shisetsu Viewer
-https://shisetsu-viewer.pages.dev/
+https://app.shisetsudb.com
 
 ## はじめに
 - このサイトは音楽練習が可能な公共施設の予約状況・施設情報を閲覧するためのものです。
