@@ -173,7 +173,7 @@ const ReservationTab = ({
 
   const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
 
   if (error) {
