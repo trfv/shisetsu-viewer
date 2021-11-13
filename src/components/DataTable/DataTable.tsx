@@ -1,16 +1,7 @@
-import type { MouseEvent } from "react";
-import { ROWS_PER_PAGE } from "../../constants/datatable";
-import { useIsMobile } from "../../hooks/useIsMobile";
+import { useEffect, useRef } from "react";
 import { formatDate, formatDatetime } from "../../utils/format";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-} from "../Table";
+import { Skeleton } from "../Skeleton";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
 
 type Row = { id: string } & { [key: string]: unknown };
 
@@ -39,20 +30,32 @@ type Props<T> = {
   columns: Columns<T>;
   rows: T[];
   onRowClick?: (params: RowParams<T>) => void;
-  rowCount: number;
-  page: number;
-  onPageChange: (event: MouseEvent<HTMLButtonElement> | null, page: number) => void;
+  fetchMore?: () => Promise<void>;
+  hasNextPage?: boolean;
 };
 
 export const DataTable = <T extends Row>({
   columns,
   rows,
   onRowClick,
-  rowCount,
-  page,
-  onPageChange,
+  fetchMore,
+  hasNextPage,
 }: Props<T>) => {
-  const isMobile = useIsMobile();
+  const target = useRef<HTMLTableRowElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries[0].isIntersecting && fetchMore?.()
+    );
+    const element = target && target.current;
+    if (!element) {
+      return;
+    }
+    observer.observe(element);
+    return () => {
+      observer.unobserve(element);
+    };
+  }, [target.current, fetchMore]);
 
   const cols = columns.filter((column) => !column.hide);
 
@@ -81,10 +84,11 @@ export const DataTable = <T extends Row>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => {
+            {rows.map((row, index) => {
               const rowParams = { id: row.id, value: undefined, row, columns };
               return (
                 <TableRow
+                  ref={index === rows.length - 20 ? target : undefined}
                   key={row.id}
                   hover={true}
                   onClick={() => onRowClick?.(rowParams)}
@@ -131,21 +135,18 @@ export const DataTable = <T extends Row>({
                 </TableRow>
               );
             })}
+            {hasNextPage && (
+              <TableRow>
+                {cols.map((_, index) => (
+                  <TableCell key={index} size="small">
+                    <Skeleton />
+                  </TableCell>
+                ))}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      {!isMobile && (
-        <TablePagination
-          component="div"
-          count={rowCount}
-          rowsPerPageOptions={[ROWS_PER_PAGE]}
-          rowsPerPage={ROWS_PER_PAGE}
-          page={page}
-          onPageChange={onPageChange}
-          showFirstButton={true}
-          showLastButton={true}
-        />
-      )}
     </>
   );
 };

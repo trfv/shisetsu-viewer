@@ -112,7 +112,6 @@ export const getResevationSearchFilterFromUrlParam = (
 };
 
 export type ReservationSearchParams = {
-  page: number;
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   startDate: Date;
   endDate: Date;
@@ -120,7 +119,6 @@ export type ReservationSearchParams = {
 };
 
 export const toReservationSearchParams = (
-  p: number | null | undefined,
   m: string | null | undefined,
   df: Date | null | undefined,
   dt: Date | null | undefined,
@@ -129,7 +127,6 @@ export const toReservationSearchParams = (
   maxDate: Date
 ): ReservationSearchParams => {
   return {
-    page: p ?? 0,
     municipality: getMunicipalityFromUrlParam(m),
     startDate:
       df &&
@@ -148,7 +145,6 @@ export const toReservationSearchParams = (
 };
 
 export const toReservationQueryVariables = ({
-  page,
   municipality,
   startDate,
   endDate,
@@ -161,7 +157,7 @@ export const toReservationQueryVariables = ({
     filter.includes(IS_ONLY_EVENING_VACANT),
   ];
   return {
-    offset: page * ROWS_PER_PAGE,
+    offset: 0,
     limit: ROWS_PER_PAGE,
     municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     startDate: startDate?.toDateString(),

@@ -48,6 +48,4 @@ Basic.args = {
     date: `2021-01-${String(i + 1).padStart(2, "0")}`,
     updated_at: `2021-01-${String(i + 1).padStart(2, "0")}`,
   })),
-  page: 0,
-  rowCount: 20,
 };

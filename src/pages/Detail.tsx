@@ -173,6 +173,7 @@ const ReservationTab = ({
 
   const { loading, data, error } = useDetail_ReservationsQuery({
     variables: { id, startDate, endDate },
+    fetchPolicy: "network-only",
   });
 
   if (error) {
@@ -264,7 +265,7 @@ export default () => {
           <Skeleton width={WIDTHS.large} height={40} />
         ) : (
           <h2>
-            {`${institutions_by_pk?.building ?? ""}\n${institutions_by_pk?.institution ?? ""}`}
+            {`${institutions_by_pk?.building ?? ""} ${institutions_by_pk?.institution ?? ""}`}
             {institutions_by_pk?.website_url && (
               <IconButton href={institutions_by_pk?.website_url} target="_blank">
                 <OpenInNewIcon />
@@ -328,9 +329,6 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
     width: "100%",
     minHeight: 80,
     maxWidth: CONTAINER_WIDTH,
-    [theme.breakpoints.down("sm")]: {
-      whiteSpace: "pre-line",
-    },
   },
   [`.${classes.tabGroup}`]: {
     marginInline: "auto",

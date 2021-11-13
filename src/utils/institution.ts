@@ -36,25 +36,21 @@ const getAvailableInstrumentFromUrlParam = (
 };
 
 export type InstitutionSearchParams = {
-  page: number;
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
 };
 
 export const toInstitutionSearchParams = (
-  p: number | null | undefined,
   m: string | null | undefined,
   a: string[] | null | undefined
 ): InstitutionSearchParams => {
   return {
-    page: p ?? 0,
     municipality: getMunicipalityFromUrlParam(m),
     availableInstruments: getAvailableInstrumentFromUrlParam(a),
   };
 };
 
 export const toInstitutionQueryVariables = ({
-  page,
   municipality,
   availableInstruments,
 }: InstitutionSearchParams): InstitutionsQueryVariables => {
@@ -65,7 +61,7 @@ export const toInstitutionQueryVariables = ({
     availableInstruments.includes(PERCUSSION),
   ];
   return {
-    offset: page * ROWS_PER_PAGE,
+    offset: 0,
     limit: ROWS_PER_PAGE,
     municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,

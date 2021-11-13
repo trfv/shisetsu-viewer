@@ -1,7 +1,7 @@
-/** XS: 0px ~ 599px, and so on. */
+/** XS: 0px ~ 679px, and so on. */
 export const BREAKPOINTS = {
   xs: 0,
-  sm: 600,
+  sm: 680,
   md: 960,
   lg: 1280,
   xl: 1920,
@@ -23,4 +23,4 @@ export const FONT_SIZE = {
 
 export const HEADER_HEIGHT = 72;
 export const SEARCH_TABLE_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + 280}px)`;
-export const SEARCH_TABLE_HEIGHT_MOBILE = `calc(var(--vh, 1vh) * 100 - ${HEADER_HEIGHT + 160}px)`;
+export const SEARCH_TABLE_HEIGHT_MOBILE = `calc(100vh - ${HEADER_HEIGHT + 160}px)`;
