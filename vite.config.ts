@@ -11,7 +11,7 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
       output: {
         esModule: true,
         manualChunks: {
-          react: ["react", "react-dom", "react-router", "react-router-dom"],
+          react: ["react", "react-dom", "react-router-dom"],
           mui: ["@mui/material", "@mui/icons-material", "@mui/lab"],
         },
         chunkFileNames: "assets/[hash].js",

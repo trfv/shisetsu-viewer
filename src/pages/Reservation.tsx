@@ -1,6 +1,6 @@
 import { max, min } from "date-fns";
 import { addMonths, endOfMonth } from "date-fns/esm";
-import { ChangeEvent, MouseEvent, useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
@@ -16,13 +16,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import {
-  DateParam,
-  NumberParam,
-  StringParam,
-  StringsParam,
-  useQueryParams,
-} from "../hooks/useQueryParams";
+import { DateParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import {
   convertMunicipalityToUrlParam,
   MunicipalityOptions,
@@ -88,7 +82,6 @@ export default () => {
   const location = useLocation();
 
   const [values, setQueryParams] = useQueryParams(navigate, location, {
-    p: NumberParam,
     m: StringParam,
     df: DateParam,
     dt: DateParam,
@@ -96,7 +89,6 @@ export default () => {
   });
 
   const resevationSearchParams = toReservationSearchParams(
-    values.p,
     values.m,
     values.df,
     values.dt,
@@ -104,30 +96,31 @@ export default () => {
     minDate,
     maxDate
   );
-  const { loading, data, error } = useReservationsQuery({
+  const { loading, data, error, fetchMore } = useReservationsQuery({
     variables: toReservationQueryVariables(resevationSearchParams),
+    fetchPolicy: "network-only",
   });
 
   if (error) {
     throw new Error(error.message);
   }
 
-  const { page, municipality, startDate, endDate, filter } = resevationSearchParams;
+  const { municipality, startDate, endDate, filter } = resevationSearchParams;
 
   const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
-    setQueryParams({ p: 0, m: convertMunicipalityToUrlParam(event.target.value) });
+    setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
   }, []);
 
   const handleStartDateChange = useCallback(
     (date: Date | null): void => {
-      setQueryParams({ p: 0, df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
+      setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
     },
     [maxDate, endDate]
   );
 
   const handleEndDateChange = useCallback(
     (date: Date | null): void => {
-      setQueryParams({ p: 0, df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
+      setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
     },
     [minDate, startDate]
   );
@@ -138,16 +131,9 @@ export default () => {
       const next = checked
         ? filter.concat(value as ReservationSearchFilter)
         : filter.filter((v) => v !== value);
-      setQueryParams({ p: 0, f: next });
+      setQueryParams({ f: next });
     },
     [filter]
-  );
-
-  const handleChangePage = useCallback(
-    (_: MouseEvent<HTMLButtonElement> | null, page: number): void => {
-      setQueryParams({ p: page });
-    },
-    []
   );
 
   return (
@@ -201,9 +187,14 @@ export default () => {
               params.row.institution?.id &&
               navigate(ROUTES.detail.replace(":id", params.row.institution.id as string))
             }
-            rowCount={data?.reservations_aggregate.aggregate?.count ?? 0}
-            page={page}
-            onPageChange={handleChangePage}
+            fetchMore={async () => {
+              fetchMore({
+                variables: {
+                  offset: data?.reservations.length,
+                },
+              });
+            }}
+            hasNextPage={data.reservations.length !== data?.reservations_aggregate.aggregate?.count} // Relay Styleにするときに直す
           />
         )}
       </div>

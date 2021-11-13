@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InstitutionsQuery, useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
@@ -13,7 +13,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import { NumberParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
+import { StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
   AvailableInstrument,
@@ -129,13 +129,12 @@ export default () => {
   const location = useLocation();
 
   const [values, setQueryParams] = useQueryParams(navigate, location, {
-    p: NumberParam,
     m: StringParam,
     a: StringsParam,
   });
 
-  const institutionSearchParams = toInstitutionSearchParams(values.p, values.m, values.a);
-  const { loading, data, error } = useInstitutionsQuery({
+  const institutionSearchParams = toInstitutionSearchParams(values.m, values.a);
+  const { loading, data, error, fetchMore } = useInstitutionsQuery({
     variables: toInstitutionQueryVariables(institutionSearchParams),
   });
 
@@ -143,10 +142,10 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { page, municipality, availableInstruments } = institutionSearchParams;
+  const { municipality, availableInstruments } = institutionSearchParams;
 
   const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
-    setQueryParams({ p: 0, m: convertMunicipalityToUrlParam(event.target.value) });
+    setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
   }, []);
 
   const handleAvailableInstrumentsChange = useCallback(
@@ -155,16 +154,9 @@ export default () => {
       const next = checked
         ? availableInstruments.concat(value as AvailableInstrument)
         : availableInstruments.filter((v) => v !== value);
-      setQueryParams({ p: 0, a: next });
+      setQueryParams({ a: next });
     },
     [availableInstruments]
-  );
-
-  const handleChangePage = useCallback(
-    (_: MouseEvent<HTMLButtonElement> | null, page: number): void => {
-      setQueryParams({ p: page });
-    },
-    []
   );
 
   return (
@@ -208,9 +200,14 @@ export default () => {
             onRowClick={(params) =>
               params.row.id && navigate(ROUTES.detail.replace(":id", params.row.id as string))
             }
-            rowCount={data?.institutions_aggregate.aggregate?.count ?? 0}
-            page={page}
-            onPageChange={handleChangePage}
+            fetchMore={async () => {
+              fetchMore({
+                variables: {
+                  offset: data?.institutions.length,
+                },
+              });
+            }}
+            hasNextPage={data.institutions.length !== data?.institutions_aggregate.aggregate?.count} // Relay Styleにするときに直す
           />
         )}
       </div>
