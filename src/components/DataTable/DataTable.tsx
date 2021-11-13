@@ -89,7 +89,7 @@ export const DataTable = <T extends Row>({
               return (
                 <TableRow
                   ref={index === rows.length - 20 ? target : undefined}
-                  key={row.id}
+                  key={`${row.id}-${index}`} // FIXME
                   hover={true}
                   onClick={() => onRowClick?.(rowParams)}
                   style={{ cursor: "pointer" }}
@@ -117,7 +117,7 @@ export const DataTable = <T extends Row>({
                     }
                     return (
                       <TableCell
-                        key={`${row.id}-${col.field}}`}
+                        key={`${row.id}-${col.field}`}
                         variant="body"
                         size="small"
                         align={col.type === "number" ? "right" : "left"}

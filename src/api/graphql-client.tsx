@@ -967,6 +967,7 @@ export const InstitutionsDocument = gql`
     offset: $offset
     limit: $limit
     where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
+    order_by: {municipality: asc, building: asc}
   ) {
     id
     municipality
@@ -1029,7 +1030,7 @@ export const ReservationsDocument = gql`
     offset: $offset
     limit: $limit
     where: {_and: {institution: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
-    order_by: {date: asc}
+    order_by: {date: asc, id: desc}
   ) {
     id
     date

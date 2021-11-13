@@ -27,7 +27,7 @@ query reservations(
         { reservation: { _contains: $reservationStatus4 } }
       ]
     }
-    order_by: { date: asc }
+    order_by: { date: asc, id: desc }
   ) {
     id
     date
