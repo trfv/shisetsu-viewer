@@ -2,15 +2,10 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns/esm";
 import { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Detail_InstitutionQuery,
-  useDetail_InstitutionQuery,
-  useDetail_ReservationsQuery,
-} from "../api/graphql-client";
+import { DetailQuery, useDetailQuery } from "../api/graphql-client";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
-import { Spinner } from "../components/Spinner";
 import { Tab } from "../components/Tab";
 import { TabGroup, TabPanel } from "../components/TabGroup";
 import {
@@ -34,7 +29,7 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution: Detail_InstitutionQuery["institutions_by_pk"] | undefined;
+  institution: DetailQuery["institutions_by_pk"] | undefined;
   loading: boolean;
 }) => {
   return (
@@ -152,43 +147,16 @@ const InstitutionTab = ({
   );
 };
 
-const today = new Date();
-const toDate = (dateString: string) => {
-  const [year, month, date] = dateString.split("-").map((p) => Number(p));
-  return new Date(year, month - 1, date);
-};
-const formatDateIso = (value: Date) => formatISO(value, { representation: "date" });
-
 const ReservationTab = ({
-  id,
   municipality,
-  maxDate,
+  reservations,
 }: {
-  id: string;
   municipality: string | undefined;
-  maxDate: string | undefined;
+  reservations: DetailQuery["reservations"] | undefined;
 }) => {
-  const startDate = formatDateIso(today);
-  const endDate = formatDateIso(maxDate ? toDate(maxDate) : today);
-
-  const { loading, data, error } = useDetail_ReservationsQuery({
-    variables: { id, startDate, endDate },
-    fetchPolicy: "no-cache",
-  });
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  const { reservations } = data || {};
-
   return (
     <div className={classes.reservationContainer}>
-      {loading ? (
-        <div className={classes.reservationNoData}>
-          <Spinner />
-        </div>
-      ) : !municipality || !reservations?.length ? (
+      {!municipality || !reservations?.length ? (
         <div className={classes.reservationNoData}>表示するデータが存在しません</div>
       ) : (
         <TableContainer>
@@ -239,13 +207,19 @@ const ReservationTab = ({
 
 type Tab = "institution" | "reservation";
 
+const today = new Date();
+const formatDateIso = (value: Date) => formatISO(value, { representation: "date" });
+
 export default () => {
   const { id } = useParams<"id">();
   const [tab, setTab] = useState<Tab>("institution");
   const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
 
-  const { loading, data, error } = useDetail_InstitutionQuery({
-    variables: { id },
+  const startDate = formatDateIso(today);
+
+  const { loading, data, error } = useDetailQuery({
+    variables: { id, startDate },
+    fetchPolicy: "no-cache",
   });
 
   if (!id || !isValidUUID(id)) {
@@ -256,7 +230,7 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { institutions_by_pk, reservations_aggregate } = data || {};
+  const { institutions_by_pk, reservations } = data || {};
 
   return (
     <StyledInstitutionDetail className={classes.pageBox}>
@@ -280,7 +254,7 @@ export default () => {
           className={classes.tab}
           value="reservation"
           label="予約状況"
-          disabled={!reservations_aggregate?.aggregate?.count}
+          disabled={!reservations?.length}
         />
       </TabGroup>
       <TabPanel className={classes.tabPanel} tabValue="institution" currentValue={tab}>
@@ -288,9 +262,8 @@ export default () => {
       </TabPanel>
       <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
         <ReservationTab
-          id={id}
           municipality={institutions_by_pk?.municipality}
-          maxDate={reservations_aggregate?.aggregate?.max?.date}
+          reservations={reservations}
         />
       </TabPanel>
     </StyledInstitutionDetail>
