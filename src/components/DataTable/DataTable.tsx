@@ -88,7 +88,7 @@ export const DataTable = <T extends Row>({
               const rowParams = { id: row.id, value: undefined, row, columns };
               return (
                 <TableRow
-                  ref={index === rows.length - 20 ? target : undefined}
+                  ref={index === rows.length - 50 ? target : undefined}
                   key={`${row.id}-${index}`} // FIXME
                   hover={true}
                   onClick={() => onRowClick?.(rowParams)}

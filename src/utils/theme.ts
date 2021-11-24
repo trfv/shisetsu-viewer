@@ -32,6 +32,9 @@ const COMMON_THEME_OPTION: ThemeOptions = {
           min-height: 100vh;
           min-height: -webkit-fill-available;
         }
+        ul {
+          padding-inline-start: 16px;
+        }
         @font-face {
           font-family: "Roboto";
           font-style: normal;
