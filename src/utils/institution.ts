@@ -1,5 +1,4 @@
 import { InstitutionsQueryVariables } from "../api/graphql-client";
-import { ROWS_PER_PAGE } from "../constants/datatable";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import { FeeDivisionMap, getMunicipalityFromUrlParam, SELECT_OPTION_ALL } from "./municipality";
@@ -69,7 +68,7 @@ export const toInstitutionQueryVariables = ({
   ];
   return {
     offset: 0,
-    limit: ROWS_PER_PAGE,
+    limit: 100,
     municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,

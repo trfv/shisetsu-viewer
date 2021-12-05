@@ -1,6 +1,14 @@
-import type { Auth0ClientOptions, LogoutOptions, RedirectLoginOptions } from "@auth0/auth0-spa-js";
-import { Auth0Client } from "@auth0/auth0-spa-js";
+import {
+  Auth0Client,
+  Auth0ClientOptions,
+  LogoutOptions,
+  RedirectLoginOptions,
+  User,
+} from "@auth0/auth0-spa-js";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+
+type Role = "user" | "anonymous";
+const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
 
 interface Auth0Context {
   isLoading: boolean;
@@ -29,7 +37,10 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
       try {
         await auth0Client.checkSession();
         const token = await getToken();
-        setToken(token);
+        if (token) {
+          await validateRole();
+          setToken(token);
+        }
       } catch (e) {
         console.info(e);
       } finally {
@@ -45,6 +56,13 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
       return token.id_token;
     } catch (e) {
       return "";
+    }
+  }, [auth0Client]);
+
+  const validateRole = useCallback(async () => {
+    const user = await auth0Client.getUser<User & { [ROLE_NAMESPACE]: Role }>();
+    if (!user?.[ROLE_NAMESPACE] || user[ROLE_NAMESPACE] === "anonymous") {
+      auth0Client.logout();
     }
   }, [auth0Client]);
 

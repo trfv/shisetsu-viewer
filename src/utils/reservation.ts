@@ -1,7 +1,6 @@
 import { isAfter, isSameDay } from "date-fns";
 import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns/esm";
 import { ReservationsQueryVariables } from "../api/graphql-client";
-import { ROWS_PER_PAGE } from "../constants/datatable";
 import { ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
   getMunicipalityFromUrlParam,
@@ -165,7 +164,7 @@ export const toReservationQueryVariables = ({
   ];
   return {
     offset: 0,
-    limit: ROWS_PER_PAGE,
+    limit: 100,
     municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
