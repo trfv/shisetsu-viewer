@@ -89,16 +89,23 @@ export const formatReservationMap = (
     .join("\n");
 };
 
-export const IS_ONLY_HOLIDAY = "h";
-export const IS_ONLY_MORNING_VACANT = "m";
-export const IS_ONLY_AFTERNOON_VACANT = "a";
-export const IS_ONLY_EVENING_VACANT = "e";
+const IS_ONLY_MORNING_VACANT = "m";
+const IS_ONLY_AFTERNOON_VACANT = "a";
+const IS_ONLY_EVENING_VACANT = "e";
+const IS_ONLY_HOLIDAY = "h";
+
+export const RESERVATION_SEARCH_FILTER_MAP = {
+  [IS_ONLY_MORNING_VACANT]: "午前空き",
+  [IS_ONLY_AFTERNOON_VACANT]: "午後空き",
+  [IS_ONLY_EVENING_VACANT]: "夜間空き",
+  [IS_ONLY_HOLIDAY]: "休日のみ",
+} as const;
 
 const ReservationSearchFilters = [
-  IS_ONLY_HOLIDAY,
   IS_ONLY_MORNING_VACANT,
   IS_ONLY_AFTERNOON_VACANT,
   IS_ONLY_EVENING_VACANT,
+  IS_ONLY_HOLIDAY,
 ] as const;
 
 export type ReservationSearchFilter = typeof ReservationSearchFilters[number];
@@ -151,10 +158,10 @@ export const toReservationQueryVariables = ({
   filter,
 }: ReservationSearchParams): ReservationsQueryVariables => {
   const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
-    filter.includes(IS_ONLY_HOLIDAY),
     filter.includes(IS_ONLY_MORNING_VACANT),
     filter.includes(IS_ONLY_AFTERNOON_VACANT),
     filter.includes(IS_ONLY_EVENING_VACANT),
+    filter.includes(IS_ONLY_HOLIDAY),
   ];
   return {
     offset: 0,

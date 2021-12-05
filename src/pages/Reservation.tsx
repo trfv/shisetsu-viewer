@@ -17,6 +17,7 @@ import {
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
 import { DateParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
+import { formatDate } from "../utils/format";
 import {
   convertMunicipalityToUrlParam,
   MunicipalityOptions,
@@ -25,11 +26,8 @@ import {
 } from "../utils/municipality";
 import {
   formatReservationMap,
-  IS_ONLY_AFTERNOON_VACANT,
-  IS_ONLY_EVENING_VACANT,
-  IS_ONLY_HOLIDAY,
-  IS_ONLY_MORNING_VACANT,
   ReservationSearchFilter,
+  RESERVATION_SEARCH_FILTER_MAP,
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
@@ -136,11 +134,21 @@ export default () => {
     [filter]
   );
 
+  const chips = [
+    ...(municipality === "all"
+      ? []
+      : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
+    `${formatDate(startDate)} 〜 ${formatDate(endDate)}`,
+    ...Object.entries(RESERVATION_SEARCH_FILTER_MAP)
+      .filter(([v]) => filter.includes(v as ReservationSearchFilter))
+      .map(([, label]) => label),
+  ];
+
   return (
     <StyledReservation className={classes.pageBox}>
       <div className={classes.searchBox}>
         <div className={classes.searchBoxForm}>
-          <SearchForm>
+          <SearchForm chips={chips}>
             <Select
               label="区"
               value={municipality}
@@ -164,10 +172,9 @@ export default () => {
               }}
             />
             <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
-              <Checkbox label="午前空き" value={IS_ONLY_MORNING_VACANT} />
-              <Checkbox label="午後空き" value={IS_ONLY_AFTERNOON_VACANT} />
-              <Checkbox label="夜間空き" value={IS_ONLY_EVENING_VACANT} />
-              <Checkbox label="休日のみ" value={IS_ONLY_HOLIDAY} />
+              {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
+                <Checkbox key={value} label={label} value={value} />
+              ))}
             </CheckboxGroup>
           </SearchForm>
         </div>
@@ -220,6 +227,7 @@ const StyledReservation = styled("main")(({ theme }) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(3, 0),
+      gap: theme.spacing(3),
     },
   },
   [`.${classes.searchBox}`]: {
