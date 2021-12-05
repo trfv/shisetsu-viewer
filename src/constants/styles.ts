@@ -22,5 +22,5 @@ export const FONT_SIZE = {
 };
 
 export const HEADER_HEIGHT = 72;
-export const SEARCH_TABLE_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + 280}px)`;
+export const SEARCH_TABLE_HEIGHT = `calc(100vh - ${HEADER_HEIGHT + 240}px)`;
 export const SEARCH_TABLE_HEIGHT_MOBILE = `calc(100vh - ${HEADER_HEIGHT + 160}px)`;

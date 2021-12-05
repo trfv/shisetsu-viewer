@@ -59,11 +59,14 @@ const StyledHeader = styled("header")(({ theme }) => ({
   },
   [`.${classes.toolbar}`]: {
     marginInline: "auto",
-    padding: theme.spacing(2),
+    padding: theme.spacing(2, 0),
     maxWidth: CONTAINER_WIDTH,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2, 1),
+    },
   },
   [`.${classes.logoAndMenu}`]: {
     height: 40,

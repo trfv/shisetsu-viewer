@@ -17,13 +17,10 @@ import { StringParam, StringsParam, useQueryParams } from "../hooks/useQueryPara
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
   AvailableInstrument,
-  BRASS,
+  AVAILABLE_INSTRUMENT_MAP,
   formatUsageFee,
-  PERCUSSION,
-  STRINGS,
   toInstitutionQueryVariables,
   toInstitutionSearchParams,
-  WOODWIND,
 } from "../utils/institution";
 import {
   convertMunicipalityToUrlParam,
@@ -41,7 +38,7 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
   },
   {
     field: "municipality",
-    headerName: "区",
+    headerName: "地区",
     hide: true,
     type: "getter",
     valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
@@ -159,11 +156,20 @@ export default () => {
     [availableInstruments]
   );
 
+  const chips = [
+    ...(municipality === "all"
+      ? []
+      : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
+    ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
+      .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
+      .map(([, label]) => label),
+  ];
+
   return (
     <StyledInstitution className={classes.pageBox}>
       <div className={classes.searchBox}>
         <div className={classes.searchBoxForm}>
-          <SearchForm>
+          <SearchForm chips={chips}>
             <Select
               label="区"
               value={municipality}
@@ -178,10 +184,9 @@ export default () => {
               values={availableInstruments}
               onChange={handleAvailableInstrumentsChange}
             >
-              <Checkbox label="弦楽器" value={STRINGS} />
-              <Checkbox label="木管楽器" value={WOODWIND} />
-              <Checkbox label="金管楽器" value={BRASS} />
-              <Checkbox label="打楽器" value={PERCUSSION} />
+              {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
+                <Checkbox key={value} label={label} value={value} />
+              ))}
             </CheckboxGroup>
           </SearchForm>
         </div>
@@ -233,6 +238,7 @@ const StyledInstitution = styled("main")(({ theme }) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(3, 0),
+      gap: theme.spacing(3),
     },
   },
   [`.${classes.searchBox}`]: {

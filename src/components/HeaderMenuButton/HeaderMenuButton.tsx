@@ -1,3 +1,4 @@
+import Close from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import { useCallback, useState } from "react";
@@ -20,8 +21,8 @@ export const HeaderMenuButton = () => {
       </IconButton>
       <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
         <StyledMenu>
-          <IconButton onClick={toggleDrawer}>
-            <MenuIcon />
+          <IconButton onClick={toggleDrawer} edge="start">
+            <Close />
           </IconButton>
           <Link to={ROUTES.reservation} onClick={toggleDrawer}>
             予約検索

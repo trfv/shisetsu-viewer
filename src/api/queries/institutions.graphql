@@ -17,7 +17,7 @@ query institutions(
       is_available_brass: { _eq: $isAvailableBrass }
       is_available_percussion: { _eq: $isAvailablePercussion }
     }
-    order_by: { municipality: asc, building: asc }
+    order_by: { municipality: asc, building_kana: asc, institution_kana: asc }
   ) {
     id
     municipality
