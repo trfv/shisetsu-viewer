@@ -34,6 +34,7 @@ const COMMON_THEME_OPTION: ThemeOptions = {
         }
         ul {
           padding-inline-start: 16px;
+          margin-bottom: 32px;
         }
         @font-face {
           font-family: "Roboto";

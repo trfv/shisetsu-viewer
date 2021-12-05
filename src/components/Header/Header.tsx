@@ -59,7 +59,7 @@ const StyledHeader = styled("header")(({ theme }) => ({
   },
   [`.${classes.toolbar}`]: {
     marginInline: "auto",
-    padding: theme.spacing(2, 0),
+    padding: theme.spacing(2),
     maxWidth: CONTAINER_WIDTH,
     display: "flex",
     alignItems: "center",
