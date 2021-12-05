@@ -45,6 +45,7 @@
     "@types/react-router-dom": "5.3.2",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
+    "dotenv": "10.0.0",
     "eslint": "8.4.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-react": "7.27.1",
@@ -64,7 +65,7 @@
     "web-vitals": "2.1.2"
   },
   "scripts": {
-    "generate": "DOTENV_CONFIG_PATH=.env.local graphql-codegen -r dotenv/config --config ./src/api/config.yml",
+    "generate": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --require dotenv/config --config ./src/api/config.yml",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",

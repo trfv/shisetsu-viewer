@@ -155,6 +155,7 @@ export type Institutions = {
   address: Scalars['String'];
   area?: Maybe<Scalars['numeric']>;
   building: Scalars['String'];
+  building_kana: Scalars['String'];
   building_system_name?: Maybe<Scalars['String']>;
   capacity?: Maybe<Scalars['Int']>;
   created_at: Scalars['timestamp'];
@@ -162,6 +163,7 @@ export type Institutions = {
   holiday_usage_fee: Scalars['jsonb'];
   id: Scalars['uuid'];
   institution: Scalars['String'];
+  institution_kana: Scalars['String'];
   institution_system_name?: Maybe<Scalars['String']>;
   is_available_brass: Scalars['availavility_division'];
   is_available_percussion: Scalars['availavility_division'];
@@ -236,6 +238,7 @@ export type Institutions_Bool_Exp = {
   address?: InputMaybe<String_Comparison_Exp>;
   area?: InputMaybe<Numeric_Comparison_Exp>;
   building?: InputMaybe<String_Comparison_Exp>;
+  building_kana?: InputMaybe<String_Comparison_Exp>;
   building_system_name?: InputMaybe<String_Comparison_Exp>;
   capacity?: InputMaybe<Int_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
@@ -243,6 +246,7 @@ export type Institutions_Bool_Exp = {
   holiday_usage_fee?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   institution?: InputMaybe<String_Comparison_Exp>;
+  institution_kana?: InputMaybe<String_Comparison_Exp>;
   institution_system_name?: InputMaybe<String_Comparison_Exp>;
   is_available_brass?: InputMaybe<Availavility_Division_Comparison_Exp>;
   is_available_percussion?: InputMaybe<Availavility_Division_Comparison_Exp>;
@@ -266,11 +270,13 @@ export type Institutions_Max_Fields = {
   address?: Maybe<Scalars['String']>;
   area?: Maybe<Scalars['numeric']>;
   building?: Maybe<Scalars['String']>;
+  building_kana?: Maybe<Scalars['String']>;
   building_system_name?: Maybe<Scalars['String']>;
   capacity?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
+  institution_kana?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
@@ -286,11 +292,13 @@ export type Institutions_Min_Fields = {
   address?: Maybe<Scalars['String']>;
   area?: Maybe<Scalars['numeric']>;
   building?: Maybe<Scalars['String']>;
+  building_kana?: Maybe<Scalars['String']>;
   building_system_name?: Maybe<Scalars['String']>;
   capacity?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
+  institution_kana?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
@@ -305,6 +313,7 @@ export type Institutions_Order_By = {
   address?: InputMaybe<Order_By>;
   area?: InputMaybe<Order_By>;
   building?: InputMaybe<Order_By>;
+  building_kana?: InputMaybe<Order_By>;
   building_system_name?: InputMaybe<Order_By>;
   capacity?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
@@ -312,6 +321,7 @@ export type Institutions_Order_By = {
   holiday_usage_fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   institution?: InputMaybe<Order_By>;
+  institution_kana?: InputMaybe<Order_By>;
   institution_system_name?: InputMaybe<Order_By>;
   is_available_brass?: InputMaybe<Order_By>;
   is_available_percussion?: InputMaybe<Order_By>;
@@ -338,6 +348,8 @@ export enum Institutions_Select_Column {
   /** column name */
   Building = 'building',
   /** column name */
+  BuildingKana = 'building_kana',
+  /** column name */
   BuildingSystemName = 'building_system_name',
   /** column name */
   Capacity = 'capacity',
@@ -351,6 +363,8 @@ export enum Institutions_Select_Column {
   Id = 'id',
   /** column name */
   Institution = 'institution',
+  /** column name */
+  InstitutionKana = 'institution_kana',
   /** column name */
   InstitutionSystemName = 'institution_system_name',
   /** column name */
@@ -567,7 +581,7 @@ export type Reservations = {
   id: Scalars['bigint'];
   /** An object relationship */
   institution?: Maybe<Institutions>;
-  institution_id?: Maybe<Scalars['uuid']>;
+  institution_id: Scalars['uuid'];
   is_holiday: Scalars['Boolean'];
   reservation: Scalars['jsonb'];
   updated_at: Scalars['timestamp'];
@@ -921,7 +935,7 @@ export const InstitutionsDocument = gql`
     offset: $offset
     limit: $limit
     where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
-    order_by: {municipality: asc, building: asc}
+    order_by: {municipality: asc, building_kana: asc, institution_kana: asc}
   ) {
     id
     municipality
