@@ -24,6 +24,11 @@ import {
   KOUTOU_RESERVATION_STATUS,
 } from "../constants/municipality/koutou";
 import {
+  SUMIDA_FEE_DIVISION,
+  SUMIDA_RESERVATION_DIVISION,
+  SUMIDA_RESERVATION_STATUS,
+} from "../constants/municipality/sumida";
+import {
   TOSHIMA_FEE_DIVISION,
   TOSHIMA_RESERVATION_DIVISION,
   TOSHIMA_RESERVATION_STATUS,
@@ -36,6 +41,7 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_TOSHIMA",
   "MUNICIPALITY_EDOGAWA",
   "MUNICIPALITY_ARAKAWA",
+  "MUNICIPALITY_SUMIDA",
 ] as const;
 
 export type SupportedMunicipality = typeof SupportedMunicipalities[number];
@@ -47,6 +53,7 @@ export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_KITA: "北区",
   MUNICIPALITY_KOUTOU: "江東区",
   MUNICIPALITY_TOSHIMA: "豊島区",
+  MUNICIPALITY_SUMIDA: "墨田区",
 };
 
 export const SELECT_OPTION_ALL = "all";
@@ -67,6 +74,7 @@ export const ReservationDivisionMap: Readonly<Record<string, Record<string, stri
   MUNICIPALITY_TOSHIMA: TOSHIMA_RESERVATION_DIVISION,
   MUNICIPALITY_EDOGAWA: EDOGAWA_RESERVATION_DIVISION,
   MUNICIPALITY_ARAKAWA: ARAKAWA_RESERVATION_DIVISION,
+  MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_DIVISION,
 };
 
 export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = {
@@ -76,6 +84,7 @@ export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = 
   MUNICIPALITY_TOSHIMA: TOSHIMA_FEE_DIVISION,
   MUNICIPALITY_EDOGAWA: EDOGAWA_FEE_DIVISION,
   MUNICIPALITY_ARAKAWA: ARAKAWA_FEE_DIVISION,
+  MUNICIPALITY_SUMIDA: SUMIDA_FEE_DIVISION,
 };
 
 export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> = {
@@ -85,6 +94,7 @@ export const ReservationStatusMap: Readonly<Record<string, Record<string, string
   MUNICIPALITY_TOSHIMA: TOSHIMA_RESERVATION_STATUS,
   MUNICIPALITY_EDOGAWA: EDOGAWA_RESERVATION_STATUS,
   MUNICIPALITY_ARAKAWA: ARAKAWA_RESERVATION_STATUS,
+  MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_STATUS,
 };
 
 const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
@@ -94,6 +104,7 @@ const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> =
   toshima: "MUNICIPALITY_TOSHIMA",
   edogawa: "MUNICIPALITY_EDOGAWA",
   arakawa: "MUNICIPALITY_ARAKAWA",
+  sumida: "MUNICIPALITY_SUMIDA",
 };
 
 export const getMunicipalityFromUrlParam = (
