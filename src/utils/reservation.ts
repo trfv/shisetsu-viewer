@@ -157,10 +157,10 @@ export const toReservationQueryVariables = ({
   filter,
 }: ReservationSearchParams): ReservationsQueryVariables => {
   const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
+    filter.includes(IS_ONLY_HOLIDAY),
     filter.includes(IS_ONLY_MORNING_VACANT),
     filter.includes(IS_ONLY_AFTERNOON_VACANT),
     filter.includes(IS_ONLY_EVENING_VACANT),
-    filter.includes(IS_ONLY_HOLIDAY),
   ];
   return {
     offset: 0,
