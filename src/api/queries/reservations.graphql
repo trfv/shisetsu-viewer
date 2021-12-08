@@ -3,6 +3,10 @@ query reservations(
   $limit: Int
   $prefecture: prefecture = "PREFECTURE_TOKYO"
   $municipality: [String!]
+  $isAvailableStrings: availavility_division = null
+  $isAvailableWoodwind: availavility_division = null
+  $isAvailableBrass: availavility_division = null
+  $isAvailablePercussion: availavility_division = null
   $startDate: date
   $endDate: date
   $isHoliday: Boolean
@@ -16,7 +20,14 @@ query reservations(
     limit: $limit
     where: {
       _and: {
-        institution: { prefecture: { _eq: $prefecture }, municipality: { _in: $municipality } }
+        institution: {
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
+          is_available_strings: { _eq: $isAvailableStrings }
+          is_available_woodwind: { _eq: $isAvailableWoodwind }
+          is_available_brass: { _eq: $isAvailableBrass }
+          is_available_percussion: { _eq: $isAvailablePercussion }
+        }
         date: { _gte: $startDate, _lte: $endDate }
         is_holiday: { _eq: $isHoliday }
       }
@@ -43,7 +54,14 @@ query reservations(
   reservations_aggregate(
     where: {
       _and: {
-        institution: { prefecture: { _eq: $prefecture }, municipality: { _in: $municipality } }
+        institution: {
+          prefecture: { _eq: $prefecture }
+          municipality: { _in: $municipality }
+          is_available_strings: { _eq: $isAvailableStrings }
+          is_available_woodwind: { _eq: $isAvailableWoodwind }
+          is_available_brass: { _eq: $isAvailableBrass }
+          is_available_percussion: { _eq: $isAvailablePercussion }
+        }
         date: { _gte: $startDate, _lte: $endDate }
         is_holiday: { _eq: $isHoliday }
       }

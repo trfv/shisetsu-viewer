@@ -1,7 +1,6 @@
-import { isAfter, isSameDay } from "date-fns";
-import { addMonths, endOfMonth, isBefore, startOfMonth } from "date-fns/esm";
+import { addMonths, isAfter, isBefore, isSameDay } from "date-fns/esm";
 import { ReservationsQueryVariables } from "../api/graphql-client";
-import { ReservationDivision, ReservationStatus } from "../constants/enums";
+import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
   getMunicipalityFromUrlParam,
   ReservationDivisionMap,
@@ -9,6 +8,7 @@ import {
   SELECT_OPTION_ALL,
   SupportedMunicipality,
 } from "./municipality";
+import { BRASS, getAvailableInstrumentFromUrlParam, PERCUSSION, STRINGS, WOODWIND } from "./search";
 
 const RESERVATION_DIVISION_ORDER = {
   [ReservationDivision.INVALID]: 0,
@@ -122,6 +122,7 @@ export type ReservationSearchParams = {
   startDate: Date;
   endDate: Date;
   filter: ReturnType<typeof getResevationSearchFilterFromUrlParam>;
+  availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
 };
 
 export const toReservationSearchParams = (
@@ -129,6 +130,7 @@ export const toReservationSearchParams = (
   df: Date | null | undefined,
   dt: Date | null | undefined,
   f: string[] | null | undefined,
+  a: string[] | null | undefined,
   minDate: Date,
   maxDate: Date
 ): ReservationSearchParams => {
@@ -147,6 +149,7 @@ export const toReservationSearchParams = (
         ? dt
         : addMonths(minDate, 1),
     filter: getResevationSearchFilterFromUrlParam(f),
+    availableInstruments: getAvailableInstrumentFromUrlParam(a),
   };
 };
 
@@ -155,6 +158,7 @@ export const toReservationQueryVariables = ({
   startDate,
   endDate,
   filter,
+  availableInstruments,
 }: ReservationSearchParams): ReservationsQueryVariables => {
   const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
     filter.includes(IS_ONLY_HOLIDAY),
@@ -162,10 +166,20 @@ export const toReservationQueryVariables = ({
     filter.includes(IS_ONLY_AFTERNOON_VACANT),
     filter.includes(IS_ONLY_EVENING_VACANT),
   ];
+  const [isAvailableStrings, isAvailableWoodwind, isAvailableBrass, isAvailablePercussion] = [
+    availableInstruments.includes(STRINGS),
+    availableInstruments.includes(WOODWIND),
+    availableInstruments.includes(BRASS),
+    availableInstruments.includes(PERCUSSION),
+  ];
   return {
     offset: 0,
     limit: 100,
     municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
+    isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
+    isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
     isHoliday: isOnlyHoliday ? true : null,
@@ -236,23 +250,4 @@ export const toReservationQueryVariables = ({
         : {}),
     },
   };
-};
-
-export const toYearMonthChips = (minDate: Date, maxDate: Date) => {
-  let targetDate = startOfMonth(minDate);
-  const max = endOfMonth(maxDate);
-  const chips = [];
-  while (isBefore(targetDate, max)) {
-    const year = targetDate.getFullYear();
-    const month = String(targetDate.getMonth() + 1).padStart(2, "0");
-    chips.push({
-      value: `${year}-${month}`,
-      label: `${year}年${month}月`,
-    });
-    targetDate = addMonths(targetDate, 1);
-  }
-  return chips.reduce<Record<number, { value: string; label: string }>>((accum, curr, index) => {
-    accum[index + 1] = curr;
-    return accum;
-  }, {});
 };

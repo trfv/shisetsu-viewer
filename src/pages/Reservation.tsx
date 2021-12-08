@@ -1,5 +1,4 @@
-import { max, min } from "date-fns";
-import { addMonths, endOfMonth } from "date-fns/esm";
+import { addMonths, endOfMonth, max, min } from "date-fns/esm";
 import { ChangeEvent, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
@@ -31,6 +30,7 @@ import {
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
+import { AvailableInstrument, AVAILABLE_INSTRUMENT_MAP } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const minDate = new Date();
@@ -84,6 +84,7 @@ export default () => {
     df: DateParam,
     dt: DateParam,
     f: StringsParam,
+    a: StringsParam,
   });
 
   const resevationSearchParams = toReservationSearchParams(
@@ -91,6 +92,7 @@ export default () => {
     values.df,
     values.dt,
     values.f,
+    values.a,
     minDate,
     maxDate
   );
@@ -103,7 +105,7 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { municipality, startDate, endDate, filter } = resevationSearchParams;
+  const { municipality, startDate, endDate, filter, availableInstruments } = resevationSearchParams;
 
   const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
     setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
@@ -134,6 +136,17 @@ export default () => {
     [filter]
   );
 
+  const handleAvailableInstrumentsChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const { value, checked } = event.target;
+      const next = checked
+        ? availableInstruments.concat(value as AvailableInstrument)
+        : availableInstruments.filter((v) => v !== value);
+      setQueryParams({ a: next });
+    },
+    [availableInstruments]
+  );
+
   const chips = [
     ...(municipality === "all"
       ? []
@@ -141,6 +154,9 @@ export default () => {
     `${formatDate(startDate)} 〜 ${formatDate(endDate)}`,
     ...Object.entries(RESERVATION_SEARCH_FILTER_MAP)
       .filter(([v]) => filter.includes(v as ReservationSearchFilter))
+      .map(([, label]) => label),
+    ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
+      .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
       .map(([, label]) => label),
   ];
 
@@ -173,6 +189,15 @@ export default () => {
             />
             <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
               {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
+                <Checkbox key={value} label={label} value={value} />
+              ))}
+            </CheckboxGroup>
+            <CheckboxGroup
+              label="利用可能楽器"
+              values={availableInstruments}
+              onChange={handleAvailableInstrumentsChange}
+            >
+              {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>

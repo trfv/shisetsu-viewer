@@ -2,6 +2,7 @@ import { InstitutionsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import { FeeDivisionMap, getMunicipalityFromUrlParam, SELECT_OPTION_ALL } from "./municipality";
+import { BRASS, getAvailableInstrumentFromUrlParam, PERCUSSION, STRINGS, WOODWIND } from "./search";
 
 export const formatUsageFee = (
   municipality: string | undefined,
@@ -16,29 +17,6 @@ export const formatUsageFee = (
         `${FeeDivisionMap[municipality]?.[division] ?? ""}: ${formatPrice(fee)}`
     )
     .join(" ");
-};
-
-const STRINGS = "s";
-const WOODWIND = "w";
-const BRASS = "b";
-const PERCUSSION = "p";
-
-export const AVAILABLE_INSTRUMENT_MAP = {
-  [STRINGS]: "弦楽器",
-  [WOODWIND]: "木管楽器",
-  [BRASS]: "金管楽器",
-  [PERCUSSION]: "打楽器",
-} as const;
-
-export const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as const;
-export type AvailableInstrument = typeof AvailableInstruments[number];
-
-const getAvailableInstrumentFromUrlParam = (
-  availableInstruments: string[] | null | undefined
-): AvailableInstrument[] => {
-  return (availableInstruments ?? []).filter((instrument) =>
-    AvailableInstruments.some((i) => instrument === i)
-  ) as AvailableInstrument[];
 };
 
 export type InstitutionSearchParams = {
