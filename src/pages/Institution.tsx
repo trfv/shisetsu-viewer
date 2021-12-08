@@ -16,8 +16,6 @@ import {
 import { StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
-  AvailableInstrument,
-  AVAILABLE_INSTRUMENT_MAP,
   formatUsageFee,
   toInstitutionQueryVariables,
   toInstitutionSearchParams,
@@ -27,6 +25,7 @@ import {
   MunicipalityOptions,
   SupportedMunicipalityMap,
 } from "../utils/municipality";
+import { AvailableInstrument, AVAILABLE_INSTRUMENT_MAP } from "../utils/search";
 import { styled } from "../utils/theme";
 
 const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
