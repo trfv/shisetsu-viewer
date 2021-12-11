@@ -1,6 +1,6 @@
 import { addMonths, endOfMonth, max, min } from "date-fns/esm";
-import { ChangeEvent, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ChangeEvent, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
@@ -15,7 +15,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import { DateParam, StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
+import { ArrayParam, DateParam, StringParam, useQueryParams } from "../contexts/QueryParams";
 import { formatDate } from "../utils/format";
 import {
   convertMunicipalityToUrlParam,
@@ -77,25 +77,29 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
 
 export default () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const [values, setQueryParams] = useQueryParams(navigate, location, {
+  const [values, setQueryParams] = useQueryParams({
     m: StringParam,
     df: DateParam,
     dt: DateParam,
-    f: StringsParam,
-    a: StringsParam,
+    f: ArrayParam,
+    a: ArrayParam,
   });
 
-  const resevationSearchParams = toReservationSearchParams(
-    values.m,
-    values.df,
-    values.dt,
-    values.f,
-    values.a,
-    minDate,
-    maxDate
+  const resevationSearchParams = useMemo(
+    () =>
+      toReservationSearchParams(
+        values.m,
+        values.df,
+        values.dt,
+        values.f,
+        values.a,
+        minDate,
+        maxDate
+      ),
+    [values]
   );
+
   const { loading, data, error, fetchMore } = useReservationsQuery({
     variables: toReservationQueryVariables(resevationSearchParams),
     fetchPolicy: "network-only",

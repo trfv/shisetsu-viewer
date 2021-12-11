@@ -2,8 +2,8 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useMemo } from "react";
 import { ROUTES } from "../../constants/routes";
+import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { useAuth0 } from "../../utils/auth0";
 import { SmallButton } from "../Button";
 import { IconButton } from "../IconButton";
 

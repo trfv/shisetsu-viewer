@@ -26,7 +26,7 @@ export type InstitutionSearchParams = {
 
 export const toInstitutionSearchParams = (
   m: string | null | undefined,
-  a: string[] | null | undefined
+  a: (string | null)[] | null | undefined
 ): InstitutionSearchParams => {
   return {
     municipality: getMunicipalityFromUrlParam(m),

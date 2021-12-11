@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, HEADER_HEIGHT } from "../../constants/styles";
+import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { useAuth0 } from "../../utils/auth0";
 import { styled } from "../../utils/theme";
 import { BaseBox } from "../Box";
 import { HeaderMenuButton } from "../HeaderMenuButton";

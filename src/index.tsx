@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
 import { ROUTES } from "./constants/routes";
+import { Auth0Provider } from "./contexts/Auth0";
 import reportWebVitals from "./reportWebVitals";
-import { Auth0Provider } from "./utils/auth0";
 
 ReactDOM.render(
   <StrictMode>

@@ -1,4 +1,4 @@
-import { MemoryRouter } from "react-router-dom";
+import { DecoratorFn } from "@storybook/react";
 import { lightTheme as theme, ThemeProvider } from "../src/utils/theme";
 
 export const parameters = {
@@ -6,10 +6,10 @@ export const parameters = {
   controls: { hideNoControlsWarning: true },
 };
 
-export const decorators = [
-  (story) => (
+export const decorators: DecoratorFn[] = [
+  (Story, ctx) => (
     <ThemeProvider theme={theme}>
-      <MemoryRouter>{story()}</MemoryRouter>
+      <Story />
     </ThemeProvider>
   ),
 ];

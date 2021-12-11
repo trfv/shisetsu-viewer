@@ -110,7 +110,7 @@ const ReservationSearchFilters = [
 export type ReservationSearchFilter = typeof ReservationSearchFilters[number];
 
 export const getResevationSearchFilterFromUrlParam = (
-  filters: string[] | null | undefined
+  filters: (string | null)[] | null | undefined
 ): ReservationSearchFilter[] => {
   return (filters ?? []).filter((filter) =>
     ReservationSearchFilters.some((f) => f === filter)
@@ -129,8 +129,8 @@ export const toReservationSearchParams = (
   m: string | null | undefined,
   df: Date | null | undefined,
   dt: Date | null | undefined,
-  f: string[] | null | undefined,
-  a: string[] | null | undefined,
+  f: (string | null)[] | null | undefined,
+  a: (string | null)[] | null | undefined,
   minDate: Date,
   maxDate: Date
 ): ReservationSearchParams => {
