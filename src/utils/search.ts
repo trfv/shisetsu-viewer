@@ -14,7 +14,7 @@ export const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as co
 export type AvailableInstrument = typeof AvailableInstruments[number];
 
 export const getAvailableInstrumentFromUrlParam = (
-  availableInstruments: string[] | null | undefined
+  availableInstruments: (string | null)[] | null | undefined
 ): AvailableInstrument[] => {
   return (availableInstruments ?? []).filter((instrument) =>
     AvailableInstruments.some((i) => instrument === i)

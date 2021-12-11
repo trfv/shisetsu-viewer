@@ -23,7 +23,8 @@
     "markdown-to-jsx": "7.1.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-router-dom": "6.1.0"
+    "react-router-dom": "6.1.0",
+    "use-query-params": "1.2.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.3.0",
@@ -74,9 +75,9 @@
     "lint:fix": "eslint --ignore-path .eslintignore --fix",
     "format:all": "npm run format:fix \"./src/**/*.ts*\"",
     "lint:all": "npm run lint:fix \"./src/**/*.ts*\"",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
-    "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
     "reg-suit": "reg-suit run",
     "prepare": "husky install"
   },

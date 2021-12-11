@@ -1,5 +1,5 @@
-import { ChangeEvent, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ChangeEvent, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { InstitutionsQuery, useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
@@ -13,7 +13,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import { StringParam, StringsParam, useQueryParams } from "../hooks/useQueryParams";
+import { ArrayParam, StringParam, useQueryParams } from "../contexts/QueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
   formatUsageFee,
@@ -122,14 +122,17 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
 
 export default () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const [values, setQueryParams] = useQueryParams(navigate, location, {
+  const [values, setQueryParams] = useQueryParams({
     m: StringParam,
-    a: StringsParam,
+    a: ArrayParam,
   });
 
-  const institutionSearchParams = toInstitutionSearchParams(values.m, values.a);
+  const institutionSearchParams = useMemo(
+    () => toInstitutionSearchParams(values.m, values.a),
+    [values]
+  );
+
   const { loading, data, error, fetchMore } = useInstitutionsQuery({
     variables: toInstitutionQueryVariables(institutionSearchParams),
   });

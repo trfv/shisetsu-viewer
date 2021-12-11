@@ -5,8 +5,9 @@ import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ScrollToTop } from "./components/utils/ScrollToTop";
 import { ROUTES } from "./constants/routes";
+import { useAuth0 } from "./contexts/Auth0";
+import { QueryParamProvider } from "./contexts/QueryParams";
 import { Loading } from "./pages/Loading";
-import { useAuth0 } from "./utils/auth0";
 import { apolloClient, ApolloProvider } from "./utils/client";
 import { CssBaseline, darkTheme, lightTheme, ThemeProvider, useMediaQuery } from "./utils/theme";
 
@@ -28,56 +29,58 @@ const App = () => {
         <CssBaseline />
         <ErrorBoundary>
           <BrowserRouter>
-            <ScrollToTop />
-            <Header />
-            <Routes>
-              <Route
-                path={ROUTES.waiting}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Waiting />
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.reservation}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Reservation />
-                    </AuthGuard>
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.institution}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Institution />
-                    </AuthGuard>
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.detail}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Detail />
-                    </AuthGuard>
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.top}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Top />
-                  </Suspense>
-                }
-              />
-            </Routes>
+            <QueryParamProvider>
+              <ScrollToTop />
+              <Header />
+              <Routes>
+                <Route
+                  path={ROUTES.waiting}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <Waiting />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path={ROUTES.reservation}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <AuthGuard>
+                        <Reservation />
+                      </AuthGuard>
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path={ROUTES.institution}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <AuthGuard>
+                        <Institution />
+                      </AuthGuard>
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path={ROUTES.detail}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <AuthGuard>
+                        <Detail />
+                      </AuthGuard>
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path={ROUTES.top}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <Top />
+                    </Suspense>
+                  }
+                />
+              </Routes>
+            </QueryParamProvider>
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>
