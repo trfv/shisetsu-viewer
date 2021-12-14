@@ -1,7 +1,7 @@
 export { ApolloProvider } from "@apollo/client";
 import { ApolloClient, FieldFunctionOptions, InMemoryCache } from "@apollo/client";
 import { Institutions, Reservations } from "../api/graphql-client";
-import { SHISETSU_GRAPHQL_ENDPOINT } from "../constants/env";
+import { GRAPHQL_ENDPOINT } from "../constants/env";
 
 const offsetLimitPagination = <T>() => ({
   merge(existing: T[] | undefined, incoming: T[], options: FieldFunctionOptions) {
@@ -24,7 +24,7 @@ const offsetLimitPagination = <T>() => ({
 
 export const apolloClient = (token: string) =>
   new ApolloClient({
-    uri: SHISETSU_GRAPHQL_ENDPOINT,
+    uri: GRAPHQL_ENDPOINT,
     cache: new InMemoryCache({
       typePolicies: {
         Query: {

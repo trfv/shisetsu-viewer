@@ -52,8 +52,10 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
 
   const getToken = useCallback(async () => {
     try {
-      const token = await auth0Client.getTokenSilently({ detailedResponse: true });
-      return token.id_token;
+      const token = await auth0Client.getTokenSilently({
+        audience: initOptions.audience,
+      });
+      return token;
     } catch (e) {
       return "";
     }

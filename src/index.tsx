@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
+import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants/env";
 import { ROUTES } from "./constants/routes";
 import { Auth0Provider } from "./contexts/Auth0";
 import reportWebVitals from "./reportWebVitals";
@@ -14,6 +14,7 @@ ReactDOM.render(
       redirect_uri={`${window.location.origin}${ROUTES.waiting}`}
       useRefreshTokens={true}
       legacySameSiteCookie={true}
+      audience={AUTH0_AUDIENCE}
     >
       <App />
     </Auth0Provider>
