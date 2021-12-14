@@ -21,4 +21,5 @@ export const SUMIDA_FEE_DIVISION: Readonly<Record<string, string>> = {
   [FeeDivision.MORNING]: "午前",
   [FeeDivision.AFTERNOON]: "午後",
   [FeeDivision.EVENING]: "夜間",
+  [FeeDivision.ONE_HOUR]: "1時間",
 };
