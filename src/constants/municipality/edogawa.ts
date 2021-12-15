@@ -50,6 +50,10 @@ export const EDOGAWA_RESERVATION_DIVISION: Readonly<Record<string, string>> = {
 export const EDOGAWA_FEE_DIVISION: Readonly<Record<string, string>> = {
   [FeeDivision.MORNING]: "午前",
   [FeeDivision.AFTERNOON]: "午後",
+  [FeeDivision.AFTERNOON_ONE]: "午後1",
+  [FeeDivision.AFTERNOON_TWO]: "午後2",
   [FeeDivision.EVENING]: "夜間",
+  [FeeDivision.EVENING_ONE]: "夜間1",
+  [FeeDivision.EVENING_TWO]: "夜間2",
   [FeeDivision.ONE_HOUR]: "1時間",
 };
