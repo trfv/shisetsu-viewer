@@ -1,6 +1,9 @@
 # CONTRIBUTING
+
 ## Setup
+
 ### Install Node
+
 [Node.js (LTS)](https://nodejs.org/) からインストールしてください
 
 ### Install dependencies
@@ -12,6 +15,7 @@ npm ci
 ```
 
 ## Command
+
 ### Run
 
 ```sh
@@ -25,4 +29,53 @@ npm run build & npm run serve
 ```
 
 ## Env
-現時点では、動作確認するために `env.local` が必要となっています。管理者に問い合わせください。
+
+現時点では、動作確認するために `.env.local` が必要となっています。管理者に問い合わせください。
+
+## Structure
+
+### api
+
+graphql 関連のコードを格納しています。
+graphql-client.tsx は `npm run generate` で自動生成されたものになります。graphql-codegen というライブラリを利用しています。
+
+### components
+
+再利用できるコンポーネントを配置しています。
+ベースとして mui というライブラリを利用しており、それをラップするだけのコンポーネントも存在します。
+storybook が作成されているコンポーネントもあります。
+
+### constants
+
+定数定義を置く場所です。municipality というディレクトリ以下に、各地区の区分値を定義しています。
+
+### contexts
+
+Provider を定義する場所です。現在は Auth0 と use-query-params という 2 つのライブラリをラップしたものになっています。
+Apollo や Theme もここに置いていい気もします。
+
+### fonts
+
+利用しているフォントを置いています。これでいいのかわかってないです。
+
+### pages
+
+ページを配置しています。Nextjs を意識した階層構造にしてみました。
+
+### utils
+
+置き場所に困ったものを雑多に置いています。
+
+依存関係としては概ね以下のように意識して書いています。
+
+```
+constants, fonts
+↑
+utils, hooks, contexts
+↑
+apis
+↑
+pages
+↑
+components
+```
