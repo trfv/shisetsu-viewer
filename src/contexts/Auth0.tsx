@@ -6,6 +6,7 @@ import {
   User,
 } from "@auth0/auth0-spa-js";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { ROUTES } from "../constants/routes";
 
 type Role = "user" | "anonymous";
 const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
@@ -64,7 +65,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
   const validateRole = useCallback(async () => {
     const user = await auth0Client.getUser<User & { [ROLE_NAMESPACE]: Role }>();
     if (!user?.[ROLE_NAMESPACE] || user[ROLE_NAMESPACE] === "anonymous") {
-      auth0Client.logout();
+      auth0Client.logout({ returnTo: `${location.origin}${ROUTES.top}` });
     }
   }, [auth0Client]);
 
