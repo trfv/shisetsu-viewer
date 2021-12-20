@@ -1,7 +1,12 @@
 import { InstitutionsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
-import { FeeDivisionMap, getMunicipalityFromUrlParam, SELECT_OPTION_ALL } from "./municipality";
+import {
+  FeeDivisionMap,
+  getMunicipalityFromUrlParam,
+  SELECT_OPTION_ALL,
+  SupportedMunicipalities,
+} from "./municipality";
 import { BRASS, getAvailableInstrumentFromUrlParam, PERCUSSION, STRINGS, WOODWIND } from "./search";
 
 export const formatUsageFee = (
@@ -47,7 +52,10 @@ export const toInstitutionQueryVariables = ({
   return {
     offset: 0,
     limit: 100,
-    municipality: municipality !== SELECT_OPTION_ALL ? [municipality] : null,
+    municipality:
+      municipality !== SELECT_OPTION_ALL
+        ? [municipality]
+        : SupportedMunicipalities.map((m) => m.toString()),
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
