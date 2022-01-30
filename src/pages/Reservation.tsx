@@ -15,7 +15,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import { ArrayParam, DateParam, StringParam, useQueryParams } from "../contexts/QueryParams";
+import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { formatDate } from "../utils/format";
 import {
   convertMunicipalityToUrlParam,
