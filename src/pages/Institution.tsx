@@ -13,7 +13,7 @@ import {
   SEARCH_TABLE_HEIGHT,
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
-import { ArrayParam, StringParam, useQueryParams } from "../contexts/QueryParams";
+import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import {
   formatUsageFee,
