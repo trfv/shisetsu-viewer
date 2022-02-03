@@ -9,6 +9,11 @@ import {
   BUNKYO_RESERVATION_STATUS,
 } from "../constants/municipality/bunkyo";
 import {
+  CHUO_FEE_DIVISION,
+  CHUO_RESERVATION_DIVISION,
+  CHUO_RESERVATION_STATUS,
+} from "../constants/municipality/chuo";
+import {
   EDOGAWA_FEE_DIVISION,
   EDOGAWA_RESERVATION_DIVISION,
   EDOGAWA_RESERVATION_STATUS,
@@ -54,6 +59,7 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_SUMIDA",
   "MUNICIPALITY_OTA",
   "MUNICIPALITY_SUGINAMI",
+  "MUNICIPALITY_CHUO",
 ] as const;
 
 export type SupportedMunicipality = typeof SupportedMunicipalities[number];
@@ -68,6 +74,7 @@ export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_SUMIDA: "墨田区",
   MUNICIPALITY_OTA: "大田区",
   MUNICIPALITY_SUGINAMI: "杉並区",
+  MUNICIPALITY_CHUO: "中央区",
 };
 
 export const SELECT_OPTION_ALL = "all";
@@ -91,6 +98,7 @@ export const ReservationDivisionMap: Readonly<Record<string, Record<string, stri
   MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_DIVISION,
   MUNICIPALITY_OTA: OTA_RESERVATION_DIVISION,
   MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_DIVISION,
+  MUNICIPALITY_CHUO: CHUO_RESERVATION_DIVISION,
 };
 
 export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = {
@@ -103,6 +111,7 @@ export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = 
   MUNICIPALITY_SUMIDA: SUMIDA_FEE_DIVISION,
   MUNICIPALITY_OTA: OTA_FEE_DIVISION,
   MUNICIPALITY_SUGINAMI: SUGINAMI_FEE_DIVISION,
+  MUNICIPALITY_CHUO: CHUO_FEE_DIVISION,
 };
 
 export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> = {
@@ -115,6 +124,7 @@ export const ReservationStatusMap: Readonly<Record<string, Record<string, string
   MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_STATUS,
   MUNICIPALITY_OTA: OTA_RESERVATION_STATUS,
   MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_STATUS,
+  MUNICIPALITY_CHUO: CHUO_RESERVATION_STATUS,
 };
 
 const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
@@ -127,6 +137,7 @@ const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> =
   sumida: "MUNICIPALITY_SUMIDA",
   ota: "MUNICIPALITY_OTA",
   suginami: "MUNICIPALITY_SUGINAMI",
+  chuo: "MUNICIPALITY_CHUO",
 };
 
 export const getMunicipalityFromUrlParam = (
