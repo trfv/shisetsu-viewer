@@ -5,7 +5,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -164,6 +164,7 @@ export type Institutions = {
   id: Scalars['uuid'];
   institution: Scalars['String'];
   institution_kana: Scalars['String'];
+  institution_size: Scalars['String'];
   institution_system_name?: Maybe<Scalars['String']>;
   is_available_brass: Scalars['availavility_division'];
   is_available_percussion: Scalars['availavility_division'];
@@ -247,6 +248,7 @@ export type Institutions_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   institution?: InputMaybe<String_Comparison_Exp>;
   institution_kana?: InputMaybe<String_Comparison_Exp>;
+  institution_size?: InputMaybe<String_Comparison_Exp>;
   institution_system_name?: InputMaybe<String_Comparison_Exp>;
   is_available_brass?: InputMaybe<Availavility_Division_Comparison_Exp>;
   is_available_percussion?: InputMaybe<Availavility_Division_Comparison_Exp>;
@@ -277,6 +279,7 @@ export type Institutions_Max_Fields = {
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
   institution_kana?: Maybe<Scalars['String']>;
+  institution_size?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
@@ -299,6 +302,7 @@ export type Institutions_Min_Fields = {
   id?: Maybe<Scalars['uuid']>;
   institution?: Maybe<Scalars['String']>;
   institution_kana?: Maybe<Scalars['String']>;
+  institution_size?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
@@ -322,6 +326,7 @@ export type Institutions_Order_By = {
   id?: InputMaybe<Order_By>;
   institution?: InputMaybe<Order_By>;
   institution_kana?: InputMaybe<Order_By>;
+  institution_size?: InputMaybe<Order_By>;
   institution_system_name?: InputMaybe<Order_By>;
   is_available_brass?: InputMaybe<Order_By>;
   is_available_percussion?: InputMaybe<Order_By>;
@@ -365,6 +370,8 @@ export enum Institutions_Select_Column {
   Institution = 'institution',
   /** column name */
   InstitutionKana = 'institution_kana',
+  /** column name */
+  InstitutionSize = 'institution_size',
   /** column name */
   InstitutionSystemName = 'institution_system_name',
   /** column name */
@@ -831,7 +838,7 @@ export type DetailQueryVariables = Exact<{
 }>;
 
 
-export type DetailQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null | undefined, area?: any | null | undefined, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null | undefined, reservations: Array<{ __typename?: 'reservations', id: any, date: any, reservation: any, updated_at: any }> };
+export type DetailQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null, area?: any | null, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null, reservations: Array<{ __typename?: 'reservations', id: any, date: any, reservation: any, updated_at: any }> };
 
 export type InstitutionsQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
@@ -841,10 +848,11 @@ export type InstitutionsQueryVariables = Exact<{
   isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']>;
   isAvailableBrass?: InputMaybe<Scalars['availavility_division']>;
   isAvailablePercussion?: InputMaybe<Scalars['availavility_division']>;
+  institutionSizes?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
-export type InstitutionsQuery = { __typename?: 'query_root', institutions: Array<{ __typename?: 'institutions', id: any, municipality: string, building: string, institution: string, capacity?: number | null | undefined, area?: any | null | undefined, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, updated_at?: any | null | undefined }>, institutions_aggregate: { __typename?: 'institutions_aggregate', aggregate?: { __typename?: 'institutions_aggregate_fields', count: number } | null | undefined } };
+export type InstitutionsQuery = { __typename?: 'query_root', institutions: Array<{ __typename?: 'institutions', id: any, municipality: string, building: string, institution: string, institution_size: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, updated_at?: any | null }>, institutions_aggregate: { __typename?: 'institutions_aggregate', aggregate?: { __typename?: 'institutions_aggregate_fields', count: number } | null } };
 
 export type ReservationsQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
@@ -855,6 +863,7 @@ export type ReservationsQueryVariables = Exact<{
   isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']>;
   isAvailableBrass?: InputMaybe<Scalars['availavility_division']>;
   isAvailablePercussion?: InputMaybe<Scalars['availavility_division']>;
+  institutionSizes?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   startDate?: InputMaybe<Scalars['date']>;
   endDate?: InputMaybe<Scalars['date']>;
   isHoliday?: InputMaybe<Scalars['Boolean']>;
@@ -865,7 +874,7 @@ export type ReservationsQueryVariables = Exact<{
 }>;
 
 
-export type ReservationsQuery = { __typename?: 'query_root', reservations: Array<{ __typename?: 'reservations', id: any, date: any, reservation: any, updated_at: any, institution?: { __typename?: 'institutions', id: any, municipality: string, building: string, institution: string } | null | undefined }>, reservations_aggregate: { __typename?: 'reservations_aggregate', aggregate?: { __typename?: 'reservations_aggregate_fields', count: number } | null | undefined } };
+export type ReservationsQuery = { __typename?: 'query_root', reservations: Array<{ __typename?: 'reservations', id: any, date: any, reservation: any, updated_at: any, institution?: { __typename?: 'institutions', id: any, municipality: string, building: string, institution: string, institution_size: string } | null }>, reservations_aggregate: { __typename?: 'reservations_aggregate', aggregate?: { __typename?: 'reservations_aggregate_fields', count: number } | null } };
 
 
 export const DetailDocument = gql`
@@ -934,27 +943,28 @@ export type DetailQueryHookResult = ReturnType<typeof useDetailQuery>;
 export type DetailLazyQueryHookResult = ReturnType<typeof useDetailLazyQuery>;
 export type DetailQueryResult = Apollo.QueryResult<DetailQuery, DetailQueryVariables>;
 export const InstitutionsDocument = gql`
-    query institutions($offset: Int, $limit: Int, $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null) {
+    query institutions($offset: Int, $limit: Int, $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null) {
   institutions(
     offset: $offset
     limit: $limit
-    where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
+    where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, institution_size: {_in: $institutionSizes}}
     order_by: {municipality: asc, building_kana: asc, institution_kana: asc}
   ) {
     id
     municipality
     building
     institution
-    capacity
-    area
+    institution_size
     is_available_strings
     is_available_woodwind
     is_available_brass
     is_available_percussion
+    is_equipped_music_stand
+    is_equipped_piano
     updated_at
   }
   institutions_aggregate(
-    where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}
+    where: {municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, institution_size: {_in: $institutionSizes}}
   ) {
     aggregate {
       count
@@ -982,6 +992,7 @@ export const InstitutionsDocument = gql`
  *      isAvailableWoodwind: // value for 'isAvailableWoodwind'
  *      isAvailableBrass: // value for 'isAvailableBrass'
  *      isAvailablePercussion: // value for 'isAvailablePercussion'
+ *      institutionSizes: // value for 'institutionSizes'
  *   },
  * });
  */
@@ -997,11 +1008,11 @@ export type InstitutionsQueryHookResult = ReturnType<typeof useInstitutionsQuery
 export type InstitutionsLazyQueryHookResult = ReturnType<typeof useInstitutionsLazyQuery>;
 export type InstitutionsQueryResult = Apollo.QueryResult<InstitutionsQuery, InstitutionsQueryVariables>;
 export const ReservationsDocument = gql`
-    query reservations($offset: Int, $limit: Int, $prefecture: prefecture = "PREFECTURE_TOKYO", $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $startDate: date, $endDate: date, $isHoliday: Boolean, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
+    query reservations($offset: Int, $limit: Int, $prefecture: prefecture = "PREFECTURE_TOKYO", $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null, $startDate: date, $endDate: date, $isHoliday: Boolean, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
   reservations(
     offset: $offset
     limit: $limit
-    where: {_and: {institution: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
+    where: {_and: {institution: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, institution_size: {_in: $institutionSizes}}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
     order_by: {date: asc}
   ) {
     id
@@ -1013,10 +1024,11 @@ export const ReservationsDocument = gql`
       municipality
       building
       institution
+      institution_size
     }
   }
   reservations_aggregate(
-    where: {_and: {institution: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
+    where: {_and: {institution: {prefecture: {_eq: $prefecture}, municipality: {_in: $municipality}, is_available_strings: {_eq: $isAvailableStrings}, is_available_woodwind: {_eq: $isAvailableWoodwind}, is_available_brass: {_eq: $isAvailableBrass}, is_available_percussion: {_eq: $isAvailablePercussion}, institution_size: {_in: $institutionSizes}}, date: {_gte: $startDate, _lte: $endDate}, is_holiday: {_eq: $isHoliday}}, _or: [{reservation: {_contains: $reservationStatus1}}, {reservation: {_contains: $reservationStatus2}}, {reservation: {_contains: $reservationStatus3}}, {reservation: {_contains: $reservationStatus4}}]}
   ) {
     aggregate {
       count
@@ -1045,6 +1057,7 @@ export const ReservationsDocument = gql`
  *      isAvailableWoodwind: // value for 'isAvailableWoodwind'
  *      isAvailableBrass: // value for 'isAvailableBrass'
  *      isAvailablePercussion: // value for 'isAvailablePercussion'
+ *      institutionSizes: // value for 'institutionSizes'
  *      startDate: // value for 'startDate'
  *      endDate: // value for 'endDate'
  *      isHoliday: // value for 'isHoliday'

@@ -16,6 +16,7 @@ import {
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
+import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate } from "../utils/format";
 import {
   convertMunicipalityToUrlParam,
@@ -30,7 +31,12 @@ import {
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
-import { AvailableInstrument, AVAILABLE_INSTRUMENT_MAP } from "../utils/search";
+import {
+  AvailableInstrument,
+  AVAILABLE_INSTRUMENT_MAP,
+  InstitutionSize,
+  INSTUTITON_SIZE_MAP,
+} from "../utils/search";
 import { styled } from "../utils/theme";
 
 const minDate = new Date();
@@ -49,7 +55,14 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
     headerName: "地区",
     hide: true,
     type: "getter",
-    valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
+    valueGetter: (params) =>
+      SupportedMunicipalityMap[params.row.institution?.municipality as string],
+  },
+  {
+    field: "institution_size",
+    headerName: "施設サイズ",
+    type: "getter",
+    valueGetter: (params) => InstitutionSizeMap[params.row.institution?.institution_size ?? ""],
   },
   {
     field: "date",
@@ -84,6 +97,7 @@ export default () => {
     dt: DateParam,
     f: ArrayParam,
     a: ArrayParam,
+    i: ArrayParam,
   });
 
   const resevationSearchParams = useMemo(
@@ -94,6 +108,7 @@ export default () => {
         values.dt,
         values.f,
         values.a,
+        values.i,
         minDate,
         maxDate
       ),
@@ -109,7 +124,8 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { municipality, startDate, endDate, filter, availableInstruments } = resevationSearchParams;
+  const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
+    resevationSearchParams;
 
   const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
     setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
@@ -151,6 +167,17 @@ export default () => {
     [availableInstruments]
   );
 
+  const handleInstitutoinSizesChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const { value, checked } = event.target;
+      const next = checked
+        ? institutionSizes.concat(value as InstitutionSize)
+        : institutionSizes.filter((v) => v !== value);
+      setQueryParams({ i: next });
+    },
+    [institutionSizes]
+  );
+
   const chips = [
     ...(municipality === "all"
       ? []
@@ -161,6 +188,9 @@ export default () => {
       .map(([, label]) => label),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
+      .map(([, label]) => label),
+    ...Object.entries(INSTUTITON_SIZE_MAP)
+      .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
       .map(([, label]) => label),
   ];
 
@@ -202,6 +232,15 @@ export default () => {
               onChange={handleAvailableInstrumentsChange}
             >
               {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
+                <Checkbox key={value} label={label} value={value} />
+              ))}
+            </CheckboxGroup>
+            <CheckboxGroup
+              label="施設サイズ"
+              values={institutionSizes}
+              onChange={handleInstitutoinSizesChange}
+            >
+              {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>
