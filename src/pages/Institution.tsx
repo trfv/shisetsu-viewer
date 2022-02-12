@@ -14,18 +14,19 @@ import {
   SEARCH_TABLE_HEIGHT_MOBILE,
 } from "../constants/styles";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
-import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
-import {
-  formatUsageFee,
-  toInstitutionQueryVariables,
-  toInstitutionSearchParams,
-} from "../utils/institution";
+import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
+import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
 import {
   convertMunicipalityToUrlParam,
   MunicipalityOptions,
   SupportedMunicipalityMap,
 } from "../utils/municipality";
-import { AvailableInstrument, AVAILABLE_INSTRUMENT_MAP } from "../utils/search";
+import {
+  AvailableInstrument,
+  AVAILABLE_INSTRUMENT_MAP,
+  InstitutionSize,
+  INSTUTITON_SIZE_MAP,
+} from "../utils/search";
 import { styled } from "../utils/theme";
 
 const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
@@ -43,38 +44,11 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
     valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
   },
   {
-    field: "capacity",
-    headerName: "定員（人）",
-    type: "number",
-  },
-  {
-    field: "area",
-    headerName: "面積（㎡）",
-    type: "number",
-  },
-  {
-    field: "weekday_usage_fee",
-    headerName: "利用料金（平日）",
-    hide: true,
+    field: "institution_size",
+    headerName: "施設サイズ",
     type: "getter",
-    valueGetter: (params) =>
-      formatUsageFee(
-        params.row.municipality as string,
-        params.value as { division: string; fee: string }[]
-      ),
+    valueGetter: (params) => InstitutionSizeMap[params.value as string],
   },
-  {
-    field: "holiday_usage_fee",
-    headerName: "利用料金（休日）",
-    hide: true,
-    type: "getter",
-    valueGetter: (params) =>
-      formatUsageFee(
-        params.row.municipality as string,
-        params.value as { division: string; fee: string }[]
-      ),
-  },
-  { field: "address", headerName: "住所", hide: true, type: "string" },
   {
     field: "is_available_strings",
     headerName: "弦楽器",
@@ -126,10 +100,11 @@ export default () => {
   const [values, setQueryParams] = useQueryParams({
     m: StringParam,
     a: ArrayParam,
+    i: ArrayParam,
   });
 
   const institutionSearchParams = useMemo(
-    () => toInstitutionSearchParams(values.m, values.a),
+    () => toInstitutionSearchParams(values.m, values.a, values.i),
     [values]
   );
 
@@ -141,7 +116,7 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const { municipality, availableInstruments } = institutionSearchParams;
+  const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
   const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
     setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
@@ -158,12 +133,26 @@ export default () => {
     [availableInstruments]
   );
 
+  const handleInstitutoinSizesChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const { value, checked } = event.target;
+      const next = checked
+        ? institutionSizes.concat(value as InstitutionSize)
+        : institutionSizes.filter((v) => v !== value);
+      setQueryParams({ i: next });
+    },
+    [institutionSizes]
+  );
+
   const chips = [
     ...(municipality === "all"
       ? []
       : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
+      .map(([, label]) => label),
+    ...Object.entries(INSTUTITON_SIZE_MAP)
+      .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
       .map(([, label]) => label),
   ];
 
@@ -179,14 +168,21 @@ export default () => {
               onChange={handleMunicipalityChange}
               selectOptions={MunicipalityOptions}
             />
-            {/* <Input label="定員下限（人）" defaultValue="" size="small" /> */}
-            {/* <Input label="面積下限（㎡）" defaultValue="" size="small" /> */}
             <CheckboxGroup
               label="利用可能楽器"
               values={availableInstruments}
               onChange={handleAvailableInstrumentsChange}
             >
               {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
+                <Checkbox key={value} label={label} value={value} />
+              ))}
+            </CheckboxGroup>
+            <CheckboxGroup
+              label="施設サイズ"
+              values={institutionSizes}
+              onChange={handleInstitutoinSizesChange}
+            >
+              {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>

@@ -9,7 +9,15 @@ import {
   SupportedMunicipalities,
   SupportedMunicipality,
 } from "./municipality";
-import { BRASS, getAvailableInstrumentFromUrlParam, PERCUSSION, STRINGS, WOODWIND } from "./search";
+import {
+  BRASS,
+  getAvailableInstrumentFromUrlParam,
+  getInstitutionSizeFromUrlParam,
+  PERCUSSION,
+  STRINGS,
+  toInstitutionSizeParam,
+  WOODWIND,
+} from "./search";
 
 const RESERVATION_DIVISION_ORDER = {
   [ReservationDivision.INVALID]: 0,
@@ -124,6 +132,7 @@ export type ReservationSearchParams = {
   endDate: Date;
   filter: ReturnType<typeof getResevationSearchFilterFromUrlParam>;
   availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
+  institutionSizes: ReturnType<typeof getInstitutionSizeFromUrlParam>;
 };
 
 export const toReservationSearchParams = (
@@ -132,6 +141,7 @@ export const toReservationSearchParams = (
   dt: Date | null | undefined,
   f: (string | null)[] | null | undefined,
   a: (string | null)[] | null | undefined,
+  i: (string | null)[] | null | undefined,
   minDate: Date,
   maxDate: Date
 ): ReservationSearchParams => {
@@ -151,6 +161,7 @@ export const toReservationSearchParams = (
         : addMonths(minDate, 1),
     filter: getResevationSearchFilterFromUrlParam(f),
     availableInstruments: getAvailableInstrumentFromUrlParam(a),
+    institutionSizes: getInstitutionSizeFromUrlParam(i),
   };
 };
 
@@ -160,6 +171,7 @@ export const toReservationQueryVariables = ({
   endDate,
   filter,
   availableInstruments,
+  institutionSizes,
 }: ReservationSearchParams): ReservationsQueryVariables => {
   const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
     filter.includes(IS_ONLY_HOLIDAY),
@@ -184,6 +196,7 @@ export const toReservationQueryVariables = ({
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
     isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
+    institutionSizes: toInstitutionSizeParam(institutionSizes),
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
     isHoliday: isOnlyHoliday ? true : null,

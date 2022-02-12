@@ -6,6 +6,7 @@ query institutions(
   $isAvailableWoodwind: availavility_division = null
   $isAvailableBrass: availavility_division = null
   $isAvailablePercussion: availavility_division = null
+  $institutionSizes: [String!] = null
 ) {
   institutions(
     offset: $offset
@@ -16,6 +17,7 @@ query institutions(
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
       is_available_percussion: { _eq: $isAvailablePercussion }
+      institution_size: { _in: $institutionSizes }
     }
     order_by: { municipality: asc, building_kana: asc, institution_kana: asc }
   ) {
@@ -23,12 +25,13 @@ query institutions(
     municipality
     building
     institution
-    capacity
-    area
+    institution_size
     is_available_strings
     is_available_woodwind
     is_available_brass
     is_available_percussion
+    is_equipped_music_stand
+    is_equipped_piano
     updated_at
   }
   institutions_aggregate(
@@ -38,6 +41,7 @@ query institutions(
       is_available_woodwind: { _eq: $isAvailableWoodwind }
       is_available_brass: { _eq: $isAvailableBrass }
       is_available_percussion: { _eq: $isAvailablePercussion }
+      institution_size: { _in: $institutionSizes }
     }
   ) {
     aggregate {

@@ -57,12 +57,14 @@ export const SearchForm = ({ chips, children }: Props) => {
 };
 
 const StyledChips = styled("div")(({ theme }) => ({
+  marginRight: "16px",
   display: "flex",
   gap: "8px",
   flexWrap: "nowrap",
   overflow: "auto",
   height: "32px",
   [theme.breakpoints.down("sm")]: {
+    marginRight: "0",
     gap: "4px",
     height: "24px",
   },
