@@ -4,10 +4,10 @@ import { useAuth0 } from "../../contexts/Auth0";
 import { Loading } from "../../pages/Loading";
 
 export const AuthGuard = ({ children }: { children: JSX.Element }) => {
-  const { isLoading, token } = useAuth0();
+  const { isLoading, isAnonymous } = useAuth0();
 
-  if (!token) {
-    return isLoading ? <Loading /> : <Navigate to={ROUTES.top} />;
+  if (isAnonymous) {
+    return isLoading ? <Loading /> : <Navigate to={ROUTES.top} replace={true} />;
   }
 
   return children;

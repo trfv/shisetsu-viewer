@@ -1,11 +1,16 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns/esm";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import { DetailQuery, useDetailQuery } from "../api/graphql-client";
+import {
+  InstitutionDetailQuery,
+  useInstitutionDetailQuery,
+  useInstitutionReservationsQuery,
+} from "../api/graphql-client";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
+import { Spinner } from "../components/Spinner";
 import { Tab } from "../components/Tab";
 import { TabGroup, TabPanel } from "../components/TabGroup";
 import {
@@ -17,6 +22,7 @@ import {
   TableRow,
 } from "../components/Table";
 import { CONTAINER_WIDTH, WIDTHS } from "../constants/styles";
+import { useAuth0 } from "../contexts/Auth0";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUUID } from "../utils/id";
@@ -29,7 +35,7 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution: DetailQuery["institutions_by_pk"] | undefined;
+  institution: InstitutionDetailQuery["institutions_by_pk"] | undefined;
   loading: boolean;
 }) => {
   return (
@@ -147,16 +153,31 @@ const InstitutionTab = ({
   );
 };
 
-const ReservationTab = ({
-  municipality,
-  reservations,
-}: {
-  municipality: string | undefined;
-  reservations: DetailQuery["reservations"] | undefined;
-}) => {
+const ReservationTab = ({ id, municipality }: { id: string; municipality: string | undefined }) => {
+  const startDate = formatDateIso(today);
+
+  if (!municipality) {
+    throw new Error("municipality is undefined");
+  }
+
+  const { loading, data, error } = useInstitutionReservationsQuery({
+    variables: { id, startDate },
+    fetchPolicy: "no-cache",
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const reservations = data?.reservations;
+
   return (
     <div className={classes.reservationContainer}>
-      {!municipality || !reservations?.length ? (
+      {loading ? (
+        <div className={classes.reservationNoData}>
+          <Spinner />
+        </div>
+      ) : !reservations?.length ? (
         <div className={classes.reservationNoData}>表示するデータが存在しません</div>
       ) : (
         <TableContainer>
@@ -213,24 +234,27 @@ const formatDateIso = (value: Date) => formatISO(value, { representation: "date"
 export default () => {
   const { id } = useParams<"id">();
   const [tab, setTab] = useState<Tab>("institution");
-  const handleTabChange = (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue);
+  const { isAnonymous } = useAuth0();
 
-  const startDate = formatDateIso(today);
-
-  const { loading, data, error } = useDetailQuery({
-    variables: { id, startDate },
-    fetchPolicy: "no-cache",
-  });
+  const handleTabChange = useCallback(
+    (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue),
+    []
+  );
 
   if (!id || !isValidUUID(id)) {
     return null;
   }
 
+  const { loading, data, error } = useInstitutionDetailQuery({
+    variables: { id },
+    fetchPolicy: "no-cache",
+  });
+
   if (error) {
     throw new Error(error.message);
   }
 
-  const { institutions_by_pk, reservations } = data || {};
+  const institution = data?.institutions_by_pk;
 
   return (
     <StyledInstitutionDetail className={classes.pageBox}>
@@ -239,9 +263,9 @@ export default () => {
           <Skeleton width={WIDTHS.large} height={40} />
         ) : (
           <h2>
-            {`${institutions_by_pk?.building ?? ""} ${institutions_by_pk?.institution ?? ""}`}
-            {institutions_by_pk?.website_url && (
-              <IconButton href={institutions_by_pk?.website_url} target="_blank">
+            {`${institution?.building ?? ""} ${institution?.institution ?? ""}`}
+            {institution?.website_url && (
+              <IconButton href={institution?.website_url} target="_blank">
                 <OpenInNewIcon />
               </IconButton>
             )}
@@ -250,21 +274,13 @@ export default () => {
       </div>
       <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
         <Tab className={classes.tab} value="institution" label="施設情報" />
-        <Tab
-          className={classes.tab}
-          value="reservation"
-          label="予約状況"
-          disabled={!reservations?.length}
-        />
+        <Tab className={classes.tab} value="reservation" label="予約状況" disabled={isAnonymous} />
       </TabGroup>
       <TabPanel className={classes.tabPanel} tabValue="institution" currentValue={tab}>
-        <InstitutionTab institution={institutions_by_pk} loading={loading} />
+        <InstitutionTab institution={institution} loading={loading} />
       </TabPanel>
       <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
-        <ReservationTab
-          municipality={institutions_by_pk?.municipality}
-          reservations={reservations}
-        />
+        {!isAnonymous && <ReservationTab id={id} municipality={institution?.municipality} />}
       </TabPanel>
     </StyledInstitutionDetail>
   );

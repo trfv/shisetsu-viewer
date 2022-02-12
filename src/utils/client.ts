@@ -36,6 +36,6 @@ export const apolloClient = (token: string) =>
       },
     }),
     headers: {
-      Authorization: token ? `Bearer ${token}` : "",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
