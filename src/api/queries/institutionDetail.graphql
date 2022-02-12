@@ -1,4 +1,4 @@
-query detail($id: uuid!, $startDate: date, $endDate: date) {
+query institutionDetail($id: uuid!) {
   institutions_by_pk(id: $id) {
     prefecture
     municipality
@@ -20,14 +20,5 @@ query detail($id: uuid!, $startDate: date, $endDate: date) {
     layout_image_url
     lottery_period
     note
-  }
-  reservations(
-    where: { institution_id: { _eq: $id }, date: { _gte: $startDate, _lte: $endDate } }
-    order_by: { date: asc }
-  ) {
-    id
-    date
-    reservation
-    updated_at
   }
 }

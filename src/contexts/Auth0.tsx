@@ -6,21 +6,22 @@ import {
   User,
 } from "@auth0/auth0-spa-js";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { ROUTES } from "../constants/routes";
 
 type Role = "user" | "anonymous";
 const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
 
-interface Auth0Context {
+type Auth0Context = {
   isLoading: boolean;
   token: string;
+  isAnonymous: boolean;
   login(o: RedirectLoginOptions): void;
   logout(o: LogoutOptions): void;
-}
+};
 
 const initlalContext: Auth0Context = {
   isLoading: true,
   token: "",
+  isAnonymous: true,
   login: () => null,
   logout: () => null,
 };
@@ -32,6 +33,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
   const [auth0Client] = useState(() => new Auth0Client(initOptions));
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
+  const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
 
   useEffect(() => {
     const initAuth0 = async () => {
@@ -39,8 +41,8 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
         await auth0Client.checkSession();
         const token = await getToken();
         if (token) {
-          await validateRole();
           setToken(token);
+          setIsAnonymous((await getRole()) === "anonymous");
         }
       } catch (e) {
         console.info(e);
@@ -62,11 +64,9 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
     }
   }, [auth0Client]);
 
-  const validateRole = useCallback(async () => {
+  const getRole = useCallback(async () => {
     const user = await auth0Client.getUser<User & { [ROLE_NAMESPACE]: Role }>();
-    if (!user?.[ROLE_NAMESPACE] || user[ROLE_NAMESPACE] === "anonymous") {
-      auth0Client.logout({ returnTo: `${location.origin}${ROUTES.top}` });
-    }
+    return user?.[ROLE_NAMESPACE] || "anonymous";
   }, [auth0Client]);
 
   const login = useCallback(
@@ -81,6 +81,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
       value={{
         isLoading,
         token,
+        isAnonymous,
         login,
         logout,
       }}

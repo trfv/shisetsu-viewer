@@ -4,11 +4,13 @@ import Drawer from "@mui/material/Drawer";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { useAuth0 } from "../../contexts/Auth0";
 import { styled } from "../../utils/theme";
 import { IconButton } from "../IconButton";
 
 export const HeaderMenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAnonymous } = useAuth0();
 
   const toggleDrawer = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -24,9 +26,13 @@ export const HeaderMenuButton = () => {
           <IconButton onClick={toggleDrawer} edge="start">
             <Close />
           </IconButton>
-          <Link to={ROUTES.reservation} onClick={toggleDrawer}>
-            予約検索
-          </Link>
+          {isAnonymous ? (
+            <span>予約検索</span>
+          ) : (
+            <Link to={ROUTES.reservation} onClick={toggleDrawer}>
+              予約検索
+            </Link>
+          )}
           <Link to={ROUTES.institution} onClick={toggleDrawer}>
             施設検索
           </Link>
@@ -40,13 +46,18 @@ const StyledMenu = styled("div")(({ theme }) => ({
   padding: theme.spacing(2),
   display: "flex",
   alignItems: "center",
-  "> a": {
+  "> a, span": {
     marginLeft: theme.spacing(2),
     color: theme.palette.text.primary,
     textDecoration: "none",
     borderBottom: `1px solid transparent`,
+  },
+  "> a": {
     ":hover": {
       borderBottom: `1px solid ${theme.palette.text.primary}`,
     },
+  },
+  "> span": {
+    color: theme.palette.grey[500],
   },
 }));

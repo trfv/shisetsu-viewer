@@ -53,9 +53,7 @@ const App = () => {
                 path={ROUTES.institution}
                 element={
                   <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Institution />
-                    </AuthGuard>
+                    <Institution />
                   </Suspense>
                 }
               />
@@ -63,9 +61,7 @@ const App = () => {
                 path={ROUTES.detail}
                 element={
                   <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Detail />
-                    </AuthGuard>
+                    <Detail />
                   </Suspense>
                 }
               />

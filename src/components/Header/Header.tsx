@@ -10,23 +10,21 @@ import { LoginButton } from "../LoginButton";
 
 export const Header = () => {
   const isMobile = useIsMobile();
-  const { token } = useAuth0();
+  const { isAnonymous } = useAuth0();
 
   return (
     <StyledHeader className={classes.appBar}>
       <BaseBox className={classes.toolbar}>
-        {isMobile && (
-          <BaseBox className={classes.menuButton}>{token && <HeaderMenuButton />}</BaseBox>
-        )}
+        {isMobile && <BaseBox className={classes.menuButton}>{<HeaderMenuButton />}</BaseBox>}
         <BaseBox className={classes.logoAndMenu}>
           <BaseBox className={classes.logoWrapper} component="h1">
             <Link to={ROUTES.top}>
               <img className={classes.logo} src="/logo.svg" alt="Shisetsu Viewer" />
             </Link>
           </BaseBox>
-          {!isMobile && token && (
+          {!isMobile && (
             <BaseBox className={classes.menu}>
-              <Link to={ROUTES.reservation}>予約検索</Link>
+              {isAnonymous ? <span>予約検索</span> : <Link to={ROUTES.reservation}>予約検索</Link>}
               <Link to={ROUTES.institution}>施設検索</Link>
             </BaseBox>
           )}
@@ -85,12 +83,17 @@ const StyledHeader = styled("header")(({ theme }) => ({
   [`.${classes.menu}`]: {
     display: "flex",
     alignItems: "center",
-    "> a": {
+    "> a, span": {
       marginLeft: theme.spacing(3),
       borderBottom: `1px solid transparent`,
+    },
+    "> a": {
       ":hover": {
         borderColor: theme.palette.common.white,
       },
+    },
+    "> span": {
+      color: theme.palette.grey[500],
     },
   },
   [`.${classes.menuButton}`]: {

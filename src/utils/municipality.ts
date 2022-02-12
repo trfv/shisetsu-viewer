@@ -66,15 +66,15 @@ export type SupportedMunicipality = typeof SupportedMunicipalities[number];
 
 export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_ARAKAWA: "荒川区",
-  MUNICIPALITY_BUNKYO: "文京区",
   MUNICIPALITY_EDOGAWA: "江戸川区",
+  MUNICIPALITY_OTA: "大田区",
   MUNICIPALITY_KITA: "北区",
   MUNICIPALITY_KOUTOU: "江東区",
-  MUNICIPALITY_TOSHIMA: "豊島区",
-  MUNICIPALITY_SUMIDA: "墨田区",
-  MUNICIPALITY_OTA: "大田区",
   MUNICIPALITY_SUGINAMI: "杉並区",
+  MUNICIPALITY_SUMIDA: "墨田区",
+  MUNICIPALITY_TOSHIMA: "豊島区",
   MUNICIPALITY_CHUO: "中央区",
+  MUNICIPALITY_BUNKYO: "文京区",
 };
 
 export const SELECT_OPTION_ALL = "all";
