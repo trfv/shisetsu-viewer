@@ -1,4 +1,4 @@
-import Markdown from "markdown-to-jsx";
+import ReactMarkdown from "react-markdown";
 import { CONTAINER_WIDTH } from "../constants/styles";
 import { styled } from "../utils/theme";
 
@@ -6,7 +6,7 @@ export default () => {
   return (
     <StyledTop className={classes.pageBox}>
       <div className={classes.contentBox}>
-        <Markdown>{CONTENT}</Markdown>
+        <ReactMarkdown>{CONTENT}</ReactMarkdown>
       </div>
       <div className={classes.copyright}>Copyright © 2021 trfv All Rights Reserved.</div>
     </StyledTop>

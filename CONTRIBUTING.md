@@ -51,16 +51,19 @@ storybook が作成されているコンポーネントもあります。
 
 ### contexts
 
-Provider を定義する場所です。現在は Auth0 と use-query-params という 2 つのライブラリをラップしたものになっています。
-Apollo や Theme もここに置いていい気もします。
+Provider, Context を定義している場所です。
 
 ### fonts
 
 利用しているフォントを置いています。これでいいのかわかってないです。
 
+### hooks
+
+カスタム hooks を定義している場所です。
+
 ### pages
 
-ページを配置しています。Nextjs を意識した階層構造にしてみました。
+ページを配置しています。
 
 ### utils
 
@@ -75,7 +78,7 @@ utils, hooks, contexts
 ↑
 apis
 ↑
-pages
-↑
 components
+↑
+pages
 ```
