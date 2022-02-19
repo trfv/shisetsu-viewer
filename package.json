@@ -13,8 +13,8 @@
   "dependencies": {
     "@apollo/client": "3.5.9",
     "@auth0/auth0-spa-js": "1.20.0",
-    "@emotion/react": "11.8.0",
-    "@emotion/styled": "11.8.0",
+    "@emotion/react": "11.8.1",
+    "@emotion/styled": "11.8.1",
     "@mui/icons-material": "5.4.2",
     "@mui/lab": "5.0.0-alpha.69",
     "@mui/material": "5.4.2",
