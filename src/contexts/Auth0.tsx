@@ -6,6 +6,7 @@ import {
   User,
 } from "@auth0/auth0-spa-js";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { requestInterval } from "../utils/interval";
 
 type Role = "user" | "anonymous";
 const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
@@ -39,11 +40,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
     const initAuth0 = async () => {
       try {
         await auth0Client.checkSession();
-        const token = await getToken();
-        if (token) {
-          setToken(token);
-          setIsAnonymous((await getRole()) === "anonymous");
-        }
+        await updateToken();
       } catch (e) {
         console.info(e);
       } finally {
@@ -51,16 +48,26 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
       }
     };
     initAuth0();
+    const cancel = requestInterval(updateToken, 60 * 60 * 1000);
+    return () => {
+      cancel();
+    };
   }, []);
 
-  const getToken = useCallback(async () => {
+  const updateToken = useCallback(async () => {
     try {
       const token = await auth0Client.getTokenSilently({
         audience: initOptions.audience,
       });
-      return token;
+      if (token) {
+        setToken(token);
+        setIsAnonymous((await getRole()) === "anonymous");
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
-      return "";
+      return false;
     }
   }, [auth0Client]);
 

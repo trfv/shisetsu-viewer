@@ -12,8 +12,6 @@ ReactDOM.render(
       domain={AUTH0_DOMAIN}
       client_id={AUTH0_CLIENT_ID}
       redirect_uri={`${window.location.origin}${ROUTES.waiting}`}
-      useRefreshTokens={true}
-      legacySameSiteCookie={true}
       audience={AUTH0_AUDIENCE}
     >
       <App />
