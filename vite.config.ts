@@ -34,6 +34,6 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
   ],
   test: {
     global: true,
-    environment: 'jsdom',
+    environment: "happy-dom",
   },
 }))

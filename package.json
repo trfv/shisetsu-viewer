@@ -80,8 +80,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "test": "TZ=Asia/Tokyo vitest",
+    "coverage": "TZ=Asia/Tokyo vitest run --coverage",
     "reg-suit": "reg-suit run",
     "prepare": "husky install"
   },

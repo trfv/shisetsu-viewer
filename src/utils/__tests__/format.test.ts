@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import {
   formatDate,
   formatDatetime,
@@ -7,9 +7,17 @@ import {
   formatPrice,
 } from "../format";
 
+const withErrorMock = (test: () => void) => {
+  const spy = vi.spyOn(console, "error");
+  spy.mockImplementation(() => null);
+  test();
+  expect(spy).toHaveBeenCalledOnce();
+  spy.mockReset();
+};
+
 describe("formatMonthDate", () => {
   test("empty string", () => {
-    expect(formatMonthDate("")).toBe("");
+    withErrorMock(() => expect(formatMonthDate("")).toBe(""));
   });
   test("string date", () => {
     expect(formatMonthDate("2022-02-26")).toBe("2月26日(土)");
@@ -21,7 +29,7 @@ describe("formatMonthDate", () => {
 
 describe("formatDate", () => {
   test("empty string", () => {
-    expect(formatDate("")).toBe("");
+    withErrorMock(() => expect(formatDate("")).toBe(""));
   });
   test("string date", () => {
     expect(formatDate("2022-02-26")).toBe("2022/02/26(土)");
@@ -33,7 +41,7 @@ describe("formatDate", () => {
 
 describe("formatDatetime", () => {
   test("empty string", () => {
-    expect(formatDatetime("")).toBe("");
+    withErrorMock(() => expect(formatDatetime("")).toBe(""));
   });
   test("string datetime", () => {
     expect(formatDatetime("2022-02-26T00:00:00")).toBe("2022/02/26 09:00:00");
