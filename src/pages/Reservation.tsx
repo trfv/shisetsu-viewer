@@ -10,11 +10,7 @@ import { SearchForm } from "../components/SearchForm";
 import { Select, SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import {
-  CONTAINER_WIDTH,
-  SEARCH_TABLE_HEIGHT,
-  SEARCH_TABLE_HEIGHT_MOBILE,
-} from "../constants/styles";
+import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate } from "../utils/format";
@@ -323,17 +319,15 @@ const StyledReservation = styled("main")(({ theme }) => ({
   [`.${classes.resultBox}`]: {
     marginInline: "auto",
     width: "100%",
-    height: SEARCH_TABLE_HEIGHT,
     maxWidth: CONTAINER_WIDTH,
-    ".MuiTableContainer-root": {
-      maxHeight: SEARCH_TABLE_HEIGHT,
+    [theme.breakpoints.up("md")]: {
+      height: SEARCH_TABLE_HEIGHT,
+      ".MuiTableContainer-root": {
+        maxHeight: SEARCH_TABLE_HEIGHT,
+      },
     },
     [theme.breakpoints.down("sm")]: {
       marginInline: 0,
-      height: SEARCH_TABLE_HEIGHT_MOBILE,
-      ".MuiTableContainer-root": {
-        maxHeight: SEARCH_TABLE_HEIGHT_MOBILE,
-      },
     },
   },
   [`.${classes.resultBoxNoData}`]: {
