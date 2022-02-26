@@ -15,7 +15,7 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
           mui: ["@mui/material", "@mui/icons-material", "@mui/lab"],
         },
         chunkFileNames: "assets/[hash].js",
-        assetFileNames: (info) => info.name.includes("woff") ? "assets/[name][extname]" : "assets/[hash][extname]",
+        assetFileNames: (info) => info.name?.includes("woff") ? "assets/[name][extname]" : "assets/[hash][extname]",
       }
     }
   },
@@ -32,4 +32,8 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
       )
     ] : []),
   ],
+  test: {
+    global: true,
+    environment: "happy-dom",
+  },
 }))

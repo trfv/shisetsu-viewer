@@ -836,7 +836,7 @@ export type InstitutionDetailQueryVariables = Exact<{
 }>;
 
 
-export type InstitutionDetailQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null, area?: any | null, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null };
+export type InstitutionDetailQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', id: any, prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null, area?: any | null, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null };
 
 export type InstitutionReservationsQueryVariables = Exact<{
   id: Scalars['uuid'];
@@ -887,6 +887,7 @@ export type ReservationsQuery = { __typename?: 'query_root', reservations: Array
 export const InstitutionDetailDocument = gql`
     query institutionDetail($id: uuid!) {
   institutions_by_pk(id: $id) {
+    id
     prefecture
     municipality
     building

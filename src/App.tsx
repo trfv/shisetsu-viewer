@@ -7,7 +7,7 @@ import { ScrollToTop } from "./components/utils/ScrollToTop";
 import { ROUTES } from "./constants/routes";
 import { useAuth0 } from "./contexts/Auth0";
 import { Loading } from "./pages/Loading";
-import { apolloClient, ApolloProvider } from "./utils/client";
+import { client, ClientProvider } from "./utils/client";
 import { CssBaseline, darkTheme, lightTheme, ThemeProvider, useMediaQuery } from "./utils/theme";
 
 const Institution = lazy(() => import("./pages/Institution"));
@@ -23,7 +23,7 @@ const App = () => {
   const { token } = useAuth0();
 
   return (
-    <ApolloProvider client={apolloClient(token)}>
+    <ClientProvider client={client(token)}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ErrorBoundary>
@@ -77,7 +77,7 @@ const App = () => {
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>
-    </ApolloProvider>
+    </ClientProvider>
   );
 };
 

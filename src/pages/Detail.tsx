@@ -1,7 +1,7 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns/esm";
 import { ChangeEvent, useCallback, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import {
   InstitutionDetailQuery,
   useInstitutionDetailQuery,
@@ -21,11 +21,12 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
+import { ROUTES } from "../constants/routes";
 import { CONTAINER_WIDTH, WIDTHS } from "../constants/styles";
 import { useAuth0 } from "../contexts/Auth0";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
-import { isValidUUID } from "../utils/id";
+import { isValidUuid } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import { ReservationDivisionMap, ReservationStatusMap } from "../utils/municipality";
 import { sortByReservationDivision } from "../utils/reservation";
@@ -241,8 +242,8 @@ export default () => {
     []
   );
 
-  if (!id || !isValidUUID(id)) {
-    return null;
+  if (!id || !isValidUuid(id)) {
+    return <Navigate to={ROUTES.top} replace={true} />;
   }
 
   const { loading, data, error } = useInstitutionDetailQuery({
