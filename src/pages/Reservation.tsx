@@ -1,6 +1,6 @@
 import { addMonths, endOfMonth, max, min } from "date-fns/esm";
 import { ChangeEvent, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
@@ -90,15 +90,20 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
 
 export default () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [values, setQueryParams] = useQueryParams({
-    m: StringParam,
-    df: DateParam,
-    dt: DateParam,
-    f: ArrayParam,
-    a: ArrayParam,
-    i: ArrayParam,
-  });
+  const [values, setQueryParams] = useQueryParams(
+    {
+      m: StringParam,
+      df: DateParam,
+      dt: DateParam,
+      f: ArrayParam,
+      a: ArrayParam,
+      i: ArrayParam,
+    },
+    navigate,
+    location
+  );
 
   const resevationSearchParams = useMemo(
     () =>

@@ -14,10 +14,10 @@ jobs:
       - name: Set Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: 'npm'
       - name: npm install
-        run: npm install --force
+        run: npm install
       - name: workaround for detached HEAD
         run: |
           git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull

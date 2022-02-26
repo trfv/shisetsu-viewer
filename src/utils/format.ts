@@ -45,9 +45,13 @@ export const formatDatetime = (datetime: string | Date): string => {
 };
 
 export const formatNumberWithCommas = (value: string | number): string => {
+  if (value !== 0 && !value) {
+    return "";
+  }
   return Number(value).toLocaleString("ja-JP");
 };
 
 export const formatPrice = (value: string | number): string => {
-  return `¥${formatNumberWithCommas(value)}`;
+  const formatted = formatNumberWithCommas(value);
+  return formatted ? `¥${formatted}` : "";
 };

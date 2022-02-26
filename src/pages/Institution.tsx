@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { InstitutionsQuery, useInstitutionsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
@@ -98,12 +98,17 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
 
 export default () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [values, setQueryParams] = useQueryParams({
-    m: StringParam,
-    a: ArrayParam,
-    i: ArrayParam,
-  });
+  const [values, setQueryParams] = useQueryParams(
+    {
+      m: StringParam,
+      a: ArrayParam,
+      i: ArrayParam,
+    },
+    navigate,
+    location
+  );
 
   const institutionSearchParams = useMemo(
     () => toInstitutionSearchParams(values.m, values.a, values.i),
