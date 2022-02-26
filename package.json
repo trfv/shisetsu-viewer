@@ -64,7 +64,7 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "generate": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --require dotenv/config --config ./src/api/config.yml",
+    "generate": "graphql-codegen --require dotenv/config --config ./src/api/config.yml",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",
