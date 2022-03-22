@@ -1,15 +1,30 @@
-import type { Meta, Story } from "@storybook/react";
-import type { ComponentProps } from "react";
+import { useArgs } from "@storybook/client-api";
+import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DatePicker } from "./DatePicker";
 
 export default {
   title: "DatePicker",
   component: DatePicker,
-} as Meta;
+  args: {
+    value: new Date(2021, 0, 1),
+    minDate: new Date(2020, 11, 1),
+    maxDate: new Date(2021, 1, 1),
+  },
+  argTypes: {
+    value: {
+      control: "date",
+    },
+    minDate: {
+      control: "date",
+    },
+    maxDate: {
+      control: "date",
+    },
+  },
+} as ComponentMeta<typeof DatePicker>;
 
-export const Basic: Story<ComponentProps<typeof DatePicker>> = (args) => <DatePicker {...args} />;
-
-Basic.args = {
-  value: new Date(2021, 0, 1),
-  onChange: () => null,
+export const Basic: ComponentStory<typeof DatePicker> = (args) => {
+  const [, updateArgs] = useArgs();
+  const onChange = (date: Date | null) => updateArgs({ ...args, value: date });
+  return <DatePicker {...args} onChange={onChange} />;
 };

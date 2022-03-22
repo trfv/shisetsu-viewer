@@ -6,7 +6,53 @@
     <meta name="description" content="Shisetsu Viewer" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/noto-sans-jp-v28-latin_japanese-700.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/noto-sans-jp-v28-latin_japanese-regular.woff2"
+      crossorigin
+    />
     <title>Shisetsu Viewer</title>
+    <style>
+      @font-face {
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local("Roboto"), url("../fonts/roboto-v27-latin-regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local("Roboto"), url("../fonts/roboto-v27-latin-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Noto Sans JP";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local("Noto Sans JP"),
+          url("../fonts/noto-sans-jp-v28-latin_japanese-regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Noto Sans JP";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local("Noto Sans JP"),
+          url("../fonts/noto-sans-jp-v28-latin_japanese-700.woff2") format("woff2");
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

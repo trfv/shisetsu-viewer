@@ -42,7 +42,7 @@ export default () => {
           <li>PC 環境での利用を推奨しております。</li>
         </ul>
       </div>
-      <div className={classes.copyright}>Copyright © 2021 trfv All Rights Reserved.</div>
+      <div className={classes.copyright}>Copyright © 2022 trfv All Rights Reserved.</div>
     </StyledTop>
   );
 };
