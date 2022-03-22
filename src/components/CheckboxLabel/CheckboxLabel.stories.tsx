@@ -1,21 +1,33 @@
-import type { Meta, Story } from "@storybook/react";
-import type { ChangeEvent, ComponentProps } from "react";
+import type { ComponentMeta, ComponentStory } from "@storybook/react";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { CheckboxLabel } from "./CheckboxLabel";
 
 export default {
   title: "CheckboxLabel",
   component: CheckboxLabel,
-} as Meta;
+  args: {
+    label: "label",
+    checkbox: {
+      label: "label",
+      value: "value",
+      checked: false,
+    },
+  },
+  argTypes: {
+    size: {
+      control: false,
+    },
+    checkbox: {
+      control: false,
+    },
+  },
+} as ComponentMeta<typeof CheckboxLabel>;
 
-export const Basic: Story<ComponentProps<typeof CheckboxLabel>> = ({ label }) => {
+export const Basic: ComponentStory<typeof CheckboxLabel> = (args) => {
   const [checked, setChecked] = useState(false);
   const onChange = (event: ChangeEvent<HTMLInputElement>) => setChecked(event.target.checked);
   return (
-    <CheckboxLabel label={label} checkbox={{ label: "label", value: "value", checked, onChange }} />
+    <CheckboxLabel {...args} checkbox={{ label: "label", value: "value", checked, onChange }} />
   );
-};
-
-Basic.args = {
-  label: "label",
 };

@@ -19,7 +19,13 @@ export const Header = () => {
         <BaseBox className={classes.logoAndMenu}>
           <BaseBox className={classes.logoWrapper} component="h1">
             <Link to={ROUTES.top}>
-              <img className={classes.logo} src="/logo.svg" alt="Shisetsu Viewer" />
+              <img
+                className={classes.logo}
+                src="/logo.svg"
+                alt="Shisetsu Viewer"
+                width="256"
+                height="100"
+              />
             </Link>
           </BaseBox>
           {!isMobile && (
@@ -78,6 +84,7 @@ const StyledHeader = styled("header")(({ theme }) => ({
     margin: 0,
   },
   [`.${classes.logo}`]: {
+    width: 100,
     height: 40,
   },
   [`.${classes.menu}`]: {

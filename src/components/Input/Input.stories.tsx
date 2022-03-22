@@ -1,31 +1,37 @@
-import type { Meta, Story } from "@storybook/react";
-import type { ComponentProps } from "react";
+import type { ComponentMeta, ComponentStoryObj } from "@storybook/react";
 import { Input } from "./Input";
 
 export default {
   title: "Input",
   component: Input,
-} as Meta;
+  args: {
+    label: "label",
+    loading: false,
+  },
+  argTypes: {
+    ref: {
+      control: false,
+    },
+    size: {
+      control: false,
+    },
+  },
+} as ComponentMeta<typeof Input>;
 
-export const Small: Story<ComponentProps<typeof Input>> = (args) => (
-  <Input {...args} size="small" />
-);
-export const Medium: Story<ComponentProps<typeof Input>> = (args) => (
-  <Input {...args} size="medium" />
-);
-export const Large: Story<ComponentProps<typeof Input>> = (args) => (
-  <Input {...args} size="large" />
-);
+export const Small: ComponentStoryObj<typeof Input> = {
+  args: {
+    size: "small",
+  },
+};
 
-Small.args = {
-  label: "small",
-  value: "",
+export const Medium: ComponentStoryObj<typeof Input> = {
+  args: {
+    size: "medium",
+  },
 };
-Medium.args = {
-  label: "medium",
-  value: "",
-};
-Large.args = {
-  label: "large",
-  value: "",
+
+export const Large: ComponentStoryObj<typeof Input> = {
+  args: {
+    size: "large",
+  },
 };

@@ -1,33 +1,32 @@
-import type { Meta, Story } from "@storybook/react";
-import type { ComponentProps } from "react";
+import type { ComponentMeta, ComponentStoryObj } from "@storybook/react";
 import { BaseButton as Button } from "./BaseButton";
-import { LargeButton } from "./LargeButton";
-import { MediumButton } from "./MediumButton";
-import { SmallButton } from "./SmallButton";
 
 export default {
   title: "Button",
   component: Button,
-} as Meta;
+  args: {
+    children: "Button",
+    color: "inherit",
+    variant: "outlined",
+  },
+  argTypes: {
+    ref: {
+      control: false,
+    },
+    size: {
+      control: false,
+    },
+  },
+} as ComponentMeta<typeof Button>;
 
-export const Small: Story<ComponentProps<typeof SmallButton>> = (args) => <SmallButton {...args} />;
-export const Medium: Story<ComponentProps<typeof MediumButton>> = (args) => (
-  <MediumButton {...args} />
-);
-export const Large: Story<ComponentProps<typeof LargeButton>> = (args) => <LargeButton {...args} />;
+export const Small: ComponentStoryObj<typeof Button> = {
+  args: { size: "small" },
+};
 
-Small.args = {
-  children: "small",
-  color: "inherit",
-  variant: "outlined",
+export const Medium: ComponentStoryObj<typeof Button> = {
+  args: { size: "medium" },
 };
-Medium.args = {
-  children: "medium",
-  color: "inherit",
-  variant: "outlined",
-};
-Large.args = {
-  children: "large",
-  color: "inherit",
-  variant: "outlined",
+
+export const Large: ComponentStoryObj<typeof Button> = {
+  args: { size: "large" },
 };

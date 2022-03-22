@@ -4,17 +4,13 @@ export { default as useMediaQuery } from "@mui/material/useMediaQuery";
 import { grey, indigo, red } from "@mui/material/colors";
 import { createTheme, responsiveFontSizes, ThemeOptions } from "@mui/material/styles";
 import { BREAKPOINTS } from "../constants/styles";
-import NotoSansJpBold from "../fonts/noto-sans-jp-v28-latin_japanese-700.woff2";
-import NotoSansJpRegular from "../fonts/noto-sans-jp-v28-latin_japanese-regular.woff2";
-import RobotoBold from "../fonts/roboto-v27-latin-700.woff2";
-import RobotoRegular from "../fonts/roboto-v27-latin-regular.woff2";
 
 const COLORS = {
   white: "#ffffff",
   black: "#000000",
 };
 
-const COMMON_THEME_OPTION: ThemeOptions = {
+const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
   typography: {
     fontSize: 12, // https://mui.com/customization/typography/#font-size
     fontFamily: 'Roboto, "Noto Sans JP", "Hiragino Sans", Meiryo, sans-serif',
@@ -23,6 +19,21 @@ const COMMON_THEME_OPTION: ThemeOptions = {
     values: BREAKPOINTS,
   },
   components: {
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          colorScheme: scheme,
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: `
         html {
@@ -36,42 +47,14 @@ const COMMON_THEME_OPTION: ThemeOptions = {
           padding-inline-start: 16px;
           margin-bottom: 32px;
         }
-        @font-face {
-          font-family: "Roboto";
-          font-style: normal;
-          font-weight: 400;
-          font-display: swap;
-          src: local("Roboto"), url(${RobotoRegular}) format("woff2"); 
-        }
-        @font-face {
-          font-family: "Roboto";
-          font-style: normal;
-          font-weight: 700;
-          font-display: swap;
-          src: local("Roboto"), url(${RobotoBold}) format("woff2"); 
-        }
-        @font-face {
-          font-family: "Noto Sans JP";
-          font-style: normal;
-          font-weight: 400;
-          font-display: swap;
-          src: local("Noto Sans JP"), url(${NotoSansJpRegular}) format("woff2"); 
-        }
-        @font-face {
-          font-family: "Noto Sans JP";
-          font-style: normal;
-          font-weight: 700;
-          font-display: swap;
-          src: local("Noto Sans JP"), url(${NotoSansJpBold}) format("woff2"); 
-        }
       `,
     },
   },
-};
+});
 
 export const lightTheme = responsiveFontSizes(
   createTheme({
-    ...COMMON_THEME_OPTION,
+    ...commonThemeOptions("light"),
     palette: {
       mode: "light",
       primary: {
@@ -94,7 +77,7 @@ export const lightTheme = responsiveFontSizes(
 
 export const darkTheme = responsiveFontSizes(
   createTheme({
-    ...COMMON_THEME_OPTION,
+    ...commonThemeOptions("dark"),
     palette: {
       mode: "dark",
       primary: {
