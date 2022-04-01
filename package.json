@@ -12,7 +12,7 @@
   "author": "trfv",
   "dependencies": {
     "@apollo/client": "3.5.10",
-    "@auth0/auth0-spa-js": "1.20.1",
+    "@auth0/auth0-spa-js": "1.21.0",
     "@emotion/react": "11.8.2",
     "@emotion/styled": "11.8.1",
     "@mui/icons-material": "5.5.1",
