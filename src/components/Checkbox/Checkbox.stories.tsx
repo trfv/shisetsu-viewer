@@ -1,4 +1,4 @@
-import { useArgs } from "@storybook/client-api";
+import { useArgs } from "@storybook/api";
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import type { ChangeEvent } from "react";
 import { Checkbox } from "./Checkbox";
