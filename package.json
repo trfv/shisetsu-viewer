@@ -29,6 +29,7 @@
     "@graphql-codegen/typescript": "2.4.11",
     "@graphql-codegen/typescript-operations": "2.4.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.14",
+    "@mdx-js/react": "2.1.1",
     "@storybook/addon-essentials": "6.5.5",
     "@storybook/api": "6.5.5",
     "@storybook/builder-vite": "0.1.35",
