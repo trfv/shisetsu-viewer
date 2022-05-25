@@ -1,4 +1,4 @@
-import { addMonths, isAfter, isBefore, isSameDay } from "date-fns/esm";
+import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
 import { ReservationsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
 import {

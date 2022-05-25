@@ -1,4 +1,4 @@
-import { addMonths, endOfMonth, max, min } from "date-fns/esm";
+import { addMonths, endOfMonth, max, min } from "date-fns";
 import { ChangeEvent, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
