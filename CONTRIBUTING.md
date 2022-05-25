@@ -4,7 +4,7 @@
 
 ### Install Node
 
-[Node.js (LTS)](https://nodejs.org/) からインストールしてください
+[Node.js (LTS)](https://nodejs.org/) から LTS（ver16）をインストールしてください。
 
 ### Install dependencies
 
@@ -52,10 +52,6 @@ storybook が作成されているコンポーネントもあります。
 ### contexts
 
 Provider, Context を定義している場所です。
-
-### fonts
-
-利用しているフォントを置いています。これでいいのかわかってないです。
 
 ### hooks
 

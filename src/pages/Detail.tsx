@@ -1,5 +1,5 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { formatISO } from "date-fns/esm";
+import { formatISO } from "date-fns";
 import { ChangeEvent, useCallback, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import {
