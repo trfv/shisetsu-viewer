@@ -5,7 +5,8 @@ import {
   RedirectLoginOptions,
   User,
 } from "@auth0/auth0-spa-js";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { useMount } from "../hooks/useMount";
 import { requestInterval } from "../utils/interval";
 
 type Role = "user" | "anonymous";
@@ -36,23 +37,22 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
   const [token, setToken] = useState(initlalContext.token);
   const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
 
-  useEffect(() => {
-    const initAuth0 = async () => {
-      try {
-        await auth0Client.checkSession();
-        await updateToken();
-      } catch (e) {
-        console.info(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    initAuth0();
-    const cancel = requestInterval(updateToken, 60 * 60 * 1000);
-    return () => {
-      cancel();
-    };
-  }, []);
+  useMount(
+    async () => {
+      const initAuth0 = async () => {
+        try {
+          await auth0Client.checkSession();
+          await updateToken();
+        } catch (e) {
+          console.info(e);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      return initAuth0();
+    },
+    () => requestInterval(updateToken, 60 * 60 * 1000)
+  );
 
   const updateToken = useCallback(async () => {
     try {
