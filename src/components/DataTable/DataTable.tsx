@@ -47,13 +47,13 @@ export const DataTable = <T extends Row>({
   const target = useRef<HTMLTableRowElement | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries[0].isIntersecting && fetchMore?.()
-    );
     const element = target && target.current;
     if (!element) {
       return;
     }
+    const observer = new IntersectionObserver(
+      (entries) => entries[0].isIntersecting && fetchMore?.()
+    );
     observer.observe(element);
     return () => {
       observer.unobserve(element);
