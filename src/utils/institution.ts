@@ -1,4 +1,4 @@
-import { InstitutionsQueryVariables } from "../api/graphql-client";
+import type { InstitutionsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import {
@@ -72,6 +72,6 @@ export const toInstitutionQueryVariables = ({
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
     isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
-    institutionSizes: toInstitutionSizeParam(institutionSizes),
+    institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
   };
 };

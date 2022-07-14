@@ -1,5 +1,5 @@
 import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
-import { ReservationsQueryVariables } from "../api/graphql-client";
+import type { ReservationsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
   getMunicipalityFromUrlParam,
@@ -197,7 +197,7 @@ export const toReservationQueryVariables = ({
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
     isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
-    institutionSizes: toInstitutionSizeParam(institutionSizes),
+    institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
     isHoliday: isOnlyHoliday ? true : null,

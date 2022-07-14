@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { BaseBox } from "./BaseBox";
 
 type Props = ComponentProps<typeof BaseBox>;

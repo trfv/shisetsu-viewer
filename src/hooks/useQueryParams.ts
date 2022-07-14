@@ -1,6 +1,6 @@
 import { formatISO, isValid } from "date-fns";
 import { useCallback, useState } from "react";
-import { Location, NavigateFunction } from "react-router-dom";
+import type { Location, NavigateFunction } from "react-router-dom";
 
 export const NumberParam = {
   encode: (value: number) => (!!value || value === 0 ? value.toString() : null),
@@ -47,7 +47,7 @@ const toQueryParams = <QPM extends QueryParamsMap>(
 ) => {
   return Object.entries(dv).reduce<URLSearchParams>((accum, curr) => {
     const [name, value] = curr;
-    const ev = qpm[name].encode(value);
+    const ev = qpm[name]?.encode(value);
     if (ev) {
       if (Array.isArray(ev)) {
         accum.delete(name);
@@ -63,7 +63,7 @@ const toQueryParams = <QPM extends QueryParamsMap>(
 const toDecodedValues = <QPM extends QueryParamsMap>(qp: URLSearchParams, qpm: QPM) => {
   return [...qp.keys()].reduce<DecodedValues<QPM>>((accum, curr) => {
     const [name, value] = [curr as keyof QPM, qp.getAll(curr)];
-    accum[name] = qpm[name].decode(value);
+    accum[name] = qpm[name]?.decode(value);
     return accum;
   }, {});
 };

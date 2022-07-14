@@ -52,7 +52,7 @@ export const DataTable = <T extends Row>({
       return;
     }
     const observer = new IntersectionObserver(
-      (entries) => entries[0].isIntersecting && fetchMore?.()
+      (entries) => entries[0]?.isIntersecting && fetchMore?.()
     );
     observer.observe(element);
     return () => {

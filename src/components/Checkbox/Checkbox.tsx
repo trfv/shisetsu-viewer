@@ -1,6 +1,6 @@
 import MuiCheckbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { ChangeEvent, FC } from "react";
+import type { ChangeEvent, FC } from "react";
 import { box, BoxSize } from "../Box";
 
 type Props = {
@@ -13,7 +13,13 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const Checkbox: FC<Props> = ({ label, value, size = "auto", checked, onChange }) => {
+export const Checkbox: FC<Props> = ({
+  label,
+  value,
+  size = "auto",
+  checked = false,
+  onChange = () => null,
+}) => {
   const Box = box(size);
   return (
     <Box>

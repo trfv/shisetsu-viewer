@@ -37,56 +37,56 @@ const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
     headerName: "地区",
     type: "getter",
     hide: true,
-    valueGetter: (params) => SupportedMunicipalityMap[params.value as string],
+    valueGetter: (params) => SupportedMunicipalityMap[params.value as string] || "",
   },
   {
     field: "institution_size",
     headerName: "施設サイズ",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => InstitutionSizeMap[params.value as string],
+    valueGetter: (params) => InstitutionSizeMap[params.value as string] || "",
   },
   {
     field: "is_available_strings",
     headerName: "弦楽器",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_woodwind",
     headerName: "木管楽器",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_brass",
     headerName: "金管楽器",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_percussion",
     headerName: "打楽器",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => AvailabilityDivisionMap[params.value as string],
+    valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_equipped_music_stand",
     headerName: "譜面台",
     type: "getter",
     hide: true,
-    valueGetter: (params) => EquipmentDivisionMap[params.value as string],
+    valueGetter: (params) => EquipmentDivisionMap[params.value as string] || "",
   },
   {
     field: "is_equipped_piano",
     headerName: "ピアノ",
     type: "getter",
     hide: true,
-    valueGetter: (params) => EquipmentDivisionMap[params.value as string],
+    valueGetter: (params) => EquipmentDivisionMap[params.value as string] || "",
   },
   {
     field: "updated_at",
@@ -157,10 +157,10 @@ export default () => {
       : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label),
+      .map(([, label]) => label || ""),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label),
+      .map(([, label]) => label || ""),
   ];
 
   return (
@@ -190,7 +190,7 @@ export default () => {
               onChange={handleInstitutoinSizesChange}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label} value={value} />
+                <Checkbox key={value} label={label || ""} value={value} />
               ))}
             </CheckboxGroup>
           </SearchForm>

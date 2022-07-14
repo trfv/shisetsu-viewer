@@ -1,6 +1,6 @@
 export { ApolloProvider as ClientProvider } from "@apollo/client";
 import { ApolloClient, FieldFunctionOptions, InMemoryCache } from "@apollo/client";
-import { Institutions, Reservations } from "../api/graphql-client";
+import type { Institutions, Reservations } from "../api/graphql-client";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 
 const offsetLimitPagination = <T>() => ({
@@ -9,7 +9,7 @@ const offsetLimitPagination = <T>() => ({
     if (!options.args) {
       throw new Error("args is null");
     }
-    if (options.args.offset === 0) {
+    if (options.args["offset"] === 0) {
       return incoming;
     }
     return merged.concat(incoming);

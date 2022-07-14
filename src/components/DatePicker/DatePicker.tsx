@@ -3,15 +3,15 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import locale from "date-fns/locale/ja";
-import { FC } from "react";
+import type { FC } from "react";
 import { useTheme } from "../../utils/theme";
 import { SmallBox } from "../Box";
 
 type Props = {
   value: Date | null;
   onChange: (date: Date | null) => void;
-  minDate?: Date | undefined;
-  maxDate?: Date | undefined;
+  minDate: Date;
+  maxDate: Date;
 };
 
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
