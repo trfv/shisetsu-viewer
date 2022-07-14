@@ -191,7 +191,8 @@ export const toReservationQueryVariables = ({
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
-        : SupportedMunicipalities.map((m) => m.toString()),
+        : SupportedMunicipalities.filter((m) => m !== "MUNICIPALITY_BUNKYO") // 文京区のシステムの改悪により更新困難になったため
+            .map((m) => m.toString()),
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
