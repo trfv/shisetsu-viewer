@@ -1,5 +1,5 @@
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import MuiDatePicker from "@mui/lab/DatePicker";
+import MuiDatePicker, { DatePickerProps } from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MuiTextField from "@mui/material/TextField";
 import locale from "date-fns/locale/ja";
@@ -27,7 +27,7 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           minDate={minDate}
           maxDate={maxDate}
           onChange={onChange}
-          renderInput={(props) => (
+          renderInput={(props: DatePickerProps<Date>) => (
             <MuiTextField {...props} variant="standard" style={{ fontSize: "16px" }} />
           )}
           showDaysOutsideCurrentMonth={true}
