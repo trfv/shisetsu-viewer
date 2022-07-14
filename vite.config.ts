@@ -12,7 +12,7 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
         esModule: true,
         manualChunks: {
           react: ["react", "react-dom", "react-router-dom"],
-          mui: ["@mui/material", "@mui/icons-material", "@mui/lab"],
+          mui: ["@mui/material", "@mui/icons-material", "@mui/x-date-pickers"],
         },
         chunkFileNames: "assets/[hash].js",
         assetFileNames: "assets/[hash][extname]",

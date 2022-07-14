@@ -1,12 +1,11 @@
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import MuiDatePicker from "@mui/lab/DatePicker";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MuiTextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import locale from "date-fns/locale/ja";
 import { FC } from "react";
 import { useTheme } from "../../utils/theme";
 import { SmallBox } from "../Box";
-import { SmallButton } from "../Button";
 
 type Props = {
   value: Date | null;
@@ -18,7 +17,7 @@ type Props = {
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   const { breakpoints } = useTheme();
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={locale}>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
       <SmallBox>
         <MuiDatePicker
           views={["day"]}
@@ -33,12 +32,6 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           showDaysOutsideCurrentMonth={true}
           ignoreInvalidInputs={true}
           desktopModeMediaQuery={breakpoints.up("sm")}
-          okText={
-            <SmallButton color="primary" variant="contained">
-              確定
-            </SmallButton>
-          }
-          cancelText={<SmallButton variant="outlined">キャンセル</SmallButton>}
         />
       </SmallBox>
     </LocalizationProvider>
