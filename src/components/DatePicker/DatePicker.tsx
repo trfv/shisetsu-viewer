@@ -32,6 +32,7 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           showDaysOutsideCurrentMonth={true}
           ignoreInvalidInputs={true}
           desktopModeMediaQuery={breakpoints.up("sm")}
+          showToolbar={false}
         />
       </SmallBox>
     </LocalizationProvider>
