@@ -10,10 +10,14 @@ export default {
     startDateProps: {
       value: new Date(2021, 0, 1),
       onChange: () => null,
+      minDate: new Date(2021, 0, 1),
+      maxDate: new Date(2022, 11, 31),
     },
     endDateProps: {
       value: new Date(2021, 1, 1),
       onChange: () => null,
+      minDate: new Date(2021, 0, 1),
+      maxDate: new Date(2022, 11, 31),
     },
   },
   argTypes: {

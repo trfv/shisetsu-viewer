@@ -1,5 +1,5 @@
 import MuiTabs from "@mui/material/Tabs";
-import { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { BaseBox } from "../Box";
 
 type Props = ComponentProps<typeof MuiTabs>;

@@ -281,10 +281,17 @@ export type Institutions_Max_Fields = {
   institution_kana?: Maybe<Scalars['String']>;
   institution_size?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
   municipality?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  prefecture?: Maybe<Scalars['prefecture']>;
   updated_at?: Maybe<Scalars['timestamp']>;
   website_url?: Maybe<Scalars['String']>;
 };
@@ -304,10 +311,17 @@ export type Institutions_Min_Fields = {
   institution_kana?: Maybe<Scalars['String']>;
   institution_size?: Maybe<Scalars['String']>;
   institution_system_name?: Maybe<Scalars['String']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
   layout_image_url?: Maybe<Scalars['String']>;
   lottery_period?: Maybe<Scalars['String']>;
   municipality?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  prefecture?: Maybe<Scalars['prefecture']>;
   updated_at?: Maybe<Scalars['timestamp']>;
   website_url?: Maybe<Scalars['String']>;
 };
@@ -453,8 +467,13 @@ export type Institutions_Variance_Fields = {
   capacity?: Maybe<Scalars['Float']>;
 };
 
+export type Jsonb_Cast_Exp = {
+  String?: InputMaybe<String_Comparison_Exp>;
+};
+
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
+  _cast?: InputMaybe<Jsonb_Cast_Exp>;
   /** is the column contained in the given json value */
   _contained_in?: InputMaybe<Scalars['jsonb']>;
   /** does the column contain the given json value at the top level */

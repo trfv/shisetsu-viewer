@@ -52,14 +52,15 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
     type: "getter",
     hide: true,
     valueGetter: (params) =>
-      SupportedMunicipalityMap[params.row.institution?.municipality as string],
+      SupportedMunicipalityMap[params.row.institution?.municipality as string] || "",
   },
   {
     field: "institution_size",
     headerName: "施設サイズ",
     type: "getter",
     hideIfMobile: true,
-    valueGetter: (params) => InstitutionSizeMap[params.row.institution?.institution_size ?? ""],
+    valueGetter: (params) =>
+      InstitutionSizeMap[params.row.institution?.institution_size ?? ""] || "",
   },
   {
     field: "date",
@@ -193,10 +194,10 @@ export default () => {
       .map(([, label]) => label),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label),
+      .map(([, label]) => label || ""),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label),
+      .map(([, label]) => label || ""),
   ];
 
   return (
@@ -246,7 +247,7 @@ export default () => {
               onChange={handleInstitutoinSizesChange}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label} value={value} />
+                <Checkbox key={value} label={label || ""} value={value} />
               ))}
             </CheckboxGroup>
           </SearchForm>

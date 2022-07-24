@@ -57,7 +57,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
   const updateToken = useCallback(async () => {
     try {
       const token = await auth0Client.getTokenSilently({
-        audience: initOptions.audience,
+        audience: initOptions.audience ?? "",
       });
       if (token) {
         setToken(token);

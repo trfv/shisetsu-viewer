@@ -1,4 +1,4 @@
-import { ElementType, FC } from "react";
+import type { ElementType, FC } from "react";
 import { FONT_SIZE } from "../../constants/styles";
 import { BaseBox } from "../Box";
 
