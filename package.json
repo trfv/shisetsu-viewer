@@ -54,10 +54,6 @@
     "prettier": "2.7.1",
     "prettier-plugin-organize-imports": "3.0.0",
     "react-test-renderer": "18.2.0",
-    "reg-keygen-git-hash-plugin": "0.12.1",
-    "reg-notify-github-plugin": "0.12.1",
-    "reg-publish-s3-plugin": "0.12.1",
-    "reg-suit": "0.12.1",
     "rollup-plugin-visualizer": "5.7.1",
     "storycap": "3.1.9",
     "typescript": "4.7.4",
@@ -80,7 +76,6 @@
     "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
     "test": "TZ=Asia/Tokyo vitest",
     "coverage": "TZ=Asia/Tokyo vitest run --coverage",
-    "reg-suit": "reg-suit run",
     "prepare": "husky install"
   },
   "eslintConfig": {
