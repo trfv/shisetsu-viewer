@@ -206,7 +206,7 @@ export default () => {
         <div className={classes.searchBoxForm}>
           <SearchForm chips={chips}>
             <Select
-              label="区"
+              label="地区"
               value={municipality}
               size="small"
               onChange={handleMunicipalityChange}

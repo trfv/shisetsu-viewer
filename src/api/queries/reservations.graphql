@@ -1,7 +1,7 @@
 query reservations(
   $offset: Int
   $limit: Int
-  $prefecture: prefecture = "PREFECTURE_TOKYO"
+  $prefecture: prefecture = null
   $municipality: [String!]
   $isAvailableStrings: availavility_division = null
   $isAvailableWoodwind: availavility_division = null
