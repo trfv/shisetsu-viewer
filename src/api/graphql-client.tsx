@@ -1067,7 +1067,7 @@ export type InstitutionsQueryHookResult = ReturnType<typeof useInstitutionsQuery
 export type InstitutionsLazyQueryHookResult = ReturnType<typeof useInstitutionsLazyQuery>;
 export type InstitutionsQueryResult = Apollo.QueryResult<InstitutionsQuery, InstitutionsQueryVariables>;
 export const ReservationsDocument = gql`
-    query reservations($offset: Int, $limit: Int, $prefecture: prefecture = "PREFECTURE_TOKYO", $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null, $startDate: date, $endDate: date, $isHoliday: Boolean, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
+    query reservations($offset: Int, $limit: Int, $prefecture: prefecture = null, $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null, $startDate: date, $endDate: date, $isHoliday: Boolean, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
   reservations(
     offset: $offset
     limit: $limit

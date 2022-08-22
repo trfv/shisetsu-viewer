@@ -19,6 +19,11 @@ import {
   EDOGAWA_RESERVATION_STATUS,
 } from "../constants/municipality/edogawa";
 import {
+  KAWASAKI_FEE_DIVISION,
+  KAWASAKI_RESERVATION_DIVISION,
+  KAWASAKI_RESERVATION_STATUS,
+} from "../constants/municipality/kawasaki";
+import {
   KITA_FEE_DIVISION,
   KITA_RESERVATION_DIVISION,
   KITA_RESERVATION_STATUS,
@@ -60,6 +65,7 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_OTA",
   "MUNICIPALITY_SUGINAMI",
   "MUNICIPALITY_CHUO",
+  "MUNICIPALITY_KAWASAKI",
 ] as const;
 
 export type SupportedMunicipality = typeof SupportedMunicipalities[number];
@@ -75,6 +81,7 @@ export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_TOSHIMA: "豊島区",
   MUNICIPALITY_CHUO: "中央区",
   MUNICIPALITY_BUNKYO: "文京区",
+  MUNICIPALITY_KAWASAKI: "川崎市",
 };
 
 export const SELECT_OPTION_ALL = "all";
@@ -99,6 +106,7 @@ export const ReservationDivisionMap: Readonly<Record<string, Record<string, stri
   MUNICIPALITY_OTA: OTA_RESERVATION_DIVISION,
   MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_DIVISION,
   MUNICIPALITY_CHUO: CHUO_RESERVATION_DIVISION,
+  MUNICIPALITY_KAWASAKI: KAWASAKI_RESERVATION_DIVISION,
 };
 
 export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = {
@@ -112,6 +120,7 @@ export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = 
   MUNICIPALITY_OTA: OTA_FEE_DIVISION,
   MUNICIPALITY_SUGINAMI: SUGINAMI_FEE_DIVISION,
   MUNICIPALITY_CHUO: CHUO_FEE_DIVISION,
+  MUNICIPALITY_KAWASAKI: KAWASAKI_FEE_DIVISION,
 };
 
 export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> = {
@@ -125,6 +134,7 @@ export const ReservationStatusMap: Readonly<Record<string, Record<string, string
   MUNICIPALITY_OTA: OTA_RESERVATION_STATUS,
   MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_STATUS,
   MUNICIPALITY_CHUO: CHUO_RESERVATION_STATUS,
+  MUNICIPALITY_KAWASAKI: KAWASAKI_RESERVATION_STATUS,
 };
 
 const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
@@ -138,6 +148,7 @@ const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> =
   ota: "MUNICIPALITY_OTA",
   suginami: "MUNICIPALITY_SUGINAMI",
   chuo: "MUNICIPALITY_CHUO",
+  kawasaki: "MUNICIPALITY_KAWASAKI",
 };
 
 export const getMunicipalityFromUrlParam = (
