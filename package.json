@@ -59,7 +59,7 @@
     "typescript": "4.8.2",
     "vite": "3.0.9",
     "vitest": "0.22.1",
-    "web-vitals": "2.1.4"
+    "web-vitals": "3.0.0"
   },
   "scripts": {
     "generate": "graphql-codegen --require dotenv/config --config ./src/api/config.yml",
