@@ -39,7 +39,7 @@
     "@testing-library/user-event": "14.4.3",
     "@tsconfig/strictest": "1.0.1",
     "@types/node": "18.0.4",
-    "@types/react": "18.0.18",
+    "@types/react": "18.0.19",
     "@types/react-dom": "18.0.6",
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "5.36.2",
@@ -58,7 +58,7 @@
     "storycap": "3.1.9",
     "typescript": "4.8.3",
     "vite": "3.1.0",
-    "vitest": "0.23.1",
+    "vitest": "0.23.2",
     "web-vitals": "3.0.1"
   },
   "scripts": {
