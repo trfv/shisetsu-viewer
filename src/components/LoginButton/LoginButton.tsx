@@ -19,17 +19,12 @@ export const LoginButton = () => {
             LogoutIcon,
             () =>
               logout({
-                returnTo: `${location.origin}${ROUTES.top}`,
+                logoutParams: {
+                  returnTo: `${location.origin}${ROUTES.top}`,
+                },
               }),
           ]
-        : [
-            "ログイン",
-            LoginIcon,
-            () =>
-              login({
-                redirectUri: `${location.origin}${ROUTES.waiting}`,
-              }),
-          ],
+        : ["ログイン", LoginIcon, () => login({})],
     [token]
   );
 

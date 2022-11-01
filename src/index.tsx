@@ -13,9 +13,11 @@ if (container) {
     <StrictMode>
       <Auth0Provider
         domain={AUTH0_DOMAIN}
-        client_id={AUTH0_CLIENT_ID}
-        redirect_uri={`${window.location.origin}${ROUTES.waiting}`}
-        audience={AUTH0_AUDIENCE}
+        clientId={AUTH0_CLIENT_ID}
+        authorizationParams={{
+          audience: AUTH0_AUDIENCE,
+          redirect_uri: `${window.location.origin}${ROUTES.waiting}`,
+        }}
       >
         <App />
       </Auth0Provider>
