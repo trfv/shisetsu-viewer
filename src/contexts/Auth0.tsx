@@ -5,12 +5,17 @@ import {
   RedirectLoginOptions,
   User,
 } from "@auth0/auth0-spa-js";
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 import { useMount } from "../hooks/useMount";
 import { requestInterval } from "../utils/interval";
 
 type Role = "user" | "anonymous";
 const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
+type CustomUser = User & { [ROLE_NAMESPACE]: Role };
+
+type Props = Auth0ClientOptions & {
+  children: ReactNode;
+};
 
 type Auth0Context = {
   isLoading: boolean;
@@ -31,8 +36,8 @@ const initlalContext: Auth0Context = {
 export const Auth0Context = createContext<Auth0Context>(initlalContext);
 export const useAuth0 = () => useContext(Auth0Context);
 
-export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) => {
-  const [auth0Client] = useState(() => new Auth0Client(initOptions));
+export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
+  const [auth0Client] = useState(() => new Auth0Client(clientOptions));
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
   const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
@@ -41,7 +46,9 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
     async () => {
       const initAuth0 = async () => {
         try {
-          await auth0Client.checkSession();
+          await auth0Client.checkSession({
+            authorizationParams: clientOptions.authorizationParams,
+          });
           await updateToken();
         } catch (e) {
           console.info(e);
@@ -51,13 +58,13 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
       };
       return initAuth0();
     },
-    () => requestInterval(updateToken, 60 * 60 * 1000)
+    () => requestInterval(() => updateToken(), 60 * 60 * 1000)
   );
 
   const updateToken = useCallback(async () => {
     try {
       const token = await auth0Client.getTokenSilently({
-        audience: initOptions.audience ?? "",
+        authorizationParams: clientOptions.authorizationParams,
       });
       if (token) {
         setToken(token);
@@ -72,8 +79,8 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0ClientOptions) 
   }, [auth0Client]);
 
   const getRole = useCallback(async () => {
-    const user = await auth0Client.getUser<User & { [ROLE_NAMESPACE]: Role }>();
-    return user?.[ROLE_NAMESPACE] || "anonymous";
+    const user = await auth0Client.getUser<CustomUser>();
+    return user[ROLE_NAMESPACE] || "anonymous";
   }, [auth0Client]);
 
   const login = useCallback(
