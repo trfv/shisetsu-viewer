@@ -1,6 +1,7 @@
 import {
   Auth0Client,
   Auth0ClientOptions,
+  GetTokenSilentlyOptions,
   LogoutOptions,
   RedirectLoginOptions,
   User,
@@ -41,14 +42,15 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
   const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
+  const options: GetTokenSilentlyOptions = {
+    authorizationParams: clientOptions.authorizationParams ?? {},
+  };
 
   useMount(
     async () => {
       const initAuth0 = async () => {
         try {
-          await auth0Client.checkSession({
-            authorizationParams: clientOptions.authorizationParams,
-          });
+          await auth0Client.checkSession(options);
           await updateToken();
         } catch (e) {
           console.info(e);
@@ -63,9 +65,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
 
   const updateToken = useCallback(async () => {
     try {
-      const token = await auth0Client.getTokenSilently({
-        authorizationParams: clientOptions.authorizationParams,
-      });
+      const token = await auth0Client.getTokenSilently(options);
       if (token) {
         setToken(token);
         setIsAnonymous((await getRole()) === "anonymous");
@@ -80,7 +80,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
 
   const getRole = useCallback(async () => {
     const user = await auth0Client.getUser<CustomUser>();
-    return user[ROLE_NAMESPACE] || "anonymous";
+    return user?.[ROLE_NAMESPACE] || "anonymous";
   }, [auth0Client]);
 
   const login = useCallback(
