@@ -1,9 +1,11 @@
-import type { ComponentMeta, ComponentStory } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { DataTable } from "./DataTable";
 
 export default {
-  title: "DataTable",
   component: DataTable,
+} as Meta<typeof DataTable>;
+
+export const Default: StoryObj<typeof DataTable> = {
   args: {
     columns: [
       {
@@ -35,7 +37,7 @@ export default {
     ],
     rows: [...new Array(20)].map((_, i) => ({
       id: String(i + 1),
-      building_system_name: `buiding${i + 1}`,
+      building_system_name: `building${i + 1}`,
       institution_system_name: `institution${i + 1}`,
       municipality: `municipality${i + 1}`,
       date: `2021-01-${String(i + 1).padStart(2, "0")}`,
@@ -50,8 +52,4 @@ export default {
       control: false,
     },
   },
-} as ComponentMeta<typeof DataTable>;
-
-export const Basic: ComponentStory<typeof DataTable> = (args) => {
-  return <DataTable {...args} onRowClick={(params) => console.log(params)} />;
 };

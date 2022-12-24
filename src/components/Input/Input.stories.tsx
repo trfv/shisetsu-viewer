@@ -1,37 +1,47 @@
-import type { ComponentMeta, ComponentStoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Input } from "./Input";
 
 export default {
-  title: "Input",
   component: Input,
+} as Meta<typeof Input>;
+
+export const Default: StoryObj<typeof Input> = {
   args: {
     label: "label",
     loading: false,
   },
   argTypes: {
-    ref: {
-      control: false,
-    },
     size: {
       control: false,
     },
   },
-} as ComponentMeta<typeof Input>;
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return <Input {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+  },
+};
 
-export const Small: ComponentStoryObj<typeof Input> = {
+export const Small: StoryObj<typeof Input> = {
+  ...Default,
   args: {
+    ...Default.args,
     size: "small",
   },
 };
 
-export const Medium: ComponentStoryObj<typeof Input> = {
+export const Medium: StoryObj<typeof Input> = {
+  ...Default,
   args: {
+    ...Default.args,
     size: "medium",
   },
 };
 
-export const Large: ComponentStoryObj<typeof Input> = {
+export const Large: StoryObj<typeof Input> = {
+  ...Default,
   args: {
+    ...Default.args,
     size: "large",
   },
 };
