@@ -61,7 +61,7 @@
     "web-vitals": "3.1.0"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=16",
     "npm": ">=8"
   },
   "scripts": {
