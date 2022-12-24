@@ -1,11 +1,13 @@
-import { useArgs } from "@storybook/client-api";
-import type { ComponentMeta, ComponentStory } from "@storybook/react";
+import { useArgs } from "@storybook/preview-api";
+import type { Meta, StoryObj } from "@storybook/react";
 import type { ChangeEvent } from "react";
 import { Checkbox } from "./Checkbox";
 
 export default {
-  title: "Checkbox",
   component: Checkbox,
+} as Meta<typeof Checkbox>;
+
+export const Default: StoryObj<typeof Checkbox> = {
   args: {
     label: "label",
     value: "value",
@@ -22,11 +24,10 @@ export default {
       control: false,
     },
   },
-} as ComponentMeta<typeof Checkbox>;
-
-export const Basic: ComponentStory<typeof Checkbox> = (args) => {
-  const [, updateArgs] = useArgs();
-  const onChange = (event: ChangeEvent<HTMLInputElement>) =>
-    updateArgs({ ...args, checked: event.target.checked });
-  return <Checkbox {...args} onChange={onChange} />;
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    const onChange = (event: ChangeEvent<HTMLInputElement>) =>
+      updateArgs({ ...args, checked: event.target.checked });
+    return <Checkbox {...args} onChange={onChange} />;
+  },
 };

@@ -1,9 +1,14 @@
-import type { ComponentMeta, ComponentStoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { BaseLabel as Label } from "./BaseLabel";
 
 export default {
-  title: "Label",
   component: Label,
+} as Meta<typeof Label>;
+
+export const Default: StoryObj<typeof Label> = {
+  args: {
+    label: "default",
+  },
   argTypes: {
     size: {
       control: false,
@@ -12,16 +17,19 @@ export default {
       control: false,
     },
   },
-} as ComponentMeta<typeof Label>;
-
-export const Small: ComponentStoryObj<typeof Label> = {
-  args: { label: "small", size: "small" },
 };
 
-export const Medium: ComponentStoryObj<typeof Label> = {
-  args: { label: "medium", size: "medium" },
+export const Small: StoryObj<typeof Label> = {
+  ...Default,
+  args: { ...Default.args, label: "small", size: "small" },
 };
 
-export const Large: ComponentStoryObj<typeof Label> = {
-  args: { label: "large", size: "large" },
+export const Medium: StoryObj<typeof Label> = {
+  ...Default,
+  args: { ...Default.args, label: "medium", size: "medium" },
+};
+
+export const Large: StoryObj<typeof Label> = {
+  ...Default,
+  args: { ...Default.args, label: "large", size: "large" },
 };

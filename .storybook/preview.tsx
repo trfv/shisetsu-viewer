@@ -1,4 +1,4 @@
-import type { DecoratorFn, Parameters } from "@storybook/react";
+import type { Decorator, Parameters } from "@storybook/react";
 import { CssBaseline, darkTheme, lightTheme, ThemeProvider } from "../src/utils/theme";
 
 export const parameters: Parameters = {
@@ -6,7 +6,7 @@ export const parameters: Parameters = {
   controls: { hideNoControlsWarning: true },
 };
 
-export const decorators: DecoratorFn[] = [
+export const decorators: Decorator[] = [
   (Story, context) => (
     <ThemeProvider
       theme={context.globals.backgrounds?.value === "#333333" ? darkTheme : lightTheme}
