@@ -19,7 +19,7 @@ export const HeaderMenuButton = () => {
   return (
     <>
       <IconButton onClick={toggleDrawer}>
-        <MenuIcon htmlColor="white" />
+        <MenuIcon htmlColor="white" aria-label="MenuIcon" />
       </IconButton>
       <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
         <StyledMenu>
