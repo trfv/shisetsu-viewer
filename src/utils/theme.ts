@@ -36,12 +36,8 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
     },
     MuiCssBaseline: {
       styleOverrides: `
-        html {
-          height: -webkit-fill-available;
-        }
         body {
-          min-height: 100vh;
-          min-height: -webkit-fill-available;
+          min-height: 100dvh;
         }
         ul {
           padding-inline-start: 16px;
