@@ -11,7 +11,7 @@
   "license": "MIT",
   "author": "trfv",
   "dependencies": {
-    "@apollo/client": "3.7.3",
+    "@apollo/client": "3.7.4",
     "@auth0/auth0-spa-js": "2.0.2",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
