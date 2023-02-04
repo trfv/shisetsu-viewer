@@ -116,7 +116,7 @@ const ReservationSearchFilters = [
   IS_ONLY_HOLIDAY,
 ] as const;
 
-export type ReservationSearchFilter = typeof ReservationSearchFilters[number];
+export type ReservationSearchFilter = (typeof ReservationSearchFilters)[number];
 
 export const getResevationSearchFilterFromUrlParam = (
   filters: (string | null)[] | null | undefined
@@ -191,7 +191,9 @@ export const toReservationQueryVariables = ({
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
-        : SupportedMunicipalities.filter((m) => m !== "MUNICIPALITY_BUNKYO") // 文京区のシステムの改悪により更新困難になったため
+        : SupportedMunicipalities.filter(
+            (m) => !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA"].includes(m)
+          ) // 文京区と江戸川区のシステムの改悪により更新困難になったため
             .map((m) => m.toString()),
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
