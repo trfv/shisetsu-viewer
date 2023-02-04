@@ -178,7 +178,8 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
         <div className={classes.reservationNoData}>
           <Spinner />
         </div>
-      ) : !reservations?.length || municipality === "MUNICIPALITY_BUNKYO" ? ( // 文京区のシステムの改悪により更新困難になったため
+      ) : !reservations?.length ||
+        ["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA"].includes(municipality) ? ( // 文京区と江戸川区のシステムの改悪により更新困難になったため
         <div className={classes.reservationNoData}>表示するデータが存在しません</div>
       ) : (
         <TableContainer>

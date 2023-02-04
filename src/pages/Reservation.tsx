@@ -210,7 +210,9 @@ export default () => {
               value={municipality}
               size="small"
               onChange={handleMunicipalityChange}
-              selectOptions={MunicipalityOptions.filter((m) => m.value !== "MUNICIPALITY_BUNKYO")} // 文京区のシステムの改悪により更新困難になったため
+              selectOptions={MunicipalityOptions.filter(
+                (m) => !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA"].includes(m.value)
+              )} // 文京区と江戸川区のシステムの改悪により更新困難になったため
             />
             <DateRangePicker
               label="期間指定"
