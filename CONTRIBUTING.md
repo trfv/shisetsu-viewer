@@ -4,7 +4,7 @@
 
 ### Install Node
 
-[Node.js (LTS)](https://nodejs.org/) から LTS（ver16）をインストールしてください。
+[Node.js (LTS)](https://nodejs.org/) から LTS をインストールしてください。
 
 ### Install dependencies
 

@@ -19,10 +19,22 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: '**/package-lock.json'
-      - name: npm install, unit test and build
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
         run: |
-          node --version
-          npm --version
+          echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+      - name: Run npm install
+        # if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: |
           npm install
+      - name: Run test and build
+        run: |
           npm run test
           npm run build
