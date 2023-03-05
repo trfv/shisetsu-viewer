@@ -10,9 +10,9 @@ export const BREAKPOINTS = {
 export const CONTAINER_WIDTH = BREAKPOINTS.lg;
 
 export const WIDTHS = {
-  small: 120,
-  medium: 240,
-  large: 480,
+  small: 128,
+  medium: 256,
+  large: 512,
 };
 
 export const FONT_SIZE = {

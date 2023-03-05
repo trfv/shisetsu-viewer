@@ -1,4 +1,3 @@
-import MuiTextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -17,22 +16,27 @@ type Props = {
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   const { breakpoints } = useTheme();
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
+    <LocalizationProvider
+      dateAdapter={AdapterDateFns}
+      dateFormats={{ monthAndYear: "yyyy/MM" }}
+      adapterLocale={locale}
+    >
       <SmallBox>
         <MuiDatePicker
           views={["day"]}
-          mask="____/__/__"
           value={value}
           minDate={minDate}
           maxDate={maxDate}
           onChange={onChange}
-          renderInput={(props) => (
-            <MuiTextField {...props} variant="standard" style={{ fontSize: "16px" }} />
-          )}
+          slotProps={{
+            field: { readOnly: true, selectedSections: "all" },
+            textField: { variant: "standard", style: { fontSize: "16px" } },
+            toolbar: { hidden: true },
+            actionBar: { actions: ["accept"] },
+          }}
           showDaysOutsideCurrentMonth={true}
-          ignoreInvalidInputs={true}
           desktopModeMediaQuery={breakpoints.up("sm")}
-          showToolbar={false}
+          localeText={{ okButtonLabel: "閉じる" }}
         />
       </SmallBox>
     </LocalizationProvider>
