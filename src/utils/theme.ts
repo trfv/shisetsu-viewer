@@ -19,6 +19,13 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
     values: BREAKPOINTS,
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "inherit",
+        },
+      },
+    },
     MuiInput: {
       styleOverrides: {
         root: {
