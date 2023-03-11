@@ -1,16 +1,31 @@
 import { Component, ReactNode } from "react";
+import { Snackbar } from "../SnackBar";
 
 type Props = { children: ReactNode };
-type State = { error?: unknown };
+type State = { hasError: boolean };
 
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error: unknown) {
-    return { error };
+    return { hasError: !!error };
+  }
+
+  private onUnhandledRejection = (event: PromiseRejectionEvent) => {
+    event.promise.catch((error) => {
+      this.setState(ErrorBoundary.getDerivedStateFromError(error));
+    });
+  };
+
+  override componentDidMount() {
+    window.addEventListener("unhandledrejection", this.onUnhandledRejection);
+  }
+
+  override componentWillUnmount() {
+    window.removeEventListener("unhandledrejection", this.onUnhandledRejection);
   }
 
   override componentDidCatch(error: unknown, errorInfo: unknown) {
@@ -18,19 +33,14 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   override render() {
-    if (this.state.error !== undefined) {
+    if (this.state.hasError) {
       return (
-        <div style={{ maxWidth: 800, margin: "auto", padding: "24px" }}>
-          <h2>エラーが発生しました。</h2>
-          <p>
-            以下のボタンを押して再実行してください。何度も発生する場合は管理者にお問い合わせください。
-          </p>
-          <button onClick={() => window.location.assign(window.location.origin)}>再実行する</button>
-          <details style={{ marginTop: "40px" }}>{String(this.state.error)}</details>
-        </div>
+        <Snackbar
+          open={true}
+          message="予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
+        />
       );
     }
-
     return this.props.children;
   }
 }
