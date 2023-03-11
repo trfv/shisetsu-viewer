@@ -34,6 +34,13 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
         },
       },
     },
+    MuiInputAdornment: {
+      styleOverrides: {
+        root: {
+          margin: 0, // 存在しない時にも margin が発生してしまっているので上書きする
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
@@ -47,8 +54,8 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
           min-height: 100dvh;
         }
         ul {
-          padding-inline-start: 16px;
-          margin-bottom: 32px;
+          padding-inline-start: 1rem;
+          margin-bottom: 1rem;
         }
       `,
     },
