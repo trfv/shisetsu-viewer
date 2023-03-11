@@ -1,7 +1,7 @@
 import { Component, ReactNode } from "react";
 import { Snackbar } from "../SnackBar";
 
-type Props = { children: ReactNode };
+type Props = { children?: ReactNode };
 type State = { hasError: boolean };
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -29,7 +29,10 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   override componentDidCatch(error: unknown, errorInfo: unknown) {
-    console.error(error, errorInfo);
+    if (import.meta.env.DEV) {
+      console.log(error);
+      console.log(errorInfo);
+    }
   }
 
   override render() {
