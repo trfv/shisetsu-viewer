@@ -127,6 +127,7 @@ export default () => {
   });
 
   if (error) {
+    // TODO Snackbar を描画する
     throw new Error(error.message);
   }
 

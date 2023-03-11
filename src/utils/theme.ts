@@ -19,11 +19,25 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
     values: BREAKPOINTS,
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "inherit",
+        },
+      },
+    },
     MuiInput: {
       styleOverrides: {
         root: {
           fontSize: "1rem",
           colorScheme: scheme,
+        },
+      },
+    },
+    MuiInputAdornment: {
+      styleOverrides: {
+        root: {
+          margin: 0, // 存在しない時にも margin が発生してしまっているので上書きする
         },
       },
     },
@@ -40,8 +54,8 @@ const commonThemeOptions = (scheme: "light" | "dark"): ThemeOptions => ({
           min-height: 100dvh;
         }
         ul {
-          padding-inline-start: 16px;
-          margin-bottom: 32px;
+          padding-inline-start: 1rem;
+          margin-bottom: 1rem;
         }
       `,
     },

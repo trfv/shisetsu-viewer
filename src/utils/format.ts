@@ -7,7 +7,7 @@ const monthDateFormat = new Intl.DateTimeFormat("ja-JP", {
 export const formatMonthDate = (date: string | Date): string => {
   if (!date) {
     console.error("invalid date");
-    return date;
+    return "";
   }
   return monthDateFormat.format(typeof date === "string" ? new Date(date) : date);
 };
@@ -22,7 +22,7 @@ const dateFormat = new Intl.DateTimeFormat("ja-JP", {
 export const formatDate = (date: string | Date): string => {
   if (!date) {
     console.error("invalid date");
-    return date;
+    return "";
   }
   return dateFormat.format(typeof date === "string" ? new Date(date) : date);
 };
@@ -39,7 +39,7 @@ const datetimeFormat = new Intl.DateTimeFormat("ja-JP", {
 export const formatDatetime = (datetime: string | Date): string => {
   if (!datetime) {
     console.error("invalid date");
-    return datetime;
+    return "";
   }
   return datetimeFormat.format(typeof datetime === "string" ? new Date(`${datetime}Z`) : datetime);
 };

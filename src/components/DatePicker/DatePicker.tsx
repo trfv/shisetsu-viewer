@@ -3,7 +3,6 @@ import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import locale from "date-fns/locale/ja";
 import type { FC } from "react";
-import { useTheme } from "../../utils/theme";
 import { SmallBox } from "../Box";
 
 type Props = {
@@ -14,7 +13,6 @@ type Props = {
 };
 
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
-  const { breakpoints } = useTheme();
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
@@ -30,12 +28,11 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           onChange={onChange}
           slotProps={{
             field: { readOnly: true, selectedSections: "all" },
-            textField: { variant: "standard", style: { fontSize: "16px" } },
+            textField: { variant: "standard" },
             toolbar: { hidden: true },
             actionBar: { actions: ["accept"] },
           }}
           showDaysOutsideCurrentMonth={true}
-          desktopModeMediaQuery={breakpoints.up("sm")}
           localeText={{ okButtonLabel: "閉じる" }}
         />
       </SmallBox>

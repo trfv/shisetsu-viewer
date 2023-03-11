@@ -19,7 +19,7 @@ export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps
       <Spacer size={4} axis="vertical" />
       <AutoBox display="flex" alignItems="center">
         <DatePicker {...startDateProps} />
-        <BaseBox component="span" mx="16px">
+        <BaseBox component="span" mx="1rem">
           〜
         </BaseBox>
         <DatePicker {...endDateProps} />
