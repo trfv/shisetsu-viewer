@@ -1,5 +1,5 @@
 import { lazy, Suspense, useMemo } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Header } from "./components/Header";
 import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
@@ -16,68 +16,62 @@ const Reservation = lazy(() => import("./pages/Reservation"));
 const Waiting = lazy(() => import("./pages/Waiting"));
 const Top = lazy(() => import("./pages/Top"));
 
+const Layout = () => {
+  return (
+    <>
+      <ScrollToTop />
+      <Header />
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
+      </ErrorBoundary>
+    </>
+  );
+};
+
 const App = () => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode]);
-
   const { token } = useAuth0();
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      path: "/",
+      children: [
+        {
+          path: ROUTES.waiting,
+          element: <Waiting />,
+        },
+        {
+          path: ROUTES.reservation,
+          element: <AuthGuard Component={<Reservation />} />,
+        },
+        {
+          path: ROUTES.institution,
+          element: <Institution />,
+        },
+        {
+          path: ROUTES.detail,
+          element: <Detail />,
+        },
+        {
+          path: ROUTES.top,
+          element: <Top />,
+        },
+      ],
+    },
+  ]);
 
   return (
-    <ClientProvider client={client(token)}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ErrorBoundary>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Header />
-            <Routes>
-              <Route
-                path={ROUTES.waiting}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Waiting />
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.reservation}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <AuthGuard>
-                      <Reservation />
-                    </AuthGuard>
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.institution}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Institution />
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.detail}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Detail />
-                  </Suspense>
-                }
-              />
-              <Route
-                path={ROUTES.top}
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Top />
-                  </Suspense>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </ClientProvider>
+    <ErrorBoundary>
+      <ClientProvider client={client(token)}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </ClientProvider>
+    </ErrorBoundary>
   );
 };
 
