@@ -24,6 +24,6 @@ export const Default: StoryObj<typeof DatePicker> = {
   },
   render: (args) => {
     const [value, setValue] = useState<Date | null>(new Date(2021, 0, 1));
-    return <DatePicker {...args} value={value} onChange={(v) => setValue(v)} />;
+    return <DatePicker {...args} onChange={(v) => setValue(v)} value={value} />;
   },
 };

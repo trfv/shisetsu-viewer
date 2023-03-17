@@ -12,12 +12,12 @@ if (container) {
   root.render(
     <StrictMode>
       <Auth0Provider
-        domain={AUTH0_DOMAIN}
-        clientId={AUTH0_CLIENT_ID}
         authorizationParams={{
           audience: AUTH0_AUDIENCE,
           redirect_uri: `${window.location.origin}${ROUTES.waiting}`,
         }}
+        clientId={AUTH0_CLIENT_ID}
+        domain={AUTH0_DOMAIN}
       >
         <App />
       </Auth0Provider>

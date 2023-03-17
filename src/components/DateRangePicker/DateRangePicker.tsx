@@ -16,8 +16,8 @@ export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps
   return (
     <AutoBox display="flex" flexDirection="column">
       <SmallLabel label={label} />
-      <Spacer size={4} axis="vertical" />
-      <AutoBox display="flex" alignItems="center">
+      <Spacer axis="vertical" size={4} />
+      <AutoBox alignItems="center" display="flex">
         <DatePicker {...startDateProps} />
         <BaseBox component="span" mx="1rem">
           〜

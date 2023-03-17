@@ -19,21 +19,21 @@ export const HeaderMenuButton = () => {
   return (
     <>
       <IconButton onClick={toggleDrawer}>
-        <MenuIcon htmlColor="white" aria-label="MenuIcon" />
+        <MenuIcon aria-label="MenuIcon" htmlColor="white" />
       </IconButton>
       <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
         <StyledMenu>
-          <IconButton onClick={toggleDrawer} edge="start">
+          <IconButton edge="start" onClick={toggleDrawer}>
             <Close />
           </IconButton>
           {isAnonymous ? (
             <span>予約検索</span>
           ) : (
-            <Link to={ROUTES.reservation} onClick={toggleDrawer}>
+            <Link onClick={toggleDrawer} to={ROUTES.reservation}>
               予約検索
             </Link>
           )}
-          <Link to={ROUTES.institution} onClick={toggleDrawer}>
+          <Link onClick={toggleDrawer} to={ROUTES.institution}>
             施設検索
           </Link>
         </StyledMenu>

@@ -25,7 +25,7 @@ export const SearchForm = ({ chips, children }: Props) => {
 
   return (
     <>
-      <FullBox display="flex" alignItems="center" justifyContent="space-between">
+      <FullBox alignItems="center" display="flex" justifyContent="space-between">
         <StyledChips>
           {chips.map((chip) => (
             <Chip key={chip} label={chip} size={isMobile ? "small" : "medium"} />
@@ -40,13 +40,13 @@ export const SearchForm = ({ chips, children }: Props) => {
         )}
       </FullBox>
       <Drawer
+        PaperProps={{ sx: { maxWidth: "88%" } }}
         anchor="right"
         onClose={toggleDrawer}
         open={isOpen}
-        PaperProps={{ sx: { maxWidth: "88%" } }}
       >
         <StyledMenu>
-          <IconButton onClick={toggleDrawer} edge="start">
+          <IconButton edge="start" onClick={toggleDrawer}>
             <Close />
           </IconButton>
           {children}

@@ -1,7 +1,7 @@
 import MuiCheckbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import type { ChangeEvent, FC } from "react";
-import { box, BoxSize } from "../Box";
+import { BoxSize, box } from "../Box";
 
 type Props = {
   label: string;
@@ -25,7 +25,7 @@ export const Checkbox: FC<Props> = ({
     <Box>
       <FormControlLabel
         control={
-          <MuiCheckbox value={value} checked={checked} onChange={onChange} color="default" />
+          <MuiCheckbox checked={checked} color="default" onChange={onChange} value={value} />
         }
         label={label}
       />

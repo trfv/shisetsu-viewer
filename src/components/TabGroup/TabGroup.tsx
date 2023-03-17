@@ -5,7 +5,7 @@ import { BaseBox } from "../Box";
 type Props = ComponentProps<typeof MuiTabs>;
 
 export const TabGroup = (props: Props) => (
-  <MuiTabs {...props} variant="standard" textColor="inherit" />
+  <MuiTabs {...props} textColor="inherit" variant="standard" />
 );
 
 type TabPanelProps<TabValue> = ComponentProps<typeof BaseBox> & {

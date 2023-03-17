@@ -13,7 +13,8 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "ignoreDeprecations": "5.0"
   },
   "extends": "@tsconfig/strictest/tsconfig.json",
   "include": [

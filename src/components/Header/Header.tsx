@@ -20,11 +20,11 @@ export const Header = () => {
           <BaseBox className={classes.logoWrapper} component="h1">
             <Link to={ROUTES.top}>
               <img
-                className={classes.logo}
-                src="/logo.svg"
                 alt="Shisetsu Viewer"
-                width="256"
+                className={classes.logo}
                 height="100"
+                src="/logo.svg"
+                width="256"
               />
             </Link>
           </BaseBox>

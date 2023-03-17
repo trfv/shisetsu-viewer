@@ -45,107 +45,107 @@ const InstitutionTab = ({
         <div className={classes.institutionRow}>
           <Input
             label="定員（人）"
-            size="small"
-            value={institution?.capacity}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={institution?.capacity}
           />
           <Input
             label="面積（㎡）"
-            size="small"
-            value={institution?.area}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={institution?.area}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
             label="利用料金（平日）"
-            size="full"
-            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
             loading={loading}
             readOnly={true}
+            size="full"
+            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
             label="利用料金（休日）"
-            size="full"
-            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
             loading={loading}
             readOnly={true}
+            size="full"
+            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
             label="弦楽器"
-            size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_strings]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={AvailabilityDivisionMap[institution?.is_available_strings]}
           />
           <Input
             label="木管楽器"
-            size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_woodwind]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={AvailabilityDivisionMap[institution?.is_available_woodwind]}
           />
           <Input
             label="金管楽器"
-            size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_brass]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={AvailabilityDivisionMap[institution?.is_available_brass]}
           />
           <Input
             label="打楽器"
-            size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_percussion]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={AvailabilityDivisionMap[institution?.is_available_percussion]}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
             label="譜面台"
-            size="small"
-            value={EquipmentDivisionMap[institution?.is_equipped_music_stand]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={EquipmentDivisionMap[institution?.is_equipped_music_stand]}
           />
           <Input
             label="ピアノ"
-            size="small"
-            value={EquipmentDivisionMap[institution?.is_equipped_piano]}
             loading={loading}
             readOnly={true}
+            size="small"
+            value={EquipmentDivisionMap[institution?.is_equipped_piano]}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
             label="住所"
-            size="medium"
-            value={institution?.address}
             loading={loading}
             readOnly={true}
+            size="medium"
+            value={institution?.address}
           />
           <Input
             label="抽選期間"
-            size="large"
-            value={institution?.lottery_period}
             loading={loading}
             readOnly={true}
+            size="large"
+            value={institution?.lottery_period}
           />
         </div>
         <div className={classes.institutionRow}>
           <Input
-            size="full"
             label="備考"
-            value={institution?.note}
             loading={loading}
-            readOnly={true}
             multiline={true}
+            readOnly={true}
+            size="full"
+            value={institution?.note}
           />
         </div>
       </div>
@@ -186,20 +186,20 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
           <Table stickyHeader={true}>
             <TableHead>
               <TableRow>
-                <TableCell className={classes.reservationTableCell} variant="head" size="small">
+                <TableCell className={classes.reservationTableCell} size="small" variant="head">
                   日付
                 </TableCell>
                 {sortByReservationDivision(reservations[0]?.reservation).map(([division]) => (
                   <TableCell
-                    key={division}
                     className={classes.reservationTableCell}
-                    variant="head"
+                    key={division}
                     size="small"
+                    variant="head"
                   >
                     {ReservationDivisionMap[municipality]?.[division]}
                   </TableCell>
                 ))}
-                <TableCell className={classes.reservationTableCell} variant="head" size="small">
+                <TableCell className={classes.reservationTableCell} size="small" variant="head">
                   取得日時
                 </TableCell>
               </TableRow>
@@ -244,7 +244,7 @@ export default () => {
   );
 
   if (!id || !isValidUuid(id)) {
-    return <Navigate to={ROUTES.top} replace={true} />;
+    return <Navigate replace={true} to={ROUTES.top} />;
   }
 
   const { loading, data, error } = useInstitutionDetailQuery({
@@ -262,7 +262,7 @@ export default () => {
     <StyledInstitutionDetail className={classes.pageBox}>
       <div className={classes.title}>
         {loading ? (
-          <Skeleton width={WIDTHS.large} height={40} />
+          <Skeleton height={40} width={WIDTHS.large} />
         ) : (
           <h2>
             {`${institution?.building ?? ""} ${institution?.institution ?? ""}`}
@@ -274,14 +274,14 @@ export default () => {
           </h2>
         )}
       </div>
-      <TabGroup className={classes.tabGroup} value={tab} onChange={handleTabChange}>
-        <Tab className={classes.tab} value="institution" label="施設情報" />
-        <Tab className={classes.tab} value="reservation" label="予約状況" disabled={isAnonymous} />
+      <TabGroup className={classes.tabGroup} onChange={handleTabChange} value={tab}>
+        <Tab className={classes.tab} label="施設情報" value="institution" />
+        <Tab className={classes.tab} disabled={isAnonymous} label="予約状況" value="reservation" />
       </TabGroup>
-      <TabPanel className={classes.tabPanel} tabValue="institution" currentValue={tab}>
+      <TabPanel className={classes.tabPanel} currentValue={tab} tabValue="institution">
         <InstitutionTab institution={institution} loading={loading} />
       </TabPanel>
-      <TabPanel className={classes.tabPanel} tabValue="reservation" currentValue={tab}>
+      <TabPanel className={classes.tabPanel} currentValue={tab} tabValue="reservation">
         {!isAnonymous && <ReservationTab id={id} municipality={institution?.municipality} />}
       </TabPanel>
     </StyledInstitutionDetail>

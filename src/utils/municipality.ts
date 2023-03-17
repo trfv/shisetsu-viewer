@@ -68,7 +68,7 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_KAWASAKI",
 ] as const;
 
-export type SupportedMunicipality = typeof SupportedMunicipalities[number];
+export type SupportedMunicipality = (typeof SupportedMunicipalities)[number];
 
 export const SupportedMunicipalityMap: Record<string, string> = {
   MUNICIPALITY_ARAKAWA: "荒川区",

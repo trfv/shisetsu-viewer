@@ -14,7 +14,7 @@ export const AVAILABLE_INSTRUMENT_MAP = {
 } as const;
 
 export const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as const;
-export type AvailableInstrument = typeof AvailableInstruments[number];
+export type AvailableInstrument = (typeof AvailableInstruments)[number];
 
 export const getAvailableInstrumentFromUrlParam = (
   availableInstruments: (string | null)[] | null | undefined
@@ -35,7 +35,7 @@ export const INSTUTITON_SIZE_MAP = {
 } as const;
 
 export const InstitutionSizes = [LARGE, MEDIUM, SMALL] as const;
-export type InstitutionSize = typeof InstitutionSizes[number];
+export type InstitutionSize = (typeof InstitutionSizes)[number];
 
 export const getInstitutionSizeFromUrlParam = (
   institutionSizes: (string | null)[] | null | undefined

@@ -38,8 +38,8 @@ export const Default: StoryObj<typeof DateRangePicker> = {
     return (
       <DateRangePicker
         {...args}
-        startDateProps={{ ...args.startDateProps, value: startDate, onChange: onChangeStartDate }}
         endDateProps={{ ...args.endDateProps, value: endDate, onChange: onChangeEndDate }}
+        startDateProps={{ ...args.startDateProps, value: startDate, onChange: onChangeStartDate }}
       />
     );
   },

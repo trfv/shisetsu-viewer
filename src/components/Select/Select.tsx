@@ -20,8 +20,8 @@ export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selec
   return (
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
-      <Spacer size={4} axis="vertical" />
-      <MuiSelect value={value} onChange={onChange} variant="standard">
+      <Spacer axis="vertical" size={4} />
+      <MuiSelect onChange={onChange} value={value} variant="standard">
         {selectOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
