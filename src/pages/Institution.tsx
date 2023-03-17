@@ -13,15 +13,15 @@ import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
 import {
-  convertMunicipalityToUrlParam,
   MunicipalityOptions,
   SupportedMunicipalityMap,
+  convertMunicipalityToUrlParam,
 } from "../utils/municipality";
 import {
-  AvailableInstrument,
   AVAILABLE_INSTRUMENT_MAP,
-  InstitutionSize,
+  AvailableInstrument,
   INSTUTITON_SIZE_MAP,
+  InstitutionSize,
 } from "../utils/search";
 import { styled } from "../utils/theme";
 
@@ -171,15 +171,15 @@ export default () => {
           <SearchForm chips={chips}>
             <Select
               label="地区"
-              value={municipality}
-              size="small"
               onChange={handleMunicipalityChange}
               selectOptions={MunicipalityOptions}
+              size="small"
+              value={municipality}
             />
             <CheckboxGroup
               label="利用可能楽器"
-              values={availableInstruments}
               onChange={handleAvailableInstrumentsChange}
+              values={availableInstruments}
             >
               {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
@@ -187,8 +187,8 @@ export default () => {
             </CheckboxGroup>
             <CheckboxGroup
               label="施設サイズ"
-              values={institutionSizes}
               onChange={handleInstitutoinSizesChange}
+              values={institutionSizes}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label || ""} value={value} />
@@ -206,11 +206,7 @@ export default () => {
           <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
-            rows={data?.institutions ?? []}
             columns={COLUMNS}
-            onRowClick={(params) =>
-              params.row.id && navigate(ROUTES.detail.replace(":id", params.row.id as string))
-            }
             fetchMore={async () => {
               fetchMore({
                 variables: {
@@ -219,6 +215,10 @@ export default () => {
               });
             }}
             hasNextPage={data.institutions.length !== data?.institutions_aggregate.aggregate?.count} // Relay Styleにするときに直す
+            onRowClick={(params) =>
+              params.row.id && navigate(ROUTES.detail.replace(":id", params.row.id as string))
+            }
+            rows={data?.institutions ?? []}
           />
         )}
       </div>

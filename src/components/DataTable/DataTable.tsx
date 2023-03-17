@@ -69,16 +69,16 @@ export const DataTable = <T extends Row>({
           <TableRow>
             {cols.map((col) => (
               <TableCell
-                key={col.field}
-                variant="head"
-                size="small"
                 align={col.type === "number" ? "right" : "left"}
+                key={col.field}
+                size="small"
                 sx={{
                   maxWidth: col.maxWidth,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                 }}
+                variant="head"
               >
                 {col.headerName}
               </TableCell>
@@ -90,10 +90,10 @@ export const DataTable = <T extends Row>({
             const rowParams = { id: row.id, value: undefined, row, columns };
             return (
               <TableRow
-                ref={index === rows.length - 50 ? target : undefined}
-                key={`${row.id}-${index}`} // FIXME
                 hover={true}
+                key={`${row.id}-${index}`} // FIXME
                 onClick={() => onRowClick?.(rowParams)}
+                ref={index === rows.length - 50 ? target : undefined}
                 style={{ cursor: "pointer" }}
               >
                 {cols.map((col) => {
@@ -119,16 +119,16 @@ export const DataTable = <T extends Row>({
                   }
                   return (
                     <TableCell
-                      key={`${row.id}-${col.field}`}
-                      variant="body"
-                      size="small"
                       align={col.type === "number" ? "right" : "left"}
+                      key={`${row.id}-${col.field}`}
+                      size="small"
                       sx={{
                         maxWidth: col.maxWidth,
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                       }}
+                      variant="body"
                     >
                       {cellValue}
                     </TableCell>

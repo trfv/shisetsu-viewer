@@ -16,11 +16,11 @@ export const Input: FC<Props> = ({ label, size = "auto", loading, value, ...rest
   return (
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
-      <Spacer size={4} axis="vertical" />
+      <Spacer axis="vertical" size={4} />
       {loading ? (
         <Skeleton height={32} />
       ) : (
-        <MuiInput {...rest} value={value || ""} fullWidth={size === "full"} />
+        <MuiInput {...rest} fullWidth={size === "full"} value={value || ""} />
       )}
     </Box>
   );

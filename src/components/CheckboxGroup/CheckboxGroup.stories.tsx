@@ -30,7 +30,7 @@ export const Default: StoryObj<typeof CheckboxGroup> = {
       );
     };
     return (
-      <CheckboxGroup label={label} values={values} onChange={onChange}>
+      <CheckboxGroup label={label} onChange={onChange} values={values}>
         <Checkbox label="A" value="a" />
         <Checkbox label="B" value="b" />
         <Checkbox label="C" value="c" />

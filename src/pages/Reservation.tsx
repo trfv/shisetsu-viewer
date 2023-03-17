@@ -15,23 +15,23 @@ import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/use
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate } from "../utils/format";
 import {
-  convertMunicipalityToUrlParam,
   MunicipalityOptions,
   SupportedMunicipality,
   SupportedMunicipalityMap,
+  convertMunicipalityToUrlParam,
 } from "../utils/municipality";
 import {
-  formatReservationMap,
-  ReservationSearchFilter,
   RESERVATION_SEARCH_FILTER_MAP,
+  ReservationSearchFilter,
+  formatReservationMap,
   toReservationQueryVariables,
   toReservationSearchParams,
 } from "../utils/reservation";
 import {
-  AvailableInstrument,
   AVAILABLE_INSTRUMENT_MAP,
-  InstitutionSize,
+  AvailableInstrument,
   INSTUTITON_SIZE_MAP,
+  InstitutionSize,
 } from "../utils/search";
 import { styled } from "../utils/theme";
 
@@ -208,14 +208,20 @@ export default () => {
           <SearchForm chips={chips}>
             <Select
               label="地区"
-              value={municipality}
-              size="small"
               onChange={handleMunicipalityChange}
               selectOptions={MunicipalityOptions.filter(
                 (m) => !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA"].includes(m.value)
               )} // 文京区と江戸川区のシステムの改悪により更新困難になったため
+              size="small"
+              value={municipality}
             />
             <DateRangePicker
+              endDateProps={{
+                value: endDate,
+                onChange: handleEndDateChange,
+                minDate,
+                maxDate,
+              }}
               label="期間指定"
               startDateProps={{
                 value: startDate,
@@ -223,22 +229,16 @@ export default () => {
                 minDate,
                 maxDate,
               }}
-              endDateProps={{
-                value: endDate,
-                onChange: handleEndDateChange,
-                minDate,
-                maxDate,
-              }}
             />
-            <CheckboxGroup label="絞り込み" values={filter} onChange={handleFilterChange}>
+            <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
               {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>
             <CheckboxGroup
               label="利用可能楽器"
-              values={availableInstruments}
               onChange={handleAvailableInstrumentsChange}
+              values={availableInstruments}
             >
               {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
@@ -246,8 +246,8 @@ export default () => {
             </CheckboxGroup>
             <CheckboxGroup
               label="施設サイズ"
-              values={institutionSizes}
               onChange={handleInstitutoinSizesChange}
+              values={institutionSizes}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label || ""} value={value} />
@@ -265,12 +265,7 @@ export default () => {
           <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
-            rows={data.reservations}
             columns={COLUMNS}
-            onRowClick={(params) =>
-              params.row.institution?.id &&
-              navigate(ROUTES.detail.replace(":id", params.row.institution.id as string))
-            }
             fetchMore={async () => {
               fetchMore({
                 variables: {
@@ -279,6 +274,11 @@ export default () => {
               });
             }}
             hasNextPage={data.reservations.length !== data?.reservations_aggregate.aggregate?.count} // Relay Styleにするときに直す
+            onRowClick={(params) =>
+              params.row.institution?.id &&
+              navigate(ROUTES.detail.replace(":id", params.row.institution.id as string))
+            }
+            rows={data.reservations}
           />
         )}
       </div>

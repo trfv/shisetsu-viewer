@@ -18,7 +18,7 @@ export const Default: StoryObj<typeof Input> = {
   },
   render: (args) => {
     const [value, setValue] = useState("");
-    return <Input {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+    return <Input {...args} onChange={(e) => setValue(e.target.value)} value={value} />;
   },
 };
 

@@ -33,6 +33,6 @@ export const Basic: StoryObj<typeof Select> = {
     const [{ value }, updateArgs] = useArgs();
     const onChange = (event: SelectChangeEvent<string>) =>
       updateArgs({ ...args, value: event.target.value });
-    return <Select {...args} value={value ?? args.value} onChange={onChange} />;
+    return <Select {...args} onChange={onChange} value={value ?? args.value} />;
   },
 };

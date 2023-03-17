@@ -33,7 +33,7 @@ export const LoginButton = () => {
   }
 
   return isMobile ? (
-    <IconButton onClick={onClick} aria-label={text}>
+    <IconButton aria-label={text} onClick={onClick}>
       <Icon htmlColor="white" />
     </IconButton>
   ) : (

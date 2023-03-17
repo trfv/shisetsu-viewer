@@ -7,7 +7,7 @@ export const AuthGuard = ({ Component }: { Component: JSX.Element }): JSX.Elemen
   const { isLoading, isAnonymous } = useAuth0();
 
   if (isAnonymous) {
-    return isLoading ? <Loading /> : <Navigate to={ROUTES.top} replace={true} />;
+    return isLoading ? <Loading /> : <Navigate replace={true} to={ROUTES.top} />;
   }
 
   return Component;

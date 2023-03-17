@@ -15,25 +15,25 @@ type Props = {
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   return (
     <LocalizationProvider
+      adapterLocale={locale}
       dateAdapter={AdapterDateFns}
       dateFormats={{ monthAndYear: "yyyy/MM" }}
-      adapterLocale={locale}
     >
       <SmallBox>
         <MuiDatePicker
-          views={["day"]}
-          value={value}
-          minDate={minDate}
+          localeText={{ okButtonLabel: "閉じる" }}
           maxDate={maxDate}
+          minDate={minDate}
           onChange={onChange}
+          showDaysOutsideCurrentMonth={true}
           slotProps={{
             field: { readOnly: true, selectedSections: "all" },
             textField: { variant: "standard" },
             toolbar: { hidden: true },
             actionBar: { actions: ["accept"] },
           }}
-          showDaysOutsideCurrentMonth={true}
-          localeText={{ okButtonLabel: "閉じる" }}
+          value={value}
+          views={["day"]}
         />
       </SmallBox>
     </LocalizationProvider>
