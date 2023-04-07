@@ -1,6 +1,6 @@
 import { useArgs } from "@storybook/preview-api";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Select, SelectChangeEvent } from "./Select";
+import { Select, type SelectChangeEvent } from "./Select";
 
 export default {
   component: Select,

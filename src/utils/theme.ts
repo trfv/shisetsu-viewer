@@ -1,8 +1,8 @@
 export { default as CssBaseline } from "@mui/material/CssBaseline";
-export { styled, ThemeProvider, useTheme } from "@mui/material/styles";
+export { ThemeProvider, styled, useTheme } from "@mui/material/styles";
 export { default as useMediaQuery } from "@mui/material/useMediaQuery";
 import { grey, indigo, red } from "@mui/material/colors";
-import { createTheme, responsiveFontSizes, ThemeOptions } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes, type ThemeOptions } from "@mui/material/styles";
 import { BREAKPOINTS } from "../constants/styles";
 
 const COLORS = {

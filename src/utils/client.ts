@@ -1,5 +1,5 @@
 export { ApolloProvider as ClientProvider } from "@apollo/client";
-import { ApolloClient, FieldFunctionOptions, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, type FieldFunctionOptions } from "@apollo/client";
 import type { Institutions, Reservations } from "../api/graphql-client";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 

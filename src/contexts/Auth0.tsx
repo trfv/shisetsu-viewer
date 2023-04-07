@@ -1,12 +1,12 @@
 import {
   Auth0Client,
-  Auth0ClientOptions,
-  GetTokenSilentlyOptions,
-  LogoutOptions,
-  RedirectLoginOptions,
   User,
+  type Auth0ClientOptions,
+  type GetTokenSilentlyOptions,
+  type LogoutOptions,
+  type RedirectLoginOptions,
 } from "@auth0/auth0-spa-js";
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { useMount } from "../hooks/useMount";
 import { requestInterval } from "../utils/interval";
 

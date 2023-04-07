@@ -2,7 +2,7 @@ import Close from "@mui/icons-material/Close";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import Chip from "@mui/material/Chip";
 import Drawer from "@mui/material/Drawer";
-import { ReactNode, useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { styled } from "../../utils/theme";
 import { FullBox } from "../Box";

@@ -1,7 +1,7 @@
 import MuiCheckbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import type { ChangeEvent, FC } from "react";
-import { BoxSize, box } from "../Box";
+import { box, type BoxSize } from "../Box";
 
 type Props = {
   label: string;

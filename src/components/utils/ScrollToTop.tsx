@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect } from "react";
+import { useLayoutEffect, type FC } from "react";
 
 export const ScrollToTop: FC = () => {
   useLayoutEffect(() => {
