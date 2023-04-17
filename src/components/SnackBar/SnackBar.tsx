@@ -1,4 +1,4 @@
-import MuiSnackbar, { SnackbarProps } from "@mui/material/Snackbar";
+import MuiSnackbar, { type SnackbarProps } from "@mui/material/Snackbar";
 import type { FC } from "react";
 
 type Props = SnackbarProps;

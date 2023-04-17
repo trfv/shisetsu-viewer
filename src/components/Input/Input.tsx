@@ -1,6 +1,6 @@
-import MuiInput, { InputProps } from "@mui/material/Input";
+import MuiInput, { type InputProps } from "@mui/material/Input";
 import type { FC } from "react";
-import { box, BoxSize } from "../Box";
+import { box, type BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Skeleton } from "../Skeleton";
 import { Spacer } from "../Spacer";

@@ -1,6 +1,6 @@
 import FormGroup from "@mui/material/FormGroup";
-import { ChangeEvent, Children, cloneElement, FC, ReactNode } from "react";
-import { box, BoxSize } from "../Box";
+import { Children, cloneElement, type ChangeEvent, type FC, type ReactNode } from "react";
+import { box, type BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
 import { SmallLabel } from "../Label";
 

@@ -2,21 +2,21 @@ import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
 import type { ReservationsQueryVariables } from "../api/graphql-client";
 import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
-  getMunicipalityFromUrlParam,
   ReservationDivisionMap,
   ReservationStatusMap,
   SELECT_OPTION_ALL,
   SupportedMunicipalities,
-  SupportedMunicipality,
+  getMunicipalityFromUrlParam,
+  type SupportedMunicipality,
 } from "./municipality";
 import {
   BRASS,
-  getAvailableInstrumentFromUrlParam,
-  getInstitutionSizeFromUrlParam,
   PERCUSSION,
   STRINGS,
-  toInstitutionSizeParam,
   WOODWIND,
+  getAvailableInstrumentFromUrlParam,
+  getInstitutionSizeFromUrlParam,
+  toInstitutionSizeParam,
 } from "./search";
 
 const RESERVATION_DIVISION_ORDER = {

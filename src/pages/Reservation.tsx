@@ -1,13 +1,13 @@
 import { addMonths, endOfMonth, max, min } from "date-fns";
-import { ChangeEvent, useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ReservationsQuery, useReservationsQuery } from "../api/graphql-client";
+import { useReservationsQuery, type ReservationsQuery } from "../api/graphql-client";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import { Columns, DataTable } from "../components/DataTable";
+import { DataTable, type Columns } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { SearchForm } from "../components/SearchForm";
-import { Select, SelectChangeEvent } from "../components/Select";
+import { Select, type SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
 import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
@@ -16,22 +16,22 @@ import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate } from "../utils/format";
 import {
   MunicipalityOptions,
-  SupportedMunicipality,
   SupportedMunicipalityMap,
   convertMunicipalityToUrlParam,
+  type SupportedMunicipality,
 } from "../utils/municipality";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
-  ReservationSearchFilter,
   formatReservationMap,
   toReservationQueryVariables,
   toReservationSearchParams,
+  type ReservationSearchFilter,
 } from "../utils/reservation";
 import {
   AVAILABLE_INSTRUMENT_MAP,
-  AvailableInstrument,
   INSTUTITON_SIZE_MAP,
-  InstitutionSize,
+  type AvailableInstrument,
+  type InstitutionSize,
 } from "../utils/search";
 import { styled } from "../utils/theme";
 

@@ -1,11 +1,11 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns";
-import { ChangeEvent, useCallback, useState } from "react";
+import { useCallback, useState, type ChangeEvent } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import {
-  InstitutionDetailQuery,
   useInstitutionDetailQuery,
   useInstitutionReservationsQuery,
+  type InstitutionDetailQuery,
 } from "../api/graphql-client";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
