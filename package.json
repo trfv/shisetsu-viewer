@@ -44,7 +44,7 @@
     "@typescript-eslint/parser": "6.2.1",
     "@vitejs/plugin-react-swc": "3.3.2",
     "eslint": "8.46.0",
-    "eslint-config-prettier": "8.10.0",
+    "eslint-config-prettier": "9.0.0",
     "eslint-plugin-react": "7.33.1",
     "eslint-plugin-storybook": "0.6.13",
     "happy-dom": "10.8.0",
