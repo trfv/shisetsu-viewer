@@ -49,7 +49,7 @@
     "eslint-plugin-storybook": "0.6.13",
     "happy-dom": "10.10.4",
     "husky": "8.0.3",
-    "lint-staged": "13.3.0",
+    "lint-staged": "14.0.0",
     "prettier": "3.0.2",
     "prettier-plugin-organize-imports": "3.2.3",
     "rollup-plugin-visualizer": "5.9.2",
