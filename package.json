@@ -19,7 +19,7 @@
     "@mui/material": "5.14.10",
     "@mui/x-date-pickers": "6.14.0",
     "date-fns": "2.30.0",
-    "graphql": "16.8.0",
+    "graphql": "16.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.16.0"
