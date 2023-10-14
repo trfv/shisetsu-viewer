@@ -33,7 +33,6 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
             actionBar: { actions: ["accept"] },
           }}
           value={value}
-          views={["day"]}
         />
       </SmallBox>
     </LocalizationProvider>
