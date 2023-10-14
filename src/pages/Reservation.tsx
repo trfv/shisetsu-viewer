@@ -210,8 +210,11 @@ export default () => {
               label="地区"
               onChange={handleMunicipalityChange}
               selectOptions={MunicipalityOptions.filter(
-                (m) => !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA"].includes(m.value)
-              )} // 文京区と江戸川区のシステムの改悪により更新困難になったため
+                (m) =>
+                  !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA", "MUNICIPALITY_TOSHIMA"].includes(
+                    m.value
+                  )
+              )} // 文京区と江戸川区と豊島区のシステムの改悪により更新困難になったため
               size="small"
               value={municipality}
             />
