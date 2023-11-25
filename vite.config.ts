@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => ({
           brotliSize: true,
         }
       )
-    ] : []),
+    ] : ([] as any)),
   ],
   test: {
     global: true,
