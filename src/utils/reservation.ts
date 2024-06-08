@@ -8,6 +8,7 @@ import {
   SupportedMunicipalities,
   getMunicipalityFromUrlParam,
   type SupportedMunicipality,
+  RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "./municipality";
 import {
   BRASS,
@@ -192,10 +193,8 @@ export const toReservationQueryVariables = ({
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
         : SupportedMunicipalities.filter(
-            (m) =>
-              !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA", "MUNICIPALITY_TOSHIMA"].includes(m)
-          ) // 文京区と江戸川区と豊島区システムの改悪により更新困難になったため
-            .map((m) => m.toString()),
+            (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
+          ).map((m) => m.toString()),
     isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
     isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
     isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,

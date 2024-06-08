@@ -86,14 +86,19 @@ export const SupportedMunicipalityMap: Record<string, string> = {
 
 export const SELECT_OPTION_ALL = "all";
 
+export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] = [
+  "MUNICIPALITY_ARAKAWA",
+  "MUNICIPALITY_EDOGAWA",
+  "MUNICIPALITY_OTA",
+  "MUNICIPALITY_SUGINAMI",
+  "MUNICIPALITY_TOSHIMA",
+  "MUNICIPALITY_BUNKYO",
+  "MUNICIPALITY_KAWASAKI",
+] as const;
+
 export const MunicipalityOptions: { value: string; label: string }[] = [
   { value: SELECT_OPTION_ALL, label: "すべて" },
-].concat(
-  Object.entries(SupportedMunicipalityMap).map(([k, v]) => ({
-    value: k,
-    label: v,
-  }))
-);
+].concat(Object.entries(SupportedMunicipalityMap).map(([k, v]) => ({ value: k, label: v })));
 
 export const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = {
   MUNICIPALITY_KOUTOU: KOUTOU_RESERVATION_DIVISION,

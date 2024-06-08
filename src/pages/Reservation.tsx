@@ -19,6 +19,7 @@ import {
   SupportedMunicipalityMap,
   convertMunicipalityToUrlParam,
   type SupportedMunicipality,
+  RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "../utils/municipality";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
@@ -211,10 +212,8 @@ export default () => {
               onChange={handleMunicipalityChange}
               selectOptions={MunicipalityOptions.filter(
                 (m) =>
-                  !["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA", "MUNICIPALITY_TOSHIMA"].includes(
-                    m.value
-                  )
-              )} // 文京区と江戸川区と豊島区のシステムの改悪により更新困難になったため
+                  !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m.value as SupportedMunicipality)
+              )}
               size="small"
               value={municipality}
             />
