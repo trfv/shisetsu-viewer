@@ -87,13 +87,11 @@ export const SupportedMunicipalityMap: Record<string, string> = {
 export const SELECT_OPTION_ALL = "all";
 
 export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] = [
-  "MUNICIPALITY_ARAKAWA",
   "MUNICIPALITY_EDOGAWA",
   "MUNICIPALITY_OTA",
   "MUNICIPALITY_SUGINAMI",
   "MUNICIPALITY_TOSHIMA",
   "MUNICIPALITY_BUNKYO",
-  "MUNICIPALITY_KAWASAKI",
 ] as const;
 
 export const MunicipalityOptions: { value: string; label: string }[] = [
