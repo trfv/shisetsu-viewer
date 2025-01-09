@@ -17,7 +17,7 @@
     "@emotion/styled": "11.14.0",
     "@mui/icons-material": "5.16.11",
     "@mui/material": "5.16.11",
-    "@mui/x-date-pickers": "6.20.2",
+    "@mui/x-date-pickers": "7.23.6",
     "date-fns": "2.30.0",
     "graphql": "16.9.0",
     "react": "18.3.1",
