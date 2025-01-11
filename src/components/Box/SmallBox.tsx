@@ -4,4 +4,6 @@ import { BaseBox } from "./BaseBox";
 
 type Props = ComponentProps<typeof BaseBox>;
 
-export const SmallBox = (props: Props) => <BaseBox {...props} width={WIDTHS.small} />;
+export const SmallBox: typeof BaseBox = (props: Props) => (
+  <BaseBox {...props} width={WIDTHS.small} />
+);

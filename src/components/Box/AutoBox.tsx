@@ -3,4 +3,4 @@ import { BaseBox } from "./BaseBox";
 
 type Props = ComponentProps<typeof BaseBox>;
 
-export const AutoBox = (props: Props) => <BaseBox {...props} width="auto" />;
+export const AutoBox: typeof BaseBox = (props: Props) => <BaseBox {...props} width="auto" />;

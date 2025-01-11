@@ -12,7 +12,7 @@ describe("useQueryParams", () => {
           c: ArrayParam,
           d: DateParam,
         },
-        () => null,
+        () => {},
         {
           state: {},
           key: "",
@@ -51,7 +51,7 @@ describe("useQueryParams", () => {
           c: ArrayParam,
           d: DateParam,
         },
-        () => null,
+        () => {},
         {
           state: {},
           key: "",
@@ -77,7 +77,7 @@ describe("useQueryParams", () => {
           e: DateParam,
           f: DateParam,
         },
-        () => null,
+        () => {},
         {
           state: {},
           key: "",

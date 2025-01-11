@@ -47,7 +47,9 @@
     "eslint": "9.18.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-react": "7.37.3",
+    "eslint-plugin-react-hooks": "5.1.0",
     "eslint-plugin-storybook": "0.11.2",
+    "globals": "15.14.0",
     "happy-dom": "16.5.3",
     "husky": "9.1.7",
     "lint-staged": "15.3.0",
@@ -71,8 +73,8 @@
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",
     "serve": "vite preview --port 3000",
-    "format:fix": "prettier --ignore-path .prettierignore --write",
-    "lint:fix": "eslint --ignore-path .eslintignore --fix",
+    "format:fix": "prettier --write",
+    "lint:fix": "eslint --fix",
     "format:all": "npm run format:fix \"./src/**/*.ts*\"",
     "lint:all": "npm run lint:fix \"./src/**/*.ts*\"",
     "storybook": "storybook dev -p 6006",
@@ -80,7 +82,7 @@
     "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
     "test": "TZ=Asia/Tokyo vitest",
     "coverage": "TZ=Asia/Tokyo vitest run --coverage",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [

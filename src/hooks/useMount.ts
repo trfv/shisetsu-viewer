@@ -4,7 +4,7 @@ export const useMount = (effect: () => Promise<void>, cancel?: () => void) => {
   useEffect(() => {
     let ignore = false;
     const fn = async () => await effect();
-    !ignore && fn();
+    if (!ignore) fn();
     return () => {
       cancel?.();
       ignore = true;
