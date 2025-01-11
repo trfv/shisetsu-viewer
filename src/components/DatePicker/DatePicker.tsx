@@ -1,9 +1,9 @@
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import locale from "date-fns/locale/ja";
 import type { FC } from "react";
 import { SmallBox } from "../Box";
+import { ja } from "date-fns/locale/ja";
 
 type Props = {
   value: Date | null;
@@ -14,11 +14,7 @@ type Props = {
 
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
   return (
-    <LocalizationProvider
-      adapterLocale={locale}
-      dateAdapter={AdapterDateFns}
-      dateFormats={{ monthAndYear: "yyyy/MM" }}
-    >
+    <LocalizationProvider adapterLocale={ja} dateAdapter={AdapterDateFns}>
       <SmallBox>
         <MuiDatePicker
           localeText={{ okButtonLabel: "閉じる" }}

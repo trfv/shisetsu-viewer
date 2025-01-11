@@ -3,7 +3,7 @@ import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { Loading } from "../../pages/Loading";
 
-export const AuthGuard = ({ Component }: { Component: JSX.Element }): JSX.Element => {
+export const AuthGuard = ({ Component }: { Component: React.ReactNode }): React.ReactNode => {
   const { isLoading, isAnonymous } = useAuth0();
 
   if (isAnonymous) {

@@ -73,7 +73,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
       } else {
         return false;
       }
-    } catch (e) {
+    } catch {
       return false;
     }
   }, [auth0Client]);
