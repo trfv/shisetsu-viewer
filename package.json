@@ -64,8 +64,8 @@
     "web-vitals": "4.2.4"
   },
   "engines": {
-    "node": ">=16",
-    "npm": ">=8"
+    "node": ">=20",
+    "npm": ">=10"
   },
   "scripts": {
     "generate": "graphql-codegen --require dotenv/config --config ./src/api/config.yml",
