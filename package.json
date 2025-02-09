@@ -43,7 +43,7 @@
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "8.23.0",
     "@typescript-eslint/parser": "8.23.0",
-    "@vitejs/plugin-react-swc": "3.7.2",
+    "@vitejs/plugin-react-swc": "3.8.0",
     "esbuild": "0.25.0",
     "eslint": "9.20.0",
     "eslint-config-prettier": "10.0.1",
