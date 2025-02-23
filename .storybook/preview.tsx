@@ -1,5 +1,6 @@
 import type { Decorator, Parameters } from "@storybook/react";
-import { CssBaseline, darkTheme, lightTheme, ThemeProvider } from "../src/utils/theme";
+import React from "react";
+import { CssBaseline, darkTheme, lightTheme, ThemeProvider } from "../packages/viewer/utils/theme";
 
 export const parameters: Parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

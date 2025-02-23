@@ -30,7 +30,7 @@ export default [
       "node_modules/**",
       "public/**",
       "storybook-static/**",
-      "src/api/graphql-client.tsx",
+      "packages/viewer/api/graphql-client.tsx",
       "vite.config.ts",
     ],
   },

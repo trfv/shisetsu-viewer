@@ -69,15 +69,15 @@
     "npm": ">=10"
   },
   "scripts": {
-    "generate": "graphql-codegen --require dotenv/config --config ./src/api/config.yml",
+    "generate": "graphql-codegen --require dotenv/config --config ./packages/viewer/api/config.yml",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",
     "serve": "vite preview --port 3000",
     "format:fix": "prettier --write",
     "lint:fix": "eslint --fix",
-    "format:all": "npm run format:fix \"./src/**/*.ts*\"",
-    "lint:all": "npm run lint:fix \"./src/**/*.ts*\"",
+    "format:all": "npm run format:fix \"./packages/**/*.ts*\"",
+    "lint:all": "npm run lint:fix \"./packages/**/*.ts*\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
