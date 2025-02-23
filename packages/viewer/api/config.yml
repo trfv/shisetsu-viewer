@@ -5,9 +5,9 @@ schema:
         x-hasura-admin-secret: ${ADMIN_SECRET}
         x-hasura-role: user
 documents:
-  - ./src/api/queries/*.graphql
+  - ./packages/front/api/queries/*.graphql
 generates:
-  ./src/api/graphql-client.tsx:
+  ./packages/front/api/graphql-client.tsx:
     plugins:
       - typescript
       - typescript-operations

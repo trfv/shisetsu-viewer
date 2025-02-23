@@ -157,7 +157,7 @@ const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> =
 export const getMunicipalityFromUrlParam = (
   param: string | null | undefined
 ): SupportedMunicipality | typeof SELECT_OPTION_ALL => {
-  return param ? MUNICIPALITY_URL_PARAMS[param] ?? SELECT_OPTION_ALL : SELECT_OPTION_ALL;
+  return param ? (MUNICIPALITY_URL_PARAMS[param] ?? SELECT_OPTION_ALL) : SELECT_OPTION_ALL;
 };
 
 export const convertMunicipalityToUrlParam = (
