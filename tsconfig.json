@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -17,8 +17,5 @@
     "ignoreDeprecations": "5.0"
   },
   "extends": "@tsconfig/strictest/tsconfig.json",
-  "include": [
-    "src",
-    ".storybook"
-  ]
+  "include": ["packages", ".storybook"]
 }

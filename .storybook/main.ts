@@ -1,7 +1,7 @@
-import type { StorybookConfig } from "@storybook/types";
+import type { StorybookConfig } from "@storybook/core/types";
 
 const config: StorybookConfig = {
-  stories: ["../src"],
+  stories: ["../packages/viewer"],
   addons: ["@storybook/addon-essentials"],
   staticDirs: ["../public"],
   framework: {
