@@ -18,6 +18,7 @@
     "@mui/icons-material": "6.4.7",
     "@mui/material": "6.4.7",
     "@mui/x-date-pickers": "7.27.3",
+    "@playwright/test": "1.51.0",
     "date-fns": "4.1.0",
     "graphql": "16.10.0",
     "react": "19.0.0",
@@ -70,7 +71,9 @@
   },
   "scripts": {
     "generate": "graphql-codegen --require dotenv/config --config ./packages/viewer/api/config.yml",
-    "start": "vite --port 3000",
+    "start": "npm run start:viewer",
+    "start:viewer": "vite --port 3000",
+    "start:scraper": "npx playwright test",
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",
     "serve": "vite preview --port 3000",
