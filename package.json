@@ -18,7 +18,7 @@
     "@mui/icons-material": "6.4.7",
     "@mui/material": "6.4.7",
     "@mui/x-date-pickers": "7.27.3",
-    "@playwright/test": "1.51.0",
+    "@playwright/test": "1.51.1",
     "date-fns": "4.1.0",
     "graphql": "16.10.0",
     "react": "19.0.0",
