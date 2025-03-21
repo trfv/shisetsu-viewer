@@ -13,6 +13,16 @@ schema.json
 # production
 /build
 
+# playwright
+/playwright-report
+/test-results
+
+# storybook
+build-storybook.log
+storybook-static
+.reg
+__screenshots__
+
 # misc
 .DS_Store
 .env
@@ -25,8 +35,3 @@ schema.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-build-storybook.log
-storybook-static
-.reg
-__screenshots__
