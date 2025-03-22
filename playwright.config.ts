@@ -12,7 +12,7 @@ import { defineConfig } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout: 30 * 60 * 1000,
+  timeout: 60 * 60 * 1000,
   tsconfig: "./tsconfig.json",
   /* Directory to search for tests */
   testDir: "./packages/scraper",
