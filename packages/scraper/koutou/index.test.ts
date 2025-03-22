@@ -18,6 +18,8 @@ import { prepare, extract, transform } from "./index";
   "商工情報センター",
 ].forEach((name) => {
   test(name, async ({ page }) => {
+    console.log(`start scraping for ${name}`);
+
     const searchPage = await prepare(page, name);
     expect(page.title()).not.toBeNull();
     const extractOutput = await extract(searchPage);
@@ -25,10 +27,9 @@ import { prepare, extract, transform } from "./index";
     const transformOutput = await transform(extractOutput);
     expect(transformOutput.length).toBeGreaterThan(1);
 
-    await fs.mkdir("packages/scraper/output/koutou", { recursive: true });
-    await fs.writeFile(
-      `packages/scraper/output/koutou/${name}.json`,
-      JSON.stringify(transformOutput)
-    );
+    console.log(`finish scraping for ${name}`);
+
+    await fs.mkdir("test_results/koutou", { recursive: true });
+    await fs.writeFile(`test_results/koutou/${name}.json`, JSON.stringify(transformOutput));
   });
 });
