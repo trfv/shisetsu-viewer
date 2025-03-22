@@ -1,5 +1,4 @@
 import type { Locator, Page } from "@playwright/test";
-import { addMonths, differenceInDays, endOfMonth } from "date-fns";
 
 type ExtractOutput = { header: string[]; rows: string[][] }[];
 
@@ -40,7 +39,12 @@ function toISODateString(dateString: string, withTimeAndZone = false): string {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}${withTimeAndZone ? ":00:00:00+09:00" : ""}`;
 }
 
-export async function prepare(page: Page, facilityName: string): Promise<Page> {
+export async function prepare(
+  page: Page,
+  facilityName: string,
+  startDate: Date,
+  monthDiff: number
+): Promise<Page> {
   await page.goto("https://www.kcf.or.jp/yoyaku/shisetsu/");
   await page.getByText("利用規約に同意する").click();
   const searchPagePromise = page.waitForEvent("popup");
@@ -48,21 +52,22 @@ export async function prepare(page: Page, facilityName: string): Promise<Page> {
   const searchPage = await searchPagePromise;
   await searchPage.getByRole("link", { name: "施設の空き状況" }).click();
   await searchPage.getByRole("link", { name: "複合検索条件" }).click();
+  await searchPage.getByRole("link", { name: "年月日" }).click();
+  if (monthDiff > 0) {
+    while (monthDiff > 0) {
+      await searchPage.getByRole("link", { name: "次月" }).click();
+      monthDiff--;
+    }
+    await searchPage
+      .getByRole("link", { name: startDate.getDate().toString(), exact: true })
+      .click();
+  }
+  await searchPage.getByRole("link", { name: "設定" }).click();
   await searchPage.getByRole("link", { name: "館" }).click();
   await searchPage.getByRole("link", { name: facilityName }).click();
   await searchPage.getByRole("link", { name: "検索を開始する" }).click();
 
   return searchPage;
-}
-
-async function calculateCount(page: Page): Promise<number> {
-  const table = page.locator('//*[@id="disp"]/center/table[3]/tbody[2]/tr[3]/td[2]/center/table');
-  await table.waitFor();
-  const dateValue = await table.locator("tr").nth(0).locator("td").nth(0).innerText();
-  const srcDate = new Date(toISODateString(dateValue, true));
-  const dstDate = addMonths(endOfMonth(srcDate), 6);
-
-  return differenceInDays(dstDate, srcDate) + 1;
 }
 
 async function _extract(page: Page): Promise<ExtractOutput> {
@@ -102,25 +107,15 @@ async function _extract(page: Page): Promise<ExtractOutput> {
   return output;
 }
 
-export async function extract(page: Page): Promise<ExtractOutput> {
+export async function extract(page: Page, startDate: Date, endDate: Date): Promise<ExtractOutput> {
   const output: ExtractOutput = [];
-  const count = await calculateCount(page);
+  const count = endDate.getDate() - startDate.getDate() + 1;
 
   let i = 0;
   while (i < count) {
-    let j = 0;
-    while (j < 3) {
-      try {
-        const o = await _extract(page);
-        output.push(...o);
-        j += 3;
-      } catch {
-        console.log(`Retry ${i + 1} page ${j + 1} try`);
-        await page.waitForTimeout(2 ** j * 1000);
-        j++;
-      }
-    }
-    await page.getByAltText("翌日").click();
+    const o = await _extract(page);
+    output.push(...o);
+    await page.getByRole("link", { name: "翌日" }).click();
     i++;
   }
 
