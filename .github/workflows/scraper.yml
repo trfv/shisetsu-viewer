@@ -9,19 +9,35 @@ on:
         type: choice
         options:
           - koutou
+          - all
+  schedule:
+    - cron: "0 4,16 * * *"
 
 jobs:
-  scrape:
-    timeout-minutes: 60
+  prepare:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        shardTotal: [20]
+    outputs:
+      municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
+      node_modules_cache_key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
+      playwright_cache_key: ${{ steps.set-cache-keys.outputs.playwright_cache_key }}
     steps:
+      - name: Set municipalities
+        id: set-municipalities
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
+            echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
+          else
+            echo "municipalities=[\"koutou\"]" >> $GITHUB_OUTPUT
+          fi
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set cache keys
+        id: set-cache-keys
+        run: |
+          NODE_MODULES_HASH=$(sha256sum package-lock.json | awk '{ print $1 }')
+          echo "node_modules_cache_key=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
+          echo "playwright_cache_key=${{ runner.os }}-playwright-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
       - name: Set Node.js
         uses: actions/setup-node@v4
         with:
@@ -33,27 +49,29 @@ jobs:
         id: node-modules-cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Run Playwright tests
-        run: npx playwright test packages/scraper/${{ inputs.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - name: Upload result
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
         with:
-          name: ${{ inputs.municipality }}-artifact-${{ matrix.shardIndex }}
-          path: test-results/${{ inputs.municipality }}/*
-          retention-days: 1
-  save:
-    timeout-minutes: 30
+          path: ~/.cache/ms-playwright
+          key: ${{ steps.set-cache-keys.outputs.playwright_cache_key }}
+
+  scrape:
+    needs: prepare
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() }}
-    needs: scrape
+    strategy:
+      fail-fast: false
+      matrix:
+        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        shardTotal: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,17 +85,75 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ needs.prepare.outputs.node_modules_cache_key }}
+      - name: Restore Playwright browsers
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ needs.prepare.outputs.playwright_cache_key }}
+      - name: Run Playwright tests
+        run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Upload result
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.municipality }}-artifact-${{ matrix.shardIndex }}
+          path: test-results/${{ matrix.municipality }}/*
+          retention-days: 1
+  save:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    needs: [prepare, scrape]
+    strategy:
+      matrix:
+        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: lts/*
+      - name: Restore cached node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          key: ${{ needs.prepare.outputs.node_modules_cache_key }}
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          path: test-results/${{ inputs.municipality }}
-          pattern: ${{ inputs.municipality }}-artifact-*
+          path: test-results/${{ matrix.municipality }}
+          pattern: ${{ matrix.municipality }}-artifact-*
           merge-multiple: true
       - name: Display structure of downloaded files
-        run: ls -R test-results/${{ inputs.municipality }}
+        run: ls -R test-results/${{ matrix.municipality }}
       - name: Save scraped data
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-        run: node .github/tools/save.mjs ${{ inputs.municipality }}
+        run: node .github/tools/save.mjs ${{ matrix.municipality }}
+      - name: Delete artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId
+            });
+            const matchArtifacts = artifacts.data.artifacts
+              .filter(artifact => artifact.name.startsWith(`${{ matrix.municipality }}-artifact`))
+            for (const matchArtifact of matchArtifacts) {
+              try {
+                console.log(`Deleting artifact: ${matchArtifact.name}`);
+                await github.rest.actions.deleteArtifact({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  artifact_id: matchArtifact.id,
+                });
+              } catch (error) {
+                console.log(`Error deleting ${matchArtifact.name}: ${error.message}`);
+              }
+            }
