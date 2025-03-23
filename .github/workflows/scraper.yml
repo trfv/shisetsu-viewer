@@ -27,6 +27,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
+          node-version: lts/*
       - name: Cache node_modules
         uses: actions/cache@v4
         id: node-modules-cache
@@ -61,6 +62,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
+          node-version: lts/*
       - name: Restore cached node_modules
         uses: actions/cache/restore@v4
         with:

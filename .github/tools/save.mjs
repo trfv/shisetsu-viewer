@@ -5,8 +5,8 @@ import { isWeekend } from "date-fns";
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
-const munitipality = process.argv[2];
-const title = `save ${munitipality} data`;
+const municipality = process.argv[2];
+const title = `save ${municipality} data`;
 
 console.time(title);
 
@@ -48,7 +48,7 @@ const institutions = await client.query({
   `,
   variables: {
     prefecture: "PREFECTURE_TOKYO",
-    municipality: `MUNICIPALITY_${munitipality.toUpperCase()}`,
+    municipality: `MUNICIPALITY_${municipality.toUpperCase()}`,
   },
 });
 
@@ -57,7 +57,7 @@ const institution_id_map = institutions["data"]["institutions"].reduce((acc, cur
   return acc;
 }, {});
 
-const dir = `test-results/${munitipality}`;
+const dir = `test-results/${municipality}`;
 const files = await fs.readdir(dir);
 const fileData = await Promise.all(
   files.map(async (file) => {
