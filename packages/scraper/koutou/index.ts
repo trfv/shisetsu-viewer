@@ -1,14 +1,18 @@
 import type { Locator, Page } from "@playwright/test";
 
-type ExtractOutput = { header: string[]; rows: string[][] }[];
+type Division =
+  | "RESERVATION_DIVISION_INVALID"
+  | "RESERVATION_DIVISION_MORNING"
+  | "RESERVATION_DIVISION_AFTERNOON"
+  | "RESERVATION_DIVISION_EVENING"
+  | "RESERVATION_DIVISION_MORNING_ONE"
+  | "RESERVATION_DIVISION_MORNING_TWO"
+  | "RESERVATION_DIVISION_AFTERNOON_ONE"
+  | "RESERVATION_DIVISION_AFTERNOON_TWO"
+  | "RESERVATION_DIVISION_EVENING_ONE"
+  | "RESERVATION_DIVISION_EVENING_TWO";
 
-type TransformOutput = {
-  room_name: string;
-  date: string;
-  reservations: { division: string; status: string }[];
-}[];
-
-const DIVISION_MAP = {
+const DIVISION_MAP: { [key: string]: Division } = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
@@ -21,7 +25,16 @@ const DIVISION_MAP = {
   "⑥": "RESERVATION_DIVISION_EVENING_TWO",
 };
 
-const STATUS_MAP = {
+type Status =
+  | "RESERVATION_STATUS_INVALID"
+  | "RESERVATION_STATUS_VACANT"
+  | "RESERVATION_STATUS_STATUS_1"
+  | "RESERVATION_STATUS_STATUS_2"
+  | "RESERVATION_STATUS_STATUS_3"
+  | "RESERVATION_STATUS_STATUS_4"
+  | "RESERVATION_STATUS_STATUS_5";
+
+const STATUS_MAP: { [key: string]: Status } = {
   "": "RESERVATION_STATUS_INVALID",
   "image/lw_emptybs.gif": "RESERVATION_STATUS_VACANT",
   "image/lw_finishs.gif": "RESERVATION_STATUS_STATUS_1",
@@ -31,12 +44,22 @@ const STATUS_MAP = {
   "image/lw_sound.gif": "RESERVATION_STATUS_STATUS_5",
 };
 
-function toISODateString(dateString: string, withTimeAndZone = false): string {
+type Reservation = { [K in Division]?: Status };
+
+type ExtractOutput = { header: string[]; rows: string[][] }[];
+
+type TransformOutput = {
+  room_name: string;
+  date: string;
+  reservation: Reservation;
+}[];
+
+function toISODateString(dateString: string): string {
   const [year, month, day] = dateString.split(/年|月|日/).flatMap((part) => {
     const match = part.match(/\d+/);
     return match ? [match[0]] : [];
   }) as [string, string, string];
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}${withTimeAndZone ? ":00:00:00+09:00" : ""}`;
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 }
 
 export async function prepare(
@@ -131,10 +154,12 @@ export async function transform(extractOutput: ExtractOutput): Promise<Transform
       return {
         room_name: row[0] as string,
         date: toISODateString(header[0] as string),
-        reservations: [...new Array(row.length - 1)].map((_, index) => ({
-          division: DIVISION_MAP[(divisions[index] || "") as keyof typeof DIVISION_MAP],
-          status: STATUS_MAP[(statuses[index] || "") as keyof typeof STATUS_MAP],
-        })),
+        reservation: [...new Array(row.length - 1)].reduce<Reservation>((acc, _, index) => {
+          const division = DIVISION_MAP[divisions[index] || ""] as Division;
+          const status = STATUS_MAP[statuses[index] || ""] as Status;
+          acc[division] = status;
+          return acc;
+        }, {}),
       };
     });
   });

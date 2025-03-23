@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8]
-        shardTotal: [8]
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        shardTotal: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,12 +27,11 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: lts/*
       - name: Cache node_modules
         uses: actions/cache@v4
         id: node-modules-cache
         with:
-          path: "**/node_modules"
+          path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
@@ -47,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.municipality }}-artifact-${{ matrix.shardIndex }}
-          path: test_results/${{ inputs.municipality }}/*
+          path: test-results/${{ inputs.municipality }}/*
           retention-days: 1
   save:
     timeout-minutes: 30
@@ -57,19 +56,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+      - name: Restore cached node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          path: packages/scraper/output/${{ inputs.municipality }}
+          path: test-results/${{ inputs.municipality }}
           pattern: ${{ inputs.municipality }}-artifact-*
           merge-multiple: true
       - name: Display structure of downloaded files
-        run: ls -R packages/scraper/output/${{ inputs.municipality }}
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git branch -m tmp/${{ inputs.municipality }}-test-results
-          git add .
-          git commit -m "Update ${{ inputs.municipality }} test results"
-          git push
+        run: ls -R test-results/${{ inputs.municipality }}
+      - name: Save scraped data
+        env:
+          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+        run: node .github/tools/save.mjs ${{ inputs.municipality }}
