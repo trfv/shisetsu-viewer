@@ -43,12 +43,12 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: lts/*
+          node-version: "lts/*"
       - name: Cache node_modules
         uses: actions/cache@v4
         id: node-modules-cache
         with:
-          path: node_modules
+          path: "**/node_modules"
           key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
@@ -80,11 +80,11 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: lts/*
+          node-version: "lts/*"
       - name: Restore cached node_modules
         uses: actions/cache/restore@v4
         with:
-          path: node_modules
+          path: "**/node_modules"
           key: ${{ needs.prepare.outputs.node_modules_cache_key }}
       - name: Restore Playwright browsers
         uses: actions/cache/restore@v4
@@ -115,11 +115,11 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: lts/*
+          node-version: "lts/*"
       - name: Restore cached node_modules
         uses: actions/cache/restore@v4
         with:
-          path: node_modules
+          path: "**/node_modules"
           key: ${{ needs.prepare.outputs.node_modules_cache_key }}
       - name: Download artifact
         uses: actions/download-artifact@v4

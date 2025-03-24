@@ -86,6 +86,12 @@ const data = fileData.flatMap(({ facility_name: institution_system_name, content
   });
 });
 
+// "Ensure that no rows proposed for insertion within the same command have duplicate constrained values." への対応
+// 原則発生しないはずなので原因を調査する
+const uniqueData = data.filter(
+  (d, i, a) => a.findIndex((t) => t.date === d.date && t.institution_id === d.institution_id) === i
+);
+
 const response = await client.mutate({
   mutation: gql`
     mutation update_reservations($data: [reservations_insert_input!]!) {
@@ -101,7 +107,7 @@ const response = await client.mutate({
     }
   `,
   variables: {
-    data: data,
+    data: uniqueData,
   },
 });
 
