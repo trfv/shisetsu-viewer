@@ -77,7 +77,7 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.node_modules_cache_key }}
-      - name: Save scraped data
+      - name: Update database data
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
