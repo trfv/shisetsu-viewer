@@ -95,11 +95,19 @@ jobs:
           key: ${{ needs.prepare.outputs.playwright_cache_key }}
       - name: Run Playwright tests
         run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - name: Display structure of scraped data files
-        run: ls -R test-results/${{ matrix.municipality }}
+      - name: Check if directory exists
+        id: check-directory
+        run: |
+          if [ -d "test-results" ]; then
+            echo "directory-exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "directory-exists=false" >> $GITHUB_OUTPUT
+          fi
       - name: Save scraped data
+        if: steps.check-directory.outputs.directory_exists == 'true'
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-        run: node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
-          }
+        run: |
+          run: ls -R test-results/${{ matrix.municipality }}
+          node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
