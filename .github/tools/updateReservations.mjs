@@ -6,7 +6,7 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 const municipality = process.argv[2];
-const title = `save ${municipality} data`;
+const title = `save ${municipality} reservations`;
 
 console.time(title);
 

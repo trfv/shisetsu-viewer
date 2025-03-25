@@ -5,7 +5,7 @@ import { prepare, extract, transform } from "./index";
 
 function calculateCount(): number {
   const startData = new Date();
-  const endDate = addMonths(endOfMonth(startData), 5);
+  const endDate = addMonths(endOfMonth(startData), 13);
   return differenceInDays(endDate, startData) + 1;
 }
 
