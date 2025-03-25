@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - koutou
+          - arakawa
           - all
   schedule:
     - cron: "0 4,16 * * *"
@@ -28,7 +29,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
             echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
           else
-            echo "municipalities=[\"koutou\"]" >> $GITHUB_OUTPUT
+            echo "municipalities=[\"koutou\", \"arakawa\"]" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
         uses: actions/checkout@v4
