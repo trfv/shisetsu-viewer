@@ -1,0 +1,85 @@
+name: Update Database
+
+on:
+  workflow_dispatch:
+    inputs:
+      municipality:
+        description: "Municipality to update"
+        required: true
+        type: choice
+        options:
+          - koutou
+          - arakawa
+          - kita
+          - all
+  # schedule:
+  #   - cron: "0 4,16 * * *"
+
+jobs:
+  prepare:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    outputs:
+      municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
+      node_modules_cache_key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
+    steps:
+      - name: Set municipalities
+        id: set-municipalities
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
+            echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
+          else
+            echo "municipalities=[\"koutou\", \"arakawa\", \"kita\"]" >> $GITHUB_OUTPUT
+          fi
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set cache keys
+        id: set-cache-keys
+        run: |
+          NODE_MODULES_HASH=$(sha256sum package-lock.json | awk '{ print $1 }')
+          echo "node_modules_cache_key=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
+      - name: Set Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "lts/*"
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci --ignore-scripts
+
+  update:
+    needs: prepare
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "lts/*"
+      - name: Restore cached node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ needs.prepare.outputs.node_modules_cache_key }}
+      - name: Update database data
+        env:
+          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+          SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
+        run: node .github/tools/updateInstitutions.mjs ${{ matrix.municipality }}
