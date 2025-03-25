@@ -10,6 +10,7 @@ on:
         options:
           - koutou
           - arakawa
+          - kita
           - all
   schedule:
     - cron: "0 4,16 * * *"
@@ -29,7 +30,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
             echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
           else
-            echo "municipalities=[\"koutou\", \"arakawa\"]" >> $GITHUB_OUTPUT
+            echo "municipalities=[\"koutou\", \"arakawa\", \"kita\"]" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,5 +101,5 @@ jobs:
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-        run: node .github/tools/save.mjs ${{ matrix.municipality }}
+        run: node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
           }
