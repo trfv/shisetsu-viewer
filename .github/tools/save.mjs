@@ -62,15 +62,12 @@ const files = await fs.readdir(dir);
 const fileData = await Promise.all(
   files.map(async (file) => {
     const contents = await fs.readFile(`${dir}/${file}`, "utf-8");
-    return {
-      facility_name: file.split("_")[0],
-      contents: JSON.parse(contents),
-    };
+    return JSON.parse(contents);
   })
 );
 
-const data = fileData.flatMap(({ facility_name: institution_system_name, contents }) => {
-  return contents.flatMap((d) => {
+const rawData = fileData.flatMap(({ facility_name: institution_system_name, data }) => {
+  return data.flatMap((d) => {
     const { room_name: building_system_name, date, reservation } = d;
     const institution_id = institution_id_map[`${institution_system_name}-${building_system_name}`];
     if (!institution_id) {
@@ -87,8 +84,8 @@ const data = fileData.flatMap(({ facility_name: institution_system_name, content
 });
 
 // "Ensure that no rows proposed for insertion within the same command have duplicate constrained values." への対応
-// 原則発生しないはずなので原因を調査する
-const uniqueData = data.filter(
+// TODO: 原則発生しないはずなので原因を調査する
+const uniqueData = rawData.filter(
   (d, i, a) => a.findIndex((t) => t.date === d.date && t.institution_id === d.institution_id) === i
 );
 
@@ -111,5 +108,6 @@ const response = await client.mutate({
   },
 });
 
+console.log(`data: ${uniqueData.length}`);
 console.log(`affected_rows: ${response["data"]["insert_reservations"]["affected_rows"]}`);
 console.timeEnd(title);

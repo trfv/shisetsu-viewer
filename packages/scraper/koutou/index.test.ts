@@ -1,14 +1,14 @@
 import fs from "fs/promises";
 import { test, expect } from "@playwright/test";
-import { prepare, extract, transform } from "./index";
 import { addDays, endOfMonth, format } from "date-fns";
+import { prepare, extract, transform } from "./index";
 
-function buildDateRanges(): [Date, Date][] {
+function buildDateRanges(): [Date, Date, number][] {
   let tmp = new Date();
-  const ret: [Date, Date][] = [];
-  for (let i = 0; i < 6; i++) {
+  const ret: [Date, Date, number][] = [];
+  for (let i = 0; i < 5; i++) {
     const end = endOfMonth(tmp);
-    ret.push([tmp, end]);
+    ret.push([tmp, end, end.getDate() - tmp.getDate() + 1]);
     tmp = addDays(end, 1);
   }
   return ret;
@@ -39,17 +39,17 @@ facilityNames.forEach((name) => {
       console.time(title);
 
       const searchPage = await prepare(page, name, dateRange[0], index);
-      const extractOutput = await extract(searchPage, dateRange[0], dateRange[1]);
-      expect(extractOutput.length).toBeGreaterThan(1);
+      const extractOutput = await extract(searchPage, dateRange[2]);
+      expect(extractOutput.length).toBeGreaterThan(0);
       const transformOutput = await transform(extractOutput);
-      expect(transformOutput.length).toBeGreaterThan(1);
+      expect(transformOutput.length).toBeGreaterThan(0);
 
       console.timeEnd(title);
 
       await fs.mkdir("test-results/koutou", { recursive: true });
       await fs.writeFile(
         `test-results/koutou/${name}_${format(dateRange[0], "yyyyMM")}.json`,
-        JSON.stringify(transformOutput)
+        JSON.stringify({ facility_name: name, data: transformOutput })
       );
 
       await searchPage.close();

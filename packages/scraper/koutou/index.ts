@@ -130,15 +130,18 @@ async function _extract(page: Page): Promise<ExtractOutput> {
   return output;
 }
 
-export async function extract(page: Page, startDate: Date, endDate: Date): Promise<ExtractOutput> {
+export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> {
   const output: ExtractOutput = [];
-  const count = endDate.getDate() - startDate.getDate() + 1;
 
   let i = 0;
-  while (i < count) {
+  while (i < maxCount) {
     const o = await _extract(page);
     output.push(...o);
-    await page.getByRole("link", { name: "翌日" }).click();
+    try {
+      await page.getByRole("link", { name: "翌日" }).click({ timeout: 5000 });
+    } catch {
+      break;
+    }
     i++;
   }
 
