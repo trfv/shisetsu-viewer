@@ -4,8 +4,8 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
 
-const municipality = process.argv[2];
-const title = `save ${municipality} data`;
+const target = process.argv[2];
+const title = `save ${target} data`;
 
 console.time(title);
 
@@ -88,10 +88,6 @@ const columns = [
   "note",
 ];
 
-const prefecture = "PREFECTURE_TOKYO";
-const municipalities = ["MUNICIPALITY_KITA"];
-// const municipalities = ["MUNICIPALITY_KOUTOU", "MUNICIPALITY_ARAKAWA", "MUNICIPALITY_KITA"];
-
 const aggreagate = (acc, key, value) => {
   switch (key) {
     case "building_name":
@@ -146,22 +142,15 @@ const aggreagate = (acc, key, value) => {
   }
 };
 
-const rawData = await Promise.all(
-  municipalities.map(async (municipality) => {
-    const res = await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`);
-    return {
-      municipality: municipality,
-      data: await res.json(),
-    };
-  })
-);
+const prefecture = "PREFECTURE_TOKYO";
+const municipality = `MUNICIPALITY_${target.toUpperCase()}`;
 
-const data = rawData.flatMap((res) => {
-  return res.data.map((d) => {
-    return Object.entries(d).reduce((acc, [key, value]) => aggreagate(acc, key, value), {
-      prefecture,
-      municipality: res.municipality,
-    });
+const rawData = await (await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)).json();
+
+const data = rawData.map((d) => {
+  return Object.entries(d).reduce((acc, [key, value]) => aggreagate(acc, key, value), {
+    prefecture,
+    municipality,
   });
 });
 
