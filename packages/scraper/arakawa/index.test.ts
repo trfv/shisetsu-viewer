@@ -10,9 +10,6 @@ function calculateCount(): number {
 }
 
 const facilityNames = [
-  "ムーブ町屋",
-  "日暮里サニーホール",
-  "サンパール荒川",
   "三河島ひろば館",
   "熊野前ひろば館",
   "宮地ひろば館",
@@ -35,6 +32,9 @@ const facilityNames = [
   "生涯学習センター",
   "町屋文化センター",
   "アクロスあらかわ",
+  "ムーブ町屋",
+  "日暮里サニーホール",
+  "サンパール荒川",
 ];
 
 facilityNames.forEach((name) => {

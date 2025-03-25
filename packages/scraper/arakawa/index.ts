@@ -157,7 +157,7 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
     const o = await _extract(page);
     output.push(...o);
     try {
-      await page.getByRole("link", { name: "次へ" }).click({ timeout: 5000 });
+      await page.getByRole("link", { name: "次へ" }).click();
     } catch {
       break;
     }

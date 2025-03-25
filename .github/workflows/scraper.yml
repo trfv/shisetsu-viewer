@@ -94,67 +94,11 @@ jobs:
           key: ${{ needs.prepare.outputs.playwright_cache_key }}
       - name: Run Playwright tests
         run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - name: Upload result
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.municipality }}-artifact-${{ matrix.shardIndex }}
-          path: test-results/${{ matrix.municipality }}/*
-          retention-days: 1
-  save:
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
-    needs: [prepare, scrape]
-    strategy:
-      matrix:
-        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set Node.js
-        uses: actions/setup-node@v4
-        with:
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-          node-version: "lts/*"
-      - name: Restore cached node_modules
-        uses: actions/cache/restore@v4
-        with:
-          path: "**/node_modules"
-          key: ${{ needs.prepare.outputs.node_modules_cache_key }}
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          path: test-results/${{ matrix.municipality }}
-          pattern: ${{ matrix.municipality }}-artifact-*
-          merge-multiple: true
-      - name: Display structure of downloaded files
+      - name: Display structure of scraped data files
         run: ls -R test-results/${{ matrix.municipality }}
       - name: Save scraped data
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         run: node .github/tools/save.mjs ${{ matrix.municipality }}
-      - name: Delete artifacts
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.runId
-            });
-            const matchArtifacts = artifacts.data.artifacts
-              .filter(artifact => artifact.name.startsWith(`${{ matrix.municipality }}-artifact`))
-            for (const matchArtifact of matchArtifacts) {
-              try {
-                console.log(`Deleting artifact: ${matchArtifact.name}`);
-                await github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: matchArtifact.id,
-                });
-              } catch (error) {
-                console.log(`Error deleting ${matchArtifact.name}: ${error.message}`);
-              }
-            }
+          }
