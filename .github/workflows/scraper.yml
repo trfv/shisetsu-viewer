@@ -98,16 +98,16 @@ jobs:
       - name: Check if test results exist
         id: check-directory
         run: |
-          if [ -d "test-results" ]; then
+          if [ -d "test-results/${{ matrix.municipality }}" ]; then
             echo "test-results-exist=true" >> $GITHUB_OUTPUT
           else
             echo "test-results-exist=false" >> $GITHUB_OUTPUT
           fi
       - name: Save scraped data
-        if: steps.check-directory.outputs.test-results-exist == 'true'
+        if: ${{ steps.check-directory.outputs.test-results-exist == 'true' }}
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         run: |
-          run: ls -R test-results/${{ matrix.municipality }}
+          ls -R test-results/${{ matrix.municipality }}
           node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
