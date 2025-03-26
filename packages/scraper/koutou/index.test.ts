@@ -46,9 +46,9 @@ facilityNames.forEach((name) => {
 
       console.timeEnd(title);
 
-      await fs.mkdir("test-results/koutou", { recursive: true });
+      await fs.mkdir("test-results/tokyo-koutou", { recursive: true });
       await fs.writeFile(
-        `test-results/koutou/${name}_${format(dateRange[0], "yyyyMM")}.json`,
+        `test-results/tokyo-koutou/${name}_${format(dateRange[0], "yyyyMM")}.json`,
         JSON.stringify({ facility_name: name, data: transformOutput })
       );
 
