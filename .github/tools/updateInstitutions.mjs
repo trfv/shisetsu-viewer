@@ -5,7 +5,7 @@ const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
 
 const target = process.argv[2];
-const title = `save ${target} data`;
+const title = `save ${target} institutions`;
 
 console.time(title);
 
@@ -142,8 +142,9 @@ const aggreagate = (acc, key, value) => {
   }
 };
 
-const prefecture = "PREFECTURE_TOKYO";
-const municipality = `MUNICIPALITY_${target.toUpperCase()}`;
+const [p, m] = target.split("-");
+const prefecture = `PREFECTURE_${p.toUpperCase()}`;
+const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
 
 const rawData = await (await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)).json();
 
@@ -176,7 +177,8 @@ const response = await client.mutate({
   },
 });
 
-console.log(`data: ${data.length}`);
-console.log(`affected_rows: ${response["data"]["insert_institutions"]["affected_rows"]}`);
+console.log(
+  `data: ${data.length}, affected_rows: ${response["data"]["insert_institutions"]["affected_rows"]}`
+);
 
 console.timeEnd(title);

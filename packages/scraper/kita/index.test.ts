@@ -23,9 +23,9 @@ facilityNames.forEach((name) => {
 
     console.timeEnd(name);
 
-    await fs.mkdir("test-results/kita", { recursive: true });
+    await fs.mkdir("test-results/tokyo-kita", { recursive: true });
     await fs.writeFile(
-      `test-results/kita/${name}.json`,
+      `test-results/tokyo-kita/${name}.json`,
       JSON.stringify({ facility_name: name, data: transformOutput })
     );
 

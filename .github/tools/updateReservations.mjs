@@ -5,8 +5,8 @@ import { isWeekend } from "date-fns";
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
-const municipality = process.argv[2];
-const title = `save ${municipality} reservations`;
+const target = process.argv[2];
+const title = `save ${target} reservations`;
 
 console.time(title);
 
@@ -34,6 +34,10 @@ const holiday_map = holidays["data"]["holidays"].reduce((acc, cur) => {
   return acc;
 }, {});
 
+const [p, m] = target.split("-");
+const prefecture = `PREFECTURE_${p.toUpperCase()}`;
+const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
+
 const institutions = await client.query({
   query: gql`
     query list_institutions($prefecture: prefecture, $municipality: String!) {
@@ -47,8 +51,8 @@ const institutions = await client.query({
     }
   `,
   variables: {
-    prefecture: "PREFECTURE_TOKYO",
-    municipality: `MUNICIPALITY_${municipality.toUpperCase()}`,
+    prefecture,
+    municipality,
   },
 });
 
@@ -57,7 +61,7 @@ const institution_id_map = institutions["data"]["institutions"].reduce((acc, cur
   return acc;
 }, {});
 
-const dir = `test-results/${municipality}`;
+const dir = `test-results/${target}`;
 const files = await fs.readdir(dir);
 const fileData = await Promise.all(
   files.map(async (file) => {
@@ -89,25 +93,31 @@ const uniqueData = rawData.filter(
   (d, i, a) => a.findIndex((t) => t.date === d.date && t.institution_id === d.institution_id) === i
 );
 
-const response = await client.mutate({
-  mutation: gql`
-    mutation update_reservations($data: [reservations_insert_input!]!) {
-      insert_reservations(
-        objects: $data
-        on_conflict: {
-          constraint: reservations_institution_id_date_key
-          update_columns: [reservation, is_holiday]
+const chunk = 2000;
+for (let i = 0; i < uniqueData.length; i += chunk) {
+  const chunkData = uniqueData.slice(i, i + chunk);
+  const response = await client.mutate({
+    mutation: gql`
+      mutation update_reservations($data: [reservations_insert_input!]!) {
+        insert_reservations(
+          objects: $data
+          on_conflict: {
+            constraint: reservations_institution_id_date_key
+            update_columns: [reservation, is_holiday]
+          }
+        ) {
+          affected_rows
         }
-      ) {
-        affected_rows
       }
-    }
-  `,
-  variables: {
-    data: uniqueData,
-  },
-});
+    `,
+    variables: {
+      data: chunkData,
+    },
+  });
 
-console.log(`data: ${uniqueData.length}`);
-console.log(`affected_rows: ${response["data"]["insert_reservations"]["affected_rows"]}`);
+  console.log(
+    `data: ${i + 1} ~ ${i + chunkData.length} / ${uniqueData.length}, affected_rows: ${response["data"]["insert_reservations"]["affected_rows"]}`
+  );
+}
+
 console.timeEnd(title);
