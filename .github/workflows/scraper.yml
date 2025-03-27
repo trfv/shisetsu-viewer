@@ -128,10 +128,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
-              const response = await github.rest.actions.listJobsForWorkflowRun({
+              const response = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 run_id: context.runId,
+                per_page: 100,
               });
               const failedShards = response.data.jobs
                 .filter((job) => job.name.startsWith('scrape') && job.conclusion === 'failure')
