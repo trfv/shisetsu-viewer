@@ -75,6 +75,8 @@ export async function prepare(
   const searchPage = await searchPagePromise;
   await searchPage.getByRole("link", { name: "施設の空き状況" }).click();
   await searchPage.getByRole("link", { name: "複合検索条件" }).click();
+  await searchPage.getByRole("link", { name: "利用目的分類" }).click();
+  await searchPage.getByRole("link", { name: "音楽講習" }).click();
   await searchPage.getByRole("link", { name: "年月日" }).click();
   if (monthDiff > 0) {
     while (monthDiff > 0) {
