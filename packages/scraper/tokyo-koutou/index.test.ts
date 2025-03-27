@@ -25,9 +25,6 @@ const facilityNames = [
   "総合区民センター",
   "江東公会堂（ティアラこうとう）",
   "深川江戸資料館",
-  "芭蕉記念館",
-  "中川船番所資料館",
-  "商工情報センター",
 ];
 
 const dateRanges = buildDateRanges();
