@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
-      node_modules_cache_key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
-      playwright_cache_key: ${{ steps.set-cache-keys.outputs.playwright_cache_key }}
+      nodeModulesCacheKey: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
+      playwrightCacheKey: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
     steps:
       - name: Set municipalities
         id: set-municipalities
@@ -39,8 +39,8 @@ jobs:
         id: set-cache-keys
         run: |
           NODE_MODULES_HASH=$(sha256sum package-lock.json | awk '{ print $1 }')
-          echo "node_modules_cache_key=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
-          echo "playwright_cache_key=${{ runner.os }}-playwright-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
+          echo "nodeModulesCacheKey=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
+          echo "playwrightCacheKey=${{ runner.os }}-playwright-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
       - name: Set Node.js
         uses: actions/setup-node@v4
         with:
@@ -52,7 +52,7 @@ jobs:
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ steps.set-cache-keys.outputs.node_modules_cache_key }}
+          key: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
@@ -63,12 +63,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ steps.set-cache-keys.outputs.playwright_cache_key }}
+          key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
 
   scrape:
     needs: prepare
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -88,12 +89,91 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: "**/node_modules"
-          key: ${{ needs.prepare.outputs.node_modules_cache_key }}
+          key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
       - name: Restore Playwright browsers
         uses: actions/cache/restore@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ needs.prepare.outputs.playwright_cache_key }}
+          key: ${{ needs.prepare.outputs.playwrightCacheKey }}
+      - name: Run Playwright tests
+        run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Check if test results exist
+        id: check-directory
+        run: |
+          if [ -d "test-results/${{ matrix.municipality }}" ]; then
+            echo "test-results-exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "test-results-exist=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Save scraped data
+        if: ${{ steps.check-directory.outputs.test-results-exist == 'true' }}
+        env:
+          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+        run: |
+          ls -R test-results/${{ matrix.municipality }}
+          node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
+
+  prepare_retry:
+    runs-on: ubuntu-latest
+    needs: scrape
+    if: always()
+    outputs:
+      failedShards: ${{ steps.collect-failures.outputs.failedShards }}
+    steps:
+      - name: Collect failed shards
+        id: collect-failures
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const response = await github.rest.actions.listJobsForWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.runId,
+              });
+              const failedShards = response.data.jobs
+                .filter((job) => job.name.startsWith('scrape') && job.conclusion === 'failure')
+                .map((job) => job.name.match(/scrape \(([^,]+),\s(\d+),\s(\d+)\)/).slice(1))
+                .filter((arr) => arr.length === 3)
+                .map((arr) => ({ municipality: arr[0], shardIndex: arr[1], shardTotal: arr[2] }));
+              console.log(`Failed shards: ${JSON.stringify(failedShards)}`);
+              core.setOutput('failedShards', JSON.stringify(failedShards));
+            } catch (error) {
+              core.setFailed(`Failed to fetch jobs or process results: ${error.message}`);
+              core.setOutput('failedShards', '[]');
+            }
+
+  retry_scrape:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - prepare_retry
+    if: needs.prepare_retry.outputs.failedShards != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{fromJson(needs.prepare_retry.outputs.failedShards)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "lts/*"
+      - name: Restore cached node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+      - name: Restore Playwright browsers
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ needs.prepare.outputs.playwrightCacheKey }}
       - name: Run Playwright tests
         run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
       - name: Check if test results exist
