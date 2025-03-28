@@ -128,13 +128,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
-              const response = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
+              const jobs = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 run_id: context.runId,
                 per_page: 100,
               });
-              const failedShards = response.data.jobs
+              console.log(`Found ${jobs.length} total jobs via pagination.`);
+              const failedShards = jobs
                 .filter((job) => job.name.startsWith('scrape') && job.conclusion === 'failure')
                 .map((job) => job.name.match(/scrape \(([^,]+),\s(\d+),\s(\d+)\)/).slice(1))
                 .filter((arr) => arr.length === 3)
