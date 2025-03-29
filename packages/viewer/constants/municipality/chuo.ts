@@ -9,6 +9,8 @@ export const CHUO_RESERVATION_STATUS: Readonly<Record<string, string>> = {
   [ReservationStatus.STATUS_5]: "なし",
   [ReservationStatus.STATUS_6]: "公開対象外",
   [ReservationStatus.STATUS_7]: "抽選",
+  [ReservationStatus.STATUS_8]: "整備",
+  [ReservationStatus.STATUS_9]: "抽選確認中",
 };
 
 export const CHUO_RESERVATION_DIVISION: Readonly<Record<string, string>> = {

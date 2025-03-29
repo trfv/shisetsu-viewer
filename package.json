@@ -74,6 +74,8 @@
     "start": "npm run start:viewer",
     "start:viewer": "vite --port 3000",
     "start:scraper": "npx playwright test",
+    "update:reservations": "node --env-file=.env .github/tools/updateReservations.mjs",
+    "update:institutions": "node --env-file=.env .github/tools/updateInstitutions.mjs",
     "build": "tsc && vite build",
     "build:analyze": "vite build  --mode analyze",
     "serve": "vite preview --port 3000",

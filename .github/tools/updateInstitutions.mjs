@@ -111,8 +111,8 @@ const aggreagate = (acc, key, value) => {
     case "holiday_usage_fee":
       if (value) {
         acc[key] = value.split(",").map((v) => {
-          const [division, fee] = v.split(":");
-          acc[key] = { division, fee };
+          const [division, fee] = v.split("=");
+          return { division: FEE_DIVISION_MAP[division], fee: Number(fee) };
         });
       } else {
         acc[key] = "{}";
