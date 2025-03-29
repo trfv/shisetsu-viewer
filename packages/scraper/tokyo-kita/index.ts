@@ -171,10 +171,9 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
 
 export async function transform(extractOutput: ExtractOutput): Promise<TransformOutput> {
   return extractOutput.flatMap(({ date, header, rows }) => {
+    const divisions = header.slice(1);
     return rows.map((row) => {
-      const divisions = header.slice(1);
       const statuses = row.slice(1);
-
       return {
         room_name: row[0]?.split("\n")?.[1]?.split("（定員")?.[0] || "",
         date: toISODateString(date),
