@@ -12,6 +12,7 @@ on:
           - tokyo-arakawa
           - tokyo-kita
           - tokyo-chuo
+          - tokyo-sumida
           - kanagawa-kawasaki
           - all
   schedule:
@@ -32,7 +33,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
             echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
           else
-            echo "municipalities=[\"tokyo-koutou\", \"tokyo-arakawa\", \"tokyo-kita\", \"tokyo-chuo\", \"kanagawa-kawasaki\"]" >> $GITHUB_OUTPUT
+            echo "municipalities=[\"tokyo-koutou\", \"tokyo-arakawa\", \"tokyo-kita\", \"tokyo-chuo\", \"tokyo-sumida\", \"kanagawa-kawasaki\"]" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
