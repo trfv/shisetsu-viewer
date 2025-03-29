@@ -62,7 +62,13 @@ function buildISODateStrings(headerStartDate: string, dates: string[]): string[]
 }
 
 export async function prepare(page: Page, facilityName: string): Promise<Page> {
-  await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home");
+  try {
+    await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home", { timeout: 10 * 60 * 1000 });
+  } catch (error) {
+    console.error(`Failed to navigate to the page. url: ${page.url()}`);
+    page.screenshot({ path: `error_${Date.now()}.png` });
+    throw error;
+  }
   await page.getByRole("tab", { name: "利用目的から探す" }).click();
   await page.getByText("器楽演奏", { exact: true }).click();
   await page.getByText("器楽演奏（現地相談）", { exact: true }).click();
