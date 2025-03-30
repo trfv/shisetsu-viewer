@@ -108,6 +108,12 @@ export async function prepare(page: Page, links: string[]): Promise<Page> {
   for (const link of links) {
     await page.getByRole("link", { name: link, exact: true }).click();
   }
+  while (true) {
+    if ((await page.locator("table.calendar a").count()) > 0) {
+      break;
+    }
+    await page.locator("a.day-next").click();
+  }
   await page.locator("table.calendar a").nth(0).click();
 
   return page;
