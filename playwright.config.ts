@@ -33,6 +33,17 @@ export default defineConfig({
     navigationTimeout: 30 * 1000,
     /* Launch setting.. See https://playwright.dev/docs/api/class-browsertype#browser-type-launch. */
     launchOptions: {
+      args: [
+        "--disable-application-cache",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-gpu",
+        "--disable-images",
+        "--ignore-certificate-errors",
+        "--proxy-bypass-list=*",
+        '--proxy-server="direct://"',
+        "--start-maximized",
+      ],
       slowMo: 500,
     },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
