@@ -23,6 +23,9 @@ storybook-static
 .reg
 __screenshots__
 
+# cline
+/cline_docs
+
 # misc
 .DS_Store
 .env
