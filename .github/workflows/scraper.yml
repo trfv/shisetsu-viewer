@@ -67,6 +67,7 @@ jobs:
           key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
 
   scrape:
+    name: Scrape (${{ matrix.municipality }}, ${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
     needs: prepare
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -80,40 +81,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: Set Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
-        with:
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-          node-version: "lts/*"
-      - name: Restore cached node_modules
-        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: "**/node_modules"
-          key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
-      - name: Restore Playwright browsers
-        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ needs.prepare.outputs.playwrightCacheKey }}
-      - name: Run Playwright tests
-        run: npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - name: Check if test results exist
-        id: check-directory
-        run: |
-          if [ -d "test-results/${{ matrix.municipality }}" ]; then
-            echo "test-results-exist=true" >> $GITHUB_OUTPUT
-          else
-            echo "test-results-exist=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Save scraped data
-        if: ${{ steps.check-directory.outputs.test-results-exist == 'true' }}
+      - name: Start Scraper
+        uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-        run: |
-          ls -R test-results/${{ matrix.municipality }}
-          node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
+        with:
+          municipality: ${{ matrix.municipality }}
+          shardIndex: ${{ matrix.shardIndex }}
+          shardTotal: ${{ matrix.shardTotal }}
+          nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+          playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
+          debug: "false"
 
   prepare_retry:
     runs-on: ubuntu-latest
@@ -137,8 +116,8 @@ jobs:
               });
               console.log(`Found ${jobs.length} total jobs via pagination.`);
               const failedShards = jobs
-                .filter((job) => job.name.startsWith('scrape') && job.conclusion === 'failure')
-                .map((job) => job.name.match(/scrape \(([^,]+),\s(\d+),\s(\d+)\)/).slice(1))
+                .filter((job) => job.name.startsWith('Scrape') && job.conclusion === 'failure')
+                .map((job) => job.name.match(/Scrape \(([^,]+),\s(\d+),\s(\d+)\)/).slice(1))
                 .filter((arr) => arr.length === 3)
                 .map((arr) => ({ municipality: arr[0], shardIndex: arr[1], shardTotal: arr[2] }));
               console.log(`Failed shards: ${JSON.stringify(failedShards)}`);
@@ -149,11 +128,13 @@ jobs:
             }
 
   retry_scrape:
-    runs-on: ubuntu-latest
+    name: Retry Scrape (${{ matrix.municipality }}, ${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
     needs:
       - prepare
       - prepare_retry
     if: needs.prepare_retry.outputs.failedShards != '[]'
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -161,37 +142,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: Set Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
-        with:
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-          node-version: "lts/*"
-      - name: Restore cached node_modules
-        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: "**/node_modules"
-          key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
-      - name: Restore Playwright browsers
-        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ needs.prepare.outputs.playwrightCacheKey }}
-      - name: Run Playwright tests
-        run: DEBUG=pw:api npx playwright test packages/scraper/${{ matrix.municipality }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - name: Check if test results exist
-        id: check-directory
-        run: |
-          if [ -d "test-results/${{ matrix.municipality }}" ]; then
-            echo "test-results-exist=true" >> $GITHUB_OUTPUT
-          else
-            echo "test-results-exist=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Save scraped data
-        if: ${{ steps.check-directory.outputs.test-results-exist == 'true' }}
+      - name: Start Scraper
+        uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-        run: |
-          ls -R test-results/${{ matrix.municipality }}
-          node .github/tools/updateReservations.mjs ${{ matrix.municipality }}
+        with:
+          municipality: ${{ matrix.municipality }}
+          shardIndex: ${{ matrix.shardIndex }}
+          shardTotal: ${{ matrix.shardTotal }}
+          nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+          playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
+          debug: "true"

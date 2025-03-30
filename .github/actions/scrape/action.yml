@@ -1,0 +1,69 @@
+name: "Scraper Action"
+description: "Run Playwright scraper tests and save results"
+
+inputs:
+  municipality:
+    description: "Municipality to scrape"
+    required: true
+  shardIndex:
+    description: "Shard index"
+    required: true
+  shardTotal:
+    description: "Total number of shards"
+    required: true
+  nodeModulesCacheKey:
+    description: "Cache key for node_modules"
+    required: true
+  playwrightCacheKey:
+    description: "Cache key for Playwright browsers"
+    required: true
+  debug:
+    description: "Enable debug mode"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set Node.js
+      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      with:
+        cache: "npm"
+        cache-dependency-path: "**/package-lock.json"
+        node-version: "lts/*"
+    - name: Restore cached node_modules
+      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      with:
+        path: "**/node_modules"
+        key: ${{ inputs.nodeModulesCacheKey }}
+    - name: Restore Playwright browsers
+      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ inputs.playwrightCacheKey }}
+    - name: Run Playwright tests
+      shell: bash
+      run: |
+        if [ "${{ inputs.debug }}" == "true" ]; then
+          DEBUG=pw:api npx playwright test packages/scraper/${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+        else
+          npx playwright test packages/scraper/${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+        fi
+    - name: Check and process test results
+      id: process-results
+      shell: bash
+      run: |
+        if [ -d "test-results/${{ inputs.municipality }}" ]; then
+          echo "test-results-exist=true" >> $GITHUB_OUTPUT
+          ls -R test-results/${{ inputs.municipality }}
+        else
+          echo "test-results-exist=false" >> $GITHUB_OUTPUT
+          echo "No test results found for ${{ inputs.municipality }}"
+        fi
+    - name: Save scraped data
+      if: ${{ steps.process-results.outputs.test-results-exist == 'true' }}
+      shell: bash
+      env:
+        GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
+        ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
+      run: node .github/tools/updateReservations.mjs ${{ inputs.municipality }}
