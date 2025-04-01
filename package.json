@@ -45,7 +45,7 @@
     "@typescript-eslint/eslint-plugin": "8.28.0",
     "@typescript-eslint/parser": "8.28.0",
     "@vitejs/plugin-react-swc": "3.8.1",
-    "esbuild": "0.25.1",
+    "esbuild": "0.25.2",
     "eslint": "9.23.0",
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-react": "7.37.4",
