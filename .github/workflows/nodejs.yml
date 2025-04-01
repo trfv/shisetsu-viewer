@@ -33,5 +33,5 @@ jobs:
           npm ci --ignore-scripts
       - name: Run test and build
         run: |
-          # npm run test // temporarily disabled
+          npm run test:ci
           npm run build

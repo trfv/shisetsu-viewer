@@ -1,4 +1,6 @@
 import type { Page } from "@playwright/test";
+import { toISODateString } from "../common/dateUtils";
+import { stripTrailingEmptyValue } from "../common/arrayUtils";
 
 type Division =
   | "RESERVATION_DIVISION_INVALID"
@@ -73,33 +75,6 @@ type TransformOutput = {
   date: string;
   reservation: Reservation;
 }[];
-
-function warekiToSeireki(wareki: "昭和" | "平成" | "令和", year: string): number {
-  const warekiMap = { 昭和: 1925, 平成: 1988, 令和: 2018 };
-  return warekiMap[wareki] + Number(year);
-}
-
-function toISODateString(dateString: string): string {
-  const [year, month, day] = dateString.split(/年|月|日/).flatMap((part) => {
-    const match = part.match(/\d+/);
-    return match ? [match[0]] : [];
-  }) as [string, string, string];
-  const wareki = dateString.match(/(昭和|平成|令和)/)?.[0];
-  if (wareki) {
-    return `${warekiToSeireki(wareki as "昭和" | "平成" | "令和", year)}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-  }
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-}
-
-function stripTrailingEmptyValue(arr: string[]): string[] {
-  const lastIndex = arr.length - 1;
-  for (let i = lastIndex; i >= 0; i--) {
-    if (arr[i]?.trim()) {
-      return arr.slice(0, i + 1);
-    }
-  }
-  return [];
-}
 
 export async function prepare(page: Page, links: string[]): Promise<Page> {
   await page.goto("https://chuo-yoyaku.openreaf02.jp/");
@@ -179,7 +154,7 @@ export async function transform(
       return {
         room_name: name,
         date: toISODateString(date),
-        reservation: [...new Array(row.length)].reduce<Reservation>((acc, _, index) => {
+        reservation: [...new Array(row.length)].reduce((acc, _, index) => {
           const division = DIVISION_MAP[header[index] || ""] as Division;
           const status = STATUS_MAP[row[index] || ""] as Status;
           acc[division] = status;

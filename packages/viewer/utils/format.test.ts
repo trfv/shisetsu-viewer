@@ -5,7 +5,7 @@ import {
   formatMonthDate,
   formatNumberWithCommas,
   formatPrice,
-} from "../format";
+} from "./format";
 
 const withErrorMock = (test: () => void) => {
   const spy = vi.spyOn(console, "error");

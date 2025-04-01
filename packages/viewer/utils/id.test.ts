@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isValidUuid } from "../id";
+import { isValidUuid } from "./id";
 
 describe("isValidUuid", () => {
   test("empty string", () => {

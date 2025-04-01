@@ -1,4 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
+import { toISODateString } from "../common/dateUtils";
 
 type Division =
   | "RESERVATION_DIVISION_INVALID"
@@ -53,14 +54,6 @@ type TransformOutput = {
   date: string;
   reservation: Reservation;
 }[];
-
-function toISODateString(dateString: string): string {
-  const [year, month, day] = dateString.split(/年|月|日/).flatMap((part) => {
-    const match = part.match(/\d+/);
-    return match ? [match[0]] : [];
-  }) as [string, string, string];
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-}
 
 export async function prepare(
   page: Page,
@@ -158,7 +151,7 @@ export async function transform(extractOutput: ExtractOutput): Promise<Transform
       return {
         room_name: row[0] as string,
         date: toISODateString(header[0] as string),
-        reservation: [...new Array(row.length - 1)].reduce<Reservation>((acc, _, index) => {
+        reservation: [...new Array(row.length - 1)].reduce((acc, _, index) => {
           const division = DIVISION_MAP[divisions[index] || ""] as Division;
           const status = STATUS_MAP[statuses[index] || ""] as Status;
           acc[division] = status;

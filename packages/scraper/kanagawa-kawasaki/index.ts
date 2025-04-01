@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { toISODateString } from "../common/dateUtils";
 
 type Division =
   | "RESERVATION_DIVISION_INVALID"
@@ -50,21 +51,13 @@ type TransformOutput = {
   reservation: Reservation;
 }[];
 
-function toISODateString(dateString: string): string {
-  const [year, month, day] = dateString.split(/年|月|日/).flatMap((part) => {
-    const match = part.match(/\d+/);
-    return match ? [match[0]] : [];
-  }) as [string, string, string];
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-}
-
 function toRoomName(caption: string, facilityName: string): string {
   return caption.replace(facilityName, "").slice(0, -4).trim();
 }
 
 export async function prepare(page: Page, facilityName: string, startDate: Date): Promise<Page> {
   await page.goto("https://www.fureai-net.city.kawasaki.jp/web/index.jsp");
-  await page.getByRole("link", { name: "予約" }).click();
+  await page.getByRole("link", { name: "予約", exact: true }).click();
   await page.getByRole("button", { name: "複合検索" }).click();
   await page.getByRole("button", { name: "利用目的", exact: true }).click();
   await page.getByRole("link", { name: "演奏・合唱" }).click();
