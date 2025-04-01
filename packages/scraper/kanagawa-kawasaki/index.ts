@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { toISODateString } from "../common/dateUtils";
 
 type Division =
   | "RESERVATION_DIVISION_INVALID"
@@ -49,14 +50,6 @@ type TransformOutput = {
   date: string;
   reservation: Reservation;
 }[];
-
-function toISODateString(dateString: string): string {
-  const [year, month, day] = dateString.split(/年|月|日/).flatMap((part) => {
-    const match = part.match(/\d+/);
-    return match ? [match[0]] : [];
-  }) as [string, string, string];
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-}
 
 function toRoomName(caption: string, facilityName: string): string {
   return caption.replace(facilityName, "").slice(0, -4).trim();
