@@ -87,6 +87,7 @@
     "build-storybook": "storybook build",
     "storycap": "storycap http://127.0.0.1:8080 --serverCmd \"npx http-server storybook-static -g -b\"",
     "test": "TZ=Asia/Tokyo vitest",
+    "test:ci": "TZ=Asia/Tokyo vitest --run",
     "coverage": "TZ=Asia/Tokyo vitest run --coverage",
     "prepare": "husky"
   },
