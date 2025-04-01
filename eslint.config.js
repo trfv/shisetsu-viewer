@@ -31,7 +31,6 @@ export default [
       "public/**",
       "storybook-static/**",
       "packages/viewer/api/graphql-client.tsx",
-      "vite.config.ts",
     ],
   },
   {
