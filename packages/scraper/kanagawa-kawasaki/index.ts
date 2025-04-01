@@ -57,7 +57,7 @@ function toRoomName(caption: string, facilityName: string): string {
 
 export async function prepare(page: Page, facilityName: string, startDate: Date): Promise<Page> {
   await page.goto("https://www.fureai-net.city.kawasaki.jp/web/index.jsp");
-  await page.getByRole("link", { name: "予約" }).click();
+  await page.getByRole("link", { name: "予約", exact: true }).click();
   await page.getByRole("button", { name: "複合検索" }).click();
   await page.getByRole("button", { name: "利用目的", exact: true }).click();
   await page.getByRole("link", { name: "演奏・合唱" }).click();
