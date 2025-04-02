@@ -10,3 +10,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      production-dependency:
+        dependency-type: production
+      development-dependency:
+        dependency-type: development
