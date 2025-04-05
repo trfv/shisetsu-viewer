@@ -12,6 +12,7 @@ on:
           - tokyo-arakawa
           - tokyo-kita
           - tokyo-chuo
+          - tokyo-sumida
           - kanagawa-kawasaki
           - all
   # schedule:
