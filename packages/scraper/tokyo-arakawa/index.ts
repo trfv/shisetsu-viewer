@@ -130,8 +130,13 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
 
   let i = 0;
   while (i < maxCount) {
-    const o = await _extract(page);
-    output.push(...o);
+    try {
+      const o = await _extract(page);
+      output.push(...o);
+    } catch {
+      console.warn(`Failed to extract data from page ${i + 1}, and jump to save current output.`);
+      break;
+    }
     try {
       await page.getByRole("link", { name: "次へ" }).click();
     } catch {
