@@ -6,7 +6,6 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: mode !== "production",
-    outDir: "build",
     rollupOptions: {
       external: [
         "/fonts/roboto-v27-latin-regular.woff2",
@@ -31,7 +30,7 @@ export default defineConfig(({ mode }) => ({
       ? [
           visualizer({
             open: true,
-            filename: "build/stats.html",
+            filename: "dist/stats.html",
             gzipSize: true,
             brotliSize: true,
           }),
@@ -41,6 +40,5 @@ export default defineConfig(({ mode }) => ({
   test: {
     global: true,
     environment: "happy-dom",
-    exclude: ["node_modules", "**/index.test.ts"],
   },
 }));

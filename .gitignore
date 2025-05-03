@@ -1,39 +1,30 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-apollo.config.js
-schema.json
-
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+**/node_modules
 
 # testing
-/coverage
+**/coverage
 
 # production
-/build
+**/dist
 
 # playwright
-/playwright-report
-/test-results
+**/playwright-report
+**/test-results
 
 # storybook
-build-storybook.log
-storybook-static
-.reg
-__screenshots__
+**/build-storybook.log
+**/storybook-static
 
 # cline
 /cline_docs
 
 # misc
 .DS_Store
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.eslintcache
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
 
 npm-debug.log*
 yarn-debug.log*

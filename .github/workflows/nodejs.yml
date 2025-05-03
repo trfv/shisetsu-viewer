@@ -33,5 +33,6 @@ jobs:
           npm ci --ignore-scripts
       - name: Run test and build
         run: |
+          cd packages/viewer
           npm run test:ci
           npm run build

@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "types": [
+      "vite/client",
+      "vitest/globals"
+    ],
+    "checkJs": false, 
+    "allowJs": false, 
+    "skipLibCheck": true, 
+    "esModuleInterop": false, 
+    "allowSyntheticDefaultImports": true, 
+    "forceConsistentCasingInFileNames": true, 
+    "resolveJsonModule": true, 
+    "isolatedModules": true, 
+    "noEmit": true, 
+    "jsx": "react-jsx", 
+    "outDir": "./dist",
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"], 
+  "exclude": ["node_modules", "storybook-static"], 
+  "references": [] 
+}

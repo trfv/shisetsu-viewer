@@ -1,21 +1,14 @@
 # Environment and configuration files
-.env*
-.envrc
-*.pem \*_/config/secrets._
-
-# Credentials and sensitive information
-\*_/credentials/_
-_\_key
-_\_token
-_.key
-_.cert
-\*.p12
+**/.env*
+**/.envrc
 
 # Build output and temporary files
-__screenshots__/
-build/
-coverage/
-dist/
-playwright-report/
-storybook-static/
-test-results/
+**/coverage/
+**/dist/
+**/playwright-report/
+**/storybook-static/
+**/test-results/
+
+
+# Packages
+**/node_modules/
