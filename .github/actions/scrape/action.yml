@@ -41,12 +41,10 @@ runs:
       with:
         path: ~/.cache/ms-playwright
         key: ${{ inputs.playwrightCacheKey }}
-    - name: Change directory
-      shell: bash
-      run: cd packages/scraper
     - name: Run Playwright tests
       shell: bash
       run: |
+        cd packages/scraper
         if [ "${{ inputs.debug }}" == "true" ]; then
           DEBUG=pw:api npm run test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         else
@@ -56,6 +54,7 @@ runs:
       id: process-results
       shell: bash
       run: |
+        cd packages/scraper
         if [ -d "test-results/${{ inputs.municipality }}" ]; then
           echo "test-results-exist=true" >> $GITHUB_OUTPUT
           ls -R test-results/${{ inputs.municipality }}
@@ -69,4 +68,4 @@ runs:
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
         ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
-      run: node tools/updateReservations.mjs ${{ inputs.municipality }}
+      run: node packages/scraper/tools/updateReservations.mjs ${{ inputs.municipality }}
