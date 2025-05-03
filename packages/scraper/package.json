@@ -1,0 +1,16 @@
+{
+  "name": "@shisetsu-viewer/scraper",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@apollo/client": "3.13.5",
+    "@playwright/test": "1.51.1",
+    "date-fns": "4.1.0"
+  },
+  "scripts": {
+    "test": "npx playwright test",
+    "update:reservations": "node --env-file=.env tools/updateReservations.mjs",
+    "update:institutions": "node --env-file=.env tools/updateInstitutions.mjs"
+  }
+}

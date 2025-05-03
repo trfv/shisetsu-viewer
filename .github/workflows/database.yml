@@ -15,8 +15,6 @@ on:
           - tokyo-sumida
           - kanagawa-kawasaki
           - all
-  # schedule:
-  #   - cron: "0 4,16 * * *"
 
 jobs:
   prepare:
@@ -80,9 +78,12 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+      - name: Change directory
+        shell: bash
+        run: cd packages/scraper
       - name: Update database data
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
           SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
-        run: node .github/tools/updateInstitutions.mjs ${{ matrix.municipality }}
+        run: node tools/updateInstitutions.mjs ${{ matrix.municipality }}

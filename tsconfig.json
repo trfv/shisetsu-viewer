@@ -6,16 +6,18 @@
       "dom.iterable",
       "ESNext"
     ],
-    "types": [
-      "vite/client",
-      "vitest/globals"
-    ],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "jsx": "react-jsx",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "composite": true,
   },
   "extends": "@tsconfig/strictest/tsconfig.json",
-  "include": ["packages", ".storybook"]
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./packages/scraper" },
+    { "path": "./packages/viewer" }
+  ]
 }
