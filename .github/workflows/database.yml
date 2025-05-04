@@ -83,4 +83,6 @@ jobs:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
           SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
-        run: node packages/scraper/tools/updateInstitutions.mjs ${{ matrix.municipality }}
+        run: |
+          cd packages/scraper
+          node tools/updateInstitutions.mjs ${{ matrix.municipality }}
