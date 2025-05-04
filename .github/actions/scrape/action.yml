@@ -43,18 +43,18 @@ runs:
         key: ${{ inputs.playwrightCacheKey }}
     - name: Run Playwright tests
       shell: bash
+      working-directory: packages/scraper
       run: |
-        cd packages/scraper
         if [ "${{ inputs.debug }}" == "true" ]; then
-          DEBUG=pw:api npm run test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+          DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         else
-          npm run test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+          npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         fi
     - name: Check and process test results
       id: process-results
       shell: bash
+      working-directory: packages/scraper
       run: |
-        cd packages/scraper
         if [ -d "test-results/${{ inputs.municipality }}" ]; then
           echo "test-results-exist=true" >> $GITHUB_OUTPUT
           ls -R test-results/${{ inputs.municipality }}
@@ -65,9 +65,9 @@ runs:
     - name: Save scraped data
       if: ${{ steps.process-results.outputs.test-results-exist == 'true' }}
       shell: bash
+      working-directory: packages/scraper
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
         ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
       run: |
-        cd packages/scraper
         node tools/updateReservations.mjs ${{ inputs.municipality }}
