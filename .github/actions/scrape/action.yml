@@ -68,4 +68,6 @@ runs:
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
         ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
-      run: node packages/scraper/tools/updateReservations.mjs ${{ inputs.municipality }}
+      run: |
+        cd packages/scraper
+        node tools/updateReservations.mjs ${{ inputs.municipality }}
