@@ -79,10 +79,11 @@ jobs:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
       - name: Update database data
+        shell: bash
+        working-directory: packages/scraper
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
           SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
         run: |
-          cd packages/scraper
           node tools/updateInstitutions.mjs ${{ matrix.municipality }}
