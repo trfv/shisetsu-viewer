@@ -4,7 +4,8 @@ description: "Run Playwright scraper tests and save results"
 inputs:
   municipality:
     description: "Municipality to scrape"
-    required: true
+    required: false
+    default: ""
   shardIndex:
     description: "Shard index"
     required: true
@@ -50,20 +51,20 @@ runs:
         else
           npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         fi
-    - name: Check and process test results
-      id: process-results
+    - name: Check test results
+      id: check-results
       shell: bash
       working-directory: packages/scraper
       run: |
-        if [ -d "test-results/${{ inputs.municipality }}" ]; then
+        if [ -d "test-results" ]; then
           echo "test-results-exist=true" >> $GITHUB_OUTPUT
-          ls -R test-results/${{ inputs.municipality }}
+          ls -R test-results
         else
           echo "test-results-exist=false" >> $GITHUB_OUTPUT
-          echo "No test results found for ${{ inputs.municipality }}"
+          echo "No test results found"
         fi
     - name: Save scraped data
-      if: ${{ steps.process-results.outputs.test-results-exist == 'true' }}
+      if: ${{ steps.check-results.outputs.test-results-exist == 'true' }}
       shell: bash
       working-directory: packages/scraper
       env:
