@@ -4,8 +4,20 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
 
+let _targets = [
+  "kawasaki-kanagawa",
+  "tokyo-arakawa",
+  "tokyo-chuo",
+  "tokyo-kita",
+  "tokyo-koutou",
+  "tokyo-sumida",
+];
 const target = process.argv[2];
-const title = `save ${target} institutions`;
+if (target) {
+  _targets = _targets.filter((t) => t === target);
+}
+const targets = _targets;
+const title = `update institutions`;
 
 console.time(title);
 
@@ -142,21 +154,22 @@ const aggreagate = (acc, key, value) => {
   }
 };
 
-const [p, m] = target.split("-");
-const prefecture = `PREFECTURE_${p.toUpperCase()}`;
-const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
+for (const target of targets) {
+  const [p, m] = target.split("-");
+  const prefecture = `PREFECTURE_${p.toUpperCase()}`;
+  const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
 
-const rawData = await (await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)).json();
+  const rawData = await (await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)).json();
 
-const data = rawData.map((d) => {
-  return Object.entries(d).reduce((acc, [key, value]) => aggreagate(acc, key, value), {
-    prefecture,
-    municipality,
+  const data = rawData.map((d) => {
+    return Object.entries(d).reduce((acc, [key, value]) => aggreagate(acc, key, value), {
+      prefecture,
+      municipality,
+    });
   });
-});
 
-const response = await client.mutate({
-  mutation: gql(`
+  const response = await client.mutate({
+    mutation: gql(`
     mutation update_institutions(
         $data: [institutions_insert_input!]!
         $columns: [institutions_update_column!]!
@@ -171,14 +184,15 @@ const response = await client.mutate({
             affected_rows
         }
     }`),
-  variables: {
-    data: data,
-    columns: columns,
-  },
-});
+    variables: {
+      data: data,
+      columns: columns,
+    },
+  });
 
-console.log(
-  `data: ${data.length}, affected_rows: ${response["data"]["insert_institutions"]["affected_rows"]}`
-);
+  console.log(
+    `data: ${data.length}, affected_rows: ${response["data"]["insert_institutions"]["affected_rows"]}`
+  );
+}
 
 console.timeEnd(title);

@@ -23,17 +23,22 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     outputs:
-      municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
+      municipality: ${{ steps.set-matrix.outputs.municipality }}
+      shardIndex: ${{ steps.set-matrix.outputs.shardIndex }}
+      shardTotal: ${{ steps.set-matrix.outputs.shardTotal }}
       nodeModulesCacheKey: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
       playwrightCacheKey: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
     steps:
-      - name: Set municipalities
-        id: set-municipalities
+      - name: Set matrix
+        id: set-matrix
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
-            echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
+            echo "municipality=${{ github.event.inputs.municipality }}" >> $GITHUB_OUTPUT
+            echo "shardIndex=[$(seq -s ',' 1 20)]" >> $GITHUB_OUTPUT
+            echo "shardTotal=[20]" >> $GITHUB_OUTPUT
           else
-            echo "municipalities=[\"tokyo-koutou\", \"tokyo-arakawa\", \"tokyo-kita\", \"tokyo-chuo\", \"tokyo-sumida\", \"kanagawa-kawasaki\"]" >> $GITHUB_OUTPUT
+            echo "shardIndex=[$(seq -s ',' 1 100)]" >> $GITHUB_OUTPUT
+            echo "shardTotal=[100]" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -68,7 +73,7 @@ jobs:
           key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
 
   scrape:
-    name: Scrape (${{ matrix.municipality }}, ${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
+    name: Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
     needs: prepare
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -76,9 +81,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
-        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        shardTotal: [20]
+        shardIndex: ${{ fromJson(needs.prepare.outputs.shardIndex) }}
+        shardTotal: ${{ fromJson(needs.prepare.outputs.shardTotal) }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -88,7 +92,7 @@ jobs:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         with:
-          municipality: ${{ matrix.municipality }}
+          municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
           shardTotal: ${{ matrix.shardTotal }}
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
@@ -118,9 +122,9 @@ jobs:
               console.log(`Found ${jobs.length} total jobs via pagination.`);
               const failedShards = jobs
                 .filter((job) => job.name.startsWith('Scrape') && job.conclusion === 'failure')
-                .map((job) => job.name.match(/Scrape \(([^,]+),\s(\d+),\s(\d+)\)/).slice(1))
-                .filter((arr) => arr.length === 3)
-                .map((arr) => ({ municipality: arr[0], shardIndex: arr[1], shardTotal: arr[2] }));
+                .map((job) => job.name.match(/Scrape \((\d+),\s(\d+)\)/).slice(1))
+                .filter((arr) => arr.length === 2)
+                .map((arr) => ({ shardIndex: arr[0], shardTotal: arr[1] }));
               console.log(`Failed shards: ${JSON.stringify(failedShards)}`);
               core.setOutput('failedShards', JSON.stringify(failedShards));
             } catch (error) {
@@ -129,7 +133,7 @@ jobs:
             }
 
   retry_scrape:
-    name: Retry Scrape (${{ matrix.municipality }}, ${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
+    name: Retry Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
     needs:
       - prepare
       - prepare_retry
@@ -149,7 +153,7 @@ jobs:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         with:
-          municipality: ${{ matrix.municipality }}
+          municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
           shardTotal: ${{ matrix.shardTotal }}
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}

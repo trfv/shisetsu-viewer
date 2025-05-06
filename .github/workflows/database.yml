@@ -21,16 +21,14 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     outputs:
-      municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
+      municipality: ${{ steps.set-municipality.outputs.municipality }}
       nodeModulesCacheKey: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
     steps:
-      - name: Set municipalities
-        id: set-municipalities
+      - name: Set municipality
+        id: set-municipality
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
-            echo "municipalities=[\"${{ github.event.inputs.municipality }}\"]" >> $GITHUB_OUTPUT
-          else
-            echo "municipalities=[\"tokyo-koutou\", \"tokyo-arakawa\", \"tokyo-kita\", \"tokyo-chuo\", \"tokyo-sumida\", \"kanagawa-kawasaki\"]" >> $GITHUB_OUTPUT
+            echo "municipality=${{ github.event.inputs.municipality }}" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -60,10 +58,6 @@ jobs:
     needs: prepare
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        municipality: ${{ fromJSON(needs.prepare.outputs.municipalities) }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -86,4 +80,4 @@ jobs:
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
           SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
         run: |
-          node tools/updateInstitutions.mjs ${{ matrix.municipality }}
+          node tools/updateInstitutions.mjs ${{ needs.prepare.outputs.municipality }}
