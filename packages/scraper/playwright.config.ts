@@ -47,4 +47,5 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: process.env.CI ? "off" : "on-first-retry",
   },
+  testMatch: ["**/index.test.ts"],
 });
