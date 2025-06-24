@@ -16,40 +16,9 @@ const facilityNames = [
   "みどりコミュニティセンター",
 ];
 
-test.use({
-  locale: "ja-JP",
-  timezoneId: "Asia/Tokyo",
-  userAgent:
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
-  actionTimeout: 5 * 60 * 1000,
-  navigationTimeout: 5 * 60 * 1000,
-});
-
 facilityNames.forEach((name) => {
   test(name, async ({ page }) => {
     console.time(name);
-
-    page.on("request", (request) => {
-      console.log(
-        "Request:",
-        JSON.stringify({
-          method: request.method(),
-          url: request.url(),
-          headers: request.headers(),
-          postData: request.postData(),
-        })
-      );
-    });
-    page.on("response", (response) => {
-      console.log(
-        "Response:",
-        JSON.stringify({
-          status: response.status(),
-          url: response.url(),
-          headers: response.headers(),
-        })
-      );
-    });
 
     const searchPage = await prepare(page, name);
     const extractOutput = await extract(

@@ -6,7 +6,7 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 let _targets = [
-  "kawasaki-kanagawa",
+  "kanagawa-kawasaki",
   "tokyo-arakawa",
   "tokyo-chuo",
   "tokyo-kita",
