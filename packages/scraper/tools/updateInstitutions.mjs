@@ -5,7 +5,7 @@ const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
 
 let _targets = [
-  "kawasaki-kanagawa",
+  "kanagawa-kawasaki",
   "tokyo-arakawa",
   "tokyo-chuo",
   "tokyo-kita",
