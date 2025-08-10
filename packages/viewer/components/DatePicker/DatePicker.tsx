@@ -1,4 +1,4 @@
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import type { FC } from "react";
@@ -23,7 +23,7 @@ export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => 
           onChange={onChange}
           showDaysOutsideCurrentMonth={true}
           slotProps={{
-            field: { readOnly: true, selectedSections: "all" },
+            field: { readOnly: true },
             textField: { variant: "standard" },
             toolbar: { hidden: true },
             actionBar: { actions: ["accept"] },
