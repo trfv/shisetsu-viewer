@@ -38,6 +38,9 @@
     "vitest": "3.1.2",
     "web-vitals": "4.2.4"
   },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.25.2"
+  },
   "scripts": {
     "generate": "graphql-codegen --require dotenv/config --config ./api/config.yml",
     "start": "vite --port 3000",
