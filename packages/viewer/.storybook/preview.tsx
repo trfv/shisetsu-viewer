@@ -1,4 +1,4 @@
-import type { Decorator, Parameters } from "@storybook/react";
+import type { Decorator, Parameters } from "@storybook/react-vite";
 import React from "react";
 import { CssBaseline, darkTheme, lightTheme, ThemeProvider } from "../utils/theme";
 
@@ -6,6 +6,8 @@ export const parameters: Parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: { hideNoControlsWarning: true },
 };
+
+export const tags = ["autodocs"];
 
 export const decorators: Decorator[] = [
   (Story, context) => (

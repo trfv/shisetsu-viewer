@@ -2,7 +2,7 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginStorybook from "eslint-plugin-storybook";
+// import pluginStorybook from "eslint-plugin-storybook";
 
 export default tseslint.config([
   {
@@ -46,5 +46,5 @@ export default tseslint.config([
       "react-hooks/exhaustive-deps": "warn",
     },
   },
-  pluginStorybook.configs["flat/recommended"],
+  // pluginStorybook.configs.recommended,
 ]);
