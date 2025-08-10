@@ -1,5 +1,8 @@
 name: Update Database
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
