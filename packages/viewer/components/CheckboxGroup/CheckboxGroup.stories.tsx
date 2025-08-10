@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { Checkbox } from "../Checkbox";
