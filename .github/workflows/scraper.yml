@@ -43,7 +43,7 @@ jobs:
             echo "shardTotal=[100]" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: Set cache keys
         id: set-cache-keys
         run: |
@@ -87,7 +87,7 @@ jobs:
         shardTotal: ${{ fromJson(needs.prepare.outputs.shardTotal) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: Start Scraper
         uses: ./.github/actions/scrape
         env:
@@ -148,7 +148,7 @@ jobs:
         include: ${{fromJson(needs.prepare_retry.outputs.failedShards)}}
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: Start Scraper
         uses: ./.github/actions/scrape
         env:
