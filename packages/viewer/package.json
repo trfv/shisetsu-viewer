@@ -9,11 +9,11 @@
     "@emotion/styled": "11.14.1",
     "@mui/icons-material": "7.3.1",
     "@mui/material": "7.3.1",
-    "@mui/x-date-pickers": "8.10.0",
+    "@mui/x-date-pickers": "8.10.2",
     "graphql": "16.11.0",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "react-router-dom": "7.8.0"
+    "react-router-dom": "7.8.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.7",
@@ -39,7 +39,7 @@
     "web-vitals": "5.1.0"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "0.25.8"
+    "@esbuild/linux-x64": "0.25.9"
   },
   "scripts": {
     "generate": "graphql-codegen --require dotenv/config --config ./api/config.yml",
