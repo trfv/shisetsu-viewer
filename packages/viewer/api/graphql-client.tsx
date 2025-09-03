@@ -5,193 +5,195 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  _fee_division: any;
-  availavility_division: any;
-  bigint: any;
-  date: any;
-  equipment_division: any;
-  jsonb: any;
-  numeric: any;
-  prefecture: any;
-  timestamp: any;
-  uuid: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  _fee_division: { input: any; output: any; }
+  availavility_division: { input: any; output: any; }
+  bigint: { input: any; output: any; }
+  date: { input: any; output: any; }
+  equipment_division: { input: any; output: any; }
+  jsonb: { input: any; output: any; }
+  numeric: { input: any; output: any; }
+  prefecture: { input: any; output: any; }
+  timestamp: { input: any; output: any; }
+  uuid: { input: any; output: any; }
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['Boolean']>;
-  _gt?: InputMaybe<Scalars['Boolean']>;
-  _gte?: InputMaybe<Scalars['Boolean']>;
-  _in?: InputMaybe<Array<Scalars['Boolean']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['Boolean']>;
-  _lte?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Scalars['Boolean']>;
-  _nin?: InputMaybe<Array<Scalars['Boolean']>>;
+  _eq?: InputMaybe<Scalars['Boolean']['input']>;
+  _gt?: InputMaybe<Scalars['Boolean']['input']>;
+  _gte?: InputMaybe<Scalars['Boolean']['input']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Boolean']['input']>;
+  _lte?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Scalars['Boolean']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['Int']>;
-  _gt?: InputMaybe<Scalars['Int']>;
-  _gte?: InputMaybe<Scalars['Int']>;
-  _in?: InputMaybe<Array<Scalars['Int']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['Int']>;
-  _lte?: InputMaybe<Scalars['Int']>;
-  _neq?: InputMaybe<Scalars['Int']>;
-  _nin?: InputMaybe<Array<Scalars['Int']>>;
+  _eq?: InputMaybe<Scalars['Int']['input']>;
+  _gt?: InputMaybe<Scalars['Int']['input']>;
+  _gte?: InputMaybe<Scalars['Int']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Int']['input']>;
+  _lte?: InputMaybe<Scalars['Int']['input']>;
+  _neq?: InputMaybe<Scalars['Int']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['String']>;
-  _gt?: InputMaybe<Scalars['String']>;
-  _gte?: InputMaybe<Scalars['String']>;
+  _eq?: InputMaybe<Scalars['String']['input']>;
+  _gt?: InputMaybe<Scalars['String']['input']>;
+  _gte?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given case-insensitive pattern */
-  _ilike?: InputMaybe<Scalars['String']>;
-  _in?: InputMaybe<Array<Scalars['String']>>;
+  _ilike?: InputMaybe<Scalars['String']['input']>;
+  _in?: InputMaybe<Array<Scalars['String']['input']>>;
   /** does the column match the given POSIX regular expression, case insensitive */
-  _iregex?: InputMaybe<Scalars['String']>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _iregex?: InputMaybe<Scalars['String']['input']>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
   /** does the column match the given pattern */
-  _like?: InputMaybe<Scalars['String']>;
-  _lt?: InputMaybe<Scalars['String']>;
-  _lte?: InputMaybe<Scalars['String']>;
-  _neq?: InputMaybe<Scalars['String']>;
+  _like?: InputMaybe<Scalars['String']['input']>;
+  _lt?: InputMaybe<Scalars['String']['input']>;
+  _lte?: InputMaybe<Scalars['String']['input']>;
+  _neq?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given case-insensitive pattern */
-  _nilike?: InputMaybe<Scalars['String']>;
-  _nin?: InputMaybe<Array<Scalars['String']>>;
+  _nilike?: InputMaybe<Scalars['String']['input']>;
+  _nin?: InputMaybe<Array<Scalars['String']['input']>>;
   /** does the column NOT match the given POSIX regular expression, case insensitive */
-  _niregex?: InputMaybe<Scalars['String']>;
+  _niregex?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given pattern */
-  _nlike?: InputMaybe<Scalars['String']>;
+  _nlike?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given POSIX regular expression, case sensitive */
-  _nregex?: InputMaybe<Scalars['String']>;
+  _nregex?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given SQL regular expression */
-  _nsimilar?: InputMaybe<Scalars['String']>;
+  _nsimilar?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given POSIX regular expression, case sensitive */
-  _regex?: InputMaybe<Scalars['String']>;
+  _regex?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given SQL regular expression */
-  _similar?: InputMaybe<Scalars['String']>;
+  _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Boolean expression to compare columns of type "_fee_division". All fields are combined with logical 'AND'. */
 export type _Fee_Division_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['_fee_division']>;
-  _gt?: InputMaybe<Scalars['_fee_division']>;
-  _gte?: InputMaybe<Scalars['_fee_division']>;
-  _in?: InputMaybe<Array<Scalars['_fee_division']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['_fee_division']>;
-  _lte?: InputMaybe<Scalars['_fee_division']>;
-  _neq?: InputMaybe<Scalars['_fee_division']>;
-  _nin?: InputMaybe<Array<Scalars['_fee_division']>>;
+  _eq?: InputMaybe<Scalars['_fee_division']['input']>;
+  _gt?: InputMaybe<Scalars['_fee_division']['input']>;
+  _gte?: InputMaybe<Scalars['_fee_division']['input']>;
+  _in?: InputMaybe<Array<Scalars['_fee_division']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['_fee_division']['input']>;
+  _lte?: InputMaybe<Scalars['_fee_division']['input']>;
+  _neq?: InputMaybe<Scalars['_fee_division']['input']>;
+  _nin?: InputMaybe<Array<Scalars['_fee_division']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "availavility_division". All fields are combined with logical 'AND'. */
 export type Availavility_Division_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['availavility_division']>;
-  _gt?: InputMaybe<Scalars['availavility_division']>;
-  _gte?: InputMaybe<Scalars['availavility_division']>;
-  _in?: InputMaybe<Array<Scalars['availavility_division']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['availavility_division']>;
-  _lte?: InputMaybe<Scalars['availavility_division']>;
-  _neq?: InputMaybe<Scalars['availavility_division']>;
-  _nin?: InputMaybe<Array<Scalars['availavility_division']>>;
+  _eq?: InputMaybe<Scalars['availavility_division']['input']>;
+  _gt?: InputMaybe<Scalars['availavility_division']['input']>;
+  _gte?: InputMaybe<Scalars['availavility_division']['input']>;
+  _in?: InputMaybe<Array<Scalars['availavility_division']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['availavility_division']['input']>;
+  _lte?: InputMaybe<Scalars['availavility_division']['input']>;
+  _neq?: InputMaybe<Scalars['availavility_division']['input']>;
+  _nin?: InputMaybe<Array<Scalars['availavility_division']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['bigint']>;
-  _gt?: InputMaybe<Scalars['bigint']>;
-  _gte?: InputMaybe<Scalars['bigint']>;
-  _in?: InputMaybe<Array<Scalars['bigint']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['bigint']>;
-  _lte?: InputMaybe<Scalars['bigint']>;
-  _neq?: InputMaybe<Scalars['bigint']>;
-  _nin?: InputMaybe<Array<Scalars['bigint']>>;
+  _eq?: InputMaybe<Scalars['bigint']['input']>;
+  _gt?: InputMaybe<Scalars['bigint']['input']>;
+  _gte?: InputMaybe<Scalars['bigint']['input']>;
+  _in?: InputMaybe<Array<Scalars['bigint']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['bigint']['input']>;
+  _lte?: InputMaybe<Scalars['bigint']['input']>;
+  _neq?: InputMaybe<Scalars['bigint']['input']>;
+  _nin?: InputMaybe<Array<Scalars['bigint']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['date']>;
-  _gt?: InputMaybe<Scalars['date']>;
-  _gte?: InputMaybe<Scalars['date']>;
-  _in?: InputMaybe<Array<Scalars['date']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['date']>;
-  _lte?: InputMaybe<Scalars['date']>;
-  _neq?: InputMaybe<Scalars['date']>;
-  _nin?: InputMaybe<Array<Scalars['date']>>;
+  _eq?: InputMaybe<Scalars['date']['input']>;
+  _gt?: InputMaybe<Scalars['date']['input']>;
+  _gte?: InputMaybe<Scalars['date']['input']>;
+  _in?: InputMaybe<Array<Scalars['date']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['date']['input']>;
+  _lte?: InputMaybe<Scalars['date']['input']>;
+  _neq?: InputMaybe<Scalars['date']['input']>;
+  _nin?: InputMaybe<Array<Scalars['date']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "equipment_division". All fields are combined with logical 'AND'. */
 export type Equipment_Division_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['equipment_division']>;
-  _gt?: InputMaybe<Scalars['equipment_division']>;
-  _gte?: InputMaybe<Scalars['equipment_division']>;
-  _in?: InputMaybe<Array<Scalars['equipment_division']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['equipment_division']>;
-  _lte?: InputMaybe<Scalars['equipment_division']>;
-  _neq?: InputMaybe<Scalars['equipment_division']>;
-  _nin?: InputMaybe<Array<Scalars['equipment_division']>>;
+  _eq?: InputMaybe<Scalars['equipment_division']['input']>;
+  _gt?: InputMaybe<Scalars['equipment_division']['input']>;
+  _gte?: InputMaybe<Scalars['equipment_division']['input']>;
+  _in?: InputMaybe<Array<Scalars['equipment_division']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['equipment_division']['input']>;
+  _lte?: InputMaybe<Scalars['equipment_division']['input']>;
+  _neq?: InputMaybe<Scalars['equipment_division']['input']>;
+  _nin?: InputMaybe<Array<Scalars['equipment_division']['input']>>;
 };
 
 /** columns and relationships of "institutions" */
 export type Institutions = {
   __typename?: 'institutions';
-  address: Scalars['String'];
-  area?: Maybe<Scalars['numeric']>;
-  building: Scalars['String'];
-  building_kana: Scalars['String'];
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at: Scalars['timestamp'];
-  fee_divisions: Scalars['_fee_division'];
-  holiday_usage_fee: Scalars['jsonb'];
-  id: Scalars['uuid'];
-  institution: Scalars['String'];
-  institution_kana: Scalars['String'];
-  institution_size: Scalars['String'];
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass: Scalars['availavility_division'];
-  is_available_percussion: Scalars['availavility_division'];
-  is_available_strings: Scalars['availavility_division'];
-  is_available_woodwind: Scalars['availavility_division'];
-  is_equipped_music_stand: Scalars['equipment_division'];
-  is_equipped_piano: Scalars['equipment_division'];
-  layout_image_url: Scalars['String'];
-  lottery_period: Scalars['String'];
-  municipality: Scalars['String'];
-  note: Scalars['String'];
-  prefecture: Scalars['prefecture'];
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url: Scalars['String'];
-  weekday_usage_fee: Scalars['jsonb'];
+  address: Scalars['String']['output'];
+  area?: Maybe<Scalars['numeric']['output']>;
+  building: Scalars['String']['output'];
+  building_kana: Scalars['String']['output'];
+  building_system_name?: Maybe<Scalars['String']['output']>;
+  capacity?: Maybe<Scalars['Int']['output']>;
+  created_at: Scalars['timestamp']['output'];
+  fee_divisions: Scalars['_fee_division']['output'];
+  holiday_usage_fee: Scalars['jsonb']['output'];
+  id: Scalars['uuid']['output'];
+  institution: Scalars['String']['output'];
+  institution_kana: Scalars['String']['output'];
+  institution_size: Scalars['String']['output'];
+  institution_system_name?: Maybe<Scalars['String']['output']>;
+  is_available_brass: Scalars['availavility_division']['output'];
+  is_available_percussion: Scalars['availavility_division']['output'];
+  is_available_strings: Scalars['availavility_division']['output'];
+  is_available_woodwind: Scalars['availavility_division']['output'];
+  is_equipped_music_stand: Scalars['equipment_division']['output'];
+  is_equipped_piano: Scalars['equipment_division']['output'];
+  layout_image_url: Scalars['String']['output'];
+  lottery_period: Scalars['String']['output'];
+  municipality: Scalars['String']['output'];
+  note: Scalars['String']['output'];
+  prefecture: Scalars['prefecture']['output'];
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  website_url: Scalars['String']['output'];
+  weekday_usage_fee: Scalars['jsonb']['output'];
 };
 
 
 /** columns and relationships of "institutions" */
 export type InstitutionsHoliday_Usage_FeeArgs = {
-  path?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** columns and relationships of "institutions" */
 export type InstitutionsWeekday_Usage_FeeArgs = {
-  path?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "institutions" */
@@ -205,7 +207,7 @@ export type Institutions_Aggregate = {
 export type Institutions_Aggregate_Fields = {
   __typename?: 'institutions_aggregate_fields';
   avg?: Maybe<Institutions_Avg_Fields>;
-  count: Scalars['Int'];
+  count: Scalars['Int']['output'];
   max?: Maybe<Institutions_Max_Fields>;
   min?: Maybe<Institutions_Min_Fields>;
   stddev?: Maybe<Institutions_Stddev_Fields>;
@@ -221,14 +223,14 @@ export type Institutions_Aggregate_Fields = {
 /** aggregate fields of "institutions" */
 export type Institutions_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Institutions_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** aggregate avg on columns */
 export type Institutions_Avg_Fields = {
   __typename?: 'institutions_avg_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "institutions". All fields are combined with a logical 'AND'. */
@@ -269,61 +271,61 @@ export type Institutions_Bool_Exp = {
 /** aggregate max on columns */
 export type Institutions_Max_Fields = {
   __typename?: 'institutions_max_fields';
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_kana?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_kana?: Maybe<Scalars['String']>;
-  institution_size?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['availavility_division']>;
-  is_available_percussion?: Maybe<Scalars['availavility_division']>;
-  is_available_strings?: Maybe<Scalars['availavility_division']>;
-  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
-  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
-  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  municipality?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  prefecture?: Maybe<Scalars['prefecture']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']['output']>;
+  area?: Maybe<Scalars['numeric']['output']>;
+  building?: Maybe<Scalars['String']['output']>;
+  building_kana?: Maybe<Scalars['String']['output']>;
+  building_system_name?: Maybe<Scalars['String']['output']>;
+  capacity?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  institution?: Maybe<Scalars['String']['output']>;
+  institution_kana?: Maybe<Scalars['String']['output']>;
+  institution_size?: Maybe<Scalars['String']['output']>;
+  institution_system_name?: Maybe<Scalars['String']['output']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']['output']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']['output']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']['output']>;
+  layout_image_url?: Maybe<Scalars['String']['output']>;
+  lottery_period?: Maybe<Scalars['String']['output']>;
+  municipality?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  prefecture?: Maybe<Scalars['prefecture']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  website_url?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Institutions_Min_Fields = {
   __typename?: 'institutions_min_fields';
-  address?: Maybe<Scalars['String']>;
-  area?: Maybe<Scalars['numeric']>;
-  building?: Maybe<Scalars['String']>;
-  building_kana?: Maybe<Scalars['String']>;
-  building_system_name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
-  created_at?: Maybe<Scalars['timestamp']>;
-  id?: Maybe<Scalars['uuid']>;
-  institution?: Maybe<Scalars['String']>;
-  institution_kana?: Maybe<Scalars['String']>;
-  institution_size?: Maybe<Scalars['String']>;
-  institution_system_name?: Maybe<Scalars['String']>;
-  is_available_brass?: Maybe<Scalars['availavility_division']>;
-  is_available_percussion?: Maybe<Scalars['availavility_division']>;
-  is_available_strings?: Maybe<Scalars['availavility_division']>;
-  is_available_woodwind?: Maybe<Scalars['availavility_division']>;
-  is_equipped_music_stand?: Maybe<Scalars['equipment_division']>;
-  is_equipped_piano?: Maybe<Scalars['equipment_division']>;
-  layout_image_url?: Maybe<Scalars['String']>;
-  lottery_period?: Maybe<Scalars['String']>;
-  municipality?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  prefecture?: Maybe<Scalars['prefecture']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
-  website_url?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']['output']>;
+  area?: Maybe<Scalars['numeric']['output']>;
+  building?: Maybe<Scalars['String']['output']>;
+  building_kana?: Maybe<Scalars['String']['output']>;
+  building_system_name?: Maybe<Scalars['String']['output']>;
+  capacity?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  institution?: Maybe<Scalars['String']['output']>;
+  institution_kana?: Maybe<Scalars['String']['output']>;
+  institution_size?: Maybe<Scalars['String']['output']>;
+  institution_system_name?: Maybe<Scalars['String']['output']>;
+  is_available_brass?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_percussion?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_strings?: Maybe<Scalars['availavility_division']['output']>;
+  is_available_woodwind?: Maybe<Scalars['availavility_division']['output']>;
+  is_equipped_music_stand?: Maybe<Scalars['equipment_division']['output']>;
+  is_equipped_piano?: Maybe<Scalars['equipment_division']['output']>;
+  layout_image_url?: Maybe<Scalars['String']['output']>;
+  lottery_period?: Maybe<Scalars['String']['output']>;
+  municipality?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  prefecture?: Maybe<Scalars['prefecture']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  website_url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Ordering options when selecting data from "institutions". */
@@ -421,50 +423,50 @@ export enum Institutions_Select_Column {
 /** aggregate stddev on columns */
 export type Institutions_Stddev_Fields = {
   __typename?: 'institutions_stddev_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Institutions_Stddev_Pop_Fields = {
   __typename?: 'institutions_stddev_pop_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Institutions_Stddev_Samp_Fields = {
   __typename?: 'institutions_stddev_samp_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate sum on columns */
 export type Institutions_Sum_Fields = {
   __typename?: 'institutions_sum_fields';
-  area?: Maybe<Scalars['numeric']>;
-  capacity?: Maybe<Scalars['Int']>;
+  area?: Maybe<Scalars['numeric']['output']>;
+  capacity?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregate var_pop on columns */
 export type Institutions_Var_Pop_Fields = {
   __typename?: 'institutions_var_pop_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Institutions_Var_Samp_Fields = {
   __typename?: 'institutions_var_samp_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Institutions_Variance_Fields = {
   __typename?: 'institutions_variance_fields';
-  area?: Maybe<Scalars['Float']>;
-  capacity?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['Float']['output']>;
+  capacity?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Jsonb_Cast_Exp = {
@@ -475,37 +477,37 @@ export type Jsonb_Cast_Exp = {
 export type Jsonb_Comparison_Exp = {
   _cast?: InputMaybe<Jsonb_Cast_Exp>;
   /** is the column contained in the given json value */
-  _contained_in?: InputMaybe<Scalars['jsonb']>;
+  _contained_in?: InputMaybe<Scalars['jsonb']['input']>;
   /** does the column contain the given json value at the top level */
-  _contains?: InputMaybe<Scalars['jsonb']>;
-  _eq?: InputMaybe<Scalars['jsonb']>;
-  _gt?: InputMaybe<Scalars['jsonb']>;
-  _gte?: InputMaybe<Scalars['jsonb']>;
+  _contains?: InputMaybe<Scalars['jsonb']['input']>;
+  _eq?: InputMaybe<Scalars['jsonb']['input']>;
+  _gt?: InputMaybe<Scalars['jsonb']['input']>;
+  _gte?: InputMaybe<Scalars['jsonb']['input']>;
   /** does the string exist as a top-level key in the column */
-  _has_key?: InputMaybe<Scalars['String']>;
+  _has_key?: InputMaybe<Scalars['String']['input']>;
   /** do all of these strings exist as top-level keys in the column */
-  _has_keys_all?: InputMaybe<Array<Scalars['String']>>;
+  _has_keys_all?: InputMaybe<Array<Scalars['String']['input']>>;
   /** do any of these strings exist as top-level keys in the column */
-  _has_keys_any?: InputMaybe<Array<Scalars['String']>>;
-  _in?: InputMaybe<Array<Scalars['jsonb']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['jsonb']>;
-  _lte?: InputMaybe<Scalars['jsonb']>;
-  _neq?: InputMaybe<Scalars['jsonb']>;
-  _nin?: InputMaybe<Array<Scalars['jsonb']>>;
+  _has_keys_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Scalars['jsonb']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['jsonb']['input']>;
+  _lte?: InputMaybe<Scalars['jsonb']['input']>;
+  _neq?: InputMaybe<Scalars['jsonb']['input']>;
+  _nin?: InputMaybe<Array<Scalars['jsonb']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export type Numeric_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['numeric']>;
-  _gt?: InputMaybe<Scalars['numeric']>;
-  _gte?: InputMaybe<Scalars['numeric']>;
-  _in?: InputMaybe<Array<Scalars['numeric']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['numeric']>;
-  _lte?: InputMaybe<Scalars['numeric']>;
-  _neq?: InputMaybe<Scalars['numeric']>;
-  _nin?: InputMaybe<Array<Scalars['numeric']>>;
+  _eq?: InputMaybe<Scalars['numeric']['input']>;
+  _gt?: InputMaybe<Scalars['numeric']['input']>;
+  _gte?: InputMaybe<Scalars['numeric']['input']>;
+  _in?: InputMaybe<Array<Scalars['numeric']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['numeric']['input']>;
+  _lte?: InputMaybe<Scalars['numeric']['input']>;
+  _neq?: InputMaybe<Scalars['numeric']['input']>;
+  _nin?: InputMaybe<Array<Scalars['numeric']['input']>>;
 };
 
 /** column ordering options */
@@ -526,15 +528,15 @@ export enum Order_By {
 
 /** Boolean expression to compare columns of type "prefecture". All fields are combined with logical 'AND'. */
 export type Prefecture_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['prefecture']>;
-  _gt?: InputMaybe<Scalars['prefecture']>;
-  _gte?: InputMaybe<Scalars['prefecture']>;
-  _in?: InputMaybe<Array<Scalars['prefecture']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['prefecture']>;
-  _lte?: InputMaybe<Scalars['prefecture']>;
-  _neq?: InputMaybe<Scalars['prefecture']>;
-  _nin?: InputMaybe<Array<Scalars['prefecture']>>;
+  _eq?: InputMaybe<Scalars['prefecture']['input']>;
+  _gt?: InputMaybe<Scalars['prefecture']['input']>;
+  _gte?: InputMaybe<Scalars['prefecture']['input']>;
+  _in?: InputMaybe<Array<Scalars['prefecture']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['prefecture']['input']>;
+  _lte?: InputMaybe<Scalars['prefecture']['input']>;
+  _neq?: InputMaybe<Scalars['prefecture']['input']>;
+  _nin?: InputMaybe<Array<Scalars['prefecture']['input']>>;
 };
 
 export type Query_Root = {
@@ -556,8 +558,8 @@ export type Query_Root = {
 
 export type Query_RootInstitutionsArgs = {
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
@@ -565,22 +567,22 @@ export type Query_RootInstitutionsArgs = {
 
 export type Query_RootInstitutions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
 
 
 export type Query_RootInstitutions_By_PkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars['uuid']['input'];
 };
 
 
 export type Query_RootReservationsArgs = {
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
@@ -588,35 +590,35 @@ export type Query_RootReservationsArgs = {
 
 export type Query_RootReservations_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
 
 
 export type Query_RootReservations_By_PkArgs = {
-  id: Scalars['bigint'];
+  id: Scalars['bigint']['input'];
 };
 
 /** columns and relationships of "reservations" */
 export type Reservations = {
   __typename?: 'reservations';
-  created_at: Scalars['timestamp'];
-  date: Scalars['date'];
-  id: Scalars['bigint'];
+  created_at: Scalars['timestamp']['output'];
+  date: Scalars['date']['output'];
+  id: Scalars['bigint']['output'];
   /** An object relationship */
   institution?: Maybe<Institutions>;
-  institution_id: Scalars['uuid'];
-  is_holiday: Scalars['Boolean'];
-  reservation: Scalars['jsonb'];
-  updated_at: Scalars['timestamp'];
+  institution_id: Scalars['uuid']['output'];
+  is_holiday: Scalars['Boolean']['output'];
+  reservation: Scalars['jsonb']['output'];
+  updated_at: Scalars['timestamp']['output'];
 };
 
 
 /** columns and relationships of "reservations" */
 export type ReservationsReservationArgs = {
-  path?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "reservations" */
@@ -630,7 +632,7 @@ export type Reservations_Aggregate = {
 export type Reservations_Aggregate_Fields = {
   __typename?: 'reservations_aggregate_fields';
   avg?: Maybe<Reservations_Avg_Fields>;
-  count: Scalars['Int'];
+  count: Scalars['Int']['output'];
   max?: Maybe<Reservations_Max_Fields>;
   min?: Maybe<Reservations_Min_Fields>;
   stddev?: Maybe<Reservations_Stddev_Fields>;
@@ -646,13 +648,13 @@ export type Reservations_Aggregate_Fields = {
 /** aggregate fields of "reservations" */
 export type Reservations_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Reservations_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** aggregate avg on columns */
 export type Reservations_Avg_Fields = {
   __typename?: 'reservations_avg_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "reservations". All fields are combined with a logical 'AND'. */
@@ -673,21 +675,21 @@ export type Reservations_Bool_Exp = {
 /** aggregate max on columns */
 export type Reservations_Max_Fields = {
   __typename?: 'reservations_max_fields';
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  id?: Maybe<Scalars['bigint']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  date?: Maybe<Scalars['date']['output']>;
+  id?: Maybe<Scalars['bigint']['output']>;
+  institution_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
 };
 
 /** aggregate min on columns */
 export type Reservations_Min_Fields = {
   __typename?: 'reservations_min_fields';
-  created_at?: Maybe<Scalars['timestamp']>;
-  date?: Maybe<Scalars['date']>;
-  id?: Maybe<Scalars['bigint']>;
-  institution_id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamp']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  date?: Maybe<Scalars['date']['output']>;
+  id?: Maybe<Scalars['bigint']['output']>;
+  institution_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
 };
 
 /** Ordering options when selecting data from "reservations". */
@@ -723,43 +725,43 @@ export enum Reservations_Select_Column {
 /** aggregate stddev on columns */
 export type Reservations_Stddev_Fields = {
   __typename?: 'reservations_stddev_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Reservations_Stddev_Pop_Fields = {
   __typename?: 'reservations_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Reservations_Stddev_Samp_Fields = {
   __typename?: 'reservations_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate sum on columns */
 export type Reservations_Sum_Fields = {
   __typename?: 'reservations_sum_fields';
-  id?: Maybe<Scalars['bigint']>;
+  id?: Maybe<Scalars['bigint']['output']>;
 };
 
 /** aggregate var_pop on columns */
 export type Reservations_Var_Pop_Fields = {
   __typename?: 'reservations_var_pop_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Reservations_Var_Samp_Fields = {
   __typename?: 'reservations_var_samp_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Reservations_Variance_Fields = {
   __typename?: 'reservations_variance_fields';
-  id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Subscription_Root = {
@@ -781,8 +783,8 @@ export type Subscription_Root = {
 
 export type Subscription_RootInstitutionsArgs = {
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
@@ -790,22 +792,22 @@ export type Subscription_RootInstitutionsArgs = {
 
 export type Subscription_RootInstitutions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
 
 
 export type Subscription_RootInstitutions_By_PkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars['uuid']['input'];
 };
 
 
 export type Subscription_RootReservationsArgs = {
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
@@ -813,90 +815,90 @@ export type Subscription_RootReservationsArgs = {
 
 export type Subscription_RootReservations_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
 
 
 export type Subscription_RootReservations_By_PkArgs = {
-  id: Scalars['bigint'];
+  id: Scalars['bigint']['input'];
 };
 
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['timestamp']>;
-  _gt?: InputMaybe<Scalars['timestamp']>;
-  _gte?: InputMaybe<Scalars['timestamp']>;
-  _in?: InputMaybe<Array<Scalars['timestamp']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['timestamp']>;
-  _lte?: InputMaybe<Scalars['timestamp']>;
-  _neq?: InputMaybe<Scalars['timestamp']>;
-  _nin?: InputMaybe<Array<Scalars['timestamp']>>;
+  _eq?: InputMaybe<Scalars['timestamp']['input']>;
+  _gt?: InputMaybe<Scalars['timestamp']['input']>;
+  _gte?: InputMaybe<Scalars['timestamp']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamp']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['timestamp']['input']>;
+  _lte?: InputMaybe<Scalars['timestamp']['input']>;
+  _neq?: InputMaybe<Scalars['timestamp']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['uuid']>;
-  _gt?: InputMaybe<Scalars['uuid']>;
-  _gte?: InputMaybe<Scalars['uuid']>;
-  _in?: InputMaybe<Array<Scalars['uuid']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['uuid']>;
-  _lte?: InputMaybe<Scalars['uuid']>;
-  _neq?: InputMaybe<Scalars['uuid']>;
-  _nin?: InputMaybe<Array<Scalars['uuid']>>;
+  _eq?: InputMaybe<Scalars['uuid']['input']>;
+  _gt?: InputMaybe<Scalars['uuid']['input']>;
+  _gte?: InputMaybe<Scalars['uuid']['input']>;
+  _in?: InputMaybe<Array<Scalars['uuid']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['uuid']['input']>;
+  _lte?: InputMaybe<Scalars['uuid']['input']>;
+  _neq?: InputMaybe<Scalars['uuid']['input']>;
+  _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
 export type InstitutionDetailQueryVariables = Exact<{
-  id: Scalars['uuid'];
+  id: Scalars['uuid']['input'];
 }>;
 
 
 export type InstitutionDetailQuery = { __typename?: 'query_root', institutions_by_pk?: { __typename?: 'institutions', id: any, prefecture: any, municipality: string, building: string, institution: string, capacity?: number | null, area?: any | null, fee_divisions: any, weekday_usage_fee: any, holiday_usage_fee: any, address: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, website_url: string, layout_image_url: string, lottery_period: string, note: string } | null };
 
 export type InstitutionReservationsQueryVariables = Exact<{
-  id: Scalars['uuid'];
-  startDate?: InputMaybe<Scalars['date']>;
-  endDate?: InputMaybe<Scalars['date']>;
+  id: Scalars['uuid']['input'];
+  startDate?: InputMaybe<Scalars['date']['input']>;
+  endDate?: InputMaybe<Scalars['date']['input']>;
 }>;
 
 
 export type InstitutionReservationsQuery = { __typename?: 'query_root', reservations: Array<{ __typename?: 'reservations', id: any, date: any, reservation: any, updated_at: any }> };
 
 export type InstitutionsQueryVariables = Exact<{
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
-  municipality?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-  isAvailableStrings?: InputMaybe<Scalars['availavility_division']>;
-  isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']>;
-  isAvailableBrass?: InputMaybe<Scalars['availavility_division']>;
-  isAvailablePercussion?: InputMaybe<Scalars['availavility_division']>;
-  institutionSizes?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  municipality?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  isAvailableStrings?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailableBrass?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailablePercussion?: InputMaybe<Scalars['availavility_division']['input']>;
+  institutionSizes?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type InstitutionsQuery = { __typename?: 'query_root', institutions: Array<{ __typename?: 'institutions', id: any, municipality: string, building: string, institution: string, institution_size: string, is_available_strings: any, is_available_woodwind: any, is_available_brass: any, is_available_percussion: any, is_equipped_music_stand: any, is_equipped_piano: any, updated_at?: any | null }>, institutions_aggregate: { __typename?: 'institutions_aggregate', aggregate?: { __typename?: 'institutions_aggregate_fields', count: number } | null } };
 
 export type ReservationsQueryVariables = Exact<{
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
-  prefecture?: InputMaybe<Scalars['prefecture']>;
-  municipality?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-  isAvailableStrings?: InputMaybe<Scalars['availavility_division']>;
-  isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']>;
-  isAvailableBrass?: InputMaybe<Scalars['availavility_division']>;
-  isAvailablePercussion?: InputMaybe<Scalars['availavility_division']>;
-  institutionSizes?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-  startDate?: InputMaybe<Scalars['date']>;
-  endDate?: InputMaybe<Scalars['date']>;
-  isHoliday?: InputMaybe<Scalars['Boolean']>;
-  reservationStatus1?: InputMaybe<Scalars['jsonb']>;
-  reservationStatus2?: InputMaybe<Scalars['jsonb']>;
-  reservationStatus3?: InputMaybe<Scalars['jsonb']>;
-  reservationStatus4?: InputMaybe<Scalars['jsonb']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  prefecture?: InputMaybe<Scalars['prefecture']['input']>;
+  municipality?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  isAvailableStrings?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailableWoodwind?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailableBrass?: InputMaybe<Scalars['availavility_division']['input']>;
+  isAvailablePercussion?: InputMaybe<Scalars['availavility_division']['input']>;
+  institutionSizes?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['date']['input']>;
+  endDate?: InputMaybe<Scalars['date']['input']>;
+  isHoliday?: InputMaybe<Scalars['Boolean']['input']>;
+  reservationStatus1?: InputMaybe<Scalars['jsonb']['input']>;
+  reservationStatus2?: InputMaybe<Scalars['jsonb']['input']>;
+  reservationStatus3?: InputMaybe<Scalars['jsonb']['input']>;
+  reservationStatus4?: InputMaybe<Scalars['jsonb']['input']>;
 }>;
 
 
@@ -947,7 +949,7 @@ export const InstitutionDetailDocument = gql`
  *   },
  * });
  */
-export function useInstitutionDetailQuery(baseOptions: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+export function useInstitutionDetailQuery(baseOptions: Apollo.QueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables> & ({ variables: InstitutionDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
       }
@@ -955,8 +957,13 @@ export function useInstitutionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
         }
+export function useInstitutionDetailSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<InstitutionDetailQuery, InstitutionDetailQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<InstitutionDetailQuery, InstitutionDetailQueryVariables>(InstitutionDetailDocument, options);
+        }
 export type InstitutionDetailQueryHookResult = ReturnType<typeof useInstitutionDetailQuery>;
 export type InstitutionDetailLazyQueryHookResult = ReturnType<typeof useInstitutionDetailLazyQuery>;
+export type InstitutionDetailSuspenseQueryHookResult = ReturnType<typeof useInstitutionDetailSuspenseQuery>;
 export type InstitutionDetailQueryResult = Apollo.QueryResult<InstitutionDetailQuery, InstitutionDetailQueryVariables>;
 export const InstitutionReservationsDocument = gql`
     query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
@@ -990,7 +997,7 @@ export const InstitutionReservationsDocument = gql`
  *   },
  * });
  */
-export function useInstitutionReservationsQuery(baseOptions: Apollo.QueryHookOptions<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>) {
+export function useInstitutionReservationsQuery(baseOptions: Apollo.QueryHookOptions<InstitutionReservationsQuery, InstitutionReservationsQueryVariables> & ({ variables: InstitutionReservationsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>(InstitutionReservationsDocument, options);
       }
@@ -998,8 +1005,13 @@ export function useInstitutionReservationsLazyQuery(baseOptions?: Apollo.LazyQue
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>(InstitutionReservationsDocument, options);
         }
+export function useInstitutionReservationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>(InstitutionReservationsDocument, options);
+        }
 export type InstitutionReservationsQueryHookResult = ReturnType<typeof useInstitutionReservationsQuery>;
 export type InstitutionReservationsLazyQueryHookResult = ReturnType<typeof useInstitutionReservationsLazyQuery>;
+export type InstitutionReservationsSuspenseQueryHookResult = ReturnType<typeof useInstitutionReservationsSuspenseQuery>;
 export type InstitutionReservationsQueryResult = Apollo.QueryResult<InstitutionReservationsQuery, InstitutionReservationsQueryVariables>;
 export const InstitutionsDocument = gql`
     query institutions($offset: Int, $limit: Int, $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null) {
@@ -1063,8 +1075,13 @@ export function useInstitutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InstitutionsQuery, InstitutionsQueryVariables>(InstitutionsDocument, options);
         }
+export function useInstitutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<InstitutionsQuery, InstitutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<InstitutionsQuery, InstitutionsQueryVariables>(InstitutionsDocument, options);
+        }
 export type InstitutionsQueryHookResult = ReturnType<typeof useInstitutionsQuery>;
 export type InstitutionsLazyQueryHookResult = ReturnType<typeof useInstitutionsLazyQuery>;
+export type InstitutionsSuspenseQueryHookResult = ReturnType<typeof useInstitutionsSuspenseQuery>;
 export type InstitutionsQueryResult = Apollo.QueryResult<InstitutionsQuery, InstitutionsQueryVariables>;
 export const ReservationsDocument = gql`
     query reservations($offset: Int, $limit: Int, $prefecture: prefecture = null, $municipality: [String!], $isAvailableStrings: availavility_division = null, $isAvailableWoodwind: availavility_division = null, $isAvailableBrass: availavility_division = null, $isAvailablePercussion: availavility_division = null, $institutionSizes: [String!] = null, $startDate: date, $endDate: date, $isHoliday: Boolean, $reservationStatus1: jsonb = null, $reservationStatus2: jsonb = null, $reservationStatus3: jsonb = null, $reservationStatus4: jsonb = null) {
@@ -1135,6 +1152,11 @@ export function useReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReservationsQuery, ReservationsQueryVariables>(ReservationsDocument, options);
         }
+export function useReservationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReservationsQuery, ReservationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ReservationsQuery, ReservationsQueryVariables>(ReservationsDocument, options);
+        }
 export type ReservationsQueryHookResult = ReturnType<typeof useReservationsQuery>;
 export type ReservationsLazyQueryHookResult = ReturnType<typeof useReservationsLazyQuery>;
+export type ReservationsSuspenseQueryHookResult = ReturnType<typeof useReservationsSuspenseQuery>;
 export type ReservationsQueryResult = Apollo.QueryResult<ReservationsQuery, ReservationsQueryVariables>;
