@@ -42,7 +42,7 @@
     "@esbuild/linux-x64": "0.25.8"
   },
   "scripts": {
-    "generate": "graphql-codegen --require dotenv/config --config ./api/config.yml",
+    "generate": "graphql-codegen --require dotenv/config --config api/config.yml",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build --mode analyze",
