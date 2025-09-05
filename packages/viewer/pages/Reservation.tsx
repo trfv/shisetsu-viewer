@@ -1,7 +1,9 @@
 import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useReservationsQuery, type ReservationsQuery } from "../api/graphql-client";
+import { useQuery } from "@apollo/client";
+import type { ReservationsQuery } from "../api/gql/graphql";
+import { ReservationsDocument } from "../api/gql/graphql";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -122,7 +124,7 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore } = useReservationsQuery({
+  const { loading, data, error, fetchMore } = useQuery(ReservationsDocument, {
     variables: toReservationQueryVariables(resevationSearchParams),
     fetchPolicy: "network-only",
   });

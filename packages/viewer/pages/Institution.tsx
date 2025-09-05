@@ -1,6 +1,8 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useInstitutionsQuery, type InstitutionsQuery } from "../api/graphql-client";
+import { useQuery } from "@apollo/client";
+import type { InstitutionsQuery } from "../api/gql/graphql";
+import { InstitutionsDocument } from "../api/gql/graphql";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -115,7 +117,7 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore } = useInstitutionsQuery({
+  const { loading, data, error, fetchMore } = useQuery(InstitutionsDocument, {
     variables: toInstitutionQueryVariables(institutionSearchParams),
   });
 

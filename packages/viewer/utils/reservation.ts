@@ -1,5 +1,5 @@
 import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
-import type { ReservationsQueryVariables } from "../api/graphql-client";
+import type { ReservationsQueryVariables } from "../api/gql/graphql";
 import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
 import {
   ReservationDivisionMap,

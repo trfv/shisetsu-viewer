@@ -2,11 +2,9 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns";
 import { useCallback, useState, type ChangeEvent } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import {
-  useInstitutionDetailQuery,
-  useInstitutionReservationsQuery,
-  type InstitutionDetailQuery,
-} from "../api/graphql-client";
+import { useQuery } from "@apollo/client";
+import type { InstitutionDetailQuery } from "../api/gql/graphql";
+import { InstitutionDetailDocument, InstitutionReservationsDocument } from "../api/gql/graphql";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
@@ -161,7 +159,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
     throw new Error("municipality is undefined");
   }
 
-  const { loading, data, error } = useInstitutionReservationsQuery({
+  const { loading, data, error } = useQuery(InstitutionReservationsDocument, {
     variables: { id, startDate },
     fetchPolicy: "no-cache",
   });
@@ -249,7 +247,7 @@ export default () => {
     return <Navigate replace={true} to={ROUTES.top} />;
   }
 
-  const { loading, data, error } = useInstitutionDetailQuery({
+  const { loading, data, error } = useQuery(InstitutionDetailDocument, {
     variables: { id },
     fetchPolicy: "no-cache",
   });

@@ -1,6 +1,6 @@
 export { ApolloProvider as ClientProvider } from "@apollo/client";
 import { ApolloClient, InMemoryCache, type FieldFunctionOptions } from "@apollo/client";
-import type { Institutions, Reservations } from "../api/graphql-client";
+import type { Institutions, Reservations } from "../api/gql/graphql";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 
 const offsetLimitPagination = <T>() => ({

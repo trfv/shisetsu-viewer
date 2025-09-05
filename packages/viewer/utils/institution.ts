@@ -1,4 +1,4 @@
-import type { InstitutionsQueryVariables } from "../api/graphql-client";
+import type { InstitutionsQueryVariables } from "../api/gql/graphql";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import {

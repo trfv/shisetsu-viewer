@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@apollo/client": "3.13.9",
     "@auth0/auth0-spa-js": "2.3.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
@@ -17,9 +18,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.7",
-    "@graphql-codegen/typescript": "4.1.6",
-    "@graphql-codegen/typescript-operations": "4.6.1",
-    "@graphql-codegen/typescript-react-apollo": "4.3.3",
+    "@graphql-codegen/client-preset": "4.6.1",
     "@storybook/addon-docs": "9.1.4",
     "@storybook/react-vite": "9.1.4",
     "@swc/core": "1.13.5",
@@ -42,7 +41,7 @@
     "@esbuild/linux-x64": "0.25.8"
   },
   "scripts": {
-    "generate": "graphql-codegen --require dotenv/config --config api/config.yml",
+    "generate": "graphql-codegen --require dotenv/config --config codegen.ts",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build --mode analyze",
