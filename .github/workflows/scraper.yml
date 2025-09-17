@@ -51,7 +51,7 @@ jobs:
           echo "nodeModulesCacheKey=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
           echo "playwrightCacheKey=${{ runner.os }}-playwright-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
       - name: Set Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
@@ -110,7 +110,7 @@ jobs:
     steps:
       - name: Collect failed shards
         id: collect-failures
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

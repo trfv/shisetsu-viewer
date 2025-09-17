@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from "react";
+import { Component, type ReactNode, type ErrorInfo } from "react";
 import { Snackbar } from "../SnackBar";
 
 type Props = { children?: ReactNode };
@@ -8,32 +8,33 @@ export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
+    this.handleUnhandledRejection = this.handleUnhandledRejection.bind(this);
   }
 
-  static getDerivedStateFromError(error: unknown) {
-    return { hasError: !!error };
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
   }
 
-  private onUnhandledRejection = (event: PromiseRejectionEvent) => {
-    event.promise.catch((error) => {
-      this.setState(ErrorBoundary.getDerivedStateFromError(error));
-    });
-  };
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (import.meta.env.DEV) {
+      console.log(error, errorInfo);
+    }
+  }
 
   override componentDidMount() {
-    window.addEventListener("unhandledrejection", this.onUnhandledRejection);
+    window.addEventListener("unhandledrejection", this.handleUnhandledRejection);
   }
 
   override componentWillUnmount() {
-    window.removeEventListener("unhandledrejection", this.onUnhandledRejection);
+    window.removeEventListener("unhandledrejection", this.handleUnhandledRejection);
   }
 
-  override componentDidCatch(error: unknown, errorInfo: unknown) {
+  handleUnhandledRejection = (event: PromiseRejectionEvent) => {
     if (import.meta.env.DEV) {
-      console.log(error);
-      console.log(errorInfo);
+      console.log(event.reason);
     }
-  }
+    this.setState({ hasError: true });
+  };
 
   override render() {
     if (this.state.hasError) {
@@ -44,6 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
         />
       );
     }
+
     return this.props.children;
   }
 }

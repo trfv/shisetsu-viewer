@@ -6,8 +6,15 @@ import {
   type LogoutOptions,
   type RedirectLoginOptions,
 } from "@auth0/auth0-spa-js";
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
-import { useMount } from "../hooks/useMount";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { requestInterval } from "../utils/interval";
 
 type Role = "user" | "anonymous";
@@ -42,26 +49,24 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
   const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
-  const options: GetTokenSilentlyOptions = {
-    authorizationParams: clientOptions.authorizationParams ?? {},
-  };
-
-  useMount(
-    async () => {
-      const initAuth0 = async () => {
-        try {
-          await auth0Client.checkSession(options);
-          await updateToken();
-        } catch (e) {
-          console.info(e);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      return initAuth0();
-    },
-    () => requestInterval(() => updateToken(), 60 * 60 * 1000)
+  const options: GetTokenSilentlyOptions = useMemo(
+    () => ({
+      authorizationParams: clientOptions.authorizationParams ?? {},
+    }),
+    [clientOptions.authorizationParams]
   );
+
+  const getRole = useCallback(async () => {
+    const user = await auth0Client.getUser<CustomUser>();
+    return user?.[ROLE_NAMESPACE] || "anonymous";
+  }, [auth0Client]);
+
+  const login = useCallback(
+    (o: RedirectLoginOptions) => auth0Client.loginWithRedirect(o),
+    [auth0Client]
+  );
+
+  const logout = useCallback((o: LogoutOptions) => auth0Client.logout(o), [auth0Client]);
 
   const updateToken = useCallback(async () => {
     try {
@@ -76,19 +81,27 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
     } catch {
       return false;
     }
-  }, [auth0Client]);
+  }, [auth0Client, options, getRole]);
 
-  const getRole = useCallback(async () => {
-    const user = await auth0Client.getUser<CustomUser>();
-    return user?.[ROLE_NAMESPACE] || "anonymous";
-  }, [auth0Client]);
+  useEffect(() => {
+    const initAuth0 = async () => {
+      try {
+        await auth0Client.checkSession(options);
+        await updateToken();
+      } catch (e) {
+        console.info(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const login = useCallback(
-    (o: RedirectLoginOptions) => auth0Client.loginWithRedirect(o),
-    [auth0Client]
-  );
+    initAuth0();
+    const intervalCleanup = requestInterval(() => updateToken(), 60 * 60 * 1000);
 
-  const logout = useCallback((o: LogoutOptions) => auth0Client.logout(o), [auth0Client]);
+    return () => {
+      intervalCleanup();
+    };
+  }, [auth0Client, updateToken, options]);
 
   return (
     <Auth0Context.Provider
