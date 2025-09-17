@@ -1,49 +1,47 @@
-import { Component, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Snackbar } from "../SnackBar";
 
 type Props = { children?: ReactNode };
-type State = { hasError: boolean };
 
-export class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+export const ErrorBoundary = ({ children }: Props) => {
+  const [hasError, setHasError] = useState(false);
 
-  static getDerivedStateFromError(error: unknown) {
-    return { hasError: !!error };
-  }
-
-  private onUnhandledRejection = (event: PromiseRejectionEvent) => {
-    event.promise.catch((error) => {
-      this.setState(ErrorBoundary.getDerivedStateFromError(error));
-    });
-  };
-
-  override componentDidMount() {
-    window.addEventListener("unhandledrejection", this.onUnhandledRejection);
-  }
-
-  override componentWillUnmount() {
-    window.removeEventListener("unhandledrejection", this.onUnhandledRejection);
-  }
-
-  override componentDidCatch(error: unknown, errorInfo: unknown) {
+  const handleError = useCallback((error: unknown) => {
     if (import.meta.env.DEV) {
       console.log(error);
-      console.log(errorInfo);
     }
+    setHasError(true);
+  }, []);
+
+  const handleUnhandledRejection = useCallback(
+    (event: PromiseRejectionEvent) => {
+      event.promise.catch(handleError);
+    },
+    [handleError]
+  );
+
+  useEffect(() => {
+    const errorHandler = (event: ErrorEvent) => {
+      handleError(event.error);
+    };
+
+    window.addEventListener("error", errorHandler);
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener("error", errorHandler);
+      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+    };
+  }, [handleError, handleUnhandledRejection]);
+
+  if (hasError) {
+    return (
+      <Snackbar
+        message="予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
+        open={true}
+      />
+    );
   }
 
-  override render() {
-    if (this.state.hasError) {
-      return (
-        <Snackbar
-          message="予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-          open={true}
-        />
-      );
-    }
-    return this.props.children;
-  }
-}
+  return children;
+};
