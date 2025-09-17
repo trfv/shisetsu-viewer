@@ -1,47 +1,51 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { Component, type ReactNode, type ErrorInfo } from "react";
 import { Snackbar } from "../SnackBar";
 
 type Props = { children?: ReactNode };
+type State = { hasError: boolean };
 
-export const ErrorBoundary = ({ children }: Props) => {
-  const [hasError, setHasError] = useState(false);
-
-  const handleError = useCallback((error: unknown) => {
-    if (import.meta.env.DEV) {
-      console.log(error);
-    }
-    setHasError(true);
-  }, []);
-
-  const handleUnhandledRejection = useCallback(
-    (event: PromiseRejectionEvent) => {
-      event.promise.catch(handleError);
-    },
-    [handleError]
-  );
-
-  useEffect(() => {
-    const errorHandler = (event: ErrorEvent) => {
-      handleError(event.error);
-    };
-
-    window.addEventListener("error", errorHandler);
-    window.addEventListener("unhandledrejection", handleUnhandledRejection);
-
-    return () => {
-      window.removeEventListener("error", errorHandler);
-      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
-    };
-  }, [handleError, handleUnhandledRejection]);
-
-  if (hasError) {
-    return (
-      <Snackbar
-        message="予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-        open={true}
-      />
-    );
+export class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+    this.handleUnhandledRejection = this.handleUnhandledRejection.bind(this);
   }
 
-  return children;
-};
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (import.meta.env.DEV) {
+      console.log(error, errorInfo);
+    }
+  }
+
+  override componentDidMount() {
+    window.addEventListener("unhandledrejection", this.handleUnhandledRejection);
+  }
+
+  override componentWillUnmount() {
+    window.removeEventListener("unhandledrejection", this.handleUnhandledRejection);
+  }
+
+  handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+    if (import.meta.env.DEV) {
+      console.log(event.reason);
+    }
+    this.setState({ hasError: true });
+  };
+
+  override render() {
+    if (this.state.hasError) {
+      return (
+        <Snackbar
+          message="予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
+          open={true}
+        />
+      );
+    }
+
+    return this.props.children;
+  }
+}
