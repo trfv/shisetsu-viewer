@@ -1,4 +1,5 @@
 // Test data factory functions without external dependencies
+import * as crypto from "crypto";
 
 // Municipality data
 const MUNICIPALITIES = [
@@ -46,18 +47,18 @@ const FACILITIES = [
 // Helper functions
 const generateId = () => {
   const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000000);
+  const random = crypto.randomInt(0, 1000000);
   return `id-${timestamp}-${random}`;
 };
 
 const randomElement = <T>(array: readonly T[]): T => {
-  const index = Math.floor(Math.random() * array.length);
+  const index = crypto.randomInt(0, array.length);
   return array[index] as T;
 };
 
 const randomElements = <T>(array: T[], min: number, max: number): T[] => {
-  const count = Math.floor(Math.random() * (max - min + 1)) + min;
-  const shuffled = [...array].sort(() => Math.random() - 0.5);
+  const count = crypto.randomInt(min, max + 1);
+  const shuffled = [...array].sort(() => crypto.randomInt(0, 2) * 2 - 1);
   return shuffled.slice(0, Math.min(count, array.length));
 };
 
