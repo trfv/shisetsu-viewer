@@ -1,7 +1,8 @@
 import { render, RenderOptions, RenderResult } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { MockedProvider } from "@apollo/client/testing/react";
+import type { MockLink } from "@apollo/client/testing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import userEvent from "@testing-library/user-event";
 
@@ -13,7 +14,7 @@ const MockAuth0Provider = ({ children }: { children: ReactNode }) => {
 interface CustomRenderOptions extends Omit<RenderOptions, "wrapper"> {
   initialEntries?: string[];
   route?: string;
-  mocks?: MockedResponse[];
+  mocks?: MockLink.MockedResponse[];
   auth0Config?: {
     isAuthenticated?: boolean;
     user?: unknown;
@@ -38,7 +39,7 @@ export function renderWithProviders(
 
   function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <MockedProvider mocks={mocks} addTypename={false} showWarnings={false}>
+      <MockedProvider mocks={mocks} showWarnings={false}>
         <MockAuth0Provider>
           <ThemeProvider theme={theme}>
             <MemoryRouter initialEntries={initialEntries}>
@@ -60,18 +61,3 @@ export function renderWithProviders(
 
 // Re-export everything from testing library
 export * from "@testing-library/react";
-export { userEvent };
-
-// Custom queries
-export const getByDataTestId = (container: HTMLElement, id: string) => {
-  return container.querySelector(`[data-testid="${id}"]`);
-};
-
-// Wait utilities
-export const waitForLoadingToFinish = async () => {
-  const { waitFor } = await import("@testing-library/react");
-  await waitFor(() => {
-    const loadingElements = document.querySelectorAll('[aria-busy="true"]');
-    expect(loadingElements).toHaveLength(0);
-  });
-};

@@ -64,3 +64,11 @@ packages/viewer/
 - Use `-w @shisetsu-viewer/viewer` for package-specific commands
 - Don't edit `api/graphql-client.tsx` (generated file)
 - Japanese text encoding: UTF-8, timezone: Asia/Tokyo
+
+## LSMCP (Language Server MCP) Integration
+This project has LSMCP configured for enhanced code intelligence:
+- **Symbol Search**: Fast indexed search across the codebase
+- **LSP Features**: Hover info, go-to-definition, find references
+- **Diagnostics**: Real-time error and warning detection
+- **Code Actions**: Quick fixes and refactorings
+- **External Libraries**: TypeScript definitions from node_modules indexed for searching
