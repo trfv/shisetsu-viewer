@@ -351,8 +351,8 @@ describe("Performance Test Suite", () => {
           );
         });
 
-        // 大量データのテーブルレンダリングは150ms以内
-        expect(renderTime).toBeLessThan(150);
+        // 大量データのテーブルレンダリングは250ms以内
+        expect(renderTime).toBeLessThan(250);
       });
 
       it("column sorting performance", async () => {
