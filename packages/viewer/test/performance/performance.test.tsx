@@ -113,7 +113,11 @@ describe("Performance Test Suite", () => {
 
         // ガベージコレクションを促す
         if (global.gc) {
-          global.gc();
+          try {
+            global.gc();
+          } catch (e) {
+            // Ignore errors if gc is not available or throws
+          }
         }
 
         const finalMemory = process.memoryUsage().heapUsed;
