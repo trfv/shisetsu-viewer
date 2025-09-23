@@ -33,8 +33,13 @@ jobs:
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
-      - name: Run test and build
-        run: |
-          cd packages/viewer
-          npm run test:ci
-          npm run build
+      - name: Type checking
+        run: npm run typecheck -w @shisetsu-viewer/viewer
+        continue-on-error: true
+      - name: Linting
+        run: npm run lint -w @shisetsu-viewer/viewer
+        continue-on-error: true
+      - name: Unit tests
+        run: npm run test:ci -w @shisetsu-viewer/viewer
+      - name: Build application
+        run: npm run build -w @shisetsu-viewer/viewer

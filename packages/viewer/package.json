@@ -19,6 +19,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "6.0.0",
     "@graphql-codegen/client-preset": "5.0.0",
+    "@playwright/test": "^1.40.0",
     "@storybook/addon-docs": "9.1.6",
     "@storybook/react-vite": "9.1.6",
     "@swc/core": "1.13.5",
@@ -30,6 +31,7 @@
     "@vitejs/plugin-react-swc": "4.0.1",
     "esbuild": "0.25.9",
     "happy-dom": "18.0.1",
+    "msw": "2.11.2",
     "rollup-plugin-visualizer": "6.0.3",
     "storybook": "9.1.6",
     "vite": "7.1.5",
@@ -49,6 +51,16 @@
     "build-storybook": "storybook build",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
-    "coverage": "TZ=Asia/Tokyo vitest run --coverage"
+    "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",
+    "test:integration": "TZ=Asia/Tokyo vitest --run test/integration",
+    "test:accessibility": "TZ=Asia/Tokyo vitest --run test/accessibility",
+    "test:performance": "TZ=Asia/Tokyo vitest --run test/performance",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:headed": "playwright test --headed",
+    "test:all": "npm run test:ci && npm run test:e2e",
+    "coverage": "TZ=Asia/Tokyo vitest run --coverage",
+    "coverage:open": "TZ=Asia/Tokyo vitest run --coverage && open coverage/index.html"
   }
 }

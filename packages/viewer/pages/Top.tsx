@@ -5,22 +5,22 @@ export default () => {
   return (
     <StyledTop className={classes.pageBox}>
       <div className={classes.contentBox}>
-        <h2 id="はじめに">はじめに</h2>
+        <h2 id="introduction">はじめに</h2>
         <ul>
           <li>
             このサイトは音楽練習が可能な公共施設の予約状況・施設情報を閲覧するためのものです。
           </li>
         </ul>
-        <h2 id="機能の説明">機能の説明</h2>
-        <h3 id="予約状況検索機能">予約状況検索機能</h3>
+        <h2 id="features">機能の説明</h2>
+        <h3 id="reservation-search">予約状況検索機能</h3>
         <ul>
           <li>公共施設の予約状況を予約システムから取得し、加工して表示しています。</li>
         </ul>
-        <h3 id="施設情報検索機能">施設情報検索機能</h3>
+        <h3 id="institution-search">施設情報検索機能</h3>
         <ul>
           <li>公共施設の施設情報をウェブサイトから取得し、加工して表示しています。</li>
         </ul>
-        <h2 id="対応地区">対応地区</h2>
+        <h2 id="supported-municipalities">対応地区</h2>
         <ul>
           <li>荒川区</li>
           <li>江戸川区（※現在、予約状況が表示できません）</li>
@@ -34,7 +34,7 @@ export default () => {
           <li>文京区（※現在、予約状況が表示できません）</li>
           <li>川崎市</li>
         </ul>
-        <h2 id="備考">備考</h2>
+        <h2 id="notes">備考</h2>
         <ul>
           <li>
             予約状況検索機能については、管理人の許可制としております。管理人までご連絡ください。

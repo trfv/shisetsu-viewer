@@ -21,7 +21,13 @@ export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selec
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer axis="vertical" size={4} />
-      <MuiSelect onChange={onChange} value={value} variant="standard">
+      <MuiSelect
+        aria-label={label}
+        inputProps={{ "aria-label": label }}
+        onChange={onChange}
+        value={value}
+        variant="standard"
+      >
         {selectOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
