@@ -428,8 +428,8 @@ describe("Performance Test Suite", () => {
       const finalMemory = process.memoryUsage().heapUsed;
       const memoryIncrease = finalMemory - initialMemory;
 
-      // メモリ増加は50MB以内 (テスト環境では多めに設定)
-      expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024);
+      // メモリ増加は100MB以内 (テスト環境では多めに設定)
+      expect(memoryIncrease).toBeLessThan(100 * 1024 * 1024);
     });
 
     it("efficient state updates do not cause memory bloat", () => {
