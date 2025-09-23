@@ -127,7 +127,7 @@ const aggreagate = (acc, key, value) => {
           return { division: FEE_DIVISION_MAP[division], fee: Number(fee) };
         });
       } else {
-        acc[key] = "{}";
+        acc[key] = [];
       }
       return acc;
     case "is_available_strings":
