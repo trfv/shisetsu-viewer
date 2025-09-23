@@ -1,5 +1,6 @@
 import fs from "fs/promises";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client/core/core.cjs";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { HttpLink } from "@apollo/client/link/http";
 import { isWeekend } from "date-fns";
 
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
@@ -23,12 +24,14 @@ const title = `update reservations`;
 console.time(title);
 
 const client = new ApolloClient({
-  uri: GRAPHQL_ENDPOINT,
+  link: new HttpLink({
+    uri: GRAPHQL_ENDPOINT,
+    headers: {
+      "Content-type": "application/json",
+      "X-Hasura-Admin-Secret": ADMIN_SECRET,
+    },
+  }),
   cache: new InMemoryCache(),
-  headers: {
-    "Content-type": "application/json",
-    "X-Hasura-Admin-Secret": ADMIN_SECRET,
-  },
 });
 
 const holidays = await client.query({
