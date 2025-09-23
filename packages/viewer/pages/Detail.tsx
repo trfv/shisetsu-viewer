@@ -2,7 +2,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns";
 import { useCallback, useState, type ChangeEvent } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import type { InstitutionDetailQuery } from "../api/gql/graphql";
 import { InstitutionDetailDocument, InstitutionReservationsDocument } from "../api/gql/graphql";
 import { IconButton } from "../components/IconButton";

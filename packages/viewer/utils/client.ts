@@ -1,5 +1,5 @@
-export { ApolloProvider as ClientProvider } from "@apollo/client";
-import { ApolloClient, InMemoryCache, type FieldFunctionOptions } from "@apollo/client";
+export { ApolloProvider as ClientProvider } from "@apollo/client/react";
+import { ApolloClient, InMemoryCache, HttpLink, type FieldFunctionOptions } from "@apollo/client";
 import type { Institutions, Reservations } from "../api/gql/graphql";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 
@@ -22,9 +22,16 @@ const offsetLimitPagination = <T>() => ({
   },
 });
 
-export const client = (token: string) =>
-  new ApolloClient({
+export const client = (token: string) => {
+  const httpLink = new HttpLink({
     uri: GRAPHQL_ENDPOINT,
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+
+  return new ApolloClient({
+    link: httpLink,
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
@@ -35,7 +42,5 @@ export const client = (token: string) =>
         },
       },
     }),
-    headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
   });
+};

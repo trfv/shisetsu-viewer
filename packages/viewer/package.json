@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@apollo/client": "3.13.9",
+    "@apollo/client": "4.0.5",
     "@auth0/auth0-spa-js": "2.3.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
@@ -49,6 +49,7 @@
     "serve": "vite preview --port 3000",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "typecheck": "tsgo",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",

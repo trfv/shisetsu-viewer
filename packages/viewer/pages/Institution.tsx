@@ -1,6 +1,6 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import type { InstitutionsQuery } from "../api/gql/graphql";
 import { InstitutionsDocument } from "../api/gql/graphql";
 import { Checkbox } from "../components/Checkbox";
