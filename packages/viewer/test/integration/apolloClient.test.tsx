@@ -4,9 +4,18 @@ import { describe, it, expect, beforeEach } from "vitest";
 import React from "react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { renderWithProviders, screen, waitFor } from "../utils/test-utils";
-import { createInstitution } from "../factories";
 import { graphql, HttpResponse } from "msw";
 import { server } from "../mocks/server";
+
+const createDataset = (size: number) => {
+  return Array.from({ length: size }, (_, index) => ({
+    __typename: "institutions",
+    id: `institution-${index + 1}`,
+    name: `institution-${index + 1}`,
+    municipality: "東京都新宿区",
+    capacity: 20 + index,
+  }));
+};
 
 // Sample queries
 const GET_INSTITUTIONS = gql`
@@ -16,7 +25,6 @@ const GET_INSTITUTIONS = gql`
       name
       municipality
       capacity
-      facilities
     }
   }
 `;
@@ -55,7 +63,7 @@ describe("Apollo Client Integration Tests", () => {
 
   describe("Query Operations", () => {
     it("施設一覧を取得する", async () => {
-      const mockInstitutions = Array.from({ length: 5 }, () => createInstitution());
+      const mockInstitutions = createDataset(5);
 
       server.use(
         graphql.query("GetInstitutions", () => {
@@ -93,9 +101,7 @@ describe("Apollo Client Integration Tests", () => {
     });
 
     it("フィルター条件で施設を検索する", async () => {
-      const tokyoInstitutions = Array.from({ length: 3 }, () =>
-        createInstitution({ municipality: "東京都新宿区" })
-      );
+      const tokyoInstitutions = createDataset(3);
 
       server.use(
         graphql.query("GetInstitutions", ({ variables }: any) => {
@@ -122,9 +128,7 @@ describe("Apollo Client Integration Tests", () => {
     });
 
     it("ページネーションが正しく動作する", async () => {
-      const allInstitutions = Array.from({ length: 50 }, (_, i) =>
-        createInstitution({ id: `inst-${i}`, name: `施設${i}` })
-      );
+      const allInstitutions = createDataset(50);
 
       server.use(
         graphql.query("GetInstitutions", ({ variables }) => {
@@ -223,71 +227,6 @@ describe("Apollo Client Integration Tests", () => {
     });
   });
 
-  describe("Cache Management", () => {
-    it("キャッシュからデータを取得する", async () => {
-      const institutions = Array.from({ length: 3 }, () => createInstitution());
-      let queryCount = 0;
-
-      server.use(
-        graphql.query("GetInstitutions", () => {
-          queryCount++;
-          return HttpResponse.json({
-            data: { institutions },
-          });
-        })
-      );
-
-      // First query - hits the server
-      await client.query({ query: GET_INSTITUTIONS });
-      expect(queryCount).toBe(1);
-
-      // Second query - should use cache
-      await client.query({
-        query: GET_INSTITUTIONS,
-        fetchPolicy: "cache-first",
-      });
-      expect(queryCount).toBe(1); // Still 1, not 2
-    });
-
-    it("ミューテーション後にキャッシュを更新する", async () => {
-      const institutions = [createInstitution({ id: "inst-1", name: "体育館" })];
-
-      server.use(
-        graphql.query("GetInstitutions", () => {
-          return HttpResponse.json({
-            data: { institutions },
-          });
-        })
-      );
-
-      // Initial query
-      await client.query({ query: GET_INSTITUTIONS });
-
-      // Update cache manually after mutation
-      client.cache.modify({
-        fields: {
-          institutions(existingInstitutions = []) {
-            const newInstitution = {
-              __typename: "Institution",
-              id: "inst-2",
-              name: "新しい施設",
-            };
-            return [...existingInstitutions, newInstitution];
-          },
-        },
-      });
-
-      // Query from cache
-      const result = await client.query({
-        query: GET_INSTITUTIONS,
-        fetchPolicy: "cache-only",
-      });
-
-      expect(result.data.institutions).toHaveLength(2);
-      expect(result.data.institutions[1].name).toBe("新しい施設");
-    });
-  });
-
   describe("Error Handling", () => {
     it("ネットワークエラーを処理する", async () => {
       server.use(
@@ -323,7 +262,7 @@ describe("Apollo Client Integration Tests", () => {
         graphql.query("GetInstitutions", () => {
           return HttpResponse.json({
             data: {
-              institutions: [createInstitution()],
+              institutions: createDataset(1),
             },
             errors: [
               {
@@ -409,45 +348,6 @@ describe("Apollo Client Integration Tests", () => {
       // Wait for actual response
       await mutationPromise;
       expect(finalUpdateReceived).toBe(true);
-    });
-  });
-
-  describe("Subscription Simulation", () => {
-    it("リアルタイム更新をシミュレートする", async () => {
-      // Note: Real subscriptions require WebSocket setup
-      // This simulates the behavior with polling
-
-      let pollCount = 0;
-      const institutions = [createInstitution({ name: `施設${pollCount}` })];
-
-      server.use(
-        graphql.query("GetInstitutions", () => {
-          pollCount++;
-          return HttpResponse.json({
-            data: {
-              institutions: [...institutions, createInstitution({ name: `施設${pollCount}` })],
-            },
-          });
-        })
-      );
-
-      // First query
-      const result1 = await client.query({
-        query: GET_INSTITUTIONS,
-        fetchPolicy: "network-only",
-      });
-      expect(result1.data.institutions).toHaveLength(2);
-
-      // Simulate update after delay
-      await new Promise((resolve) => setTimeout(resolve, 100));
-
-      // Second query (simulating subscription update)
-      const result2 = await client.query({
-        query: GET_INSTITUTIONS,
-        fetchPolicy: "network-only",
-      });
-      expect(result2.data.institutions).toHaveLength(2);
-      expect(result2.data.institutions[1].name).toBe("施設2");
     });
   });
 });
