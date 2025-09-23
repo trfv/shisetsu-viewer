@@ -27,7 +27,7 @@ const mapChildren = (
       }
       if (child?.type?.displayName === Checkbox.displayName) {
         return cloneElement(child, {
-          checked: values.includes(child.props.value),
+          checked: child.props?.value ? values.includes(child.props.value) : false,
           onChange,
         });
       }

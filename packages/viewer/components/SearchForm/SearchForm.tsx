@@ -32,7 +32,7 @@ export const SearchForm = ({ chips, children }: Props) => {
           ))}
         </StyledChips>
         {isMobile ? (
-          <IconButton onClick={toggleDrawer}>
+          <IconButton aria-label="絞り込み" onClick={toggleDrawer}>
             <ManageSearchIcon />
           </IconButton>
         ) : (
@@ -46,7 +46,7 @@ export const SearchForm = ({ chips, children }: Props) => {
         open={isOpen}
       >
         <StyledMenu>
-          <IconButton edge="start" onClick={toggleDrawer}>
+          <IconButton aria-label="閉じる" edge="start" onClick={toggleDrawer}>
             <Close />
           </IconButton>
           {children}
