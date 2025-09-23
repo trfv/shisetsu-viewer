@@ -1,6 +1,7 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client/react";
+import { NetworkStatus } from "@apollo/client";
 import type { InstitutionsQuery } from "../api/gql/graphql";
 import { InstitutionsDocument } from "../api/gql/graphql";
 import { Checkbox } from "../components/Checkbox";
@@ -117,8 +118,9 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore } = useQuery(InstitutionsDocument, {
+  const { loading, data, error, fetchMore, networkStatus } = useQuery(InstitutionsDocument, {
     variables: toInstitutionQueryVariables(institutionSearchParams),
+    notifyOnNetworkStatusChange: true,
   });
 
   if (error) {
@@ -200,7 +202,7 @@ export default () => {
         </div>
       </div>
       <div className={classes.resultBox}>
-        {loading ? (
+        {loading && networkStatus !== NetworkStatus.fetchMore ? (
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>

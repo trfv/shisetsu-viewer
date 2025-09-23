@@ -2,6 +2,7 @@ import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client/react";
+import { NetworkStatus } from "@apollo/client";
 import type { ReservationsQuery } from "../api/gql/graphql";
 import { ReservationsDocument } from "../api/gql/graphql";
 import { Checkbox } from "../components/Checkbox";
@@ -124,9 +125,10 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore } = useQuery(ReservationsDocument, {
+  const { loading, data, error, fetchMore, networkStatus } = useQuery(ReservationsDocument, {
     variables: toReservationQueryVariables(resevationSearchParams),
     fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
   });
 
   if (error) {
@@ -261,7 +263,7 @@ export default () => {
         </div>
       </div>
       <div className={classes.resultBox}>
-        {loading ? (
+        {loading && networkStatus !== NetworkStatus.fetchMore ? (
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
