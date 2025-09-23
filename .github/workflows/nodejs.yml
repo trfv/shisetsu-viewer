@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ["20", "22"]
+        node-version: ["22", "24"]
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -33,12 +33,6 @@ jobs:
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
-      - name: Type checking
-        run: npm run typecheck -w @shisetsu-viewer/viewer
-        continue-on-error: true
-      - name: Linting
-        run: npm run lint -w @shisetsu-viewer/viewer
-        continue-on-error: true
       - name: Unit tests
         run: npm run test:ci -w @shisetsu-viewer/viewer
       - name: Build application

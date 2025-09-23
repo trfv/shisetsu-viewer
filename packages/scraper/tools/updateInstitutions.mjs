@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client/core/core.cjs";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { HttpLink } from "@apollo/client/link/http";
 
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
@@ -22,12 +23,14 @@ const title = `update institutions`;
 console.time(title);
 
 const client = new ApolloClient({
-  uri: GRAPHQL_ENDPOINT,
+  link: new HttpLink({
+    uri: GRAPHQL_ENDPOINT,
+    headers: {
+      "Content-type": "application/json",
+      "X-Hasura-Admin-Secret": ADMIN_SECRET,
+    },
+  }),
   cache: new InMemoryCache(),
-  headers: {
-    "Content-type": "application/json",
-    "X-Hasura-Admin-Secret": ADMIN_SECRET,
-  },
 });
 
 const FEE_DIVISION_MAP = {
@@ -127,7 +130,7 @@ const aggreagate = (acc, key, value) => {
           return { division: FEE_DIVISION_MAP[division], fee: Number(fee) };
         });
       } else {
-        acc[key] = "{}";
+        acc[key] = [];
       }
       return acc;
     case "is_available_strings":

@@ -15,8 +15,10 @@
   ],
   "devDependencies": {
     "@eslint/js": "9.36.0",
+    "@mizchi/lsmcp": "0.10.0",
     "@tsconfig/strictest": "2.0.6",
     "@types/node": "24.5.2",
+    "@typescript/native-preview": "7.0.0-dev.20250922.1",
     "eslint": "9.36.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react": "7.37.5",
@@ -31,7 +33,7 @@
     "typescript-eslint": "8.44.1"
   },
   "engines": {
-    "node": ">=20",
+    "node": ">=22",
     "npm": ">=10"
   },
   "scripts": {
