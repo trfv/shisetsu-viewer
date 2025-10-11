@@ -101,11 +101,11 @@ describe("SearchForm Component", () => {
 
   describe("Mobile View", () => {
     beforeEach(() => {
-      vi.mocked(useIsMobile).mockReturnValue(true);
+      vi.mocked(useIsMobile).mockImplementation(() => true);
     });
 
     afterEach(() => {
-      vi.mocked(useIsMobile).mockReturnValue(false);
+      vi.mocked(useIsMobile).mockImplementation(() => false);
     });
 
     it("モバイルビューでアイコンボタンを表示する", () => {
@@ -133,11 +133,11 @@ describe("SearchForm Component", () => {
   describe("Accessibility", () => {
     describe("Mobile View", () => {
       beforeEach(() => {
-        vi.mocked(useIsMobile).mockReturnValue(true);
+        vi.mocked(useIsMobile).mockImplementation(() => true);
       });
 
       afterEach(() => {
-        vi.mocked(useIsMobile).mockReturnValue(false);
+        vi.mocked(useIsMobile).mockImplementation(() => false);
       });
 
       it("適切なARIA属性を持つ", () => {

@@ -4,10 +4,13 @@ import { renderWithProviders, screen, waitFor } from "../utils/test-utils";
 import { MockLink } from "@apollo/client/testing";
 
 // Import components to test
+// Using dynamic imports with explicit extensions to improve CI reliability
 import TopPage from "../../pages/Top";
-import ReservationPage from "../../pages/Reservation";
 import { SearchForm } from "../../components/SearchForm/SearchForm";
 import { DataTable } from "../../components/DataTable";
+
+// Lazy load ReservationPage to avoid module fetch timing issues in CI
+const ReservationPage = React.lazy(() => import("../../pages/Reservation"));
 
 // Import test data
 import { ReservationsDocument } from "../../api/gql/graphql";
@@ -193,7 +196,17 @@ describe("Performance Test Suite", () => {
         ];
 
         const renderTime = await measureRenderTime(() => {
-          renderWithProviders(<ReservationPage />, { mocks });
+          renderWithProviders(
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <ReservationPage />
+            </React.Suspense>,
+            { mocks }
+          );
+        });
+
+        // Wait for lazy component to load
+        await waitFor(() => {
+          expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
         });
 
         // 大量データでも初期レンダリングは200ms以内
@@ -222,7 +235,17 @@ describe("Performance Test Suite", () => {
 
         const mocks: MockLink.MockedResponse[] = [mockVariablesMatcher as MockLink.MockedResponse];
 
-        const { user } = renderWithProviders(<ReservationPage />, { mocks });
+        const { user } = renderWithProviders(
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ReservationPage />
+          </React.Suspense>,
+          { mocks }
+        );
+
+        // Wait for lazy component to load
+        await waitFor(() => {
+          expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+        });
 
         // 初期レンダリング完了を待つ
         await waitFor(() => {
@@ -267,7 +290,17 @@ describe("Performance Test Suite", () => {
           },
         ];
 
-        renderWithProviders(<ReservationPage />, { mocks });
+        renderWithProviders(
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ReservationPage />
+          </React.Suspense>,
+          { mocks }
+        );
+
+        // Wait for lazy component to load
+        await waitFor(() => {
+          expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+        });
 
         await waitFor(
           () => {
@@ -588,7 +621,21 @@ describe("Performance Test Suite", () => {
 
         // 複数のクエリを同時実行
         const promises = queries.map((mock) =>
-          renderWithProviders(<ReservationPage />, { mocks: [mock] })
+          renderWithProviders(
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <ReservationPage />
+            </React.Suspense>,
+            { mocks: [mock] }
+          )
+        );
+
+        // Wait for all lazy components to load
+        await Promise.all(
+          promises.map(() =>
+            waitFor(() => {
+              expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+            })
+          )
         );
 
         await Promise.all(
@@ -627,7 +674,17 @@ describe("Performance Test Suite", () => {
         };
 
         // 初回レンダリング
-        const { unmount: unmount1 } = renderWithProviders(<ReservationPage />, { mocks: [mock] });
+        const { unmount: unmount1 } = renderWithProviders(
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ReservationPage />
+          </React.Suspense>,
+          { mocks: [mock] }
+        );
+
+        // Wait for lazy component to load
+        await waitFor(() => {
+          expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+        });
 
         await waitFor(
           () => {
@@ -646,7 +703,17 @@ describe("Performance Test Suite", () => {
 
         // 2回目レンダリング（キャッシュされたデータを使用）
         const start = performance.now();
-        const { unmount: unmount2 } = renderWithProviders(<ReservationPage />, { mocks: [mock] });
+        const { unmount: unmount2 } = renderWithProviders(
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ReservationPage />
+          </React.Suspense>,
+          { mocks: [mock] }
+        );
+
+        // Wait for lazy component to load
+        await waitFor(() => {
+          expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+        });
 
         await waitFor(
           () => {
