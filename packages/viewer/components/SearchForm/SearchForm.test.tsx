@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderWithProviders, screen, waitFor } from "../../test/utils/test-utils";
 import { SearchForm } from "./SearchForm";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 // Mock the useIsMobile hook
 vi.mock("../../hooks/useIsMobile", () => ({
@@ -99,9 +100,12 @@ describe("SearchForm Component", () => {
   });
 
   describe("Mobile View", () => {
-    beforeEach(async () => {
-      const module = await import("../../hooks/useIsMobile");
-      vi.mocked(module).useIsMobile.mockReturnValue(true);
+    beforeEach(() => {
+      vi.mocked(useIsMobile).mockReturnValue(true);
+    });
+
+    afterEach(() => {
+      vi.mocked(useIsMobile).mockReturnValue(false);
     });
 
     it("モバイルビューでアイコンボタンを表示する", () => {
@@ -127,26 +131,36 @@ describe("SearchForm Component", () => {
   });
 
   describe("Accessibility", () => {
-    it("適切なARIA属性を持つ", () => {
-      renderWithProviders(<SearchForm {...defaultProps} />);
+    describe("Mobile View", () => {
+      beforeEach(() => {
+        vi.mocked(useIsMobile).mockReturnValue(true);
+      });
 
-      const button = screen.getByRole("button", { name: /絞り込み/i });
-      expect(button).toBeInTheDocument();
-    });
+      afterEach(() => {
+        vi.mocked(useIsMobile).mockReturnValue(false);
+      });
 
-    it("キーボードナビゲーションが機能する", async () => {
-      const { user } = renderWithProviders(<SearchForm {...defaultProps} />);
+      it("適切なARIA属性を持つ", () => {
+        renderWithProviders(<SearchForm {...defaultProps} />);
 
-      // Tab to button
-      await user.tab();
-      const button = screen.getByRole("button", { name: /絞り込み/i });
-      expect(button).toHaveFocus();
+        const button = screen.getByRole("button", { name: /絞り込み/i });
+        expect(button).toBeInTheDocument();
+      });
 
-      // Enter to open
-      await user.keyboard("{Enter}");
+      it("キーボードナビゲーションが機能する", async () => {
+        const { user } = renderWithProviders(<SearchForm {...defaultProps} />);
 
-      await waitFor(() => {
-        expect(screen.getByText("Search Form Content")).toBeVisible();
+        // Tab to button
+        await user.tab();
+        const button = screen.getByRole("button", { name: /絞り込み/i });
+        expect(button).toHaveFocus();
+
+        // Enter to open
+        await user.keyboard("{Enter}");
+
+        await waitFor(() => {
+          expect(screen.getByText("Search Form Content")).toBeVisible();
+        });
       });
     });
   });

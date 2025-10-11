@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import React from "react";
 import { ApolloClient, InMemoryCache, HttpLink, gql } from "@apollo/client";
 import { renderWithProviders, screen, waitFor } from "../utils/test-utils";
 import { graphql, HttpResponse } from "msw";
@@ -98,13 +97,9 @@ describe("Apollo Client Integration Tests", () => {
         })
       );
 
-      const TestComponent = () => {
-        const [data, setData] = React.useState<any>(null);
+      const result = await client.query({ query: GET_INSTITUTIONS });
 
-        React.useEffect(() => {
-          client.query({ query: GET_INSTITUTIONS }).then((result: any) => setData(result.data));
-        }, []);
-
+      const TestComponent = ({ data }: { data: any }) => {
         if (!data) return <div>Loading...</div>;
 
         return (
@@ -116,7 +111,7 @@ describe("Apollo Client Integration Tests", () => {
         );
       };
 
-      renderWithProviders(<TestComponent />);
+      renderWithProviders(<TestComponent data={result.data} />);
 
       await waitFor(() => {
         mockInstitutions.forEach((inst) => {
