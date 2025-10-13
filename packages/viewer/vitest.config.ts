@@ -5,10 +5,20 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: "happy-dom",
-    setupFiles: ["./test/setup.ts"],
+    browser: {
+      enabled: true,
+      instances: [
+        {
+          browser: "chromium",
+        },
+      ],
+      provider: "playwright",
+      headless: true,
+    },
+    setupFiles: ["./test/browser-setup.ts"],
     css: true,
     exclude: ["node_modules", "e2e/**", "playwright-*/**"],
+    silent: true,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov"],
@@ -45,5 +55,8 @@ export default defineConfig({
       json: "./test-results/results.json",
       html: "./test-results/index.html",
     },
+  },
+  define: {
+    global: "window",
   },
 });

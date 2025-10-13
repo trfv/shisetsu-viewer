@@ -1,17 +1,17 @@
-import { render, RenderOptions, RenderResult } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { MockedProvider } from "@apollo/client/testing/react";
 import type { MockLink } from "@apollo/client/testing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import userEvent from "@testing-library/user-event";
+import { userEvent as browserUserEvent } from "@vitest/browser/context";
 
 // Mock Auth0 provider
 const MockAuth0Provider = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 };
 
-interface CustomRenderOptions extends Omit<RenderOptions, "wrapper"> {
+interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
   mocks?: MockLink.MockedResponse[];
@@ -34,12 +34,20 @@ export function renderWithProviders(
     theme = createTheme(),
     ...renderOptions
   }: CustomRenderOptions = {}
-): RenderResult & { user: ReturnType<typeof userEvent.setup> } {
-  const user = userEvent.setup();
+) {
+  // Use browser's native userEvent
+  const user = browserUserEvent;
 
   function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <MockedProvider mocks={mocks} showWarnings={false}>
+      <MockedProvider
+        mocks={mocks}
+        showWarnings={false}
+        defaultOptions={{
+          watchQuery: { fetchPolicy: "no-cache", errorPolicy: "all" },
+          query: { fetchPolicy: "no-cache", errorPolicy: "all" },
+        }}
+      >
         <MockAuth0Provider>
           <ThemeProvider theme={theme}>
             <MemoryRouter initialEntries={initialEntries}>
@@ -61,3 +69,4 @@ export function renderWithProviders(
 
 // Re-export everything from testing library
 export * from "@testing-library/react";
+export { userEvent } from "@vitest/browser/context";

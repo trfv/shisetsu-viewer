@@ -32,7 +32,13 @@ facilityNames.forEach((name) => {
   test(name, async ({ page }) => {
     console.time(name);
 
-    const searchPage = await prepare(page, name, new Date());
+    let searchPage;
+    try {
+      searchPage = await prepare(page, name, new Date());
+    } catch (e) {
+      console.error(`Failed to prepare page for ${name}, and skip to next.`);
+      throw e;
+    }
     const extractOutput = await extract(searchPage, calculateCount());
     expect(extractOutput.length).toBeGreaterThan(0);
     const transformOutput = await transform(extractOutput, name);

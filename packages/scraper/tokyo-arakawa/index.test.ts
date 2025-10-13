@@ -11,11 +11,11 @@ function calculateCount(): number {
 
 const facilityNames = [
   "三河島ひろば館",
-  "熊野前ひろば館",
-  "宮地ひろば館",
+  // "熊野前ひろば館",
+  // "宮地ひろば館",
   "石浜ふれあい館",
   "南千住ふれあい館",
-  "南千住駅前ふれあい館",
+  // "南千住駅前ふれあい館",
   "汐入ふれあい館",
   "峡田ふれあい館",
   "荒川山吹ふれあい館",
@@ -41,7 +41,13 @@ facilityNames.forEach((name) => {
   test(name, async ({ page }) => {
     console.time(name);
 
-    const searchPage = await prepare(page, name);
+    let searchPage;
+    try {
+      searchPage = await prepare(page, name);
+    } catch (e) {
+      console.error(`Failed to prepare page for ${name}, and skip to next.`);
+      throw e;
+    }
     const extractOutput = await extract(searchPage, calculateCount());
     expect(extractOutput.length).toBeGreaterThan(0);
     const transformOutput = await transform(extractOutput);

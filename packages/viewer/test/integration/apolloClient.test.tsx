@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import React from "react";
 import { ApolloClient, InMemoryCache, HttpLink, gql } from "@apollo/client";
 import { renderWithProviders, screen, waitFor } from "../utils/test-utils";
 import { graphql, HttpResponse } from "msw";
-import { server } from "../mocks/server";
 import { InstitutionsQuery } from "../../api/gql/graphql";
 
 interface ReservationMutation {
@@ -57,8 +55,17 @@ const CREATE_RESERVATION = gql`
 
 describe("Apollo Client Integration Tests", () => {
   let client: ApolloClient;
+  let server: any;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    // Import server dynamically based on environment
+    if (typeof window !== "undefined") {
+      const { worker } = await import("../mocks/browser");
+      server = worker;
+    } else {
+      const { server: nodeServer } = await import("../mocks/server");
+      server = nodeServer;
+    }
     // Use a mock fetch that works with MSW
     const httpLink = new HttpLink({
       uri: "http://localhost/graphql", // MSW will intercept this
@@ -90,13 +97,9 @@ describe("Apollo Client Integration Tests", () => {
         })
       );
 
-      const TestComponent = () => {
-        const [data, setData] = React.useState<any>(null);
+      const result = await client.query({ query: GET_INSTITUTIONS });
 
-        React.useEffect(() => {
-          client.query({ query: GET_INSTITUTIONS }).then((result: any) => setData(result.data));
-        }, []);
-
+      const TestComponent = ({ data }: { data: any }) => {
         if (!data) return <div>Loading...</div>;
 
         return (
@@ -108,7 +111,7 @@ describe("Apollo Client Integration Tests", () => {
         );
       };
 
-      renderWithProviders(<TestComponent />);
+      renderWithProviders(<TestComponent data={result.data} />);
 
       await waitFor(() => {
         mockInstitutions.forEach((inst) => {
