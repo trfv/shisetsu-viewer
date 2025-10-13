@@ -6,7 +6,7 @@ import { MockLink } from "@apollo/client/testing";
 // Import components to test
 // Using dynamic imports with explicit extensions to improve CI reliability
 import TopPage from "../../pages/Top";
-import { SearchForm } from "../../components/SearchForm/SearchForm";
+import { SearchForm } from "../../components/SearchForm";
 import { DataTable } from "../../components/DataTable";
 
 // Lazy load ReservationPage to avoid module fetch timing issues in CI
@@ -24,26 +24,11 @@ vi.mock("web-vitals", () => ({
   getTTFB: vi.fn(),
 }));
 
-// Mock hooks
+// Mock hooks - use module-level variable for browser mode compatibility
+let mockIsMobileValue = false;
 vi.mock("../../hooks/useIsMobile", () => ({
-  useIsMobile: vi.fn(() => false),
+  useIsMobile: () => mockIsMobileValue,
 }));
-
-// Mock router
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
-  return {
-    ...actual,
-    useNavigate: () => vi.fn(),
-    useLocation: () => ({
-      pathname: "/",
-      search: "",
-      hash: "",
-      state: {},
-      key: "default",
-    }),
-  };
-});
 
 // Helper function to create a variable matcher for reservation queries
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -99,6 +84,8 @@ const measureRenderTime = async (renderFunction: () => void): Promise<number> =>
 describe("Performance Test Suite", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Reset mock value
+    mockIsMobileValue = false;
   });
 
   describe("Component Render Performance", () => {
@@ -408,16 +395,22 @@ describe("Performance Test Suite", () => {
           { field: "date", headerName: "日付", type: "date" as const },
         ];
 
-        const renderTime = await measureRenderTime(() => {
-          renderWithProviders(
-            <DataTable
-              rows={largeDataset.slice(0, 100)} // 仮想化で実際には100件のみ表示
-              columns={columns}
-              hasNextPage={true}
-              fetchMore={vi.fn()}
-              onRowClick={vi.fn()}
-            />
-          );
+        const start = performance.now();
+        const { container } = renderWithProviders(
+          <DataTable
+            rows={largeDataset.slice(0, 100)} // 仮想化で実際には100件のみ表示
+            columns={columns}
+            hasNextPage={true}
+            fetchMore={vi.fn()}
+            onRowClick={vi.fn()}
+          />
+        );
+        const end = performance.now();
+        const renderTime = end - start;
+
+        // Wait for table to render
+        await waitFor(() => {
+          expect(container.querySelector("table")).toBeInTheDocument();
         });
 
         // 大量データのテーブルレンダリングは250ms以内
@@ -437,7 +430,7 @@ describe("Performance Test Suite", () => {
           { field: "municipality", headerName: "地区", type: "string" as const, sortable: true },
         ];
 
-        const { user } = renderWithProviders(
+        const { user, container } = renderWithProviders(
           <DataTable
             rows={dataset}
             columns={columns}
@@ -446,6 +439,11 @@ describe("Performance Test Suite", () => {
             onRowClick={vi.fn()}
           />
         );
+
+        // Wait for table to render
+        await waitFor(() => {
+          expect(container.querySelector("table")).toBeInTheDocument();
+        });
 
         // ソートヘッダーをクリック
         const sortHeader = screen.queryByRole("columnheader", { name: "施設名" });
@@ -853,6 +851,11 @@ describe("Performance Test Suite", () => {
           onRowClick={vi.fn()}
         />
       );
+
+      // Wait for table to render
+      await waitFor(() => {
+        expect(container.querySelector("table")).toBeInTheDocument();
+      });
 
       // 仮想スクロールにより実際のDOM要素数は制限される
       const tableRows = container.querySelectorAll('tr[role="row"]');

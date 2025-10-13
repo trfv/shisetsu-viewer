@@ -3,6 +3,9 @@ import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    include: ["web-vitals"],
+  },
   test: {
     globals: true,
     browser: {

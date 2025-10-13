@@ -1,11 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderWithProviders, screen, waitFor } from "../../test/utils/test-utils";
 import { SearchForm } from "./SearchForm";
-import { useIsMobile } from "../../hooks/useIsMobile";
 
-// Mock the useIsMobile hook
+// Create a mock function that can be controlled
+let mockIsMobileValue = false;
+
+// Mock the useIsMobile hook with a function that reads the value
 vi.mock("../../hooks/useIsMobile", () => ({
-  useIsMobile: vi.fn(() => false),
+  useIsMobile: () => mockIsMobileValue,
 }));
 
 describe("SearchForm Component", () => {
@@ -13,6 +15,11 @@ describe("SearchForm Component", () => {
     chips: ["東京都", "体育館", "利用可能"],
     children: <div>Search Form Content</div>,
   };
+
+  beforeEach(() => {
+    // Reset to default
+    mockIsMobileValue = false;
+  });
 
   describe("Rendering", () => {
     it("すべてのチップを表示する", () => {
@@ -101,11 +108,11 @@ describe("SearchForm Component", () => {
 
   describe("Mobile View", () => {
     beforeEach(() => {
-      vi.mocked(useIsMobile).mockImplementation(() => true);
+      mockIsMobileValue = true;
     });
 
     afterEach(() => {
-      vi.mocked(useIsMobile).mockImplementation(() => false);
+      mockIsMobileValue = false;
     });
 
     it("モバイルビューでアイコンボタンを表示する", () => {
@@ -133,11 +140,11 @@ describe("SearchForm Component", () => {
   describe("Accessibility", () => {
     describe("Mobile View", () => {
       beforeEach(() => {
-        vi.mocked(useIsMobile).mockImplementation(() => true);
+        mockIsMobileValue = true;
       });
 
       afterEach(() => {
-        vi.mocked(useIsMobile).mockImplementation(() => false);
+        mockIsMobileValue = false;
       });
 
       it("適切なARIA属性を持つ", () => {
