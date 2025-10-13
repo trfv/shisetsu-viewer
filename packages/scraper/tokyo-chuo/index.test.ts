@@ -73,7 +73,13 @@ scrapeTargets.forEach((target) => {
   test(title, async ({ page }) => {
     console.time(title);
 
-    const searchPage = await prepare(page, links);
+    let searchPage;
+    try {
+      searchPage = await prepare(page, links);
+    } catch (e) {
+      console.error(`Failed to prepare page for ${title}, and skip to next.`);
+      throw e;
+    }
     const extractOutput = await extract(searchPage, calculateCount());
     expect(extractOutput.length).toBeGreaterThan(0);
     const transformOutput = await transform(roomName, extractOutput);

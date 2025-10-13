@@ -20,7 +20,13 @@ facilityNames.forEach((name) => {
   test(name, async ({ page }) => {
     console.time(name);
 
-    const searchPage = await prepare(page, name);
+    let searchPage;
+    try {
+      searchPage = await prepare(page, name);
+    } catch (e) {
+      console.error(`Failed to prepare page for ${name}, and skip to next.`);
+      throw e;
+    }
     const extractOutput = await extract(
       searchPage,
       format(new Date(), "yyyy-MM-dd"),
