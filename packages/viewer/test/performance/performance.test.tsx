@@ -30,22 +30,6 @@ vi.mock("../../hooks/useIsMobile", () => ({
   useIsMobile: () => mockIsMobileValue,
 }));
 
-// Mock router hooks - needed for CI browser mode
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
-  return {
-    ...actual,
-    useNavigate: vi.fn(() => vi.fn()),
-    useLocation: vi.fn(() => ({
-      pathname: "/",
-      search: "",
-      hash: "",
-      state: null,
-      key: "default",
-    })),
-  };
-});
-
 // Helper function to create a variable matcher for reservation queries
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createReservationVariableMatcher = () => (variables: any) => {
