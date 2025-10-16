@@ -62,17 +62,58 @@ function buildISODateStrings(headerStartDate: string, dates: string[]): string[]
 }
 
 export async function prepare(page: Page, facilityName: string): Promise<Page> {
-  await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home");
-  await page.getByRole("tab", { name: "利用目的から探す" }).click();
-  await page.getByText("器楽演奏", { exact: true }).click();
-  await page.getByText("器楽演奏（現地相談）", { exact: true }).click();
-  await page.getByText("合唱・歌唱・詩吟", { exact: true }).click();
-  await page.getByText("合唱・歌唱・詩吟（現地相談）", { exact: true }).click();
-  await page.getByRole("button", { name: "検索" }).click();
-  await page.getByText(facilityName, { exact: true }).click();
-  await page.getByRole("button", { name: "次へ進む" }).click();
+  const maxRetries = 3;
+  const timeout = 5 * 60 * 1000; // 5 minutes
 
-  return page;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`[Sumida] Attempt ${attempt}/${maxRetries}: Navigating to ${facilityName}`);
+
+      await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home", {
+        timeout,
+        waitUntil: "load",
+      });
+
+      console.log(`[Sumida] Successfully loaded page, waiting for UI elements...`);
+
+      await page.getByRole("tab", { name: "利用目的から探す" }).click();
+      await page.getByText("器楽演奏", { exact: true }).click();
+      await page.getByText("器楽演奏（現地相談）", { exact: true }).click();
+      await page.getByText("合唱・歌唱・詩吟", { exact: true }).click();
+      await page.getByText("合唱・歌唱・詩吟（現地相談）", { exact: true }).click();
+      await page.getByRole("button", { name: "検索" }).click();
+      await page.getByText(facilityName, { exact: true }).click();
+      await page.getByRole("button", { name: "次へ進む" }).click();
+
+      console.log(`[Sumida] Successfully prepared page for ${facilityName}`);
+      return page;
+    } catch (error) {
+      console.error(`[Sumida] Attempt ${attempt}/${maxRetries} failed for ${facilityName}:`, error);
+
+      // Take screenshot on error (before test ends)
+      try {
+        const screenshotPath = `test-results/sumida-error-attempt-${attempt}-${Date.now()}.png`;
+        await page.screenshot({ path: screenshotPath, fullPage: true });
+        console.log(`[Sumida] Screenshot saved to ${screenshotPath}`);
+      } catch (screenshotError) {
+        console.error(`[Sumida] Failed to take screenshot:`, screenshotError);
+      }
+
+      // If this was the last attempt, rethrow the error
+      if (attempt === maxRetries) {
+        console.error(`[Sumida] All ${maxRetries} attempts failed. URL: ${page.url()}`);
+        throw error;
+      }
+
+      // Wait before retrying (exponential backoff)
+      const waitTime = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
+      console.log(`[Sumida] Waiting ${waitTime}ms before retry...`);
+      await page.waitForTimeout(waitTime);
+    }
+  }
+
+  // This should never be reached due to the throw in the loop
+  throw new Error(`[Sumida] Unexpected error: prepare function exited without returning`);
 }
 
 async function _extract(page: Page, division: string): Promise<ExtractOutput> {

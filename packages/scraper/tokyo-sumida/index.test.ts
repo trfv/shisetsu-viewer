@@ -20,25 +20,31 @@ facilityNames.forEach((name) => {
   test(name, async ({ page }) => {
     console.time(name);
 
-    const searchPage = await prepare(page, name);
-    const extractOutput = await extract(
-      searchPage,
-      format(new Date(), "yyyy-MM-dd"),
-      calculateCount()
-    );
-    expect(extractOutput.length).toBeGreaterThan(0);
-    const transformOutput = await transform(extractOutput);
-    expect(transformOutput.length).toBeGreaterThan(0);
+    try {
+      const searchPage = await prepare(page, name);
+      const extractOutput = await extract(
+        searchPage,
+        format(new Date(), "yyyy-MM-dd"),
+        calculateCount()
+      );
+      expect(extractOutput.length).toBeGreaterThan(0);
+      const transformOutput = await transform(extractOutput);
+      expect(transformOutput.length).toBeGreaterThan(0);
 
-    console.timeEnd(name);
+      console.timeEnd(name);
 
-    await fs.mkdir("test-results/tokyo-sumida", { recursive: true });
-    await fs.writeFile(
-      `test-results/tokyo-sumida/${name}.json`,
-      JSON.stringify({ facility_name: name, data: transformOutput })
-    );
+      await fs.mkdir("test-results/tokyo-sumida", { recursive: true });
+      await fs.writeFile(
+        `test-results/tokyo-sumida/${name}.json`,
+        JSON.stringify({ facility_name: name, data: transformOutput })
+      );
 
-    await searchPage.close();
-    await page.close();
+      await searchPage.close();
+      await page.close();
+    } catch (error) {
+      console.error(`[Test] Failed to process ${name}:`, error);
+      console.timeEnd(name);
+      throw error;
+    }
   });
 });

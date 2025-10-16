@@ -48,5 +48,5 @@ export default defineConfig({
     trace: process.env.CI ? "off" : "on-first-retry",
   },
   testMatch: ["**/index.test.ts"],
-  testIgnore: process.env.CI ? ["**/tokyo-sumida/**"] : [],
+  // testIgnore: process.env.CI ? ["**/tokyo-sumida/**"] : [],
 });
