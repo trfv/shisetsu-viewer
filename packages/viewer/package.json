@@ -33,7 +33,7 @@
     "msw": "2.11.3",
     "rollup-plugin-visualizer": "6.0.3",
     "storybook": "9.1.7",
-    "vite": "7.1.7",
+    "vite": "7.1.11",
     "vitest": "3.2.4",
     "web-vitals": "5.1.0"
   },
