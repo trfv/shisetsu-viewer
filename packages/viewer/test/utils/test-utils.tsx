@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { MockedProvider } from "@apollo/client/testing/react";
 import type { MockLink } from "@apollo/client/testing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { userEvent as browserUserEvent } from "@vitest/browser/context";
+import { userEvent as browserUserEvent } from "vitest/browser";
 
 // Mock Auth0 provider
 const MockAuth0Provider = ({ children }: { children: ReactNode }) => {
@@ -69,4 +69,4 @@ export function renderWithProviders(
 
 // Re-export everything from testing library
 export * from "@testing-library/react";
-export { userEvent } from "@vitest/browser/context";
+export { userEvent } from "vitest/browser";
