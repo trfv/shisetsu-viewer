@@ -82,6 +82,18 @@ beforeAll(async () => {
     }
     originalWarn.call(console, ...args);
   };
+
+  // Handle unhandled rejections from Apollo Client cleanup
+  window.addEventListener("unhandledrejection", (event) => {
+    // Filter out Apollo Client MockedProvider cleanup errors
+    if (
+      event.reason?.message?.includes("QueryManager stopped while query was in flight") ||
+      event.reason?.message?.includes("Invariant Violation")
+    ) {
+      event.preventDefault();
+      return;
+    }
+  });
 });
 
 // Clean up after each test

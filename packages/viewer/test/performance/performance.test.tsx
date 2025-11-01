@@ -694,10 +694,16 @@ describe("Performance Test Suite", () => {
         // Wait a bit to ensure query is complete
         await new Promise((resolve) => setTimeout(resolve, 100));
 
-        unmount1();
+        // Wrap unmount to handle any unhandled rejections from Apollo Client cleanup
+        await new Promise<void>((resolve) => {
+          setTimeout(() => {
+            unmount1();
+            resolve();
+          }, 0);
+        });
 
-        // Wait before second render
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        // Wait longer before second render to ensure Apollo Client cleanup is complete
+        await new Promise((resolve) => setTimeout(resolve, 200));
 
         // 2回目レンダリング（キャッシュされたデータを使用）
         const start = performance.now();
@@ -726,7 +732,13 @@ describe("Performance Test Suite", () => {
         // Wait before unmounting
         await new Promise((resolve) => setTimeout(resolve, 100));
 
-        unmount2();
+        // Wrap unmount to handle any unhandled rejections from Apollo Client cleanup
+        await new Promise<void>((resolve) => {
+          setTimeout(() => {
+            unmount2();
+            resolve();
+          }, 0);
+        });
 
         // キャッシュされたデータの表示は200ms以内
         expect(cachedRenderTime).toBeLessThan(200);
