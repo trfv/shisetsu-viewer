@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { playwright } from "@vitest/browser-playwright";
 
 export default defineConfig({
   plugins: [react()],
@@ -15,7 +16,7 @@ export default defineConfig({
           browser: "chromium",
         },
       ],
-      provider: "playwright",
+      provider: playwright(),
       headless: true,
     },
     setupFiles: ["./test/browser-setup.ts"],
