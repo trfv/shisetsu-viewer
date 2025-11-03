@@ -30,7 +30,7 @@
     "@vitejs/plugin-react-swc": "4.2.0",
     "@vitest/browser": "4.0.6",
     "@vitest/browser-playwright": "4.0.6",
-    "esbuild": "0.25.11",
+    "esbuild": "0.25.12",
     "msw": "2.11.6",
     "rollup-plugin-visualizer": "6.0.5",
     "storybook": "10.0.2",
