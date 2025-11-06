@@ -14,23 +14,23 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@eslint/js": "9.39.0",
+    "@eslint/js": "9.39.1",
     "@mizchi/lsmcp": "0.10.0",
     "@tsconfig/strictest": "2.0.7",
-    "@types/node": "24.9.2",
-    "@typescript/native-preview": "7.0.0-dev.20251101.1",
-    "eslint": "9.39.0",
+    "@types/node": "24.10.0",
+    "@typescript/native-preview": "7.0.0-dev.20251106.1",
+    "eslint": "9.39.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.0.1",
-    "eslint-plugin-storybook": "10.0.2",
+    "eslint-plugin-storybook": "10.0.5",
     "globals": "16.5.0",
     "husky": "9.1.7",
     "lint-staged": "16.2.6",
     "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "4.3.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.46.2"
+    "typescript-eslint": "8.46.3"
   },
   "engines": {
     "node": ">=22",
