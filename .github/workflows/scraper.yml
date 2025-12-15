@@ -57,7 +57,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "lts/*"
       - name: Cache node_modules
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -69,7 +69,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Cache Playwright browsers
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ~/.cache/ms-playwright
           key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
