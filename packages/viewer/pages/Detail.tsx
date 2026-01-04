@@ -236,7 +236,9 @@ const formatDateIso = (value: Date) => formatISO(value, { representation: "date"
 export default () => {
   const { id } = useParams<"id">();
   const [tab, setTab] = useState<Tab>("institution");
-  const { isAnonymous } = useAuth0();
+  const {
+    userInfo: { anonymous, trial },
+  } = useAuth0();
 
   const handleTabChange = useCallback(
     (_: ChangeEvent<unknown>, newValue: Tab) => setTab(newValue),
@@ -276,13 +278,20 @@ export default () => {
       </div>
       <TabGroup className={classes.tabGroup} onChange={handleTabChange} value={tab}>
         <Tab className={classes.tab} label="施設情報" value="institution" />
-        <Tab className={classes.tab} disabled={isAnonymous} label="予約状況" value="reservation" />
+        <Tab
+          className={classes.tab}
+          disabled={anonymous || trial}
+          label="予約状況"
+          value="reservation"
+        />
       </TabGroup>
       <TabPanel className={classes.tabPanel} currentValue={tab} tabValue="institution">
         <InstitutionTab institution={institution} loading={loading} />
       </TabPanel>
       <TabPanel className={classes.tabPanel} currentValue={tab} tabValue="reservation">
-        {!isAnonymous && <ReservationTab id={id} municipality={institution?.municipality} />}
+        {!(anonymous || trial) && (
+          <ReservationTab id={id} municipality={institution?.municipality} />
+        )}
       </TabPanel>
     </StyledInstitutionDetail>
   );

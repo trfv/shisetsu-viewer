@@ -25,7 +25,7 @@ export const LoginButton = () => {
               }),
           ]
         : ["ログイン", LoginIcon, () => login({})],
-    [token]
+    [token, login, logout]
   );
 
   if (isLoading) {

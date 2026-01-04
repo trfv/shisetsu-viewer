@@ -10,7 +10,9 @@ import { IconButton } from "../IconButton";
 
 export const HeaderMenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAnonymous } = useAuth0();
+  const {
+    userInfo: { anonymous, trial },
+  } = useAuth0();
 
   const toggleDrawer = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -26,11 +28,11 @@ export const HeaderMenuButton = () => {
           <IconButton edge="start" onClick={toggleDrawer}>
             <Close />
           </IconButton>
-          {isAnonymous ? (
+          {anonymous ? (
             <span>予約検索</span>
           ) : (
             <Link onClick={toggleDrawer} to={ROUTES.reservation}>
-              予約検索
+              {`予約検索${trial ? "（トライアル）" : ""}`}
             </Link>
           )}
           <Link onClick={toggleDrawer} to={ROUTES.institution}>

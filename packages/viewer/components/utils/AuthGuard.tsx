@@ -4,9 +4,12 @@ import { useAuth0 } from "../../contexts/Auth0";
 import { Loading } from "../../pages/Loading";
 
 export const AuthGuard = ({ Component }: { Component: React.ReactNode }): React.ReactNode => {
-  const { isLoading, isAnonymous } = useAuth0();
+  const {
+    isLoading,
+    userInfo: { anonymous },
+  } = useAuth0();
 
-  if (isAnonymous) {
+  if (anonymous) {
     return isLoading ? <Loading /> : <Navigate replace={true} to={ROUTES.top} />;
   }
 

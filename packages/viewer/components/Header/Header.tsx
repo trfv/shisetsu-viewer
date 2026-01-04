@@ -10,7 +10,9 @@ import { LoginButton } from "../LoginButton";
 
 export const Header = () => {
   const isMobile = useIsMobile();
-  const { isAnonymous } = useAuth0();
+  const {
+    userInfo: { anonymous, trial },
+  } = useAuth0();
 
   return (
     <StyledHeader className={classes.appBar}>
@@ -30,7 +32,11 @@ export const Header = () => {
           </BaseBox>
           {!isMobile && (
             <BaseBox className={classes.menu}>
-              {isAnonymous ? <span>予約検索</span> : <Link to={ROUTES.reservation}>予約検索</Link>}
+              {anonymous ? (
+                <span>予約検索</span>
+              ) : (
+                <Link to={ROUTES.reservation}>{`予約検索${trial ? "（トライアル）" : ""}`}</Link>
+              )}
               <Link to={ROUTES.institution}>施設検索</Link>
             </BaseBox>
           )}
