@@ -1,6 +1,5 @@
 import {
   Auth0Client,
-  User,
   type Auth0ClientOptions,
   type GetTokenSilentlyOptions,
   type LogoutOptions,
@@ -17,9 +16,7 @@ import {
 } from "react";
 import { requestInterval } from "../utils/interval";
 
-type Role = "user" | "anonymous";
-const ROLE_NAMESPACE = "https://app.shisetsudb.com/role";
-type CustomUser = User & { [ROLE_NAMESPACE]: Role };
+const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";
 
 type Props = Auth0ClientOptions & {
   children: ReactNode;
@@ -28,7 +25,7 @@ type Props = Auth0ClientOptions & {
 type Auth0Context = {
   isLoading: boolean;
   token: string;
-  isAnonymous: boolean;
+  userInfo: { anonymous: boolean; trial: boolean };
   login(o: RedirectLoginOptions): void;
   logout(o: LogoutOptions): void;
 };
@@ -36,7 +33,7 @@ type Auth0Context = {
 const initlalContext: Auth0Context = {
   isLoading: true,
   token: "",
-  isAnonymous: true,
+  userInfo: { anonymous: true, trial: false },
   login: () => null,
   logout: () => null,
 };
@@ -48,7 +45,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   const [auth0Client] = useState(() => new Auth0Client(clientOptions));
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
-  const [isAnonymous, setIsAnonymous] = useState(initlalContext.isAnonymous);
+  const [userInfo, setUserInfo] = useState(initlalContext.userInfo);
   // Type assertion needed: Auth0 2.8.0 allows authorizationParams.scope to be
   // string | Record<string, string>, but GetTokenSilentlyOptions type still expects
   // only string. The runtime supports both formats, so this assertion is safe.
@@ -59,9 +56,9 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
     [clientOptions.authorizationParams]
   ) as GetTokenSilentlyOptions;
 
-  const getRole = useCallback(async () => {
-    const user = await auth0Client.getUser<CustomUser>();
-    return user?.[ROLE_NAMESPACE] || "anonymous";
+  const getIdTokenClaims = useCallback(async () => {
+    const claims = await auth0Client.getIdTokenClaims();
+    return claims?.[TOKEN_CLAIM_KEY];
   }, [auth0Client]);
 
   const login = useCallback(
@@ -76,7 +73,11 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
       const token = await auth0Client.getTokenSilently(options);
       if (token) {
         setToken(token);
-        setIsAnonymous((await getRole()) === "anonymous");
+        const idTokenClaims = await getIdTokenClaims();
+        setUserInfo({
+          anonymous: idTokenClaims?.role === "anonymous",
+          trial: idTokenClaims?.trial === true,
+        });
         return true;
       } else {
         return false;
@@ -84,7 +85,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
     } catch {
       return false;
     }
-  }, [auth0Client, options, getRole]);
+  }, [auth0Client, options, getIdTokenClaims]);
 
   useEffect(() => {
     const initAuth0 = async () => {
@@ -111,7 +112,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
       value={{
         isLoading,
         token,
-        isAnonymous,
+        userInfo,
         login,
         logout,
       }}
