@@ -1,8 +1,5 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { HttpLink } from "@apollo/client/link/http";
+import { graphqlRequest } from "./request.mjs";
 
-const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
 
 let _targets = [
@@ -21,17 +18,6 @@ const targets = _targets;
 const title = `update institutions`;
 
 console.time(title);
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: GRAPHQL_ENDPOINT,
-    headers: {
-      "Content-type": "application/json",
-      "X-Hasura-Admin-Secret": ADMIN_SECRET,
-    },
-  }),
-  cache: new InMemoryCache(),
-});
 
 const FEE_DIVISION_MAP = {
   "": "FEE_DIVISION_INVALID",
@@ -171,8 +157,8 @@ for (const target of targets) {
     });
   });
 
-  const response = await client.mutate({
-    mutation: gql(`
+  const response = await graphqlRequest(
+    `
     mutation update_institutions(
         $data: [institutions_insert_input!]!
         $columns: [institutions_update_column!]!
@@ -186,16 +172,14 @@ for (const target of targets) {
         ) {
             affected_rows
         }
-    }`),
-    variables: {
+    }`,
+    {
       data: data,
       columns: columns,
-    },
-  });
-
-  console.log(
-    `data: ${data.length}, affected_rows: ${response["data"]["insert_institutions"]["affected_rows"]}`
+    }
   );
+
+  console.log(`data: ${data.length}, affected_rows: ${response.insert_institutions.affected_rows}`);
 }
 
 console.timeEnd(title);

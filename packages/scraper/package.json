@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@apollo/client": "4.0.9",
     "@playwright/test": "1.56.1",
     "date-fns": "4.1.0"
   },
