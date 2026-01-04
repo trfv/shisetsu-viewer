@@ -1,10 +1,6 @@
 import fs from "fs/promises";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { HttpLink } from "@apollo/client/link/http";
 import { isWeekend } from "date-fns";
-
-const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
+import { graphqlRequest } from "./request.mjs";
 
 let _targets = [
   "kanagawa-kawasaki",
@@ -23,29 +19,16 @@ const title = `update reservations`;
 
 console.time(title);
 
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: GRAPHQL_ENDPOINT,
-    headers: {
-      "Content-type": "application/json",
-      "X-Hasura-Admin-Secret": ADMIN_SECRET,
-    },
-  }),
-  cache: new InMemoryCache(),
-});
-
-const holidays = await client.query({
-  query: gql`
-    query list_holidays {
-      holidays(where: { date: { _gte: now } }) {
-        date
-      }
+const holidays = await graphqlRequest(`
+  query list_holidays {
+    holidays(where: { date: { _gte: now } }) {
+      date
     }
-  `,
-});
+  }
+`);
 
-const holidayMap = holidays["data"]["holidays"].reduce((acc, cur) => {
-  acc[cur["date"]] = true;
+const holidayMap = holidays.holidays.reduce((acc, cur) => {
+  acc[cur.date] = true;
   return acc;
 }, {});
 
@@ -69,8 +52,8 @@ for (const target of targets) {
   const prefecture = `PREFECTURE_${p.toUpperCase()}`;
   const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
 
-  const institutions = await client.query({
-    query: gql`
+  const institutions = await graphqlRequest(
+    `
       query list_institutions($prefecture: prefecture, $municipality: String!) {
         institutions(
           where: { prefecture: { _eq: $prefecture }, municipality: { _eq: $municipality } }
@@ -81,14 +64,14 @@ for (const target of targets) {
         }
       }
     `,
-    variables: {
+    {
       prefecture,
       municipality,
-    },
-  });
+    }
+  );
 
-  const institutionIdMap = institutions["data"]["institutions"].reduce((acc, cur) => {
-    acc[`${cur["building_system_name"]}-${cur["institution_system_name"]}`] = cur["id"];
+  const institutionIdMap = institutions.institutions.reduce((acc, cur) => {
+    acc[`${cur.building_system_name}-${cur.institution_system_name}`] = cur.id;
     return acc;
   }, {});
 
@@ -121,8 +104,8 @@ for (const target of targets) {
 
   for (let i = 0; i < uniqueData.length; i += chunk) {
     const chunkData = uniqueData.slice(i, i + chunk);
-    const response = await client.mutate({
-      mutation: gql`
+    const response = await graphqlRequest(
+      `
         mutation update_reservations($data: [reservations_insert_input!]!) {
           insert_reservations(
             objects: $data
@@ -135,13 +118,13 @@ for (const target of targets) {
           }
         }
       `,
-      variables: {
+      {
         data: chunkData,
-      },
-    });
+      }
+    );
 
     console.log(
-      `data: ${i + 1} ~ ${i + chunkData.length}, affected_rows: ${response["data"]["insert_reservations"]["affected_rows"]}`
+      `data: ${i + 1} ~ ${i + chunkData.length}, affected_rows: ${response.insert_reservations.affected_rows}`
     );
   }
 }
