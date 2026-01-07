@@ -1,6 +1,6 @@
 export { ApolloProvider as ClientProvider } from "@apollo/client/react";
 import { ApolloClient, InMemoryCache, HttpLink, type FieldFunctionOptions } from "@apollo/client";
-import type { Institutions, Reservations } from "../api/gql/graphql";
+import type { Institutions, Reservations, Searchable_Reservations } from "../api/gql/graphql";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 
 const offsetLimitPagination = <T>() => ({
@@ -36,6 +36,7 @@ export const client = (token: string) => {
       typePolicies: {
         Query: {
           fields: {
+            searchable_reservations: offsetLimitPagination<Searchable_Reservations>(),
             reservations: offsetLimitPagination<Reservations>(),
             institutions: offsetLimitPagination<Institutions>(),
           },
