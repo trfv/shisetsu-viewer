@@ -34,7 +34,7 @@
     "esbuild": "0.27.0",
     "msw": "2.12.3",
     "rollup-plugin-visualizer": "6.0.5",
-    "storybook": "10.1.2",
+    "storybook": "10.1.10",
     "vite": "7.2.4",
     "vitest": "4.0.14",
     "web-vitals": "5.1.0"
