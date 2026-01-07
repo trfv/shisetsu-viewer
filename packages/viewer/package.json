@@ -30,6 +30,7 @@
     "@vitejs/plugin-react-swc": "4.2.2",
     "@vitest/browser": "4.0.14",
     "@vitest/browser-playwright": "4.0.14",
+    "dotenv": "17.2.3",
     "esbuild": "0.27.0",
     "msw": "2.12.3",
     "rollup-plugin-visualizer": "6.0.5",
