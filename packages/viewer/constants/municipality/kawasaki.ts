@@ -16,6 +16,8 @@ export const KAWASAKI_RESERVATION_STATUS: Readonly<Record<string, string>> = {
 export const KAWASAKI_RESERVATION_DIVISION: Readonly<Record<string, string>> = {
   [ReservationDivision.MORNING]: "午前",
   [ReservationDivision.AFTERNOON]: "午後",
+  [ReservationDivision.AFTERNOON_ONE]: "午後１",
+  [ReservationDivision.AFTERNOON_TWO]: "午後２",
   [ReservationDivision.EVENING]: "夜間",
 };
 
