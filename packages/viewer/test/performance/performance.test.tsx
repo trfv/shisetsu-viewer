@@ -41,15 +41,14 @@ const createReservationVariableMatcher = () => (variables: any) => {
     variables.isAvailableBrass === null &&
     variables.isAvailablePercussion === null &&
     variables.institutionSizes === null &&
-    typeof variables.reservationStatus1 === "object" &&
-    typeof variables.reservationStatus2 === "object" &&
-    typeof variables.reservationStatus3 === "object" &&
-    typeof variables.reservationStatus4 === "object" &&
     typeof variables.offset === "number" &&
     typeof variables.limit === "number" &&
     Array.isArray(variables.municipality) &&
     typeof variables.startDate === "string" &&
     typeof variables.endDate === "string" &&
+    variables.isMorningVacant === null &&
+    variables.isAfternoonVacant === null &&
+    variables.isEveningVacant === null &&
     variables.isHoliday === null
   );
 };
@@ -57,11 +56,15 @@ const createReservationVariableMatcher = () => (variables: any) => {
 // Helper function to create large datasets
 const createLargeDataset = (size: number) => {
   return Array.from({ length: size }, (_, index) => ({
-    __typename: "reservations",
+    __typename: "searchable_reservations",
     id: `reservation-${index + 1}`,
-    date: new Date(),
-    reservation: {},
-    updated_at: new Date(),
+    reservation: {
+      __typename: "reservations",
+      id: `reservation-${index + 1}`,
+      date: new Date(),
+      reservation: {},
+      updated_at: new Date(),
+    },
     institution: {
       __typename: "institutions",
       id: `institution-${index + 1}`,
@@ -173,8 +176,8 @@ describe("Performance Test Suite", () => {
             },
             result: {
               data: {
-                reservations: largeDataset.slice(0, 100), // 初期表示分
-                reservations_aggregate: {
+                searchable_reservations: largeDataset.slice(0, 100), // 初期表示分
+                searchable_searchable_reservations_aggregate: {
                   aggregate: { count: largeDataset.length },
                 },
               },
@@ -211,8 +214,8 @@ describe("Performance Test Suite", () => {
           },
           result: {
             data: {
-              reservations: dataset.slice(0, 100),
-              reservations_aggregate: {
+              searchable_reservations: dataset.slice(0, 100),
+              searchable_reservations_aggregate: {
                 aggregate: { count: dataset.length },
               },
             },
@@ -268,8 +271,8 @@ describe("Performance Test Suite", () => {
             },
             result: {
               data: {
-                reservations: largeDataset,
-                reservations_aggregate: {
+                searchable_reservations: largeDataset,
+                searchable_reservations_aggregate: {
                   aggregate: { count: largeDataset.length },
                 },
               },
@@ -609,8 +612,8 @@ describe("Performance Test Suite", () => {
           },
           result: {
             data: {
-              reservations: createLargeDataset(10),
-              reservations_aggregate: { aggregate: { count: 10 } },
+              searchable_reservations: createLargeDataset(10),
+              searchable_reservations_aggregate: { aggregate: { count: 10 } },
             },
           },
         }));
@@ -663,8 +666,8 @@ describe("Performance Test Suite", () => {
           },
           result: {
             data: {
-              reservations: mockData,
-              reservations_aggregate: { aggregate: { count: mockData.length } },
+              searchable_reservations: mockData,
+              searchable_reservations_aggregate: { aggregate: { count: mockData.length } },
             },
           },
           delay: 0, // No delay for immediate response

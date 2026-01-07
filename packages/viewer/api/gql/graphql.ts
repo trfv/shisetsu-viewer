@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
+export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -18,11 +18,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  _fee_division: { input: any; output: any };
   availavility_division: { input: any; output: any };
   bigint: { input: any; output: any };
   date: { input: any; output: any };
   equipment_division: { input: any; output: any };
+  fee_division: { input: any; output: any };
   jsonb: { input: any; output: any };
   numeric: { input: any; output: any };
   prefecture: { input: any; output: any };
@@ -89,19 +89,6 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-/** Boolean expression to compare columns of type "_fee_division". All fields are combined with logical 'AND'. */
-export type _Fee_Division_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _gt?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _gte?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["_fee_division"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _lte?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _neq?: InputMaybe<Scalars["_fee_division"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["_fee_division"]["input"]>>;
-};
-
 /** Boolean expression to compare columns of type "availavility_division". All fields are combined with logical 'AND'. */
 export type Availavility_Division_Comparison_Exp = {
   _eq?: InputMaybe<Scalars["availavility_division"]["input"]>;
@@ -127,6 +114,14 @@ export type Bigint_Comparison_Exp = {
   _neq?: InputMaybe<Scalars["bigint"]["input"]>;
   _nin?: InputMaybe<Array<Scalars["bigint"]["input"]>>;
 };
+
+/** ordering argument of a cursor */
+export enum Cursor_Ordering {
+  /** ascending ordering of the cursor */
+  Asc = "ASC",
+  /** descending ordering of the cursor */
+  Desc = "DESC",
+}
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
@@ -154,6 +149,23 @@ export type Equipment_Division_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars["equipment_division"]["input"]>>;
 };
 
+/** Boolean expression to compare columns of type "fee_division". All fields are combined with logical 'AND'. */
+export type Fee_Division_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _eq?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _gt?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _gte?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _in?: InputMaybe<Array<Array<Scalars["fee_division"]["input"]>>>;
+  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
+  _lt?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _lte?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _neq?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  _nin?: InputMaybe<Array<Array<Scalars["fee_division"]["input"]>>>;
+};
+
 /** columns and relationships of "institutions" */
 export type Institutions = {
   __typename?: "institutions";
@@ -164,7 +176,7 @@ export type Institutions = {
   building_system_name?: Maybe<Scalars["String"]["output"]>;
   capacity?: Maybe<Scalars["Int"]["output"]>;
   created_at: Scalars["timestamp"]["output"];
-  fee_divisions: Scalars["_fee_division"]["output"];
+  fee_divisions: Array<Scalars["fee_division"]["output"]>;
   holiday_usage_fee: Scalars["jsonb"]["output"];
   id: Scalars["uuid"]["output"];
   institution: Scalars["String"]["output"];
@@ -245,7 +257,7 @@ export type Institutions_Bool_Exp = {
   building_system_name?: InputMaybe<String_Comparison_Exp>;
   capacity?: InputMaybe<Int_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  fee_divisions?: InputMaybe<_Fee_Division_Comparison_Exp>;
+  fee_divisions?: InputMaybe<Fee_Division_Array_Comparison_Exp>;
   holiday_usage_fee?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   institution?: InputMaybe<String_Comparison_Exp>;
@@ -278,6 +290,7 @@ export type Institutions_Max_Fields = {
   building_system_name?: Maybe<Scalars["String"]["output"]>;
   capacity?: Maybe<Scalars["Int"]["output"]>;
   created_at?: Maybe<Scalars["timestamp"]["output"]>;
+  fee_divisions?: Maybe<Array<Scalars["fee_division"]["output"]>>;
   id?: Maybe<Scalars["uuid"]["output"]>;
   institution?: Maybe<Scalars["String"]["output"]>;
   institution_kana?: Maybe<Scalars["String"]["output"]>;
@@ -308,6 +321,7 @@ export type Institutions_Min_Fields = {
   building_system_name?: Maybe<Scalars["String"]["output"]>;
   capacity?: Maybe<Scalars["Int"]["output"]>;
   created_at?: Maybe<Scalars["timestamp"]["output"]>;
+  fee_divisions?: Maybe<Array<Scalars["fee_division"]["output"]>>;
   id?: Maybe<Scalars["uuid"]["output"]>;
   institution?: Maybe<Scalars["String"]["output"]>;
   institution_kana?: Maybe<Scalars["String"]["output"]>;
@@ -441,6 +455,46 @@ export type Institutions_Stddev_Samp_Fields = {
   capacity?: Maybe<Scalars["Float"]["output"]>;
 };
 
+/** Streaming cursor of the table "institutions" */
+export type Institutions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Institutions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Institutions_Stream_Cursor_Value_Input = {
+  address?: InputMaybe<Scalars["String"]["input"]>;
+  area?: InputMaybe<Scalars["numeric"]["input"]>;
+  building?: InputMaybe<Scalars["String"]["input"]>;
+  building_kana?: InputMaybe<Scalars["String"]["input"]>;
+  building_system_name?: InputMaybe<Scalars["String"]["input"]>;
+  capacity?: InputMaybe<Scalars["Int"]["input"]>;
+  created_at?: InputMaybe<Scalars["timestamp"]["input"]>;
+  fee_divisions?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
+  holiday_usage_fee?: InputMaybe<Scalars["jsonb"]["input"]>;
+  id?: InputMaybe<Scalars["uuid"]["input"]>;
+  institution?: InputMaybe<Scalars["String"]["input"]>;
+  institution_kana?: InputMaybe<Scalars["String"]["input"]>;
+  institution_size?: InputMaybe<Scalars["String"]["input"]>;
+  institution_system_name?: InputMaybe<Scalars["String"]["input"]>;
+  is_available_brass?: InputMaybe<Scalars["availavility_division"]["input"]>;
+  is_available_percussion?: InputMaybe<Scalars["availavility_division"]["input"]>;
+  is_available_strings?: InputMaybe<Scalars["availavility_division"]["input"]>;
+  is_available_woodwind?: InputMaybe<Scalars["availavility_division"]["input"]>;
+  is_equipped_music_stand?: InputMaybe<Scalars["equipment_division"]["input"]>;
+  is_equipped_piano?: InputMaybe<Scalars["equipment_division"]["input"]>;
+  layout_image_url?: InputMaybe<Scalars["String"]["input"]>;
+  lottery_period?: InputMaybe<Scalars["String"]["input"]>;
+  municipality?: InputMaybe<Scalars["String"]["input"]>;
+  note?: InputMaybe<Scalars["String"]["input"]>;
+  prefecture?: InputMaybe<Scalars["prefecture"]["input"]>;
+  updated_at?: InputMaybe<Scalars["timestamp"]["input"]>;
+  website_url?: InputMaybe<Scalars["String"]["input"]>;
+  weekday_usage_fee?: InputMaybe<Scalars["jsonb"]["input"]>;
+};
+
 /** aggregate sum on columns */
 export type Institutions_Sum_Fields = {
   __typename?: "institutions_sum_fields";
@@ -553,6 +607,12 @@ export type Query_Root = {
   reservations_aggregate: Reservations_Aggregate;
   /** fetch data from the table: "reservations" using primary key columns */
   reservations_by_pk?: Maybe<Reservations>;
+  /** fetch data from the table: "searchable_reservations" */
+  searchable_reservations: Array<Searchable_Reservations>;
+  /** fetch aggregated fields from the table: "searchable_reservations" */
+  searchable_reservations_aggregate: Searchable_Reservations_Aggregate;
+  /** fetch data from the table: "searchable_reservations" using primary key columns */
+  searchable_reservations_by_pk?: Maybe<Searchable_Reservations>;
 };
 
 export type Query_RootInstitutionsArgs = {
@@ -592,6 +652,26 @@ export type Query_RootReservations_AggregateArgs = {
 };
 
 export type Query_RootReservations_By_PkArgs = {
+  id: Scalars["bigint"]["input"];
+};
+
+export type Query_RootSearchable_ReservationsArgs = {
+  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
+  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
+};
+
+export type Query_RootSearchable_Reservations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
+  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
+};
+
+export type Query_RootSearchable_Reservations_By_PkArgs = {
   id: Scalars["bigint"]["input"];
 };
 
@@ -732,6 +812,25 @@ export type Reservations_Stddev_Samp_Fields = {
   id?: Maybe<Scalars["Float"]["output"]>;
 };
 
+/** Streaming cursor of the table "reservations" */
+export type Reservations_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Reservations_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Reservations_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars["timestamp"]["input"]>;
+  date?: InputMaybe<Scalars["date"]["input"]>;
+  id?: InputMaybe<Scalars["bigint"]["input"]>;
+  institution_id?: InputMaybe<Scalars["uuid"]["input"]>;
+  is_holiday?: InputMaybe<Scalars["Boolean"]["input"]>;
+  reservation?: InputMaybe<Scalars["jsonb"]["input"]>;
+  updated_at?: InputMaybe<Scalars["timestamp"]["input"]>;
+};
+
 /** aggregate sum on columns */
 export type Reservations_Sum_Fields = {
   __typename?: "reservations_sum_fields";
@@ -756,6 +855,179 @@ export type Reservations_Variance_Fields = {
   id?: Maybe<Scalars["Float"]["output"]>;
 };
 
+/** columns and relationships of "searchable_reservations" */
+export type Searchable_Reservations = {
+  __typename?: "searchable_reservations";
+  date?: Maybe<Scalars["date"]["output"]>;
+  id: Scalars["bigint"]["output"];
+  /** An object relationship */
+  institution?: Maybe<Institutions>;
+  institution_id?: Maybe<Scalars["uuid"]["output"]>;
+  is_afternoon_vacant?: Maybe<Scalars["Boolean"]["output"]>;
+  is_evening_vacant?: Maybe<Scalars["Boolean"]["output"]>;
+  /** A computed field, executes function "reservations_is_holiday" */
+  is_holiday?: Maybe<Scalars["Boolean"]["output"]>;
+  is_morning_vacant?: Maybe<Scalars["Boolean"]["output"]>;
+  /** An object relationship */
+  reservation?: Maybe<Reservations>;
+};
+
+/** aggregated selection of "searchable_reservations" */
+export type Searchable_Reservations_Aggregate = {
+  __typename?: "searchable_reservations_aggregate";
+  aggregate?: Maybe<Searchable_Reservations_Aggregate_Fields>;
+  nodes: Array<Searchable_Reservations>;
+};
+
+/** aggregate fields of "searchable_reservations" */
+export type Searchable_Reservations_Aggregate_Fields = {
+  __typename?: "searchable_reservations_aggregate_fields";
+  avg?: Maybe<Searchable_Reservations_Avg_Fields>;
+  count: Scalars["Int"]["output"];
+  max?: Maybe<Searchable_Reservations_Max_Fields>;
+  min?: Maybe<Searchable_Reservations_Min_Fields>;
+  stddev?: Maybe<Searchable_Reservations_Stddev_Fields>;
+  stddev_pop?: Maybe<Searchable_Reservations_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Searchable_Reservations_Stddev_Samp_Fields>;
+  sum?: Maybe<Searchable_Reservations_Sum_Fields>;
+  var_pop?: Maybe<Searchable_Reservations_Var_Pop_Fields>;
+  var_samp?: Maybe<Searchable_Reservations_Var_Samp_Fields>;
+  variance?: Maybe<Searchable_Reservations_Variance_Fields>;
+};
+
+/** aggregate fields of "searchable_reservations" */
+export type Searchable_Reservations_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
+  distinct?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+/** aggregate avg on columns */
+export type Searchable_Reservations_Avg_Fields = {
+  __typename?: "searchable_reservations_avg_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** Boolean expression to filter rows from the table "searchable_reservations". All fields are combined with a logical 'AND'. */
+export type Searchable_Reservations_Bool_Exp = {
+  _and?: InputMaybe<Array<Searchable_Reservations_Bool_Exp>>;
+  _not?: InputMaybe<Searchable_Reservations_Bool_Exp>;
+  _or?: InputMaybe<Array<Searchable_Reservations_Bool_Exp>>;
+  date?: InputMaybe<Date_Comparison_Exp>;
+  id?: InputMaybe<Bigint_Comparison_Exp>;
+  institution?: InputMaybe<Institutions_Bool_Exp>;
+  institution_id?: InputMaybe<Uuid_Comparison_Exp>;
+  is_afternoon_vacant?: InputMaybe<Boolean_Comparison_Exp>;
+  is_evening_vacant?: InputMaybe<Boolean_Comparison_Exp>;
+  is_holiday?: InputMaybe<Boolean_Comparison_Exp>;
+  is_morning_vacant?: InputMaybe<Boolean_Comparison_Exp>;
+  reservation?: InputMaybe<Reservations_Bool_Exp>;
+};
+
+/** aggregate max on columns */
+export type Searchable_Reservations_Max_Fields = {
+  __typename?: "searchable_reservations_max_fields";
+  date?: Maybe<Scalars["date"]["output"]>;
+  id?: Maybe<Scalars["bigint"]["output"]>;
+  institution_id?: Maybe<Scalars["uuid"]["output"]>;
+};
+
+/** aggregate min on columns */
+export type Searchable_Reservations_Min_Fields = {
+  __typename?: "searchable_reservations_min_fields";
+  date?: Maybe<Scalars["date"]["output"]>;
+  id?: Maybe<Scalars["bigint"]["output"]>;
+  institution_id?: Maybe<Scalars["uuid"]["output"]>;
+};
+
+/** Ordering options when selecting data from "searchable_reservations". */
+export type Searchable_Reservations_Order_By = {
+  date?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  institution?: InputMaybe<Institutions_Order_By>;
+  institution_id?: InputMaybe<Order_By>;
+  is_afternoon_vacant?: InputMaybe<Order_By>;
+  is_evening_vacant?: InputMaybe<Order_By>;
+  is_holiday?: InputMaybe<Order_By>;
+  is_morning_vacant?: InputMaybe<Order_By>;
+  reservation?: InputMaybe<Reservations_Order_By>;
+};
+
+/** select columns of table "searchable_reservations" */
+export enum Searchable_Reservations_Select_Column {
+  /** column name */
+  Date = "date",
+  /** column name */
+  Id = "id",
+  /** column name */
+  InstitutionId = "institution_id",
+  /** column name */
+  IsAfternoonVacant = "is_afternoon_vacant",
+  /** column name */
+  IsEveningVacant = "is_evening_vacant",
+  /** column name */
+  IsMorningVacant = "is_morning_vacant",
+}
+
+/** aggregate stddev on columns */
+export type Searchable_Reservations_Stddev_Fields = {
+  __typename?: "searchable_reservations_stddev_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Searchable_Reservations_Stddev_Pop_Fields = {
+  __typename?: "searchable_reservations_stddev_pop_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Searchable_Reservations_Stddev_Samp_Fields = {
+  __typename?: "searchable_reservations_stddev_samp_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** Streaming cursor of the table "searchable_reservations" */
+export type Searchable_Reservations_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Searchable_Reservations_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Searchable_Reservations_Stream_Cursor_Value_Input = {
+  date?: InputMaybe<Scalars["date"]["input"]>;
+  id?: InputMaybe<Scalars["bigint"]["input"]>;
+  institution_id?: InputMaybe<Scalars["uuid"]["input"]>;
+  is_afternoon_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
+  is_evening_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
+  is_morning_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+/** aggregate sum on columns */
+export type Searchable_Reservations_Sum_Fields = {
+  __typename?: "searchable_reservations_sum_fields";
+  id?: Maybe<Scalars["bigint"]["output"]>;
+};
+
+/** aggregate var_pop on columns */
+export type Searchable_Reservations_Var_Pop_Fields = {
+  __typename?: "searchable_reservations_var_pop_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** aggregate var_samp on columns */
+export type Searchable_Reservations_Var_Samp_Fields = {
+  __typename?: "searchable_reservations_var_samp_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** aggregate variance on columns */
+export type Searchable_Reservations_Variance_Fields = {
+  __typename?: "searchable_reservations_variance_fields";
+  id?: Maybe<Scalars["Float"]["output"]>;
+};
+
 export type Subscription_Root = {
   __typename?: "subscription_root";
   /** fetch data from the table: "institutions" */
@@ -764,12 +1036,24 @@ export type Subscription_Root = {
   institutions_aggregate: Institutions_Aggregate;
   /** fetch data from the table: "institutions" using primary key columns */
   institutions_by_pk?: Maybe<Institutions>;
+  /** fetch data from the table in a streaming manner: "institutions" */
+  institutions_stream: Array<Institutions>;
   /** fetch data from the table: "reservations" */
   reservations: Array<Reservations>;
   /** fetch aggregated fields from the table: "reservations" */
   reservations_aggregate: Reservations_Aggregate;
   /** fetch data from the table: "reservations" using primary key columns */
   reservations_by_pk?: Maybe<Reservations>;
+  /** fetch data from the table in a streaming manner: "reservations" */
+  reservations_stream: Array<Reservations>;
+  /** fetch data from the table: "searchable_reservations" */
+  searchable_reservations: Array<Searchable_Reservations>;
+  /** fetch aggregated fields from the table: "searchable_reservations" */
+  searchable_reservations_aggregate: Searchable_Reservations_Aggregate;
+  /** fetch data from the table: "searchable_reservations" using primary key columns */
+  searchable_reservations_by_pk?: Maybe<Searchable_Reservations>;
+  /** fetch data from the table in a streaming manner: "searchable_reservations" */
+  searchable_reservations_stream: Array<Searchable_Reservations>;
 };
 
 export type Subscription_RootInstitutionsArgs = {
@@ -792,6 +1076,12 @@ export type Subscription_RootInstitutions_By_PkArgs = {
   id: Scalars["uuid"]["input"];
 };
 
+export type Subscription_RootInstitutions_StreamArgs = {
+  batch_size: Scalars["Int"]["input"];
+  cursor: Array<InputMaybe<Institutions_Stream_Cursor_Input>>;
+  where?: InputMaybe<Institutions_Bool_Exp>;
+};
+
 export type Subscription_RootReservationsArgs = {
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
@@ -810,6 +1100,38 @@ export type Subscription_RootReservations_AggregateArgs = {
 
 export type Subscription_RootReservations_By_PkArgs = {
   id: Scalars["bigint"]["input"];
+};
+
+export type Subscription_RootReservations_StreamArgs = {
+  batch_size: Scalars["Int"]["input"];
+  cursor: Array<InputMaybe<Reservations_Stream_Cursor_Input>>;
+  where?: InputMaybe<Reservations_Bool_Exp>;
+};
+
+export type Subscription_RootSearchable_ReservationsArgs = {
+  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
+  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
+};
+
+export type Subscription_RootSearchable_Reservations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
+  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
+};
+
+export type Subscription_RootSearchable_Reservations_By_PkArgs = {
+  id: Scalars["bigint"]["input"];
+};
+
+export type Subscription_RootSearchable_Reservations_StreamArgs = {
+  batch_size: Scalars["Int"]["input"];
+  cursor: Array<InputMaybe<Searchable_Reservations_Stream_Cursor_Input>>;
+  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
@@ -853,7 +1175,7 @@ export type InstitutionDetailQuery = {
     institution: string;
     capacity?: number | null;
     area?: any | null;
-    fee_divisions: any;
+    fee_divisions: Array<any>;
     weekday_usage_fee: any;
     holiday_usage_fee: any;
     address: string;
@@ -934,20 +1256,23 @@ export type ReservationsQueryVariables = Exact<{
   startDate?: InputMaybe<Scalars["date"]["input"]>;
   endDate?: InputMaybe<Scalars["date"]["input"]>;
   isHoliday?: InputMaybe<Scalars["Boolean"]["input"]>;
-  reservationStatus1?: InputMaybe<Scalars["jsonb"]["input"]>;
-  reservationStatus2?: InputMaybe<Scalars["jsonb"]["input"]>;
-  reservationStatus3?: InputMaybe<Scalars["jsonb"]["input"]>;
-  reservationStatus4?: InputMaybe<Scalars["jsonb"]["input"]>;
+  isMorningVacant?: InputMaybe<Scalars["Boolean"]["input"]>;
+  isAfternoonVacant?: InputMaybe<Scalars["Boolean"]["input"]>;
+  isEveningVacant?: InputMaybe<Scalars["Boolean"]["input"]>;
 }>;
 
 export type ReservationsQuery = {
   __typename?: "query_root";
-  reservations: Array<{
-    __typename?: "reservations";
+  searchable_reservations: Array<{
+    __typename?: "searchable_reservations";
     id: any;
-    date: any;
-    reservation: any;
-    updated_at: any;
+    reservation?: {
+      __typename?: "reservations";
+      id: any;
+      date: any;
+      reservation: any;
+      updated_at: any;
+    } | null;
     institution?: {
       __typename?: "institutions";
       id: any;
@@ -957,9 +1282,9 @@ export type ReservationsQuery = {
       institution_size: string;
     } | null;
   }>;
-  reservations_aggregate: {
-    __typename?: "reservations_aggregate";
-    aggregate?: { __typename?: "reservations_aggregate_fields"; count: number } | null;
+  searchable_reservations_aggregate: {
+    __typename?: "searchable_reservations_aggregate";
+    aggregate?: { __typename?: "searchable_reservations_aggregate_fields"; count: number } | null;
   };
 };
 
@@ -1591,27 +1916,18 @@ export const ReservationsDocument = {
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "reservationStatus1" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "jsonb" } },
-          defaultValue: { kind: "NullValue" },
+          variable: { kind: "Variable", name: { kind: "Name", value: "isMorningVacant" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "reservationStatus2" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "jsonb" } },
-          defaultValue: { kind: "NullValue" },
+          variable: { kind: "Variable", name: { kind: "Name", value: "isAfternoonVacant" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "reservationStatus3" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "jsonb" } },
-          defaultValue: { kind: "NullValue" },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "reservationStatus4" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "jsonb" } },
-          defaultValue: { kind: "NullValue" },
+          variable: { kind: "Variable", name: { kind: "Name", value: "isEveningVacant" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
         },
       ],
       selectionSet: {
@@ -1619,7 +1935,7 @@ export const ReservationsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "reservations" },
+            name: { kind: "Name", value: "searchable_reservations" },
             arguments: [
               {
                 kind: "Argument",
@@ -1798,6 +2114,57 @@ export const ReservationsDocument = {
                           },
                           {
                             kind: "ObjectField",
+                            name: { kind: "Name", value: "is_morning_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isMorningVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "is_afternoon_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isAfternoonVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "is_evening_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isEveningVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
                             name: { kind: "Name", value: "is_holiday" },
                             value: {
                               kind: "ObjectValue",
@@ -1812,103 +2179,6 @@ export const ReservationsDocument = {
                                 },
                               ],
                             },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "_or" },
-                      value: {
-                        kind: "ListValue",
-                        values: [
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus1" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus2" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus3" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus4" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
                           },
                         ],
                       },
@@ -1935,9 +2205,19 @@ export const ReservationsDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "date" } },
-                { kind: "Field", name: { kind: "Name", value: "reservation" } },
-                { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "reservation" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "date" } },
+                      { kind: "Field", name: { kind: "Name", value: "reservation" } },
+                      { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                    ],
+                  },
+                },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "institution" },
@@ -1957,7 +2237,7 @@ export const ReservationsDocument = {
           },
           {
             kind: "Field",
-            name: { kind: "Name", value: "reservations_aggregate" },
+            name: { kind: "Name", value: "searchable_reservations_aggregate" },
             arguments: [
               {
                 kind: "Argument",
@@ -2126,6 +2406,57 @@ export const ReservationsDocument = {
                           },
                           {
                             kind: "ObjectField",
+                            name: { kind: "Name", value: "is_morning_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isMorningVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "is_afternoon_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isAfternoonVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "is_evening_vacant" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "_eq" },
+                                  value: {
+                                    kind: "Variable",
+                                    name: { kind: "Name", value: "isEveningVacant" },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: "ObjectField",
                             name: { kind: "Name", value: "is_holiday" },
                             value: {
                               kind: "ObjectValue",
@@ -2140,103 +2471,6 @@ export const ReservationsDocument = {
                                 },
                               ],
                             },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "_or" },
-                      value: {
-                        kind: "ListValue",
-                        values: [
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus1" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus2" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus3" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            kind: "ObjectValue",
-                            fields: [
-                              {
-                                kind: "ObjectField",
-                                name: { kind: "Name", value: "reservation" },
-                                value: {
-                                  kind: "ObjectValue",
-                                  fields: [
-                                    {
-                                      kind: "ObjectField",
-                                      name: { kind: "Name", value: "_contains" },
-                                      value: {
-                                        kind: "Variable",
-                                        name: { kind: "Name", value: "reservationStatus4" },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
                           },
                         ],
                       },

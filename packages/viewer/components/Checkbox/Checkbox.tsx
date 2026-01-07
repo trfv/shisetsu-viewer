@@ -22,6 +22,7 @@ export const Checkbox: FC<Props> = ({
 }) => {
   const Box = box(size);
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <Box>
       <FormControlLabel
         control={

@@ -16,7 +16,7 @@ import { ROUTES } from "../constants/routes";
 import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
-import { formatDate } from "../utils/format";
+import { formatDate, formatDatetime } from "../utils/format";
 import {
   MunicipalityOptions,
   SupportedMunicipalityMap,
@@ -42,7 +42,7 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
+const COLUMNS: Columns<ReservationsQuery["searchable_reservations"][number]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -69,8 +69,9 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "date",
     headerName: "日付",
-    type: "date",
+    type: "getter",
     hideIfMobile: true,
+    valueGetter: (params) => formatDate(params.row.reservation?.date),
   },
   {
     field: "reservation",
@@ -80,7 +81,7 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
     hideIfMobile: true,
     valueGetter: (params) => {
       const municipality = params.row.institution?.municipality as SupportedMunicipality;
-      const obj = params.row.reservation as Record<string, string>;
+      const obj = params.row.reservation?.reservation as Record<string, string>;
       return formatReservationMap(municipality, obj);
     },
     /** TODO hover したときに中身がすべて表示されるように修正する */
@@ -88,8 +89,9 @@ const COLUMNS: Columns<ReservationsQuery["reservations"][number]> = [
   {
     field: "updated_at",
     headerName: "取得日時",
-    type: "datetime",
+    type: "getter",
     hideIfMobile: true,
+    valueGetter: (params) => formatDatetime(params.row.reservation?.updated_at),
   },
 ];
 
@@ -139,22 +141,25 @@ export default () => {
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     resevationSearchParams;
 
-  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
-    setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
-  }, []);
+  const handleMunicipalityChange = useCallback(
+    (event: SelectChangeEvent<string>): void => {
+      setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
+    },
+    [setQueryParams]
+  );
 
   const handleStartDateChange = useCallback(
     (date: Date | null): void => {
       setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
     },
-    [maxDate, endDate]
+    [setQueryParams, endDate]
   );
 
   const handleEndDateChange = useCallback(
     (date: Date | null): void => {
       setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
     },
-    [minDate, startDate]
+    [setQueryParams, startDate]
   );
 
   const handleFilterChange = useCallback(
@@ -165,7 +170,7 @@ export default () => {
         : filter.filter((v) => v !== value);
       setQueryParams({ f: next });
     },
-    [filter]
+    [setQueryParams, filter]
   );
 
   const handleAvailableInstrumentsChange = useCallback(
@@ -176,7 +181,7 @@ export default () => {
         : availableInstruments.filter((v) => v !== value);
       setQueryParams({ a: next });
     },
-    [availableInstruments]
+    [setQueryParams, availableInstruments]
   );
 
   const handleInstitutoinSizesChange = useCallback(
@@ -187,7 +192,7 @@ export default () => {
         : institutionSizes.filter((v) => v !== value);
       setQueryParams({ i: next });
     },
-    [institutionSizes]
+    [setQueryParams, institutionSizes]
   );
 
   const chips = [
@@ -267,7 +272,7 @@ export default () => {
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
-        ) : !municipality || !data?.reservations?.length ? (
+        ) : !municipality || !data?.searchable_reservations?.length ? (
           <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
@@ -275,16 +280,19 @@ export default () => {
             fetchMore={async () => {
               fetchMore({
                 variables: {
-                  offset: data?.reservations.length,
+                  offset: data?.searchable_reservations.length,
                 },
               });
             }}
-            hasNextPage={data.reservations.length !== data?.reservations_aggregate.aggregate?.count} // Relay Styleにするときに直す
+            hasNextPage={
+              data.searchable_reservations.length !==
+              data?.searchable_reservations_aggregate.aggregate?.count
+            } // Relay Styleにするときに直す
             onRowClick={(params) =>
               params.row.institution?.id &&
               navigate(ROUTES.detail.replace(":id", params.row.institution.id as string))
             }
-            rows={data.reservations}
+            rows={data.searchable_reservations}
           />
         )}
       </div>

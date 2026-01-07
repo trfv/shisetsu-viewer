@@ -1,6 +1,6 @@
 import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
 import type { ReservationsQueryVariables } from "../api/gql/graphql";
-import { AvailabilityDivision, ReservationDivision, ReservationStatus } from "../constants/enums";
+import { AvailabilityDivision, ReservationDivision } from "../constants/enums";
 import {
   ReservationDivisionMap,
   ReservationStatusMap,
@@ -203,71 +203,8 @@ export const toReservationQueryVariables = ({
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
     isHoliday: isOnlyHoliday ? true : null,
-    reservationStatus1: {
-      ...(isOnlyMorningVacant ? { [ReservationDivision.MORNING]: ReservationStatus.VACANT } : {}),
-      ...(isOnlyAfternoonVacant
-        ? {
-            [ReservationDivision.AFTERNOON]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyEveningVacant ? { [ReservationDivision.EVENING]: ReservationStatus.VACANT } : {}),
-    },
-    reservationStatus2: {
-      ...(isOnlyMorningVacant
-        ? {
-            [ReservationDivision.MORNING_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.MORNING_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyAfternoonVacant
-        ? {
-            [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyEveningVacant
-        ? {
-            [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-    },
-    reservationStatus3: {
-      ...(isOnlyMorningVacant
-        ? {
-            [ReservationDivision.MORNING]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyAfternoonVacant
-        ? {
-            [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyEveningVacant
-        ? {
-            [ReservationDivision.EVENING_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.EVENING_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-    },
-    reservationStatus4: {
-      ...(isOnlyMorningVacant
-        ? {
-            [ReservationDivision.MORNING]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyAfternoonVacant
-        ? {
-            [ReservationDivision.AFTERNOON_ONE]: ReservationStatus.VACANT,
-            [ReservationDivision.AFTERNOON_TWO]: ReservationStatus.VACANT,
-          }
-        : {}),
-      ...(isOnlyEveningVacant
-        ? {
-            [ReservationDivision.EVENING]: ReservationStatus.VACANT,
-          }
-        : {}),
-    },
+    isMorningVacant: isOnlyMorningVacant ? true : null,
+    isAfternoonVacant: isOnlyAfternoonVacant ? true : null,
+    isEveningVacant: isOnlyEveningVacant ? true : null,
   };
 };

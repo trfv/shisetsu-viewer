@@ -23,6 +23,7 @@ export const Default: StoryObj<typeof DatePicker> = {
     },
   },
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<Date | null>(new Date(2021, 0, 1));
     return <DatePicker {...args} onChange={(v) => setValue(v)} value={value} />;
   },

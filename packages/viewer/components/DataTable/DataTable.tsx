@@ -58,7 +58,7 @@ export const DataTable = <T extends Row>({
     return () => {
       observer.unobserve(element);
     };
-  }, [target.current, fetchMore]);
+  }, [fetchMore]);
 
   const cols = columns.filter((column) => !(column.hide || (isMobile && column.hideIfMobile)));
 

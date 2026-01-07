@@ -130,9 +130,12 @@ export default () => {
 
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
-  const handleMunicipalityChange = useCallback((event: SelectChangeEvent<string>): void => {
-    setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
-  }, []);
+  const handleMunicipalityChange = useCallback(
+    (event: SelectChangeEvent<string>): void => {
+      setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
+    },
+    [setQueryParams]
+  );
 
   const handleAvailableInstrumentsChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
@@ -142,7 +145,7 @@ export default () => {
         : availableInstruments.filter((v) => v !== value);
       setQueryParams({ a: next });
     },
-    [availableInstruments]
+    [setQueryParams, availableInstruments]
   );
 
   const handleInstitutoinSizesChange = useCallback(
@@ -153,7 +156,7 @@ export default () => {
         : institutionSizes.filter((v) => v !== value);
       setQueryParams({ i: next });
     },
-    [institutionSizes]
+    [setQueryParams, institutionSizes]
   );
 
   const chips = [

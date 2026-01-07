@@ -14,6 +14,7 @@ type Props = Omit<InputProps, "size"> & {
 export const Input: FC<Props> = ({ label, size = "auto", loading, value, ...rest }: Props) => {
   const Box = box(size);
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer axis="vertical" size={4} />

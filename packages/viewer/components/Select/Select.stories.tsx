@@ -30,6 +30,7 @@ export const Basic: StoryObj<typeof Select> = {
     },
   },
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [{ value }, updateArgs] = useArgs();
     const onChange = (event: SelectChangeEvent<string>) =>
       updateArgs({ ...args, value: event.target.value });

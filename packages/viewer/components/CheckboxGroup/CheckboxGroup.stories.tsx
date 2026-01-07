@@ -21,6 +21,7 @@ export const Default: StoryObj<typeof CheckboxGroup> = {
     },
   },
   render: ({ label }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [values, setValues] = useState<string[]>([]);
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
       setValues((prev) =>
