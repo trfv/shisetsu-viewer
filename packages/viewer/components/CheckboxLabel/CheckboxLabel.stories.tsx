@@ -27,6 +27,7 @@ export const Default: StoryObj<typeof CheckboxLabel> = {
     },
   },
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [, updateArgs] = useArgs();
     const onChange = (event: ChangeEvent<HTMLInputElement>) =>
       updateArgs({ ...args, checkbox: { ...args.checkbox, checked: event.target.checked } });

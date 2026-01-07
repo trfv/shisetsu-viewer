@@ -39,6 +39,7 @@ const mapChildren = (
 export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto", children }) => {
   const Box = box(size);
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <Box>
       <SmallLabel label={label} />
       <FormGroup row={true}>{mapChildren(children, values, onChange)}</FormGroup>

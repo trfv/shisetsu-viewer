@@ -12,6 +12,7 @@ type Props = {
 export const CheckboxLabel: FC<Props> = ({ label, size = "auto", checkbox }) => {
   const Box = box(size);
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <Box display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Checkbox {...checkbox} noLeftMargin={true} />

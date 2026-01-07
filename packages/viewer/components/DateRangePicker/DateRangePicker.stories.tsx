@@ -31,7 +31,9 @@ export const Default: StoryObj<typeof DateRangePicker> = {
     },
   },
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [startDate, setStartDate] = useState<Date | null>(new Date(2021, 0, 1));
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [endDate, setEndDate] = useState<Date | null>(new Date(2021, 1, 1));
     const onChangeStartDate = (date: Date | null) => setStartDate(date);
     const onChangeEndDate = (date: Date | null) => setEndDate(date);

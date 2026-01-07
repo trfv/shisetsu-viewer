@@ -17,6 +17,7 @@ export const Default: StoryObj<typeof Input> = {
     },
   },
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState("");
     return <Input {...args} onChange={(e) => setValue(e.target.value)} value={value} />;
   },

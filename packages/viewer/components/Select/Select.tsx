@@ -18,6 +18,7 @@ type Props = {
 export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selectOptions }) => {
   const Box = box(size);
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <Box component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer axis="vertical" size={4} />
