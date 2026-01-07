@@ -11,12 +11,11 @@ query reservations(
   $startDate: date
   $endDate: date
   $isHoliday: Boolean
-  $reservationStatus1: jsonb = null
-  $reservationStatus2: jsonb = null
-  $reservationStatus3: jsonb = null
-  $reservationStatus4: jsonb = null
+  $isMorningVacant: Boolean
+  $isAfternoonVacant: Boolean
+  $isEveningVacant: Boolean
 ) {
-  reservations(
+  searchable_reservations(
     offset: $offset
     limit: $limit
     where: {
@@ -31,21 +30,21 @@ query reservations(
           institution_size: { _in: $institutionSizes }
         }
         date: { _gte: $startDate, _lte: $endDate }
+        is_morning_vacant: { _eq: $isMorningVacant }
+        is_afternoon_vacant: { _eq: $isAfternoonVacant }
+        is_evening_vacant: { _eq: $isEveningVacant }
         is_holiday: { _eq: $isHoliday }
       }
-      _or: [
-        { reservation: { _contains: $reservationStatus1 } }
-        { reservation: { _contains: $reservationStatus2 } }
-        { reservation: { _contains: $reservationStatus3 } }
-        { reservation: { _contains: $reservationStatus4 } }
-      ]
     }
     order_by: { date: asc }
   ) {
     id
-    date
-    reservation
-    updated_at
+    reservation {
+      id
+      date
+      reservation
+      updated_at
+    }
     institution {
       id
       municipality
@@ -54,7 +53,7 @@ query reservations(
       institution_size
     }
   }
-  reservations_aggregate(
+  searchable_reservations_aggregate(
     where: {
       _and: {
         institution: {
@@ -67,14 +66,11 @@ query reservations(
           institution_size: { _in: $institutionSizes }
         }
         date: { _gte: $startDate, _lte: $endDate }
+        is_morning_vacant: { _eq: $isMorningVacant }
+        is_afternoon_vacant: { _eq: $isAfternoonVacant }
+        is_evening_vacant: { _eq: $isEveningVacant }
         is_holiday: { _eq: $isHoliday }
       }
-      _or: [
-        { reservation: { _contains: $reservationStatus1 } }
-        { reservation: { _contains: $reservationStatus2 } }
-        { reservation: { _contains: $reservationStatus3 } }
-        { reservation: { _contains: $reservationStatus4 } }
-      ]
     }
   ) {
     aggregate {
