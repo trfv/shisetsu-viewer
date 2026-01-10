@@ -4,7 +4,6 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { ApolloClient, InMemoryCache, HttpLink, gql } from "@apollo/client";
 import { renderWithProviders, screen, waitFor } from "../utils/test-utils";
 import { graphql, HttpResponse } from "msw";
-import { InstitutionsQuery } from "../../api/gql/graphql";
 
 interface ReservationMutation {
   createReservation: {
@@ -136,13 +135,13 @@ describe("Apollo Client Integration Tests", () => {
         })
       );
 
-      const result = await client.query<InstitutionsQuery>({
+      const result = await client.query<any>({
         query: GET_INSTITUTIONS,
         variables: { municipality: "東京都新宿区" },
       });
 
       expect(result.data?.institutions).toHaveLength(3);
-      result.data?.institutions.forEach((inst) => {
+      result.data?.institutions.forEach((inst: any) => {
         expect(inst.municipality).toBe("東京都新宿区");
       });
     });
@@ -162,14 +161,14 @@ describe("Apollo Client Integration Tests", () => {
       );
 
       // First page
-      const firstPage = await client.query<InstitutionsQuery>({
+      const firstPage = await client.query<any>({
         query: GET_INSTITUTIONS,
         variables: { limit: 10, offset: 0 },
       });
       expect(firstPage.data?.institutions).toHaveLength(10);
 
       // Second page
-      const secondPage = await client.query<InstitutionsQuery>({
+      const secondPage = await client.query<any>({
         query: GET_INSTITUTIONS,
         variables: { limit: 10, offset: 10 },
       });
@@ -294,7 +293,7 @@ describe("Apollo Client Integration Tests", () => {
         })
       );
 
-      const result = await client.query<InstitutionsQuery>({
+      const result = await client.query<any>({
         query: GET_INSTITUTIONS,
         errorPolicy: "all",
       });

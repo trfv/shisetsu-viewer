@@ -5,6 +5,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client/react";
 import type { InstitutionDetailQuery } from "../api/gql/graphql";
 import { InstitutionDetailDocument, InstitutionReservationsDocument } from "../api/gql/graphql";
+import { extractNodes } from "../utils/relay";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
@@ -34,7 +35,9 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution: InstitutionDetailQuery["institutions_by_pk"] | undefined;
+  institution:
+    | InstitutionDetailQuery["institutions_connection"]["edges"][number]["node"]
+    | undefined;
   loading: boolean;
 }) => {
   return (
@@ -153,14 +156,12 @@ const InstitutionTab = ({
 };
 
 const ReservationTab = ({ id, municipality }: { id: string; municipality: string | undefined }) => {
-  const startDate = formatDateIso(today);
-
   if (!municipality) {
     throw new Error("municipality is undefined");
   }
 
   const { loading, data, error } = useQuery(InstitutionReservationsDocument, {
-    variables: { id, startDate },
+    variables: { id, startDate: formatISO(today, { representation: "date" }) },
     fetchPolicy: "no-cache",
   });
 
@@ -168,7 +169,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
     throw new Error(error.message);
   }
 
-  const reservations = data?.reservations;
+  const reservations = extractNodes(data?.reservations_connection);
 
   return (
     <div className={classes.reservationContainer}>
@@ -177,9 +178,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
           <Spinner />
         </div>
       ) : !reservations?.length ||
-        ["MUNICIPALITY_BUNKYO", "MUNICIPALITY_EDOGAWA", "MUNICIPALITY_TOSHIMA"].includes(
-          municipality
-        ) ? ( // 文京区と江戸川区と豊島区のシステムの改悪により更新困難になったため
+        MUNICIPALITIES_WITHOUT_RESERVATION_DATA.includes(municipality) ? (
         <div className={classes.reservationNoData}>表示するデータが存在しません</div>
       ) : (
         <TableContainer>
@@ -231,7 +230,13 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
 type Tab = "institution" | "reservation";
 
 const today = new Date();
-const formatDateIso = (value: Date) => formatISO(value, { representation: "date" });
+
+// システムの改悪により更新困難な自治体
+const MUNICIPALITIES_WITHOUT_RESERVATION_DATA = [
+  "MUNICIPALITY_BUNKYO",
+  "MUNICIPALITY_EDOGAWA",
+  "MUNICIPALITY_TOSHIMA",
+];
 
 export default () => {
   const { id } = useParams<"id">();
@@ -258,7 +263,7 @@ export default () => {
     throw new Error(error.message);
   }
 
-  const institution = data?.institutions_by_pk;
+  const institution = extractNodes(data?.institutions_connection)[0];
 
   return (
     <StyledInstitutionDetail className={classes.pageBox}>
