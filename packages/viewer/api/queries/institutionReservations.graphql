@@ -1,11 +1,16 @@
 query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
-  reservations(
+  reservations_connection(
     where: { institution_id: { _eq: $id }, date: { _gte: $startDate, _lte: $endDate } }
     order_by: { date: asc }
+    first: 1000
   ) {
-    id
-    date
-    reservation
-    updated_at
+    edges {
+      node {
+        id
+        date
+        reservation
+        updated_at
+      }
+    }
   }
 }

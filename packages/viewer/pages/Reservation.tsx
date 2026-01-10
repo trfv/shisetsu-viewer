@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client/react";
 import { NetworkStatus } from "@apollo/client";
 import type { ReservationsQuery } from "../api/gql/graphql";
 import { ReservationsDocument } from "../api/gql/graphql";
+import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -42,7 +43,9 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-const COLUMNS: Columns<ReservationsQuery["searchable_reservations"][number]> = [
+const COLUMNS: Columns<
+  ReservationsQuery["searchable_reservations_connection"]["edges"][number]["node"]
+> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -137,6 +140,12 @@ export default () => {
     // TODO Snackbar を描画する
     throw new Error(error.message);
   }
+
+  const {
+    edges: reservations,
+    endCursor,
+    hasNextPage: hasMore,
+  } = extractRelayParams(data?.searchable_reservations_connection);
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     resevationSearchParams;
@@ -272,27 +281,28 @@ export default () => {
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
-        ) : !municipality || !data?.searchable_reservations?.length ? (
+        ) : !municipality || !reservations?.length ? (
           <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             columns={COLUMNS}
             fetchMore={async () => {
-              fetchMore({
+              if (!hasMore || !endCursor) return;
+              await fetchMore({
                 variables: {
-                  offset: data?.searchable_reservations.length,
+                  after: endCursor,
                 },
               });
             }}
-            hasNextPage={
-              data.searchable_reservations.length !==
-              data?.searchable_reservations_aggregate.aggregate?.count
-            } // Relay Styleにするときに直す
-            onRowClick={(params) =>
-              params.row.institution?.id &&
-              navigate(ROUTES.detail.replace(":id", params.row.institution.id as string))
-            }
-            rows={data.searchable_reservations}
+            hasNextPage={hasMore}
+            onRowClick={(params) => {
+              const institutionId =
+                params.row.institution?.id && extractSinglePkFromRelayId(params.row.institution.id);
+              if (institutionId) {
+                navigate(ROUTES.detail.replace(":id", institutionId as string));
+              }
+            }}
+            rows={reservations}
           />
         )}
       </div>

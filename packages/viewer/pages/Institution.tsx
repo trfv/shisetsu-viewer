@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client/react";
 import { NetworkStatus } from "@apollo/client";
 import type { InstitutionsQuery } from "../api/gql/graphql";
 import { InstitutionsDocument } from "../api/gql/graphql";
+import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -28,7 +29,7 @@ import {
 } from "../utils/search";
 import { styled } from "../utils/theme";
 
-const COLUMNS: Columns<InstitutionsQuery["institutions"][number]> = [
+const COLUMNS: Columns<InstitutionsQuery["institutions_connection"]["edges"][number]["node"]> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -128,6 +129,12 @@ export default () => {
     throw new Error(error.message);
   }
 
+  const {
+    edges: institutions,
+    endCursor,
+    hasNextPage: hasMore,
+  } = extractRelayParams(data?.institutions_connection);
+
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
   const handleMunicipalityChange = useCallback(
@@ -209,23 +216,27 @@ export default () => {
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
-        ) : !municipality || !data?.institutions?.length ? (
+        ) : !municipality || !institutions?.length ? (
           <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             columns={COLUMNS}
             fetchMore={async () => {
-              fetchMore({
+              if (!hasMore || !endCursor) return;
+              await fetchMore({
                 variables: {
-                  offset: data?.institutions.length,
+                  after: endCursor,
                 },
               });
             }}
-            hasNextPage={data.institutions.length !== data?.institutions_aggregate.aggregate?.count} // Relay Styleにするときに直す
-            onRowClick={(params) =>
-              params.row.id && navigate(ROUTES.detail.replace(":id", params.row.id as string))
-            }
-            rows={data?.institutions ?? []}
+            hasNextPage={hasMore}
+            onRowClick={(params) => {
+              const institutionId = extractSinglePkFromRelayId(params.row.id);
+              if (institutionId) {
+                navigate(ROUTES.detail.replace(":id", institutionId as string));
+              }
+            }}
+            rows={institutions}
           />
         )}
       </div>

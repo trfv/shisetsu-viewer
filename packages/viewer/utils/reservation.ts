@@ -174,37 +174,31 @@ export const toReservationQueryVariables = ({
   availableInstruments,
   institutionSizes,
 }: ReservationSearchParams): ReservationsQueryVariables => {
-  const [isOnlyHoliday, isOnlyMorningVacant, isOnlyAfternoonVacant, isOnlyEveningVacant] = [
-    filter.includes(IS_ONLY_HOLIDAY),
-    filter.includes(IS_ONLY_MORNING_VACANT),
-    filter.includes(IS_ONLY_AFTERNOON_VACANT),
-    filter.includes(IS_ONLY_EVENING_VACANT),
-  ];
-  const [isAvailableStrings, isAvailableWoodwind, isAvailableBrass, isAvailablePercussion] = [
-    availableInstruments.includes(STRINGS),
-    availableInstruments.includes(WOODWIND),
-    availableInstruments.includes(BRASS),
-    availableInstruments.includes(PERCUSSION),
-  ];
   return {
-    offset: 0,
-    limit: 100,
+    first: 100,
+    after: null,
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
         : SupportedMunicipalities.filter(
             (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
           ).map((m) => m.toString()),
-    isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
-    isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
-    isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
-    isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableStrings: availableInstruments.includes(STRINGS)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
+    isAvailableWoodwind: availableInstruments.includes(WOODWIND)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
+    isAvailableBrass: availableInstruments.includes(BRASS) ? AvailabilityDivision.AVAILABLE : null,
+    isAvailablePercussion: availableInstruments.includes(PERCUSSION)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
     institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
     startDate: startDate?.toDateString(),
     endDate: endDate?.toDateString(),
-    isHoliday: isOnlyHoliday ? true : null,
-    isMorningVacant: isOnlyMorningVacant ? true : null,
-    isAfternoonVacant: isOnlyAfternoonVacant ? true : null,
-    isEveningVacant: isOnlyEveningVacant ? true : null,
+    isHoliday: filter.includes(IS_ONLY_HOLIDAY) ? true : null,
+    isMorningVacant: filter.includes(IS_ONLY_MORNING_VACANT) ? true : null,
+    isAfternoonVacant: filter.includes(IS_ONLY_AFTERNOON_VACANT) ? true : null,
+    isEveningVacant: filter.includes(IS_ONLY_EVENING_VACANT) ? true : null,
   };
 };

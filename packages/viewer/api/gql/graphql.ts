@@ -56,6 +56,20 @@ export type Int_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars["Int"]["input"]>>;
 };
 
+/** An object with globally unique ID */
+export type Node = {
+  /** A globally unique identifier */
+  id: Scalars["ID"]["output"];
+};
+
+export type PageInfo = {
+  __typename?: "PageInfo";
+  endCursor: Scalars["String"]["output"];
+  hasNextPage: Scalars["Boolean"]["output"];
+  hasPreviousPage: Scalars["Boolean"]["output"];
+  startCursor: Scalars["String"]["output"];
+};
+
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: InputMaybe<Scalars["String"]["input"]>;
@@ -115,14 +129,6 @@ export type Bigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars["bigint"]["input"]>>;
 };
 
-/** ordering argument of a cursor */
-export enum Cursor_Ordering {
-  /** ascending ordering of the cursor */
-  Asc = "ASC",
-  /** descending ordering of the cursor */
-  Desc = "DESC",
-}
-
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
   _eq?: InputMaybe<Scalars["date"]["input"]>;
@@ -167,7 +173,7 @@ export type Fee_Division_Array_Comparison_Exp = {
 };
 
 /** columns and relationships of "institutions" */
-export type Institutions = {
+export type Institutions = Node & {
   __typename?: "institutions";
   address: Scalars["String"]["output"];
   area?: Maybe<Scalars["numeric"]["output"]>;
@@ -178,7 +184,7 @@ export type Institutions = {
   created_at: Scalars["timestamp"]["output"];
   fee_divisions: Array<Scalars["fee_division"]["output"]>;
   holiday_usage_fee: Scalars["jsonb"]["output"];
-  id: Scalars["uuid"]["output"];
+  id: Scalars["ID"]["output"];
   institution: Scalars["String"]["output"];
   institution_kana: Scalars["String"]["output"];
   institution_size: Scalars["String"]["output"];
@@ -209,40 +215,17 @@ export type InstitutionsWeekday_Usage_FeeArgs = {
   path?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-/** aggregated selection of "institutions" */
-export type Institutions_Aggregate = {
-  __typename?: "institutions_aggregate";
-  aggregate?: Maybe<Institutions_Aggregate_Fields>;
-  nodes: Array<Institutions>;
+/** A Relay connection object on "institutions" */
+export type InstitutionsConnection = {
+  __typename?: "institutionsConnection";
+  edges: Array<InstitutionsEdge>;
+  pageInfo: PageInfo;
 };
 
-/** aggregate fields of "institutions" */
-export type Institutions_Aggregate_Fields = {
-  __typename?: "institutions_aggregate_fields";
-  avg?: Maybe<Institutions_Avg_Fields>;
-  count: Scalars["Int"]["output"];
-  max?: Maybe<Institutions_Max_Fields>;
-  min?: Maybe<Institutions_Min_Fields>;
-  stddev?: Maybe<Institutions_Stddev_Fields>;
-  stddev_pop?: Maybe<Institutions_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Institutions_Stddev_Samp_Fields>;
-  sum?: Maybe<Institutions_Sum_Fields>;
-  var_pop?: Maybe<Institutions_Var_Pop_Fields>;
-  var_samp?: Maybe<Institutions_Var_Samp_Fields>;
-  variance?: Maybe<Institutions_Variance_Fields>;
-};
-
-/** aggregate fields of "institutions" */
-export type Institutions_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Institutions_Select_Column>>;
-  distinct?: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-/** aggregate avg on columns */
-export type Institutions_Avg_Fields = {
-  __typename?: "institutions_avg_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
+export type InstitutionsEdge = {
+  __typename?: "institutionsEdge";
+  cursor: Scalars["String"]["output"];
+  node: Institutions;
 };
 
 /** Boolean expression to filter rows from the table "institutions". All fields are combined with a logical 'AND'. */
@@ -278,68 +261,6 @@ export type Institutions_Bool_Exp = {
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
   website_url?: InputMaybe<String_Comparison_Exp>;
   weekday_usage_fee?: InputMaybe<Jsonb_Comparison_Exp>;
-};
-
-/** aggregate max on columns */
-export type Institutions_Max_Fields = {
-  __typename?: "institutions_max_fields";
-  address?: Maybe<Scalars["String"]["output"]>;
-  area?: Maybe<Scalars["numeric"]["output"]>;
-  building?: Maybe<Scalars["String"]["output"]>;
-  building_kana?: Maybe<Scalars["String"]["output"]>;
-  building_system_name?: Maybe<Scalars["String"]["output"]>;
-  capacity?: Maybe<Scalars["Int"]["output"]>;
-  created_at?: Maybe<Scalars["timestamp"]["output"]>;
-  fee_divisions?: Maybe<Array<Scalars["fee_division"]["output"]>>;
-  id?: Maybe<Scalars["uuid"]["output"]>;
-  institution?: Maybe<Scalars["String"]["output"]>;
-  institution_kana?: Maybe<Scalars["String"]["output"]>;
-  institution_size?: Maybe<Scalars["String"]["output"]>;
-  institution_system_name?: Maybe<Scalars["String"]["output"]>;
-  is_available_brass?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_percussion?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_strings?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_woodwind?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_equipped_music_stand?: Maybe<Scalars["equipment_division"]["output"]>;
-  is_equipped_piano?: Maybe<Scalars["equipment_division"]["output"]>;
-  layout_image_url?: Maybe<Scalars["String"]["output"]>;
-  lottery_period?: Maybe<Scalars["String"]["output"]>;
-  municipality?: Maybe<Scalars["String"]["output"]>;
-  note?: Maybe<Scalars["String"]["output"]>;
-  prefecture?: Maybe<Scalars["prefecture"]["output"]>;
-  updated_at?: Maybe<Scalars["timestamp"]["output"]>;
-  website_url?: Maybe<Scalars["String"]["output"]>;
-};
-
-/** aggregate min on columns */
-export type Institutions_Min_Fields = {
-  __typename?: "institutions_min_fields";
-  address?: Maybe<Scalars["String"]["output"]>;
-  area?: Maybe<Scalars["numeric"]["output"]>;
-  building?: Maybe<Scalars["String"]["output"]>;
-  building_kana?: Maybe<Scalars["String"]["output"]>;
-  building_system_name?: Maybe<Scalars["String"]["output"]>;
-  capacity?: Maybe<Scalars["Int"]["output"]>;
-  created_at?: Maybe<Scalars["timestamp"]["output"]>;
-  fee_divisions?: Maybe<Array<Scalars["fee_division"]["output"]>>;
-  id?: Maybe<Scalars["uuid"]["output"]>;
-  institution?: Maybe<Scalars["String"]["output"]>;
-  institution_kana?: Maybe<Scalars["String"]["output"]>;
-  institution_size?: Maybe<Scalars["String"]["output"]>;
-  institution_system_name?: Maybe<Scalars["String"]["output"]>;
-  is_available_brass?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_percussion?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_strings?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_available_woodwind?: Maybe<Scalars["availavility_division"]["output"]>;
-  is_equipped_music_stand?: Maybe<Scalars["equipment_division"]["output"]>;
-  is_equipped_piano?: Maybe<Scalars["equipment_division"]["output"]>;
-  layout_image_url?: Maybe<Scalars["String"]["output"]>;
-  lottery_period?: Maybe<Scalars["String"]["output"]>;
-  municipality?: Maybe<Scalars["String"]["output"]>;
-  note?: Maybe<Scalars["String"]["output"]>;
-  prefecture?: Maybe<Scalars["prefecture"]["output"]>;
-  updated_at?: Maybe<Scalars["timestamp"]["output"]>;
-  website_url?: Maybe<Scalars["String"]["output"]>;
 };
 
 /** Ordering options when selecting data from "institutions". */
@@ -434,95 +355,6 @@ export enum Institutions_Select_Column {
   WeekdayUsageFee = "weekday_usage_fee",
 }
 
-/** aggregate stddev on columns */
-export type Institutions_Stddev_Fields = {
-  __typename?: "institutions_stddev_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Institutions_Stddev_Pop_Fields = {
-  __typename?: "institutions_stddev_pop_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Institutions_Stddev_Samp_Fields = {
-  __typename?: "institutions_stddev_samp_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** Streaming cursor of the table "institutions" */
-export type Institutions_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Institutions_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Institutions_Stream_Cursor_Value_Input = {
-  address?: InputMaybe<Scalars["String"]["input"]>;
-  area?: InputMaybe<Scalars["numeric"]["input"]>;
-  building?: InputMaybe<Scalars["String"]["input"]>;
-  building_kana?: InputMaybe<Scalars["String"]["input"]>;
-  building_system_name?: InputMaybe<Scalars["String"]["input"]>;
-  capacity?: InputMaybe<Scalars["Int"]["input"]>;
-  created_at?: InputMaybe<Scalars["timestamp"]["input"]>;
-  fee_divisions?: InputMaybe<Array<Scalars["fee_division"]["input"]>>;
-  holiday_usage_fee?: InputMaybe<Scalars["jsonb"]["input"]>;
-  id?: InputMaybe<Scalars["uuid"]["input"]>;
-  institution?: InputMaybe<Scalars["String"]["input"]>;
-  institution_kana?: InputMaybe<Scalars["String"]["input"]>;
-  institution_size?: InputMaybe<Scalars["String"]["input"]>;
-  institution_system_name?: InputMaybe<Scalars["String"]["input"]>;
-  is_available_brass?: InputMaybe<Scalars["availavility_division"]["input"]>;
-  is_available_percussion?: InputMaybe<Scalars["availavility_division"]["input"]>;
-  is_available_strings?: InputMaybe<Scalars["availavility_division"]["input"]>;
-  is_available_woodwind?: InputMaybe<Scalars["availavility_division"]["input"]>;
-  is_equipped_music_stand?: InputMaybe<Scalars["equipment_division"]["input"]>;
-  is_equipped_piano?: InputMaybe<Scalars["equipment_division"]["input"]>;
-  layout_image_url?: InputMaybe<Scalars["String"]["input"]>;
-  lottery_period?: InputMaybe<Scalars["String"]["input"]>;
-  municipality?: InputMaybe<Scalars["String"]["input"]>;
-  note?: InputMaybe<Scalars["String"]["input"]>;
-  prefecture?: InputMaybe<Scalars["prefecture"]["input"]>;
-  updated_at?: InputMaybe<Scalars["timestamp"]["input"]>;
-  website_url?: InputMaybe<Scalars["String"]["input"]>;
-  weekday_usage_fee?: InputMaybe<Scalars["jsonb"]["input"]>;
-};
-
-/** aggregate sum on columns */
-export type Institutions_Sum_Fields = {
-  __typename?: "institutions_sum_fields";
-  area?: Maybe<Scalars["numeric"]["output"]>;
-  capacity?: Maybe<Scalars["Int"]["output"]>;
-};
-
-/** aggregate var_pop on columns */
-export type Institutions_Var_Pop_Fields = {
-  __typename?: "institutions_var_pop_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate var_samp on columns */
-export type Institutions_Var_Samp_Fields = {
-  __typename?: "institutions_var_samp_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate variance on columns */
-export type Institutions_Variance_Fields = {
-  __typename?: "institutions_variance_fields";
-  area?: Maybe<Scalars["Float"]["output"]>;
-  capacity?: Maybe<Scalars["Float"]["output"]>;
-};
-
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
 };
@@ -596,91 +428,54 @@ export type Prefecture_Comparison_Exp = {
 export type Query_Root = {
   __typename?: "query_root";
   /** fetch data from the table: "institutions" */
-  institutions: Array<Institutions>;
-  /** fetch aggregated fields from the table: "institutions" */
-  institutions_aggregate: Institutions_Aggregate;
-  /** fetch data from the table: "institutions" using primary key columns */
-  institutions_by_pk?: Maybe<Institutions>;
+  institutions_connection: InstitutionsConnection;
+  node?: Maybe<Node>;
   /** fetch data from the table: "reservations" */
-  reservations: Array<Reservations>;
-  /** fetch aggregated fields from the table: "reservations" */
-  reservations_aggregate: Reservations_Aggregate;
-  /** fetch data from the table: "reservations" using primary key columns */
-  reservations_by_pk?: Maybe<Reservations>;
+  reservations_connection: ReservationsConnection;
   /** fetch data from the table: "searchable_reservations" */
-  searchable_reservations: Array<Searchable_Reservations>;
-  /** fetch aggregated fields from the table: "searchable_reservations" */
-  searchable_reservations_aggregate: Searchable_Reservations_Aggregate;
-  /** fetch data from the table: "searchable_reservations" using primary key columns */
-  searchable_reservations_by_pk?: Maybe<Searchable_Reservations>;
+  searchable_reservations_connection: Searchable_ReservationsConnection;
 };
 
-export type Query_RootInstitutionsArgs = {
+export type Query_RootInstitutions_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
 
-export type Query_RootInstitutions_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Institutions_Order_By>>;
-  where?: InputMaybe<Institutions_Bool_Exp>;
+export type Query_RootNodeArgs = {
+  id: Scalars["ID"]["input"];
 };
 
-export type Query_RootInstitutions_By_PkArgs = {
-  id: Scalars["uuid"]["input"];
-};
-
-export type Query_RootReservationsArgs = {
+export type Query_RootReservations_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
 
-export type Query_RootReservations_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Reservations_Order_By>>;
-  where?: InputMaybe<Reservations_Bool_Exp>;
-};
-
-export type Query_RootReservations_By_PkArgs = {
-  id: Scalars["bigint"]["input"];
-};
-
-export type Query_RootSearchable_ReservationsArgs = {
+export type Query_RootSearchable_Reservations_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
   where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
-};
-
-export type Query_RootSearchable_Reservations_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
-  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
-};
-
-export type Query_RootSearchable_Reservations_By_PkArgs = {
-  id: Scalars["bigint"]["input"];
 };
 
 /** columns and relationships of "reservations" */
-export type Reservations = {
+export type Reservations = Node & {
   __typename?: "reservations";
   created_at: Scalars["timestamp"]["output"];
   date: Scalars["date"]["output"];
-  id: Scalars["bigint"]["output"];
+  id: Scalars["ID"]["output"];
   /** An object relationship */
   institution?: Maybe<Institutions>;
   institution_id: Scalars["uuid"]["output"];
@@ -694,39 +489,17 @@ export type ReservationsReservationArgs = {
   path?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-/** aggregated selection of "reservations" */
-export type Reservations_Aggregate = {
-  __typename?: "reservations_aggregate";
-  aggregate?: Maybe<Reservations_Aggregate_Fields>;
-  nodes: Array<Reservations>;
+/** A Relay connection object on "reservations" */
+export type ReservationsConnection = {
+  __typename?: "reservationsConnection";
+  edges: Array<ReservationsEdge>;
+  pageInfo: PageInfo;
 };
 
-/** aggregate fields of "reservations" */
-export type Reservations_Aggregate_Fields = {
-  __typename?: "reservations_aggregate_fields";
-  avg?: Maybe<Reservations_Avg_Fields>;
-  count: Scalars["Int"]["output"];
-  max?: Maybe<Reservations_Max_Fields>;
-  min?: Maybe<Reservations_Min_Fields>;
-  stddev?: Maybe<Reservations_Stddev_Fields>;
-  stddev_pop?: Maybe<Reservations_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Reservations_Stddev_Samp_Fields>;
-  sum?: Maybe<Reservations_Sum_Fields>;
-  var_pop?: Maybe<Reservations_Var_Pop_Fields>;
-  var_samp?: Maybe<Reservations_Var_Samp_Fields>;
-  variance?: Maybe<Reservations_Variance_Fields>;
-};
-
-/** aggregate fields of "reservations" */
-export type Reservations_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Reservations_Select_Column>>;
-  distinct?: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-/** aggregate avg on columns */
-export type Reservations_Avg_Fields = {
-  __typename?: "reservations_avg_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
+export type ReservationsEdge = {
+  __typename?: "reservationsEdge";
+  cursor: Scalars["String"]["output"];
+  node: Reservations;
 };
 
 /** Boolean expression to filter rows from the table "reservations". All fields are combined with a logical 'AND'. */
@@ -742,26 +515,6 @@ export type Reservations_Bool_Exp = {
   is_holiday?: InputMaybe<Boolean_Comparison_Exp>;
   reservation?: InputMaybe<Jsonb_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
-};
-
-/** aggregate max on columns */
-export type Reservations_Max_Fields = {
-  __typename?: "reservations_max_fields";
-  created_at?: Maybe<Scalars["timestamp"]["output"]>;
-  date?: Maybe<Scalars["date"]["output"]>;
-  id?: Maybe<Scalars["bigint"]["output"]>;
-  institution_id?: Maybe<Scalars["uuid"]["output"]>;
-  updated_at?: Maybe<Scalars["timestamp"]["output"]>;
-};
-
-/** aggregate min on columns */
-export type Reservations_Min_Fields = {
-  __typename?: "reservations_min_fields";
-  created_at?: Maybe<Scalars["timestamp"]["output"]>;
-  date?: Maybe<Scalars["date"]["output"]>;
-  id?: Maybe<Scalars["bigint"]["output"]>;
-  institution_id?: Maybe<Scalars["uuid"]["output"]>;
-  updated_at?: Maybe<Scalars["timestamp"]["output"]>;
 };
 
 /** Ordering options when selecting data from "reservations". */
@@ -794,72 +547,11 @@ export enum Reservations_Select_Column {
   UpdatedAt = "updated_at",
 }
 
-/** aggregate stddev on columns */
-export type Reservations_Stddev_Fields = {
-  __typename?: "reservations_stddev_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Reservations_Stddev_Pop_Fields = {
-  __typename?: "reservations_stddev_pop_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Reservations_Stddev_Samp_Fields = {
-  __typename?: "reservations_stddev_samp_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** Streaming cursor of the table "reservations" */
-export type Reservations_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Reservations_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Reservations_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars["timestamp"]["input"]>;
-  date?: InputMaybe<Scalars["date"]["input"]>;
-  id?: InputMaybe<Scalars["bigint"]["input"]>;
-  institution_id?: InputMaybe<Scalars["uuid"]["input"]>;
-  is_holiday?: InputMaybe<Scalars["Boolean"]["input"]>;
-  reservation?: InputMaybe<Scalars["jsonb"]["input"]>;
-  updated_at?: InputMaybe<Scalars["timestamp"]["input"]>;
-};
-
-/** aggregate sum on columns */
-export type Reservations_Sum_Fields = {
-  __typename?: "reservations_sum_fields";
-  id?: Maybe<Scalars["bigint"]["output"]>;
-};
-
-/** aggregate var_pop on columns */
-export type Reservations_Var_Pop_Fields = {
-  __typename?: "reservations_var_pop_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate var_samp on columns */
-export type Reservations_Var_Samp_Fields = {
-  __typename?: "reservations_var_samp_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate variance on columns */
-export type Reservations_Variance_Fields = {
-  __typename?: "reservations_variance_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
 /** columns and relationships of "searchable_reservations" */
-export type Searchable_Reservations = {
+export type Searchable_Reservations = Node & {
   __typename?: "searchable_reservations";
   date?: Maybe<Scalars["date"]["output"]>;
-  id: Scalars["bigint"]["output"];
+  id: Scalars["ID"]["output"];
   /** An object relationship */
   institution?: Maybe<Institutions>;
   institution_id?: Maybe<Scalars["uuid"]["output"]>;
@@ -872,39 +564,17 @@ export type Searchable_Reservations = {
   reservation?: Maybe<Reservations>;
 };
 
-/** aggregated selection of "searchable_reservations" */
-export type Searchable_Reservations_Aggregate = {
-  __typename?: "searchable_reservations_aggregate";
-  aggregate?: Maybe<Searchable_Reservations_Aggregate_Fields>;
-  nodes: Array<Searchable_Reservations>;
+/** A Relay connection object on "searchable_reservations" */
+export type Searchable_ReservationsConnection = {
+  __typename?: "searchable_reservationsConnection";
+  edges: Array<Searchable_ReservationsEdge>;
+  pageInfo: PageInfo;
 };
 
-/** aggregate fields of "searchable_reservations" */
-export type Searchable_Reservations_Aggregate_Fields = {
-  __typename?: "searchable_reservations_aggregate_fields";
-  avg?: Maybe<Searchable_Reservations_Avg_Fields>;
-  count: Scalars["Int"]["output"];
-  max?: Maybe<Searchable_Reservations_Max_Fields>;
-  min?: Maybe<Searchable_Reservations_Min_Fields>;
-  stddev?: Maybe<Searchable_Reservations_Stddev_Fields>;
-  stddev_pop?: Maybe<Searchable_Reservations_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Searchable_Reservations_Stddev_Samp_Fields>;
-  sum?: Maybe<Searchable_Reservations_Sum_Fields>;
-  var_pop?: Maybe<Searchable_Reservations_Var_Pop_Fields>;
-  var_samp?: Maybe<Searchable_Reservations_Var_Samp_Fields>;
-  variance?: Maybe<Searchable_Reservations_Variance_Fields>;
-};
-
-/** aggregate fields of "searchable_reservations" */
-export type Searchable_Reservations_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
-  distinct?: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-/** aggregate avg on columns */
-export type Searchable_Reservations_Avg_Fields = {
-  __typename?: "searchable_reservations_avg_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
+export type Searchable_ReservationsEdge = {
+  __typename?: "searchable_reservationsEdge";
+  cursor: Scalars["String"]["output"];
+  node: Searchable_Reservations;
 };
 
 /** Boolean expression to filter rows from the table "searchable_reservations". All fields are combined with a logical 'AND'. */
@@ -921,22 +591,6 @@ export type Searchable_Reservations_Bool_Exp = {
   is_holiday?: InputMaybe<Boolean_Comparison_Exp>;
   is_morning_vacant?: InputMaybe<Boolean_Comparison_Exp>;
   reservation?: InputMaybe<Reservations_Bool_Exp>;
-};
-
-/** aggregate max on columns */
-export type Searchable_Reservations_Max_Fields = {
-  __typename?: "searchable_reservations_max_fields";
-  date?: Maybe<Scalars["date"]["output"]>;
-  id?: Maybe<Scalars["bigint"]["output"]>;
-  institution_id?: Maybe<Scalars["uuid"]["output"]>;
-};
-
-/** aggregate min on columns */
-export type Searchable_Reservations_Min_Fields = {
-  __typename?: "searchable_reservations_min_fields";
-  date?: Maybe<Scalars["date"]["output"]>;
-  id?: Maybe<Scalars["bigint"]["output"]>;
-  institution_id?: Maybe<Scalars["uuid"]["output"]>;
 };
 
 /** Ordering options when selecting data from "searchable_reservations". */
@@ -968,169 +622,48 @@ export enum Searchable_Reservations_Select_Column {
   IsMorningVacant = "is_morning_vacant",
 }
 
-/** aggregate stddev on columns */
-export type Searchable_Reservations_Stddev_Fields = {
-  __typename?: "searchable_reservations_stddev_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Searchable_Reservations_Stddev_Pop_Fields = {
-  __typename?: "searchable_reservations_stddev_pop_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Searchable_Reservations_Stddev_Samp_Fields = {
-  __typename?: "searchable_reservations_stddev_samp_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** Streaming cursor of the table "searchable_reservations" */
-export type Searchable_Reservations_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Searchable_Reservations_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Searchable_Reservations_Stream_Cursor_Value_Input = {
-  date?: InputMaybe<Scalars["date"]["input"]>;
-  id?: InputMaybe<Scalars["bigint"]["input"]>;
-  institution_id?: InputMaybe<Scalars["uuid"]["input"]>;
-  is_afternoon_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
-  is_evening_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
-  is_morning_vacant?: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-/** aggregate sum on columns */
-export type Searchable_Reservations_Sum_Fields = {
-  __typename?: "searchable_reservations_sum_fields";
-  id?: Maybe<Scalars["bigint"]["output"]>;
-};
-
-/** aggregate var_pop on columns */
-export type Searchable_Reservations_Var_Pop_Fields = {
-  __typename?: "searchable_reservations_var_pop_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate var_samp on columns */
-export type Searchable_Reservations_Var_Samp_Fields = {
-  __typename?: "searchable_reservations_var_samp_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** aggregate variance on columns */
-export type Searchable_Reservations_Variance_Fields = {
-  __typename?: "searchable_reservations_variance_fields";
-  id?: Maybe<Scalars["Float"]["output"]>;
-};
-
 export type Subscription_Root = {
   __typename?: "subscription_root";
   /** fetch data from the table: "institutions" */
-  institutions: Array<Institutions>;
-  /** fetch aggregated fields from the table: "institutions" */
-  institutions_aggregate: Institutions_Aggregate;
-  /** fetch data from the table: "institutions" using primary key columns */
-  institutions_by_pk?: Maybe<Institutions>;
-  /** fetch data from the table in a streaming manner: "institutions" */
-  institutions_stream: Array<Institutions>;
+  institutions_connection: InstitutionsConnection;
+  node?: Maybe<Node>;
   /** fetch data from the table: "reservations" */
-  reservations: Array<Reservations>;
-  /** fetch aggregated fields from the table: "reservations" */
-  reservations_aggregate: Reservations_Aggregate;
-  /** fetch data from the table: "reservations" using primary key columns */
-  reservations_by_pk?: Maybe<Reservations>;
-  /** fetch data from the table in a streaming manner: "reservations" */
-  reservations_stream: Array<Reservations>;
+  reservations_connection: ReservationsConnection;
   /** fetch data from the table: "searchable_reservations" */
-  searchable_reservations: Array<Searchable_Reservations>;
-  /** fetch aggregated fields from the table: "searchable_reservations" */
-  searchable_reservations_aggregate: Searchable_Reservations_Aggregate;
-  /** fetch data from the table: "searchable_reservations" using primary key columns */
-  searchable_reservations_by_pk?: Maybe<Searchable_Reservations>;
-  /** fetch data from the table in a streaming manner: "searchable_reservations" */
-  searchable_reservations_stream: Array<Searchable_Reservations>;
+  searchable_reservations_connection: Searchable_ReservationsConnection;
 };
 
-export type Subscription_RootInstitutionsArgs = {
+export type Subscription_RootInstitutions_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Institutions_Order_By>>;
   where?: InputMaybe<Institutions_Bool_Exp>;
 };
 
-export type Subscription_RootInstitutions_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Institutions_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Institutions_Order_By>>;
-  where?: InputMaybe<Institutions_Bool_Exp>;
+export type Subscription_RootNodeArgs = {
+  id: Scalars["ID"]["input"];
 };
 
-export type Subscription_RootInstitutions_By_PkArgs = {
-  id: Scalars["uuid"]["input"];
-};
-
-export type Subscription_RootInstitutions_StreamArgs = {
-  batch_size: Scalars["Int"]["input"];
-  cursor: Array<InputMaybe<Institutions_Stream_Cursor_Input>>;
-  where?: InputMaybe<Institutions_Bool_Exp>;
-};
-
-export type Subscription_RootReservationsArgs = {
+export type Subscription_RootReservations_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Reservations_Order_By>>;
   where?: InputMaybe<Reservations_Bool_Exp>;
 };
 
-export type Subscription_RootReservations_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Reservations_Order_By>>;
-  where?: InputMaybe<Reservations_Bool_Exp>;
-};
-
-export type Subscription_RootReservations_By_PkArgs = {
-  id: Scalars["bigint"]["input"];
-};
-
-export type Subscription_RootReservations_StreamArgs = {
-  batch_size: Scalars["Int"]["input"];
-  cursor: Array<InputMaybe<Reservations_Stream_Cursor_Input>>;
-  where?: InputMaybe<Reservations_Bool_Exp>;
-};
-
-export type Subscription_RootSearchable_ReservationsArgs = {
+export type Subscription_RootSearchable_Reservations_ConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
   distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
   order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
-  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
-};
-
-export type Subscription_RootSearchable_Reservations_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Searchable_Reservations_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  order_by?: InputMaybe<Array<Searchable_Reservations_Order_By>>;
-  where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
-};
-
-export type Subscription_RootSearchable_Reservations_By_PkArgs = {
-  id: Scalars["bigint"]["input"];
-};
-
-export type Subscription_RootSearchable_Reservations_StreamArgs = {
-  batch_size: Scalars["Int"]["input"];
-  cursor: Array<InputMaybe<Searchable_Reservations_Stream_Cursor_Input>>;
   where?: InputMaybe<Searchable_Reservations_Bool_Exp>;
 };
 
@@ -1166,30 +699,36 @@ export type InstitutionDetailQueryVariables = Exact<{
 
 export type InstitutionDetailQuery = {
   __typename?: "query_root";
-  institutions_by_pk?: {
-    __typename?: "institutions";
-    id: any;
-    prefecture: any;
-    municipality: string;
-    building: string;
-    institution: string;
-    capacity?: number | null;
-    area?: any | null;
-    fee_divisions: Array<any>;
-    weekday_usage_fee: any;
-    holiday_usage_fee: any;
-    address: string;
-    is_available_strings: any;
-    is_available_woodwind: any;
-    is_available_brass: any;
-    is_available_percussion: any;
-    is_equipped_music_stand: any;
-    is_equipped_piano: any;
-    website_url: string;
-    layout_image_url: string;
-    lottery_period: string;
-    note: string;
-  } | null;
+  institutions_connection: {
+    __typename?: "institutionsConnection";
+    edges: Array<{
+      __typename?: "institutionsEdge";
+      node: {
+        __typename?: "institutions";
+        id: string;
+        prefecture: any;
+        municipality: string;
+        building: string;
+        institution: string;
+        capacity?: number | null;
+        area?: any | null;
+        fee_divisions: Array<any>;
+        weekday_usage_fee: any;
+        holiday_usage_fee: any;
+        address: string;
+        is_available_strings: any;
+        is_available_woodwind: any;
+        is_available_brass: any;
+        is_available_percussion: any;
+        is_equipped_music_stand: any;
+        is_equipped_piano: any;
+        website_url: string;
+        layout_image_url: string;
+        lottery_period: string;
+        note: string;
+      };
+    }>;
+  };
 };
 
 export type InstitutionReservationsQueryVariables = Exact<{
@@ -1200,18 +739,24 @@ export type InstitutionReservationsQueryVariables = Exact<{
 
 export type InstitutionReservationsQuery = {
   __typename?: "query_root";
-  reservations: Array<{
-    __typename?: "reservations";
-    id: any;
-    date: any;
-    reservation: any;
-    updated_at: any;
-  }>;
+  reservations_connection: {
+    __typename?: "reservationsConnection";
+    edges: Array<{
+      __typename?: "reservationsEdge";
+      node: {
+        __typename?: "reservations";
+        id: string;
+        date: any;
+        reservation: any;
+        updated_at: any;
+      };
+    }>;
+  };
 };
 
 export type InstitutionsQueryVariables = Exact<{
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  after?: InputMaybe<Scalars["String"]["input"]>;
   municipality?: InputMaybe<Array<Scalars["String"]["input"]> | Scalars["String"]["input"]>;
   isAvailableStrings?: InputMaybe<Scalars["availavility_division"]["input"]>;
   isAvailableWoodwind?: InputMaybe<Scalars["availavility_division"]["input"]>;
@@ -1222,30 +767,34 @@ export type InstitutionsQueryVariables = Exact<{
 
 export type InstitutionsQuery = {
   __typename?: "query_root";
-  institutions: Array<{
-    __typename?: "institutions";
-    id: any;
-    municipality: string;
-    building: string;
-    institution: string;
-    institution_size: string;
-    is_available_strings: any;
-    is_available_woodwind: any;
-    is_available_brass: any;
-    is_available_percussion: any;
-    is_equipped_music_stand: any;
-    is_equipped_piano: any;
-    updated_at?: any | null;
-  }>;
-  institutions_aggregate: {
-    __typename?: "institutions_aggregate";
-    aggregate?: { __typename?: "institutions_aggregate_fields"; count: number } | null;
+  institutions_connection: {
+    __typename?: "institutionsConnection";
+    edges: Array<{
+      __typename?: "institutionsEdge";
+      cursor: string;
+      node: {
+        __typename?: "institutions";
+        id: string;
+        municipality: string;
+        building: string;
+        institution: string;
+        institution_size: string;
+        is_available_strings: any;
+        is_available_woodwind: any;
+        is_available_brass: any;
+        is_available_percussion: any;
+        is_equipped_music_stand: any;
+        is_equipped_piano: any;
+        updated_at?: any | null;
+      };
+    }>;
+    pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean; endCursor: string };
   };
 };
 
 export type ReservationsQueryVariables = Exact<{
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  after?: InputMaybe<Scalars["String"]["input"]>;
   prefecture?: InputMaybe<Scalars["prefecture"]["input"]>;
   municipality?: InputMaybe<Array<Scalars["String"]["input"]> | Scalars["String"]["input"]>;
   isAvailableStrings?: InputMaybe<Scalars["availavility_division"]["input"]>;
@@ -1263,28 +812,32 @@ export type ReservationsQueryVariables = Exact<{
 
 export type ReservationsQuery = {
   __typename?: "query_root";
-  searchable_reservations: Array<{
-    __typename?: "searchable_reservations";
-    id: any;
-    reservation?: {
-      __typename?: "reservations";
-      id: any;
-      date: any;
-      reservation: any;
-      updated_at: any;
-    } | null;
-    institution?: {
-      __typename?: "institutions";
-      id: any;
-      municipality: string;
-      building: string;
-      institution: string;
-      institution_size: string;
-    } | null;
-  }>;
-  searchable_reservations_aggregate: {
-    __typename?: "searchable_reservations_aggregate";
-    aggregate?: { __typename?: "searchable_reservations_aggregate_fields"; count: number } | null;
+  searchable_reservations_connection: {
+    __typename?: "searchable_reservationsConnection";
+    edges: Array<{
+      __typename?: "searchable_reservationsEdge";
+      cursor: string;
+      node: {
+        __typename?: "searchable_reservations";
+        id: string;
+        reservation?: {
+          __typename?: "reservations";
+          id: string;
+          date: any;
+          reservation: any;
+          updated_at: any;
+        } | null;
+        institution?: {
+          __typename?: "institutions";
+          id: string;
+          municipality: string;
+          building: string;
+          institution: string;
+          institution_size: string;
+        } | null;
+      };
+    }>;
+    pageInfo: { __typename?: "PageInfo"; hasNextPage: boolean; endCursor: string };
   };
 };
 
@@ -1310,38 +863,91 @@ export const InstitutionDetailDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "institutions_by_pk" },
+            name: { kind: "Name", value: "institutions_connection" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "id" },
-                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "id" },
+                      value: {
+                        kind: "ObjectValue",
+                        fields: [
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "_eq" },
+                            value: { kind: "Variable", name: { kind: "Name", value: "id" } },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "IntValue", value: "1" },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "prefecture" } },
-                { kind: "Field", name: { kind: "Name", value: "municipality" } },
-                { kind: "Field", name: { kind: "Name", value: "building" } },
-                { kind: "Field", name: { kind: "Name", value: "institution" } },
-                { kind: "Field", name: { kind: "Name", value: "capacity" } },
-                { kind: "Field", name: { kind: "Name", value: "area" } },
-                { kind: "Field", name: { kind: "Name", value: "fee_divisions" } },
-                { kind: "Field", name: { kind: "Name", value: "weekday_usage_fee" } },
-                { kind: "Field", name: { kind: "Name", value: "holiday_usage_fee" } },
-                { kind: "Field", name: { kind: "Name", value: "address" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_strings" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_woodwind" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_brass" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_percussion" } },
-                { kind: "Field", name: { kind: "Name", value: "is_equipped_music_stand" } },
-                { kind: "Field", name: { kind: "Name", value: "is_equipped_piano" } },
-                { kind: "Field", name: { kind: "Name", value: "website_url" } },
-                { kind: "Field", name: { kind: "Name", value: "layout_image_url" } },
-                { kind: "Field", name: { kind: "Name", value: "lottery_period" } },
-                { kind: "Field", name: { kind: "Name", value: "note" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "edges" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "prefecture" } },
+                            { kind: "Field", name: { kind: "Name", value: "municipality" } },
+                            { kind: "Field", name: { kind: "Name", value: "building" } },
+                            { kind: "Field", name: { kind: "Name", value: "institution" } },
+                            { kind: "Field", name: { kind: "Name", value: "capacity" } },
+                            { kind: "Field", name: { kind: "Name", value: "area" } },
+                            { kind: "Field", name: { kind: "Name", value: "fee_divisions" } },
+                            { kind: "Field", name: { kind: "Name", value: "weekday_usage_fee" } },
+                            { kind: "Field", name: { kind: "Name", value: "holiday_usage_fee" } },
+                            { kind: "Field", name: { kind: "Name", value: "address" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_strings" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_woodwind" },
+                            },
+                            { kind: "Field", name: { kind: "Name", value: "is_available_brass" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_percussion" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_equipped_music_stand" },
+                            },
+                            { kind: "Field", name: { kind: "Name", value: "is_equipped_piano" } },
+                            { kind: "Field", name: { kind: "Name", value: "website_url" } },
+                            { kind: "Field", name: { kind: "Name", value: "layout_image_url" } },
+                            { kind: "Field", name: { kind: "Name", value: "lottery_period" } },
+                            { kind: "Field", name: { kind: "Name", value: "note" } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -1382,7 +988,7 @@ export const InstitutionReservationsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "reservations" },
+            name: { kind: "Name", value: "reservations_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -1440,14 +1046,37 @@ export const InstitutionReservationsDocument = {
                   ],
                 },
               },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "IntValue", value: "1000" },
+              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "date" } },
-                { kind: "Field", name: { kind: "Name", value: "reservation" } },
-                { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "edges" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "date" } },
+                            { kind: "Field", name: { kind: "Name", value: "reservation" } },
+                            { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -1466,13 +1095,13 @@ export const InstitutionsDocument = {
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "offset" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
           type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "limit" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
         },
         {
           kind: "VariableDefinition",
@@ -1527,17 +1156,17 @@ export const InstitutionsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "institutions" },
+            name: { kind: "Name", value: "institutions_connection" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "offset" },
-                value: { kind: "Variable", name: { kind: "Name", value: "offset" } },
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "limit" },
-                value: { kind: "Variable", name: { kind: "Name", value: "limit" } },
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
               },
               {
                 kind: "Argument",
@@ -1678,146 +1307,58 @@ export const InstitutionsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "municipality" } },
-                { kind: "Field", name: { kind: "Name", value: "building" } },
-                { kind: "Field", name: { kind: "Name", value: "institution" } },
-                { kind: "Field", name: { kind: "Name", value: "institution_size" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_strings" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_woodwind" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_brass" } },
-                { kind: "Field", name: { kind: "Name", value: "is_available_percussion" } },
-                { kind: "Field", name: { kind: "Name", value: "is_equipped_music_stand" } },
-                { kind: "Field", name: { kind: "Name", value: "is_equipped_piano" } },
-                { kind: "Field", name: { kind: "Name", value: "updated_at" } },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "institutions_aggregate" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "where" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "municipality" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_in" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "municipality" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "is_available_strings" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "isAvailableStrings" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "is_available_woodwind" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "isAvailableWoodwind" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "is_available_brass" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "isAvailableBrass" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "is_available_percussion" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "isAvailablePercussion" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "institution_size" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "_in" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "institutionSizes" },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "aggregate" },
+                  name: { kind: "Name", value: "edges" },
                   selectionSet: {
                     kind: "SelectionSet",
-                    selections: [{ kind: "Field", name: { kind: "Name", value: "count" } }],
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "municipality" } },
+                            { kind: "Field", name: { kind: "Name", value: "building" } },
+                            { kind: "Field", name: { kind: "Name", value: "institution" } },
+                            { kind: "Field", name: { kind: "Name", value: "institution_size" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_strings" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_woodwind" },
+                            },
+                            { kind: "Field", name: { kind: "Name", value: "is_available_brass" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_available_percussion" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "is_equipped_music_stand" },
+                            },
+                            { kind: "Field", name: { kind: "Name", value: "is_equipped_piano" } },
+                            { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                          ],
+                        },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pageInfo" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                    ],
                   },
                 },
               ],
@@ -1838,13 +1379,13 @@ export const ReservationsDocument = {
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "offset" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
           type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "limit" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
         },
         {
           kind: "VariableDefinition",
@@ -1935,17 +1476,17 @@ export const ReservationsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "searchable_reservations" },
+            name: { kind: "Name", value: "searchable_reservations_connection" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "offset" },
-                value: { kind: "Variable", name: { kind: "Name", value: "offset" } },
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "limit" },
-                value: { kind: "Variable", name: { kind: "Name", value: "limit" } },
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
               },
               {
                 kind: "Argument",
@@ -2204,290 +1745,65 @@ export const ReservationsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "reservation" },
+                  name: { kind: "Name", value: "edges" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "date" } },
-                      { kind: "Field", name: { kind: "Name", value: "reservation" } },
-                      { kind: "Field", name: { kind: "Name", value: "updated_at" } },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "institution" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "municipality" } },
-                      { kind: "Field", name: { kind: "Name", value: "building" } },
-                      { kind: "Field", name: { kind: "Name", value: "institution" } },
-                      { kind: "Field", name: { kind: "Name", value: "institution_size" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "searchable_reservations_aggregate" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "where" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "_and" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "institution" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "prefecture" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_eq" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "prefecture" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "municipality" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_in" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "municipality" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "is_available_strings" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_eq" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "isAvailableStrings" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "is_available_woodwind" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_eq" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "isAvailableWoodwind" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "is_available_brass" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_eq" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "isAvailableBrass" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "is_available_percussion" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_eq" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "isAvailablePercussion" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "institution_size" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "_in" },
-                                        value: {
-                                          kind: "Variable",
-                                          name: { kind: "Name", value: "institutionSizes" },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              ],
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "reservation" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  { kind: "Field", name: { kind: "Name", value: "id" } },
+                                  { kind: "Field", name: { kind: "Name", value: "date" } },
+                                  { kind: "Field", name: { kind: "Name", value: "reservation" } },
+                                  { kind: "Field", name: { kind: "Name", value: "updated_at" } },
+                                ],
+                              },
                             },
-                          },
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "date" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_gte" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "startDate" },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "institution" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  { kind: "Field", name: { kind: "Name", value: "id" } },
+                                  { kind: "Field", name: { kind: "Name", value: "municipality" } },
+                                  { kind: "Field", name: { kind: "Name", value: "building" } },
+                                  { kind: "Field", name: { kind: "Name", value: "institution" } },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "institution_size" },
                                   },
-                                },
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_lte" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "endDate" },
-                                  },
-                                },
-                              ],
+                                ],
+                              },
                             },
-                          },
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "is_morning_vacant" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_eq" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "isMorningVacant" },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "is_afternoon_vacant" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_eq" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "isAfternoonVacant" },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "is_evening_vacant" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_eq" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "isEveningVacant" },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "is_holiday" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "_eq" },
-                                  value: {
-                                    kind: "Variable",
-                                    name: { kind: "Name", value: "isHoliday" },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
+                          ],
+                        },
                       },
-                    },
-                  ],
+                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                    ],
+                  },
                 },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "aggregate" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
-                    selections: [{ kind: "Field", name: { kind: "Name", value: "count" } }],
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                    ],
                   },
                 },
               ],

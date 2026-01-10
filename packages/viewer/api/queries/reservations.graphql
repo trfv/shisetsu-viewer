@@ -1,6 +1,6 @@
 query reservations(
-  $offset: Int
-  $limit: Int
+  $first: Int
+  $after: String
   $prefecture: prefecture = null
   $municipality: [String!]
   $isAvailableStrings: availavility_division = null
@@ -15,9 +15,9 @@ query reservations(
   $isAfternoonVacant: Boolean
   $isEveningVacant: Boolean
 ) {
-  searchable_reservations(
-    offset: $offset
-    limit: $limit
+  searchable_reservations_connection(
+    first: $first
+    after: $after
     where: {
       _and: {
         institution: {
@@ -38,43 +38,28 @@ query reservations(
     }
     order_by: { date: asc }
   ) {
-    id
-    reservation {
-      id
-      date
-      reservation
-      updated_at
-    }
-    institution {
-      id
-      municipality
-      building
-      institution
-      institution_size
-    }
-  }
-  searchable_reservations_aggregate(
-    where: {
-      _and: {
-        institution: {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          is_available_strings: { _eq: $isAvailableStrings }
-          is_available_woodwind: { _eq: $isAvailableWoodwind }
-          is_available_brass: { _eq: $isAvailableBrass }
-          is_available_percussion: { _eq: $isAvailablePercussion }
-          institution_size: { _in: $institutionSizes }
+    edges {
+      node {
+        id
+        reservation {
+          id
+          date
+          reservation
+          updated_at
         }
-        date: { _gte: $startDate, _lte: $endDate }
-        is_morning_vacant: { _eq: $isMorningVacant }
-        is_afternoon_vacant: { _eq: $isAfternoonVacant }
-        is_evening_vacant: { _eq: $isEveningVacant }
-        is_holiday: { _eq: $isHoliday }
+        institution {
+          id
+          municipality
+          building
+          institution
+          institution_size
+        }
       }
+      cursor
     }
-  ) {
-    aggregate {
-      count
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }

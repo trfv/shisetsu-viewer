@@ -55,23 +55,23 @@ export const toInstitutionQueryVariables = ({
   availableInstruments,
   institutionSizes,
 }: InstitutionSearchParams): InstitutionsQueryVariables => {
-  const [isAvailableStrings, isAvailableWoodwind, isAvailableBrass, isAvailablePercussion] = [
-    availableInstruments.includes(STRINGS),
-    availableInstruments.includes(WOODWIND),
-    availableInstruments.includes(BRASS),
-    availableInstruments.includes(PERCUSSION),
-  ];
   return {
-    offset: 0,
-    limit: 100,
+    first: 100,
+    after: null,
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
         : SupportedMunicipalities.map((m) => m.toString()),
-    isAvailableStrings: isAvailableStrings ? AvailabilityDivision.AVAILABLE : null,
-    isAvailableBrass: isAvailableBrass ? AvailabilityDivision.AVAILABLE : null,
-    isAvailableWoodwind: isAvailableWoodwind ? AvailabilityDivision.AVAILABLE : null,
-    isAvailablePercussion: isAvailablePercussion ? AvailabilityDivision.AVAILABLE : null,
+    isAvailableStrings: availableInstruments.includes(STRINGS)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
+    isAvailableWoodwind: availableInstruments.includes(WOODWIND)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
+    isAvailableBrass: availableInstruments.includes(BRASS) ? AvailabilityDivision.AVAILABLE : null,
+    isAvailablePercussion: availableInstruments.includes(PERCUSSION)
+      ? AvailabilityDivision.AVAILABLE
+      : null,
     institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
   };
 };
