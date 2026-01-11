@@ -2,122 +2,124 @@ import {
   Auth0Client,
   type Auth0ClientOptions,
   type GetTokenSilentlyOptions,
+  type IdToken,
   type LogoutOptions,
   type RedirectLoginOptions,
 } from "@auth0/auth0-spa-js";
 import {
   createContext,
+  use,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
+  useTransition,
   type ReactNode,
 } from "react";
-import { requestInterval } from "../utils/interval";
 
 const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";
+const TOKEN_REFRESH_INTERVAL = 60 * 60 * 1000;
 
-type Props = Auth0ClientOptions & {
-  children: ReactNode;
-};
+type UserInfo = { anonymous: boolean; trial: boolean };
 
-type Auth0Context = {
-  isLoading: boolean;
+type Auth0ContextType = {
   token: string;
-  userInfo: { anonymous: boolean; trial: boolean };
-  login(o: RedirectLoginOptions): void;
-  logout(o: LogoutOptions): void;
+  userInfo: UserInfo;
+  isPending: boolean;
+  login: (o?: RedirectLoginOptions) => void;
+  logout: (o?: LogoutOptions) => void;
 };
 
-const initlalContext: Auth0Context = {
-  isLoading: true,
+const DEFAULT_USER_INFO: UserInfo = { anonymous: true, trial: false };
+
+const initialContext: Auth0ContextType = {
   token: "",
-  userInfo: { anonymous: true, trial: false },
-  login: () => null,
-  logout: () => null,
+  userInfo: DEFAULT_USER_INFO,
+  isPending: false,
+  login: () => undefined,
+  logout: () => undefined,
 };
 
-export const Auth0Context = createContext<Auth0Context>(initlalContext);
-export const useAuth0 = () => useContext(Auth0Context);
+export const Auth0Context = createContext<Auth0ContextType>(initialContext);
+
+export const useAuth0 = () => use(Auth0Context);
+
+const parseUserInfo = (claims?: IdToken): UserInfo => {
+  const tokenClaims = claims?.[TOKEN_CLAIM_KEY];
+  return {
+    anonymous: tokenClaims?.role === "anonymous",
+    trial: tokenClaims?.trial === true,
+  };
+};
+
+type Props = Auth0ClientOptions & { children: ReactNode };
 
 export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
-  const [auth0Client] = useState(() => new Auth0Client(clientOptions));
-  const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
-  const [token, setToken] = useState(initlalContext.token);
-  const [userInfo, setUserInfo] = useState(initlalContext.userInfo);
-  // Type assertion needed: Auth0 2.8.0 allows authorizationParams.scope to be
-  // string | Record<string, string>, but GetTokenSilentlyOptions type still expects
-  // only string. The runtime supports both formats, so this assertion is safe.
-  const options = useMemo(
-    () => ({
-      authorizationParams: clientOptions.authorizationParams ?? {},
-    }),
+  const [client] = useState(() => new Auth0Client(clientOptions));
+  const [token, setToken] = useState("");
+  const [userInfo, setUserInfo] = useState<UserInfo>(DEFAULT_USER_INFO);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  const authParams = useMemo(
+    () => ({ authorizationParams: clientOptions.authorizationParams ?? {} }),
     [clientOptions.authorizationParams]
   ) as GetTokenSilentlyOptions;
 
-  const getIdTokenClaims = useCallback(async () => {
-    const claims = await auth0Client.getIdTokenClaims();
-    return claims?.[TOKEN_CLAIM_KEY];
-  }, [auth0Client]);
-
-  const login = useCallback(
-    (o: RedirectLoginOptions) => auth0Client.loginWithRedirect(o),
-    [auth0Client]
-  );
-
-  const logout = useCallback((o: LogoutOptions) => auth0Client.logout(o), [auth0Client]);
-
-  const updateToken = useCallback(async () => {
+  const updateAuth = useCallback(async () => {
     try {
-      const token = await auth0Client.getTokenSilently(options);
-      if (token) {
-        setToken(token);
-        const idTokenClaims = await getIdTokenClaims();
-        setUserInfo({
-          anonymous: idTokenClaims?.role === "anonymous",
-          trial: idTokenClaims?.trial === true,
-        });
+      const newToken = await client.getTokenSilently(authParams);
+      if (newToken) {
+        const claims = await client.getIdTokenClaims();
+        setToken(newToken);
+        setUserInfo(parseUserInfo(claims));
         return true;
-      } else {
-        return false;
       }
     } catch {
-      return false;
+      // Silent failure
     }
-  }, [auth0Client, options, getIdTokenClaims]);
+    return false;
+  }, [client, authParams]);
 
   useEffect(() => {
-    const initAuth0 = async () => {
+    const init = async () => {
       try {
-        await auth0Client.checkSession(options);
-        await updateToken();
-      } catch (e) {
-        console.info(e);
-      } finally {
-        setIsLoading(false);
+        await client.checkSession(authParams);
+        await updateAuth();
+      } catch {
+        // Ignore
       }
+      setIsInitialized(true);
     };
 
-    initAuth0();
-    const intervalCleanup = requestInterval(() => updateToken(), 60 * 60 * 1000);
+    init();
 
-    return () => {
-      intervalCleanup();
-    };
-  }, [auth0Client, updateToken, options]);
+    const intervalId = setInterval(updateAuth, TOKEN_REFRESH_INTERVAL);
+    return () => clearInterval(intervalId);
+  }, [client, authParams, updateAuth]);
 
-  return (
-    <Auth0Context.Provider
-      value={{
-        isLoading,
-        token,
-        userInfo,
-        login,
-        logout,
-      }}
-    >
-      {children}
-    </Auth0Context.Provider>
+  const login = useCallback(
+    (o: RedirectLoginOptions = {}) => {
+      startTransition(async () => {
+        await client.loginWithRedirect(o);
+      });
+    },
+    [client]
   );
+
+  const logout = useCallback(
+    (o: LogoutOptions = {}) => {
+      startTransition(async () => {
+        await client.logout(o);
+      });
+    },
+    [client]
+  );
+
+  const value = useMemo(
+    () => ({ token, userInfo, isPending: isPending || !isInitialized, login, logout }),
+    [token, userInfo, isPending, isInitialized, login, logout]
+  );
+
+  return <Auth0Context value={value}>{children}</Auth0Context>;
 };
