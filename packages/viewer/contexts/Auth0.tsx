@@ -2,6 +2,7 @@ import {
   Auth0Client,
   type Auth0ClientOptions,
   type GetTokenSilentlyOptions,
+  type IdToken,
   type LogoutOptions,
   type RedirectLoginOptions,
 } from "@auth0/auth0-spa-js";
@@ -11,37 +12,29 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
   useTransition,
   type ReactNode,
 } from "react";
 
 const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";
-const TOKEN_REFRESH_INTERVAL = 60 * 60 * 1000; // 60 minutes
+const TOKEN_REFRESH_INTERVAL = 60 * 60 * 1000;
 
-type Props = Auth0ClientOptions & {
-  children: ReactNode;
-};
-
-type UserInfo = {
-  anonymous: boolean;
-  trial: boolean;
-};
+type UserInfo = { anonymous: boolean; trial: boolean };
 
 type Auth0ContextType = {
   token: string;
   userInfo: UserInfo;
   isPending: boolean;
-  login(o?: RedirectLoginOptions): void;
-  logout(o?: LogoutOptions): void;
+  login: (o?: RedirectLoginOptions) => void;
+  logout: (o?: LogoutOptions) => void;
 };
 
-const initialUserInfo: UserInfo = { anonymous: true, trial: false };
+const DEFAULT_USER_INFO: UserInfo = { anonymous: true, trial: false };
 
 const initialContext: Auth0ContextType = {
   token: "",
-  userInfo: initialUserInfo,
+  userInfo: DEFAULT_USER_INFO,
   isPending: false,
   login: () => undefined,
   logout: () => undefined,
@@ -49,145 +42,84 @@ const initialContext: Auth0ContextType = {
 
 export const Auth0Context = createContext<Auth0ContextType>(initialContext);
 
-/**
- * React 19: use() hook for context consumption
- * This is the recommended way to consume context in React 19
- */
 export const useAuth0 = () => use(Auth0Context);
 
-/**
- * Creates a cached promise for Auth0 initialization
- * This ensures the promise is stable across renders
- */
-const createInitPromise = (
-  client: Auth0Client,
-  options: GetTokenSilentlyOptions
-): Promise<{ token: string; userInfo: UserInfo }> => {
-  return (async () => {
-    try {
-      await client.checkSession(options);
-      const token = await client.getTokenSilently(options);
-      if (token) {
-        const claims = await client.getIdTokenClaims();
-        const idTokenClaims = claims?.[TOKEN_CLAIM_KEY];
-        return {
-          token,
-          userInfo: {
-            anonymous: idTokenClaims?.role === "anonymous",
-            trial: idTokenClaims?.trial === true,
-          },
-        };
-      }
-    } catch {
-      // Silent failure for unauthenticated users
-    }
-    return { token: "", userInfo: initialUserInfo };
-  })();
+const parseUserInfo = (claims?: IdToken): UserInfo => {
+  const tokenClaims = claims?.[TOKEN_CLAIM_KEY];
+  return {
+    anonymous: tokenClaims?.role === "anonymous",
+    trial: tokenClaims?.trial === true,
+  };
 };
 
-/**
- * Auth0Provider with React 19 best practices:
- * - Uses Context directly instead of Context.Provider (React 19 feature)
- * - Uses useTransition for non-blocking login/logout operations
- * - Maintains stable promise reference for initialization
- */
+type Props = Auth0ClientOptions & { children: ReactNode };
+
 export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
-  const [auth0Client] = useState(() => new Auth0Client(clientOptions));
+  const [client] = useState(() => new Auth0Client(clientOptions));
   const [token, setToken] = useState("");
-  const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
+  const [userInfo, setUserInfo] = useState<UserInfo>(DEFAULT_USER_INFO);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  // Stable options reference
-  const options = useMemo(
-    () => ({
-      authorizationParams: clientOptions.authorizationParams ?? {},
-    }),
+  const authParams = useMemo(
+    () => ({ authorizationParams: clientOptions.authorizationParams ?? {} }),
     [clientOptions.authorizationParams]
   ) as GetTokenSilentlyOptions;
 
-  // Ref to track initialization promise
-  const initPromiseRef = useRef<Promise<{ token: string; userInfo: UserInfo }> | null>(null);
-
-  // Token update function
-  const updateToken = useCallback(async () => {
+  const updateAuth = useCallback(async () => {
     try {
-      const newToken = await auth0Client.getTokenSilently(options);
+      const newToken = await client.getTokenSilently(authParams);
       if (newToken) {
-        const claims = await auth0Client.getIdTokenClaims();
-        const idTokenClaims = claims?.[TOKEN_CLAIM_KEY];
+        const claims = await client.getIdTokenClaims();
         setToken(newToken);
-        setUserInfo({
-          anonymous: idTokenClaims?.role === "anonymous",
-          trial: idTokenClaims?.trial === true,
-        });
+        setUserInfo(parseUserInfo(claims));
         return true;
       }
     } catch {
       // Silent failure
     }
     return false;
-  }, [auth0Client, options]);
+  }, [client, authParams]);
 
-  // Initialize Auth0 on mount
   useEffect(() => {
-    if (!initPromiseRef.current) {
-      initPromiseRef.current = createInitPromise(auth0Client, options);
-    }
-
-    initPromiseRef.current.then(({ token: initialToken, userInfo: initialUserInfo }) => {
-      setToken(initialToken);
-      setUserInfo(initialUserInfo);
+    const init = async () => {
+      try {
+        await client.checkSession(authParams);
+        await updateAuth();
+      } catch {
+        // Ignore
+      }
       setIsInitialized(true);
-    });
-
-    // Token refresh interval
-    const intervalId = setInterval(() => {
-      updateToken();
-    }, TOKEN_REFRESH_INTERVAL);
-
-    return () => {
-      clearInterval(intervalId);
     };
-  }, [auth0Client, options, updateToken]);
 
-  /**
-   * React 19: useTransition for login
-   * Wraps the redirect in a transition to keep UI responsive
-   */
+    init();
+
+    const intervalId = setInterval(updateAuth, TOKEN_REFRESH_INTERVAL);
+    return () => clearInterval(intervalId);
+  }, [client, authParams, updateAuth]);
+
   const login = useCallback(
     (o: RedirectLoginOptions = {}) => {
       startTransition(async () => {
-        await auth0Client.loginWithRedirect(o);
+        await client.loginWithRedirect(o);
       });
     },
-    [auth0Client]
+    [client]
   );
 
-  /**
-   * React 19: useTransition for logout
-   * Wraps the logout in a transition to keep UI responsive
-   */
   const logout = useCallback(
     (o: LogoutOptions = {}) => {
       startTransition(async () => {
-        await auth0Client.logout(o);
+        await client.logout(o);
       });
     },
-    [auth0Client]
+    [client]
   );
 
-  const contextValue = useMemo(
-    () => ({
-      token,
-      userInfo,
-      isPending: isPending || !isInitialized,
-      login,
-      logout,
-    }),
+  const value = useMemo(
+    () => ({ token, userInfo, isPending: isPending || !isInitialized, login, logout }),
     [token, userInfo, isPending, isInitialized, login, logout]
   );
 
-  // React 19: Use Context directly as JSX element instead of Context.Provider
-  return <Auth0Context value={contextValue}>{children}</Auth0Context>;
+  return <Auth0Context value={value}>{children}</Auth0Context>;
 };
