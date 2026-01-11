@@ -5,12 +5,12 @@ import { Loading } from "../../pages/Loading";
 
 export const AuthGuard = ({ Component }: { Component: React.ReactNode }): React.ReactNode => {
   const {
-    isLoading,
+    isPending,
     userInfo: { anonymous },
   } = useAuth0();
 
   if (anonymous) {
-    return isLoading ? <Loading /> : <Navigate replace={true} to={ROUTES.top} />;
+    return isPending ? <Loading /> : <Navigate replace={true} to={ROUTES.top} />;
   }
 
   return Component;

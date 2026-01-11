@@ -8,7 +8,7 @@ import { SmallButton } from "../Button";
 import { IconButton } from "../IconButton";
 
 export const LoginButton = () => {
-  const { isLoading, token, login, logout } = useAuth0();
+  const { isPending, token, login, logout } = useAuth0();
   const isMobile = useIsMobile();
 
   const [text, Icon, onClick] = useMemo(
@@ -24,11 +24,11 @@ export const LoginButton = () => {
                 },
               }),
           ]
-        : ["ログイン", LoginIcon, () => login({})],
+        : ["ログイン", LoginIcon, () => login()],
     [token, login, logout]
   );
 
-  if (isLoading) {
+  if (isPending) {
     return null;
   }
 
