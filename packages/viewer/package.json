@@ -4,17 +4,17 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@apollo/client": "4.0.11",
-    "@auth0/auth0-spa-js": "2.11.0",
+    "@apollo/client": "4.0.12",
+    "@auth0/auth0-spa-js": "2.11.2",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@mui/icons-material": "7.3.6",
-    "@mui/material": "7.3.6",
-    "@mui/x-date-pickers": "8.23.0",
+    "@mui/icons-material": "7.3.7",
+    "@mui/material": "7.3.7",
+    "@mui/x-date-pickers": "8.24.0",
     "graphql": "16.12.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-router-dom": "7.11.0"
+    "react-router-dom": "7.12.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "6.1.0",
