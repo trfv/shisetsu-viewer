@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 import { relayStylePagination } from "@apollo/client/utilities";
 import { GRAPHQL_ENDPOINT } from "../constants/env";
 
-export const client = (token: string) => {
+export const createClient = (token: string) => {
   return new ApolloClient({
     link: new HttpLink({
       uri: GRAPHQL_ENDPOINT,
