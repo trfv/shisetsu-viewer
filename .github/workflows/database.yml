@@ -47,7 +47,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "lts/*"
       - name: Cache node_modules
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -71,7 +71,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "lts/*"
       - name: Restore cached node_modules
-        uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
