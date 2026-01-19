@@ -18,7 +18,7 @@
     "@mizchi/lsmcp": "0.10.0",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "25.0.9",
-    "@typescript/native-preview": "7.0.0-dev.20260117.1",
+    "@typescript/native-preview": "7.0.0-dev.20260119.1",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react": "7.37.5",
