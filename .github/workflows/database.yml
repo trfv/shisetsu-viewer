@@ -34,20 +34,20 @@ jobs:
             echo "municipality=${{ github.event.inputs.municipality }}" >> $GITHUB_OUTPUT
           fi
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
       - name: Set cache keys
         id: set-cache-keys
         run: |
           NODE_MODULES_HASH=$(sha256sum package-lock.json | awk '{ print $1 }')
           echo "nodeModulesCacheKey=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
       - name: Set Node.js
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
           node-version: "lts/*"
       - name: Cache node_modules
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -63,15 +63,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
       - name: Set Node.js
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
           node-version: "lts/*"
       - name: Restore cached node_modules
-        uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
