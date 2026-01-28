@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import { isWeekend } from "date-fns";
 import { graphqlRequest } from "./request.mjs";
 
 let _targets = [
@@ -18,19 +17,6 @@ const targets = _targets;
 const title = `update reservations`;
 
 console.time(title);
-
-const holidays = await graphqlRequest(`
-  query list_holidays {
-    holidays(where: { date: { _gte: now } }) {
-      date
-    }
-  }
-`);
-
-const holidayMap = holidays.holidays.reduce((acc, cur) => {
-  acc[cur.date] = true;
-  return acc;
-}, {});
 
 for (const target of targets) {
   const dir = `test-results/${target}`;
@@ -82,12 +68,10 @@ for (const target of targets) {
       if (!institution_id) {
         return [];
       }
-      const is_holiday = isWeekend(new Date(date)) || holidayMap[date] || false;
       return {
         institution_id,
         date,
         reservation,
-        is_holiday,
       };
     });
   });
@@ -111,7 +95,7 @@ for (const target of targets) {
             objects: $data
             on_conflict: {
               constraint: reservations_institution_id_date_key
-              update_columns: [reservation, is_holiday]
+              update_columns: [reservation]
             }
           ) {
             affected_rows
