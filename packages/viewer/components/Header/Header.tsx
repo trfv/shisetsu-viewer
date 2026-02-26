@@ -3,8 +3,9 @@ import { ROUTES } from "../../constants/routes";
 import { CONTAINER_WIDTH, HEADER_HEIGHT } from "../../constants/styles";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { styled } from "../../utils/theme";
+import { palette, styled } from "../../utils/theme";
 import { BaseBox } from "../Box";
+import { ColorModeButton } from "../ColorModeButton";
 import { HeaderMenuButton } from "../HeaderMenuButton";
 import { LoginButton } from "../LoginButton";
 
@@ -41,7 +42,8 @@ export const Header = () => {
             </BaseBox>
           )}
         </BaseBox>
-        <BaseBox className={classes.menuButton}>
+        <BaseBox className={classes.actions}>
+          <ColorModeButton />
           <LoginButton />
         </BaseBox>
       </BaseBox>
@@ -58,6 +60,7 @@ const classes = {
   logo: `${PREFIX}-logo`,
   menu: `${PREFIX}-menu`,
   menuButton: `${PREFIX}-menuButton`,
+  actions: `${PREFIX}-actions`,
 };
 
 const StyledHeader = styled("header")(({ theme }) => ({
@@ -65,7 +68,7 @@ const StyledHeader = styled("header")(({ theme }) => ({
     width: "100%",
     height: HEADER_HEIGHT,
     color: theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: palette.headerBg,
   },
   [`.${classes.toolbar}`]: {
     marginInline: "auto",
@@ -111,5 +114,10 @@ const StyledHeader = styled("header")(({ theme }) => ({
   },
   [`.${classes.menuButton}`]: {
     minWidth: 40, // icon size
+  },
+  [`.${classes.actions}`]: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(0.5),
   },
 }));

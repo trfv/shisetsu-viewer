@@ -17,8 +17,8 @@ export const WIDTHS = {
 
 export const FONT_SIZE = {
   small: "0.75rem",
-  medium: "1rem",
-  large: "1.25rem",
+  medium: "0.9375rem",
+  large: "1.125rem",
 };
 
 export const HEADER_HEIGHT = 72;
