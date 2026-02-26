@@ -92,4 +92,61 @@ describe("CheckboxGroup Component", () => {
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).toHaveAttribute("value", "gym");
   });
+
+  it("ネストされた要素内のチェックボックスを再帰的に処理する", () => {
+    renderWithProviders(
+      <CheckboxGroup {...defaultProps} values={["gym", "pool"]}>
+        <div>
+          <Checkbox label="体育館" value="gym" />
+          <Checkbox label="プール" value="pool" />
+        </div>
+      </CheckboxGroup>
+    );
+
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes[0]).toBeChecked();
+    expect(checkboxes[1]).toBeChecked();
+  });
+
+  it("Checkbox以外の子要素はnullを返す", () => {
+    renderWithProviders(
+      <CheckboxGroup {...defaultProps} values={[]}>
+        <Checkbox label="体育館" value="gym" />
+        {null}
+        {false}
+      </CheckboxGroup>
+    );
+
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes).toHaveLength(1);
+  });
+
+  it("子要素なしのCheckbox以外の要素はnullを返す", () => {
+    renderWithProviders(
+      <CheckboxGroup {...defaultProps} values={["gym"]}>
+        <Checkbox label="体育館" value="gym" />
+        <hr />
+      </CheckboxGroup>
+    );
+
+    // The <hr /> element is not a Checkbox and has no children,
+    // so mapChildren returns null for it
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes).toHaveLength(1);
+    expect(checkboxes[0]).toBeChecked();
+  });
+
+  it("value属性のないCheckboxはchecked=falseになる", () => {
+    renderWithProviders(
+      <CheckboxGroup {...defaultProps} values={["gym"]}>
+        <Checkbox label="体育館" value="gym" />
+        <Checkbox label="不明" value="" />
+      </CheckboxGroup>
+    );
+
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes[0]).toBeChecked();
+    // Checkbox with empty string value should not be checked
+    expect(checkboxes[1]).not.toBeChecked();
+  });
 });

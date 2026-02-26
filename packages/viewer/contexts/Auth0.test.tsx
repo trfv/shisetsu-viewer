@@ -291,6 +291,47 @@ describe("Auth0Provider", () => {
     });
   });
 
+  describe("トークン取得 - falsyトークン", () => {
+    it("getTokenSilentlyがfalsy値を返した場合、トークンは空のままである", async () => {
+      configureMockClient({
+        getTokenSilently: vi.fn().mockResolvedValue(""),
+      });
+
+      render(
+        <Auth0Provider {...defaultProviderProps}>
+          <Auth0Consumer />
+        </Auth0Provider>
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId("is-loading").textContent).toBe("false");
+      });
+
+      // Token should remain empty because getTokenSilently returned falsy
+      expect(screen.getByTestId("token").textContent).toBe("");
+    });
+  });
+
+  describe("デフォルトコンテキスト", () => {
+    it("Auth0Providerの外でuseAuth0を使用するとデフォルトのlogin/logoutが呼べる", async () => {
+      render(<Auth0Consumer />);
+
+      expect(screen.getByTestId("is-loading").textContent).toBe("true");
+      expect(screen.getByTestId("token").textContent).toBe("");
+
+      // Default login and logout (from initialContext) should not throw when called
+      await act(async () => {
+        await userEvent.click(screen.getByTestId("login-btn"));
+      });
+      await act(async () => {
+        await userEvent.click(screen.getByTestId("logout-btn"));
+      });
+
+      // Should still be in initial state (no crash)
+      expect(screen.getByTestId("is-loading").textContent).toBe("true");
+    });
+  });
+
   describe("初期コンテキスト値", () => {
     it("初期状態のトークンは空文字列である", () => {
       // Configure checkSession to never resolve so we can observe initial state

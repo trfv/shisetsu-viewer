@@ -49,4 +49,20 @@ describe("Checkbox Component", () => {
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).toHaveAttribute("value", "available");
   });
+
+  it("onChangeを渡さない場合にデフォルトのonChangeが使われる", async () => {
+    const { user } = renderWithProviders(<Checkbox label="テスト" value="test" />);
+
+    const checkbox = screen.getByRole("checkbox");
+    // Should not throw when clicking without onChange handler
+    await user.click(checkbox);
+
+    expect(checkbox).toBeInTheDocument();
+  });
+
+  it("sizeプロパティを指定してレンダリングする", () => {
+    renderWithProviders(<Checkbox label="テスト" value="test" size="small" />);
+
+    expect(screen.getByText("テスト")).toBeInTheDocument();
+  });
 });
