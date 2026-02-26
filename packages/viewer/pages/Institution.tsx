@@ -36,6 +36,7 @@ export const COLUMNS: Columns<
     field: "building_and_institution",
     headerName: "施設名",
     type: "getter",
+    maxWidth: 400,
     valueGetter: (params) => `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
   },
   {
@@ -49,35 +50,30 @@ export const COLUMNS: Columns<
     field: "institution_size",
     headerName: "施設サイズ",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => InstitutionSizeMap[params.value as string] || "",
   },
   {
     field: "is_available_strings",
     headerName: "弦楽器",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_woodwind",
     headerName: "木管楽器",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_brass",
     headerName: "金管楽器",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
     field: "is_available_percussion",
     headerName: "打楽器",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => AvailabilityDivisionMap[params.value as string] || "",
   },
   {
@@ -98,7 +94,6 @@ export const COLUMNS: Columns<
     field: "updated_at",
     headerName: "更新日時",
     type: "datetime",
-    hideIfMobile: true,
   },
 ];
 

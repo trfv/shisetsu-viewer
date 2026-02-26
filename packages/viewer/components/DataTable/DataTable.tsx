@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
-import { styled } from "../../utils/theme";
+import { styled, useTheme } from "../../utils/theme";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
 
@@ -23,7 +23,6 @@ type Column<T> = {
   description?: string;
   maxWidth?: number;
   hide?: boolean;
-  hideIfMobile?: boolean;
   valueGetter?: (row: RowParams<T>) => string; // type = getter の時に設定する
 };
 
@@ -63,6 +62,7 @@ export const DataTable = <T extends Row>({
   hasNextPage,
 }: Props<T>) => {
   const isMobile = useIsMobile();
+  const theme = useTheme();
   const target = useRef<HTMLTableRowElement | null>(null);
   const cardTarget = useRef<HTMLDivElement | null>(null);
 
@@ -80,7 +80,7 @@ export const DataTable = <T extends Row>({
     };
   }, [fetchMore, isMobile]);
 
-  const tableCols = columns.filter((column) => !(column.hide || (isMobile && column.hideIfMobile)));
+  const tableCols = columns.filter((column) => !column.hide);
   const cardCols = columns.filter((column) => !column.hide);
 
   if (isMobile) {
@@ -134,6 +134,7 @@ export const DataTable = <T extends Row>({
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  borderBottomColor: theme.palette.text.primary,
                 }}
                 variant="head"
               >
@@ -163,6 +164,7 @@ export const DataTable = <T extends Row>({
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
+                      borderBottomColor: theme.palette.text.secondary,
                     }}
                     variant="body"
                   >
