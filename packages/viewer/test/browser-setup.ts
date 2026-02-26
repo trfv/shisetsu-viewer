@@ -4,6 +4,17 @@ import { afterEach, beforeAll, afterAll, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 
+// Mock @auth0/auth0-spa-js to prevent it from interfering with React module resolution
+vi.mock("@auth0/auth0-spa-js", () => ({
+  Auth0Client: vi.fn().mockImplementation(() => ({
+    checkSession: vi.fn().mockResolvedValue(undefined),
+    getTokenSilently: vi.fn().mockResolvedValue("mock-token"),
+    getIdTokenClaims: vi.fn().mockResolvedValue({}),
+    loginWithRedirect: vi.fn().mockResolvedValue(undefined),
+    logout: vi.fn().mockResolvedValue(undefined),
+  })),
+}));
+
 let worker: any;
 
 beforeAll(async () => {

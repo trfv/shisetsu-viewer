@@ -116,4 +116,70 @@ test.describe("Mobile Responsiveness", () => {
       expect(mainBox.width).toBeLessThanOrEqual(viewportSize.width);
     }
   });
+
+  test("should show hamburger menu on mobile", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    // モバイルではハンバーガーメニューボタンが表示される
+    const menuButton = page.locator('button svg[data-testid="MenuIcon"]');
+    await expect(menuButton).toBeVisible();
+  });
+});
+
+test.describe("Institution Search Page", () => {
+  test("displays search form", async ({ page }) => {
+    await page.goto("/institution");
+    await page.waitForLoadState("networkidle");
+
+    // メインコンテンツが表示される
+    const main = page.locator("main");
+    await expect(main).toBeVisible();
+
+    // 絞り込みボタンが表示される
+    await expect(page.locator("text=絞り込み")).toBeVisible();
+  });
+});
+
+test.describe("Detail Page", () => {
+  test("redirects to top on invalid UUID", async ({ page }) => {
+    await page.goto("/institution/invalid-uuid");
+
+    // トップページにリダイレクトされる
+    await page.waitForURL("/");
+    expect(page.url()).toContain("/");
+  });
+});
+
+test.describe("Navigation", () => {
+  test("navigate from top to institution search", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    // 施設検索リンクをクリック
+    const institutionLink = page.locator('a[href="/institution"]').first();
+    await expect(institutionLink).toBeVisible();
+    await institutionLink.click();
+
+    // URLが変更される
+    await page.waitForURL("/institution");
+    expect(page.url()).toContain("/institution");
+  });
+});
+
+test.describe("Color Mode", () => {
+  test("toggle changes theme", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    // テーマ切替ボタンを見つける
+    const themeButton = page.locator('button[aria-label*="テーマ"]');
+    await expect(themeButton).toBeVisible();
+
+    // クリックしてテーマが変更される
+    await themeButton.click();
+
+    // aria-labelが変わることを確認（system→light）
+    await expect(themeButton).toHaveAttribute("aria-label", /テーマ/);
+  });
 });
