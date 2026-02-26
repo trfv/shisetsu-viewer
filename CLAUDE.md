@@ -26,14 +26,19 @@ Always use `-w @shisetsu-viewer/viewer` for viewer-specific commands:
 npm run start -w @shisetsu-viewer/viewer        # Start dev server (port 3000)
 npm run build -w @shisetsu-viewer/viewer        # Production build
 npm run build:analyze -w @shisetsu-viewer/viewer # Build with bundle analysis
+npm run typecheck -w @shisetsu-viewer/viewer    # Type check with tsgo
 
 # Testing
 npm run test -w @shisetsu-viewer/viewer         # Watch mode
 npm run test:ci -w @shisetsu-viewer/viewer      # CI mode (single run)
 npm run test:unit -w @shisetsu-viewer/viewer    # Unit tests only
 npm run test:integration -w @shisetsu-viewer/viewer
+npm run test:accessibility -w @shisetsu-viewer/viewer # Accessibility tests
+npm run test:performance -w @shisetsu-viewer/viewer   # Performance tests
 npm run test:e2e -w @shisetsu-viewer/viewer     # Playwright e2e tests
 npm run test:e2e:ui -w @shisetsu-viewer/viewer  # e2e with UI
+npm run test:e2e:debug -w @shisetsu-viewer/viewer   # e2e with debug
+npm run test:e2e:headed -w @shisetsu-viewer/viewer  # e2e headed mode
 npm run test:all -w @shisetsu-viewer/viewer     # All tests
 
 # Coverage
@@ -117,9 +122,15 @@ This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` w
 - MSW for API mocking (worker in `public/` directory)
 - Playwright for E2E tests
 
+**Test Helpers**:
+- Use `renderWithProviders()` from `test/utils/test-utils.tsx` for component tests
+- Wraps components with MockedProvider (Apollo), ThemeProvider, MemoryRouter
+- Returns `{ user, ...renderResult }` where `user` is vitest browser userEvent
+- Re-exports all `@testing-library/react` utilities
+
 **Running Tests**:
 - Always set `TZ=Asia/Tokyo` (handled automatically by npm scripts)
-- Coverage thresholds enforced in vitest.config.ts
+- Coverage thresholds: branches 60%, functions 60%, lines 70%, statements 70%
 - E2E tests start dev server automatically (playwright.config.ts webServer)
 
 ## GraphQL Workflow
@@ -151,6 +162,9 @@ This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` w
 - Pages are route components in `pages/`
 - Constants in `constants/` (especially municipality-specific data)
 
+**Prettier** (`.prettierrc.yaml`):
+- printWidth: 100, tabWidth: 2, double quotes, trailing commas (es5)
+
 **Internationalization**:
 - Primary language: Japanese
 - Text encoding: UTF-8
@@ -158,6 +172,7 @@ This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` w
 
 ## Important Notes
 
+- **Key Dependencies**: React 19, React Router 7, Apollo Client 4, Storybook 10
 - Node.js >=22 required
 - Pre-commit hooks run lint-staged (ESLint + Prettier)
 - Storybook for component documentation and visual testing

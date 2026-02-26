@@ -2,6 +2,7 @@ import Close from "@mui/icons-material/Close";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import Chip from "@mui/material/Chip";
 import Drawer from "@mui/material/Drawer";
+import Tooltip from "@mui/material/Tooltip";
 import { useCallback, useState, type ReactNode } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { styled } from "../../utils/theme";
@@ -32,9 +33,11 @@ export const SearchForm = ({ chips, children }: Props) => {
           ))}
         </StyledChips>
         {isMobile ? (
-          <IconButton aria-label="絞り込み" onClick={toggleDrawer}>
-            <ManageSearchIcon />
-          </IconButton>
+          <Tooltip title="絞り込み">
+            <IconButton aria-label="絞り込み" onClick={toggleDrawer}>
+              <ManageSearchIcon />
+            </IconButton>
+          </Tooltip>
         ) : (
           <SmallButton onClick={toggleDrawer}>絞り込み</SmallButton>
         )}
@@ -46,9 +49,11 @@ export const SearchForm = ({ chips, children }: Props) => {
         open={isOpen}
       >
         <StyledMenu>
-          <IconButton aria-label="閉じる" edge="start" onClick={toggleDrawer}>
-            <Close />
-          </IconButton>
+          <Tooltip title="絞り込みを閉じる">
+            <IconButton aria-label="閉じる" edge="start" onClick={toggleDrawer}>
+              <Close />
+            </IconButton>
+          </Tooltip>
           {children}
         </StyledMenu>
       </Drawer>
@@ -66,7 +71,10 @@ const StyledChips = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     marginRight: "0",
     gap: "0.25rem",
-    height: "1.5rem",
+    flexWrap: "wrap",
+    overflow: "visible",
+    height: "auto",
+    minHeight: "1.5rem",
   },
 }));
 

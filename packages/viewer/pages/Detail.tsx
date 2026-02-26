@@ -23,6 +23,7 @@ import {
 import { ROUTES } from "../constants/routes";
 import { CONTAINER_WIDTH, WIDTHS } from "../constants/styles";
 import { useAuth0 } from "../contexts/Auth0";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUuid } from "../utils/id";
@@ -160,6 +161,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
     throw new Error("municipality is undefined");
   }
 
+  const isMobile = useIsMobile();
   const { loading, data, error } = useQuery(InstitutionReservationsDocument, {
     variables: { id, startDate: formatISO(today, { representation: "date" }) },
     fetchPolicy: "no-cache",
@@ -180,6 +182,25 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
       ) : !reservations?.length ||
         MUNICIPALITIES_WITHOUT_RESERVATION_DATA.includes(municipality) ? (
         <div className={classes.reservationNoData}>表示するデータが存在しません</div>
+      ) : isMobile ? (
+        <div className={classes.reservationCardList}>
+          {reservations.map((row, index) => (
+            <div className={classes.reservationCard} key={index}>
+              <div className={classes.reservationCardDate}>{formatMonthDate(row.date)}</div>
+              <div className={classes.reservationCardDivisions}>
+                {sortByReservationDivision(row.reservation).map(([division, status], i) => (
+                  <div className={classes.reservationCardDivisionItem} key={i}>
+                    <span>{ReservationDivisionMap[municipality]?.[division]}</span>
+                    <span>{ReservationStatusMap[municipality]?.[status]}</span>
+                  </div>
+                ))}
+              </div>
+              <div className={classes.reservationCardUpdatedAt}>
+                {formatDatetime(row.updated_at)}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <TableContainer>
           <Table stickyHeader={true}>
@@ -316,6 +337,12 @@ const classes = {
   reservationContainer: `${PREFIX}-reservationContainer`,
   reservationNoData: `${PREFIX}-reservationNoData`,
   reservationTableCell: `${PREFIX}-reservationTableCell`,
+  reservationCardList: `${PREFIX}-reservationCardList`,
+  reservationCard: `${PREFIX}-reservationCard`,
+  reservationCardDate: `${PREFIX}-reservationCardDate`,
+  reservationCardDivisions: `${PREFIX}-reservationCardDivisions`,
+  reservationCardDivisionItem: `${PREFIX}-reservationCardDivisionItem`,
+  reservationCardUpdatedAt: `${PREFIX}-reservationCardUpdatedAt`,
 };
 
 const StyledInstitutionDetail = styled("main")(({ theme }) => ({
@@ -376,11 +403,19 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
       marginTop: 24,
       gap: theme.spacing(3),
     },
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap",
+      gap: theme.spacing(2),
+      [`+ .${classes.institutionRow}`]: {
+        marginTop: theme.spacing(2),
+        gap: theme.spacing(2),
+      },
+    },
   },
   [`.${classes.institutionRightArea}`]: {
     width: 384,
     [theme.breakpoints.down("sm")]: {
-      width: 0, // TODO
+      display: "none",
     },
   },
   [`.${classes.reservationContainer}`]: {
@@ -398,5 +433,44 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   },
   [`.${classes.reservationTableCell}`]: {
     whiteSpace: "nowrap",
+  },
+  [`.${classes.reservationCardList}`]: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+    padding: theme.spacing(0, 2),
+  },
+  [`.${classes.reservationCard}`]: {
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+  },
+  [`.${classes.reservationCardDate}`]: {
+    fontWeight: "bold",
+    fontSize: "1rem",
+    marginBottom: theme.spacing(1),
+  },
+  [`.${classes.reservationCardDivisions}`]: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  [`.${classes.reservationCardDivisionItem}`]: {
+    display: "flex",
+    gap: theme.spacing(0.5),
+    fontSize: "0.875rem",
+    "& > span:first-of-type": {
+      color: theme.palette.text.secondary,
+      "&::after": {
+        content: '":"',
+      },
+    },
+  },
+  [`.${classes.reservationCardUpdatedAt}`]: {
+    fontSize: "0.75rem",
+    color: theme.palette.text.secondary,
+    textAlign: "right",
   },
 }));

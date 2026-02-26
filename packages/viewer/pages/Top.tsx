@@ -40,10 +40,11 @@ export default () => {
             予約状況検索機能については、管理人の許可制としております。管理人までご連絡ください。
           </li>
           <li>表示されている情報に関し、当サイトはいかなる責任も負いません。</li>
-          <li>PC 環境での利用を推奨しております。</li>
         </ul>
       </div>
-      <div className={classes.copyright}>Copyright © 2023 trfv All Rights Reserved.</div>
+      <div className={classes.copyright}>
+        Copyright © {new Date().getFullYear()} trfv All Rights Reserved.
+      </div>
     </StyledTop>
   );
 };

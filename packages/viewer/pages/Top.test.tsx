@@ -83,13 +83,12 @@ describe("Top Page", () => {
       expect(
         screen.getByText("表示されている情報に関し、当サイトはいかなる責任も負いません。")
       ).toBeInTheDocument();
-      expect(screen.getByText("PC 環境での利用を推奨しております。")).toBeInTheDocument();
     });
 
     it("著作権表示を表示する", () => {
       renderWithProviders(<TopPage />);
 
-      expect(screen.getByText("Copyright © 2023 trfv All Rights Reserved.")).toBeInTheDocument();
+      expect(screen.getByText(/Copyright/)).toBeInTheDocument();
     });
   });
 
@@ -168,7 +167,6 @@ describe("Top Page", () => {
       // 利用上の注意
       expect(screen.getByText(/管理人の許可制/)).toBeInTheDocument();
       expect(screen.getByText(/いかなる責任も負いません/)).toBeInTheDocument();
-      expect(screen.getByText(/PC 環境での利用を推奨/)).toBeInTheDocument();
     });
 
     it("対応地区の情報が完全である", () => {
@@ -209,7 +207,7 @@ describe("Top Page", () => {
     it("著作権情報が正確である", () => {
       renderWithProviders(<TopPage />);
 
-      expect(screen.getByText("Copyright © 2023 trfv All Rights Reserved.")).toBeInTheDocument();
+      expect(screen.getByText(/Copyright/)).toBeInTheDocument();
     });
   });
 
@@ -224,7 +222,7 @@ describe("Top Page", () => {
     it("著作権セクションが中央揃えで表示される", () => {
       renderWithProviders(<TopPage />);
 
-      const copyright = screen.getByText("Copyright © 2023 trfv All Rights Reserved.");
+      const copyright = screen.getByText(/Copyright/);
       expect(copyright).toBeInTheDocument();
     });
   });

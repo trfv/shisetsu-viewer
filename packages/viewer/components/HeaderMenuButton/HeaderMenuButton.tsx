@@ -1,6 +1,7 @@
 import Close from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
+import Tooltip from "@mui/material/Tooltip";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
@@ -20,14 +21,18 @@ export const HeaderMenuButton = () => {
 
   return (
     <>
-      <IconButton onClick={toggleDrawer}>
-        <MenuIcon aria-label="MenuIcon" htmlColor="white" />
-      </IconButton>
+      <Tooltip title="メニュー">
+        <IconButton onClick={toggleDrawer}>
+          <MenuIcon aria-label="MenuIcon" htmlColor="white" />
+        </IconButton>
+      </Tooltip>
       <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
         <StyledMenu>
-          <IconButton edge="start" onClick={toggleDrawer}>
-            <Close />
-          </IconButton>
+          <Tooltip title="メニューを閉じる">
+            <IconButton edge="start" onClick={toggleDrawer}>
+              <Close />
+            </IconButton>
+          </Tooltip>
           {anonymous ? (
             <span>予約検索</span>
           ) : (
