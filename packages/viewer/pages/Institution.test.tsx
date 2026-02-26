@@ -54,8 +54,8 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode();
     const col = COLUMNS.find((c) => c.field === "municipality");
     const params = {
-      id: mockRow.id as string,
-      value: mockRow.municipality,
+      id: mockRow["id"] as string,
+      value: mockRow["municipality"],
       row: mockRow,
       columns: COLUMNS,
     };
@@ -66,8 +66,8 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode({ municipality: "UNKNOWN" });
     const col = COLUMNS.find((c) => c.field === "municipality");
     const params = {
-      id: mockRow.id as string,
-      value: mockRow.municipality,
+      id: mockRow["id"] as string,
+      value: mockRow["municipality"],
       row: mockRow,
       columns: COLUMNS,
     };
@@ -78,8 +78,8 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode();
     const col = COLUMNS.find((c) => c.field === "is_equipped_music_stand");
     const params = {
-      id: mockRow.id as string,
-      value: mockRow.is_equipped_music_stand,
+      id: mockRow["id"] as string,
+      value: mockRow["is_equipped_music_stand"],
       row: mockRow,
       columns: COLUMNS,
     };
@@ -90,8 +90,8 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode();
     const col = COLUMNS.find((c) => c.field === "is_equipped_piano");
     const params = {
-      id: mockRow.id as string,
-      value: mockRow.is_equipped_piano,
+      id: mockRow["id"] as string,
+      value: mockRow["is_equipped_piano"],
       row: mockRow,
       columns: COLUMNS,
     };
@@ -110,7 +110,7 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode(overrides);
     const col = COLUMNS.find((c) => c.field === field);
     const params = {
-      id: mockRow.id as string,
+      id: mockRow["id"] as string,
       value: mockRow[field as string],
       row: mockRow,
       columns: COLUMNS,
@@ -122,7 +122,7 @@ describe("COLUMNS定義", () => {
     const mockRow = createMockInstitutionNode({ building: null, institution: null });
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
     const params = {
-      id: mockRow.id as string,
+      id: mockRow["id"] as string,
       value: undefined,
       row: mockRow,
       columns: COLUMNS,
@@ -584,9 +584,9 @@ describe("Institution Page", () => {
       const mockLink = new MockLink([initialMock, fetchMoreMock], { showWarnings: false });
       const requestedVariables: unknown[] = [];
       const originalRequest = mockLink.request.bind(mockLink);
-      vi.spyOn(mockLink, "request").mockImplementation((operation, nextLink) => {
+      vi.spyOn(mockLink, "request").mockImplementation((operation) => {
         requestedVariables.push(operation.variables);
-        return originalRequest(operation, nextLink);
+        return originalRequest(operation);
       });
 
       const auth0Value = {

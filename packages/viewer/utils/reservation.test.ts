@@ -33,10 +33,10 @@ describe("sortByReservationDivision", () => {
       [ReservationDivision.MORNING_TWO]: "d",
     };
     const result = sortByReservationDivision(obj);
-    expect(result[0][0]).toBe(ReservationDivision.MORNING_ONE);
-    expect(result[1][0]).toBe(ReservationDivision.MORNING_TWO);
-    expect(result[2][0]).toBe(ReservationDivision.AFTERNOON_TWO);
-    expect(result[3][0]).toBe(ReservationDivision.EVENING_ONE);
+    expect(result[0]![0]).toBe(ReservationDivision.MORNING_ONE);
+    expect(result[1]![0]).toBe(ReservationDivision.MORNING_TWO);
+    expect(result[2]![0]).toBe(ReservationDivision.AFTERNOON_TWO);
+    expect(result[3]![0]).toBe(ReservationDivision.EVENING_ONE);
   });
 
   test("returns empty array for empty object", () => {
@@ -54,8 +54,8 @@ describe("sortByReservationDivision", () => {
       [ReservationDivision.INVALID]: "b",
     };
     const result = sortByReservationDivision(obj);
-    expect(result[0][0]).toBe(ReservationDivision.INVALID);
-    expect(result[1][0]).toBe(ReservationDivision.MORNING);
+    expect(result[0]![0]).toBe(ReservationDivision.INVALID);
+    expect(result[1]![0]).toBe(ReservationDivision.MORNING);
   });
 });
 

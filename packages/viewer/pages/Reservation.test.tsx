@@ -54,7 +54,7 @@ describe("COLUMNS定義", () => {
     const mockNode = createMockSearchableReservationNode();
     const col = COLUMNS.find((c) => c.field === "municipality");
     const params = {
-      id: mockNode.id as string,
+      id: mockNode["id"] as string,
       value: undefined,
       row: mockNode,
       columns: COLUMNS,
@@ -76,7 +76,7 @@ describe("COLUMNS定義", () => {
     });
     const col = COLUMNS.find((c) => c.field === "municipality");
     const params = {
-      id: mockNode.id as string,
+      id: mockNode["id"] as string,
       value: undefined,
       row: mockNode,
       columns: COLUMNS,
@@ -98,7 +98,7 @@ describe("COLUMNS定義", () => {
     });
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
     const params = {
-      id: mockNode.id as string,
+      id: mockNode["id"] as string,
       value: undefined,
       row: mockNode,
       columns: COLUMNS,
@@ -120,7 +120,7 @@ describe("COLUMNS定義", () => {
     });
     const col = COLUMNS.find((c) => c.field === "institution_size");
     const params = {
-      id: mockNode.id as string,
+      id: mockNode["id"] as string,
       value: undefined,
       row: mockNode,
       columns: COLUMNS,
@@ -142,7 +142,7 @@ describe("COLUMNS定義", () => {
     });
     const col = COLUMNS.find((c) => c.field === "institution_size");
     const params = {
-      id: mockNode.id as string,
+      id: mockNode["id"] as string,
       value: undefined,
       row: mockNode,
       columns: COLUMNS,
@@ -697,7 +697,7 @@ describe("Reservation Page", () => {
 
       // Find the start date "Choose date" button (first one)
       const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[0]);
+      await user.click(chooseDateButtons[0]!);
 
       // Wait for calendar to open
       await waitFor(() => {
@@ -758,7 +758,7 @@ describe("Reservation Page", () => {
 
       // Find the start date "Choose date" button (first one)
       const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[0]);
+      await user.click(chooseDateButtons[0]!);
 
       // Wait for calendar to open
       await waitFor(() => {
@@ -815,7 +815,7 @@ describe("Reservation Page", () => {
 
       // Find the end date "Choose date" button (second one)
       const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[1]);
+      await user.click(chooseDateButtons[1]!);
 
       // Wait for calendar to open (shows July 2025 since endDate = July 15)
       await waitFor(() => {
@@ -882,7 +882,7 @@ describe("Reservation Page", () => {
 
       // Find the end date "Choose date" button (second one)
       const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[1]);
+      await user.click(chooseDateButtons[1]!);
 
       // Wait for calendar to open (shows July 2025 since endDate = July 15)
       await waitFor(() => {

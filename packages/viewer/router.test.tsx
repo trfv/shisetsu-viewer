@@ -10,11 +10,11 @@ describe("router", () => {
     const routes = router.routes;
     expect(routes).toBeDefined();
     expect(routes.length).toBeGreaterThan(0);
-    expect(routes[0].path).toBe("/");
+    expect(routes[0]!.path).toBe("/");
   });
 
   it("子ルートが定義されている", () => {
-    const children = router.routes[0].children;
+    const children = router.routes[0]!.children;
     expect(children).toBeDefined();
     expect(children!.length).toBe(5);
   });
