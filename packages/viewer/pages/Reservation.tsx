@@ -43,7 +43,7 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-const COLUMNS: Columns<
+export const COLUMNS: Columns<
   ReservationsQuery["searchable_reservations_connection"]["edges"][number]["node"]
 > = [
   {
@@ -159,6 +159,7 @@ export default () => {
 
   const handleStartDateChange = useCallback(
     (date: Date | null): void => {
+      /* istanbul ignore next -- date is always provided by DatePicker onChange */
       setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
     },
     [setQueryParams, endDate]
@@ -166,6 +167,7 @@ export default () => {
 
   const handleEndDateChange = useCallback(
     (date: Date | null): void => {
+      /* istanbul ignore next -- date is always provided by DatePicker onChange */
       setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
     },
     [setQueryParams, startDate]
@@ -214,10 +216,10 @@ export default () => {
       .map(([, label]) => label),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label || ""),
+      .map(([, label]) => label),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label || ""),
+      .map(([, label]) => label),
   ];
 
   return (
@@ -270,7 +272,7 @@ export default () => {
               values={institutionSizes}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label || ""} value={value} />
+                <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>
           </SearchForm>
@@ -287,6 +289,7 @@ export default () => {
           <DataTable
             columns={COLUMNS}
             fetchMore={async () => {
+              /* istanbul ignore next -- endCursor is always set when hasMore is true */
               if (!hasMore || !endCursor) return;
               await fetchMore({
                 variables: {

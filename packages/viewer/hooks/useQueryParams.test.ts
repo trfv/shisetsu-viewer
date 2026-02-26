@@ -1,6 +1,96 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { ArrayParam, DateParam, NumberParam, StringParam, useQueryParams } from "./useQueryParams";
+
+describe("NumberParam", () => {
+  test("encode: 正の数値を文字列に変換する", () => {
+    expect(NumberParam.encode(42)).toBe("42");
+  });
+
+  test("encode: 0を文字列に変換する", () => {
+    expect(NumberParam.encode(0)).toBe("0");
+  });
+
+  test("encode: NaNの場合nullを返す", () => {
+    expect(NumberParam.encode(NaN)).toBeNull();
+  });
+
+  test("decode: 数値文字列を数値に変換する", () => {
+    expect(NumberParam.decode(["42"])).toBe(42);
+  });
+
+  test("decode: 空文字列の場合nullを返す", () => {
+    expect(NumberParam.decode([""])).toBeNull();
+  });
+
+  test("decode: 数値でない文字列の場合nullを返す", () => {
+    expect(NumberParam.decode(["abc"])).toBeNull();
+  });
+
+  test("decode: nullの場合nullを返す", () => {
+    expect(NumberParam.decode(null)).toBeNull();
+  });
+});
+
+describe("StringParam", () => {
+  test("encode: 文字列をそのまま返す", () => {
+    expect(StringParam.encode("hello")).toBe("hello");
+  });
+
+  test("encode: undefinedの場合nullを返す", () => {
+    expect(StringParam.encode(undefined as unknown as string)).toBeNull();
+  });
+
+  test("decode: 文字列配列の最初の要素を返す", () => {
+    expect(StringParam.decode(["hello"])).toBe("hello");
+  });
+
+  test("decode: nullの場合nullを返す", () => {
+    expect(StringParam.decode(null)).toBeNull();
+  });
+});
+
+describe("ArrayParam", () => {
+  test("encode: 配列をそのまま返す", () => {
+    expect(ArrayParam.encode(["a", "b"])).toEqual(["a", "b"]);
+  });
+
+  test("encode: undefinedの場合nullを返す", () => {
+    expect(ArrayParam.encode(undefined as unknown as string[])).toBeNull();
+  });
+
+  test("decode: 配列をそのまま返す", () => {
+    expect(ArrayParam.decode(["a", "b"])).toEqual(["a", "b"]);
+  });
+
+  test("decode: nullの場合nullを返す", () => {
+    expect(ArrayParam.decode(null)).toBeNull();
+  });
+});
+
+describe("DateParam", () => {
+  test("encode: DateをISO日付文字列に変換する", () => {
+    expect(DateParam.encode(new Date("2022-02-26"))).toBe("2022-02-26");
+  });
+
+  test("decode: 有効な日付文字列をDateに変換する", () => {
+    const result = DateParam.decode(["2022-02-26"]);
+    expect(result).toBeInstanceOf(Date);
+    expect(result?.toISOString()).toBe(new Date("2022-02-26").toISOString());
+  });
+
+  test("decode: 無効な日付文字列の場合nullを返す", () => {
+    expect(DateParam.decode(["invalid-date"])).toBeNull();
+  });
+
+  test("decode: 空文字列の場合nullを返す", () => {
+    expect(DateParam.decode([""])).toBeNull();
+  });
+
+  test("decode: nullの場合nullを返す", () => {
+    expect(DateParam.decode(null)).toBeNull();
+  });
+});
 
 describe("useQueryParams", () => {
   test("all pattern", () => {
@@ -93,5 +183,92 @@ describe("useQueryParams", () => {
     expect(result.current[0].d).toBeNull();
     expect(result.current[0].e).toBeNull();
     expect(result.current[0].f).toBeNull();
+  });
+
+  test("setQueryParams with array values exercises toQueryParams array branch", () => {
+    const navigateMock = vi.fn();
+    const { result, rerender } = renderHook(() =>
+      useQueryParams(
+        {
+          tags: ArrayParam,
+          count: NumberParam,
+        },
+        navigateMock,
+        {
+          state: {},
+          key: "",
+          pathname: "/test",
+          search: "",
+          hash: "",
+        }
+      )
+    );
+
+    act(() => {
+      result.current[1]({
+        tags: ["a", "b", "c"],
+        count: 5,
+      });
+      rerender();
+    });
+
+    expect(navigateMock).toHaveBeenCalledWith(expect.objectContaining({ pathname: "/test" }), {
+      replace: true,
+    });
+    expect(result.current[0].tags?.sort().toString()).toBe(["a", "b", "c"].sort().toString());
+    expect(result.current[0].count).toBe(5);
+  });
+
+  test("setQueryParams with null encode result skips parameter", () => {
+    const navigateMock = vi.fn();
+    const { result, rerender } = renderHook(() =>
+      useQueryParams(
+        {
+          name: StringParam,
+          value: StringParam,
+        },
+        navigateMock,
+        {
+          state: {},
+          key: "",
+          pathname: "/test",
+          search: "?name=hello",
+          hash: "",
+        }
+      )
+    );
+
+    // Setting a param to undefined triggers encode → null, which is skipped (if (ev) is false)
+    act(() => {
+      result.current[1]({
+        value: undefined as unknown as string,
+      });
+      rerender();
+    });
+
+    // name should remain unchanged, value param should not be added
+    expect(result.current[0].name).toBe("hello");
+  });
+
+  test("toDecodedValues with existing query params maps all keys", () => {
+    const { result } = renderHook(() =>
+      useQueryParams(
+        {
+          name: StringParam,
+          ids: ArrayParam,
+        },
+        () => {},
+        {
+          state: {},
+          key: "",
+          pathname: "",
+          search: "?name=test&ids=1&ids=2",
+          hash: "",
+        }
+      )
+    );
+
+    expect(result.current[0].name).toBe("test");
+    expect(result.current[0].ids).toEqual(["1", "2"]);
   });
 });

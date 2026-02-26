@@ -222,5 +222,17 @@ describe("ColorModeProvider", () => {
 
       expect(screen.getByTestId("mode").textContent).toBe("system");
     });
+
+    it("プロバイダーなしでtoggleModeを呼んでもエラーにならない", async () => {
+      render(<ColorModeConsumer />);
+
+      const toggleButton = screen.getByTestId("toggle");
+      await act(async () => {
+        await userEvent.click(toggleButton);
+      });
+
+      // Default toggleMode is a no-op, mode should remain "system"
+      expect(screen.getByTestId("mode").textContent).toBe("system");
+    });
   });
 });

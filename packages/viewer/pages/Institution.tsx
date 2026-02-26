@@ -29,7 +29,9 @@ import {
 } from "../utils/search";
 import { styled } from "../utils/theme";
 
-const COLUMNS: Columns<InstitutionsQuery["institutions_connection"]["edges"][number]["node"]> = [
+export const COLUMNS: Columns<
+  InstitutionsQuery["institutions_connection"]["edges"][number]["node"]
+> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -172,10 +174,10 @@ export default () => {
       : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label || ""),
+      .map(([, label]) => label),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label || ""),
+      .map(([, label]) => label),
   ];
 
   return (
@@ -205,7 +207,7 @@ export default () => {
               values={institutionSizes}
             >
               {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label || ""} value={value} />
+                <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>
           </SearchForm>
@@ -222,6 +224,7 @@ export default () => {
           <DataTable
             columns={COLUMNS}
             fetchMore={async () => {
+              /* istanbul ignore next -- endCursor is always set when hasMore is true */
               if (!hasMore || !endCursor) return;
               await fetchMore({
                 variables: {

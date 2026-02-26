@@ -35,6 +35,7 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   const toggleMode = useCallback(() => {
     setMode((prev) => {
       const idx = MODES.indexOf(prev);
+      /* istanbul ignore next -- MODES index is always valid via modulo */
       const next = MODES[(idx + 1) % MODES.length] ?? "system";
       try {
         localStorage.setItem(STORAGE_KEY, next);

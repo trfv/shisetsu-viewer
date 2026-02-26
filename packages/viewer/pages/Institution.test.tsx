@@ -97,6 +97,38 @@ describe("COLUMNS定義", () => {
     };
     expect(col?.valueGetter?.(params as never)).toBeTruthy();
   });
+
+  it.each([
+    ["institution_size", { institution_size: "INVALID" }],
+    ["is_available_strings", { is_available_strings: "INVALID" }],
+    ["is_available_woodwind", { is_available_woodwind: "INVALID" }],
+    ["is_available_brass", { is_available_brass: "INVALID" }],
+    ["is_available_percussion", { is_available_percussion: "INVALID" }],
+    ["is_equipped_music_stand", { is_equipped_music_stand: "INVALID" }],
+    ["is_equipped_piano", { is_equipped_piano: "INVALID" }],
+  ] as const)("%sのvalueGetterが不明な値に対して空文字を返す", (field, overrides) => {
+    const mockRow = createMockInstitutionNode(overrides);
+    const col = COLUMNS.find((c) => c.field === field);
+    const params = {
+      id: mockRow.id as string,
+      value: mockRow[field as string],
+      row: mockRow,
+      columns: COLUMNS,
+    };
+    expect(col?.valueGetter?.(params as never)).toBe("");
+  });
+
+  it("building_and_institutionのvalueGetterがnull値にフォールバックする", () => {
+    const mockRow = createMockInstitutionNode({ building: null, institution: null });
+    const col = COLUMNS.find((c) => c.field === "building_and_institution");
+    const params = {
+      id: mockRow.id as string,
+      value: undefined,
+      row: mockRow,
+      columns: COLUMNS,
+    };
+    expect(col?.valueGetter?.(params as never)).toBe(" ");
+  });
 });
 
 describe("Institution Page", () => {
@@ -624,6 +656,37 @@ describe("Institution Page", () => {
       // Click the row - this exercises the onRowClick handler which extracts
       // the institution ID from the relay ID and calls navigate
       await user.click(cell);
+    });
+
+    it("無効なRelay IDの施設行をクリックしてもナビゲーションが発生しない", async () => {
+      const invalidNode = createMockInstitutionNode({
+        id: btoa(JSON.stringify([1, "public", "institutions"])), // missing pk at index 3
+        building: "無効ID施設",
+        institution: "テスト室",
+      });
+
+      const mock = {
+        request: {
+          query: InstitutionsDocument,
+          variables: defaultVariables,
+        },
+        result: createMockInstitutionsConnection([invalidNode]),
+      };
+
+      const { user } = renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
+        mocks: [mock],
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
+      });
+
+      // Click row with invalid relay ID - extractSinglePkFromRelayId returns undefined
+      await user.click(screen.getByText("無効ID施設 テスト室"));
+
+      // Should still be on the same page (no navigation occurred)
+      expect(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
     });
   });
 });

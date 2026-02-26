@@ -83,6 +83,72 @@ describe("COLUMNS定義", () => {
     };
     expect(col?.valueGetter?.(params as never)).toBe("");
   });
+
+  it("building_and_institutionのvalueGetterがnull値にフォールバックする", async () => {
+    const { COLUMNS } = await import("./Reservation");
+    const mockNode = createMockSearchableReservationNode({
+      institution: {
+        __typename: "institutions",
+        id: "test-id",
+        municipality: "MUNICIPALITY_KOUTOU",
+        building: null,
+        institution: null,
+        institution_size: "INSTITUTION_SIZE_MEDIUM",
+      },
+    });
+    const col = COLUMNS.find((c) => c.field === "building_and_institution");
+    const params = {
+      id: mockNode.id as string,
+      value: undefined,
+      row: mockNode,
+      columns: COLUMNS,
+    };
+    expect(col?.valueGetter?.(params as never)).toBe(" ");
+  });
+
+  it("institution_sizeのvalueGetterが不明な値に対して空文字を返す", async () => {
+    const { COLUMNS } = await import("./Reservation");
+    const mockNode = createMockSearchableReservationNode({
+      institution: {
+        __typename: "institutions",
+        id: "test-id",
+        municipality: "MUNICIPALITY_KOUTOU",
+        building: "テスト",
+        institution: "テスト施設",
+        institution_size: "INVALID",
+      },
+    });
+    const col = COLUMNS.find((c) => c.field === "institution_size");
+    const params = {
+      id: mockNode.id as string,
+      value: undefined,
+      row: mockNode,
+      columns: COLUMNS,
+    };
+    expect(col?.valueGetter?.(params as never)).toBe("");
+  });
+
+  it("institution_sizeのvalueGetterがnullのinstitution_sizeに対して空文字を返す", async () => {
+    const { COLUMNS } = await import("./Reservation");
+    const mockNode = createMockSearchableReservationNode({
+      institution: {
+        __typename: "institutions",
+        id: "test-id",
+        municipality: "MUNICIPALITY_KOUTOU",
+        building: "テスト",
+        institution: "テスト施設",
+        institution_size: null,
+      },
+    });
+    const col = COLUMNS.find((c) => c.field === "institution_size");
+    const params = {
+      id: mockNode.id as string,
+      value: undefined,
+      row: mockNode,
+      columns: COLUMNS,
+    };
+    expect(col?.valueGetter?.(params as never)).toBe("");
+  });
 });
 
 describe("Reservation Page", () => {
@@ -128,6 +194,38 @@ describe("Reservation Page", () => {
       });
 
       expect(screen.getByText("江東区")).toBeInTheDocument();
+      expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
+    });
+
+    it("municipality=allの場合、地区チップが表示されない", () => {
+      const allMunicipalityVariables = {
+        ...defaultVariables,
+        municipality: [
+          "MUNICIPALITY_KOUTOU",
+          "MUNICIPALITY_KITA",
+          "MUNICIPALITY_ARAKAWA",
+          "MUNICIPALITY_SUMIDA",
+          "MUNICIPALITY_CHUO",
+          "MUNICIPALITY_KAWASAKI",
+        ],
+      };
+      const mock = {
+        request: {
+          query: ReservationsDocument,
+          variables: allMunicipalityVariables,
+        },
+        result: createMockSearchableReservationsConnection([]),
+      };
+
+      renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation"],
+        mocks: [mock],
+      });
+
+      // When no municipality param is set, defaults to "all"
+      // The municipality chip should not appear, only the date range chip
+      expect(screen.queryByText("江東区")).not.toBeInTheDocument();
+      expect(screen.queryByText("すべて")).not.toBeInTheDocument();
       expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
@@ -1046,6 +1144,42 @@ describe("Reservation Page", () => {
       // Click the row - this exercises the onRowClick handler which extracts
       // the institution ID from the relay ID and calls navigate
       await user.click(cell);
+    });
+
+    it("institution.idがnullの予約行をクリックしてもナビゲーションが発生しない", async () => {
+      const node = createMockSearchableReservationNode({
+        institution: {
+          __typename: "institutions",
+          id: null,
+          municipality: "MUNICIPALITY_KOUTOU",
+          building: "テスト施設",
+          institution: "音楽室",
+          institution_size: "INSTITUTION_SIZE_MEDIUM",
+        },
+      });
+
+      const mock = {
+        request: {
+          query: ReservationsDocument,
+          variables: defaultVariables,
+        },
+        result: createMockSearchableReservationsConnection([node]),
+      };
+
+      const { user } = renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+        mocks: [mock],
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
+      });
+
+      // Click row with null institution.id - onRowClick short-circuits
+      await user.click(screen.getByText("テスト施設 音楽室"));
+
+      // Should still be on the same page (no navigation occurred)
+      expect(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
     });
   });
 });

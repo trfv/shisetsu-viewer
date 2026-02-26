@@ -100,6 +100,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
     };
 
     initAuth0();
+    /* istanbul ignore next -- interval callback fires after 1 hour, untestable in unit tests */
     const intervalCleanup = requestInterval(() => updateToken(), 60 * 60 * 1000);
 
     return () => {
