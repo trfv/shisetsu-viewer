@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "npx playwright test",
-    "update:reservations": "node --env-file=.env tools/updateReservations.mjs",
-    "update:institutions": "node --env-file=.env tools/updateInstitutions.mjs"
+    "update:reservations": "node --env-file=.env tools/updateReservations.ts",
+    "update:institutions": "node --env-file=.env tools/updateInstitutions.ts"
   }
 }

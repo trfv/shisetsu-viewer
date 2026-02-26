@@ -71,4 +71,4 @@ runs:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
         ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
       run: |
-        node tools/updateReservations.mjs ${{ inputs.municipality }}
+        node tools/updateReservations.ts ${{ inputs.municipality }}

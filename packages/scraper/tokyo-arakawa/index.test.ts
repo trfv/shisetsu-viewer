@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import { test, expect } from "@playwright/test";
 import { addMonths, differenceInDays, endOfMonth } from "date-fns";
+import { validateTransformOutput } from "../common/validation";
 import { prepare, extract, transform } from "./index";
 
 function calculateCount(): number {
@@ -52,6 +53,7 @@ facilityNames.forEach((name) => {
     expect(extractOutput.length).toBeGreaterThan(0);
     const transformOutput = await transform(extractOutput);
     expect(transformOutput.length).toBeGreaterThan(0);
+    expect(validateTransformOutput(transformOutput)).toEqual([]);
 
     console.timeEnd(name);
 

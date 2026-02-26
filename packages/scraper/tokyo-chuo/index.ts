@@ -1,26 +1,10 @@
 import type { Page } from "@playwright/test";
+import type { Division, Status, TransformOutput } from "../common/types";
 import { toISODateString } from "../common/dateUtils";
 import { stripTrailingEmptyValue } from "../common/arrayUtils";
+import { getCellValue } from "../common/playwrightUtils";
 
-type Division =
-  | "RESERVATION_DIVISION_INVALID"
-  | "RESERVATION_DIVISION_MORNING"
-  | "RESERVATION_DIVISION_AFTERNOON"
-  | "RESERVATION_DIVISION_EVENING"
-  | "RESERVATION_DIVISION_DIVISION_1"
-  | "RESERVATION_DIVISION_DIVISION_2"
-  | "RESERVATION_DIVISION_DIVISION_3"
-  | "RESERVATION_DIVISION_DIVISION_4"
-  | "RESERVATION_DIVISION_DIVISION_5"
-  | "RESERVATION_DIVISION_DIVISION_6"
-  | "RESERVATION_DIVISION_DIVISION_7"
-  | "RESERVATION_DIVISION_DIVISION_8"
-  | "RESERVATION_DIVISION_DIVISION_9"
-  | "RESERVATION_DIVISION_DIVISION_10"
-  | "RESERVATION_DIVISION_DIVISION_11"
-  | "RESERVATION_DIVISION_DIVISION_12";
-
-const DIVISION_MAP: { [key: string]: Division } = {
+const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   "9:00-12:00": "RESERVATION_DIVISION_MORNING",
   "13:00-17:00": "RESERVATION_DIVISION_AFTERNOON",
@@ -39,20 +23,7 @@ const DIVISION_MAP: { [key: string]: Division } = {
   // "20:00-21:00": "RESERVATION_DIVISION_DIVISION_12",
 };
 
-type Status =
-  | "RESERVATION_STATUS_INVALID"
-  | "RESERVATION_STATUS_VACANT"
-  | "RESERVATION_STATUS_STATUS_1"
-  | "RESERVATION_STATUS_STATUS_2"
-  | "RESERVATION_STATUS_STATUS_3"
-  | "RESERVATION_STATUS_STATUS_4"
-  | "RESERVATION_STATUS_STATUS_5"
-  | "RESERVATION_STATUS_STATUS_6"
-  | "RESERVATION_STATUS_STATUS_7"
-  | "RESERVATION_STATUS_STATUS_8"
-  | "RESERVATION_STATUS_STATUS_9";
-
-const STATUS_MAP: { [key: string]: Status } = {
+const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "○": "RESERVATION_STATUS_VACANT",
   "△": "RESERVATION_STATUS_STATUS_1",
@@ -66,15 +37,7 @@ const STATUS_MAP: { [key: string]: Status } = {
   抽選確認中: "RESERVATION_STATUS_STATUS_9",
 };
 
-type Reservation = { [K in Division]?: Status };
-
 type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
-
-type TransformOutput = {
-  room_name: string;
-  date: string;
-  reservation: Reservation;
-}[];
 
 export async function prepare(page: Page, links: string[]): Promise<Page> {
   await page.goto("https://chuo-yoyaku.openreaf02.jp/");
@@ -108,21 +71,7 @@ async function _extract(page: Page): Promise<ExtractOutput> {
     (await Promise.all((lines[0] || []).map((l) => l.innerText()))).map((v) => v.trim())
   );
   const row = stripTrailingEmptyValue(
-    (
-      await Promise.all(
-        (lines[1] || []).map((l) =>
-          l.innerText().then((value) => {
-            if (value) {
-              return value;
-            }
-            return l.innerHTML().then((value) => {
-              const match = value.match(/src="([^"]+)"/);
-              return match?.[1] ?? "";
-            });
-          })
-        )
-      )
-    ).map((v) => v.trim())
+    (await Promise.all((lines[1] || []).map((l) => getCellValue(l)))).map((v) => v.trim())
   );
   return [{ date, header, rows: [row] }];
 }
@@ -132,11 +81,19 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
 
   let i = 0;
   while (i < maxCount) {
-    const o = await _extract(page);
-    output.push(...o);
     try {
-      await page.locator("a.day-next").click();
+      const o = await _extract(page);
+      output.push(...o);
     } catch {
+      console.warn(`Failed to extract data from page ${i + 1}, saving current output.`);
+      break;
+    }
+    const nextLink = page.locator("a.day-next");
+    if ((await nextLink.count()) === 0) break;
+    try {
+      await nextLink.click();
+    } catch {
+      console.warn(`Failed to navigate to next page at page ${i + 1}.`);
       break;
     }
     i++;
