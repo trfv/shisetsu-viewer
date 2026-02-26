@@ -66,7 +66,10 @@ const StyledChips = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     marginRight: "0",
     gap: "0.25rem",
-    height: "1.5rem",
+    flexWrap: "wrap",
+    overflow: "visible",
+    height: "auto",
+    minHeight: "1.5rem",
   },
 }));
 

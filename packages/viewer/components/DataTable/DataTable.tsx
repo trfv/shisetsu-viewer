@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
+import { styled } from "../../utils/theme";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
 
@@ -36,6 +37,24 @@ type Props<T> = {
   hasNextPage?: boolean;
 };
 
+const getCellValue = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>): string => {
+  const value = row[col.field];
+  const rowParams = { id: row.id, value, row, columns };
+  switch (col.type) {
+    case "date":
+      return formatDate(value as string);
+    case "datetime":
+      return formatDatetime(value as string);
+    case "getter":
+      return col.valueGetter?.(rowParams) ?? "";
+    case "number":
+      return isNaN(parseFloat(String(value))) ? "" : String(value);
+    case "string":
+    default:
+      return String(value);
+  }
+};
+
 export const DataTable = <T extends Row>({
   columns,
   rows,
@@ -45,9 +64,10 @@ export const DataTable = <T extends Row>({
 }: Props<T>) => {
   const isMobile = useIsMobile();
   const target = useRef<HTMLTableRowElement | null>(null);
+  const cardTarget = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const element = target && target.current;
+    const element = isMobile ? cardTarget.current : target.current;
     if (!element) {
       return;
     }
@@ -58,16 +78,53 @@ export const DataTable = <T extends Row>({
     return () => {
       observer.unobserve(element);
     };
-  }, [fetchMore]);
+  }, [fetchMore, isMobile]);
 
-  const cols = columns.filter((column) => !(column.hide || (isMobile && column.hideIfMobile)));
+  const tableCols = columns.filter((column) => !(column.hide || (isMobile && column.hideIfMobile)));
+  const cardCols = columns.filter((column) => !column.hide);
+
+  if (isMobile) {
+    const titleCol = cardCols[0];
+    const detailCols = cardCols.slice(1);
+
+    return (
+      <StyledCardList>
+        {rows.map((row, index) => {
+          const rowParams = { id: row.id, value: undefined, row, columns };
+          return (
+            <StyledCard
+              key={`${row.id}-${index}`}
+              onClick={() => onRowClick?.(rowParams)}
+              ref={index === rows.length - 50 ? cardTarget : undefined}
+            >
+              {titleCol && (
+                <StyledCardTitle>{getCellValue(titleCol, row, columns)}</StyledCardTitle>
+              )}
+              {detailCols.map((col) => (
+                <StyledCardRow key={`${row.id}-${col.field}`}>
+                  <StyledCardLabel>{col.headerName}</StyledCardLabel>
+                  <StyledCardValue>{getCellValue(col, row, columns)}</StyledCardValue>
+                </StyledCardRow>
+              ))}
+            </StyledCard>
+          );
+        })}
+        {hasNextPage && (
+          <StyledCard style={{ cursor: "default" }}>
+            <Skeleton />
+            <Skeleton width="60%" />
+          </StyledCard>
+        )}
+      </StyledCardList>
+    );
+  }
 
   return (
     <TableContainer>
       <Table stickyHeader={true}>
         <TableHead>
           <TableRow>
-            {cols.map((col) => (
+            {tableCols.map((col) => (
               <TableCell
                 align={col.type === "number" ? "right" : "left"}
                 key={col.field}
@@ -96,50 +153,28 @@ export const DataTable = <T extends Row>({
                 ref={index === rows.length - 50 ? target : undefined}
                 style={{ cursor: "pointer" }}
               >
-                {cols.map((col) => {
-                  const value = row[col.field];
-                  let cellValue = "";
-                  switch (col.type) {
-                    case "date":
-                      cellValue = formatDate(value as string);
-                      break;
-                    case "datetime":
-                      cellValue = formatDatetime(value as string);
-                      break;
-                    case "getter":
-                      cellValue = col.valueGetter?.({ ...rowParams, value }) ?? "";
-                      break;
-                    case "number":
-                      cellValue = isNaN(parseFloat(String(value))) ? "" : String(value);
-                      break;
-                    case "string":
-                    default:
-                      cellValue = String(value);
-                      break;
-                  }
-                  return (
-                    <TableCell
-                      align={col.type === "number" ? "right" : "left"}
-                      key={`${row.id}-${col.field}`}
-                      size="small"
-                      sx={{
-                        maxWidth: col.maxWidth,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                      variant="body"
-                    >
-                      {cellValue}
-                    </TableCell>
-                  );
-                })}
+                {tableCols.map((col) => (
+                  <TableCell
+                    align={col.type === "number" ? "right" : "left"}
+                    key={`${row.id}-${col.field}`}
+                    size="small"
+                    sx={{
+                      maxWidth: col.maxWidth,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    variant="body"
+                  >
+                    {getCellValue(col, row, columns)}
+                  </TableCell>
+                ))}
               </TableRow>
             );
           })}
           {hasNextPage && (
             <TableRow>
-              {cols.map((_, index) => (
+              {tableCols.map((_, index) => (
                 <TableCell key={index} size="small">
                   <Skeleton />
                 </TableCell>
@@ -151,3 +186,46 @@ export const DataTable = <T extends Row>({
     </TableContainer>
   );
 };
+
+const StyledCardList = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(1),
+  padding: theme.spacing(0, 1),
+}));
+
+const StyledCard = styled("div")(({ theme }) => ({
+  padding: theme.spacing(1.5, 2),
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: theme.palette.background.paper,
+  cursor: "pointer",
+  "&:active": {
+    opacity: 0.7,
+  },
+}));
+
+const StyledCardTitle = styled("div")({
+  fontSize: "0.95rem",
+  fontWeight: 500,
+  marginBottom: 4,
+});
+
+const StyledCardRow = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "baseline",
+  padding: "2px 0",
+});
+
+const StyledCardLabel = styled("span")(({ theme }) => ({
+  fontSize: "0.7rem",
+  color: theme.palette.text.secondary,
+  flexShrink: 0,
+  marginRight: "0.5rem",
+}));
+
+const StyledCardValue = styled("span")({
+  fontSize: "0.85rem",
+  textAlign: "right",
+  wordBreak: "break-word",
+});
