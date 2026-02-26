@@ -29,9 +29,9 @@ export const MEDIUM = "m";
 export const SMALL = "s";
 
 export const INSTUTITON_SIZE_MAP = {
-  [LARGE]: InstitutionSizeMap[InstitutionSizeEnum.LARGE],
-  [MEDIUM]: InstitutionSizeMap[InstitutionSizeEnum.MEDIUM],
-  [SMALL]: InstitutionSizeMap[InstitutionSizeEnum.SMALL],
+  [LARGE]: InstitutionSizeMap[InstitutionSizeEnum.LARGE]!,
+  [MEDIUM]: InstitutionSizeMap[InstitutionSizeEnum.MEDIUM]!,
+  [SMALL]: InstitutionSizeMap[InstitutionSizeEnum.SMALL]!,
 } as const;
 
 export const InstitutionSizes = [LARGE, MEDIUM, SMALL] as const;

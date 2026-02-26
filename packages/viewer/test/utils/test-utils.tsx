@@ -5,23 +5,39 @@ import { MockedProvider } from "@apollo/client/testing/react";
 import type { MockLink } from "@apollo/client/testing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { userEvent as browserUserEvent } from "vitest/browser";
+import { vi } from "vitest";
+import { Auth0Context } from "../../contexts/Auth0";
 
-// Mock Auth0 provider
-const MockAuth0Provider = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
+export type Auth0MockConfig = {
+  isLoading?: boolean;
+  token?: string;
+  userInfo?: { anonymous: boolean; trial: boolean };
+  login?: () => void;
+  logout?: () => void;
+};
+
+const MockAuth0Provider = ({
+  children,
+  config = {},
+}: {
+  children: ReactNode;
+  config?: Auth0MockConfig;
+}) => {
+  const value = {
+    isLoading: config.isLoading ?? false,
+    token: config.token ?? "mock-token",
+    userInfo: config.userInfo ?? { anonymous: false, trial: false },
+    login: config.login ?? vi.fn(),
+    logout: config.logout ?? vi.fn(),
+  };
+  return <Auth0Context.Provider value={value}>{children}</Auth0Context.Provider>;
 };
 
 interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
   mocks?: MockLink.MockedResponse[];
-  auth0Config?: {
-    isAuthenticated?: boolean;
-    user?: unknown;
-    isLoading?: boolean;
-    loginWithRedirect?: () => void;
-    logout?: () => void;
-  };
+  auth0Config?: Auth0MockConfig;
   theme?: ReturnType<typeof createTheme>;
 }
 
@@ -31,6 +47,7 @@ export function renderWithProviders(
     initialEntries = ["/"],
     route = "/*",
     mocks = [],
+    auth0Config = {},
     theme = createTheme(),
     ...renderOptions
   }: CustomRenderOptions = {}
@@ -48,7 +65,7 @@ export function renderWithProviders(
           query: { fetchPolicy: "no-cache", errorPolicy: "all" },
         }}
       >
-        <MockAuth0Provider>
+        <MockAuth0Provider config={auth0Config}>
           <ThemeProvider theme={theme}>
             <MemoryRouter initialEntries={initialEntries}>
               <Routes>

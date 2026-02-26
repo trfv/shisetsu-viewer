@@ -16,6 +16,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    /* istanbul ignore next -- DEV is always true in test environment */
     if (import.meta.env.DEV) {
       console.log(error, errorInfo);
     }
@@ -30,6 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+    /* istanbul ignore next -- DEV is always true in test environment */
     if (import.meta.env.DEV) {
       console.log(event.reason);
     }

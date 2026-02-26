@@ -19,7 +19,7 @@ export const ArrayParam = {
 };
 
 export const DateParam = {
-  encode: (value: Date) => formatISO(value, { representation: "date" }) ?? null,
+  encode: (value: Date) => formatISO(value, { representation: "date" }),
   decode: (value: string[] | null) => {
     const date = value?.[0];
     return date && isValid(new Date(date)) ? new Date(date) : null;

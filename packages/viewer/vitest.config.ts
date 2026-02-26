@@ -5,7 +5,7 @@ import { playwright } from "@vitest/browser-playwright";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ["web-vitals"],
+    include: ["web-vitals", "@apollo/client/react", "@mui/icons-material/OpenInNew"],
   },
   test: {
     globals: true,
@@ -24,8 +24,8 @@ export default defineConfig({
     exclude: ["node_modules", "e2e/**", "playwright-*/**"],
     silent: true,
     coverage: {
-      provider: "v8",
-      reporter: ["text", "json", "html", "lcov"],
+      provider: "istanbul",
+      reporter: ["text"],
       exclude: [
         "node_modules/",
         "test/",

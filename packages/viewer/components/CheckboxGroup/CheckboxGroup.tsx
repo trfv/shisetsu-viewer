@@ -25,6 +25,7 @@ const mapChildren = (
           children: mapChildren(child.props.children, values, onChange),
         });
       }
+      /* istanbul ignore next -- child.type is always defined for React elements */
       if (child?.type?.displayName === Checkbox.displayName) {
         return cloneElement(child, {
           checked: child.props?.value ? values.includes(child.props.value) : false,

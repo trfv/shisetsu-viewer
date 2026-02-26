@@ -8,7 +8,79 @@ on:
       - master
 
 jobs:
-  build:
+  lint:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Lint
+        run: npx eslint "./packages/**/*.ts*"
+
+  format:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Format check
+        run: npx prettier --check "./packages/**/*.ts*"
+
+  typecheck:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Typecheck
+        run: npm run typecheck -w @shisetsu-viewer/viewer
+
+  unit-test:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     strategy:
@@ -31,11 +103,200 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        run: |
-          npm ci --ignore-scripts
-      - name: Set up playwright
-        run: npx playwright install
+        run: npm ci --ignore-scripts
+      - name: Cache Playwright browsers
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
       - name: Unit tests
-        run: npm run test:ci -w @shisetsu-viewer/viewer
+        run: TZ=Asia/Tokyo npx vitest --run --reporter=default --reporter=github-actions
+        working-directory: packages/viewer
+
+  integration-test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Cache Playwright browsers
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+      - name: Integration tests
+        run: TZ=Asia/Tokyo npx vitest --run test/integration --reporter=default --reporter=github-actions
+        working-directory: packages/viewer
+
+  coverage:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Cache Playwright browsers
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+      - name: Coverage
+        run: TZ=Asia/Tokyo npx vitest run --coverage --reporter=default --reporter=github-actions
+        working-directory: packages/viewer
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: packages/viewer/coverage/
+          retention-days: 14
+
+  build:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
       - name: Build application
         run: npm run build -w @shisetsu-viewer/viewer
+
+  e2e-test:
+    needs: build
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version: "22"
+      - name: Cache node_modules
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Cache Playwright browsers
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-all-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
+      - name: Run E2E tests
+        run: npx playwright test
+        working-directory: packages/viewer
+        env:
+          CI: "true"
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: packages/viewer/playwright-report/
+          retention-days: 14
+
+  ci-success:
+    if: always()
+    needs:
+      - lint
+      - format
+      - typecheck
+      - unit-test
+      - integration-test
+      - coverage
+      - build
+      - e2e-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check all job results
+        run: |
+          if [[ "${{ needs.lint.result }}" != "success" ]] ||
+             [[ "${{ needs.format.result }}" != "success" ]] ||
+             [[ "${{ needs.typecheck.result }}" != "success" ]] ||
+             [[ "${{ needs.unit-test.result }}" != "success" ]] ||
+             [[ "${{ needs.integration-test.result }}" != "success" ]] ||
+             [[ "${{ needs.coverage.result }}" != "success" ]] ||
+             [[ "${{ needs.build.result }}" != "success" ]] ||
+             [[ "${{ needs.e2e-test.result }}" != "success" ]]; then
+            echo "One or more CI jobs failed"
+            exit 1
+          fi
+          echo "All CI jobs passed"
