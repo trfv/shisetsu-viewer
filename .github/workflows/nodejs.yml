@@ -19,13 +19,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -43,13 +43,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -67,13 +67,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -91,13 +91,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ["22", "24"]
+        node-version: ["24"]
     steps:
       - name: Checkout
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
@@ -155,13 +155,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -192,13 +192,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -236,13 +236,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
@@ -261,13 +261,13 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "22"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-modules-22-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
