@@ -4,6 +4,9 @@
   "compatibility_date": "2025-04-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
+    "not_found_handling": "single-page-application",
+  },
+  "dev": {
+    "port": 3000,
+  },
 }
