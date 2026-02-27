@@ -433,6 +433,7 @@ const StyledInstitutionDetail = styled("main")(({ theme }) => ({
   },
   [`.${classes.reservationTableCell}`]: {
     whiteSpace: "nowrap",
+    borderBottomColor: theme.palette.text.primary,
   },
   [`.${classes.reservationCardList}`]: {
     display: "flex",
