@@ -19,7 +19,9 @@ const config: KnipConfig = {
         "esbuild", // used internally by vite for dependency pre-bundling
       ],
     },
-    "packages/scraper": {},
+    "packages/scraper": {
+      entry: ["**/index.test.ts", "scripts/run.ts", "tools/*.ts"],
+    },
   },
 };
 
