@@ -50,6 +50,7 @@ export const COLUMNS: Columns<
     field: "building_and_institution",
     headerName: "施設名",
     type: "getter",
+    maxWidth: 400,
     valueGetter: (params) =>
       `${params.row.institution?.building ?? ""} ${params.row.institution?.institution ?? ""}`,
   },
@@ -65,7 +66,6 @@ export const COLUMNS: Columns<
     field: "institution_size",
     headerName: "施設サイズ",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) =>
       InstitutionSizeMap[params.row.institution?.institution_size ?? ""] || "",
   },
@@ -73,15 +73,13 @@ export const COLUMNS: Columns<
     field: "date",
     headerName: "日付",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => formatDate(params.row.reservation?.date),
   },
   {
     field: "reservation",
     headerName: "予約状況",
-    maxWidth: 480,
+    maxWidth: 400,
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => {
       const municipality = params.row.institution?.municipality as SupportedMunicipality;
       const obj = params.row.reservation?.reservation as Record<string, string>;
@@ -93,7 +91,6 @@ export const COLUMNS: Columns<
     field: "updated_at",
     headerName: "取得日時",
     type: "getter",
-    hideIfMobile: true,
     valueGetter: (params) => formatDatetime(params.row.reservation?.updated_at),
   },
 ];

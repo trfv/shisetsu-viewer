@@ -8,6 +8,9 @@
 # production
 **/dist
 
+# typescript build info
+**/*.tsbuildinfo
+
 # playwright
 **/playwright-report
 **/test-results

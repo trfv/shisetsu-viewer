@@ -1,6 +1,10 @@
-import { graphqlRequest } from "./request.mjs";
+import { graphqlRequest } from "./request.ts";
 
-const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT;
+const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT as string;
+
+interface InsertInstitutionsResponse {
+  insert_institutions: { affected_rows: number };
+}
 
 let _targets = [
   "kanagawa-kawasaki",
@@ -19,7 +23,7 @@ const title = `update institutions`;
 
 console.time(title);
 
-const FEE_DIVISION_MAP = {
+const FEE_DIVISION_MAP: Record<string, string> = {
   "": "FEE_DIVISION_INVALID",
   午前: "FEE_DIVISION_MORNING",
   午後: "FEE_DIVISION_AFTERNOON",
@@ -38,21 +42,21 @@ const FEE_DIVISION_MAP = {
   "⑥": "FEE_DIVISION_DIVISION_6",
 };
 
-const AVAILABILITY_DIVISION_MAP = {
+const AVAILABILITY_DIVISION_MAP: Record<string, string> = {
   "": "AVAILABILITY_DIVISION_INVALID",
   利用可: "AVAILABILITY_DIVISION_AVAILABLE",
   利用不可: "AVAILABILITY_DIVISION_UNAVAILABLE",
   不明: "AVAILABILITY_DIVISION_UNKNOWN",
 };
 
-const EQUIPMENT_DIVISION_MAP = {
+const EQUIPMENT_DIVISION_MAP: Record<string, string> = {
   "": "EQUIPMENT_DIVISION_INVALID",
   あり: "EQUIPMENT_DIVISION_EQUIPPED",
   なし: "EQUIPMENT_DIVISION_UNEQUIPPED",
   不明: "EQUIPMENT_DIVISION_UNKNOWN",
 };
 
-const INSTITUTION_SIZE_MAP = {
+const INSTITUTION_SIZE_MAP: Record<string, string> = {
   "": "INSTITUTION_SIZE_INVALID",
   大: "INSTITUTION_SIZE_LARGE",
   中: "INSTITUTION_SIZE_MEDIUM",
@@ -89,7 +93,7 @@ const columns = [
   "note",
 ];
 
-const aggreagate = (acc, key, value) => {
+const aggregate = (acc: Record<string, unknown>, key: string, value: string) => {
   switch (key) {
     case "building_name":
     case "institution_name":
@@ -103,7 +107,7 @@ const aggreagate = (acc, key, value) => {
       return acc;
     case "fee_divisions":
       if (value) {
-        acc[key] = `{${value.split(",").map((v) => FEE_DIVISION_MAP[v])}}`;
+        acc[key] = `{${value.split(",").map((v: string) => FEE_DIVISION_MAP[v])}}`;
       } else {
         acc[key] = "{}";
       }
@@ -111,9 +115,9 @@ const aggreagate = (acc, key, value) => {
     case "weekday_usage_fee":
     case "holiday_usage_fee":
       if (value) {
-        acc[key] = value.split(",").map((v) => {
+        acc[key] = value.split(",").map((v: string) => {
           const [division, fee] = v.split("=");
-          return { division: FEE_DIVISION_MAP[division], fee: Number(fee) };
+          return { division: FEE_DIVISION_MAP[division as string], fee: Number(fee) };
         });
       } else {
         acc[key] = [];
@@ -145,19 +149,21 @@ const aggreagate = (acc, key, value) => {
 
 for (const target of targets) {
   const [p, m] = target.split("-");
-  const prefecture = `PREFECTURE_${p.toUpperCase()}`;
-  const municipality = `MUNICIPALITY_${m.toUpperCase()}`;
+  const prefecture = `PREFECTURE_${(p as string).toUpperCase()}`;
+  const municipality = `MUNICIPALITY_${(m as string).toUpperCase()}`;
 
-  const rawData = await (await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)).json();
+  const rawData = (await (
+    await fetch(`${SCRIPT_ENDPOINT}?sheet_name=${municipality}`)
+  ).json()) as Record<string, string>[];
 
   const data = rawData.map((d) => {
-    return Object.entries(d).reduce((acc, [key, value]) => aggreagate(acc, key, value), {
+    return Object.entries(d).reduce((acc, [key, value]) => aggregate(acc, key, value), {
       prefecture,
       municipality,
-    });
+    } as Record<string, unknown>);
   });
 
-  const response = await graphqlRequest(
+  const response = await graphqlRequest<InsertInstitutionsResponse>(
     `
     mutation update_institutions(
         $data: [institutions_insert_input!]!

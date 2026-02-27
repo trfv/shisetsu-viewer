@@ -1,17 +1,10 @@
 import type { Page } from "@playwright/test";
+import type { Division, Status, TransformOutput } from "../common/types";
 import { toISODateString } from "../common/dateUtils";
 import { stripTrailingEmptyValue } from "../common/arrayUtils";
-import { selectAllOptions } from "../common/playwrightUtils";
+import { getCellValue, selectAllOptions } from "../common/playwrightUtils";
 
-type Division =
-  | "RESERVATION_DIVISION_INVALID"
-  | "RESERVATION_DIVISION_MORNING"
-  | "RESERVATION_DIVISION_AFTERNOON"
-  | "RESERVATION_DIVISION_AFTERNOON_ONE"
-  | "RESERVATION_DIVISION_AFTERNOON_TWO"
-  | "RESERVATION_DIVISION_EVENING";
-
-const DIVISION_MAP: { [key: string]: Division } = {
+const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   "09:00\n～\n12:00": "RESERVATION_DIVISION_MORNING",
   "09:00\n～\n12:30": "RESERVATION_DIVISION_MORNING",
@@ -30,15 +23,7 @@ const DIVISION_MAP: { [key: string]: Division } = {
   "19:00\n～\n22:00": "RESERVATION_DIVISION_EVENING",
 };
 
-type Status =
-  | "RESERVATION_STATUS_INVALID"
-  | "RESERVATION_STATUS_VACANT"
-  | "RESERVATION_STATUS_STATUS_1"
-  | "RESERVATION_STATUS_STATUS_2"
-  | "RESERVATION_STATUS_STATUS_3"
-  | "RESERVATION_STATUS_STATUS_4";
-
-const STATUS_MAP: { [key: string]: Status } = {
+const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "/stagia/jsp/images_jp/multi_images/timetable-o.gif": "RESERVATION_STATUS_VACANT",
   Ｘ: "RESERVATION_STATUS_STATUS_1",
@@ -47,15 +32,7 @@ const STATUS_MAP: { [key: string]: Status } = {
   開放: "RESERVATION_STATUS_STATUS_4",
 };
 
-type Reservation = { [K in Division]?: Status };
-
 type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
-
-type TransformOutput = {
-  room_name: string;
-  date: string;
-  reservation: Reservation;
-}[];
 
 export async function prepare(page: Page, facilityName: string): Promise<Page> {
   await page.goto("https://shisetsu.city.arakawa.tokyo.jp/stagia/reserve/gin_menu");
@@ -104,20 +81,10 @@ async function _extract(page: Page): Promise<ExtractOutput> {
       }
       lineGroups[0] = header;
     } else {
-      const row = await Promise.all(
-        line.map((l) =>
-          l.innerText().then((value) => {
-            if (value) {
-              return value;
-            }
-            return l.innerHTML().then((value) => {
-              const match = value.match(/src="([^"]+)"/);
-              return match?.[1] ?? "";
-            });
-          })
-        )
-      );
-      lineGroups[1].push(stripTrailingEmptyValue(row));
+      const row = stripTrailingEmptyValue(await Promise.all(line.map((l) => getCellValue(l))));
+      if (row.length > 1) {
+        lineGroups[1].push(row);
+      }
     }
   }
   output.push({ date, header: lineGroups[0], rows: lineGroups[1] });
@@ -137,9 +104,12 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
       console.warn(`Failed to extract data from page ${i + 1}, and jump to save current output.`);
       break;
     }
+    const nextLink = page.getByRole("link", { name: "次へ" });
+    if ((await nextLink.count()) === 0) break;
     try {
-      await page.getByRole("link", { name: "次へ" }).click();
+      await nextLink.click();
     } catch {
+      console.warn(`Failed to navigate to next page at page ${i + 1}.`);
       break;
     }
     i++;
@@ -151,18 +121,20 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
 export async function transform(extractOutput: ExtractOutput): Promise<TransformOutput> {
   return extractOutput.flatMap(({ date, header, rows }) => {
     const divisions = header.slice(1);
-    return rows.map((row) => {
-      const statuses = row.slice(1);
-      return {
-        room_name: row[0]?.split("\n")?.[1] || "",
-        date: toISODateString(date),
-        reservation: [...new Array(row.length - 1)].reduce((acc, _, index) => {
-          const division = DIVISION_MAP[divisions[index] || ""] as Division;
-          const status = STATUS_MAP[statuses[index] || ""] as Status;
-          acc[division] = status;
-          return acc;
-        }, {}),
-      };
-    });
+    return rows
+      .map((row) => {
+        const statuses = row.slice(1);
+        return {
+          room_name: row[0]?.split("\n")?.[1] || "",
+          date: toISODateString(date),
+          reservation: [...new Array(row.length - 1)].reduce((acc, _, index) => {
+            const division = DIVISION_MAP[divisions[index] || ""] as Division;
+            const status = STATUS_MAP[statuses[index] || ""] as Status;
+            acc[division] = status;
+            return acc;
+          }, {}),
+        };
+      })
+      .filter((entry) => entry.room_name !== "");
   });
 }

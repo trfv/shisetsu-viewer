@@ -1,15 +1,9 @@
 import type { Page } from "@playwright/test";
+import type { Division, Status, TransformOutput } from "../common/types";
 import { toISODateString } from "../common/dateUtils";
+import { getCellValue } from "../common/playwrightUtils";
 
-type Division =
-  | "RESERVATION_DIVISION_INVALID"
-  | "RESERVATION_DIVISION_MORNING"
-  | "RESERVATION_DIVISION_AFTERNOON"
-  | "RESERVATION_DIVISION_AFTERNOON_ONE"
-  | "RESERVATION_DIVISION_AFTERNOON_TWO"
-  | "RESERVATION_DIVISION_EVENING";
-
-const DIVISION_MAP: { [key: string]: Division } = {
+const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
@@ -18,20 +12,7 @@ const DIVISION_MAP: { [key: string]: Division } = {
   夜間: "RESERVATION_DIVISION_EVENING",
 };
 
-type Status =
-  | "RESERVATION_STATUS_INVALID"
-  | "RESERVATION_STATUS_VACANT"
-  | "RESERVATION_STATUS_STATUS_1"
-  | "RESERVATION_STATUS_STATUS_2"
-  | "RESERVATION_STATUS_STATUS_3"
-  | "RESERVATION_STATUS_STATUS_4"
-  | "RESERVATION_STATUS_STATUS_5"
-  | "RESERVATION_STATUS_STATUS_6"
-  | "RESERVATION_STATUS_STATUS_7"
-  | "RESERVATION_STATUS_STATUS_8"
-  | "RESERVATION_STATUS_STATUS_9";
-
-const STATUS_MAP: { [key: string]: Status } = {
+const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "image/lw_emptybs.gif": "RESERVATION_STATUS_VACANT",
   "image/lw_finishs.gif": "RESERVATION_STATUS_STATUS_1",
@@ -45,15 +26,7 @@ const STATUS_MAP: { [key: string]: Status } = {
   "image/lw_aki11.gif": "RESERVATION_STATUS_STATUS_9",
 };
 
-type Reservation = { [K in Division]?: Status };
-
 type ExtractOutput = { caption: string; header: string[]; rows: string[][] }[];
-
-type TransformOutput = {
-  room_name: string;
-  date: string;
-  reservation: Reservation;
-}[];
 
 function toRoomName(caption: string, facilityName: string): string {
   return caption.replace(facilityName, "").slice(0, -4).trim();
@@ -87,19 +60,7 @@ async function _extract(page: Page): Promise<ExtractOutput> {
   const header = await Promise.all((lines[0] || []).map((l) => l.innerText()));
   const rows: string[][] = [];
   for (const line of lines.slice(1)) {
-    const row = await Promise.all(
-      line.map((l) =>
-        l.innerText().then((value) => {
-          if (value) {
-            return value;
-          }
-          return l.innerHTML().then((value) => {
-            const match = value.match(/src="([^"]+)"/);
-            return match?.[1] ?? "";
-          });
-        })
-      )
-    );
+    const row = await Promise.all(line.map((l) => getCellValue(l)));
     rows.push(row);
   }
 
@@ -111,10 +72,13 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
 
   let roomCount = 1;
   while (true) {
+    const nextFacility = page.getByRole("button", { name: "次の施設" });
+    if ((await nextFacility.count()) === 0) break;
     try {
-      await page.getByRole("button", { name: "次の施設" }).click();
+      await nextFacility.click();
       roomCount++;
     } catch {
+      console.warn(`Failed to count rooms at room ${roomCount}.`);
       break;
     }
   }
@@ -129,11 +93,21 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
     }
     let k = 0;
     while (k < maxCount) {
-      const o = await _extract(page);
-      output.push(...o);
       try {
-        await page.getByRole("button", { name: "次の週" }).nth(0).click();
+        const o = await _extract(page);
+        output.push(...o);
       } catch {
+        console.warn(
+          `Failed to extract data for room ${i + 1} page ${k + 1}, saving current output.`
+        );
+        break;
+      }
+      const nextWeek = page.getByRole("button", { name: "次の週" }).nth(0);
+      if ((await nextWeek.count()) === 0) break;
+      try {
+        await nextWeek.click();
+      } catch {
+        console.warn(`Failed to navigate to next week for room ${i + 1} at page ${k + 1}.`);
         break;
       }
       k++;

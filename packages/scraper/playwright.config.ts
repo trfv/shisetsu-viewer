@@ -1,52 +1,43 @@
 import { defineConfig } from "@playwright/test";
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+const isCI = !!process.env.CI;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   tsconfig: "./tsconfig.json",
-  /* Run tests in files in parallel */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 3 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 1,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
-  /* Timeout setting. See https://playwright.dev/docs/test-timeouts */
-  timeout: process.env.CI ? 60 * 60 * 1000 : 15 * 60 * 1000,
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  forbidOnly: isCI,
+  retries: isCI ? 3 : 0,
+  workers: isCI ? 1 : 4,
+  reporter: isCI ? "html" : "line",
+  timeout: isCI ? 60 * 60 * 1000 : 15 * 60 * 1000,
   use: {
     actionTimeout: 10 * 1000,
     navigationTimeout: 30 * 1000,
-    /* Launch setting.. See https://playwright.dev/docs/api/class-browsertype#browser-type-launch. */
     launchOptions: {
       args: [
         "--disable-application-cache",
+        "--disable-background-networking",
+        "--disable-background-timer-throttling",
+        "--disable-default-apps",
         "--disable-dev-shm-usage",
         "--disable-extensions",
         "--disable-gpu",
         "--disable-images",
+        "--disable-sync",
+        "--disable-translate",
         "--ignore-certificate-errors",
+        "--no-first-run",
         "--proxy-bypass-list=*",
         '--proxy-server="direct://"',
         "--start-maximized",
       ],
-      slowMo: 500,
+      slowMo: process.env.SLOW_MO ? Number(process.env.SLOW_MO) : 500,
     },
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: process.env.CI ? "off" : "on-first-retry",
   },
   testMatch: ["**/index.test.ts"],
-  testIgnore: process.env.CI ? ["**/tokyo-sumida/**"] : [],
+  testIgnore: isCI ? ["**/tokyo-sumida/**"] : [],
 });

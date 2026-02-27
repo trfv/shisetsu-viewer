@@ -282,7 +282,7 @@ export const lightTheme = responsiveFontSizes(
         primary: palette.slate[600],
         secondary: palette.slate[400],
       },
-      divider: palette.slate[200],
+      divider: palette.slate[500],
       action: {
         hover: "rgba(27,122,110,0.06)",
       },

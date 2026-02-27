@@ -1,31 +1,15 @@
 import type { Page } from "@playwright/test";
+import type { Division, Status, Reservation, TransformOutput } from "../common/types";
 import { addDays, format } from "date-fns";
 
-type Division =
-  | "RESERVATION_DIVISION_INVALID"
-  | "RESERVATION_DIVISION_MORNING"
-  | "RESERVATION_DIVISION_AFTERNOON"
-  | "RESERVATION_DIVISION_EVENING";
-
-const DIVISION_MAP: { [key: string]: Division } = {
+const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
   夜間: "RESERVATION_DIVISION_EVENING",
 };
 
-type Status =
-  | "RESERVATION_STATUS_INVALID"
-  | "RESERVATION_STATUS_VACANT"
-  | "RESERVATION_STATUS_STATUS_1"
-  | "RESERVATION_STATUS_STATUS_2"
-  | "RESERVATION_STATUS_STATUS_3"
-  | "RESERVATION_STATUS_STATUS_4"
-  | "RESERVATION_STATUS_STATUS_5"
-  | "RESERVATION_STATUS_STATUS_6"
-  | "RESERVATION_STATUS_STATUS_7";
-
-const STATUS_MAP: { [key: string]: Status } = {
+const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   空き: "RESERVATION_STATUS_VACANT",
   一部空き: "RESERVATION_STATUS_STATUS_1",
@@ -38,15 +22,7 @@ const STATUS_MAP: { [key: string]: Status } = {
   抽選: "RESERVATION_STATUS_STATUS_7",
 };
 
-type Reservation = { [K in Division]?: Status };
-
 type ExtractOutput = { division: string; header: string[]; rows: string[][] }[];
-
-type TransformOutput = {
-  room_name: string;
-  date: string;
-  reservation: Reservation;
-}[];
 
 function buildISODateStrings(headerStartDate: string, dates: string[]): string[] {
   const base = new Date(
@@ -107,11 +83,21 @@ export async function extract(
 
     let i = 0;
     while (i < maxCount) {
-      const o = await _extract(page, division);
-      output.push(...o);
       try {
-        await page.getByRole("button", { name: "次の期間" }).click();
+        const o = await _extract(page, division);
+        output.push(...o);
       } catch {
+        console.warn(
+          `Failed to extract data for division ${division} page ${i + 1}, saving current output.`
+        );
+        break;
+      }
+      const nextButton = page.getByRole("button", { name: "次の期間" });
+      if ((await nextButton.count()) === 0) break;
+      try {
+        await nextButton.click();
+      } catch {
+        console.warn(`Failed to navigate to next period at page ${i + 1}.`);
         break;
       }
       i++;
