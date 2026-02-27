@@ -8,7 +8,7 @@ type Props = {
   as?: ElementType;
 };
 
-export type LabelSize = "small" | "medium" | "large";
+type LabelSize = "small" | "medium" | "large";
 
 export const BaseLabel: FC<Props> = ({ label, size, as = "span" }) => {
   return (

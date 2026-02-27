@@ -32,7 +32,7 @@ export const formatUsageFee = (
     .join(" ");
 };
 
-export type InstitutionSearchParams = {
+type InstitutionSearchParams = {
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
   institutionSizes: ReturnType<typeof getInstitutionSizeFromUrlParam>;

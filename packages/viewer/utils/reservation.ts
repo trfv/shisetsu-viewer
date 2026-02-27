@@ -127,7 +127,7 @@ export const getResevationSearchFilterFromUrlParam = (
   ) as ReservationSearchFilter[];
 };
 
-export type ReservationSearchParams = {
+type ReservationSearchParams = {
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   startDate: Date;
   endDate: Date;

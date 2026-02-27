@@ -8,7 +8,7 @@ import { userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
 
-export type Auth0MockConfig = {
+type Auth0MockConfig = {
   isLoading?: boolean;
   token?: string;
   userInfo?: { anonymous: boolean; trial: boolean };
@@ -86,4 +86,3 @@ export function renderWithProviders(
 
 // Re-export everything from testing library
 export * from "@testing-library/react";
-export { userEvent } from "vitest/browser";

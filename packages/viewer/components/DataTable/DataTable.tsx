@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 
 type Row = { id: string } & { [key: string]: unknown };
 
-export type RowParams<T> = {
+type RowParams<T> = {
   id: string;
   value: unknown;
   row: T;

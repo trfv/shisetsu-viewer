@@ -37,8 +37,4 @@ export default defineConfig(({ mode }) => ({
         ]
       : []),
   ] as PluginOption[],
-  test: {
-    global: true,
-    environment: "happy-dom",
-  },
 }));

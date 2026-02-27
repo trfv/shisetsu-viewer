@@ -26,5 +26,3 @@ export const Input: FC<Props> = ({ label, size = "auto", loading, value, ...rest
     </Box>
   );
 };
-
-export type InputSize = "small" | "medium" | "large" | "full";
