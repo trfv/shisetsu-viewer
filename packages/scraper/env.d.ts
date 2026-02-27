@@ -7,6 +7,7 @@ declare module "process" {
         readonly ADMIN_SECRET?: string;
         readonly SCRIPT_ENDPOINT?: string;
         readonly SLOW_MO?: string;
+        readonly WORKERS?: string;
       }
     }
   }

@@ -10,7 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 3 : 0,
-  workers: isCI ? 1 : 4,
+  workers: process.env.WORKERS ? Number(process.env.WORKERS) : isCI ? 1 : 4,
   reporter: isCI ? "html" : "line",
   timeout: isCI ? 60 * 60 * 1000 : 15 * 60 * 1000,
   use: {
