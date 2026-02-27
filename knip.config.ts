@@ -1,0 +1,24 @@
+import type { KnipConfig } from "knip";
+
+const config: KnipConfig = {
+  workspaces: {
+    ".": {
+      ignoreDependencies: [
+        "@mizchi/lsmcp", // MCP server (external dev tool, not imported)
+        "prettier-plugin-organize-imports", // loaded by prettier via config
+      ],
+    },
+    "packages/viewer": {
+      ignore: ["api/gql/**"],
+      ignoreDependencies: [
+        "@swc/core", // used internally by @vitejs/plugin-react-swc
+        "@vitest/browser", // required for vitest browser mode (test.browser.enabled)
+        "dotenv", // used via --require dotenv/config in generate script
+        "esbuild", // used internally by vite for dependency pre-bundling
+      ],
+    },
+    "packages/scraper": {},
+  },
+};
+
+export default config;

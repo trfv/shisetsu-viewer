@@ -25,6 +25,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "globals": "17.3.0",
     "husky": "9.1.7",
+    "knip": "5.85.0",
     "lint-staged": "16.2.7",
     "prettier": "3.8.1",
     "prettier-plugin-organize-imports": "4.3.0",
@@ -45,6 +46,7 @@
     "update:institutions": "npm run update:institutions -w @shisetsu-viewer/scraper",
     "format:all": "prettier --write \"./packages/**/*.ts*\"",
     "lint:all": "eslint --fix \"./packages/**/*.ts*\"",
+    "knip": "knip",
     "prepare": "husky"
   },
   "browserslist": {
