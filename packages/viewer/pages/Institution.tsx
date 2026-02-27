@@ -166,13 +166,24 @@ export default () => {
   const chips = [
     ...(municipality === "all"
       ? []
-      : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
+      : [
+          {
+            label: `${MunicipalityOptions.find((o) => o.value === municipality)?.label}`,
+            onDelete: () => setQueryParams({ m: null }),
+          },
+        ]),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ a: availableInstruments.filter((a) => a !== v) }),
+      })),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ i: institutionSizes.filter((i) => i !== v) }),
+      })),
   ];
 
   return (

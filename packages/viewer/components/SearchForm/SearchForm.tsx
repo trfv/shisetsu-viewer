@@ -10,8 +10,13 @@ import { FullBox } from "../Box";
 import { SmallButton } from "../Button";
 import { IconButton } from "../IconButton";
 
+type ChipItem = {
+  label: string;
+  onDelete?: () => void;
+};
+
 type Props = {
-  chips: string[];
+  chips: ChipItem[];
   children: ReactNode;
 };
 
@@ -29,7 +34,12 @@ export const SearchForm = ({ chips, children }: Props) => {
       <FullBox alignItems="center" display="flex" justifyContent="space-between">
         <StyledChips>
           {chips.map((chip) => (
-            <Chip key={chip} label={chip} size={isMobile ? "small" : "medium"} />
+            <Chip
+              key={chip.label}
+              label={chip.label}
+              size={isMobile ? "small" : "medium"}
+              {...(chip.onDelete ? { onDelete: chip.onDelete } : {})}
+            />
           ))}
         </StyledChips>
         {isMobile ? (

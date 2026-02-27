@@ -12,7 +12,11 @@ vi.mock("../../hooks/useIsMobile", () => ({
 
 describe("SearchForm Component", () => {
   const defaultProps = {
-    chips: ["東京都", "体育館", "利用可能"],
+    chips: [
+      { label: "東京都", onDelete: vi.fn() },
+      { label: "体育館", onDelete: vi.fn() },
+      { label: "利用可能" },
+    ],
     children: <div>Search Form Content</div>,
   };
 
@@ -26,7 +30,7 @@ describe("SearchForm Component", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
       defaultProps.chips.forEach((chip) => {
-        expect(screen.getByText(chip)).toBeInTheDocument();
+        expect(screen.getByText(chip.label)).toBeInTheDocument();
       });
     });
 
@@ -44,6 +48,36 @@ describe("SearchForm Component", () => {
       );
 
       expect(screen.getByRole("button", { name: /絞り込み/i })).toBeInTheDocument();
+    });
+  });
+
+  describe("Chip Delete", () => {
+    it("onDeleteが設定されたチップに削除ボタンが表示される", () => {
+      renderWithProviders(<SearchForm {...defaultProps} />);
+
+      // "東京都" と "体育館" には onDelete があるので削除ボタンがある
+      const chips = document.querySelectorAll(".MuiChip-root");
+      const deletableChips = document.querySelectorAll(".MuiChip-deleteIcon");
+      expect(deletableChips).toHaveLength(2);
+
+      // "利用可能" には onDelete がないので削除ボタンがない
+      expect(chips).toHaveLength(3);
+    });
+
+    it("削除ボタンクリックでonDeleteが呼ばれる", async () => {
+      const onDelete = vi.fn();
+      const chips = [{ label: "テスト", onDelete }];
+      const { user } = renderWithProviders(
+        <SearchForm chips={chips}>
+          <div>Content</div>
+        </SearchForm>
+      );
+
+      const deleteButton = document.querySelector(".MuiChip-deleteIcon");
+      expect(deleteButton).not.toBeNull();
+      await user.click(deleteButton as Element);
+
+      expect(onDelete).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -155,9 +189,14 @@ describe("SearchForm Component", () => {
       });
 
       it("キーボードナビゲーションが機能する", async () => {
-        const { user } = renderWithProviders(<SearchForm {...defaultProps} />);
+        const chips = [{ label: "東京都" }, { label: "体育館" }];
+        const { user } = renderWithProviders(
+          <SearchForm chips={chips}>
+            <div>Search Form Content</div>
+          </SearchForm>
+        );
 
-        // Tab to button
+        // Tab to button (削除不可のChipはフォーカスを受けない)
         await user.tab();
         const button = screen.getByRole("button", { name: /絞り込み/i });
         expect(button).toHaveFocus();
@@ -175,8 +214,11 @@ describe("SearchForm Component", () => {
   describe("Edge Cases", () => {
     it("非常に長いチップテキストを適切に処理する", () => {
       const longChips = [
-        "これは非常に長いテキストを含むチップです。オーバーフローを適切に処理する必要があります。",
-        "もう一つの長いテキスト",
+        {
+          label:
+            "これは非常に長いテキストを含むチップです。オーバーフローを適切に処理する必要があります。",
+        },
+        { label: "もう一つの長いテキスト" },
       ];
 
       renderWithProviders(
@@ -187,13 +229,15 @@ describe("SearchForm Component", () => {
 
       // チップが表示されることを確認
       longChips.forEach((chip) => {
-        const chipText = chip.length > 20 ? chip.substring(0, 20) : chip;
+        const chipText = chip.label.length > 20 ? chip.label.substring(0, 20) : chip.label;
         expect(screen.getByText(chipText, { exact: false })).toBeInTheDocument();
       });
     });
 
     it("多数のチップを水平スクロールで表示する", () => {
-      const manyChips = Array.from({ length: 20 }, (_, i) => `チップ${i + 1}`);
+      const manyChips = Array.from({ length: 20 }, (_, i) => ({
+        label: `チップ${i + 1}`,
+      }));
 
       renderWithProviders(
         <SearchForm chips={manyChips}>
