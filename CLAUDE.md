@@ -47,10 +47,6 @@ npm run coverage:open -w @shisetsu-viewer/viewer # Open in browser
 
 # GraphQL
 npm run generate -w @shisetsu-viewer/viewer     # Regenerate GraphQL client from queries
-
-# Storybook
-npm run storybook -w @shisetsu-viewer/viewer    # Start Storybook (port 6006)
-npm run build-storybook -w @shisetsu-viewer/viewer
 ```
 
 ### Scraper Package (`packages/scraper/`)
@@ -153,10 +149,9 @@ This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` w
 - Components: PascalCase (e.g., `SearchForm.tsx`)
 - Utils/hooks: camelCase (e.g., `useAuth0.ts`)
 - Tests: `*.test.tsx` alongside source files
-- Stories: `*.stories.tsx` for Storybook
 
 **Code Organization**:
-- Components co-located with tests and stories
+- Components co-located with tests
 - Custom hooks in `hooks/`
 - Shared utilities in `utils/`
 - Pages are route components in `pages/`
@@ -172,10 +167,9 @@ This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` w
 
 ## Important Notes
 
-- **Key Dependencies**: React 19, React Router 7, Apollo Client 4, Storybook 10
+- **Key Dependencies**: React 19, React Router 7, Apollo Client 4
 - Node.js >=22 required
 - Pre-commit hooks run lint-staged (ESLint + Prettier)
-- Storybook for component documentation and visual testing
 - Bundle analysis available via `build:analyze` (uses rollup-plugin-visualizer)
 - Font files are external in build config (see vite.config.ts)
 - MSW worker must be initialized: `npx msw init public -w @shisetsu-viewer/viewer`

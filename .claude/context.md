@@ -5,7 +5,6 @@
 ### Components (`packages/viewer/components/`)
 - 26 UI components for the app
 - Each component has tests alongside
-- Storybook stories for documentation
 
 ### Pages (`packages/viewer/pages/`) 
 - Route-based page components
