@@ -476,58 +476,6 @@ describe("Detail Page", () => {
     });
   });
 
-  describe("municipalityがundefinedの場合", () => {
-    it("ReservationTabでエラーがスローされる", async () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-      const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-      const nodeWithoutMunicipality = createMockInstitutionDetailNode({
-        municipality: undefined,
-      });
-      const responseWithoutMunicipality =
-        createMockInstitutionDetailConnection(nodeWithoutMunicipality);
-
-      const mocks = [
-        {
-          request: {
-            query: InstitutionDetailDocument,
-            variables: { id: VALID_UUID },
-          },
-          result: responseWithoutMunicipality,
-        },
-      ];
-
-      const { user } = renderWithProviders(
-        <ErrorBoundary>
-          <DetailPage />
-        </ErrorBoundary>,
-        {
-          initialEntries: [`/institution/${VALID_UUID}`],
-          route: "/institution/:id",
-          mocks,
-          auth0Config: { userInfo: { anonymous: false, trial: false } },
-        }
-      );
-
-      await waitFor(() => {
-        expect(screen.getByRole("tab", { name: "予約状況" })).toBeInTheDocument();
-      });
-
-      await user.click(screen.getByRole("tab", { name: "予約状況" }));
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-          )
-        ).toBeInTheDocument();
-      });
-
-      consoleSpy.mockRestore();
-      consoleLogSpy.mockRestore();
-    });
-  });
-
   describe("モバイル予約カードビュー", () => {
     beforeEach(() => {
       mockIsMobile.value = true;

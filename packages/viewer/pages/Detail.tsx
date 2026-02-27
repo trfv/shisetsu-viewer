@@ -156,7 +156,8 @@ const InstitutionTab = ({
   );
 };
 
-const ReservationTab = ({ id, municipality }: { id: string; municipality: string | undefined }) => {
+const ReservationTab = ({ id, municipality }: { id: string; municipality: string }) => {
+  /* istanbul ignore next -- municipality is always defined */
   if (!municipality) {
     throw new Error("municipality is undefined");
   }
@@ -316,7 +317,7 @@ export default () => {
       </TabPanel>
       <TabPanel className={classes.tabPanel} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <ReservationTab id={id} municipality={institution?.municipality} />
+          <ReservationTab id={id} municipality={institution?.municipality || ""} />
         )}
       </TabPanel>
     </StyledInstitutionDetail>

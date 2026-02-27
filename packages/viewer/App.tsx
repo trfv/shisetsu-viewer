@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import { RouterProvider } from "react-router-dom";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
 import { ColorModeProvider, useColorMode } from "./contexts/ColorMode";
@@ -11,9 +11,10 @@ import { CssBaseline, ThemeProvider } from "./utils/theme";
 const AppInner = () => {
   const { theme } = useColorMode();
   const { token } = useAuth0();
+  const apolloClient = useMemo(() => client(token), [token]);
 
   return (
-    <ClientProvider client={client(token)}>
+    <ClientProvider client={apolloClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Suspense fallback={<Loading />}>
