@@ -29,6 +29,7 @@ npm run test:all -w @shisetsu-viewer/viewer     # Unit + E2E
 # Coverage & Deploy
 npm run coverage -w @shisetsu-viewer/viewer     # Coverage report
 npm run deploy -w @shisetsu-viewer/viewer       # Deploy via wrangler
+npm run preview:wrangler -w @shisetsu-viewer/viewer  # Local preview via wrangler dev
 ```
 
 ## Architecture
@@ -37,7 +38,7 @@ npm run deploy -w @shisetsu-viewer/viewer       # Deploy via wrangler
 
 ```
 index.tsx:  StrictMode > Auth0Provider > App
-App.tsx:    ErrorBoundary > ColorModeProvider > Router > ScrollToTop + Header + ErrorBoundary > Switch/Route
+App.tsx:    ErrorBoundary > ColorModeProvider > Router > ScrollToTop + Header + ErrorBoundary > Suspense(Loading) > Switch/Route
 ```
 
 Uses wouter's `<Router>`, `<Switch>`, `<Route>` for declarative routing. All page components are lazy-loaded inline in App.tsx (no separate router file). `Navigate` → `Redirect`, `useNavigate()` → `useLocation()[1]` (setLocation), `useLocation()` → `useLocation()[0]` + `useSearch()`.
@@ -81,6 +82,7 @@ Enum constants (ReservationStatus, AvailabilityDivision, etc.) re-exported from 
 ## Directory Structure
 
 ```
+(Source files live at package root — no src/ directory)
 api/          — GraphQL client (graphqlClient.ts) and queries (queries.ts)
 components/   — Reusable UI components, each in own directory with .tsx, .test.tsx, .module.css
 constants/    — App constants: env vars, routes, styles, enums
