@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
-import { styled, useTheme } from "../../utils/theme";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
+import styles from "./DataTable.module.css";
 
 type Row = { id: string } & { [key: string]: unknown };
 
@@ -54,6 +54,13 @@ const getCellValue = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>
   }
 };
 
+const cellStyle = (col: Column<unknown>): React.CSSProperties => ({
+  maxWidth: col.maxWidth,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+});
+
 export const DataTable = <T extends Row>({
   columns,
   rows,
@@ -62,7 +69,6 @@ export const DataTable = <T extends Row>({
   hasNextPage,
 }: Props<T>) => {
   const isMobile = useIsMobile();
-  const theme = useTheme();
   const target = useRef<HTMLTableRowElement | null>(null);
   const cardTarget = useRef<HTMLDivElement | null>(null);
 
@@ -88,34 +94,35 @@ export const DataTable = <T extends Row>({
     const detailCols = cardCols.slice(1);
 
     return (
-      <StyledCardList>
+      <div className={styles["cardList"]}>
         {rows.map((row, index) => {
           const rowParams = { id: row.id, value: undefined, row, columns };
           return (
-            <StyledCard
+            <div
+              className={styles["card"]}
               key={`${row.id}-${index}`}
               onClick={() => onRowClick?.(rowParams)}
               ref={index === rows.length - 50 ? cardTarget : undefined}
             >
               {titleCol && (
-                <StyledCardTitle>{getCellValue(titleCol, row, columns)}</StyledCardTitle>
+                <div className={styles["cardTitle"]}>{getCellValue(titleCol, row, columns)}</div>
               )}
               {detailCols.map((col) => (
-                <StyledCardRow key={`${row.id}-${col.field}`}>
-                  <StyledCardLabel>{col.headerName}</StyledCardLabel>
-                  <StyledCardValue>{getCellValue(col, row, columns)}</StyledCardValue>
-                </StyledCardRow>
+                <div className={styles["cardRow"]} key={`${row.id}-${col.field}`}>
+                  <span className={styles["cardLabel"]}>{col.headerName}</span>
+                  <span className={styles["cardValue"]}>{getCellValue(col, row, columns)}</span>
+                </div>
               ))}
-            </StyledCard>
+            </div>
           );
         })}
         {hasNextPage && (
-          <StyledCard style={{ cursor: "default" }}>
+          <div className={styles["card"]} style={{ cursor: "default" }}>
             <Skeleton />
             <Skeleton width="60%" />
-          </StyledCard>
+          </div>
         )}
-      </StyledCardList>
+      </div>
     );
   }
 
@@ -129,12 +136,9 @@ export const DataTable = <T extends Row>({
                 align={col.type === "number" ? "right" : "left"}
                 key={col.field}
                 size="small"
-                sx={{
-                  maxWidth: col.maxWidth,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  borderBottomColor: theme.palette.text.primary,
+                style={{
+                  ...cellStyle(col as Column<unknown>),
+                  borderBottomColor: "var(--color-text-primary)",
                 }}
                 variant="head"
               >
@@ -159,12 +163,9 @@ export const DataTable = <T extends Row>({
                     align={col.type === "number" ? "right" : "left"}
                     key={`${row.id}-${col.field}`}
                     size="small"
-                    sx={{
-                      maxWidth: col.maxWidth,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      borderBottomColor: theme.palette.text.secondary,
+                    style={{
+                      ...cellStyle(col as Column<unknown>),
+                      borderBottomColor: "var(--color-text-secondary)",
                     }}
                     variant="body"
                   >
@@ -188,46 +189,3 @@ export const DataTable = <T extends Row>({
     </TableContainer>
   );
 };
-
-const StyledCardList = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.spacing(1),
-  padding: theme.spacing(0, 1),
-}));
-
-const StyledCard = styled("div")(({ theme }) => ({
-  padding: theme.spacing(1.5, 2),
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.background.paper,
-  cursor: "pointer",
-  "&:active": {
-    opacity: 0.7,
-  },
-}));
-
-const StyledCardTitle = styled("div")({
-  fontSize: "0.95rem",
-  fontWeight: 500,
-  marginBottom: 4,
-});
-
-const StyledCardRow = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "baseline",
-  padding: "2px 0",
-});
-
-const StyledCardLabel = styled("span")(({ theme }) => ({
-  fontSize: "0.7rem",
-  color: theme.palette.text.secondary,
-  flexShrink: 0,
-  marginRight: "0.5rem",
-}));
-
-const StyledCardValue = styled("span")({
-  fontSize: "0.85rem",
-  textAlign: "right",
-  wordBreak: "break-word",
-});

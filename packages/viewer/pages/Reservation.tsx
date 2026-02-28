@@ -1,11 +1,13 @@
 import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client/react";
-import { NetworkStatus } from "@apollo/client";
-import type { ReservationsQuery } from "../api/gql/graphql";
-import { ReservationsDocument } from "../api/gql/graphql";
-import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
+import {
+  RESERVATIONS_QUERY,
+  type SearchableReservationNode,
+  type ReservationsQueryData,
+} from "../api/queries";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -43,9 +45,7 @@ import { styled } from "../utils/theme";
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-export const COLUMNS: Columns<
-  ReservationsQuery["searchable_reservations_connection"]["edges"][number]["node"]
-> = [
+export const COLUMNS: Columns<SearchableReservationNode> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -127,22 +127,23 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore, networkStatus } = useQuery(ReservationsDocument, {
-    variables: toReservationQueryVariables(resevationSearchParams),
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-  });
+  const {
+    data: reservations,
+    loading,
+    error,
+    hasNextPage: hasMore,
+    fetchMore,
+    fetchingMore,
+  } = usePaginatedQuery<ReservationsQueryData, SearchableReservationNode>(
+    RESERVATIONS_QUERY,
+    toReservationQueryVariables(resevationSearchParams),
+    (d) => d.searchable_reservations_connection
+  );
 
   if (error) {
     // TODO Snackbar を描画する
     throw new Error(error.message);
   }
-
-  const {
-    edges: reservations,
-    endCursor,
-    hasNextPage: hasMore,
-  } = extractRelayParams(data?.searchable_reservations_connection);
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     resevationSearchParams;
@@ -290,7 +291,7 @@ export default () => {
         </div>
       </div>
       <div className={classes.resultBox}>
-        {loading && networkStatus !== NetworkStatus.fetchMore ? (
+        {loading && !fetchingMore ? (
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
@@ -299,15 +300,7 @@ export default () => {
         ) : (
           <DataTable
             columns={COLUMNS}
-            fetchMore={async () => {
-              /* istanbul ignore next -- endCursor is always set when hasMore is true */
-              if (!hasMore || !endCursor) return;
-              await fetchMore({
-                variables: {
-                  after: endCursor,
-                },
-              });
-            }}
+            fetchMore={fetchMore}
             hasNextPage={hasMore}
             onRowClick={(params) => {
               const institutionId =

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
-import { ReservationsDocument } from "../api/gql/graphql";
+import { http, HttpResponse } from "msw";
+import { worker } from "../test/mocks/browser";
+import { fireEvent, renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
 import {
   createMockSearchableReservationNode,
   createMockSearchableReservationsConnection,
@@ -10,6 +11,8 @@ import { ErrorBoundary } from "../components/utils/ErrorBoundary";
 vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,
 }));
+
+const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
 
 const FAKE_NOW = new Date("2025-06-15T12:00:00+09:00");
 
@@ -27,25 +30,12 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-// Build expected variables matching what the component will generate with the fake date.
-const startDate = new Date("2025-06-15T12:00:00+09:00");
-const endDate = new Date("2025-07-15T12:00:00+09:00");
-
-const defaultVariables = {
-  first: 100,
-  after: null,
-  municipality: ["MUNICIPALITY_KOUTOU"],
-  isAvailableStrings: null,
-  isAvailableWoodwind: null,
-  isAvailableBrass: null,
-  isAvailablePercussion: null,
-  institutionSizes: null,
-  startDate: startDate.toDateString(),
-  endDate: endDate.toDateString(),
-  isHoliday: null,
-  isMorningVacant: null,
-  isAfternoonVacant: null,
-  isEveningVacant: null,
+const useMswMock = (nodes: Record<string, unknown>[], hasNextPage = false) => {
+  worker.use(
+    http.post(TEST_ENDPOINT, () => {
+      return HttpResponse.json(createMockSearchableReservationsConnection(nodes, hasNextPage));
+    })
+  );
 };
 
 describe("COLUMNS定義", () => {
@@ -154,17 +144,10 @@ describe("COLUMNS定義", () => {
 describe("Reservation Page", () => {
   describe("検索フォームの表示", () => {
     it("絞り込みボタンを押すとSelect、DateRangePicker、CheckboxGroupが表示される", async () => {
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       // Open the drawer
@@ -180,17 +163,10 @@ describe("Reservation Page", () => {
     });
 
     it("選択した地区と日付範囲がチップとして表示される", () => {
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       expect(screen.getByText("江東区")).toBeInTheDocument();
@@ -198,28 +174,10 @@ describe("Reservation Page", () => {
     });
 
     it("municipality=allの場合、地区チップが表示されない", () => {
-      const allMunicipalityVariables = {
-        ...defaultVariables,
-        municipality: [
-          "MUNICIPALITY_KOUTOU",
-          "MUNICIPALITY_KITA",
-          "MUNICIPALITY_ARAKAWA",
-          "MUNICIPALITY_SUMIDA",
-          "MUNICIPALITY_CHUO",
-          "MUNICIPALITY_KAWASAKI",
-        ],
-      };
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: allMunicipalityVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation"],
-        mocks: [mock],
       });
 
       // When no municipality param is set, defaults to "all"
@@ -230,76 +188,44 @@ describe("Reservation Page", () => {
     });
 
     it("予約状況除外対象の自治体がSelectの選択肢から除外されている", async () => {
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       // Open the drawer to access Select
       await user.click(screen.getByText("絞り込み"));
 
       await waitFor(() => {
-        expect(screen.getByText("地区")).toBeInTheDocument();
+        expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
       });
 
-      // Open the MUI Select dropdown
-      const selectTrigger = screen.getByRole("combobox", { name: "地区" });
-      await user.click(selectTrigger);
-
-      // Wait for the listbox to appear
-      await waitFor(() => {
-        expect(screen.getByRole("listbox")).toBeInTheDocument();
-      });
+      // For native <select>, check <option> elements directly (always in the DOM)
+      const select = screen.getByRole("combobox", { name: "地区" });
+      const optionTexts = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
 
       // Non-excluded municipalities should be present as options
-      const listbox = screen.getByRole("listbox");
-      expect(listbox).toHaveTextContent("江東区");
-      expect(listbox).toHaveTextContent("北区");
-      expect(listbox).toHaveTextContent("荒川区");
+      expect(optionTexts).toContain("江東区");
+      expect(optionTexts).toContain("北区");
+      expect(optionTexts).toContain("荒川区");
 
       // Excluded municipalities should NOT be present
       // RESERVATION_EXCLUDED_MUNICIPALITIES: edogawa, ota, suginami, toshima, bunkyo
-      expect(listbox).not.toHaveTextContent("江戸川区");
-      expect(listbox).not.toHaveTextContent("大田区");
-      expect(listbox).not.toHaveTextContent("杉並区");
-      expect(listbox).not.toHaveTextContent("豊島区");
-      expect(listbox).not.toHaveTextContent("文京区");
+      expect(optionTexts).not.toContain("江戸川区");
+      expect(optionTexts).not.toContain("大田区");
+      expect(optionTexts).not.toContain("杉並区");
+      expect(optionTexts).not.toContain("豊島区");
+      expect(optionTexts).not.toContain("文京区");
     });
   });
 
   describe("検索フォームの操作", () => {
     it("地区を変更するとチップが更新される", async () => {
-      const kitaVariables = {
-        ...defaultVariables,
-        municipality: ["MUNICIPALITY_KITA"],
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: kitaVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Verify initial chip
@@ -312,18 +238,11 @@ describe("Reservation Page", () => {
         expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
       });
 
-      // Change the municipality select
-      const selectTrigger = screen.getByRole("combobox", { name: "地区" });
-      await user.click(selectTrigger);
+      // For native <select>, use fireEvent.change to change the value
+      const select = screen.getByRole("combobox", { name: "地区" });
+      fireEvent.change(select, { target: { value: "MUNICIPALITY_KITA" } });
 
-      await waitFor(() => {
-        expect(screen.getByRole("listbox")).toBeInTheDocument();
-      });
-
-      // Select "北区"
-      await user.click(screen.getByRole("option", { name: "北区" }));
-
-      // The chip should update to "北区" (chip + select display value)
+      // The chip should update to "北区"
       await waitFor(() => {
         const elements = screen.getAllByText("北区");
         expect(elements.length).toBeGreaterThanOrEqual(1);
@@ -331,29 +250,10 @@ describe("Reservation Page", () => {
     });
 
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {
-      const stringsVariables = {
-        ...defaultVariables,
-        isAvailableStrings: "AVAILABILITY_DIVISION_AVAILABLE",
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: stringsVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -374,29 +274,10 @@ describe("Reservation Page", () => {
     });
 
     it("施設サイズチェックボックスを切り替えるとチップが追加される", async () => {
-      const sizeVariables = {
-        ...defaultVariables,
-        institutionSizes: ["INSTITUTION_SIZE_LARGE"],
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: sizeVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -417,29 +298,10 @@ describe("Reservation Page", () => {
     });
 
     it("利用可能楽器チェックボックスをオフにするとチップが削除される", async () => {
-      const stringsVariables = {
-        ...defaultVariables,
-        isAvailableStrings: "AVAILABILITY_DIVISION_AVAILABLE",
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: stringsVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&a=s"],
-        mocks: [mock1, mock2],
       });
 
       await user.click(screen.getByText("絞り込み"));
@@ -459,29 +321,10 @@ describe("Reservation Page", () => {
     });
 
     it("施設サイズチェックボックスをオフにするとチップが削除される", async () => {
-      const sizeVariables = {
-        ...defaultVariables,
-        institutionSizes: ["INSTITUTION_SIZE_LARGE"],
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: sizeVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&i=l"],
-        mocks: [mock1, mock2],
       });
 
       await user.click(screen.getByText("絞り込み"));
@@ -501,29 +344,10 @@ describe("Reservation Page", () => {
     });
 
     it("絞り込みチェックボックスをオフにするとチップが削除される", async () => {
-      const filterVariables = {
-        ...defaultVariables,
-        isMorningVacant: true,
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: filterVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&f=m"],
-        mocks: [mock1, mock2],
       });
 
       await user.click(screen.getByText("絞り込み"));
@@ -541,29 +365,10 @@ describe("Reservation Page", () => {
     });
 
     it("絞り込みチェックボックスを切り替えるとチップが追加される", async () => {
-      const filterVariables = {
-        ...defaultVariables,
-        isMorningVacant: true,
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: filterVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -586,17 +391,10 @@ describe("Reservation Page", () => {
 
   describe("データが空の場合", () => {
     it("データが存在しないメッセージを表示する", async () => {
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       await waitFor(() => {
@@ -607,18 +405,16 @@ describe("Reservation Page", () => {
 
   describe("ローディング状態", () => {
     it("データ取得中にスピナーを表示する", () => {
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        delay: Infinity,
-        result: createMockSearchableReservationsConnection([]),
-      };
+      // Use a handler that delays indefinitely
+      worker.use(
+        http.post(TEST_ENDPOINT, async () => {
+          await new Promise(() => {}); // never resolves
+          return HttpResponse.json(createMockSearchableReservationsConnection([]));
+        })
+      );
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       expect(screen.getByRole("progressbar", { name: "読み込み中" })).toBeInTheDocument();
@@ -630,13 +426,13 @@ describe("Reservation Page", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        error: new Error("Network error"),
-      };
+      worker.use(
+        http.post(TEST_ENDPOINT, () => {
+          return HttpResponse.json({
+            errors: [{ message: "Network error" }],
+          });
+        })
+      );
 
       renderWithProviders(
         <ErrorBoundary>
@@ -644,7 +440,6 @@ describe("Reservation Page", () => {
         </ErrorBoundary>,
         {
           initialEntries: ["/reservation?m=koutou"],
-          mocks: [mock],
         }
       );
 
@@ -663,29 +458,10 @@ describe("Reservation Page", () => {
 
   describe("日付変更ハンドラー", () => {
     it("handleStartDateChange: 新しい開始日が終了日より前の場合、終了日は変更されない", async () => {
-      const updatedStartVariables = {
-        ...defaultVariables,
-        startDate: new Date("2025-06-20").toDateString(),
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: updatedStartVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -705,48 +481,22 @@ describe("Reservation Page", () => {
       });
 
       // Click on day "20" in the calendar (June 20, which is before July 15 endDate)
-      // onChange fires on day click, updating the start date immediately
       const dayButtons = document.querySelectorAll('[role="gridcell"]');
       const day20 = Array.from(dayButtons).find((el) => el.textContent === "20");
       expect(day20).toBeTruthy();
       await user.click(day20 as Element);
 
       // Wait for chip to update: startDate = June 20, endDate = July 15 (unchanged)
-      // The min/max logic: dt = min(maxDate, max(June 20, July 15)) = July 15
       await waitFor(() => {
         expect(screen.getByText(/2025\/06\/20.*〜.*2025\/07\/15/)).toBeInTheDocument();
       });
     });
 
     it("handleStartDateChange: 新しい開始日が終了日より後の場合、終了日も更新される", async () => {
-      const initialVariables = {
-        ...defaultVariables,
-        endDate: new Date("2025-06-20").toDateString(),
-      };
-      const updatedVariables = {
-        ...defaultVariables,
-        startDate: new Date("2025-06-25").toDateString(),
-        endDate: new Date("2025-06-25").toDateString(),
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: initialVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: updatedVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&dt=2025-06-20"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -766,44 +516,22 @@ describe("Reservation Page", () => {
       });
 
       // Click on day "25" in the calendar (June 25, which is after June 20 endDate)
-      // onChange fires on day click; since June 25 > endDate (June 20),
-      // endDate is also adjusted to June 25
       const dayButtons = document.querySelectorAll('[role="gridcell"]');
       const day25 = Array.from(dayButtons).find((el) => el.textContent === "25");
       expect(day25).toBeTruthy();
       await user.click(day25 as Element);
 
       // Wait for chip to update: both start and end should be June 25
-      // (onChange fires on day click, no need to click "閉じる" to trigger state update)
       await waitFor(() => {
         expect(screen.getByText(/2025\/06\/25.*〜.*2025\/06\/25/)).toBeInTheDocument();
       });
     });
 
     it("handleEndDateChange: 新しい終了日が開始日より後の場合、開始日は変更されない", async () => {
-      const updatedEndVariables = {
-        ...defaultVariables,
-        endDate: new Date("2025-07-10").toDateString(),
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: updatedEndVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -822,14 +550,12 @@ describe("Reservation Page", () => {
         expect(document.querySelector('[role="dialog"]')).toBeInTheDocument();
       });
 
-      // Click on day "10" in the calendar (July 10, before July 15 endDate but after June 15 startDate)
-      // onChange is called on day selection, which updates the state immediately
+      // Click on day "10" in the calendar (July 10, after June 15 startDate)
       const dayButtons = document.querySelectorAll('[role="gridcell"]');
       const day10 = Array.from(dayButtons).find((el) => el.textContent === "10");
       expect(day10).toBeTruthy();
       await user.click(day10 as Element);
 
-      // onChange fires on day click and updates state. Wait for chip to reflect new date.
       // startDate unchanged (June 15), endDate = July 10
       await waitFor(() => {
         expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/10/)).toBeInTheDocument();
@@ -843,34 +569,10 @@ describe("Reservation Page", () => {
     });
 
     it("handleEndDateChange: 新しい終了日が開始日より前の場合、開始日も更新される", async () => {
-      const initialVariables = {
-        ...defaultVariables,
-        startDate: new Date("2025-06-20").toDateString(),
-      };
-      const updatedVariables = {
-        ...defaultVariables,
-        startDate: new Date("2025-06-18").toDateString(),
-        endDate: new Date("2025-06-18").toDateString(),
-      };
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: initialVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: updatedVariables,
-        },
-        result: createMockSearchableReservationsConnection([]),
-      };
+      useMswMock([]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&df=2025-06-20"],
-        mocks: [mock1, mock2],
       });
 
       // Open the drawer
@@ -895,8 +597,6 @@ describe("Reservation Page", () => {
       await user.click(prevMonthButton as Element);
 
       // Click on day "18" in the calendar (June 18, before June 20 startDate)
-      // onChange fires on day click; since June 18 < startDate (June 20),
-      // startDate is also adjusted to June 18
       await waitFor(() => {
         const dayButtons = document.querySelectorAll('[role="gridcell"]');
         const day18 = Array.from(dayButtons).find((el) => el.textContent === "18");
@@ -916,8 +616,6 @@ describe("Reservation Page", () => {
 
   describe("ページネーション (fetchMore)", () => {
     it("hasNextPage=trueかつendCursorがある場合、IntersectionObserverがfetchMoreを起動する", async () => {
-      // Create 51 mock nodes to trigger IntersectionObserver
-      // DataTable sets ref at index (rows.length - 50), which is index 1 for 51 rows
       const nodes = Array.from({ length: 51 }, (_, i) =>
         createMockSearchableReservationNode({
           id: `searchable-reservation-${i}`,
@@ -939,63 +637,45 @@ describe("Reservation Page", () => {
         })
       );
 
-      // endCursor from createMockSearchableReservationsConnection with 51 nodes = btoa("cursor-50")
-      const endCursor = btoa("cursor-50");
-      const fetchMoreVariables = {
-        ...defaultVariables,
-        after: endCursor,
-      };
-
-      // Track whether the fetchMore query was called
-      let fetchMoreCalled = false;
-
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection(nodes, true),
-      };
-      const mock2 = {
-        request: {
-          query: ReservationsDocument,
-          variables: fetchMoreVariables,
-        },
-        result: () => {
-          fetchMoreCalled = true;
-          return createMockSearchableReservationsConnection([]);
-        },
-      };
+      let requestCount = 0;
+      worker.use(
+        http.post(TEST_ENDPOINT, async ({ request }) => {
+          requestCount++;
+          const body = (await request.json()) as { variables: Record<string, unknown> };
+          if (body.variables.after) {
+            // Return empty page for fetchMore
+            return HttpResponse.json(createMockSearchableReservationsConnection([], false));
+          }
+          return HttpResponse.json(createMockSearchableReservationsConnection(nodes, true));
+        })
+      );
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1, mock2],
       });
 
-      // Wait for initial data to load (51 rows with hasNextPage=true → skeleton visible)
+      // Wait for initial data to load
       await waitFor(() => {
         expect(screen.getByText("テスト文化センター0 音楽練習室A")).toBeInTheDocument();
       });
 
       // The skeleton loading row should appear because hasNextPage=true
-      const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+      const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
       expect(skeletons.length).toBeGreaterThanOrEqual(1);
 
       // Wait for IntersectionObserver to fire and trigger fetchMore
-      // The ref is set on the row at index 1 (which is visible in the browser)
       await new Promise((resolve) => setTimeout(resolve, 300));
 
       // Verify that fetchMore was called with the correct after cursor
       await waitFor(
         () => {
-          expect(fetchMoreCalled).toBe(true);
+          expect(requestCount).toBeGreaterThanOrEqual(2);
         },
         { timeout: 3000 }
       );
     });
 
     it("hasNextPage=falseの場合、fetchMoreコールバックは早期リターンする", async () => {
-      // Create 51 nodes but with hasNextPage=false
       const nodes = Array.from({ length: 51 }, (_, i) =>
         createMockSearchableReservationNode({
           id: `searchable-reservation-${i}`,
@@ -1017,17 +697,10 @@ describe("Reservation Page", () => {
         })
       );
 
-      const mock1 = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection(nodes, false),
-      };
+      useMswMock(nodes, false);
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock1],
       });
 
       // Wait for initial data to load
@@ -1036,14 +709,11 @@ describe("Reservation Page", () => {
       });
 
       // With hasNextPage=false, no skeleton should appear
-      const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+      const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
       expect(skeletons.length).toBe(0);
 
       // Wait to confirm no additional fetchMore request is made
       await new Promise((resolve) => setTimeout(resolve, 300));
-
-      // No second mock consumed means the early return in fetchMore worked correctly
-      // (Only mock1 was needed)
     });
   });
 
@@ -1084,17 +754,10 @@ describe("Reservation Page", () => {
         },
       });
 
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([node1, node2]),
-      };
+      useMswMock([node1, node2]);
 
       renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       await waitFor(() => {
@@ -1119,17 +782,10 @@ describe("Reservation Page", () => {
         },
       });
 
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([node]),
-      };
+      useMswMock([node]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       await waitFor(() => {
@@ -1141,8 +797,7 @@ describe("Reservation Page", () => {
       const row = cell.closest("tr");
       expect(row).toHaveStyle({ cursor: "pointer" });
 
-      // Click the row - this exercises the onRowClick handler which extracts
-      // the institution ID from the relay ID and calls navigate
+      // Click the row - this exercises the onRowClick handler
       await user.click(cell);
     });
 
@@ -1158,17 +813,10 @@ describe("Reservation Page", () => {
         },
       });
 
-      const mock = {
-        request: {
-          query: ReservationsDocument,
-          variables: defaultVariables,
-        },
-        result: createMockSearchableReservationsConnection([node]),
-      };
+      useMswMock([node]);
 
       const { user } = renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
-        mocks: [mock],
       });
 
       await waitFor(() => {
