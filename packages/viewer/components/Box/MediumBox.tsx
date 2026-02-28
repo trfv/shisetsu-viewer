@@ -1,9 +1,7 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps, FC } from "react";
 import { WIDTHS } from "../../constants/styles";
 import { BaseBox } from "./BaseBox";
 
 type Props = ComponentProps<typeof BaseBox>;
 
-export const MediumBox: typeof BaseBox = (props: Props) => (
-  <BaseBox {...props} width={WIDTHS.medium} />
-);
+export const MediumBox: FC<Props> = (props) => <BaseBox {...props} width={WIDTHS.medium} />;
