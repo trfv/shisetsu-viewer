@@ -7,12 +7,6 @@ export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: mode !== "production",
     rollupOptions: {
-      external: [
-        "/fonts/roboto-v27-latin-regular.woff2",
-        "/fonts/roboto-v27-latin-700.woff2",
-        "/fonts/noto-sans-jp-v28-latin_japanese-regular.woff2",
-        "/fonts/noto-sans-jp-v28-latin_japanese-700.woff2",
-      ],
       output: {
         esModule: true,
         manualChunks: {

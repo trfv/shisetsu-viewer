@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@auth0/auth0-spa-js": "2.15.0",
+    "@fontsource-variable/noto-sans-jp": "5.2.10",
     "date-fns": "4.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
