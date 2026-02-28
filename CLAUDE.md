@@ -36,7 +36,9 @@ npm run knip                  # Detect unused files, deps, exports
 
 **Internationalization**: primary language Japanese, UTF-8, timezone Asia/Tokyo.
 
-**Pre-commit hooks**: Husky + lint-staged runs ESLint and Prettier on staged `.ts`/`.tsx` files.
+**Pre-commit hooks**: Husky + lint-staged runs ESLint and Prettier on staged `.ts`/`.tsx` files. Gitleaks runs `protect --staged` for secret detection (requires `brew install gitleaks`).
+
+**Secret detection**: Gitleaks (`.gitleaks.toml`). Pre-commit scans staged files; CI scans full history. Install locally: `brew install gitleaks`.
 
 ## Cross-Package Architecture
 
