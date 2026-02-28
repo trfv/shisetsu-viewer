@@ -269,7 +269,7 @@ const MUNICIPALITIES_WITHOUT_RESERVATION_DATA = [
 ];
 
 export default () => {
-  const { id } = useParams<"id">();
+  const { id } = useParams();
   const [tab, setTab] = useState<TabType>("institution");
   const {
     userInfo: { anonymous, trial },

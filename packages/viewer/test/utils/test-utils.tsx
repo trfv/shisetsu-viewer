@@ -44,7 +44,7 @@ export function renderWithProviders(
   // Use browser's native userEvent
   const user = browserUserEvent;
 
-  const { hook } = memoryLocation({ path: initialEntries[0], static: true });
+  const { hook } = memoryLocation({ path: initialEntries[0] ?? "/", static: true });
 
   function Wrapper({ children }: { children: ReactNode }) {
     return (
