@@ -17,7 +17,7 @@ describe("Spinner Component", () => {
     expect(spinner).toHaveAttribute("aria-label", "読み込み中");
   });
 
-  it("CircularProgressPropsを受け取れる", () => {
+  it("sizeプロパティを受け取れる", () => {
     renderWithProviders(<Spinner size={60} />);
 
     const spinner = screen.getByRole("progressbar");
