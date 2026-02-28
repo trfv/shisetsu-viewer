@@ -1,8 +1,10 @@
-import MuiTab from "@mui/material/Tab";
-import type { ComponentProps } from "react";
+import type { ButtonHTMLAttributes, FC } from "react";
+import styles from "./Tab.module.css";
 
-type Props = Omit<ComponentProps<typeof MuiTab>, "value"> & {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  label: string;
   value: string;
+  selected?: boolean;
 };
 
 function a11yProps(value: string) {
@@ -13,6 +15,16 @@ function a11yProps(value: string) {
   };
 }
 
-export const Tab = (props: Props) => (
-  <MuiTab {...props} {...a11yProps(props.value)} style={{ minWidth: "0px" }} /> // min-width: 0px is for clear default style.
+export const Tab: FC<Props> = ({ label, value, selected, className, ...rest }) => (
+  <button
+    aria-selected={selected}
+    className={`${styles["tab"]}${className ? ` ${className}` : ""}`}
+    role="tab"
+    style={{ minWidth: "0px" }}
+    type="button"
+    {...a11yProps(value)}
+    {...rest}
+  >
+    {label}
+  </button>
 );
