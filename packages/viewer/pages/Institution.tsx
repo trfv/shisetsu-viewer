@@ -1,10 +1,12 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client/react";
-import { NetworkStatus } from "@apollo/client";
-import type { InstitutionsQuery } from "../api/gql/graphql";
-import { InstitutionsDocument } from "../api/gql/graphql";
-import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
+import {
+  INSTITUTIONS_QUERY,
+  type InstitutionNode,
+  type InstitutionsQueryData,
+} from "../api/queries";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -29,9 +31,7 @@ import {
 } from "../utils/search";
 import { styled } from "../utils/theme";
 
-export const COLUMNS: Columns<
-  InstitutionsQuery["institutions_connection"]["edges"][number]["node"]
-> = [
+export const COLUMNS: Columns<InstitutionNode> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -116,21 +116,23 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore, networkStatus } = useQuery(InstitutionsDocument, {
-    variables: toInstitutionQueryVariables(institutionSearchParams),
-    notifyOnNetworkStatusChange: true,
-  });
+  const {
+    data: institutions,
+    loading,
+    error,
+    hasNextPage: hasMore,
+    fetchMore,
+    fetchingMore,
+  } = usePaginatedQuery<InstitutionsQueryData, InstitutionNode>(
+    INSTITUTIONS_QUERY,
+    toInstitutionQueryVariables(institutionSearchParams),
+    (d) => d.institutions_connection
+  );
 
   if (error) {
     // TODO Snackbar を描画する
     throw new Error(error.message);
   }
-
-  const {
-    edges: institutions,
-    endCursor,
-    hasNextPage: hasMore,
-  } = extractRelayParams(data?.institutions_connection);
 
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
@@ -220,7 +222,7 @@ export default () => {
         </div>
       </div>
       <div className={classes.resultBox}>
-        {loading && networkStatus !== NetworkStatus.fetchMore ? (
+        {loading && !fetchingMore ? (
           <div className={classes.resultBoxNoData}>
             <Spinner />
           </div>
@@ -229,15 +231,7 @@ export default () => {
         ) : (
           <DataTable
             columns={COLUMNS}
-            fetchMore={async () => {
-              /* istanbul ignore next -- endCursor is always set when hasMore is true */
-              if (!hasMore || !endCursor) return;
-              await fetchMore({
-                variables: {
-                  after: endCursor,
-                },
-              });
-            }}
+            fetchMore={fetchMore}
             hasNextPage={hasMore}
             onRowClick={(params) => {
               const institutionId = extractSinglePkFromRelayId(params.row.id);

@@ -1,8 +1,6 @@
 import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { MockedProvider } from "@apollo/client/testing/react";
-import type { MockLink } from "@apollo/client/testing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
@@ -36,7 +34,6 @@ const MockAuth0Provider = ({
 interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
-  mocks?: MockLink.MockedResponse[];
   auth0Config?: Auth0MockConfig;
   theme?: ReturnType<typeof createTheme>;
 }
@@ -46,7 +43,6 @@ export function renderWithProviders(
   {
     initialEntries = ["/"],
     route = "/*",
-    mocks = [],
     auth0Config = {},
     theme = createTheme(),
     ...renderOptions
@@ -57,24 +53,15 @@ export function renderWithProviders(
 
   function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <MockedProvider
-        mocks={mocks}
-        showWarnings={false}
-        defaultOptions={{
-          watchQuery: { fetchPolicy: "no-cache", errorPolicy: "all" },
-          query: { fetchPolicy: "no-cache", errorPolicy: "all" },
-        }}
-      >
-        <MockAuth0Provider config={auth0Config}>
-          <ThemeProvider theme={theme}>
-            <MemoryRouter initialEntries={initialEntries}>
-              <Routes>
-                <Route path={route} element={children} />
-              </Routes>
-            </MemoryRouter>
-          </ThemeProvider>
-        </MockAuth0Provider>
-      </MockedProvider>
+      <MockAuth0Provider config={auth0Config}>
+        <ThemeProvider theme={theme}>
+          <MemoryRouter initialEntries={initialEntries}>
+            <Routes>
+              <Route path={route} element={children} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </MockAuth0Provider>
     );
   }
 
