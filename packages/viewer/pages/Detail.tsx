@@ -52,14 +52,14 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="small"
-            value={institution?.capacity}
+            value={institution?.capacity ?? undefined}
           />
           <Input
             label="面積（㎡）"
             loading={loading}
             readOnly={true}
             size="small"
-            value={institution?.area}
+            value={institution?.area ?? undefined}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -68,7 +68,10 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
+            value={formatUsageFee(
+              institution?.municipality,
+              institution?.weekday_usage_fee as { division: string; fee: string }[] | undefined
+            )}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -77,7 +80,10 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
+            value={formatUsageFee(
+              institution?.municipality,
+              institution?.holiday_usage_fee as { division: string; fee: string }[] | undefined
+            )}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -86,28 +92,28 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_strings]}
+            value={AvailabilityDivisionMap[institution?.is_available_strings ?? ""]}
           />
           <Input
             label="木管楽器"
             loading={loading}
             readOnly={true}
             size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_woodwind]}
+            value={AvailabilityDivisionMap[institution?.is_available_woodwind ?? ""]}
           />
           <Input
             label="金管楽器"
             loading={loading}
             readOnly={true}
             size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_brass]}
+            value={AvailabilityDivisionMap[institution?.is_available_brass ?? ""]}
           />
           <Input
             label="打楽器"
             loading={loading}
             readOnly={true}
             size="small"
-            value={AvailabilityDivisionMap[institution?.is_available_percussion]}
+            value={AvailabilityDivisionMap[institution?.is_available_percussion ?? ""]}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -116,14 +122,14 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="small"
-            value={EquipmentDivisionMap[institution?.is_equipped_music_stand]}
+            value={EquipmentDivisionMap[institution?.is_equipped_music_stand ?? ""]}
           />
           <Input
             label="ピアノ"
             loading={loading}
             readOnly={true}
             size="small"
-            value={EquipmentDivisionMap[institution?.is_equipped_piano]}
+            value={EquipmentDivisionMap[institution?.is_equipped_piano ?? ""]}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -212,7 +218,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
                 <TableCell className={styles["reservationTableCell"]} size="small" variant="head">
                   日付
                 </TableCell>
-                {sortByReservationDivision(reservations[0]?.reservation).map(([division]) => (
+                {sortByReservationDivision(reservations[0]?.reservation ?? {}).map(([division]) => (
                   <TableCell
                     className={styles["reservationTableCell"]}
                     key={division}
@@ -270,7 +276,7 @@ export default () => {
   } = useAuth0();
 
   const handleTabChange = useCallback(
-    (_: ChangeEvent<unknown>, newValue: TabType) => setTab(newValue),
+    (_: ChangeEvent<unknown>, newValue: string) => setTab(newValue as TabType),
     []
   );
 
@@ -305,14 +311,14 @@ export default () => {
           </h2>
         )}
       </div>
-      <TabGroup className={styles["tabGroup"]} onChange={handleTabChange} value={tab}>
+      <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
         <Tab label="施設情報" value="institution" />
         <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
       </TabGroup>
-      <TabPanel className={styles["tabPanel"]} currentValue={tab} tabValue="institution">
+      <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
         <InstitutionTab institution={institution} loading={loading} />
       </TabPanel>
-      <TabPanel className={styles["tabPanel"]} currentValue={tab} tabValue="reservation">
+      <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
           <ReservationTab id={id} municipality={institution?.municipality || ""} />
         )}

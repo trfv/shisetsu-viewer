@@ -2,6 +2,37 @@
 // the auto-generated api/gql/graphql.ts and api/queries/*.graphql.
 // These replace the codegen-generated typed documents.
 
+// ─── Query variable types ────────────────────────────────────
+
+export type InstitutionsQueryVariables = {
+  first?: number | null;
+  after?: string | null;
+  municipality?: string[] | string | null;
+  isAvailableStrings?: string | null;
+  isAvailableWoodwind?: string | null;
+  isAvailableBrass?: string | null;
+  isAvailablePercussion?: string | null;
+  institutionSizes?: string[] | string | null;
+};
+
+export type ReservationsQueryVariables = {
+  first?: number | null;
+  after?: string | null;
+  prefecture?: string | null;
+  municipality?: string[] | string | null;
+  isAvailableStrings?: string | null;
+  isAvailableWoodwind?: string | null;
+  isAvailableBrass?: string | null;
+  isAvailablePercussion?: string | null;
+  institutionSizes?: string[] | string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  isHoliday?: boolean | null;
+  isMorningVacant?: boolean | null;
+  isAfternoonVacant?: boolean | null;
+  isEveningVacant?: boolean | null;
+};
+
 // ─── Institutions (list page) ─────────────────────────────────
 
 export const INSTITUTIONS_QUERY = `

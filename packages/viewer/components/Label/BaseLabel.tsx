@@ -1,6 +1,5 @@
 import type { ElementType, FC } from "react";
-import { FONT_SIZE } from "../../constants/styles";
-import { BaseBox } from "../Box";
+import styles from "./Label.module.css";
 
 type Props = {
   label: string;
@@ -10,10 +9,6 @@ type Props = {
 
 type LabelSize = "small" | "medium" | "large";
 
-export const BaseLabel: FC<Props> = ({ label, size, as = "span" }) => {
-  return (
-    <BaseBox component={as} display="inline-block" fontSize={FONT_SIZE[size]}>
-      {label}
-    </BaseBox>
-  );
+export const BaseLabel: FC<Props> = ({ label, size, as: Component = "span" }) => {
+  return <Component className={`${styles["label"]} ${styles[size]}`}>{label}</Component>;
 };

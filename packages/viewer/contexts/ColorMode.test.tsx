@@ -1,22 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import { userEvent } from "vitest/browser";
 import { ColorModeProvider, useColorMode } from "./ColorMode";
-
-// Mock useMediaQuery from MUI to control prefers-color-scheme
-vi.mock("@mui/material/useMediaQuery", () => ({
-  default: vi.fn().mockReturnValue(false),
-}));
 
 const STORAGE_KEY = "shisetsu-viewer-color-mode";
 
 // Helper component that reads from the context and exposes values for testing
 const ColorModeConsumer = () => {
-  const { mode, toggleMode, theme } = useColorMode();
+  const { mode, isDark, toggleMode } = useColorMode();
   return (
     <div>
       <span data-testid="mode">{mode}</span>
-      <span data-testid="palette-mode">{theme.palette.mode}</span>
+      <span data-testid="is-dark">{isDark ? "dark" : "light"}</span>
       <button data-testid="toggle" onClick={toggleMode}>
         Toggle
       </button>
@@ -151,40 +146,19 @@ describe("ColorModeProvider", () => {
     });
   });
 
-  describe("テーマオブジェクト", () => {
-    it("systemモードでprefers-color-schemeがlightの場合、lightテーマを提供する", async () => {
-      const useMediaQueryModule = await import("@mui/material/useMediaQuery");
-      const mockUseMediaQuery = useMediaQueryModule.default as ReturnType<typeof vi.fn>;
-      mockUseMediaQuery.mockReturnValue(false); // prefersDark = false
-
+  describe("テーマ解決", () => {
+    it("systemモードでprefers-color-schemeがlightの場合、isDark=false", () => {
+      // Default matchMedia returns matches=false (light)
       render(
         <ColorModeProvider>
           <ColorModeConsumer />
         </ColorModeProvider>
       );
 
-      expect(screen.getByTestId("palette-mode").textContent).toBe("light");
+      expect(screen.getByTestId("is-dark").textContent).toBe("light");
     });
 
-    it("systemモードでprefers-color-schemeがdarkの場合、darkテーマを提供する", async () => {
-      const useMediaQueryModule = await import("@mui/material/useMediaQuery");
-      const mockUseMediaQuery = useMediaQueryModule.default as ReturnType<typeof vi.fn>;
-      mockUseMediaQuery.mockReturnValue(true); // prefersDark = true
-
-      render(
-        <ColorModeProvider>
-          <ColorModeConsumer />
-        </ColorModeProvider>
-      );
-
-      expect(screen.getByTestId("palette-mode").textContent).toBe("dark");
-    });
-
-    it("lightモードではシステム設定に関係なくlightテーマを提供する", async () => {
-      const useMediaQueryModule = await import("@mui/material/useMediaQuery");
-      const mockUseMediaQuery = useMediaQueryModule.default as ReturnType<typeof vi.fn>;
-      mockUseMediaQuery.mockReturnValue(true); // prefersDark = true, but mode is explicit
-
+    it("lightモードではシステム設定に関係なくisDark=false", () => {
       localStorage.setItem(STORAGE_KEY, "light");
 
       render(
@@ -194,14 +168,10 @@ describe("ColorModeProvider", () => {
       );
 
       expect(screen.getByTestId("mode").textContent).toBe("light");
-      expect(screen.getByTestId("palette-mode").textContent).toBe("light");
+      expect(screen.getByTestId("is-dark").textContent).toBe("light");
     });
 
-    it("darkモードではシステム設定に関係なくdarkテーマを提供する", async () => {
-      const useMediaQueryModule = await import("@mui/material/useMediaQuery");
-      const mockUseMediaQuery = useMediaQueryModule.default as ReturnType<typeof vi.fn>;
-      mockUseMediaQuery.mockReturnValue(false); // prefersDark = false, but mode is explicit
-
+    it("darkモードではシステム設定に関係なくisDark=true", () => {
       localStorage.setItem(STORAGE_KEY, "dark");
 
       render(
@@ -211,13 +181,13 @@ describe("ColorModeProvider", () => {
       );
 
       expect(screen.getByTestId("mode").textContent).toBe("dark");
-      expect(screen.getByTestId("palette-mode").textContent).toBe("dark");
+      expect(screen.getByTestId("is-dark").textContent).toBe("dark");
     });
   });
 
   describe("useColorModeフック", () => {
     it("プロバイダーなしではデフォルト値を返す", () => {
-      // Context default: mode "system", theme lightTheme
+      // Context default: mode "system", isDark false
       render(<ColorModeConsumer />);
 
       expect(screen.getByTestId("mode").textContent).toBe("system");

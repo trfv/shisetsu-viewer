@@ -12,7 +12,8 @@
   width: 100%;
   max-width: 1280px;
   background: var(--color-bg-paper);
-  border-radius: var(--shape-border-radius, 8px);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-2);
 }
 
 .searchBoxForm {

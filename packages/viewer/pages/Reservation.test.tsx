@@ -151,7 +151,7 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("地区")).toBeInTheDocument();
@@ -195,7 +195,7 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer to access Select
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
@@ -232,7 +232,7 @@ describe("Reservation Page", () => {
       expect(screen.getByText("江東区")).toBeInTheDocument();
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
@@ -257,7 +257,7 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
@@ -281,7 +281,7 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("施設サイズ")).toBeInTheDocument();
@@ -304,7 +304,7 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou&a=s"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
@@ -327,7 +327,7 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou&i=l"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("施設サイズ")).toBeInTheDocument();
@@ -350,7 +350,7 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou&f=m"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         const checkbox = screen.getByRole("checkbox", { name: "午前空き" });
@@ -372,7 +372,7 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByRole("checkbox", { name: "午前空き" })).toBeInTheDocument();
@@ -465,26 +465,18 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("期間指定")).toBeInTheDocument();
       });
 
-      // Find the start date "Choose date" button (first one)
-      const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[0]!);
+      // Find the start date input (first input[type="date"])
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
-      // Wait for calendar to open
-      await waitFor(() => {
-        expect(document.querySelector('[role="dialog"]')).toBeInTheDocument();
-      });
-
-      // Click on day "20" in the calendar (June 20, which is before July 15 endDate)
-      const dayButtons = document.querySelectorAll('[role="gridcell"]');
-      const day20 = Array.from(dayButtons).find((el) => el.textContent === "20");
-      expect(day20).toBeTruthy();
-      await user.click(day20 as Element);
+      // Change start date to June 20 (before July 15 endDate)
+      fireEvent.change(dateInputs[0]!, { target: { value: "2025-06-20" } });
 
       // Wait for chip to update: startDate = June 20, endDate = July 15 (unchanged)
       await waitFor(() => {
@@ -500,26 +492,18 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("期間指定")).toBeInTheDocument();
       });
 
-      // Find the start date "Choose date" button (first one)
-      const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[0]!);
+      // Find the start date input (first input[type="date"])
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
-      // Wait for calendar to open
-      await waitFor(() => {
-        expect(document.querySelector('[role="dialog"]')).toBeInTheDocument();
-      });
-
-      // Click on day "25" in the calendar (June 25, which is after June 20 endDate)
-      const dayButtons = document.querySelectorAll('[role="gridcell"]');
-      const day25 = Array.from(dayButtons).find((el) => el.textContent === "25");
-      expect(day25).toBeTruthy();
-      await user.click(day25 as Element);
+      // Change start date to June 25 (after June 20 endDate)
+      fireEvent.change(dateInputs[0]!, { target: { value: "2025-06-25" } });
 
       // Wait for chip to update: both start and end should be June 25
       await waitFor(() => {
@@ -535,37 +519,23 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("期間指定")).toBeInTheDocument();
       });
 
-      // Find the end date "Choose date" button (second one)
-      const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[1]!);
+      // Find the end date input (second input[type="date"])
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
-      // Wait for calendar to open (shows July 2025 since endDate = July 15)
-      await waitFor(() => {
-        expect(document.querySelector('[role="dialog"]')).toBeInTheDocument();
-      });
-
-      // Click on day "10" in the calendar (July 10, after June 15 startDate)
-      const dayButtons = document.querySelectorAll('[role="gridcell"]');
-      const day10 = Array.from(dayButtons).find((el) => el.textContent === "10");
-      expect(day10).toBeTruthy();
-      await user.click(day10 as Element);
+      // Change end date to July 10 (after June 15 startDate)
+      fireEvent.change(dateInputs[1]!, { target: { value: "2025-07-10" } });
 
       // startDate unchanged (June 15), endDate = July 10
       await waitFor(() => {
         expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/10/)).toBeInTheDocument();
       });
-
-      // Close the dialog if still open
-      const closeBtn = document.querySelector('[aria-label="閉じる"], button[class*="MuiButton"]');
-      if (closeBtn && closeBtn.textContent === "閉じる") {
-        await user.click(closeBtn as Element);
-      }
     });
 
     it("handleEndDateChange: 新しい終了日が開始日より前の場合、開始日も更新される", async () => {
@@ -576,36 +546,18 @@ describe("Reservation Page", () => {
       });
 
       // Open the drawer
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("期間指定")).toBeInTheDocument();
       });
 
-      // Find the end date "Choose date" button (second one)
-      const chooseDateButtons = screen.getAllByRole("button", { name: /Choose date/ });
-      await user.click(chooseDateButtons[1]!);
+      // Find the end date input (second input[type="date"])
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
-      // Wait for calendar to open (shows July 2025 since endDate = July 15)
-      await waitFor(() => {
-        expect(document.querySelector('[role="dialog"]')).toBeInTheDocument();
-      });
-
-      // Navigate to previous month (June 2025) since calendar opens at July
-      const prevMonthButton = document.querySelector('[aria-label="Previous month"]');
-      expect(prevMonthButton).toBeTruthy();
-      await user.click(prevMonthButton as Element);
-
-      // Click on day "18" in the calendar (June 18, before June 20 startDate)
-      await waitFor(() => {
-        const dayButtons = document.querySelectorAll('[role="gridcell"]');
-        const day18 = Array.from(dayButtons).find((el) => el.textContent === "18");
-        expect(day18).toBeTruthy();
-      });
-
-      const dayButtonsAfterNav = document.querySelectorAll('[role="gridcell"]');
-      const day18 = Array.from(dayButtonsAfterNav).find((el) => el.textContent === "18");
-      await user.click(day18 as Element);
+      // Change end date to June 18 (before June 20 startDate)
+      fireEvent.change(dateInputs[1]!, { target: { value: "2025-06-18" } });
 
       // Wait for chip to update: both start and end should be June 18
       await waitFor(() => {

@@ -65,7 +65,7 @@
 
 .reservationTableCell {
   white-space: nowrap;
-  border-bottom-color: var(--color-text-primary);
+  border-bottom-color: var(--color-divider);
 }
 
 .reservationCardList {
@@ -76,10 +76,10 @@
 }
 
 .reservationCard {
-  border: 1px solid var(--color-divider);
-  border-radius: var(--shape-border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 16px;
   background-color: var(--color-bg-paper);
+  box-shadow: var(--shadow-2);
 }
 
 .reservationCardDate {

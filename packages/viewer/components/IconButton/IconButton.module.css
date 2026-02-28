@@ -8,12 +8,17 @@
   color: inherit;
   cursor: pointer;
   padding: 8px;
-  transition: background-color 120ms ease;
+  transition: background-color var(--transition-short);
   text-decoration: none;
 }
 
 .iconButton:hover {
   background-color: var(--color-action-hover);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }
 
 .small {

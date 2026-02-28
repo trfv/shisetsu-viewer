@@ -111,7 +111,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("地区")).toBeInTheDocument();
@@ -152,7 +152,7 @@ describe("Institution Page", () => {
 
       expect(screen.getByText("江東区")).toBeInTheDocument();
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
@@ -174,7 +174,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
@@ -195,7 +195,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou&a=s"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
@@ -218,7 +218,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou&i=l"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("施設サイズ")).toBeInTheDocument();
@@ -241,7 +241,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await user.click(screen.getByText("絞り込み"));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await waitFor(() => {
         expect(screen.getByText("施設サイズ")).toBeInTheDocument();

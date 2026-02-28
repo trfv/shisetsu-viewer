@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
@@ -35,7 +34,6 @@ interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
   auth0Config?: Auth0MockConfig;
-  theme?: ReturnType<typeof createTheme>;
 }
 
 export function renderWithProviders(
@@ -44,7 +42,6 @@ export function renderWithProviders(
     initialEntries = ["/"],
     route = "/*",
     auth0Config = {},
-    theme = createTheme(),
     ...renderOptions
   }: CustomRenderOptions = {}
 ) {
@@ -54,13 +51,11 @@ export function renderWithProviders(
   function Wrapper({ children }: { children: ReactNode }) {
     return (
       <MockAuth0Provider config={auth0Config}>
-        <ThemeProvider theme={theme}>
-          <MemoryRouter initialEntries={initialEntries}>
-            <Routes>
-              <Route path={route} element={children} />
-            </Routes>
-          </MemoryRouter>
-        </ThemeProvider>
+        <MemoryRouter initialEntries={initialEntries}>
+          <Routes>
+            <Route path={route} element={children} />
+          </Routes>
+        </MemoryRouter>
       </MockAuth0Provider>
     );
   }

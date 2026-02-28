@@ -7,23 +7,23 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { darkTheme, lightTheme, useMediaQuery } from "../utils/theme";
 
 type Mode = "system" | "light" | "dark";
 
 type ColorModeContext = {
   mode: Mode;
+  isDark: boolean;
   toggleMode: () => void;
-  theme: typeof lightTheme;
 };
 
 const STORAGE_KEY = "shisetsu-viewer-color-mode";
 const MODES: Mode[] = ["system", "light", "dark"];
+const PREFERS_DARK_QUERY = "(prefers-color-scheme: dark)";
 
 const Context = createContext<ColorModeContext>({
   mode: "system",
+  isDark: false,
   toggleMode: () => {},
-  theme: lightTheme,
 });
 
 const getStoredMode = (): Mode => {
@@ -38,7 +38,16 @@ const getStoredMode = (): Mode => {
 
 export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<Mode>(getStoredMode);
-  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+  const [prefersDark, setPrefersDark] = useState(
+    () => window.matchMedia(PREFERS_DARK_QUERY).matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(PREFERS_DARK_QUERY);
+    const handler = (e: MediaQueryListEvent) => setPrefersDark(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   const toggleMode = useCallback(() => {
     setMode((prev) => {
@@ -55,15 +64,13 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const isDark = mode === "dark" || (mode === "system" && prefersDark);
-  const theme = useMemo(() => (isDark ? darkTheme : lightTheme), [isDark]);
 
   // Set data-theme attribute on <html> for CSS Custom Properties
   useEffect(() => {
-    const resolvedTheme = isDark ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", resolvedTheme);
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  const value = useMemo(() => ({ mode, toggleMode, theme }), [mode, toggleMode, theme]);
+  const value = useMemo(() => ({ mode, isDark, toggleMode }), [mode, isDark, toggleMode]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

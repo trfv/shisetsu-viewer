@@ -2,10 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { LoginButton } from "./LoginButton";
 
-vi.mock("../../hooks/useIsMobile", () => ({
-  useIsMobile: () => false,
-}));
-
 describe("LoginButton Component", () => {
   it("isLoading=trueの場合はnullを返す", () => {
     const { container } = renderWithProviders(<LoginButton />, {
@@ -20,7 +16,7 @@ describe("LoginButton Component", () => {
       auth0Config: { token: "some-token" },
     });
 
-    expect(screen.getByText("ログアウト")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "ログアウト" })).toBeInTheDocument();
   });
 
   it("ログアウトボタンをクリックするとlogoutが呼ばれる", async () => {
@@ -29,7 +25,7 @@ describe("LoginButton Component", () => {
       auth0Config: { token: "some-token", logout },
     });
 
-    await user.click(screen.getByText("ログアウト"));
+    await user.click(screen.getByRole("button", { name: "ログアウト" }));
 
     expect(logout).toHaveBeenCalledOnce();
     expect(logout).toHaveBeenCalledWith({
@@ -42,7 +38,7 @@ describe("LoginButton Component", () => {
       auth0Config: { token: "" },
     });
 
-    expect(screen.getByText("ログイン")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "ログイン" })).toBeInTheDocument();
   });
 
   it("ログインボタンをクリックするとloginが呼ばれる", async () => {
@@ -51,7 +47,7 @@ describe("LoginButton Component", () => {
       auth0Config: { token: "", login },
     });
 
-    await user.click(screen.getByText("ログイン"));
+    await user.click(screen.getByRole("button", { name: "ログイン" }));
 
     expect(login).toHaveBeenCalledOnce();
     expect(login).toHaveBeenCalledWith({});

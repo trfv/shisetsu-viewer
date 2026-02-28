@@ -1,7 +1,6 @@
 import { useCallback, useState, type ReactNode } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { FullBox } from "../Box";
-import { SmallButton } from "../Button";
 import { Chip } from "../Chip";
 import { Drawer } from "../Drawer";
 import { IconButton } from "../IconButton";
@@ -40,13 +39,9 @@ export const SearchForm = ({ chips, children }: Props) => {
             />
           ))}
         </div>
-        {isMobile ? (
-          <IconButton aria-label="絞り込み" onClick={toggleDrawer} title="絞り込み">
-            <ManageSearchIcon />
-          </IconButton>
-        ) : (
-          <SmallButton onClick={toggleDrawer}>絞り込み</SmallButton>
-        )}
+        <IconButton aria-label="絞り込み" onClick={toggleDrawer} title="絞り込み">
+          <ManageSearchIcon />
+        </IconButton>
       </FullBox>
       <Drawer onClose={toggleDrawer} open={isOpen}>
         <div className={styles["menu"]}>

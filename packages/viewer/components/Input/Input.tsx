@@ -9,7 +9,7 @@ type Props = {
   label: string;
   size?: BoxSize;
   loading?: boolean;
-  value?: string | number | null;
+  value?: string | number | null | undefined;
   readOnly?: boolean;
   multiline?: boolean;
   rows?: number;

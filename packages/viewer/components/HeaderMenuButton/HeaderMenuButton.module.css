@@ -7,13 +7,13 @@
 .menu > a,
 .menu > span {
   margin-left: 16px;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
 
 .menu > a:hover {
-  border-bottom: 1px solid var(--color-text-primary);
+  border-bottom: 1px solid var(--color-text);
 }
 
 .menu > span {

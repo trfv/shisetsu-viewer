@@ -15,23 +15,28 @@
   text-transform: none;
   cursor: pointer;
   transition:
-    color 150ms ease,
-    border-color 150ms ease;
+    color var(--transition-short),
+    border-color var(--transition-short);
   white-space: nowrap;
   user-select: none;
 }
 
 .tab:hover {
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 .tab[aria-selected="true"] {
-  color: var(--color-text-primary);
+  color: var(--color-text);
   border-bottom-color: var(--color-primary);
 }
 
+.tab:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -2px;
+}
+
 .tab:disabled {
-  opacity: 0.5;
+  opacity: 0.38;
   cursor: default;
   pointer-events: none;
 }

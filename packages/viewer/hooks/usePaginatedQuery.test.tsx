@@ -110,7 +110,7 @@ describe("usePaginatedQuery", () => {
       http.post(TEST_ENDPOINT, async ({ request }) => {
         const body = (await request.json()) as { variables: Record<string, unknown> };
         capturedVariables = body.variables;
-        const name = body.variables.filter === "X" ? "Filtered X" : "All Items";
+        const name = body.variables["filter"] === "X" ? "Filtered X" : "All Items";
         return HttpResponse.json(makeConnection([{ id: "1", name }], false, "cursor-0"));
       })
     );
@@ -126,7 +126,7 @@ describe("usePaginatedQuery", () => {
     rerender(<TestComponent variables={{ first: 10, filter: "Y" }} />);
 
     await waitFor(() => {
-      expect(capturedVariables.filter).toBe("Y");
+      expect(capturedVariables["filter"]).toBe("Y");
     });
   });
 });

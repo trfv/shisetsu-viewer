@@ -2,18 +2,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border: 1px solid currentColor;
   border-radius: var(--border-radius-button);
   background: transparent;
-  color: inherit;
+  color: var(--color-primary);
   font-family: inherit;
   font-weight: 500;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.75;
-  padding: 3px 9px;
+  padding: 5px 15px;
+  min-height: 36px;
   cursor: pointer;
   text-transform: none;
-  transition: background-color 120ms ease;
+  transition:
+    background-color var(--transition-short),
+    box-shadow var(--transition-short),
+    border-color var(--transition-short);
   white-space: nowrap;
 }
 
@@ -21,11 +26,17 @@
   background-color: var(--color-action-hover);
 }
 
+.button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
 .button:active {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .button:disabled {
-  opacity: 0.5;
+  opacity: 0.38;
   cursor: not-allowed;
+  pointer-events: none;
 }

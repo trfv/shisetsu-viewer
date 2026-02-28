@@ -34,10 +34,12 @@ describe("SearchForm Component", () => {
       });
     });
 
-    it("絞り込みボタンを表示する", () => {
+    it("絞り込みアイコンボタンを表示する", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
-      expect(screen.getByRole("button", { name: /絞り込み/i })).toBeInTheDocument();
+      const button = screen.getByRole("button", { name: /絞り込み/i });
+      expect(button).toBeInTheDocument();
+      expect(button.querySelector("svg")).not.toBeNull();
     });
 
     it("チップが空の場合も正しく表示する", () => {
@@ -133,15 +135,6 @@ describe("SearchForm Component", () => {
 
     afterEach(() => {
       mockIsMobileValue = false;
-    });
-
-    it("モバイルビューでアイコンボタンを表示する", () => {
-      renderWithProviders(<SearchForm {...defaultProps} />);
-
-      // Check for icon button with aria-label
-      const iconButton = screen.getByRole("button", { name: /絞り込み/i });
-      expect(iconButton).toBeInTheDocument();
-      expect(iconButton.querySelector("svg")).not.toBeNull();
     });
 
     it("モバイルビューで小さいチップサイズを使用する", () => {

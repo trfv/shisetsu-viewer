@@ -7,9 +7,15 @@
 
 .card {
   padding: 12px 16px;
-  border-radius: var(--shape-border-radius, 8px);
+  border-radius: var(--border-radius);
   background-color: var(--color-bg-paper);
+  box-shadow: var(--shadow-2);
   cursor: pointer;
+  transition: box-shadow var(--transition-short);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-3);
 }
 
 .card:active {
