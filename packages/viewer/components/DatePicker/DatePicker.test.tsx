@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { renderWithProviders, screen } from "../../test/utils/test-utils";
+import { renderWithProviders, screen, fireEvent } from "../../test/utils/test-utils";
 import { DatePicker } from "./DatePicker";
 
 describe("DatePicker Component", () => {
@@ -10,50 +10,42 @@ describe("DatePicker Component", () => {
     maxDate: new Date(2021, 11, 31),
   };
 
-  it("日付入力グループを表示する", () => {
+  it("date入力フィールドを表示する", () => {
     renderWithProviders(<DatePicker {...defaultProps} />);
-
-    expect(screen.getByRole("group")).toBeInTheDocument();
-  });
-
-  it("年・月・日のスピンボタンを表示する", () => {
-    renderWithProviders(<DatePicker {...defaultProps} />);
-
-    const spinbuttons = screen.getAllByRole("spinbutton");
-    expect(spinbuttons).toHaveLength(3);
-    expect(screen.getByRole("spinbutton", { name: "Year" })).toBeInTheDocument();
-    expect(screen.getByRole("spinbutton", { name: "Month" })).toBeInTheDocument();
-    expect(screen.getByRole("spinbutton", { name: "Day" })).toBeInTheDocument();
+    const input = screen.getByDisplayValue("2021-01-15");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "date");
   });
 
   it("選択された日付の値を表示する", () => {
     renderWithProviders(<DatePicker {...defaultProps} />);
-
-    const yearSpinner = screen.getByRole("spinbutton", { name: "Year" });
-    const monthSpinner = screen.getByRole("spinbutton", { name: "Month" });
-    const daySpinner = screen.getByRole("spinbutton", { name: "Day" });
-
-    expect(yearSpinner).toHaveAttribute("aria-valuenow", "2021");
-    expect(monthSpinner).toHaveAttribute("aria-valuenow", "1");
-    expect(daySpinner).toHaveAttribute("aria-valuenow", "15");
+    expect(screen.getByDisplayValue("2021-01-15")).toBeInTheDocument();
   });
 
-  it("minDateとmaxDateのpropsを受け取る", () => {
+  it("minとmax属性が設定される", () => {
     const minDate = new Date(2021, 5, 1);
     const maxDate = new Date(2021, 5, 30);
 
     renderWithProviders(<DatePicker {...defaultProps} minDate={minDate} maxDate={maxDate} />);
 
-    expect(screen.getByRole("group")).toBeInTheDocument();
-    expect(screen.getAllByRole("spinbutton")).toHaveLength(3);
+    const input = screen.getByDisplayValue("2021-01-15");
+    expect(input).toHaveAttribute("min", "2021-06-01");
+    expect(input).toHaveAttribute("max", "2021-06-30");
   });
 
-  it("readOnlyフィールドとして表示される", () => {
-    renderWithProviders(<DatePicker {...defaultProps} />);
+  it("日付変更時にonChangeが呼ばれる", () => {
+    const onChange = vi.fn();
+    renderWithProviders(<DatePicker {...defaultProps} onChange={onChange} />);
 
-    const spinbuttons = screen.getAllByRole("spinbutton");
-    spinbuttons.forEach((spinbutton) => {
-      expect(spinbutton).toHaveAttribute("aria-readonly", "true");
-    });
+    const input = screen.getByDisplayValue("2021-01-15");
+    fireEvent.change(input, { target: { value: "2021-03-20" } });
+
+    expect(onChange).toHaveBeenCalledWith(new Date(2021, 2, 20));
+  });
+
+  it("valueがnullの場合、空文字を表示する", () => {
+    renderWithProviders(<DatePicker {...defaultProps} value={null} />);
+    const input = document.querySelector('input[type="date"]');
+    expect(input).toHaveAttribute("value", "");
   });
 });

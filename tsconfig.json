@@ -17,6 +17,7 @@
   "files": [],
   "include": [],
   "references": [
+    { "path": "./packages/shared" },
     { "path": "./packages/scraper" },
     { "path": "./packages/viewer" }
   ]

@@ -34,7 +34,6 @@ npm install
 ### Development
 - `npm start` - Start viewer
 - `npm run test -w @shisetsu-viewer/viewer` - Test viewer
-- `npm run storybook -w @shisetsu-viewer/viewer` - Component docs
 
 ### Quality
 - `npm run lint:all` - Fix all linting 

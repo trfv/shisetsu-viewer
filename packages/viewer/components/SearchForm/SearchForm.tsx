@@ -1,17 +1,19 @@
-import Close from "@mui/icons-material/Close";
-import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import Chip from "@mui/material/Chip";
-import Drawer from "@mui/material/Drawer";
-import Tooltip from "@mui/material/Tooltip";
 import { useCallback, useState, type ReactNode } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { styled } from "../../utils/theme";
 import { FullBox } from "../Box";
-import { SmallButton } from "../Button";
+import { Chip } from "../Chip";
+import { Drawer } from "../Drawer";
 import { IconButton } from "../IconButton";
+import { CloseIcon, ManageSearchIcon } from "../icons";
+import styles from "./SearchForm.module.css";
+
+type ChipItem = {
+  label: string;
+  onDelete?: () => void;
+};
 
 type Props = {
-  chips: string[];
+  chips: ChipItem[];
   children: ReactNode;
 };
 
@@ -27,62 +29,28 @@ export const SearchForm = ({ chips, children }: Props) => {
   return (
     <>
       <FullBox alignItems="center" display="flex" justifyContent="space-between">
-        <StyledChips>
+        <div className={styles["chips"]}>
           {chips.map((chip) => (
-            <Chip key={chip} label={chip} size={isMobile ? "small" : "medium"} />
+            <Chip
+              key={chip.label}
+              label={chip.label}
+              size={isMobile ? "small" : "medium"}
+              {...(chip.onDelete ? { onDelete: chip.onDelete } : {})}
+            />
           ))}
-        </StyledChips>
-        {isMobile ? (
-          <Tooltip title="絞り込み">
-            <IconButton aria-label="絞り込み" onClick={toggleDrawer}>
-              <ManageSearchIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <SmallButton onClick={toggleDrawer}>絞り込み</SmallButton>
-        )}
+        </div>
+        <IconButton aria-label="絞り込み" onClick={toggleDrawer} title="絞り込み">
+          <ManageSearchIcon />
+        </IconButton>
       </FullBox>
-      <Drawer
-        PaperProps={{ sx: { maxWidth: "88%" } }}
-        anchor="right"
-        onClose={toggleDrawer}
-        open={isOpen}
-      >
-        <StyledMenu>
-          <Tooltip title="絞り込みを閉じる">
-            <IconButton aria-label="閉じる" edge="start" onClick={toggleDrawer}>
-              <Close />
-            </IconButton>
-          </Tooltip>
+      <Drawer onClose={toggleDrawer} open={isOpen}>
+        <div className={styles["menu"]}>
+          <IconButton aria-label="閉じる" onClick={toggleDrawer} title="絞り込みを閉じる">
+            <CloseIcon />
+          </IconButton>
           {children}
-        </StyledMenu>
+        </div>
       </Drawer>
     </>
   );
 };
-
-const StyledChips = styled("div")(({ theme }) => ({
-  marginRight: "1rem",
-  display: "flex",
-  gap: "0.5rem",
-  flexWrap: "nowrap",
-  overflow: "auto",
-  height: "2rem",
-  [theme.breakpoints.down("sm")]: {
-    marginRight: "0",
-    gap: "0.25rem",
-    flexWrap: "wrap",
-    overflow: "visible",
-    height: "auto",
-    minHeight: "1.5rem",
-  },
-}));
-
-const StyledMenu = styled("div")(({ theme }) => ({
-  width: "80%",
-  padding: theme.spacing(2, 3),
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: theme.spacing(3),
-}));

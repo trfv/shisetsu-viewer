@@ -15,10 +15,6 @@
 **/playwright-report
 **/test-results
 
-# storybook
-**/build-storybook.log
-**/storybook-static
-
 # cline
 /cline_docs
 
@@ -36,3 +32,6 @@ yarn-error.log*
 
 # lsmcp cache
 .lsmcp/cache
+
+# wrangler
+**/.wrangler

@@ -16,8 +16,7 @@ export default defineConfig(({ mode }) => ({
       output: {
         esModule: true,
         manualChunks: {
-          react: ["react", "react-dom", "react-router-dom"],
-          mui: ["@mui/material", "@mui/icons-material", "@mui/x-date-pickers"],
+          "react-vendor": ["react", "react-dom"],
         },
         chunkFileNames: "assets/[hash].js",
         assetFileNames: "assets/[hash][extname]",
@@ -29,16 +28,13 @@ export default defineConfig(({ mode }) => ({
     ...(mode === "analyze"
       ? [
           visualizer({
-            open: true,
-            filename: "dist/stats.html",
+            open: false,
+            filename: "dist/stats.json",
+            template: "raw-data",
             gzipSize: true,
             brotliSize: true,
           }),
         ]
       : []),
   ] as PluginOption[],
-  test: {
-    global: true,
-    environment: "happy-dom",
-  },
 }));

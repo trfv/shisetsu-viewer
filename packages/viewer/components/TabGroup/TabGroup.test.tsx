@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import Tab from "@mui/material/Tab";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
+import { Tab } from "../Tab";
 import { TabGroup, TabPanel } from "./TabGroup";
 
 describe("TabGroup Component", () => {

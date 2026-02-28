@@ -1,11 +1,13 @@
 import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client/react";
-import { NetworkStatus } from "@apollo/client";
-import type { ReservationsQuery } from "../api/gql/graphql";
-import { ReservationsDocument } from "../api/gql/graphql";
-import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
+import { useLocation, useSearch } from "wouter";
+import {
+  RESERVATIONS_QUERY,
+  type SearchableReservationNode,
+  type ReservationsQueryData,
+} from "../api/queries";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -14,7 +16,6 @@ import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
@@ -38,14 +39,12 @@ import {
   type AvailableInstrument,
   type InstitutionSize,
 } from "../utils/search";
-import { styled } from "../utils/theme";
+import styles from "./Reservation.module.css";
 
 const minDate = new Date();
 const maxDate = addMonths(endOfMonth(new Date()), 6);
 
-export const COLUMNS: Columns<
-  ReservationsQuery["searchable_reservations_connection"]["edges"][number]["node"]
-> = [
+export const COLUMNS: Columns<SearchableReservationNode> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -96,8 +95,8 @@ export const COLUMNS: Columns<
 ];
 
 export default () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [pathname, setLocation] = useLocation();
+  const search = useSearch();
 
   const [values, setQueryParams] = useQueryParams(
     {
@@ -108,8 +107,9 @@ export default () => {
       a: ArrayParam,
       i: ArrayParam,
     },
-    navigate,
-    location
+    setLocation,
+    search,
+    pathname
   );
 
   const resevationSearchParams = useMemo(
@@ -127,22 +127,23 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore, networkStatus } = useQuery(ReservationsDocument, {
-    variables: toReservationQueryVariables(resevationSearchParams),
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-  });
+  const {
+    data: reservations,
+    loading,
+    error,
+    hasNextPage: hasMore,
+    fetchMore,
+    fetchingMore,
+  } = usePaginatedQuery<ReservationsQueryData, SearchableReservationNode>(
+    RESERVATIONS_QUERY,
+    toReservationQueryVariables(resevationSearchParams),
+    (d) => d.searchable_reservations_connection
+  );
 
   if (error) {
     // TODO Snackbar を描画する
     throw new Error(error.message);
   }
-
-  const {
-    edges: reservations,
-    endCursor,
-    hasNextPage: hasMore,
-  } = extractRelayParams(data?.searchable_reservations_connection);
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     resevationSearchParams;
@@ -206,23 +207,37 @@ export default () => {
   const chips = [
     ...(municipality === "all"
       ? []
-      : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
-    `${formatDate(startDate)} 〜 ${formatDate(endDate)}`,
+      : [
+          {
+            label: `${MunicipalityOptions.find((o) => o.value === municipality)?.label}`,
+            onDelete: () => setQueryParams({ m: null }),
+          },
+        ]),
+    { label: `${formatDate(startDate)} 〜 ${formatDate(endDate)}` },
     ...Object.entries(RESERVATION_SEARCH_FILTER_MAP)
       .filter(([v]) => filter.includes(v as ReservationSearchFilter))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ f: filter.filter((f) => f !== v) }),
+      })),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ a: availableInstruments.filter((a) => a !== v) }),
+      })),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ i: institutionSizes.filter((i) => i !== v) }),
+      })),
   ];
 
   return (
-    <StyledReservation className={classes.pageBox}>
-      <div className={classes.searchBox}>
-        <div className={classes.searchBoxForm}>
+    <main className={styles["pageBox"]}>
+      <div className={styles["searchBox"]}>
+        <div className={styles["searchBoxForm"]}>
           <SearchForm chips={chips}>
             <Select
               label="地区"
@@ -275,99 +290,29 @@ export default () => {
           </SearchForm>
         </div>
       </div>
-      <div className={classes.resultBox}>
-        {loading && networkStatus !== NetworkStatus.fetchMore ? (
-          <div className={classes.resultBoxNoData}>
+      <div className={styles["resultBox"]}>
+        {loading && !fetchingMore ? (
+          <div className={styles["resultBoxNoData"]}>
             <Spinner />
           </div>
         ) : !municipality || !reservations?.length ? (
-          <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
+          <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             columns={COLUMNS}
-            fetchMore={async () => {
-              /* istanbul ignore next -- endCursor is always set when hasMore is true */
-              if (!hasMore || !endCursor) return;
-              await fetchMore({
-                variables: {
-                  after: endCursor,
-                },
-              });
-            }}
+            fetchMore={fetchMore}
             hasNextPage={hasMore}
             onRowClick={(params) => {
               const institutionId =
                 params.row.institution?.id && extractSinglePkFromRelayId(params.row.institution.id);
               if (institutionId) {
-                navigate(ROUTES.detail.replace(":id", institutionId as string));
+                setLocation(ROUTES.detail.replace(":id", institutionId as string));
               }
             }}
             rows={reservations}
           />
         )}
       </div>
-    </StyledReservation>
+    </main>
   );
 };
-
-const PREFIX = "Reservation";
-const classes = {
-  pageBox: `${PREFIX}-pageBox`,
-  searchBox: `${PREFIX}-searchBox`,
-  searchBoxForm: `${PREFIX}-searchBoxForm`,
-  resultBox: `${PREFIX}-resultBox`,
-  resultBoxNoData: `${PREFIX}-resultBoxNoData`,
-};
-
-const StyledReservation = styled("main")(({ theme }) => ({
-  [`&.${classes.pageBox}`]: {
-    padding: theme.spacing(5, 0),
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.spacing(5),
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(3, 0),
-      gap: theme.spacing(3),
-    },
-  },
-  [`.${classes.searchBox}`]: {
-    marginInline: "auto",
-    padding: theme.spacing(3),
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    background: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-      padding: theme.spacing(1),
-      borderRadius: 0,
-    },
-  },
-  [`.${classes.searchBoxForm}`]: {
-    display: "flex",
-    flexWrap: "nowrap",
-    gap: theme.spacing(3, 5),
-  },
-  [`.${classes.resultBox}`]: {
-    marginInline: "auto",
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    [theme.breakpoints.up("md")]: {
-      height: SEARCH_TABLE_HEIGHT,
-      ".MuiTableContainer-root": {
-        maxHeight: SEARCH_TABLE_HEIGHT,
-      },
-    },
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-    },
-  },
-  [`.${classes.resultBoxNoData}`]: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));

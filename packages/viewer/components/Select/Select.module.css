@@ -1,0 +1,27 @@
+.select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--color-text-secondary);
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.75;
+  padding: 4px 0 5px;
+  min-height: 32px;
+  outline: none;
+  cursor: pointer;
+  color-scheme: inherit;
+  appearance: auto;
+  transition: border-color var(--transition-short);
+}
+
+.select:focus {
+  border-bottom-color: var(--color-primary);
+  border-bottom-width: 2px;
+  padding-bottom: 4px;
+}
+
+.select:focus-visible {
+  outline: none;
+}

@@ -1,0 +1,25 @@
+.datePicker {
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  padding: 6px 4px 5px;
+  border: none;
+  border-bottom: 1px solid var(--color-text-secondary);
+  background: transparent;
+  color: var(--color-text);
+  color-scheme: light;
+  width: 100%;
+  min-height: 32px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-short);
+}
+
+.datePicker:focus {
+  border-bottom-color: var(--color-primary);
+  border-bottom-width: 2px;
+  padding-bottom: 4px;
+}
+
+[data-theme="dark"] .datePicker {
+  color-scheme: dark;
+}

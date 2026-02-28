@@ -4,24 +4,14 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@apollo/client": "4.1.4",
     "@auth0/auth0-spa-js": "2.15.0",
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.1",
-    "@mui/icons-material": "7.3.8",
-    "@mui/material": "7.3.8",
-    "@mui/x-date-pickers": "8.27.0",
-    "graphql": "16.12.0",
+    "date-fns": "4.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-router-dom": "7.13.0"
+    "wouter": "3.9.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "6.1.2",
-    "@graphql-codegen/client-preset": "5.2.3",
     "@playwright/test": "^1.58.2",
-    "@storybook/addon-docs": "10.2.12",
-    "@storybook/react-vite": "10.2.12",
     "@swc/core": "1.15.13",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
@@ -31,41 +21,36 @@
     "@vitest/browser": "4.0.18",
     "@vitest/browser-playwright": "4.0.18",
     "@vitest/coverage-istanbul": "4.0.18",
-    "@vitest/coverage-v8": "4.0.18",
     "dotenv": "17.3.1",
     "esbuild": "0.27.3",
     "msw": "2.12.10",
     "rollup-plugin-visualizer": "7.0.0",
-    "storybook": "10.2.12",
     "vite": "7.3.1",
     "vitest": "4.0.18",
-    "web-vitals": "5.1.0"
+    "wrangler": "4.69.0"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "0.27.3"
   },
   "scripts": {
-    "generate": "graphql-codegen --require dotenv/config --config codegen.ts",
     "start": "vite --port 3000",
     "build": "tsc && vite build",
     "build:analyze": "vite build --mode analyze",
     "serve": "vite preview --port 3000",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "typecheck": "tsgo",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",
     "test:integration": "TZ=Asia/Tokyo vitest --run test/integration",
-    "test:accessibility": "TZ=Asia/Tokyo vitest --run test/accessibility",
-    "test:performance": "TZ=Asia/Tokyo vitest --run test/performance",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:headed": "playwright test --headed",
     "test:all": "npm run test:ci && npm run test:e2e",
     "coverage": "TZ=Asia/Tokyo vitest run --coverage",
-    "coverage:open": "TZ=Asia/Tokyo vitest run --coverage && open coverage/index.html"
+    "coverage:open": "TZ=Asia/Tokyo vitest run --coverage && open coverage/index.html",
+    "deploy": "wrangler deploy",
+    "preview:wrangler": "wrangler dev"
   },
   "msw": {
     "workerDirectory": [

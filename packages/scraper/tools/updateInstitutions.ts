@@ -1,3 +1,4 @@
+import { getReservationTargets } from "@shisetsu-viewer/shared";
 import { graphqlRequest } from "./request.ts";
 
 const SCRIPT_ENDPOINT = process.env.SCRIPT_ENDPOINT as string;
@@ -6,19 +7,9 @@ interface InsertInstitutionsResponse {
   insert_institutions: { affected_rows: number };
 }
 
-let _targets = [
-  "kanagawa-kawasaki",
-  "tokyo-arakawa",
-  "tokyo-chuo",
-  "tokyo-kita",
-  "tokyo-koutou",
-  "tokyo-sumida",
-];
-const target = process.argv[2];
-if (target) {
-  _targets = _targets.filter((t) => t === target);
-}
-const targets = _targets;
+const allTargets = getReservationTargets();
+const filterArg = process.argv[2];
+const targets = filterArg ? allTargets.filter((t) => t === filterArg) : allTargets;
 const title = `update institutions`;
 
 console.time(title);

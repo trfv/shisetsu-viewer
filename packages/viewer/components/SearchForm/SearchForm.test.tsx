@@ -12,7 +12,11 @@ vi.mock("../../hooks/useIsMobile", () => ({
 
 describe("SearchForm Component", () => {
   const defaultProps = {
-    chips: ["東京都", "体育館", "利用可能"],
+    chips: [
+      { label: "東京都", onDelete: vi.fn() },
+      { label: "体育館", onDelete: vi.fn() },
+      { label: "利用可能" },
+    ],
     children: <div>Search Form Content</div>,
   };
 
@@ -26,14 +30,16 @@ describe("SearchForm Component", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
       defaultProps.chips.forEach((chip) => {
-        expect(screen.getByText(chip)).toBeInTheDocument();
+        expect(screen.getByText(chip.label)).toBeInTheDocument();
       });
     });
 
-    it("絞り込みボタンを表示する", () => {
+    it("絞り込みアイコンボタンを表示する", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
-      expect(screen.getByRole("button", { name: /絞り込み/i })).toBeInTheDocument();
+      const button = screen.getByRole("button", { name: /絞り込み/i });
+      expect(button).toBeInTheDocument();
+      expect(button.querySelector("svg")).not.toBeNull();
     });
 
     it("チップが空の場合も正しく表示する", () => {
@@ -44,6 +50,35 @@ describe("SearchForm Component", () => {
       );
 
       expect(screen.getByRole("button", { name: /絞り込み/i })).toBeInTheDocument();
+    });
+  });
+
+  describe("Chip Delete", () => {
+    it("onDeleteが設定されたチップに削除ボタンが表示される", () => {
+      renderWithProviders(<SearchForm {...defaultProps} />);
+
+      const chips = document.querySelectorAll('[data-testid="chip"]');
+      const deletableChips = document.querySelectorAll('[data-testid="chip-delete"]');
+      expect(deletableChips).toHaveLength(2);
+
+      // "利用可能" には onDelete がないので削除ボタンがない
+      expect(chips).toHaveLength(3);
+    });
+
+    it("削除ボタンクリックでonDeleteが呼ばれる", async () => {
+      const onDelete = vi.fn();
+      const chips = [{ label: "テスト", onDelete }];
+      const { user } = renderWithProviders(
+        <SearchForm chips={chips}>
+          <div>Content</div>
+        </SearchForm>
+      );
+
+      const deleteButton = document.querySelector('[data-testid="chip-delete"]');
+      expect(deleteButton).not.toBeNull();
+      await user.click(deleteButton as Element);
+
+      expect(onDelete).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -67,21 +102,11 @@ describe("SearchForm Component", () => {
       await user.click(openButton);
 
       // Find and click close button
-      const closeButtons = screen.getAllByRole("button");
-      const closeButton = closeButtons.find((button) => {
-        const svg = button.querySelector('svg[data-testid="CloseIcon"]');
-        return svg !== null;
-      });
-
-      if (closeButton) {
-        await user.click(closeButton);
-      }
+      const closeButton = screen.getByRole("button", { name: "閉じる" });
+      await user.click(closeButton);
 
       await waitFor(() => {
-        const drawer = screen.queryByRole("presentation");
-        if (drawer) {
-          expect(drawer).toHaveAttribute("aria-hidden", "true");
-        }
+        expect(screen.queryByTestId("drawer-overlay")).not.toBeInTheDocument();
       });
     });
 
@@ -91,17 +116,14 @@ describe("SearchForm Component", () => {
       const button = screen.getByRole("button", { name: /絞り込み/i });
       await user.click(button);
 
-      // Click backdrop
-      const backdrop = document.querySelector(".MuiBackdrop-root");
-      if (backdrop) {
-        await user.click(backdrop as Element);
+      // Click overlay
+      const overlay = document.querySelector('[data-testid="drawer-overlay"]');
+      if (overlay) {
+        await user.click(overlay as Element);
       }
 
       await waitFor(() => {
-        const drawer = screen.queryByRole("presentation");
-        if (drawer) {
-          expect(drawer).toHaveAttribute("aria-hidden", "true");
-        }
+        expect(screen.queryByTestId("drawer-overlay")).not.toBeInTheDocument();
       });
     });
   });
@@ -115,24 +137,13 @@ describe("SearchForm Component", () => {
       mockIsMobileValue = false;
     });
 
-    it("モバイルビューでアイコンボタンを表示する", () => {
+    it("モバイルビューで小さいチップサイズを使用する", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
-      // Check for icon button instead of text button
-      const buttons = screen.getAllByRole("button");
-      const iconButton = buttons.find((button) => {
-        return button.querySelector('svg[data-testid="ManageSearchIcon"]');
-      });
-
-      expect(iconButton).toBeInTheDocument();
-    });
-
-    it("モバイルビューで小さいチップサイズを使用する", () => {
-      const { container } = renderWithProviders(<SearchForm {...defaultProps} />);
-
-      const chips = container.querySelectorAll(".MuiChip-root");
+      const chips = document.querySelectorAll('[data-testid="chip"]');
       chips.forEach((chip) => {
-        expect(chip).toHaveClass("MuiChip-sizeSmall");
+        // The chip element should have the "small" class in mobile view
+        expect(chip.className).toContain("small");
       });
     });
   });
@@ -155,7 +166,12 @@ describe("SearchForm Component", () => {
       });
 
       it("キーボードナビゲーションが機能する", async () => {
-        const { user } = renderWithProviders(<SearchForm {...defaultProps} />);
+        const chips = [{ label: "東京都" }, { label: "体育館" }];
+        const { user } = renderWithProviders(
+          <SearchForm chips={chips}>
+            <div>Search Form Content</div>
+          </SearchForm>
+        );
 
         // Tab to button
         await user.tab();
@@ -175,8 +191,11 @@ describe("SearchForm Component", () => {
   describe("Edge Cases", () => {
     it("非常に長いチップテキストを適切に処理する", () => {
       const longChips = [
-        "これは非常に長いテキストを含むチップです。オーバーフローを適切に処理する必要があります。",
-        "もう一つの長いテキスト",
+        {
+          label:
+            "これは非常に長いテキストを含むチップです。オーバーフローを適切に処理する必要があります。",
+        },
+        { label: "もう一つの長いテキスト" },
       ];
 
       renderWithProviders(
@@ -187,13 +206,15 @@ describe("SearchForm Component", () => {
 
       // チップが表示されることを確認
       longChips.forEach((chip) => {
-        const chipText = chip.length > 20 ? chip.substring(0, 20) : chip;
+        const chipText = chip.label.length > 20 ? chip.label.substring(0, 20) : chip.label;
         expect(screen.getByText(chipText, { exact: false })).toBeInTheDocument();
       });
     });
 
     it("多数のチップを水平スクロールで表示する", () => {
-      const manyChips = Array.from({ length: 20 }, (_, i) => `チップ${i + 1}`);
+      const manyChips = Array.from({ length: 20 }, (_, i) => ({
+        label: `チップ${i + 1}`,
+      }));
 
       renderWithProviders(
         <SearchForm chips={manyChips}>

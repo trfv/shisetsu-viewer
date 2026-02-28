@@ -1,0 +1,4 @@
+.tabList {
+  display: flex;
+  border-bottom: 1px solid var(--color-divider);
+}

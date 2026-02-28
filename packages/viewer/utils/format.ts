@@ -19,7 +19,7 @@ const dateFormat = new Intl.DateTimeFormat("ja-JP", {
   weekday: "narrow",
 });
 
-export const formatDate = (date: string | Date): string => {
+export const formatDate = (date: string | Date | undefined): string => {
   if (!date) {
     console.error("invalid date");
     return "";
@@ -36,7 +36,7 @@ const datetimeFormat = new Intl.DateTimeFormat("ja-JP", {
   second: "2-digit",
 });
 
-export const formatDatetime = (datetime: string | Date): string => {
+export const formatDatetime = (datetime: string | Date | undefined): string => {
   if (!datetime) {
     console.error("invalid date");
     return "";

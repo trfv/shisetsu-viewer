@@ -4,9 +4,7 @@ import { playwright } from "@vitest/browser-playwright";
 
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    include: ["web-vitals", "@apollo/client/react", "@mui/icons-material/OpenInNew"],
-  },
+  optimizeDeps: {},
   test: {
     globals: true,
     browser: {
@@ -31,10 +29,7 @@ export default defineConfig({
         "test/",
         "*.config.ts",
         "*.config.js",
-        "*.stories.tsx",
         "api/graphql-client.tsx",
-        "storybook-static/",
-        ".storybook/",
         "dist/",
         "coverage/",
         "**/*.d.ts",

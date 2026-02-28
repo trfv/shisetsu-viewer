@@ -27,5 +27,3 @@ export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps
     </AutoBox>
   );
 };
-
-export default DateRangePicker;

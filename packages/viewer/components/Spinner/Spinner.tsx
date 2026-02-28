@@ -1,5 +1,15 @@
-import CircularProgress, { CircularProgressProps } from "@mui/material/CircularProgress";
+import type { FC } from "react";
+import styles from "./Spinner.module.css";
 
-export const Spinner = (props: CircularProgressProps) => (
-  <CircularProgress aria-label="読み込み中" {...props} />
+type Props = {
+  size?: number;
+};
+
+export const Spinner: FC<Props> = ({ size = 40 }) => (
+  <span
+    aria-label="読み込み中"
+    className={styles["spinner"]}
+    role="progressbar"
+    style={{ width: size, height: size }}
+  />
 );

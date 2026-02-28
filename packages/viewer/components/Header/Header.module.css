@@ -1,0 +1,69 @@
+.appBar {
+  width: 100%;
+  height: 72px;
+  color: #fff;
+  background-color: var(--color-header-bg, #1a237e);
+}
+
+.toolbar {
+  margin-inline: auto;
+  padding: 16px;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoAndMenu {
+  height: 40px;
+  display: flex;
+}
+
+.logoAndMenu a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.logoWrapper {
+  margin: 0;
+}
+
+.logo {
+  width: 100px;
+  height: 40px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu > a,
+.menu > span {
+  margin-left: 24px;
+  border-bottom: 1px solid transparent;
+}
+
+.menu > a:hover {
+  border-color: #fff;
+}
+
+.menu > span {
+  color: var(--color-text-disabled, #9e9e9e);
+}
+
+.menuButton {
+  min-width: 40px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 679px) {
+  .toolbar {
+    padding: 16px 8px;
+  }
+}

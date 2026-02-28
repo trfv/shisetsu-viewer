@@ -1,181 +1,45 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. Package-specific details are in each package's own CLAUDE.md.
 
 ## Project Overview
 
-Shisetsu Viewer is a web application for viewing public facility reservation status and information across multiple municipalities in Japan (Tokyo and Kawasaki). The project is a monorepo with two packages:
-- **viewer**: React frontend application
-- **scraper**: Playwright-based data scraping tools
+Shisetsu Viewer is a web application for viewing public facility reservation status across municipalities in Japan (Tokyo wards and Kawasaki). The project is a monorepo with three packages:
 
-## Development Commands
+- **viewer** (`packages/viewer/`) — React 19 frontend application. See `packages/viewer/CLAUDE.md`.
+- **scraper** (`packages/scraper/`) — Playwright-based data scraping tools. See `packages/scraper/CLAUDE.md`.
+- **shared** (`packages/shared/`) — Shared types and municipality registry. See `packages/shared/CLAUDE.md`.
 
-### Root-level Commands
+## Monorepo Setup
+
+- npm workspaces. Use `-w @shisetsu-viewer/<package>` for package-specific commands.
+- Node >= 24, npm >= 10, ES Modules throughout.
+- Root `tsconfig.json` extends `@tsconfig/strictest` with composite project references.
+
+## Root Commands
+
 ```bash
 npm start                     # Start viewer dev server (port 3000)
 npm run build                 # Build viewer for production
 npm run format:all            # Format all TypeScript files with Prettier
 npm run lint:all              # Lint all TypeScript files with ESLint
+npm run knip                  # Detect unused files, deps, exports
 ```
-
-### Viewer Package (`packages/viewer/`)
-Always use `-w @shisetsu-viewer/viewer` for viewer-specific commands:
-
-```bash
-# Development
-npm run start -w @shisetsu-viewer/viewer        # Start dev server (port 3000)
-npm run build -w @shisetsu-viewer/viewer        # Production build
-npm run build:analyze -w @shisetsu-viewer/viewer # Build with bundle analysis
-npm run typecheck -w @shisetsu-viewer/viewer    # Type check with tsgo
-
-# Testing
-npm run test -w @shisetsu-viewer/viewer         # Watch mode
-npm run test:ci -w @shisetsu-viewer/viewer      # CI mode (single run)
-npm run test:unit -w @shisetsu-viewer/viewer    # Unit tests only
-npm run test:integration -w @shisetsu-viewer/viewer
-npm run test:accessibility -w @shisetsu-viewer/viewer # Accessibility tests
-npm run test:performance -w @shisetsu-viewer/viewer   # Performance tests
-npm run test:e2e -w @shisetsu-viewer/viewer     # Playwright e2e tests
-npm run test:e2e:ui -w @shisetsu-viewer/viewer  # e2e with UI
-npm run test:e2e:debug -w @shisetsu-viewer/viewer   # e2e with debug
-npm run test:e2e:headed -w @shisetsu-viewer/viewer  # e2e headed mode
-npm run test:all -w @shisetsu-viewer/viewer     # All tests
-
-# Coverage
-npm run coverage -w @shisetsu-viewer/viewer     # Generate coverage report
-npm run coverage:open -w @shisetsu-viewer/viewer # Open in browser
-
-# GraphQL
-npm run generate -w @shisetsu-viewer/viewer     # Regenerate GraphQL client from queries
-
-# Storybook
-npm run storybook -w @shisetsu-viewer/viewer    # Start Storybook (port 6006)
-npm run build-storybook -w @shisetsu-viewer/viewer
-```
-
-### Scraper Package (`packages/scraper/`)
-```bash
-npm run update:reservations         # Update reservation data
-npm run update:institutions         # Update institution data
-npm run test -w @shisetsu-viewer/scraper # Run scraper tests
-```
-
-## Architecture
-
-### Monorepo Structure
-This is an npm workspaces monorepo. Always use `-w @shisetsu-viewer/<package>` when running package-specific commands.
-
-### Viewer Architecture
-
-**Application Bootstrap** (App.tsx → router.tsx):
-- App.tsx wraps the application with providers: Auth0 → ApolloClient → Theme → ErrorBoundary → React Router
-- router.tsx uses lazy-loaded route components with a shared Layout (Header + ScrollToTop + ErrorBoundary)
-- Routes defined in constants/routes.ts
-
-**Data Flow**:
-1. GraphQL queries defined in `api/queries/*.graphql`
-2. Run `npm run generate -w @shisetsu-viewer/viewer` to generate typed hooks in `api/gql/`
-3. Import and use hooks from generated code (DO NOT edit `api/gql/` files manually)
-4. Apollo Client configured in `utils/client.ts` with Auth0 token injection and offset-limit pagination
-
-**Auth & State**:
-- Auth0 context (`contexts/Auth0.tsx`) provides authentication state and token
-- Apollo Client receives token from Auth0 context for authenticated requests
-- AuthGuard component protects routes requiring authentication
-
-**Municipality Data**:
-- Each municipality (Tokyo wards + Kawasaki) has constants in `constants/municipality/<name>.ts`
-- Maps reservation statuses, time divisions, and fee structures specific to each municipality
-- Used by both viewer and scraper to maintain consistency
-
-**Theme & Styling**:
-- Material-UI v7 with light/dark mode based on system preference
-- Theme configuration in `utils/theme.ts`
-- Uses Emotion for styled components
-
-### Scraper Architecture
-
-**Purpose**: Playwright-based scrapers that fetch reservation and institution data from municipal websites and update the GraphQL database.
-
-**Structure**:
-- `tools/updateReservations.mjs` - Updates reservation data
-- `tools/updateInstitutions.mjs` - Updates institution data
-- Municipality-specific scrapers in `<region>-<city>/` directories
-- Shared utilities in `common/`
-
-**Data Flow**:
-1. Scrapers use Playwright to navigate municipal reservation systems
-2. Extract and transform data using municipality constants
-3. Update Hasura GraphQL backend via Apollo Client with admin credentials
-
-## Testing Strategy
-
-**Test Types & Locations**:
-- Unit tests: Co-located with components (`*.test.tsx`)
-- Integration tests: `test/integration/`
-- Performance tests: `test/performance/`
-- E2E tests: `e2e/` (Playwright)
-
-**Testing Tools**:
-- Vitest with browser mode (Chromium via Playwright)
-- Testing Library for component testing
-- MSW for API mocking (worker in `public/` directory)
-- Playwright for E2E tests
-
-**Test Helpers**:
-- Use `renderWithProviders()` from `test/utils/test-utils.tsx` for component tests
-- Wraps components with MockedProvider (Apollo), ThemeProvider, MemoryRouter
-- Returns `{ user, ...renderResult }` where `user` is vitest browser userEvent
-- Re-exports all `@testing-library/react` utilities
-
-**Running Tests**:
-- Always set `TZ=Asia/Tokyo` (handled automatically by npm scripts)
-- Coverage thresholds: branches 60%, functions 60%, lines 70%, statements 70%
-- E2E tests start dev server automatically (playwright.config.ts webServer)
-
-## GraphQL Workflow
-
-**IMPORTANT**: `api/gql/` is generated code - never edit manually.
-
-1. Edit queries in `api/queries/*.graphql`
-2. Run `npm run generate -w @shisetsu-viewer/viewer`
-3. Generated hooks appear in `api/gql/` directory
-4. Import and use typed hooks in components
-
-**Configuration**:
-- codegen.ts defines schema endpoint (requires GRAPHQL_ENDPOINT and ADMIN_SECRET env vars)
-- Uses @graphql-codegen/client-preset for type-safe hooks
-- Backend is Hasura GraphQL with role-based access control
 
 ## Conventions
 
-**File Naming**:
-- Components: PascalCase (e.g., `SearchForm.tsx`)
-- Utils/hooks: camelCase (e.g., `useAuth0.ts`)
-- Tests: `*.test.tsx` alongside source files
-- Stories: `*.stories.tsx` for Storybook
+**Prettier** (`.prettierrc.yaml`): printWidth 100, tabWidth 2, double quotes, trailing commas (es5).
 
-**Code Organization**:
-- Components co-located with tests and stories
-- Custom hooks in `hooks/`
-- Shared utilities in `utils/`
-- Pages are route components in `pages/`
-- Constants in `constants/` (especially municipality-specific data)
+**ESLint**: flat config in `eslint.config.ts`. TypeScript recommended + React/React-hooks plugins for `.tsx` files.
 
-**Prettier** (`.prettierrc.yaml`):
-- printWidth: 100, tabWidth: 2, double quotes, trailing commas (es5)
+**File Naming**: Components PascalCase (`SearchForm.tsx`), utils/hooks camelCase (`useAuth0.ts`), tests `*.test.ts(x)` co-located with source, CSS Modules `*.module.css`.
 
-**Internationalization**:
-- Primary language: Japanese
-- Text encoding: UTF-8
-- Timezone: Asia/Tokyo
+**Internationalization**: primary language Japanese, UTF-8, timezone Asia/Tokyo.
 
-## Important Notes
+**Pre-commit hooks**: Husky + lint-staged runs ESLint and Prettier on staged `.ts`/`.tsx` files.
 
-- **Key Dependencies**: React 19, React Router 7, Apollo Client 4, Storybook 10
-- Node.js >=22 required
-- Pre-commit hooks run lint-staged (ESLint + Prettier)
-- Storybook for component documentation and visual testing
-- Bundle analysis available via `build:analyze` (uses rollup-plugin-visualizer)
-- Font files are external in build config (see vite.config.ts)
-- MSW worker must be initialized: `npx msw init public -w @shisetsu-viewer/viewer`
+## Cross-Package Architecture
+
+- `@shisetsu-viewer/shared` is the source of truth for municipality data, enums (`ReservationStatus`, `ReservationDivision`, etc.), and types. Both viewer and scraper import from it.
+- Backend: Hasura GraphQL with role-based access control. Viewer authenticates via Auth0 Bearer token; scraper authenticates via `X-Hasura-Admin-Secret` header.
+- Data flow: scrapers navigate municipal websites → extract/transform reservation data → upload to Hasura via GraphQL mutations. Viewer fetches and displays this data via custom fetch-based GraphQL client.

@@ -1,13 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { ROUTES } from "../../constants/routes";
-import { CONTAINER_WIDTH, HEADER_HEIGHT } from "../../constants/styles";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { palette, styled } from "../../utils/theme";
-import { BaseBox } from "../Box";
 import { ColorModeButton } from "../ColorModeButton";
 import { HeaderMenuButton } from "../HeaderMenuButton";
 import { LoginButton } from "../LoginButton";
+import styles from "./Header.module.css";
 
 export const Header = () => {
   const isMobile = useIsMobile();
@@ -16,108 +14,41 @@ export const Header = () => {
   } = useAuth0();
 
   return (
-    <StyledHeader className={classes.appBar}>
-      <BaseBox className={classes.toolbar}>
-        {isMobile && <BaseBox className={classes.menuButton}>{<HeaderMenuButton />}</BaseBox>}
-        <BaseBox className={classes.logoAndMenu}>
-          <BaseBox className={classes.logoWrapper} component="h1">
+    <header className={styles["appBar"]}>
+      <div className={styles["toolbar"]}>
+        {isMobile && (
+          <div className={styles["menuButton"]}>
+            <HeaderMenuButton />
+          </div>
+        )}
+        <div className={styles["logoAndMenu"]}>
+          <h1 className={styles["logoWrapper"]}>
             <Link to={ROUTES.top}>
               <img
                 alt="Shisetsu Viewer"
-                className={classes.logo}
+                className={styles["logo"]}
                 height="100"
                 src="/logo.svg"
                 width="256"
               />
             </Link>
-          </BaseBox>
+          </h1>
           {!isMobile && (
-            <BaseBox className={classes.menu}>
+            <div className={styles["menu"]}>
               {anonymous ? (
                 <span>予約検索</span>
               ) : (
                 <Link to={ROUTES.reservation}>{`予約検索${trial ? "（トライアル）" : ""}`}</Link>
               )}
               <Link to={ROUTES.institution}>施設検索</Link>
-            </BaseBox>
+            </div>
           )}
-        </BaseBox>
-        <BaseBox className={classes.actions}>
+        </div>
+        <div className={styles["actions"]}>
           <ColorModeButton />
           <LoginButton />
-        </BaseBox>
-      </BaseBox>
-    </StyledHeader>
+        </div>
+      </div>
+    </header>
   );
 };
-
-const PREFIX = "Header";
-const classes = {
-  appBar: `${PREFIX}-appBar`,
-  toolbar: `${PREFIX}-toolbar`,
-  logoAndMenu: `${PREFIX}-logoAndMenu`,
-  logoWrapper: `${PREFIX}-logoWrapper`,
-  logo: `${PREFIX}-logo`,
-  menu: `${PREFIX}-menu`,
-  menuButton: `${PREFIX}-menuButton`,
-  actions: `${PREFIX}-actions`,
-};
-
-const StyledHeader = styled("header")(({ theme }) => ({
-  [`&.${classes.appBar}`]: {
-    width: "100%",
-    height: HEADER_HEIGHT,
-    color: theme.palette.common.white,
-    backgroundColor: palette.headerBg,
-  },
-  [`.${classes.toolbar}`]: {
-    marginInline: "auto",
-    padding: theme.spacing(2),
-    maxWidth: CONTAINER_WIDTH,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(2, 1),
-    },
-  },
-  [`.${classes.logoAndMenu}`]: {
-    height: 40,
-    display: "flex",
-    a: {
-      color: theme.palette.common.white,
-      textDecoration: "none",
-    },
-  },
-  [`.${classes.logoWrapper}`]: {
-    margin: 0,
-  },
-  [`.${classes.logo}`]: {
-    width: 100,
-    height: 40,
-  },
-  [`.${classes.menu}`]: {
-    display: "flex",
-    alignItems: "center",
-    "> a, span": {
-      marginLeft: theme.spacing(3),
-      borderBottom: `1px solid transparent`,
-    },
-    "> a": {
-      ":hover": {
-        borderColor: theme.palette.common.white,
-      },
-    },
-    "> span": {
-      color: theme.palette.grey[500],
-    },
-  },
-  [`.${classes.menuButton}`]: {
-    minWidth: 40, // icon size
-  },
-  [`.${classes.actions}`]: {
-    display: "flex",
-    alignItems: "center",
-    gap: theme.spacing(0.5),
-  },
-}));

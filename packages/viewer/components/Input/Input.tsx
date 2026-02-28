@@ -1,30 +1,59 @@
-import MuiInput, { type InputProps } from "@mui/material/Input";
-import type { FC } from "react";
-import { box, type BoxSize } from "../Box";
+import type { FC, InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { BaseBox, type BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Skeleton } from "../Skeleton";
 import { Spacer } from "../Spacer";
+import inputStyles from "./Input.module.css";
 
-type Props = Omit<InputProps, "size"> & {
+type Props = {
   label: string;
   size?: BoxSize;
   loading?: boolean;
-};
+  value?: string | number | null | undefined;
+  readOnly?: boolean;
+  multiline?: boolean;
+  rows?: number;
+  fullWidth?: boolean;
+} & Omit<
+  InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "size"
+>;
 
-export const Input: FC<Props> = ({ label, size = "auto", loading, value, ...rest }: Props) => {
-  const Box = box(size);
+export const Input: FC<Props> = ({
+  label,
+  size = "auto",
+  loading,
+  value,
+  multiline,
+  rows,
+  readOnly,
+  ...rest
+}: Props) => {
+  const inputClass = `${inputStyles["input"]}${multiline ? ` ${inputStyles["textarea"]}` : ""}`;
+
   return (
-    // eslint-disable-next-line react-hooks/static-components
-    <Box component="label" display="flex" flexDirection="column">
+    <BaseBox size={size} component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer axis="vertical" size={4} />
       {loading ? (
         <Skeleton height={32} />
+      ) : multiline ? (
+        <textarea
+          className={inputClass}
+          readOnly={readOnly}
+          rows={rows}
+          value={value ?? ""}
+          {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+        />
       ) : (
-        <MuiInput {...rest} fullWidth={size === "full"} value={value || ""} />
+        <input
+          className={inputStyles["input"]}
+          readOnly={readOnly}
+          type="text"
+          value={value ?? ""}
+          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+        />
       )}
-    </Box>
+    </BaseBox>
   );
 };
-
-export type InputSize = "small" | "medium" | "large" | "full";

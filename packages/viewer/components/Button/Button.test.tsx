@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
-import { BaseButton, button } from "./BaseButton";
+import { BaseButton } from "./BaseButton";
 import { AutoButton } from "./AutoButton";
 import { LargeButton } from "./LargeButton";
 import { MediumButton } from "./MediumButton";
@@ -10,24 +10,6 @@ describe("BaseButton", () => {
   it("正しくレンダリングされる", () => {
     renderWithProviders(<BaseButton>テスト</BaseButton>);
     expect(screen.getByRole("button", { name: "テスト" })).toBeInTheDocument();
-  });
-});
-
-describe("button factory", () => {
-  it("smallサイズでSmallButtonを返す", () => {
-    expect(button("small")).toBe(SmallButton);
-  });
-
-  it("mediumサイズでMediumButtonを返す", () => {
-    expect(button("medium")).toBe(MediumButton);
-  });
-
-  it("largeサイズでLargeButtonを返す", () => {
-    expect(button("large")).toBe(LargeButton);
-  });
-
-  it("autoサイズでAutoButtonを返す", () => {
-    expect(button("auto")).toBe(AutoButton);
   });
 });
 

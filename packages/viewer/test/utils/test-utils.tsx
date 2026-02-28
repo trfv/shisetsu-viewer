@@ -1,14 +1,12 @@
 import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { MockedProvider } from "@apollo/client/testing/react";
-import type { MockLink } from "@apollo/client/testing";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Route, Router } from "wouter";
+import { memoryLocation } from "wouter/memory-location";
 import { userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
 
-export type Auth0MockConfig = {
+type Auth0MockConfig = {
   isLoading?: boolean;
   token?: string;
   userInfo?: { anonymous: boolean; trial: boolean };
@@ -36,45 +34,23 @@ const MockAuth0Provider = ({
 interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
-  mocks?: MockLink.MockedResponse[];
   auth0Config?: Auth0MockConfig;
-  theme?: ReturnType<typeof createTheme>;
 }
 
 export function renderWithProviders(
   ui: ReactElement,
-  {
-    initialEntries = ["/"],
-    route = "/*",
-    mocks = [],
-    auth0Config = {},
-    theme = createTheme(),
-    ...renderOptions
-  }: CustomRenderOptions = {}
+  { initialEntries = ["/"], route, auth0Config = {}, ...renderOptions }: CustomRenderOptions = {}
 ) {
   // Use browser's native userEvent
   const user = browserUserEvent;
 
+  const { hook } = memoryLocation({ path: initialEntries[0] ?? "/", static: true });
+
   function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <MockedProvider
-        mocks={mocks}
-        showWarnings={false}
-        defaultOptions={{
-          watchQuery: { fetchPolicy: "no-cache", errorPolicy: "all" },
-          query: { fetchPolicy: "no-cache", errorPolicy: "all" },
-        }}
-      >
-        <MockAuth0Provider config={auth0Config}>
-          <ThemeProvider theme={theme}>
-            <MemoryRouter initialEntries={initialEntries}>
-              <Routes>
-                <Route path={route} element={children} />
-              </Routes>
-            </MemoryRouter>
-          </ThemeProvider>
-        </MockAuth0Provider>
-      </MockedProvider>
+      <MockAuth0Provider config={auth0Config}>
+        <Router hook={hook}>{route ? <Route path={route}>{children}</Route> : children}</Router>
+      </MockAuth0Provider>
     );
   }
 
@@ -86,4 +62,3 @@ export function renderWithProviders(
 
 // Re-export everything from testing library
 export * from "@testing-library/react";
-export { userEvent } from "vitest/browser";

@@ -1,59 +1,6 @@
-import {
-  ARAKAWA_FEE_DIVISION,
-  ARAKAWA_RESERVATION_DIVISION,
-  ARAKAWA_RESERVATION_STATUS,
-} from "../constants/municipality/arakawa";
-import {
-  BUNKYO_FEE_DIVISION,
-  BUNKYO_RESERVATION_DIVISION,
-  BUNKYO_RESERVATION_STATUS,
-} from "../constants/municipality/bunkyo";
-import {
-  CHUO_FEE_DIVISION,
-  CHUO_RESERVATION_DIVISION,
-  CHUO_RESERVATION_STATUS,
-} from "../constants/municipality/chuo";
-import {
-  EDOGAWA_FEE_DIVISION,
-  EDOGAWA_RESERVATION_DIVISION,
-  EDOGAWA_RESERVATION_STATUS,
-} from "../constants/municipality/edogawa";
-import {
-  KAWASAKI_FEE_DIVISION,
-  KAWASAKI_RESERVATION_DIVISION,
-  KAWASAKI_RESERVATION_STATUS,
-} from "../constants/municipality/kawasaki";
-import {
-  KITA_FEE_DIVISION,
-  KITA_RESERVATION_DIVISION,
-  KITA_RESERVATION_STATUS,
-} from "../constants/municipality/kita";
-import {
-  KOUTOU_FEE_DIVISION,
-  KOUTOU_RESERVATION_DIVISION,
-  KOUTOU_RESERVATION_STATUS,
-} from "../constants/municipality/koutou";
-import {
-  OTA_FEE_DIVISION,
-  OTA_RESERVATION_DIVISION,
-  OTA_RESERVATION_STATUS,
-} from "../constants/municipality/ota";
-import {
-  SUGINAMI_FEE_DIVISION,
-  SUGINAMI_RESERVATION_DIVISION,
-  SUGINAMI_RESERVATION_STATUS,
-} from "../constants/municipality/suginami";
-import {
-  SUMIDA_FEE_DIVISION,
-  SUMIDA_RESERVATION_DIVISION,
-  SUMIDA_RESERVATION_STATUS,
-} from "../constants/municipality/sumida";
-import {
-  TOSHIMA_FEE_DIVISION,
-  TOSHIMA_RESERVATION_DIVISION,
-  TOSHIMA_RESERVATION_STATUS,
-} from "../constants/municipality/toshima";
+import { MUNICIPALITIES, type MunicipalityKey } from "@shisetsu-viewer/shared";
 
+// Derive SupportedMunicipalities from the registry in the original order
 export const SupportedMunicipalities = [
   "MUNICIPALITY_KOUTOU",
   "MUNICIPALITY_BUNKYO",
@@ -66,93 +13,40 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_SUGINAMI",
   "MUNICIPALITY_CHUO",
   "MUNICIPALITY_KAWASAKI",
-] as const;
+] as const satisfies readonly MunicipalityKey[];
 
 export type SupportedMunicipality = (typeof SupportedMunicipalities)[number];
 
-export const SupportedMunicipalityMap: Record<string, string> = {
-  MUNICIPALITY_ARAKAWA: "荒川区",
-  MUNICIPALITY_EDOGAWA: "江戸川区",
-  MUNICIPALITY_OTA: "大田区",
-  MUNICIPALITY_KITA: "北区",
-  MUNICIPALITY_KOUTOU: "江東区",
-  MUNICIPALITY_SUGINAMI: "杉並区",
-  MUNICIPALITY_SUMIDA: "墨田区",
-  MUNICIPALITY_TOSHIMA: "豊島区",
-  MUNICIPALITY_CHUO: "中央区",
-  MUNICIPALITY_BUNKYO: "文京区",
-  MUNICIPALITY_KAWASAKI: "川崎市",
-};
+export const SupportedMunicipalityMap: Record<string, string> = Object.fromEntries(
+  SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].label])
+);
 
 export const SELECT_OPTION_ALL = "all";
 
-export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] = [
-  "MUNICIPALITY_EDOGAWA",
-  "MUNICIPALITY_OTA",
-  "MUNICIPALITY_SUGINAMI",
-  "MUNICIPALITY_TOSHIMA",
-  "MUNICIPALITY_BUNKYO",
-] as const;
+export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] =
+  SupportedMunicipalities.filter(
+    (k) => MUNICIPALITIES[k].reservationExcluded
+  ) as SupportedMunicipality[];
 
 export const MunicipalityOptions: { value: string; label: string }[] = [
   { value: SELECT_OPTION_ALL, label: "すべて" },
 ].concat(Object.entries(SupportedMunicipalityMap).map(([k, v]) => ({ value: k, label: v })));
 
-export const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = {
-  MUNICIPALITY_KOUTOU: KOUTOU_RESERVATION_DIVISION,
-  MUNICIPALITY_BUNKYO: BUNKYO_RESERVATION_DIVISION,
-  MUNICIPALITY_KITA: KITA_RESERVATION_DIVISION,
-  MUNICIPALITY_TOSHIMA: TOSHIMA_RESERVATION_DIVISION,
-  MUNICIPALITY_EDOGAWA: EDOGAWA_RESERVATION_DIVISION,
-  MUNICIPALITY_ARAKAWA: ARAKAWA_RESERVATION_DIVISION,
-  MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_DIVISION,
-  MUNICIPALITY_OTA: OTA_RESERVATION_DIVISION,
-  MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_DIVISION,
-  MUNICIPALITY_CHUO: CHUO_RESERVATION_DIVISION,
-  MUNICIPALITY_KAWASAKI: KAWASAKI_RESERVATION_DIVISION,
-};
+export const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> =
+  Object.fromEntries(
+    SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
+  );
 
-export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = {
-  MUNICIPALITY_KOUTOU: KOUTOU_FEE_DIVISION,
-  MUNICIPALITY_BUNKYO: BUNKYO_FEE_DIVISION,
-  MUNICIPALITY_KITA: KITA_FEE_DIVISION,
-  MUNICIPALITY_TOSHIMA: TOSHIMA_FEE_DIVISION,
-  MUNICIPALITY_EDOGAWA: EDOGAWA_FEE_DIVISION,
-  MUNICIPALITY_ARAKAWA: ARAKAWA_FEE_DIVISION,
-  MUNICIPALITY_SUMIDA: SUMIDA_FEE_DIVISION,
-  MUNICIPALITY_OTA: OTA_FEE_DIVISION,
-  MUNICIPALITY_SUGINAMI: SUGINAMI_FEE_DIVISION,
-  MUNICIPALITY_CHUO: CHUO_FEE_DIVISION,
-  MUNICIPALITY_KAWASAKI: KAWASAKI_FEE_DIVISION,
-};
+export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
+  SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].feeDivision])
+);
 
-export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> = {
-  MUNICIPALITY_KOUTOU: KOUTOU_RESERVATION_STATUS,
-  MUNICIPALITY_BUNKYO: BUNKYO_RESERVATION_STATUS,
-  MUNICIPALITY_KITA: KITA_RESERVATION_STATUS,
-  MUNICIPALITY_TOSHIMA: TOSHIMA_RESERVATION_STATUS,
-  MUNICIPALITY_EDOGAWA: EDOGAWA_RESERVATION_STATUS,
-  MUNICIPALITY_ARAKAWA: ARAKAWA_RESERVATION_STATUS,
-  MUNICIPALITY_SUMIDA: SUMIDA_RESERVATION_STATUS,
-  MUNICIPALITY_OTA: OTA_RESERVATION_STATUS,
-  MUNICIPALITY_SUGINAMI: SUGINAMI_RESERVATION_STATUS,
-  MUNICIPALITY_CHUO: CHUO_RESERVATION_STATUS,
-  MUNICIPALITY_KAWASAKI: KAWASAKI_RESERVATION_STATUS,
-};
+export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> =
+  Object.fromEntries(SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationStatus]));
 
-const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = {
-  koutou: "MUNICIPALITY_KOUTOU",
-  bunkyo: "MUNICIPALITY_BUNKYO",
-  kita: "MUNICIPALITY_KITA",
-  toshima: "MUNICIPALITY_TOSHIMA",
-  edogawa: "MUNICIPALITY_EDOGAWA",
-  arakawa: "MUNICIPALITY_ARAKAWA",
-  sumida: "MUNICIPALITY_SUMIDA",
-  ota: "MUNICIPALITY_OTA",
-  suginami: "MUNICIPALITY_SUGINAMI",
-  chuo: "MUNICIPALITY_CHUO",
-  kawasaki: "MUNICIPALITY_KAWASAKI",
-};
+const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = Object.fromEntries(
+  SupportedMunicipalities.map((k) => [MUNICIPALITIES[k].slug, k])
+) as Record<string, SupportedMunicipality>;
 
 export const getMunicipalityFromUrlParam = (
   param: string | null | undefined

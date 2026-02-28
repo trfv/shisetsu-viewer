@@ -122,7 +122,7 @@ test.describe("Mobile Responsiveness", () => {
     await page.waitForLoadState("networkidle");
 
     // モバイルではハンバーガーメニューボタンが表示される
-    const menuButton = page.locator('button svg[data-testid="MenuIcon"]');
+    const menuButton = page.locator('button svg[aria-label="MenuIcon"]');
     await expect(menuButton).toBeVisible();
   });
 });

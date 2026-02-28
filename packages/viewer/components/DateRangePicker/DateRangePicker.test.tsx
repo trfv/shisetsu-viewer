@@ -25,11 +25,11 @@ describe("DateRangePicker Component", () => {
     expect(screen.getByText("期間")).toBeInTheDocument();
   });
 
-  it("2つの日付ピッカーセクションを表示する", () => {
+  it("2つの日付ピッカーを表示する", () => {
     renderWithProviders(<DateRangePicker {...defaultProps} />);
 
-    const groups = screen.getAllByRole("group");
-    expect(groups).toHaveLength(2);
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    expect(dateInputs).toHaveLength(2);
   });
 
   it("開始日と終了日の間に「〜」セパレーターを表示する", () => {
@@ -41,19 +41,8 @@ describe("DateRangePicker Component", () => {
   it("開始日と終了日の値を正しく表示する", () => {
     renderWithProviders(<DateRangePicker {...defaultProps} />);
 
-    const yearSpinners = screen.getAllByRole("spinbutton", { name: "Year" });
-    const monthSpinners = screen.getAllByRole("spinbutton", { name: "Month" });
-    const daySpinners = screen.getAllByRole("spinbutton", { name: "Day" });
-
-    // Start date: 2021/01/01
-    expect(yearSpinners[0]).toHaveAttribute("aria-valuenow", "2021");
-    expect(monthSpinners[0]).toHaveAttribute("aria-valuenow", "1");
-    expect(daySpinners[0]).toHaveAttribute("aria-valuenow", "1");
-
-    // End date: 2021/02/01
-    expect(yearSpinners[1]).toHaveAttribute("aria-valuenow", "2021");
-    expect(monthSpinners[1]).toHaveAttribute("aria-valuenow", "2");
-    expect(daySpinners[1]).toHaveAttribute("aria-valuenow", "1");
+    expect(screen.getByDisplayValue("2021-01-01")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("2021-02-01")).toBeInTheDocument();
   });
 
   it("異なるラベルテキストを表示する", () => {

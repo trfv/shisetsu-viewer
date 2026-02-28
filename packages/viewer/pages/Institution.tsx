@@ -1,10 +1,12 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client/react";
-import { NetworkStatus } from "@apollo/client";
-import type { InstitutionsQuery } from "../api/gql/graphql";
-import { InstitutionsDocument } from "../api/gql/graphql";
-import { extractRelayParams, extractSinglePkFromRelayId } from "../utils/relay";
+import { useLocation, useSearch } from "wouter";
+import {
+  INSTITUTIONS_QUERY,
+  type InstitutionNode,
+  type InstitutionsQueryData,
+} from "../api/queries";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
@@ -12,7 +14,6 @@ import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
@@ -27,11 +28,9 @@ import {
   type AvailableInstrument,
   type InstitutionSize,
 } from "../utils/search";
-import { styled } from "../utils/theme";
+import styles from "./Institution.module.css";
 
-export const COLUMNS: Columns<
-  InstitutionsQuery["institutions_connection"]["edges"][number]["node"]
-> = [
+export const COLUMNS: Columns<InstitutionNode> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -98,8 +97,8 @@ export const COLUMNS: Columns<
 ];
 
 export default () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [pathname, setLocation] = useLocation();
+  const search = useSearch();
 
   const [values, setQueryParams] = useQueryParams(
     {
@@ -107,8 +106,9 @@ export default () => {
       a: ArrayParam,
       i: ArrayParam,
     },
-    navigate,
-    location
+    setLocation,
+    search,
+    pathname
   );
 
   const institutionSearchParams = useMemo(
@@ -116,21 +116,23 @@ export default () => {
     [values]
   );
 
-  const { loading, data, error, fetchMore, networkStatus } = useQuery(InstitutionsDocument, {
-    variables: toInstitutionQueryVariables(institutionSearchParams),
-    notifyOnNetworkStatusChange: true,
-  });
+  const {
+    data: institutions,
+    loading,
+    error,
+    hasNextPage: hasMore,
+    fetchMore,
+    fetchingMore,
+  } = usePaginatedQuery<InstitutionsQueryData, InstitutionNode>(
+    INSTITUTIONS_QUERY,
+    toInstitutionQueryVariables(institutionSearchParams),
+    (d) => d.institutions_connection
+  );
 
   if (error) {
     // TODO Snackbar を描画する
     throw new Error(error.message);
   }
-
-  const {
-    edges: institutions,
-    endCursor,
-    hasNextPage: hasMore,
-  } = extractRelayParams(data?.institutions_connection);
 
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
@@ -166,19 +168,30 @@ export default () => {
   const chips = [
     ...(municipality === "all"
       ? []
-      : [`${MunicipalityOptions.find((o) => o.value === municipality)?.label}`]),
+      : [
+          {
+            label: `${MunicipalityOptions.find((o) => o.value === municipality)?.label}`,
+            onDelete: () => setQueryParams({ m: null }),
+          },
+        ]),
     ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
       .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ a: availableInstruments.filter((a) => a !== v) }),
+      })),
     ...Object.entries(INSTUTITON_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([, label]) => label),
+      .map(([v, label]) => ({
+        label,
+        onDelete: () => setQueryParams({ i: institutionSizes.filter((i) => i !== v) }),
+      })),
   ];
 
   return (
-    <StyledInstitution className={classes.pageBox}>
-      <div className={classes.searchBox}>
-        <div className={classes.searchBoxForm}>
+    <main className={styles["pageBox"]}>
+      <div className={styles["searchBox"]}>
+        <div className={styles["searchBoxForm"]}>
           <SearchForm chips={chips}>
             <Select
               label="地区"
@@ -208,98 +221,28 @@ export default () => {
           </SearchForm>
         </div>
       </div>
-      <div className={classes.resultBox}>
-        {loading && networkStatus !== NetworkStatus.fetchMore ? (
-          <div className={classes.resultBoxNoData}>
+      <div className={styles["resultBox"]}>
+        {loading && !fetchingMore ? (
+          <div className={styles["resultBoxNoData"]}>
             <Spinner />
           </div>
         ) : !municipality || !institutions?.length ? (
-          <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
+          <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             columns={COLUMNS}
-            fetchMore={async () => {
-              /* istanbul ignore next -- endCursor is always set when hasMore is true */
-              if (!hasMore || !endCursor) return;
-              await fetchMore({
-                variables: {
-                  after: endCursor,
-                },
-              });
-            }}
+            fetchMore={fetchMore}
             hasNextPage={hasMore}
             onRowClick={(params) => {
               const institutionId = extractSinglePkFromRelayId(params.row.id);
               if (institutionId) {
-                navigate(ROUTES.detail.replace(":id", institutionId as string));
+                setLocation(ROUTES.detail.replace(":id", institutionId as string));
               }
             }}
             rows={institutions}
           />
         )}
       </div>
-    </StyledInstitution>
+    </main>
   );
 };
-
-const PREFIX = "Institution";
-const classes = {
-  pageBox: `${PREFIX}-pageBox`,
-  searchBox: `${PREFIX}-searchBox`,
-  searchBoxForm: `${PREFIX}-searchBoxForm`,
-  resultBox: `${PREFIX}-resultBox`,
-  resultBoxNoData: `${PREFIX}-resultBoxNoData`,
-};
-
-const StyledInstitution = styled("main")(({ theme }) => ({
-  [`&.${classes.pageBox}`]: {
-    padding: theme.spacing(5, 0),
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.spacing(5),
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(3, 0),
-      gap: theme.spacing(3),
-    },
-  },
-  [`.${classes.searchBox}`]: {
-    marginInline: "auto",
-    padding: theme.spacing(3),
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    background: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-      padding: theme.spacing(1),
-      borderRadius: 0,
-    },
-  },
-  [`.${classes.searchBoxForm}`]: {
-    display: "flex",
-    flexWrap: "nowrap",
-    gap: theme.spacing(3, 5),
-  },
-  [`.${classes.resultBox}`]: {
-    marginInline: "auto",
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    [theme.breakpoints.up("md")]: {
-      height: SEARCH_TABLE_HEIGHT,
-      ".MuiTableContainer-root": {
-        maxHeight: SEARCH_TABLE_HEIGHT,
-      },
-    },
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-    },
-  },
-  [`.${classes.resultBoxNoData}`]: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));

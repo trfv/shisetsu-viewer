@@ -3,7 +3,6 @@ import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
-// import pluginStorybook from "eslint-plugin-storybook";
 
 export default tseslint.config([
   {
@@ -13,7 +12,6 @@ export default tseslint.config([
       "coverage/**",
       "node_modules/**",
       "public/**",
-      "storybook-static/**",
       "packages/viewer/api/graphql-client.tsx",
     ],
   },
@@ -57,5 +55,4 @@ export default tseslint.config([
       "react-hooks/exhaustive-deps": "warn",
     },
   },
-  // pluginStorybook.configs.recommended,
 ]);

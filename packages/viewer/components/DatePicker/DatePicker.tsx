@@ -1,9 +1,7 @@
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import type { FC } from "react";
+import { formatISO, parseISO } from "date-fns";
+import type { ChangeEvent, FC } from "react";
 import { SmallBox } from "../Box";
-import { ja } from "date-fns/locale/ja";
+import styles from "./DatePicker.module.css";
 
 type Props = {
   value: Date | null;
@@ -12,25 +10,25 @@ type Props = {
   maxDate: Date;
 };
 
+const toDateString = (date: Date | null): string =>
+  date ? formatISO(date, { representation: "date" }) : "";
+
 export const DatePicker: FC<Props> = ({ value, onChange, minDate, maxDate }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    onChange(val ? parseISO(val) : null);
+  };
+
   return (
-    <LocalizationProvider adapterLocale={ja} dateAdapter={AdapterDateFns}>
-      <SmallBox>
-        <MuiDatePicker
-          localeText={{ okButtonLabel: "閉じる" }}
-          maxDate={maxDate}
-          minDate={minDate}
-          onChange={onChange}
-          showDaysOutsideCurrentMonth={true}
-          slotProps={{
-            field: { readOnly: true },
-            textField: { variant: "standard" },
-            toolbar: { hidden: true },
-            actionBar: { actions: ["accept"] },
-          }}
-          value={value}
-        />
-      </SmallBox>
-    </LocalizationProvider>
+    <SmallBox>
+      <input
+        className={styles["datePicker"]}
+        max={toDateString(maxDate)}
+        min={toDateString(minDate)}
+        onChange={handleChange}
+        type="date"
+        value={toDateString(value)}
+      />
+    </SmallBox>
   );
 };

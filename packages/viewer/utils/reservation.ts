@@ -1,5 +1,5 @@
 import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
-import type { ReservationsQueryVariables } from "../api/gql/graphql";
+import type { ReservationsQueryVariables } from "../api/queries";
 import { AvailabilityDivision, ReservationDivision } from "../constants/enums";
 import {
   ReservationDivisionMap,
@@ -127,7 +127,7 @@ export const getResevationSearchFilterFromUrlParam = (
   ) as ReservationSearchFilter[];
 };
 
-export type ReservationSearchParams = {
+type ReservationSearchParams = {
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   startDate: Date;
   endDate: Date;

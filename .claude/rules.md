@@ -31,8 +31,7 @@ packages/viewer/
 ├── components/          # Reusable UI components
 │   ├── ComponentName/
 │   │   ├── index.tsx           # Main component
-│   │   ├── ComponentName.test.tsx  # Tests
-│   │   └── ComponentName.stories.tsx  # Storybook
+│   │   └── ComponentName.test.tsx  # Tests
 ├── pages/              # Route-based page components
 ├── contexts/           # React context providers
 ├── hooks/              # Custom React hooks

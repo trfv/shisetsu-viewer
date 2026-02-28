@@ -24,9 +24,9 @@ export const getAvailableInstrumentFromUrlParam = (
   ) as AvailableInstrument[];
 };
 
-export const LARGE = "l";
-export const MEDIUM = "m";
-export const SMALL = "s";
+const LARGE = "l";
+const MEDIUM = "m";
+const SMALL = "s";
 
 export const INSTUTITON_SIZE_MAP = {
   [LARGE]: InstitutionSizeMap[InstitutionSizeEnum.LARGE]!,
@@ -45,7 +45,7 @@ export const getInstitutionSizeFromUrlParam = (
   ) as InstitutionSize[];
 };
 
-export const INSTUTITON_SIZE_PARAM_MAP = {
+const INSTUTITON_SIZE_PARAM_MAP = {
   [LARGE]: InstitutionSizeEnum.LARGE,
   [MEDIUM]: InstitutionSizeEnum.MEDIUM,
   [SMALL]: InstitutionSizeEnum.SMALL,

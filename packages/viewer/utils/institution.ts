@@ -1,4 +1,4 @@
-import type { InstitutionsQueryVariables } from "../api/gql/graphql";
+import type { InstitutionsQueryVariables } from "../api/queries";
 import { AvailabilityDivision } from "../constants/enums";
 import { formatPrice } from "./format";
 import {
@@ -32,7 +32,7 @@ export const formatUsageFee = (
     .join(" ");
 };
 
-export type InstitutionSearchParams = {
+type InstitutionSearchParams = {
   municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
   availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
   institutionSizes: ReturnType<typeof getInstitutionSizeFromUrlParam>;

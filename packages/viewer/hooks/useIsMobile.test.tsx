@@ -1,298 +1,127 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook } from "@testing-library/react";
-import { ReactNode } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { createTheme } from "@mui/material/styles";
+import { renderHook, act } from "@testing-library/react";
 import { useIsMobile } from "./useIsMobile";
 
-// Mock MUI's useMediaQuery
-vi.mock("@mui/material/useMediaQuery", () => ({
-  default: vi.fn(),
-}));
-
 describe("useIsMobile Hook", () => {
-  let mockUseMediaQuery: ReturnType<typeof vi.fn>;
+  let listeners: Map<string, ((e: MediaQueryListEvent) => void)[]>;
+  let mediaQueryMatches: boolean;
   let originalMatchMedia: typeof window.matchMedia;
 
-  beforeEach(async () => {
-    // Import the mocked function
-    const useMediaQueryModule = await import("@mui/material/useMediaQuery");
-    mockUseMediaQuery = useMediaQueryModule.default as ReturnType<typeof vi.fn>;
-
-    // Mock window.matchMedia
+  beforeEach(() => {
+    listeners = new Map();
+    mediaQueryMatches = false;
     originalMatchMedia = window.matchMedia;
-    window.matchMedia = vi.fn().mockImplementation((query) => ({
-      matches: false,
+
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: mediaQueryMatches,
       media: query,
       onchange: null,
+      addEventListener: vi.fn((event: string, handler: (e: MediaQueryListEvent) => void) => {
+        const key = `${query}:${event}`;
+        if (!listeners.has(key)) listeners.set(key, []);
+        listeners.get(key)!.push(handler);
+      }),
+      removeEventListener: vi.fn((event: string, handler: (e: MediaQueryListEvent) => void) => {
+        const key = `${query}:${event}`;
+        const handlers = listeners.get(key);
+        if (handlers) {
+          listeners.set(
+            key,
+            handlers.filter((h) => h !== handler)
+          );
+        }
+      }),
       addListener: vi.fn(),
       removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
     }));
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
     window.matchMedia = originalMatchMedia;
+    vi.clearAllMocks();
   });
 
-  const createWrapper = () => {
-    const theme = createTheme();
-    return ({ children }: { children: ReactNode }) => (
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    );
+  const fireMediaChange = (matches: boolean) => {
+    for (const [key, handlers] of listeners) {
+      if (key.endsWith(":change")) {
+        for (const handler of handlers) {
+          handler({ matches } as MediaQueryListEvent);
+        }
+      }
+    }
   };
 
   describe("基本機能", () => {
-    it("モバイル画面でtrueを返す", () => {
-      mockUseMediaQuery.mockReturnValue(true);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current).toBe(true);
-    });
-
-    it("デスクトップ画面でfalseを返す", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
+    it("初期状態でデスクトップの場合falseを返す", () => {
+      mediaQueryMatches = false;
+      const { result } = renderHook(() => useIsMobile());
       expect(result.current).toBe(false);
     });
 
-    it("適切なブレークポイントクエリを使用する", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      // useMediaQueryが適切なブレークポイントで呼ばれることを確認
-      expect(mockUseMediaQuery).toHaveBeenCalledWith(expect.stringContaining("max-width"));
-    });
-  });
-
-  describe("レスポンシブブレークポイント", () => {
-    it("small (sm) ブレークポイント以下でモバイルと判定する", () => {
-      // MUI のデフォルトの sm ブレークポイントは 600px
-      mockUseMediaQuery.mockReturnValue(true);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
+    it("初期状態でモバイルの場合trueを返す", () => {
+      mediaQueryMatches = true;
+      const { result } = renderHook(() => useIsMobile());
       expect(result.current).toBe(true);
-      expect(mockUseMediaQuery).toHaveBeenCalled();
     });
 
-    it("medium (md) ブレークポイント以上でデスクトップと判定する", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current).toBe(false);
+    it("適切なmax-widthクエリを使用する", () => {
+      renderHook(() => useIsMobile());
+      expect(window.matchMedia).toHaveBeenCalledWith(expect.stringContaining("max-width"));
     });
   });
 
   describe("リアクティブな変更", () => {
-    it("画面サイズ変更に応じて値が更新される", () => {
-      // 初期状態: デスクトップ
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { result, rerender } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
+    it("メディアクエリの変更に応じて値が更新される", () => {
+      mediaQueryMatches = false;
+      const { result } = renderHook(() => useIsMobile());
 
       expect(result.current).toBe(false);
 
-      // 画面サイズ変更: モバイル
-      mockUseMediaQuery.mockReturnValue(true);
-      rerender();
+      act(() => {
+        fireMediaChange(true);
+      });
 
       expect(result.current).toBe(true);
     });
 
     it("複数回の変更に対応する", () => {
-      const { result, rerender } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
+      mediaQueryMatches = false;
+      const { result } = renderHook(() => useIsMobile());
 
-      // デスクトップ → モバイル → デスクトップ
-      mockUseMediaQuery.mockReturnValue(false);
-      rerender();
       expect(result.current).toBe(false);
 
-      mockUseMediaQuery.mockReturnValue(true);
-      rerender();
+      act(() => fireMediaChange(true));
       expect(result.current).toBe(true);
 
-      mockUseMediaQuery.mockReturnValue(false);
-      rerender();
+      act(() => fireMediaChange(false));
       expect(result.current).toBe(false);
     });
   });
 
-  describe("エッジケース", () => {
-    it("テーマが提供されていない場合でもエラーにならない", () => {
-      mockUseMediaQuery.mockReturnValue(false);
+  describe("クリーンアップ", () => {
+    it("アンマウント時にイベントリスナーを解除する", () => {
+      const { unmount } = renderHook(() => useIsMobile());
 
-      expect(() => {
-        renderHook(() => useIsMobile());
-      }).not.toThrow();
-    });
+      // Listeners are registered
+      const changeListeners = [...listeners.entries()].filter(([k]) => k.endsWith(":change"));
+      expect(changeListeners.length).toBeGreaterThan(0);
 
-    it("useMediaQueryが例外を投げた場合の処理", () => {
-      mockUseMediaQuery.mockImplementation(() => {
-        throw new Error("Media query error");
-      });
+      unmount();
 
-      expect(() => {
-        renderHook(() => useIsMobile(), {
-          wrapper: createWrapper(),
-        });
-      }).toThrow("Media query error");
-    });
-  });
-
-  describe("パフォーマンス", () => {
-    it("同じテーマで複数回実行されても適切に動作する", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { result: result1 } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      const { result: result2 } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result1.current).toBe(result2.current);
-      expect(mockUseMediaQuery).toHaveBeenCalledTimes(2);
-    });
-
-    it("再レンダリング時に不要な再計算を行わない", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { rerender } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      const initialCallCount = mockUseMediaQuery.mock.calls.length;
-
-      // propsが変わらない再レンダリング
-      rerender();
-
-      // useMediaQueryの呼び出し回数が増加することを確認
-      // (useMediaQueryは内部でメディアクエリのリスナーを管理するため)
-      expect(mockUseMediaQuery.mock.calls.length).toBeGreaterThanOrEqual(initialCallCount);
-    });
-  });
-
-  describe("統合テスト", () => {
-    it("実際のメディアクエリ文字列を確認する", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      // breakpoints.down('sm') が呼ばれることを確認
-      const call = mockUseMediaQuery.mock.calls[0];
-      expect(call?.[0]).toContain("max-width");
-    });
-
-    it("カスタムテーマのブレークポイントに対応する", () => {
-      const customTheme = createTheme({
-        breakpoints: {
-          values: {
-            xs: 0,
-            sm: 768, // カスタムsmブレークポイント
-            md: 1024,
-            lg: 1200,
-            xl: 1536,
-          },
-        },
-      });
-
-      const CustomThemeWrapper = ({ children }: { children: ReactNode }) => (
-        <ThemeProvider theme={customTheme}>{children}</ThemeProvider>
-      );
-
-      mockUseMediaQuery.mockReturnValue(false);
-
-      renderHook(() => useIsMobile(), {
-        wrapper: CustomThemeWrapper,
-      });
-
-      expect(mockUseMediaQuery).toHaveBeenCalled();
+      // After unmount, the change handler for our query should be removed
+      for (const [key, handlers] of listeners) {
+        if (key.endsWith(":change")) {
+          expect(handlers.length).toBe(0);
+        }
+      }
     });
   });
 
   describe("TypeScript型安全性", () => {
     it("正しいboolean型を返す", () => {
-      mockUseMediaQuery.mockReturnValue(true);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      // TypeScriptコンパイル時にboolean型であることが保証される
+      const { result } = renderHook(() => useIsMobile());
       expect(typeof result.current).toBe("boolean");
-      expect(result.current).toBe(true);
-    });
-
-    it("undefinedやnullを返さない", () => {
-      mockUseMediaQuery.mockReturnValue(false);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      expect(result.current).not.toBeUndefined();
-      expect(result.current).not.toBeNull();
-      expect(result.current).toBe(false);
-    });
-  });
-
-  describe("実用的なユースケース", () => {
-    it("条件分岐でモバイル用コンポーネントを制御する", () => {
-      mockUseMediaQuery.mockReturnValue(true);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      // モバイル判定に基づく条件分岐の例
-      const shouldShowMobileLayout = result.current;
-      const shouldShowDesktopLayout = !result.current;
-
-      expect(shouldShowMobileLayout).toBe(true);
-      expect(shouldShowDesktopLayout).toBe(false);
-    });
-
-    it("複数のブレークポイント判定との組み合わせ", () => {
-      mockUseMediaQuery.mockReturnValue(true);
-
-      const { result } = renderHook(() => useIsMobile(), {
-        wrapper: createWrapper(),
-      });
-
-      const isMobile = result.current;
-
-      // 実際のアプリケーションでの使用例
-      const columnCount = isMobile ? 1 : 3;
-      const fontSize = isMobile ? "14px" : "16px";
-
-      expect(columnCount).toBe(1);
-      expect(fontSize).toBe("14px");
     });
   });
 });

@@ -1,0 +1,42 @@
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+
+.stickyHeader thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--color-bg);
+}
+
+.cell {
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--color-divider);
+  text-align: left;
+  line-height: 1.43;
+  letter-spacing: 0.01em;
+}
+
+.cellSmall {
+  padding: 4px 8px;
+}
+
+.cellHead {
+  font-weight: 600;
+}
+
+.cellRight {
+  text-align: right;
+}
+
+.rowHover:hover {
+  background-color: var(--color-action-hover);
+}

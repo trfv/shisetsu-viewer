@@ -5,7 +5,7 @@ import { Skeleton } from "./Skeleton";
 describe("Skeleton", () => {
   it("正しくレンダリングされる", () => {
     const { container } = renderWithProviders(<Skeleton width={200} height={20} />);
-    const skeleton = container.querySelector(".MuiSkeleton-root");
+    const skeleton = container.querySelector('[data-testid="skeleton"]');
     expect(skeleton).toBeInTheDocument();
   });
 });

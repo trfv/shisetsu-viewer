@@ -1,6 +1,5 @@
-import FormGroup from "@mui/material/FormGroup";
 import { Children, cloneElement, type ChangeEvent, type FC, type ReactNode } from "react";
-import { box, type BoxSize } from "../Box";
+import { BaseBox, type BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
 import { SmallLabel } from "../Label";
 
@@ -37,13 +36,11 @@ const mapChildren = (
   });
 };
 
-export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto", children }) => {
-  const Box = box(size);
-  return (
-    // eslint-disable-next-line react-hooks/static-components
-    <Box>
-      <SmallLabel label={label} />
-      <FormGroup row={true}>{mapChildren(children, values, onChange)}</FormGroup>
-    </Box>
-  );
-};
+export const CheckboxGroup: FC<Props> = ({ label, values, onChange, size = "auto", children }) => (
+  <BaseBox size={size}>
+    <SmallLabel label={label} />
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "0 8px" }}>
+      {mapChildren(children, values, onChange)}
+    </div>
+  </BaseBox>
+);
