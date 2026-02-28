@@ -1,0 +1,22 @@
+# Gitleaks configuration for shisetsu-viewer
+# https://github.com/gitleaks/gitleaks
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Test mock data and fixtures"
+paths = [
+  '''test/mocks/.*\.ts$''',
+  '''test/utils/.*\.ts$''',
+  '''test/browser-setup\.ts$''',
+  '''\.test\.tsx?$''',
+]
+
+[[allowlists]]
+description = "Configuration and sample files"
+paths = [
+  '''\.env\.sample$''',
+  '''\.env\.example$''',
+  '''env\.d\.ts$''',
+]

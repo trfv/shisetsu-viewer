@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Route, Router, Switch } from "wouter";
+import { Redirect, Route, Router, Switch } from "wouter";
 import { Header } from "./components/Header";
 import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
@@ -43,6 +43,9 @@ const App = () => {
                 </Route>
                 <Route path={ROUTES.top}>
                   <Top />
+                </Route>
+                <Route>
+                  <Redirect to={ROUTES.top} />
                 </Route>
               </Switch>
             </Suspense>

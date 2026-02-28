@@ -1,1 +1,9 @@
+# Secret detection (install: brew install gitleaks)
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --verbose
+else
+  echo "warning: gitleaks is not installed. Skipping secret detection."
+  echo "  Install with: brew install gitleaks"
+fi
+
 lint-staged
