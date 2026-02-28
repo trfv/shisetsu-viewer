@@ -21,8 +21,7 @@ describe("Input Component", () => {
 
     // Skeleton is rendered, no textbox should be present
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
-    // MUI Skeleton renders a span with the MuiSkeleton class
-    const skeleton = container.querySelector(".MuiSkeleton-root");
+    const skeleton = container.querySelector('[data-testid="skeleton"]');
     expect(skeleton).toBeInTheDocument();
   });
 

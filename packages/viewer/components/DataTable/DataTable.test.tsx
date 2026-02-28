@@ -114,14 +114,14 @@ describe("DataTable Component", () => {
     renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
 
     // The skeleton row should contain skeleton elements (one per visible column)
-    const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+    const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(3);
   });
 
   it("hasNextPage=falseの場合はスケルトンを表示しない", () => {
     renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
 
-    const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+    const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBe(0);
   });
 
@@ -314,14 +314,14 @@ describe("Mobile Card View", () => {
   it("モバイルでhasNextPage=trueの場合にスケルトンを表示する", () => {
     renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
 
-    const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+    const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(1);
   });
 
   it("モバイルでhasNextPage=falseの場合はスケルトンを表示しない", () => {
     renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
 
-    const skeletons = document.querySelectorAll(".MuiSkeleton-root");
+    const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBe(0);
   });
 
