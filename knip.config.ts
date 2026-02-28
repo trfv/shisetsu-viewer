@@ -11,8 +11,8 @@ const config: KnipConfig = {
       ],
     },
     "packages/viewer": {
-      ignore: ["api/gql/**"],
       ignoreDependencies: [
+        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
         "@swc/core", // used internally by @vitejs/plugin-react-swc
         "@vitest/browser", // required for vitest browser mode (test.browser.enabled)
         "dotenv", // used via --require dotenv/config in generate script
@@ -21,6 +21,15 @@ const config: KnipConfig = {
     },
     "packages/scraper": {
       entry: ["**/index.test.ts", "scripts/run.ts", "tools/*.ts"],
+      ignoreDependencies: [
+        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
+      ],
+    },
+    "packages/shared": {
+      entry: ["registry.test.ts"],
+      ignoreDependencies: [
+        "vitest", // provided by root workspace
+      ],
     },
   },
 };
