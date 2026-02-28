@@ -18,3 +18,5 @@ export {
 } from "./registry";
 
 export type { MunicipalityConfig, MunicipalityKey } from "./registry";
+
+export type { ScraperModule } from "./scraper";
