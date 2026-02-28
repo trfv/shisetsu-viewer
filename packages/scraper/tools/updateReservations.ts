@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { getReservationTargets } from "@shisetsu-viewer/shared";
 import { graphqlRequest } from "./request.ts";
 
 interface Institution {
@@ -26,19 +27,9 @@ interface ReservationRow {
   reservation: Record<string, string>;
 }
 
-let _targets = [
-  "kanagawa-kawasaki",
-  "tokyo-arakawa",
-  "tokyo-chuo",
-  "tokyo-kita",
-  "tokyo-koutou",
-  "tokyo-sumida",
-];
-const target = process.argv[2];
-if (target) {
-  _targets = _targets.filter((t) => t === target);
-}
-const targets = _targets;
+const allTargets = getReservationTargets();
+const filterArg = process.argv[2];
+const targets = filterArg ? allTargets.filter((t) => t === filterArg) : allTargets;
 const title = `update reservations`;
 
 console.time(title);
