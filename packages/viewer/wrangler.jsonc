@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "app-shisetsu-viewer",
+  "name": "shisetsu-viewer",
   "compatibility_date": "2025-04-01",
   "assets": {
     "directory": "./dist",
