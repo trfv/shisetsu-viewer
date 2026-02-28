@@ -49,7 +49,7 @@
 }
 
 .menu > span {
-  color: var(--color-text-disabled, #9e9e9e);
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .menuButton {
