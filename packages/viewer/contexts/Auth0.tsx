@@ -1,9 +1,9 @@
-import {
+import type {
   Auth0Client,
-  type Auth0ClientOptions,
-  type GetTokenSilentlyOptions,
-  type LogoutOptions,
-  type RedirectLoginOptions,
+  Auth0ClientOptions,
+  GetTokenSilentlyOptions,
+  LogoutOptions,
+  RedirectLoginOptions,
 } from "@auth0/auth0-spa-js";
 import {
   createContext,
@@ -42,7 +42,7 @@ export const Auth0Context = createContext<Auth0Context>(initlalContext);
 export const useAuth0 = () => useContext(Auth0Context);
 
 export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
-  const [auth0Client] = useState(() => new Auth0Client(clientOptions));
+  const [auth0Client, setAuth0Client] = useState<Auth0Client | null>(null);
   const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
   const [token, setToken] = useState(initlalContext.token);
   const [userInfo, setUserInfo] = useState(initlalContext.userInfo);
@@ -56,19 +56,30 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
     [clientOptions.authorizationParams]
   ) as GetTokenSilentlyOptions;
 
+  // Dynamically load Auth0 SDK to keep it out of the initial bundle
+  useEffect(() => {
+    import("@auth0/auth0-spa-js").then(({ Auth0Client: Client }) => {
+      setAuth0Client(new Client(clientOptions));
+    });
+    // clientOptions are stable environment constants from index.tsx
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const getIdTokenClaims = useCallback(async () => {
+    if (!auth0Client) return undefined;
     const claims = await auth0Client.getIdTokenClaims();
     return claims?.[TOKEN_CLAIM_KEY];
   }, [auth0Client]);
 
   const login = useCallback(
-    (o: RedirectLoginOptions) => auth0Client.loginWithRedirect(o),
+    (o: RedirectLoginOptions) => auth0Client?.loginWithRedirect(o),
     [auth0Client]
   );
 
-  const logout = useCallback((o: LogoutOptions) => auth0Client.logout(o), [auth0Client]);
+  const logout = useCallback((o: LogoutOptions) => auth0Client?.logout(o), [auth0Client]);
 
   const updateToken = useCallback(async () => {
+    if (!auth0Client) return false;
     try {
       const token = await auth0Client.getTokenSilently(options);
       if (token) {
@@ -88,6 +99,8 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   }, [auth0Client, options, getIdTokenClaims]);
 
   useEffect(() => {
+    if (!auth0Client) return;
+
     const initAuth0 = async () => {
       try {
         await auth0Client.checkSession(options);
