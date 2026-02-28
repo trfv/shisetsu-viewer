@@ -1,0 +1,43 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 225ms ease-in-out;
+}
+
+.overlayOpen {
+  opacity: 1;
+}
+
+.panel {
+  position: fixed;
+  z-index: 1200;
+  background-color: var(--color-bg-paper);
+  overflow-y: auto;
+  transition: transform 225ms ease-in-out;
+}
+
+.right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 88%;
+  transform: translateX(100%);
+}
+
+.rightOpen {
+  transform: translateX(0);
+}
+
+.top {
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+}
+
+.topOpen {
+  transform: translateY(0);
+}

@@ -1,13 +1,11 @@
-import Close from "@mui/icons-material/Close";
-import MenuIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
-import Tooltip from "@mui/material/Tooltip";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
-import { styled } from "../../utils/theme";
+import { Drawer } from "../Drawer";
 import { IconButton } from "../IconButton";
+import { CloseIcon, MenuIcon } from "../icons";
+import styles from "./HeaderMenuButton.module.css";
 
 export const HeaderMenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,18 +19,14 @@ export const HeaderMenuButton = () => {
 
   return (
     <>
-      <Tooltip title="メニュー">
-        <IconButton onClick={toggleDrawer}>
-          <MenuIcon aria-label="MenuIcon" htmlColor="white" />
-        </IconButton>
-      </Tooltip>
+      <IconButton onClick={toggleDrawer} title="メニュー">
+        <MenuIcon aria-label="MenuIcon" htmlColor="white" />
+      </IconButton>
       <Drawer anchor="top" onClose={toggleDrawer} open={isOpen}>
-        <StyledMenu>
-          <Tooltip title="メニューを閉じる">
-            <IconButton edge="start" onClick={toggleDrawer}>
-              <Close />
-            </IconButton>
-          </Tooltip>
+        <div className={styles["menu"]}>
+          <IconButton onClick={toggleDrawer} title="メニューを閉じる">
+            <CloseIcon />
+          </IconButton>
           {anonymous ? (
             <span>予約検索</span>
           ) : (
@@ -43,28 +37,8 @@ export const HeaderMenuButton = () => {
           <Link onClick={toggleDrawer} to={ROUTES.institution}>
             施設検索
           </Link>
-        </StyledMenu>
+        </div>
       </Drawer>
     </>
   );
 };
-
-const StyledMenu = styled("div")(({ theme }) => ({
-  padding: theme.spacing(2),
-  display: "flex",
-  alignItems: "center",
-  "> a, span": {
-    marginLeft: theme.spacing(2),
-    color: theme.palette.text.primary,
-    textDecoration: "none",
-    borderBottom: `1px solid transparent`,
-  },
-  "> a": {
-    ":hover": {
-      borderBottom: `1px solid ${theme.palette.text.primary}`,
-    },
-  },
-  "> span": {
-    color: theme.palette.grey[500],
-  },
-}));

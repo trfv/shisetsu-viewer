@@ -1,12 +1,10 @@
-import LoginIcon from "@mui/icons-material/Login";
-import LogoutIcon from "@mui/icons-material/Logout";
-import Tooltip from "@mui/material/Tooltip";
 import { useMemo } from "react";
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { SmallButton } from "../Button";
 import { IconButton } from "../IconButton";
+import { LoginIcon, LogoutIcon } from "../icons";
 
 export const LoginButton = () => {
   const { isLoading, token, login, logout } = useAuth0();
@@ -34,11 +32,9 @@ export const LoginButton = () => {
   }
 
   return isMobile ? (
-    <Tooltip title={text}>
-      <IconButton aria-label={text} onClick={onClick}>
-        <Icon htmlColor="white" />
-      </IconButton>
-    </Tooltip>
+    <IconButton aria-label={text} onClick={onClick} title={text}>
+      <Icon htmlColor="white" />
+    </IconButton>
   ) : (
     <SmallButton onClick={onClick}>{text}</SmallButton>
   );

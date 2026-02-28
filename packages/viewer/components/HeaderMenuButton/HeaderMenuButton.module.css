@@ -1,0 +1,21 @@
+.menu {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.menu > a,
+.menu > span {
+  margin-left: 16px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.menu > a:hover {
+  border-bottom: 1px solid var(--color-text-primary);
+}
+
+.menu > span {
+  color: var(--color-text-secondary);
+}

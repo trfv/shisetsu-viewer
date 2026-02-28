@@ -55,9 +55,8 @@ describe("SearchForm Component", () => {
     it("onDeleteが設定されたチップに削除ボタンが表示される", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
-      // "東京都" と "体育館" には onDelete があるので削除ボタンがある
-      const chips = document.querySelectorAll(".MuiChip-root");
-      const deletableChips = document.querySelectorAll(".MuiChip-deleteIcon");
+      const chips = document.querySelectorAll('[data-testid="chip"]');
+      const deletableChips = document.querySelectorAll('[data-testid="chip-delete"]');
       expect(deletableChips).toHaveLength(2);
 
       // "利用可能" には onDelete がないので削除ボタンがない
@@ -73,7 +72,7 @@ describe("SearchForm Component", () => {
         </SearchForm>
       );
 
-      const deleteButton = document.querySelector(".MuiChip-deleteIcon");
+      const deleteButton = document.querySelector('[data-testid="chip-delete"]');
       expect(deleteButton).not.toBeNull();
       await user.click(deleteButton as Element);
 
@@ -101,21 +100,11 @@ describe("SearchForm Component", () => {
       await user.click(openButton);
 
       // Find and click close button
-      const closeButtons = screen.getAllByRole("button");
-      const closeButton = closeButtons.find((button) => {
-        const svg = button.querySelector('svg[data-testid="CloseIcon"]');
-        return svg !== null;
-      });
-
-      if (closeButton) {
-        await user.click(closeButton);
-      }
+      const closeButton = screen.getByRole("button", { name: "閉じる" });
+      await user.click(closeButton);
 
       await waitFor(() => {
-        const drawer = screen.queryByRole("presentation");
-        if (drawer) {
-          expect(drawer).toHaveAttribute("aria-hidden", "true");
-        }
+        expect(screen.queryByTestId("drawer-overlay")).not.toBeInTheDocument();
       });
     });
 
@@ -125,17 +114,14 @@ describe("SearchForm Component", () => {
       const button = screen.getByRole("button", { name: /絞り込み/i });
       await user.click(button);
 
-      // Click backdrop
-      const backdrop = document.querySelector(".MuiBackdrop-root");
-      if (backdrop) {
-        await user.click(backdrop as Element);
+      // Click overlay
+      const overlay = document.querySelector('[data-testid="drawer-overlay"]');
+      if (overlay) {
+        await user.click(overlay as Element);
       }
 
       await waitFor(() => {
-        const drawer = screen.queryByRole("presentation");
-        if (drawer) {
-          expect(drawer).toHaveAttribute("aria-hidden", "true");
-        }
+        expect(screen.queryByTestId("drawer-overlay")).not.toBeInTheDocument();
       });
     });
   });
@@ -152,21 +138,19 @@ describe("SearchForm Component", () => {
     it("モバイルビューでアイコンボタンを表示する", () => {
       renderWithProviders(<SearchForm {...defaultProps} />);
 
-      // Check for icon button instead of text button
-      const buttons = screen.getAllByRole("button");
-      const iconButton = buttons.find((button) => {
-        return button.querySelector('svg[data-testid="ManageSearchIcon"]');
-      });
-
+      // Check for icon button with aria-label
+      const iconButton = screen.getByRole("button", { name: /絞り込み/i });
       expect(iconButton).toBeInTheDocument();
+      expect(iconButton.querySelector("svg")).not.toBeNull();
     });
 
     it("モバイルビューで小さいチップサイズを使用する", () => {
-      const { container } = renderWithProviders(<SearchForm {...defaultProps} />);
+      renderWithProviders(<SearchForm {...defaultProps} />);
 
-      const chips = container.querySelectorAll(".MuiChip-root");
+      const chips = document.querySelectorAll('[data-testid="chip"]');
       chips.forEach((chip) => {
-        expect(chip).toHaveClass("MuiChip-sizeSmall");
+        // The chip element should have the "small" class in mobile view
+        expect(chip.className).toContain("small");
       });
     });
   });
@@ -196,7 +180,7 @@ describe("SearchForm Component", () => {
           </SearchForm>
         );
 
-        // Tab to button (削除不可のChipはフォーカスを受けない)
+        // Tab to button
         await user.tab();
         const button = screen.getByRole("button", { name: /絞り込み/i });
         expect(button).toHaveFocus();
