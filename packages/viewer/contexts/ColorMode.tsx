@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { darkTheme, lightTheme, useMediaQuery } from "../utils/theme";
 
 type Mode = "system" | "light" | "dark";
@@ -48,6 +56,12 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
 
   const isDark = mode === "dark" || (mode === "system" && prefersDark);
   const theme = useMemo(() => (isDark ? darkTheme : lightTheme), [isDark]);
+
+  // Set data-theme attribute on <html> for CSS Custom Properties
+  useEffect(() => {
+    const resolvedTheme = isDark ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", resolvedTheme);
+  }, [isDark]);
 
   const value = useMemo(() => ({ mode, toggleMode, theme }), [mode, toggleMode, theme]);
 
