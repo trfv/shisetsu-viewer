@@ -14,7 +14,6 @@ import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
-import { CONTAINER_WIDTH, SEARCH_TABLE_HEIGHT } from "../constants/styles";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
@@ -29,7 +28,7 @@ import {
   type AvailableInstrument,
   type InstitutionSize,
 } from "../utils/search";
-import { styled } from "../utils/theme";
+import styles from "./Institution.module.css";
 
 export const COLUMNS: Columns<InstitutionNode> = [
   {
@@ -189,9 +188,9 @@ export default () => {
   ];
 
   return (
-    <StyledInstitution className={classes.pageBox}>
-      <div className={classes.searchBox}>
-        <div className={classes.searchBoxForm}>
+    <main className={styles["pageBox"]}>
+      <div className={styles["searchBox"]}>
+        <div className={styles["searchBoxForm"]}>
           <SearchForm chips={chips}>
             <Select
               label="地区"
@@ -221,13 +220,13 @@ export default () => {
           </SearchForm>
         </div>
       </div>
-      <div className={classes.resultBox}>
+      <div className={styles["resultBox"]}>
         {loading && !fetchingMore ? (
-          <div className={classes.resultBoxNoData}>
+          <div className={styles["resultBoxNoData"]}>
             <Spinner />
           </div>
         ) : !municipality || !institutions?.length ? (
-          <div className={classes.resultBoxNoData}>表示するデータが存在しません</div>
+          <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>
         ) : (
           <DataTable
             columns={COLUMNS}
@@ -243,68 +242,6 @@ export default () => {
           />
         )}
       </div>
-    </StyledInstitution>
+    </main>
   );
 };
-
-const PREFIX = "Institution";
-const classes = {
-  pageBox: `${PREFIX}-pageBox`,
-  searchBox: `${PREFIX}-searchBox`,
-  searchBoxForm: `${PREFIX}-searchBoxForm`,
-  resultBox: `${PREFIX}-resultBox`,
-  resultBoxNoData: `${PREFIX}-resultBoxNoData`,
-};
-
-const StyledInstitution = styled("main")(({ theme }) => ({
-  [`&.${classes.pageBox}`]: {
-    padding: theme.spacing(5, 0),
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.spacing(5),
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(3, 0),
-      gap: theme.spacing(3),
-    },
-  },
-  [`.${classes.searchBox}`]: {
-    marginInline: "auto",
-    padding: theme.spacing(3),
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    background: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-      padding: theme.spacing(1),
-      borderRadius: 0,
-    },
-  },
-  [`.${classes.searchBoxForm}`]: {
-    display: "flex",
-    flexWrap: "nowrap",
-    gap: theme.spacing(3, 5),
-  },
-  [`.${classes.resultBox}`]: {
-    marginInline: "auto",
-    width: "100%",
-    maxWidth: CONTAINER_WIDTH,
-    [theme.breakpoints.up("md")]: {
-      height: SEARCH_TABLE_HEIGHT,
-      ".MuiTableContainer-root": {
-        maxHeight: SEARCH_TABLE_HEIGHT,
-      },
-    },
-    [theme.breakpoints.down("sm")]: {
-      marginInline: 0,
-    },
-  },
-  [`.${classes.resultBoxNoData}`]: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));

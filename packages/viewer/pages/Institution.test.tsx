@@ -158,14 +158,8 @@ describe("Institution Page", () => {
         expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
       });
 
-      const selectTrigger = screen.getByRole("combobox", { name: "地区" });
-      await user.click(selectTrigger);
-
-      await waitFor(() => {
-        expect(screen.getByRole("listbox")).toBeInTheDocument();
-      });
-
-      await user.click(screen.getByRole("option", { name: "北区" }));
+      const selectElement = screen.getByRole("combobox", { name: "地区" });
+      await user.selectOptions(selectElement, "MUNICIPALITY_KITA");
 
       await waitFor(() => {
         const elements = screen.getAllByText("北区");

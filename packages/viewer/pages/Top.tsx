@@ -1,10 +1,9 @@
-import { CONTAINER_WIDTH } from "../constants/styles";
-import { styled } from "../utils/theme";
+import styles from "./Top.module.css";
 
 export default () => {
   return (
-    <StyledTop className={classes.pageBox}>
-      <div className={classes.contentBox}>
+    <main className={styles["pageBox"]}>
+      <div className={styles["contentBox"]}>
         <h2 id="introduction">はじめに</h2>
         <ul>
           <li>
@@ -42,40 +41,9 @@ export default () => {
           <li>表示されている情報に関し、当サイトはいかなる責任も負いません。</li>
         </ul>
       </div>
-      <div className={classes.copyright}>
+      <div className={styles["copyright"]}>
         Copyright © {new Date().getFullYear()} trfv All Rights Reserved.
       </div>
-    </StyledTop>
+    </main>
   );
 };
-
-const PREFIX = "Top";
-const classes = {
-  pageBox: `${PREFIX}-pageBox`,
-  contentBox: `${PREFIX}-contentBox`,
-  copyright: `${PREFIX}-copyright`,
-};
-
-const StyledTop = styled("main")(({ theme }) => ({
-  [`&.${classes.pageBox}`]: {
-    width: "100%",
-  },
-  [`.${classes.contentBox}`]: {
-    marginInline: "auto",
-    padding: theme.spacing(3),
-    maxWidth: CONTAINER_WIDTH,
-  },
-  [`.${classes.copyright}`]: {
-    padding: theme.spacing(3, 0),
-    width: "100%",
-    textAlign: "center",
-  },
-  a: {
-    color: theme.palette.text.primary,
-    textDecoration: "none",
-    borderBottom: `1px solid transparent`,
-    ":hover": {
-      borderBottom: `1px solid ${theme.palette.text.primary}`,
-    },
-  },
-}));
