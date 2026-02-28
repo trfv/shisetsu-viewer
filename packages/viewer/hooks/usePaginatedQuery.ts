@@ -12,7 +12,7 @@ type UsePaginatedQueryResult<T> = {
   loading: boolean;
   error: Error | undefined;
   hasNextPage: boolean;
-  fetchMore: () => void;
+  fetchMore: () => Promise<void>;
   fetchingMore: boolean;
 };
 

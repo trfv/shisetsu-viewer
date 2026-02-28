@@ -4,9 +4,7 @@ import { playwright } from "@vitest/browser-playwright";
 
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    include: ["@apollo/client/react", "@mui/icons-material/OpenInNew"],
-  },
+  optimizeDeps: {},
   test: {
     globals: true,
     browser: {

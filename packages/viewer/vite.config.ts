@@ -17,8 +17,6 @@ export default defineConfig(({ mode }) => ({
         esModule: true,
         manualChunks: {
           react: ["react", "react-dom", "react-router-dom"],
-          mui: ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"],
-          apollo: ["@apollo/client", "graphql"],
         },
         chunkFileNames: "assets/[hash].js",
         assetFileNames: "assets/[hash][extname]",

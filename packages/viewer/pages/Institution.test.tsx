@@ -372,7 +372,7 @@ describe("Institution Page", () => {
         http.post(TEST_ENDPOINT, async ({ request }) => {
           requestCount++;
           const body = (await request.json()) as { variables: Record<string, unknown> };
-          if (body.variables.after) {
+          if (body.variables["after"]) {
             // Return empty page for fetchMore
             return HttpResponse.json(createMockInstitutionsConnection([], false));
           }
