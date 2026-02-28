@@ -45,6 +45,7 @@ const toQueryParams = <QPM extends QueryParamsMap>(
   qp: URLSearchParams,
   qpm: QPM
 ) => {
+  const next = new URLSearchParams(qp);
   return Object.entries(dv).reduce<URLSearchParams>((accum, curr) => {
     const [name, value] = curr;
     const ev = qpm[name]?.encode(value);
@@ -55,9 +56,11 @@ const toQueryParams = <QPM extends QueryParamsMap>(
       } else {
         accum.set(name, ev);
       }
+    } else {
+      accum.delete(name);
     }
     return accum;
-  }, qp);
+  }, next);
 };
 
 const toDecodedValues = <QPM extends QueryParamsMap>(qp: URLSearchParams, qpm: QPM) => {

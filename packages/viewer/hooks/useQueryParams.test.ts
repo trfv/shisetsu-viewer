@@ -219,7 +219,7 @@ describe("useQueryParams", () => {
     expect(result.current[0].count).toBe(5);
   });
 
-  test("setQueryParams with null encode result skips parameter", () => {
+  test("setQueryParams with null encode result deletes parameter from URL", () => {
     const navigateMock = vi.fn();
     const { result, rerender } = renderHook(() =>
       useQueryParams(
@@ -232,22 +232,32 @@ describe("useQueryParams", () => {
           state: {},
           key: "",
           pathname: "/test",
-          search: "?name=hello",
+          search: "?name=hello&value=world",
           hash: "",
         }
       )
     );
 
-    // Setting a param to undefined triggers encode → null, which is skipped (if (ev) is false)
+    expect(result.current[0].name).toBe("hello");
+    expect(result.current[0].value).toBe("world");
+
+    // Setting a param to null should delete it from URLSearchParams
     act(() => {
       result.current[1]({
-        value: undefined as unknown as string,
+        name: null as unknown as string,
       });
       rerender();
     });
 
-    // name should remain unchanged, value param should not be added
-    expect(result.current[0].name).toBe("hello");
+    // name should be removed, value should remain unchanged
+    expect(result.current[0].name).toBeUndefined();
+    expect(result.current[0].value).toBe("world");
+
+    // navigate should be called with URL without name param
+    expect(navigateMock).toHaveBeenCalledWith(
+      { pathname: "/test", search: "value=world" },
+      { replace: true }
+    );
   });
 
   test("toDecodedValues with existing query params maps all keys", () => {
