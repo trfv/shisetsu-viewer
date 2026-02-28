@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { Route, Router } from "wouter";
+import { memoryLocation } from "wouter/memory-location";
 import { userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
@@ -38,24 +39,17 @@ interface CustomRenderOptions {
 
 export function renderWithProviders(
   ui: ReactElement,
-  {
-    initialEntries = ["/"],
-    route = "/*",
-    auth0Config = {},
-    ...renderOptions
-  }: CustomRenderOptions = {}
+  { initialEntries = ["/"], route, auth0Config = {}, ...renderOptions }: CustomRenderOptions = {}
 ) {
   // Use browser's native userEvent
   const user = browserUserEvent;
 
+  const { hook } = memoryLocation({ path: initialEntries[0], static: true });
+
   function Wrapper({ children }: { children: ReactNode }) {
     return (
       <MockAuth0Provider config={auth0Config}>
-        <MemoryRouter initialEntries={initialEntries}>
-          <Routes>
-            <Route path={route} element={children} />
-          </Routes>
-        </MemoryRouter>
+        <Router hook={hook}>{route ? <Route path={route}>{children}</Route> : children}</Router>
       </MockAuth0Provider>
     );
   }

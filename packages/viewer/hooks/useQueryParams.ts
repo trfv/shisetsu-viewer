@@ -1,6 +1,5 @@
 import { formatISO, isValid } from "date-fns";
 import { useCallback, useState } from "react";
-import type { Location, NavigateFunction } from "react-router-dom";
 
 export const NumberParam = {
   encode: (value: number) => (!!value || value === 0 ? value.toString() : null),
@@ -73,26 +72,22 @@ const toDecodedValues = <QPM extends QueryParamsMap>(qp: URLSearchParams, qpm: Q
 
 export const useQueryParams = <QPM extends QueryParamsMap>(
   qpm: QPM,
-  navigate: NavigateFunction,
-  location: Location
+  setLocation: (to: string, options?: { replace?: boolean }) => void,
+  search: string,
+  pathname: string
 ): [DecodedValues<QPM>, (args: DecodedValues<QPM>) => void] => {
-  const [qp, setQP] = useState(new URLSearchParams(location.search));
+  const [qp, setQP] = useState(new URLSearchParams(search));
 
   const setQueryParams = useCallback(
     (dv: DecodedValues<QPM>) => {
       setQP((prev) => {
         const next = toQueryParams(dv, prev, qpm);
-        navigate(
-          {
-            pathname: location.pathname,
-            search: next.toString(),
-          },
-          { replace: true }
-        );
+        const qs = next.toString();
+        setLocation(qs ? `${pathname}?${qs}` : pathname, { replace: true });
         return next;
       });
     },
-    [qpm, navigate, location]
+    [qpm, setLocation, pathname]
   );
 
   return [toDecodedValues(qp, qpm), setQueryParams];

@@ -8,7 +8,7 @@
     "date-fns": "4.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-router-dom": "7.13.0"
+    "wouter": "3.9.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

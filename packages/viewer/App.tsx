@@ -1,17 +1,53 @@
-import { Suspense } from "react";
-import { RouterProvider } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Route, Router, Switch } from "wouter";
+import { Header } from "./components/Header";
+import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";
+import { ScrollToTop } from "./components/utils/ScrollToTop";
+import { ROUTES } from "./constants/routes";
 import { ColorModeProvider } from "./contexts/ColorMode";
 import { Loading } from "./pages/Loading";
-import { router } from "./router";
+
+/* istanbul ignore next -- lazy imports are exercised at runtime, not in unit tests */
+const Institution = lazy(() => import("./pages/Institution"));
+/* istanbul ignore next */
+const Detail = lazy(() => import("./pages/Detail"));
+/* istanbul ignore next */
+const Reservation = lazy(() => import("./pages/Reservation"));
+/* istanbul ignore next */
+const Waiting = lazy(() => import("./pages/Waiting"));
+/* istanbul ignore next */
+const Top = lazy(() => import("./pages/Top"));
 
 const App = () => {
   return (
     <ErrorBoundary>
       <ColorModeProvider>
-        <Suspense fallback={<Loading />}>
-          <RouterProvider router={router} />
-        </Suspense>
+        <Router>
+          <ScrollToTop />
+          <Header />
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <Switch>
+                <Route path={ROUTES.waiting}>
+                  <Waiting />
+                </Route>
+                <Route path={ROUTES.reservation}>
+                  <AuthGuard Component={<Reservation />} />
+                </Route>
+                <Route path={ROUTES.detail}>
+                  <Detail />
+                </Route>
+                <Route path={ROUTES.institution}>
+                  <Institution />
+                </Route>
+                <Route path={ROUTES.top}>
+                  <Top />
+                </Route>
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
+        </Router>
       </ColorModeProvider>
     </ErrorBoundary>
   );

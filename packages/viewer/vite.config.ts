@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => ({
       output: {
         esModule: true,
         manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom", "react-router"],
+          "react-vendor": ["react", "react-dom"],
         },
         chunkFileNames: "assets/[hash].js",
         assetFileNames: "assets/[hash][extname]",

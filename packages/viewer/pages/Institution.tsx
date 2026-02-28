@@ -1,5 +1,5 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useSearch } from "wouter";
 import {
   INSTITUTIONS_QUERY,
   type InstitutionNode,
@@ -97,8 +97,8 @@ export const COLUMNS: Columns<InstitutionNode> = [
 ];
 
 export default () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [pathname, setLocation] = useLocation();
+  const search = useSearch();
 
   const [values, setQueryParams] = useQueryParams(
     {
@@ -106,8 +106,9 @@ export default () => {
       a: ArrayParam,
       i: ArrayParam,
     },
-    navigate,
-    location
+    setLocation,
+    search,
+    pathname
   );
 
   const institutionSearchParams = useMemo(
@@ -235,7 +236,7 @@ export default () => {
             onRowClick={(params) => {
               const institutionId = extractSinglePkFromRelayId(params.row.id);
               if (institutionId) {
-                navigate(ROUTES.detail.replace(":id", institutionId as string));
+                setLocation(ROUTES.detail.replace(":id", institutionId as string));
               }
             }}
             rows={institutions}

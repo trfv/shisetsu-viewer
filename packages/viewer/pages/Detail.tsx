@@ -1,6 +1,6 @@
 import { formatISO } from "date-fns";
 import { useCallback, useState, type ChangeEvent } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Redirect, useParams } from "wouter";
 import {
   INSTITUTION_DETAIL_QUERY,
   INSTITUTION_RESERVATIONS_QUERY,
@@ -281,7 +281,7 @@ export default () => {
   );
 
   if (!id || !isValidUuid(id)) {
-    return <Navigate replace={true} to={ROUTES.top} />;
+    return <Redirect to={ROUTES.top} replace />;
   }
 
   const { loading, data, error } = useGraphQLQuery<InstitutionDetailQueryData>(

@@ -103,13 +103,8 @@ describe("useQueryParams", () => {
           d: DateParam,
         },
         () => {},
-        {
-          state: {},
-          key: "",
-          pathname: "",
-          search: "?a=12345&b=ABCDE&c=XXX&c=YYY&c=ZZZ&d=2022-02-26",
-          hash: "",
-        }
+        "a=12345&b=ABCDE&c=XXX&c=YYY&c=ZZZ&d=2022-02-26",
+        ""
       )
     );
     expect(result.current[0].a).toBe(12345);
@@ -142,13 +137,8 @@ describe("useQueryParams", () => {
           d: DateParam,
         },
         () => {},
-        {
-          state: {},
-          key: "",
-          pathname: "",
-          search: "",
-          hash: "",
-        }
+        "",
+        ""
       )
     );
     expect(result.current[0].a).toBeUndefined();
@@ -168,13 +158,8 @@ describe("useQueryParams", () => {
           f: DateParam,
         },
         () => {},
-        {
-          state: {},
-          key: "",
-          pathname: "",
-          search: "?a=XXXXX&b=&c=0&d=YYYYY&e=&f=2022-13-29",
-          hash: "",
-        }
+        "a=XXXXX&b=&c=0&d=YYYYY&e=&f=2022-13-29",
+        ""
       )
     );
     expect(result.current[0].a).toBeNull();
@@ -186,21 +171,16 @@ describe("useQueryParams", () => {
   });
 
   test("setQueryParams with array values exercises toQueryParams array branch", () => {
-    const navigateMock = vi.fn();
+    const setLocationMock = vi.fn();
     const { result, rerender } = renderHook(() =>
       useQueryParams(
         {
           tags: ArrayParam,
           count: NumberParam,
         },
-        navigateMock,
-        {
-          state: {},
-          key: "",
-          pathname: "/test",
-          search: "",
-          hash: "",
-        }
+        setLocationMock,
+        "",
+        "/test"
       )
     );
 
@@ -212,7 +192,7 @@ describe("useQueryParams", () => {
       rerender();
     });
 
-    expect(navigateMock).toHaveBeenCalledWith(expect.objectContaining({ pathname: "/test" }), {
+    expect(setLocationMock).toHaveBeenCalledWith(expect.stringContaining("/test?"), {
       replace: true,
     });
     expect(result.current[0].tags?.sort().toString()).toBe(["a", "b", "c"].sort().toString());
@@ -220,21 +200,16 @@ describe("useQueryParams", () => {
   });
 
   test("setQueryParams with null encode result deletes parameter from URL", () => {
-    const navigateMock = vi.fn();
+    const setLocationMock = vi.fn();
     const { result, rerender } = renderHook(() =>
       useQueryParams(
         {
           name: StringParam,
           value: StringParam,
         },
-        navigateMock,
-        {
-          state: {},
-          key: "",
-          pathname: "/test",
-          search: "?name=hello&value=world",
-          hash: "",
-        }
+        setLocationMock,
+        "name=hello&value=world",
+        "/test"
       )
     );
 
@@ -253,11 +228,8 @@ describe("useQueryParams", () => {
     expect(result.current[0].name).toBeUndefined();
     expect(result.current[0].value).toBe("world");
 
-    // navigate should be called with URL without name param
-    expect(navigateMock).toHaveBeenCalledWith(
-      { pathname: "/test", search: "value=world" },
-      { replace: true }
-    );
+    // setLocation should be called with URL without name param
+    expect(setLocationMock).toHaveBeenCalledWith("/test?value=world", { replace: true });
   });
 
   test("toDecodedValues with existing query params maps all keys", () => {
@@ -268,13 +240,8 @@ describe("useQueryParams", () => {
           ids: ArrayParam,
         },
         () => {},
-        {
-          state: {},
-          key: "",
-          pathname: "",
-          search: "?name=test&ids=1&ids=2",
-          hash: "",
-        }
+        "name=test&ids=1&ids=2",
+        ""
       )
     );
 

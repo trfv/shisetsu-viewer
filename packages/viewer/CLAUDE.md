@@ -2,7 +2,7 @@
 
 React 19 SPA for browsing public facility reservation data. Deployed to Cloudflare Workers.
 
-Key dependencies: React 19, React Router 7, @auth0/auth0-spa-js, date-fns 4. Build: Vite 7 + SWC.
+Key dependencies: React 19, wouter 3 (lightweight router), @auth0/auth0-spa-js (dynamic import), date-fns 4. Build: Vite 7 + SWC.
 
 ## Commands
 
@@ -37,9 +37,10 @@ npm run deploy -w @shisetsu-viewer/viewer       # Deploy via wrangler
 
 ```
 index.tsx:  StrictMode > Auth0Provider > App
-App.tsx:    ErrorBoundary > ColorModeProvider > Suspense(Loading) > RouterProvider
-router.tsx: createBrowserRouter with Layout (ScrollToTop + Header + ErrorBoundary + Outlet)
+App.tsx:    ErrorBoundary > ColorModeProvider > Router > ScrollToTop + Header + ErrorBoundary > Switch/Route
 ```
+
+Uses wouter's `<Router>`, `<Switch>`, `<Route>` for declarative routing. All page components are lazy-loaded inline in App.tsx (no separate router file). `Navigate` → `Redirect`, `useNavigate()` → `useLocation()[1]` (setLocation), `useLocation()` → `useLocation()[0]` + `useSearch()`.
 
 Routes (`constants/routes.ts`):
 - `/` — Top (home)
@@ -105,7 +106,7 @@ public/       — Static assets: fonts, icons, mockServiceWorker.js
 - Setup: `test/browser-setup.ts` — mocks Auth0Client, starts MSW worker, polyfills matchMedia/IntersectionObserver/ResizeObserver.
 - MSW 2 for API mocking: handlers in `test/mocks/handlers.ts`, mock data factories in `test/mocks/data.ts`.
 - Test helper: `renderWithProviders()` from `test/utils/test-utils.tsx`
-  - Wraps with MockAuth0Provider (mock token/userInfo) + MemoryRouter
+  - Wraps with MockAuth0Provider (mock token/userInfo) + wouter Router (memoryLocation)
   - Returns `{ user, ...renderResult }` where `user` is `vitest/browser` userEvent
   - Re-exports all `@testing-library/react` utilities
 - Coverage: Istanbul provider. Thresholds: branches 60%, functions 60%, lines 70%, statements 70%.
@@ -131,7 +132,7 @@ Copy `.env.sample` to `.env` and fill in values.
 
 - Vite config: `vite.config.ts`. SWC plugin for fast refresh.
 - Font files externalized in Rollup config (served from public, not bundled).
-- Manual chunks: react/react-dom/react-router-dom bundled together.
+- Manual chunks: react/react-dom bundled together. wouter is in the index chunk (~6 kB gz).
 - Bundle analysis: `build:analyze` generates `dist/stats.json` (raw-data format with gzip/brotli sizes).
 - Cloudflare Workers via Wrangler. Config in `wrangler.jsonc`. SPA mode.
 - MSW worker must be initialized: `npx msw init public -w @shisetsu-viewer/viewer`
