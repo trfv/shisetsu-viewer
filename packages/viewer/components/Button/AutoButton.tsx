@@ -1,6 +1,6 @@
-import type { ComponentProps } from "react";
-import { BaseButton } from "./BaseButton";
+import type { FC } from "react";
+import { BaseButton, type ButtonProps } from "./BaseButton";
 
-type Props = ComponentProps<typeof BaseButton>;
-
-export const AutoButton = (props: Props) => <BaseButton {...props} style={{ width: "auto" }} />;
+export const AutoButton: FC<ButtonProps> = (props) => (
+  <BaseButton {...props} style={{ width: "auto", ...props.style }} />
+);

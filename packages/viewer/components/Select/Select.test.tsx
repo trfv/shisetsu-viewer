@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { vi } from "vitest";
-import { renderWithProviders, screen, waitFor } from "../../test/utils/test-utils";
+import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { Select } from "./Select";
 
 const selectOptions = [
@@ -23,24 +23,17 @@ describe("Select Component", () => {
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
-    // MUI Select displays the label of the selected option
-    expect(screen.getByText("東京都")).toBeInTheDocument();
+    const select = screen.getByRole("combobox", { name: "地域" }) as HTMLSelectElement;
+    expect(select.value).toBe("tokyo");
   });
 
-  it("ドロップダウンを開くとオプションを表示する", async () => {
-    const { user } = renderWithProviders(
+  it("すべてのオプションが存在する", () => {
+    renderWithProviders(
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
-    // Click the select to open the dropdown
-    const selectButton = screen.getByRole("combobox", { name: "地域" });
-    await user.click(selectButton);
-
-    // All options should be visible in the dropdown
-    await waitFor(() => {
-      const options = screen.getAllByRole("option");
-      expect(options).toHaveLength(3);
-    });
+    const options = screen.getAllByRole("option");
+    expect(options).toHaveLength(3);
   });
 
   it("オプション選択時にonChangeが呼ばれる", async () => {
@@ -49,15 +42,8 @@ describe("Select Component", () => {
       <Select label="地域" value="tokyo" onChange={handleChange} selectOptions={selectOptions} />
     );
 
-    // Open the dropdown
-    const selectButton = screen.getByRole("combobox", { name: "地域" });
-    await user.click(selectButton);
-
-    // Click an option
-    await waitFor(async () => {
-      const option = screen.getByRole("option", { name: "川崎市" });
-      await user.click(option);
-    });
+    const select = screen.getByRole("combobox", { name: "地域" });
+    await user.selectOptions(select, "kawasaki");
 
     expect(handleChange).toHaveBeenCalled();
   });

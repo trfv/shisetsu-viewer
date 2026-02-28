@@ -1,0 +1,31 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: var(--border-radius-button);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  padding: 3px 9px;
+  cursor: pointer;
+  text-transform: none;
+  transition: background-color 120ms ease;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background-color: var(--color-action-hover);
+}
+
+.button:active {
+  opacity: 0.8;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

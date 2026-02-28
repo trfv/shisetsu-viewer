@@ -1,11 +1,12 @@
-import MenuItem from "@mui/material/MenuItem";
-import MuiSelect, { type SelectChangeEvent as MuiSelectChangeEvent } from "@mui/material/Select";
-import type { FC } from "react";
-import { box, type BoxSize } from "../Box";
+import type { ChangeEvent, FC } from "react";
+import { BaseBox, type BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
+import styles from "./Select.module.css";
 
-export type SelectChangeEvent<T> = MuiSelectChangeEvent<T>;
+export type SelectChangeEvent<T = string> = ChangeEvent<HTMLSelectElement> & {
+  target: HTMLSelectElement & { value: T };
+};
 
 type Props = {
   label: string;
@@ -15,26 +16,21 @@ type Props = {
   selectOptions: { value: string; label: string }[];
 };
 
-export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selectOptions }) => {
-  const Box = box(size);
-  return (
-    // eslint-disable-next-line react-hooks/static-components
-    <Box component="label" display="flex" flexDirection="column">
-      <SmallLabel label={label} />
-      <Spacer axis="vertical" size={4} />
-      <MuiSelect
-        aria-label={label}
-        inputProps={{ "aria-label": label }}
-        onChange={onChange}
-        value={value}
-        variant="standard"
-      >
-        {selectOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </MuiSelect>
-    </Box>
-  );
-};
+export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selectOptions }) => (
+  <BaseBox size={size} component="label" display="flex" flexDirection="column">
+    <SmallLabel label={label} />
+    <Spacer axis="vertical" size={4} />
+    <select
+      aria-label={label}
+      className={styles["select"]}
+      onChange={onChange as (event: ChangeEvent<HTMLSelectElement>) => void}
+      value={value}
+    >
+      {selectOptions.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </BaseBox>
+);

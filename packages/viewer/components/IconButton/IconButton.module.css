@@ -1,0 +1,21 @@
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 8px;
+  transition: background-color 120ms ease;
+  text-decoration: none;
+}
+
+.iconButton:hover {
+  background-color: var(--color-action-hover);
+}
+
+.small {
+  padding: 4px;
+}

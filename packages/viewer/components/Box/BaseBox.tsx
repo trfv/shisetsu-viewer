@@ -1,4 +1,5 @@
 import { type ComponentProps, type ElementType, type FC, type ReactNode } from "react";
+import { WIDTHS } from "../../constants/styles";
 import { AutoBox } from "./AutoBox";
 import { FullBox } from "./FullBox";
 import { LargeBox } from "./LargeBox";
@@ -6,6 +7,14 @@ import { MediumBox } from "./MediumBox";
 import { SmallBox } from "./SmallBox";
 
 export type BoxSize = "small" | "medium" | "large" | "auto" | "full";
+
+const SIZE_TO_WIDTH: Record<BoxSize, number | string> = {
+  small: WIDTHS.small,
+  medium: WIDTHS.medium,
+  large: WIDTHS.large,
+  auto: "auto",
+  full: "100%",
+};
 
 type BaseBoxProps = {
   children?: ReactNode;
@@ -16,6 +25,7 @@ type BaseBoxProps = {
   justifyContent?: string;
   fontSize?: string;
   width?: number | string;
+  size?: BoxSize;
   mx?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -31,11 +41,13 @@ export const BaseBox: FC<BaseBoxProps> = ({
   justifyContent,
   fontSize,
   width,
+  size,
   mx,
   className,
   style,
   ...rest
 }) => {
+  const resolvedWidth = size ? SIZE_TO_WIDTH[size] : width;
   const inlineStyle: React.CSSProperties = {
     ...(display ? { display } : {}),
     ...(flexDirection
@@ -44,7 +56,7 @@ export const BaseBox: FC<BaseBoxProps> = ({
     ...(alignItems ? { alignItems } : {}),
     ...(justifyContent ? { justifyContent } : {}),
     ...(fontSize ? { fontSize } : {}),
-    ...(width !== undefined ? { width } : {}),
+    ...(resolvedWidth !== undefined ? { width: resolvedWidth } : {}),
     ...(mx ? { marginInline: mx } : {}),
     ...style,
   };

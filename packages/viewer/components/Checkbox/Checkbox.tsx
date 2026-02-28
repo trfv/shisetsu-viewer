@@ -1,7 +1,6 @@
-import MuiCheckbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import type { ChangeEvent, FC } from "react";
-import { box, type BoxSize } from "../Box";
+import { BaseBox, type BoxSize } from "../Box";
+import styles from "./Checkbox.module.css";
 
 type Props = {
   label: string;
@@ -19,17 +18,17 @@ export const Checkbox: FC<Props> = ({
   size = "auto",
   checked = false,
   onChange = () => null,
-}) => {
-  const Box = box(size);
-  return (
-    // eslint-disable-next-line react-hooks/static-components
-    <Box>
-      <FormControlLabel
-        control={
-          <MuiCheckbox checked={checked} color="default" onChange={onChange} value={value} />
-        }
-        label={label}
+}) => (
+  <BaseBox size={size}>
+    <label className={styles["label"]}>
+      <input
+        checked={checked}
+        className={styles["checkbox"]}
+        onChange={onChange}
+        type="checkbox"
+        value={value}
       />
-    </Box>
-  );
-};
+      {label}
+    </label>
+  </BaseBox>
+);

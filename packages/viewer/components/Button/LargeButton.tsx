@@ -1,9 +1,7 @@
-import type { ComponentProps } from "react";
+import type { FC } from "react";
 import { WIDTHS } from "../../constants/styles";
-import { BaseButton } from "./BaseButton";
+import { BaseButton, type ButtonProps } from "./BaseButton";
 
-type Props = ComponentProps<typeof BaseButton>;
-
-export const LargeButton = (props: Props) => (
-  <BaseButton {...props} size="small" style={{ width: WIDTHS.large }} />
+export const LargeButton: FC<ButtonProps> = (props) => (
+  <BaseButton {...props} style={{ width: WIDTHS.large, ...props.style }} />
 );
