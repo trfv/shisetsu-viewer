@@ -2,10 +2,14 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { formatISO } from "date-fns";
 import { useCallback, useState, type ChangeEvent } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client/react";
-import type { InstitutionDetailQuery } from "../api/gql/graphql";
-import { InstitutionDetailDocument, InstitutionReservationsDocument } from "../api/gql/graphql";
-import { extractNodes } from "../utils/relay";
+import {
+  INSTITUTION_DETAIL_QUERY,
+  INSTITUTION_RESERVATIONS_QUERY,
+  type InstitutionDetailNode,
+  type InstitutionDetailQueryData,
+  type InstitutionReservationsQueryData,
+} from "../api/queries";
+import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
@@ -36,9 +40,7 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution:
-    | InstitutionDetailQuery["institutions_connection"]["edges"][number]["node"]
-    | undefined;
+  institution: InstitutionDetailNode | undefined;
   loading: boolean;
 }) => {
   return (
@@ -163,16 +165,16 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
   }
 
   const isMobile = useIsMobile();
-  const { loading, data, error } = useQuery(InstitutionReservationsDocument, {
-    variables: { id, startDate: formatISO(today, { representation: "date" }) },
-    fetchPolicy: "no-cache",
-  });
+  const { loading, data, error } = useGraphQLQuery<InstitutionReservationsQueryData>(
+    INSTITUTION_RESERVATIONS_QUERY,
+    { id, startDate: formatISO(today, { representation: "date" }) }
+  );
 
   if (error) {
     throw new Error(error.message);
   }
 
-  const reservations = extractNodes(data?.reservations_connection);
+  const reservations = data?.reservations_connection.edges.map((e) => e.node) ?? [];
 
   return (
     <div className={classes.reservationContainer}>
@@ -276,16 +278,16 @@ export default () => {
     return <Navigate replace={true} to={ROUTES.top} />;
   }
 
-  const { loading, data, error } = useQuery(InstitutionDetailDocument, {
-    variables: { id },
-    fetchPolicy: "no-cache",
-  });
+  const { loading, data, error } = useGraphQLQuery<InstitutionDetailQueryData>(
+    INSTITUTION_DETAIL_QUERY,
+    { id }
+  );
 
   if (error) {
     throw new Error(error.message);
   }
 
-  const institution = extractNodes(data?.institutions_connection)[0];
+  const institution = data?.institutions_connection.edges[0]?.node;
 
   return (
     <StyledInstitutionDetail className={classes.pageBox}>
