@@ -11,6 +11,7 @@ const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";
 
 type MockClientMethods = {
   checkSession: ReturnType<typeof vi.fn>;
+  handleRedirectCallback: ReturnType<typeof vi.fn>;
   getTokenSilently: ReturnType<typeof vi.fn>;
   getIdTokenClaims: ReturnType<typeof vi.fn>;
   loginWithRedirect: ReturnType<typeof vi.fn>;
@@ -22,6 +23,7 @@ type MockClientMethods = {
 const configureMockClient = (overrides: Partial<MockClientMethods> = {}): MockClientMethods => {
   const methods: MockClientMethods = {
     checkSession: overrides.checkSession ?? vi.fn().mockResolvedValue(undefined),
+    handleRedirectCallback: overrides.handleRedirectCallback ?? vi.fn().mockResolvedValue({}),
     getTokenSilently: overrides.getTokenSilently ?? vi.fn().mockResolvedValue("mock-token"),
     getIdTokenClaims: overrides.getIdTokenClaims ?? vi.fn().mockResolvedValue({}),
     loginWithRedirect: overrides.loginWithRedirect ?? vi.fn().mockResolvedValue(undefined),
@@ -126,6 +128,42 @@ describe("Auth0Provider", () => {
       await waitFor(() => {
         expect(methods.checkSession).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe("リダイレクトコールバック", () => {
+    it("URLにcodeとstateがある場合、handleRedirectCallbackが呼ばれる", async () => {
+      const methods = configureMockClient();
+      window.history.pushState({}, "", "/waiting?code=test-code&state=test-state");
+
+      render(
+        <Auth0Provider {...defaultProviderProps}>
+          <Auth0Consumer />
+        </Auth0Provider>
+      );
+
+      await waitFor(() => {
+        expect(methods.handleRedirectCallback).toHaveBeenCalled();
+      });
+      expect(methods.checkSession).not.toHaveBeenCalled();
+
+      window.history.pushState({}, "", "/");
+    });
+
+    it("URLにcodeとstateがない場合、checkSessionが呼ばれる", async () => {
+      const methods = configureMockClient();
+      window.history.pushState({}, "", "/");
+
+      render(
+        <Auth0Provider {...defaultProviderProps}>
+          <Auth0Consumer />
+        </Auth0Provider>
+      );
+
+      await waitFor(() => {
+        expect(methods.checkSession).toHaveBeenCalled();
+      });
+      expect(methods.handleRedirectCallback).not.toHaveBeenCalled();
     });
   });
 
