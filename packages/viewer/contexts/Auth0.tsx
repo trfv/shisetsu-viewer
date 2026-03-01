@@ -103,7 +103,12 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
 
     const initAuth0 = async () => {
       try {
-        await auth0Client.checkSession(options);
+        const query = new URLSearchParams(window.location.search);
+        if (query.has("code") && query.has("state")) {
+          await auth0Client.handleRedirectCallback();
+        } else {
+          await auth0Client.checkSession(options);
+        }
         await updateToken();
       } catch (e) {
         console.info(e);

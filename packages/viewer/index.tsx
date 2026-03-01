@@ -19,6 +19,7 @@ if (container) {
         }}
         clientId={AUTH0_CLIENT_ID}
         domain={AUTH0_DOMAIN}
+        useRefreshTokens
       >
         <App />
       </Auth0Provider>
