@@ -14,6 +14,7 @@ type ColorModeContext = {
   mode: Mode;
   isDark: boolean;
   toggleMode: () => void;
+  setMode: (mode: Mode) => void;
 };
 
 const STORAGE_KEY = "shisetsu-viewer-color-mode";
@@ -24,6 +25,7 @@ const Context = createContext<ColorModeContext>({
   mode: "system",
   isDark: false,
   toggleMode: () => {},
+  setMode: () => {},
 });
 
 const getStoredMode = (): Mode => {
@@ -49,6 +51,15 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
+  const persistAndSetMode = useCallback((next: Mode) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      // localStorage unavailable
+    }
+    setMode(next);
+  }, []);
+
   const toggleMode = useCallback(() => {
     setMode((prev) => {
       const idx = MODES.indexOf(prev);
@@ -70,7 +81,10 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  const value = useMemo(() => ({ mode, isDark, toggleMode }), [mode, isDark, toggleMode]);
+  const value = useMemo(
+    () => ({ mode, isDark, toggleMode, setMode: persistAndSetMode }),
+    [mode, isDark, toggleMode, persistAndSetMode]
+  );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

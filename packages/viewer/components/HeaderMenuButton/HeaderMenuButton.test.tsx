@@ -3,9 +3,27 @@ import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { HeaderMenuButton } from "./HeaderMenuButton";
 
 describe("HeaderMenuButton", () => {
-  it("メニューアイコンボタンをレンダリングする", () => {
+  it("メニューボタンをレンダリングする", () => {
     renderWithProviders(<HeaderMenuButton />);
-    expect(screen.getByLabelText("MenuIcon")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "メニュー" })).toBeInTheDocument();
+  });
+
+  it("クリックでメニューが開く", async () => {
+    const { user } = renderWithProviders(<HeaderMenuButton />);
+
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
+
+    expect(screen.getByRole("menu", { name: "ナビゲーション" })).toBeInTheDocument();
+  });
+
+  it("Escapeキーでメニューが閉じる", async () => {
+    const { user } = renderWithProviders(<HeaderMenuButton />);
+
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
   it("anonymousユーザーの場合、予約検索がリンクでなくspanで表示される", async () => {
@@ -13,9 +31,8 @@ describe("HeaderMenuButton", () => {
       auth0Config: { userInfo: { anonymous: true, trial: false } },
     });
 
-    await user.click(screen.getByLabelText("MenuIcon"));
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
 
-    // anonymous user sees non-clickable "予約検索"
     const reservationText = await screen.findByText("予約検索");
     expect(reservationText.tagName).toBe("SPAN");
   });
@@ -25,7 +42,7 @@ describe("HeaderMenuButton", () => {
       auth0Config: { userInfo: { anonymous: false, trial: false } },
     });
 
-    await user.click(screen.getByLabelText("MenuIcon"));
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
 
     const reservationLink = await screen.findByText("予約検索");
     expect(reservationLink.tagName).toBe("A");
@@ -36,7 +53,7 @@ describe("HeaderMenuButton", () => {
       auth0Config: { userInfo: { anonymous: false, trial: true } },
     });
 
-    await user.click(screen.getByLabelText("MenuIcon"));
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
 
     const reservationLink = await screen.findByText("予約検索（トライアル）");
     expect(reservationLink).toBeInTheDocument();
@@ -45,7 +62,7 @@ describe("HeaderMenuButton", () => {
   it("施設検索リンクが常に表示される", async () => {
     const { user } = renderWithProviders(<HeaderMenuButton />);
 
-    await user.click(screen.getByLabelText("MenuIcon"));
+    await user.click(screen.getByRole("button", { name: "メニュー" }));
 
     const institutionLink = await screen.findByText("施設検索");
     expect(institutionLink.tagName).toBe("A");

@@ -27,9 +27,9 @@
 .menu {
   position: absolute;
   top: calc(100% + 8px);
-  left: 0;
+  right: 0;
   z-index: 900;
-  min-width: 160px;
+  min-width: 200px;
   background-color: var(--color-bg-paper);
   color: var(--color-text);
   border-radius: var(--border-radius);
@@ -41,32 +41,69 @@
   padding: 4px 0;
 }
 
-.menuItemLink {
+.sectionLabel {
+  padding: 4px 16px 2px;
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  user-select: none;
+}
+
+.menuItem {
   display: flex;
   align-items: center;
+  gap: 10px;
   width: 100%;
   padding: 8px 16px;
+  border: none;
+  background: transparent;
   color: var(--color-text);
   font-size: var(--font-size-base);
-  text-decoration: none;
+  text-align: left;
   cursor: pointer;
   transition: background-color var(--transition-short);
 }
 
-.menuItemLink:hover {
+.menuItem:hover {
   background-color: var(--color-action-hover);
 }
 
-.menuItemLink:focus-visible {
+.menuItem:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: -2px;
 }
 
-.menuItemDisabled {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 8px 16px;
+.menuItemActive {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.menuItem:disabled {
   color: var(--color-text-disabled);
-  font-size: var(--font-size-base);
+  cursor: default;
+}
+
+.menuItem:disabled:hover {
+  background: transparent;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-divider);
+  margin: 4px 0;
+}
+
+.loadingDot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-text-secondary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
