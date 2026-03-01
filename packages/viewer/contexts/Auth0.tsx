@@ -106,12 +106,13 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
         const query = new URLSearchParams(window.location.search);
         if (query.has("code") && query.has("state")) {
           await auth0Client.handleRedirectCallback();
+          window.history.replaceState({}, "", window.location.pathname);
         } else {
           await auth0Client.checkSession(options);
         }
         await updateToken();
       } catch (e) {
-        console.info(e);
+        console.error("[Auth0] initialization failed:", e);
       } finally {
         setIsLoading(false);
       }

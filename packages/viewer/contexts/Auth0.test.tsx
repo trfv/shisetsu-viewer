@@ -132,7 +132,7 @@ describe("Auth0Provider", () => {
   });
 
   describe("リダイレクトコールバック", () => {
-    it("URLにcodeとstateがある場合、handleRedirectCallbackが呼ばれる", async () => {
+    it("URLにcodeとstateがある場合、handleRedirectCallbackが呼ばれURLがクリーンアップされる", async () => {
       const methods = configureMockClient();
       window.history.pushState({}, "", "/waiting?code=test-code&state=test-state");
 
@@ -146,6 +146,9 @@ describe("Auth0Provider", () => {
         expect(methods.handleRedirectCallback).toHaveBeenCalled();
       });
       expect(methods.checkSession).not.toHaveBeenCalled();
+      // URL should be cleaned up (query params removed)
+      expect(window.location.search).toBe("");
+      expect(window.location.pathname).toBe("/waiting");
 
       window.history.pushState({}, "", "/");
     });

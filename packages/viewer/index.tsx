@@ -16,8 +16,10 @@ if (container) {
           audience: AUTH0_AUDIENCE,
           redirect_uri: `${window.location.origin}${ROUTES.waiting}`,
         }}
+        cacheLocation="localstorage"
         clientId={AUTH0_CLIENT_ID}
         domain={AUTH0_DOMAIN}
+        useCookiesForTransactions
         useRefreshTokens
       >
         <App />
