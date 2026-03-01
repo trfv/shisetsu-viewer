@@ -124,6 +124,40 @@ export const InstitutionSize = {
 } as const;
 export type InstitutionSize = (typeof InstitutionSize)[keyof typeof InstitutionSize];
 
+export type UsageFeeEntry = {
+  division: string;
+  fee: number;
+};
+
+export type Institution = {
+  id: string;
+  prefecture: string;
+  municipality: string;
+  building: string;
+  institution: string;
+  building_kana: string;
+  institution_kana: string;
+  building_system_name: string;
+  institution_system_name: string;
+  capacity?: number | null;
+  area?: number | null;
+  institution_size: string;
+  fee_divisions: string[];
+  weekday_usage_fee: UsageFeeEntry[];
+  holiday_usage_fee: UsageFeeEntry[];
+  address: string;
+  is_available_strings: string;
+  is_available_woodwind: string;
+  is_available_brass: string;
+  is_available_percussion: string;
+  is_equipped_music_stand: string;
+  is_equipped_piano: string;
+  website_url: string;
+  layout_image_url: string;
+  lottery_period: string;
+  note: string;
+};
+
 // Scraper-compatible type aliases
 export type Division = ReservationDivision;
 export type Status = ReservationStatus;

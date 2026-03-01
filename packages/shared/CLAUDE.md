@@ -14,13 +14,15 @@ Uses `as const` objects with dual-export pattern (`export const Foo = { ... } as
 - `AvailabilityDivision` — AVAILABLE, UNAVAILABLE, UNKNOWN
 - `EquipmentDivision` — EQUIPPED, UNEQUIPPED, UNKNOWN
 - `InstitutionSize` — LARGE, MEDIUM, SMALL, UNKNOWN
+- `UsageFeeEntry` — `{ division: string, fee: number }` for fee schedule entries
+- `Institution` — full institution record type (25 fields: id, names, location, fees, availability, equipment, etc.)
 - Aliases: `Division = ReservationDivision`, `Status = ReservationStatus`, `Reservation`, `TransformOutput`
 
 ### Municipality Registry (`registry.ts`)
 
 - `MUNICIPALITIES` — 10 municipality configs with `as const satisfies Record<string, MunicipalityConfig>`
 - Each config: `key`, `slug`, `prefecture`, `label`, `reservationExcluded`, mappings for `reservationStatus`, `reservationDivision`, `feeDivision`
-- `getMunicipalityBySlug(slug)`, `getMunicipalityKeyBySlug(slug)`, `getReservationTargets()`
+- `getMunicipalityBySlug(slug)`, `getMunicipalityKeyBySlug(slug)`, `getReservationTargets()`, `getAllMunicipalityTargets()`
 - Types: `MunicipalityConfig`, `MunicipalityKey`
 
 ### ScraperModule Interface (`scraper.ts`)
