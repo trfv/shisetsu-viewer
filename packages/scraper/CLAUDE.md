@@ -7,7 +7,8 @@ Playwright-based web scrapers that navigate municipal reservation systems, extra
 ```bash
 npm run test -w @shisetsu-viewer/scraper              # Run scraper tests (Playwright)
 npm run update:reservations -w @shisetsu-viewer/scraper  # Upload reservation data to Hasura
-npm run update:institutions -w @shisetsu-viewer/scraper  # Upload institution data to Hasura
+npm run update:institutions -w @shisetsu-viewer/scraper  # Upload institution data from local JSON to Hasura
+npm run export:institutions -w @shisetsu-viewer/scraper  # Export institution data from Hasura to local JSON
 ```
 
 ## Architecture
@@ -29,7 +30,14 @@ Scrapers run as Playwright tests via `createScraperTests()` from `common/testFac
 - Test output is written to `test-results/<municipality>/<facility>.json`
 - Validates output via `validateTransformOutput()` before writing
 
-### Data Upload Pipeline
+### Institution Data Management
+
+Institution metadata is stored as JSON files in `data/institutions/{prefecture}-{slug}.json` (one file per municipality). These files are the source of truth, version-controlled, and AI-editable. Each file contains an array of `Institution` objects in DB-ready format (enum values, not Japanese text).
+
+- `tools/updateInstitutions.ts` reads local JSON files and upserts to Hasura
+- `tools/exportInstitutions.ts` queries Hasura and writes JSON files (for initial migration or re-export)
+
+### Reservation Data Upload Pipeline
 
 1. Scraper tests produce JSON in `test-results/<municipality>/`
 2. `tools/updateReservations.ts` reads JSON, resolves institution IDs via GraphQL, upserts reservation records
@@ -51,9 +59,12 @@ common/           — Shared utilities
   dateUtils.ts    — toISODateString() with Japanese calendar support
   arrayUtils.ts   — stripTrailingEmptyValue()
   playwrightUtils.ts — selectAllOptions(), getCellValue()
-tools/            — Data upload scripts
+data/             — Local data files (source of truth for institution metadata)
+  institutions/   — JSON files per municipality (e.g., tokyo-koutou.json)
+tools/            — Data upload/export scripts
   updateReservations.ts — Reservation data uploader
-  updateInstitutions.ts — Institution data uploader
+  updateInstitutions.ts — Institution data uploader (reads from data/institutions/)
+  exportInstitutions.ts — Institution data exporter (writes to data/institutions/)
   request.ts      — GraphQL client with retry
 ```
 

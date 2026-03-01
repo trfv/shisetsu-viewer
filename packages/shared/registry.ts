@@ -423,3 +423,7 @@ export function getReservationTargets(): string[] {
     .filter((m) => !m.reservationExcluded)
     .map((m) => `${m.prefecture}-${m.slug}`);
 }
+
+export function getAllMunicipalityTargets(): string[] {
+  return Object.values(MUNICIPALITIES).map((m) => `${m.prefecture}-${m.slug}`);
+}
