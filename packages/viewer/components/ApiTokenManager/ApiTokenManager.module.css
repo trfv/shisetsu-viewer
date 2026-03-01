@@ -1,0 +1,178 @@
+.container {
+  margin-top: 16px;
+}
+
+.createForm {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.nameInput {
+  flex: 1;
+  max-width: 300px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  background: var(--color-bg-paper);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+}
+
+.nameInput:focus {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -1px;
+}
+
+.createButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.createButton:hover {
+  opacity: 0.9;
+}
+
+.createButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tokenList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tokenItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  background: var(--color-bg-paper);
+}
+
+.tokenInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tokenName {
+  font-weight: 600;
+}
+
+.tokenMeta {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}
+
+.deleteButton {
+  padding: 6px 12px;
+  border: 1px solid var(--color-error);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-error);
+  font-size: var(--font-size-small);
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background: var(--color-error);
+  color: white;
+}
+
+.newTokenDialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialogContent {
+  max-width: 500px;
+  width: 90%;
+  padding: 24px;
+  border-radius: var(--border-radius);
+  background: var(--color-bg-paper);
+  color: var(--color-text);
+  box-shadow: var(--shadow-4);
+}
+
+.dialogTitle {
+  margin: 0 0 8px;
+  font-size: var(--font-size-large);
+}
+
+.dialogWarning {
+  margin-bottom: 16px;
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+}
+
+.tokenDisplay {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tokenValue {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  font-family: monospace;
+  font-size: var(--font-size-small);
+  word-break: break-all;
+  user-select: all;
+}
+
+.copyButton {
+  padding: 8px 12px;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  background: var(--color-bg-paper);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.copyButton:hover {
+  background: var(--color-action-hover);
+}
+
+.dialogClose {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+}
+
+.errorMessage {
+  margin-bottom: 16px;
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+}
+
+.emptyMessage {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+}

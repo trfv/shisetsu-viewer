@@ -31,6 +31,13 @@ const config: KnipConfig = {
         "vitest", // provided by root workspace
       ],
     },
+    "packages/mcp-server": {
+      entry: ["worker.ts"],
+      ignoreBinaries: ["wrangler"],
+      ignoreDependencies: [
+        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
+      ],
+    },
   },
 };
 

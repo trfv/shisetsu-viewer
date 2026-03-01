@@ -19,6 +19,7 @@
   "references": [
     { "path": "./packages/shared" },
     { "path": "./packages/scraper" },
-    { "path": "./packages/viewer" }
+    { "path": "./packages/viewer" },
+    { "path": "./packages/mcp-server" }
   ]
 }

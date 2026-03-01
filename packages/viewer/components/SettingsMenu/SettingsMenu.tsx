@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "wouter";
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useColorMode } from "../../contexts/ColorMode";
@@ -22,6 +23,7 @@ export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoading, token, login, logout } = useAuth0();
   const { mode, setMode } = useColorMode();
+  const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -93,6 +95,26 @@ export const SettingsMenu = () => {
               </button>
             ))}
           </div>
+
+          {token && (
+            <>
+              <div className={styles["divider"]} role="separator" />
+              <div className={styles["section"]}>
+                <button
+                  className={styles["menuItem"]}
+                  onClick={() => {
+                    close();
+                    setLocation(ROUTES.settings);
+                  }}
+                  role="menuitem"
+                  type="button"
+                >
+                  <SettingsIcon size={16} />
+                  <span>設定</span>
+                </button>
+              </div>
+            </>
+          )}
 
           <div className={styles["divider"]} role="separator" />
 
