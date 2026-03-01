@@ -1,0 +1,4386 @@
+[
+  {
+    "id": "b3ed861c-c057-4b71-8678-93b7fea06202",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクト２１",
+    "institution": "ホール",
+    "building_kana": "アクトニジュウイチ",
+    "institution_kana": "ホール",
+    "building_system_name": "アクト２１",
+    "institution_system_name": "ホール",
+    "capacity": 100,
+    "area": 194,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東尾久五丁目9番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a001/shisetsuannai/koukyoushisetsu/bunka002.html",
+    "layout_image_url": "",
+    "lottery_period": "11ヶ月前の同じ日",
+    "note": "ピアノは電子ピアノ"
+  },
+  {
+    "id": "499c7b92-a3a9-4663-a3db-a7bb6cabaace",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "第1会議室",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "ダイ1カイギシツ",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "第１会議室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "b4963042-88b4-446f-910e-5b94f352b212",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "第2会議室",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "ダイ2カイギシツ",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "第２会議室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "54961ddf-0b1b-4fca-892e-23ffd225e914",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "第3会議室",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "ダイ3カイギシツ",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "第３会議室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "397753e5-dcef-443c-a430-d733c5ab097a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "多目的ホール1",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "タモクテキホール1",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "多目的ホール１",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "6bacd2d6-3a1b-406d-824c-6661820fdb76",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "多目的ホール2",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "タモクテキホール2",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "多目的ホール２",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "92cac1a5-450a-436e-beb4-936cb7749119",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "アクロスあらかわ",
+    "institution": "多目的ホール全面",
+    "building_kana": "アクロスアラカワ",
+    "institution_kana": "タモクテキホールゼンメン",
+    "building_system_name": "アクロスあらかわ",
+    "institution_system_name": "多目的ホール全面",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川二丁目57番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": "新型コロナ対策中のある時期の定員しか記載なし。"
+  },
+  {
+    "id": "6af9d050-c748-4c02-8979-10b29a7ec9f8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒川山吹ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "アラカワヤマブキフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "荒川山吹ふれあい館",
+    "institution_system_name": "３階多目的室",
+    "capacity": 100,
+    "area": 194,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川七丁目6番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "f4866181-adf3-4bd5-9251-9288327a9b60",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒川山吹ふれあい館",
+    "institution": "和室1",
+    "building_kana": "アラカワヤマブキフレアイカン",
+    "institution_kana": "ワシツ1",
+    "building_system_name": "荒川山吹ふれあい館",
+    "institution_system_name": "１階和室１",
+    "capacity": 30,
+    "area": 46,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川七丁目6番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "42c506d8-1d52-4625-b064-5d94568cea15",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒川山吹ふれあい館",
+    "institution": "和室1・2",
+    "building_kana": "アラカワヤマブキフレアイカン",
+    "institution_kana": "ワシツ1・2",
+    "building_system_name": "荒川山吹ふれあい館",
+    "institution_system_name": "１階和室１・２",
+    "capacity": 60,
+    "area": 79,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川七丁目6番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "86a8e439-a723-4070-bc68-1ef1570b5221",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒川山吹ふれあい館",
+    "institution": "和室2",
+    "building_kana": "アラカワヤマブキフレアイカン",
+    "institution_kana": "ワシツ2",
+    "building_system_name": "荒川山吹ふれあい館",
+    "institution_system_name": "１階和室２",
+    "capacity": 30,
+    "area": 33,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川七丁目6番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "3ff56ac9-50a4-4f03-b678-7794bee4b446",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒木田ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "アラキダフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "荒木田ふれあい館",
+    "institution_system_name": "３階音楽室",
+    "capacity": 30,
+    "area": 57,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "町屋六丁目13番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba013.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "e2776239-3e31-4f53-9e7b-dc36d03a7934",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "荒木田ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "アラキダフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "荒木田ふれあい館",
+    "institution_system_name": "１階多目的室",
+    "capacity": 125,
+    "area": 235,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "町屋六丁目13番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba013.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "188ef84d-fadb-42c3-ab86-ed0041f9335f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "石浜ふれあい館",
+    "institution": "和室1",
+    "building_kana": "イシハマフレアイカン",
+    "institution_kana": "ワシツ1",
+    "building_system_name": "石浜ふれあい館",
+    "institution_system_name": "３階和室１",
+    "capacity": 15,
+    "area": 39,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住三丁目28番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "f6117e57-7723-4917-a0b4-71db065ba456",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "石浜ふれあい館",
+    "institution": "和室1・2",
+    "building_kana": "イシハマフレアイカン",
+    "institution_kana": "ワシツ1・2",
+    "building_system_name": "石浜ふれあい館",
+    "institution_system_name": "３階和室１・２",
+    "capacity": 30,
+    "area": 73,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住三丁目28番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "017d8f1c-dd07-4945-be2d-900aecf62f16",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "石浜ふれあい館",
+    "institution": "和室2",
+    "building_kana": "イシハマフレアイカン",
+    "institution_kana": "ワシツ2",
+    "building_system_name": "石浜ふれあい館",
+    "institution_system_name": "３階和室２",
+    "capacity": 15,
+    "area": 34,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住三丁目28番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "9d68d127-2bee-491c-96e2-7d8e7a3f4e14",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久区民事務所ひろば館",
+    "institution": "301洋室",
+    "building_kana": "オククミンジムショヒロバカン",
+    "institution_kana": "301ヨウシツ",
+    "building_system_name": "尾久区民事務所ひろば館",
+    "institution_system_name": "３０１洋室",
+    "capacity": 60,
+    "area": 83,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久三丁目7番15号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba022.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "349ad387-680a-4d3d-b9ed-ca05c651655f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "４階多目的室",
+    "capacity": 100,
+    "area": 208,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "ccb15cef-3e4d-4d67-a301-3801f5ae8300",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "レクホール",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "レクホール",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "４階レクホール",
+    "capacity": 50,
+    "area": 105,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "2c7e810b-8b6b-4586-8b9b-ae4562dc15e1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "和室1",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "ワシツ1",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "３階和室１",
+    "capacity": 20,
+    "area": 46,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "68878654-ba90-4cd5-897d-bd2033b2bcc6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "和室1・2",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "ワシツ1・2",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "３階和室１・２",
+    "capacity": 35,
+    "area": 74,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "c108b932-4cfe-4b10-88d4-a8293238e723",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "和室2",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "ワシツ2",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "３階和室２",
+    "capacity": 15,
+    "area": 28,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "b8fa880f-d1cb-4c00-bb7c-271398b306be",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "尾久ふれあい館",
+    "institution": "和室3",
+    "building_kana": "オクフレアイカン",
+    "institution_kana": "ワシツ3",
+    "building_system_name": "尾久ふれあい館",
+    "institution_system_name": "３階和室３",
+    "capacity": 20,
+    "area": 39,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久二丁目25番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "b52b0a98-31da-4133-9d4e-012d60c9b689",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "峡田ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "カイタフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "峡田ふれあい館",
+    "institution_system_name": "２階音楽室",
+    "capacity": 25,
+    "area": 67,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目3番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "5d0fd0c7-95a4-41bf-b580-24ff6c2d3c4a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "峡田ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "カイタフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "峡田ふれあい館",
+    "institution_system_name": "３階多目的室",
+    "capacity": 100,
+    "area": 225,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目3番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "e7f3b552-0adb-4d0b-8bb3-a7ce037264f3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "峡田ふれあい館",
+    "institution": "和室1",
+    "building_kana": "カイタフレアイカン",
+    "institution_kana": "ワシツ1",
+    "building_system_name": "峡田ふれあい館",
+    "institution_system_name": "２階和室１",
+    "capacity": 25,
+    "area": 48,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目3番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "f0fb4173-526a-44fe-92b1-1b395c7fac51",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "峡田ふれあい館",
+    "institution": "和室1・2",
+    "building_kana": "カイタフレアイカン",
+    "institution_kana": "ワシツ1・2",
+    "building_system_name": "峡田ふれあい館",
+    "institution_system_name": "２階和室１・２",
+    "capacity": 35,
+    "area": 67,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目3番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "348bd981-6fd4-48e0-8fd2-bcf252190d07",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "峡田ふれあい館",
+    "institution": "和室2",
+    "building_kana": "カイタフレアイカン",
+    "institution_kana": "ワシツ2",
+    "building_system_name": "峡田ふれあい館",
+    "institution_system_name": "２階和室２",
+    "capacity": 10,
+    "area": 19,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目3番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "d6c5573b-ce54-41ed-b55e-89bfbc533e59",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "熊野前ひろば館",
+    "institution": "多目的室",
+    "building_kana": "クマノゼンヒロバカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "熊野前ひろば館",
+    "institution_system_name": "多目的室",
+    "capacity": 70,
+    "area": 139,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東尾久五丁目9番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a036/shisetsuannai/koukyoushisetsu/hiroba020.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "e8e9dceb-3ac4-4bf0-98f2-4b377646577e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "汐入ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "シオイリフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "汐入ふれあい館",
+    "institution_system_name": "２階多目的室",
+    "capacity": 120,
+    "area": 210,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住八丁目2番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "225965ed-577d-4865-93ca-189d5531b101",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "汐入ふれあい館",
+    "institution": "和室",
+    "building_kana": "シオイリフレアイカン",
+    "institution_kana": "ワシツ",
+    "building_system_name": "汐入ふれあい館",
+    "institution_system_name": "２階和室",
+    "capacity": 60,
+    "area": 101,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住八丁目2番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "74b638bd-9b03-4a55-a14c-f0f3241b24ea",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "生涯学習センター",
+    "institution": "音楽室",
+    "building_kana": "ショウガイガクシュウセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "生涯学習センター",
+    "institution_system_name": "音楽室",
+    "capacity": 40,
+    "area": 96,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 750,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川3-49-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.arakawa-sgc.com/",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": "アンプや大きな楽器の使用、大人数でのコーラスは不可。"
+  },
+  {
+    "id": "a6a84115-35bb-4712-8478-d7be2d808a0a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "生涯学習センター",
+    "institution": "体育館",
+    "building_kana": "ショウガイガクシュウセンター",
+    "institution_kana": "タイイクカン",
+    "building_system_name": "生涯学習センター",
+    "institution_system_name": "体育館",
+    "capacity": null,
+    "area": 585,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1750,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川3-49-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.arakawa-sgc.com/",
+    "layout_image_url": "",
+    "lottery_period": "利用日の前月の2日",
+    "note": ""
+  },
+  {
+    "id": "f48ce0cb-2f55-4fa0-be6a-7e0ef714821c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "西尾久ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "ニシオヒサフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "西尾久ふれあい館",
+    "institution_system_name": "３階多目的室",
+    "capacity": 110,
+    "area": 197,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西尾久八丁目33番31号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba016.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "aceb35b3-825c-457c-810a-6866febbe7f7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "西日暮里二丁目ひろば館",
+    "institution": "遊戯室",
+    "building_kana": "ニシニッポリニチョウメヒロバカン",
+    "institution_kana": "ユウギシツ",
+    "building_system_name": "西日暮里二丁目ひろば館",
+    "institution_system_name": "遊戯室",
+    "capacity": 15,
+    "area": 90,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区西日暮里二丁目32番25号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a036/shisetsuannai/koukyoushisetsu/hiroba028.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "6a22acfd-ca3a-4726-b395-034d243738d9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "西日暮里ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "ニシニッポリフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "西日暮里ふれあい館",
+    "institution_system_name": "２階音楽室",
+    "capacity": 25,
+    "area": 49,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西日暮里六丁目24番4号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba026.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "698c5bf2-50be-40f0-bde2-b2fd3de7c3de",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "日暮里ひろば館",
+    "institution": "201洋室",
+    "building_kana": "ニッポリヒロバカン",
+    "institution_kana": "201ヨウシツ",
+    "building_system_name": "日暮里ひろば館",
+    "institution_system_name": "２０１洋室",
+    "capacity": 50,
+    "area": 60,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西日暮里二丁目10番9号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "fc337e43-94dd-4199-89ba-27057f8b97ea",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "日暮里ひろば館",
+    "institution": "301洋室",
+    "building_kana": "ニッポリヒロバカン",
+    "institution_kana": "301ヨウシツ",
+    "building_system_name": "日暮里ひろば館",
+    "institution_system_name": "３０１洋室",
+    "capacity": 80,
+    "area": 96,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西日暮里二丁目10番9号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "da6bd749-8f57-4c87-8f29-3906dcb0df62",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "日暮里ひろば館",
+    "institution": "302洋室",
+    "building_kana": "ニッポリヒロバカン",
+    "institution_kana": "302ヨウシツ",
+    "building_system_name": "日暮里ひろば館",
+    "institution_system_name": "３０２洋室",
+    "capacity": 25,
+    "area": 32,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西日暮里二丁目10番9号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "517c6ac9-dc58-446d-9ead-7871f803c8f9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "日暮里ひろば館",
+    "institution": "304洋室",
+    "building_kana": "ニッポリヒロバカン",
+    "institution_kana": "304ヨウシツ",
+    "building_system_name": "日暮里ひろば館",
+    "institution_system_name": "３０４洋室",
+    "capacity": 12,
+    "area": 16,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "西日暮里二丁目10番9号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "981530a9-0d81-4fed-a779-bec2155339ce",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "東尾久ひろば館",
+    "institution": "101洋室",
+    "building_kana": "ヒガシオグヒロバカン",
+    "institution_kana": "101ヨウシツ",
+    "building_system_name": "東尾久ひろば館",
+    "institution_system_name": "１０１洋室",
+    "capacity": 30,
+    "area": 71,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東尾久三丁目5番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": "令和4年3月31日をもって閉館"
+  },
+  {
+    "id": "fa9e759d-e326-482c-943e-5aa925de56f1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "東尾久ひろば館",
+    "institution": "201洋室",
+    "building_kana": "ヒガシオグヒロバカン",
+    "institution_kana": "201ヨウシツ",
+    "building_system_name": "東尾久ひろば館",
+    "institution_system_name": "２０１洋室",
+    "capacity": 15,
+    "area": 22,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東尾久三丁目5番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": "令和4年3月31日をもって閉館"
+  },
+  {
+    "id": "94701f06-97b8-405f-a5ce-1d1b9b7000fe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "東尾久ひろば館",
+    "institution": "301洋室",
+    "building_kana": "ヒガシオグヒロバカン",
+    "institution_kana": "301ヨウシツ",
+    "building_system_name": "東尾久ひろば館",
+    "institution_system_name": "３０１洋室",
+    "capacity": 20,
+    "area": 47,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東尾久三丁目5番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": "令和4年3月31日をもって閉館"
+  },
+  {
+    "id": "b4ab050c-f74f-423e-a62c-96e83ee3d379",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "東尾久本町通りふれあい館",
+    "institution": "2階音楽室",
+    "building_kana": "ヒガシオクホンチョウドオリフレアイカン",
+    "institution_kana": "2カイオンガクシツ",
+    "building_system_name": "東尾久本町通りふれあい館",
+    "institution_system_name": "２階音楽室",
+    "capacity": 20,
+    "area": 38,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東尾久2-37-14",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "65919da0-a6d6-4882-92dc-26f60c155310",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "東日暮里ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "ヒガシニッポリフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "東日暮里ふれあい館",
+    "institution_system_name": "１階音楽室",
+    "capacity": 25,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里一丁目17番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba024.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "08825768-be18-44d6-bea3-6a2ba4c3d9b9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ひぐらしふれあい館",
+    "institution": "3階音楽室",
+    "building_kana": "ヒグラシフレアイカン",
+    "institution_kana": "3カイオンガクシツ",
+    "building_system_name": "ひぐらしふれあい館",
+    "institution_system_name": "３階音楽室",
+    "capacity": 20,
+    "area": 43,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東日暮里6-28-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "a1e22be0-8dd6-4462-9756-e8befabc4a51",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ひぐらしふれあい館",
+    "institution": "3階多目的室",
+    "building_kana": "ヒグラシフレアイカン",
+    "institution_kana": "3カイタモクテキシツ",
+    "building_system_name": "ひぐらしふれあい館",
+    "institution_system_name": "３階多目的室",
+    "capacity": 85,
+    "area": 169,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東日暮里6-28-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "f6dcf807-11b5-49ce-b0ea-aeba5a5f686a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ひぐらしふれあい館",
+    "institution": "3階レクホール",
+    "building_kana": "ヒグラシフレアイカン",
+    "institution_kana": "3カイレクホール",
+    "building_system_name": "ひぐらしふれあい館",
+    "institution_system_name": "３階レクホール",
+    "capacity": 40,
+    "area": 40,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東日暮里6-28-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "72800f77-3cc9-4569-b204-da2aac9adeb2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ひぐらしふれあい館",
+    "institution": "4階洋室3",
+    "building_kana": "ヒグラシフレアイカン",
+    "institution_kana": "4カイヨウシツ3",
+    "building_system_name": "ひぐらしふれあい館",
+    "institution_system_name": "４階洋室３",
+    "capacity": 30,
+    "area": 77,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区東日暮里6-28-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "6ec56dc7-bf52-4301-82a8-aba0ea1a62ba",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "町屋ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "マチヤフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "町屋ふれあい館",
+    "institution_system_name": "２階音楽室",
+    "capacity": 25,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "町屋一丁目35番8号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba014.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "c3e72734-760a-48f0-927a-7e145fdf574b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "町屋文化センター",
+    "institution": "音楽練習室",
+    "building_kana": "マチヤブンカセンター",
+    "institution_kana": "オンガクレンシュウシツ",
+    "building_system_name": "町屋文化センター",
+    "institution_system_name": "音楽練習室",
+    "capacity": 30,
+    "area": 60.78,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川七丁目20番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://machiya.acc-arakawa.jp/index.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "9f12f566-88f9-49a4-b9b7-63e70dcb9e66",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "三河島ひろば館",
+    "institution": "いこい室",
+    "building_kana": "ミカワシマムネヒロバカン",
+    "institution_kana": "イコイシツ",
+    "building_system_name": "三河島ひろば館",
+    "institution_system_name": "いこい室",
+    "capacity": 50,
+    "area": 70,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川三丁目36番4号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba010.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "263ef2e2-b768-4fb7-8183-a88dfee24e54",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "南千住駅前ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "ミナミセンジュエキマエフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "南千住駅前ふれあい館",
+    "institution_system_name": "２階多目的室",
+    "capacity": 90,
+    "area": 182,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区南千住七丁目1番1号アクレスティ南千住2階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba003.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "41ad34e2-f6e5-4990-b88c-c8413b4519fc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "南千住ふれあい館",
+    "institution": "音楽室",
+    "building_kana": "ミナミセンジュフレアイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "南千住ふれあい館",
+    "institution_system_name": "３階音楽室",
+    "capacity": 25,
+    "area": 68,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住六丁目36番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba002.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "45d1cdd3-1b1c-4efa-9e13-c0875476bd6d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "南千住ふれあい館",
+    "institution": "多目的室",
+    "building_kana": "ミナミセンジュフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "南千住ふれあい館",
+    "institution_system_name": "２階多目的室",
+    "capacity": 90,
+    "area": 200,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "南千住六丁目36番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba002.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "f95865f2-1c10-4d79-aac7-7a659c289118",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "宮地ひろば館",
+    "institution": "洋室",
+    "building_kana": "ミヤジヒロバカン",
+    "institution_kana": "ヨウシツ",
+    "building_system_name": "宮地ひろば館",
+    "institution_system_name": "４階洋室",
+    "capacity": 30,
+    "area": 47,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川五丁目12番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a035/shisetsuannai/miyachihirobakan.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "2faae78d-ace2-4aee-939b-594e6dd6fb48",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "宮地ひろば館",
+    "institution": "和室",
+    "building_kana": "ミヤジヒロバカン",
+    "institution_kana": "ワシツ",
+    "building_system_name": "宮地ひろば館",
+    "institution_system_name": "５階和室",
+    "capacity": 30,
+    "area": 43,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川五丁目12番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a035/shisetsuannai/miyachihirobakan.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "5eeb57d4-a4c5-46ba-9d17-f810ba9fc9ea",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ムーブ町屋",
+    "institution": "スタジオ",
+    "building_kana": "ムーブマチヤ",
+    "institution_kana": "スタジオ",
+    "building_system_name": "ムーブ町屋",
+    "institution_system_name": "スタジオ",
+    "capacity": 10,
+    "area": 30,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川7-50-9 センターまちや3F",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.sunny-move.jp/move/",
+    "layout_image_url": "",
+    "lottery_period": "11ヶ月前",
+    "note": ""
+  },
+  {
+    "id": "28bbef1f-d90c-4996-b09b-03bbab2e2ce1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "ムーブ町屋",
+    "institution": "ムーブホール",
+    "building_kana": "ムーブマチヤ",
+    "institution_kana": "ムーブホール",
+    "building_system_name": "ムーブ町屋",
+    "institution_system_name": "ムーブホール",
+    "capacity": null,
+    "area": 230,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 31000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 30000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 38000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "荒川区荒川7-50-9 センターまちや3F",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.sunny-move.jp/move/",
+    "layout_image_url": "",
+    "lottery_period": "11ヶ月前",
+    "note": "席数296"
+  },
+  {
+    "id": "9e24b347-d688-489d-81ed-eb91f8bcc972",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "多目的室",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "４階多目的室",
+    "capacity": 180,
+    "area": 312,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "b363fd7e-cf10-4c13-a859-760d24cd18fd",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "洋室2",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "ヨウシツ2",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "３階洋室２",
+    "capacity": 30,
+    "area": 76,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "4f3df883-ee38-4e4d-87ee-c39db37f2c69",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "レクホール1",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "レクホール1",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "４階レクホール１",
+    "capacity": 20,
+    "area": 49,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "5ae787f7-e931-47a0-9e50-2f3ecfe238a1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "レクホール1・2",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "レクホール1・2",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "４階レクホール１・２",
+    "capacity": 40,
+    "area": 95,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "7b09bf34-6eb2-420f-a7d0-d8db20f6a752",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "レクホール2",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "レクホール2",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "４階レクホール２",
+    "capacity": 20,
+    "area": 46,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "c7de114c-0727-4315-84cd-3bda668d2328",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "和室1",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "ワシツ1",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "３階和室１",
+    "capacity": 20,
+    "area": 59,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "c31935eb-fbec-4492-bd4d-2f7793fe24d5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "和室1・2",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "ワシツ1・2",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "３階和室１・２",
+    "capacity": 35,
+    "area": 100,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  },
+  {
+    "id": "f762bc99-0ebf-44d7-95c1-14c5bd0e99d4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "building": "夕やけこやけふれあい館",
+    "institution": "和室2",
+    "building_kana": "ユウヤケコヤケフレアイカン",
+    "institution_kana": "ワシツ2",
+    "building_system_name": "夕やけこやけふれあい館",
+    "institution_system_name": "３階和室２",
+    "capacity": 15,
+    "area": 41,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
+    "layout_image_url": "",
+    "lottery_period": "1ヶ月前の同じ日",
+    "note": ""
+  }
+]

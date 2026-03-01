@@ -5,7 +5,7 @@ export {
   AvailabilityDivision,
   EquipmentDivision,
   InstitutionSize,
-} from "./types";
+} from "./types.ts";
 
 export type {
   Division,
@@ -14,7 +14,7 @@ export type {
   TransformOutput,
   UsageFeeEntry,
   Institution,
-} from "./types";
+} from "./types.ts";
 
 export {
   MUNICIPALITIES,
@@ -23,8 +23,8 @@ export {
   getMunicipalityKeyBySlug,
   getReservationTargets,
   getAllMunicipalityTargets,
-} from "./registry";
+} from "./registry.ts";
 
-export type { MunicipalityConfig, MunicipalityKey } from "./registry";
+export type { MunicipalityConfig, MunicipalityKey } from "./registry.ts";
 
-export type { ScraperModule } from "./scraper";
+export type { ScraperModule } from "./scraper.ts";

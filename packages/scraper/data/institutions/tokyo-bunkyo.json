@@ -1,0 +1,2282 @@
+[
+  {
+    "id": "06d4905b-18e0-4f0a-b423-6d9628be13aa",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "学習室A",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "ガクシュウシツA",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "学習室Ａ",
+    "capacity": 36,
+    "area": 72,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-otowa/study-a.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "57d0ecbf-f728-4fdb-81e2-6c8d0a58cd53",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "学習室B",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "ガクシュウシツB",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "学習室Ｂ",
+    "capacity": 30,
+    "area": 64,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-otowa/study-b.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "24b9e01e-a268-455b-8d6d-25c74d7710ff",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "多目的ホール",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "多目的ホール",
+    "capacity": 80,
+    "area": 132,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-otowa/multipurpose.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "b8fe3e7a-c671-9a3e-fd40-6b6b5fd2a3ba",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "多目的ホール+洋室A",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "タモクテキホール ヨウシツA",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "多目的ホール＋洋室Ａ",
+    "capacity": 92,
+    "area": 154,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-otowa/multipurpose.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "ce7ea8eb-11bf-4643-94c6-583084be3f71",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "洋室A",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "ヨウシツA",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "洋室Ａ",
+    "capacity": 12,
+    "area": 22,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-otowa/european-a.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "c3e1ec73-eb87-4ebc-958e-a4c6d7aca9e8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー音羽",
+    "institution": "洋室B",
+    "building_kana": "アカデミーオトワ",
+    "institution_kana": "ヨウシツB",
+    "building_system_name": "アカデミー音羽",
+    "institution_system_name": "洋室Ｂ",
+    "capacity": 8,
+    "area": 14,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区大塚5-40-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.b-academy.jp/rental/ac-otowa/european-b.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "6291a051-569d-49cc-bafc-4207a1599880",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー文京",
+    "institution": "音楽室A",
+    "building_kana": "アカデミーブンキョウ",
+    "institution_kana": "オンガクシツA",
+    "building_system_name": "アカデミー文京",
+    "institution_system_name": "音楽室Ａ",
+    "capacity": 10,
+    "area": 33.8,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-bunkyo/music-a.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "45ab483a-d863-48c8-b63d-1b1fa7077813",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー文京",
+    "institution": "音楽室B",
+    "building_kana": "アカデミーブンキョウ",
+    "institution_kana": "オンガクシツB",
+    "building_system_name": "アカデミー文京",
+    "institution_system_name": "音楽室Ｂ",
+    "capacity": 12,
+    "area": 41.1,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/bunka/academy/bunkyo.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "吹奏楽・打楽器不可"
+  },
+  {
+    "id": "98571d5c-1721-43d5-8f69-89ea2f1f17bc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー文京",
+    "institution": "レクリエーションホール",
+    "building_kana": "アカデミーブンキョウ",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "アカデミー文京",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 160,
+    "area": 199.5,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-bunkyo/recreation.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "吹奏楽・打楽器不可"
+  },
+  {
+    "id": "451d926e-aa05-4980-bb4c-d8cb7bbedab7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー向丘",
+    "institution": "音楽室",
+    "building_kana": "アカデミームコウガオカ",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "アカデミー向丘",
+    "institution_system_name": "音楽室",
+    "capacity": 15,
+    "area": 26,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区向丘1-20-8",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/bunka/academy/mukougaoka.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "bc0a6231-0eae-4414-bee4-ba1c71c79a65",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー向丘",
+    "institution": "学習室",
+    "building_kana": "アカデミームコウガオカ",
+    "institution_kana": "ガクシュウシツ",
+    "building_system_name": "アカデミー向丘",
+    "institution_system_name": "学習室",
+    "capacity": 35,
+    "area": 68,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区向丘1-20-8",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/bunka/academy/mukougaoka.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "大音量不可"
+  },
+  {
+    "id": "5e191f9d-c353-4708-b87a-176ef436ef2f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー向丘",
+    "institution": "レクリエーションホール",
+    "building_kana": "アカデミームコウガオカ",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "アカデミー向丘",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 60,
+    "area": 112,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区向丘1-20-8",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/bunka/academy/mukougaoka.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "大音量不可"
+  },
+  {
+    "id": "7728c4f9-ab10-43a7-9954-b6c5395905de",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー茗台",
+    "institution": "レクリエーションホールA",
+    "building_kana": "アカデミーメイダイ",
+    "institution_kana": "レクリエーションホールA",
+    "building_system_name": "アカデミー茗台",
+    "institution_system_name": "レクリエーションホールＡ",
+    "capacity": 108,
+    "area": 164,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日2-9-5",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-meidai/recreation-a.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "打楽器借りられる"
+  },
+  {
+    "id": "cbaad24e-a6ea-4063-b9cc-abd9dc38c0d9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー茗台",
+    "institution": "レクリエーションホールB",
+    "building_kana": "アカデミーメイダイ",
+    "institution_kana": "レクリエーションホールB",
+    "building_system_name": "アカデミー茗台",
+    "institution_system_name": "レクリエーションホールＢ",
+    "capacity": 120,
+    "area": 251.4,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日2-9-5",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-meidai/recreation-b.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "10152058-ca39-4125-b065-58b3b3a2d211",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "アカデミー湯島",
+    "institution": "視聴覚室",
+    "building_kana": "アカデミーユジマ",
+    "institution_kana": "シチョウカクシツ",
+    "building_system_name": "アカデミー湯島",
+    "institution_system_name": "視聴覚室",
+    "capacity": 56,
+    "area": 106,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区湯島2‐28‐14",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.b-academy.jp/rental/ac-yushima/audiovisual.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前20日-月末",
+    "note": "打楽器は和太鼓は不可のみ明記有り,音量制限あるので事前問い合わせしろとのこと"
+  },
+  {
+    "id": "a7b76f6d-7489-4bcd-9525-9b6195179cd5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "大原地域活動センター",
+    "institution": "多目的室A",
+    "building_kana": "オオハラチイキカツドウセンター",
+    "institution_kana": "タモクテキシツA",
+    "building_system_name": "大原地域活動センター",
+    "institution_system_name": "多目的室Ａ",
+    "capacity": 80,
+    "area": 168,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区千石1-4-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/ohara.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/8788/oharapanfuretoreiwagannen.pdf",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "87743200-2d23-4ed8-b857-6528aaeb0a9d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "大原地域活動センター",
+    "institution": "多目的室B",
+    "building_kana": "オオハラチイキカツドウセンター",
+    "institution_kana": "タモクテキシツB",
+    "building_system_name": "大原地域活動センター",
+    "institution_system_name": "多目的室Ｂ",
+    "capacity": 30,
+    "area": 66,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区千石1-4-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/ohara.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/8788/oharapanfuretoreiwagannen.pdf",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "5e9ddcd9-414b-4804-8579-57244787172e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "大原地域活動センター",
+    "institution": "多目的室C",
+    "building_kana": "オオハラチイキカツドウセンター",
+    "institution_kana": "タモクテキシツC",
+    "building_system_name": "大原地域活動センター",
+    "institution_system_name": "多目的室Ｃ",
+    "capacity": 30,
+    "area": 62,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区千石1-4-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/ohara.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/8788/oharapanfuretoreiwagannen.pdf",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "312bafe6-2451-4e66-ba6a-5791db287582",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "多目的室",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "多目的室Ａ",
+    "capacity": 80,
+    "area": 123,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額,使用可能楽器の記載なし"
+  },
+  {
+    "id": "0f6eb962-3058-4151-b665-80afaf47c10f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールA",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールA",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＡ",
+    "capacity": 80,
+    "area": 144,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "7cd39244-2d6b-4b5c-9530-cee07bdef83e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールA+B",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールA B",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＡ＋Ｂ",
+    "capacity": 200,
+    "area": 288,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "",
+    "lottery_period": "3か月前から",
+    "note": "文京区民半額,ホールA・B同時申し込み"
+  },
+  {
+    "id": "1987bb5f-7cd4-4509-83b5-18f0dc71d832",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールB",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールB",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＢ",
+    "capacity": 80,
+    "area": 144,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "efdf9f12-5b36-42d1-94b5-05d2b1d94ea5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "汐見地域活動センター",
+    "institution": "洋室A+B",
+    "building_kana": "シオミチイキカツドウセンター",
+    "institution_kana": "ヨウシツA B",
+    "building_system_name": "汐見地域活動センター",
+    "institution_system_name": "洋室Ａ＋Ｂ",
+    "capacity": 60,
+    "area": 116,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区千駄木3-2-6",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/shiomi.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "c64c6cd1-048e-42e5-9437-aa6056681f26",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "汐見地域活動センター",
+    "institution": "洋室C+D",
+    "building_kana": "シオミチイキカツドウセンター",
+    "institution_kana": "ヨウシツC D",
+    "building_system_name": "汐見地域活動センター",
+    "institution_system_name": "洋室Ｃ＋Ｄ",
+    "capacity": 28,
+    "area": 53,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区千駄木3-2-6",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/shiomi.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7d0d649a-9919-46f2-a94d-f2618cf93f6b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "不忍通りふれあい館",
+    "institution": "スタジオ",
+    "building_kana": "シノバズドオリフレアイカン",
+    "institution_kana": "スタジオ",
+    "building_system_name": "不忍通りふれあい館",
+    "institution_system_name": "スタジオ",
+    "capacity": 8,
+    "area": 27,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区根津2-20-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/shukai/shinobazu.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/6691/fureaikan_pamphlet.pdf",
+    "lottery_period": "2ヵ月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "701cff5b-4cbc-48b6-9547-b8b2f1733d82",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "不忍通りふれあい館",
+    "institution": "ホール",
+    "building_kana": "シノバズドオリフレアイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "不忍通りふれあい館",
+    "institution_system_name": "ホール",
+    "capacity": 150,
+    "area": 201,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区根津2-20-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/shukai/shinobazu.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/6691/fureaikan_pamphlet.pdf",
+    "lottery_period": "3ヵ月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "ebdd4283-c820-4d09-ab32-ccc7bc6785c8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "不忍通りふれあい館",
+    "institution": "ホール+スタジオ",
+    "building_kana": "シノバズドオリフレアイカン",
+    "institution_kana": "ホール スタジオ",
+    "building_system_name": "不忍通りふれあい館",
+    "institution_system_name": "ホール＋スタジオ",
+    "capacity": 158,
+    "area": 228,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区根津2-20-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/shukai/shinobazu.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0197/6691/fureaikan_pamphlet.pdf",
+    "lottery_period": "3ヵ月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "e3832387-8fc0-4b64-886f-5fc361ca344d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "男女平等センター",
+    "institution": "研修室A",
+    "building_kana": "ダンジョビョウドウセンター",
+    "institution_kana": "ケンシュウシツA",
+    "building_system_name": "男女平等センター",
+    "institution_system_name": "研修室Ａ",
+    "capacity": 96,
+    "area": 195.3,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本郷4-8-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.bunkyo-danjo.jp/index.aspx",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "39558a3c-6df6-4f08-8139-dab9bff422c0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "男女平等センター",
+    "institution": "研修室B",
+    "building_kana": "ダンジョビョウドウセンター",
+    "institution_kana": "ケンシュウシツB",
+    "building_system_name": "男女平等センター",
+    "institution_system_name": "研修室Ｂ",
+    "capacity": 43,
+    "area": 74.1,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本郷4-8-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.bunkyo-danjo.jp/index.aspx",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "54c016ab-f9c2-4ec1-a741-77a8708684a5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京区勤労福祉会館",
+    "institution": "区民会議室",
+    "building_kana": "ブンキョウクキンロウフクシカイカン",
+    "institution_kana": "クミンカイギシツ",
+    "building_system_name": "勤労福祉会館",
+    "institution_system_name": "区民会議室",
+    "capacity": 60,
+    "area": 92,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込4-35-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.bunkyo-kinrou-fukushi.info/facility/kumin_kaigishitsu/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "a0e1cfea-c26d-4dfd-ade9-71ee738cec57",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京区勤労福祉会館",
+    "institution": "第2洋室",
+    "building_kana": "ブンキョウクキンロウフクシカイカン",
+    "institution_kana": "ダイ2ヨウシツ",
+    "building_system_name": "勤労福祉会館",
+    "institution_system_name": "第２洋室",
+    "capacity": 24,
+    "area": 61,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込4-35-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.bunkyo-kinrou-fukushi.info/facility/youshitsu02/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "1f847da4-ae71-0903-f752-6f61c4e7243b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京区勤労福祉会館",
+    "institution": "第3洋室",
+    "building_kana": "ブンキョウクキンロウフクシカイカン",
+    "institution_kana": "ダイ3ヨウシツ",
+    "building_system_name": "勤労福祉会館",
+    "institution_system_name": "第３洋室",
+    "capacity": 15,
+    "area": 61,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込4-35-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.bunkyo-kinrou-fukushi.info/facility/youshitsu03/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "e07754db-d586-4cf4-be43-2381d64988c5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京シビックホール",
+    "institution": "多目的室",
+    "building_kana": "ブンキョウシビックホール",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "シビックホールその他施設",
+    "institution_system_name": "多目的室",
+    "capacity": 160,
+    "area": 213.36,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 23400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 23400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.b-academy.jp/rental/bc/multipurpose.html",
+    "layout_image_url": "https://www.b-academy.jp/rental/upload/rensyuannai.pdf",
+    "lottery_period": "4ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "020e4cc8-8a12-496e-8963-e93369ddf18a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京シビックホール",
+    "institution": "練習室1",
+    "building_kana": "ブンキョウシビックホール",
+    "institution_kana": "レンシュウシツ1",
+    "building_system_name": "シビックホールその他施設",
+    "institution_system_name": "練習室１",
+    "capacity": 40,
+    "area": 107.88,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.b-academy.jp/rental/bc/practice01.html",
+    "layout_image_url": "https://www.b-academy.jp/rental/upload/rensyuannai.pdf",
+    "lottery_period": "4ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "f48c4b7e-afa5-4868-9e4f-c6a924b11e59",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京シビックホール",
+    "institution": "練習室2",
+    "building_kana": "ブンキョウシビックホール",
+    "institution_kana": "レンシュウシツ2",
+    "building_system_name": "シビックホールその他施設",
+    "institution_system_name": "練習室２",
+    "capacity": 20,
+    "area": 95.84,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区春日1-16-21",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.b-academy.jp/rental/bc/practice02.html",
+    "layout_image_url": "https://www.b-academy.jp/rental/upload/rensyuannai.pdf",
+    "lottery_period": "4ヵ月前20日-月末",
+    "note": ""
+  },
+  {
+    "id": "3d9568fe-e3f5-4d60-8455-913a4ec57403",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京福祉センター江戸川橋",
+    "institution": "学習室",
+    "building_kana": "ブンキョウフクシセンターエドガワバシ",
+    "institution_kana": "ガクシュウシツ",
+    "building_system_name": "福祉センター江戸川橋",
+    "institution_system_name": "学習室",
+    "capacity": 30,
+    "area": 51,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区小日向2-16-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "http://www.care-net.biz/13/lien/chiki.php",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0176/2397/mitorizu.pdf",
+    "lottery_period": "3か月前の20日-月末",
+    "note": "防音室,「音量に配慮すべきことございます」要確認"
+  },
+  {
+    "id": "f270e13d-be4e-430b-b6d8-451247c4dd39",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "文京福祉センター江戸川橋",
+    "institution": "視聴覚室",
+    "building_kana": "ブンキョウフクシセンターエドガワバシ",
+    "institution_kana": "シチョウカクシツ",
+    "building_system_name": "福祉センター江戸川橋",
+    "institution_system_name": "視聴覚室",
+    "capacity": 105,
+    "area": 171,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区小日向2-16-15",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.care-net.biz/13/lien/chiki.php",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/var/rev0/0176/2397/mitorizu.pdf",
+    "lottery_period": "3か月前の20日-月末",
+    "note": ""
+  },
+  {
+    "id": "ca453826-ea31-40b1-8614-ae5ee0e82745",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "目白台交流館",
+    "institution": "洋室A",
+    "building_kana": "メジロダイコウリュウカン",
+    "institution_kana": "ヨウシツA",
+    "building_system_name": "目白台交流館",
+    "institution_system_name": "洋室Ａ",
+    "capacity": null,
+    "area": 98,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区目白台3-18-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://mejirodai-krk.roukyou.gr.jp/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "e042b76f-84d2-43ec-962a-bc19cef55393",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "目白台交流館",
+    "institution": "洋室B",
+    "building_kana": "メジロダイコウリュウカン",
+    "institution_kana": "ヨウシツB",
+    "building_system_name": "目白台交流館",
+    "institution_system_name": "洋室Ｂ",
+    "capacity": null,
+    "area": 41.3,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区目白台3-18-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://mejirodai-krk.roukyou.gr.jp/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  }
+]

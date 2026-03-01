@@ -1,4 +1,4 @@
-import { FeeDivision, ReservationDivision, ReservationStatus } from "./types";
+import { FeeDivision, ReservationDivision, ReservationStatus } from "./types.ts";
 
 export interface MunicipalityConfig {
   readonly key: string;

@@ -1,0 +1,1464 @@
+[
+  {
+    "id": "32cba3cf-4bf1-4d5f-8e7c-02a4c9287da5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "阿佐谷地域区民センター",
+    "institution": "音楽室",
+    "building_kana": "アサガヤチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "阿佐谷地域区民センター",
+    "institution_system_name": "音楽室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": {},
+    "holiday_usage_fee": {},
+    "address": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006943.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "720beb2e-1319-4b1d-9857-d29748778452",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "阿佐谷地域区民センター",
+    "institution": "音楽室",
+    "building_kana": "アサガヤチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "阿佐谷地域区民センター（２月まで）",
+    "institution_system_name": "音楽室",
+    "capacity": 40,
+    "area": 80.05,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区阿佐谷南1丁目47番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006943.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "690c5bd2-e4c5-4e3b-bbb3-887f4df4f868",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "阿佐谷地域区民センター",
+    "institution": "音楽室",
+    "building_kana": "アサガヤチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "阿佐谷地域区民センター（４月から）",
+    "institution_system_name": "音楽室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "杉並区阿佐谷南1丁目47番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006943.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "debef11b-87d4-4f53-ae20-ee6f2e3f521b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "阿佐谷地域区民センター",
+    "institution": "楽器練習室",
+    "building_kana": "アサガヤチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "阿佐谷地域区民センター（４月から）",
+    "institution_system_name": "楽器練習室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "杉並区阿佐谷南1丁目47番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "b1bf555e-3277-45aa-8ff3-642d1d0fe8b0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "阿佐谷地域区民センター",
+    "institution": "楽器練習室",
+    "building_kana": "アサガヤチイキクミンセンター",
+    "institution_kana": "ガッキレンシュウシツ",
+    "building_system_name": "阿佐谷地域区民センター",
+    "institution_system_name": "楽器練習室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": {},
+    "holiday_usage_fee": {},
+    "address": "杉並区阿佐谷南1丁目47番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006943.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "331430f0-8953-49bf-b948-09941b4cfe82",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "井草地域区民センター",
+    "institution": "第1音楽室",
+    "building_kana": "イグサチイキクミンセンター",
+    "institution_kana": "ダイ1オンガクシツ",
+    "building_system_name": "井草地域区民センター",
+    "institution_system_name": "第１音楽室",
+    "capacity": 17,
+    "area": 46.7,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区下井草5丁目7番22号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006944.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "杉並区は区外利用者は抽選に参加できない。空き枠予約のみ可。"
+  },
+  {
+    "id": "f0ba44f9-9dc7-4035-8313-5ae8906da949",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "井草地域区民センター",
+    "institution": "第2音楽室",
+    "building_kana": "イグサチイキクミンセンター",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "井草地域区民センター",
+    "institution_system_name": "第２音楽室",
+    "capacity": 37,
+    "area": 84.33,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区下井草5丁目7番22号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006944.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "98d4a42e-2e84-40bd-81f8-790296b621be",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "永福和泉地域区民センター",
+    "institution": "第1音楽室",
+    "building_kana": "エイフクイズミチイキクミンセンター",
+    "institution_kana": "ダイ1オンガクシツ",
+    "building_system_name": "永福和泉地域区民センター",
+    "institution_system_name": "第１音楽室",
+    "capacity": 42,
+    "area": 71.69,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区和泉3丁目8番18号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006945.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "cddb82b0-bae4-4f22-a945-5a2d2337049b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "永福和泉地域区民センター",
+    "institution": "第2音楽室",
+    "building_kana": "エイフクイズミチイキクミンセンター",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "永福和泉地域区民センター",
+    "institution_system_name": "第２音楽室",
+    "capacity": 28,
+    "area": 45.39,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区和泉3丁目8番18号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006945.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "21134045-bdca-4503-952b-eb6886a20e34",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "荻窪地域区民センター",
+    "institution": "音楽室",
+    "building_kana": "オギクボチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "荻窪地域区民センター",
+    "institution_system_name": "音楽室",
+    "capacity": 40,
+    "area": 79.3,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区荻窪2丁目34番20号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006946.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "82fb6614-6acd-4242-9305-3fa6f0c603a0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "荻窪地域区民センター",
+    "institution": "第1・2集会室（一体使用）",
+    "building_kana": "オギクボチイキクミンセンター",
+    "institution_kana": "ダイ1・2シュウカイシツ（イッタイシヨウ）",
+    "building_system_name": "荻窪地域区民センター",
+    "institution_system_name": "第１・２集会室（一体使用）",
+    "capacity": 90,
+    "area": 126.9,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区荻窪2丁目34番20号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006946.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "ef6e3833-31f2-453a-bb23-ecbe1184e03e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "荻窪地域区民センター",
+    "institution": "ピアノ室",
+    "building_kana": "オギクボチイキクミンセンター",
+    "institution_kana": "ピアノシツ",
+    "building_system_name": "荻窪地域区民センター",
+    "institution_system_name": "ピアノ室",
+    "capacity": 2,
+    "area": 9.3,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区荻窪2丁目34番20号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006946.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "78b842d3-ae86-4e90-b8c4-cea99c30147a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "久我山会館",
+    "institution": "ホール",
+    "building_kana": "クガヤマカイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "久我山会館",
+    "institution_system_name": "ホール",
+    "capacity": 180,
+    "area": 232.25,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区久我山3丁目23番20号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/kaikan/1006960.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "区分を跨いで引き続き使用する場合、延長使用料1600円が別途必要。"
+  },
+  {
+    "id": "4f343bab-894c-4333-8994-49c15e0f03a5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "コミュニティふらっと永福",
+    "institution": "楽器練習室",
+    "building_kana": "コミュニティフラットエイフク",
+    "institution_kana": "ガッキレンシュウシツ",
+    "building_system_name": "コミュニティふらっと永福",
+    "institution_system_name": "楽器練習室",
+    "capacity": 5,
+    "area": 22.31,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区永福3丁目51番17号3階",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/flat/1063799.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "ピアノは電子ピアノ。"
+  },
+  {
+    "id": "74cc14a7-f4af-4c29-8199-348f234c1149",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "コミュニティふらっと成田",
+    "institution": "第1・2集会室（一体使用）",
+    "building_kana": "コミュニティフラットナリタ",
+    "institution_kana": "ダイ1・2シュウカイシツ（イッタイシヨウ）",
+    "building_system_name": "コミュニティふらっと成田",
+    "institution_system_name": "第１・２集会室（一体使用）",
+    "capacity": 32,
+    "area": 60.2,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区成田西1丁目28番18号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/flat/1069814.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "2be59997-8242-4127-b76b-070c07dac198",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "コミュニティふらっと成田",
+    "institution": "第3集会室",
+    "building_kana": "コミュニティフラットナリタ",
+    "institution_kana": "ダイ3シュウカイシツ",
+    "building_system_name": "コミュニティふらっと成田",
+    "institution_system_name": "第３集会室",
+    "capacity": 24,
+    "area": 43.33,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区成田西1丁目28番18号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/flat/1069814.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "f3325ddd-d457-4a79-8f93-d7ad3fa6aa07",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "コミュニティふらっと成田",
+    "institution": "多目的室",
+    "building_kana": "コミュニティフラットナリタ",
+    "institution_kana": "タモクテキシツ",
+    "building_system_name": "コミュニティふらっと成田",
+    "institution_system_name": "多目的室",
+    "capacity": 40,
+    "area": 94.75,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区成田西1丁目28番18号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/flat/1069814.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7d75134e-01fc-4533-a501-ac61c8770c81",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "セシオン杉並",
+    "institution": "第1音楽室",
+    "building_kana": "セシオンスギナミ",
+    "institution_kana": "ダイ1オンガクシツ",
+    "building_system_name": "セシオン杉並",
+    "institution_system_name": "第１音楽室",
+    "capacity": 48,
+    "area": 86.07,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区梅里1丁目22番32号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006947.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "令和3年4月1日から令和5年4月（予定）まで休館"
+  },
+  {
+    "id": "c53ada58-46bf-408e-89d0-d132c9615e62",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "セシオン杉並",
+    "institution": "第2音楽室",
+    "building_kana": "セシオンスギナミ",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "セシオン杉並",
+    "institution_system_name": "第２音楽室",
+    "capacity": 18,
+    "area": 38.05,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区梅里1丁目22番32号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006947.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "令和3年4月1日から令和5年4月（予定）まで休館"
+  },
+  {
+    "id": "9706bfb2-6e24-48b0-94a7-d4d9cb821e14",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "高井戸地域区民センター",
+    "institution": "音楽室",
+    "building_kana": "タカイドチイキクミンセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "高井戸地域区民センター",
+    "institution_system_name": "音楽室",
+    "capacity": 42,
+    "area": 98.3,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区高井戸東3丁目7番5号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006948.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "e62e51ed-164c-4e14-aeaa-9cfe70cff6ad",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "高井戸地域区民センター",
+    "institution": "ピアノ室",
+    "building_kana": "タカイドチイキクミンセンター",
+    "institution_kana": "ピアノシツ",
+    "building_system_name": "高井戸地域区民センター",
+    "institution_system_name": "ピアノ室",
+    "capacity": 2,
+    "area": 13.49,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区高井戸東3丁目7番5号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/center/1006948.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7751ab11-3364-4cba-b4af-74485bbd5d03",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "西荻センター・勤福会館",
+    "institution": "第1楽器練習室",
+    "building_kana": "ニシオギセンター・キンフクカイカン",
+    "institution_kana": "ダイ1ガッキレンシュウシツ",
+    "building_system_name": "西荻センター・勤福会館",
+    "institution_system_name": "第１楽器練習室",
+    "capacity": 2,
+    "area": 9.9,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区桃井4丁目3番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://nishiogi-community.jp/center/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "3e47a448-3dbd-4d50-a275-85e23d3962c7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "西荻センター・勤福会館",
+    "institution": "第2音楽室",
+    "building_kana": "ニシオギセンター・キンフクカイカン",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "西荻センター・勤福会館",
+    "institution_system_name": "第２音楽室",
+    "capacity": 25,
+    "area": 57.26,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区桃井4丁目3番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://nishiogi-community.jp/center/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "c5121e8a-55c2-4e9c-bc21-3ab291a39ead",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "西荻センター・勤福会館",
+    "institution": "第2楽器練習室",
+    "building_kana": "ニシオギセンター・キンフクカイカン",
+    "institution_kana": "ダイ2ガッキレンシュウシツ",
+    "building_system_name": "西荻センター・勤福会館",
+    "institution_system_name": "第２楽器練習室",
+    "capacity": 2,
+    "area": 9.31,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 100,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "杉並区桃井4丁目3番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://nishiogi-community.jp/center/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "ac796192-880e-4b6a-9c0e-313999e3f26c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "八成区民集会所",
+    "institution": "第1集会室",
+    "building_kana": "ハチナルクミンシュウカイショ",
+    "institution_kana": "ダイ1シュウカイシツ",
+    "building_system_name": "八成区民集会所",
+    "institution_system_name": "第１集会室",
+    "capacity": 12,
+    "area": 27.8,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区井草1丁目3番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/shukaijo/1006956.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7a99f5af-5066-439a-8a60-24ee44c51d83",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "浜田山会館",
+    "institution": "ホール",
+    "building_kana": "ハマダヤマカイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "浜田山会館",
+    "institution_system_name": "ホール",
+    "capacity": 195,
+    "area": 244.19,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 16000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区浜田山1丁目36番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/kaikan/1006961.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "区分を跨いで引き続き使用する場合、延長使用料1700円が別途必要。"
+  },
+  {
+    "id": "a62823cc-e1c7-4f7a-b7bd-c72034937b76",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "方南会館",
+    "institution": "ホール",
+    "building_kana": "ホウナンカイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "方南会館",
+    "institution_system_name": "ホール",
+    "capacity": 160,
+    "area": 230.17,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区和泉4丁目42番5号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/kaikan/1006962.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "区分を跨いで引き続き使用する場合、延長使用料1600円が別途必要。"
+  },
+  {
+    "id": "e54dd59c-46d7-4e03-950c-ed33785f69cc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "本天沼区民集会所",
+    "institution": "第1集会室",
+    "building_kana": "ホンアマヌマクミンシュウカイショ",
+    "institution_kana": "ダイ1シュウカイシツ",
+    "building_system_name": "本天沼区民集会所",
+    "institution_system_name": "第１集会室",
+    "capacity": 12,
+    "area": 27.54,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区本天沼2丁目12番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/shukaijo/1006958.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "828e372d-0fa5-40a4-a553-f6f26475e08e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "ゆう杉並",
+    "institution": "ホール",
+    "building_kana": "ユウスギナミ",
+    "institution_kana": "ホール",
+    "building_system_name": "ゆう杉並",
+    "institution_system_name": "ホール",
+    "capacity": 114,
+    "area": 286.7,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_MORNING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_MORNING"
+      }
+    ],
+    "address": "杉並区荻窪1丁目56番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/kosodate/center/1006499.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "中学・高校生以外の利用は目的外利用となり、午前9時から正午まで。"
+  },
+  {
+    "id": "f7db7398-3c35-452e-b9c1-13cd2856d9b6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "ゆうゆう今川館",
+    "institution": "ホール",
+    "building_kana": "ユウユウイマガワカン",
+    "institution_kana": "ホール",
+    "building_system_name": "ゆうゆう今川館",
+    "institution_system_name": "ホール",
+    "capacity": 50,
+    "area": 101.8,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区今川4丁目12番10号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/kourei/yuyu/1006422.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "延長利用料は1300円。"
+  },
+  {
+    "id": "fdd79629-43e0-494d-af20-b88445b456d3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUGINAMI",
+    "building": "和田区民集会所",
+    "institution": "第1集会室",
+    "building_kana": "ワダクミンシュウカイショ",
+    "institution_kana": "ダイ1シュウカイシツ",
+    "building_system_name": "和田区民集会所",
+    "institution_system_name": "第１集会室",
+    "capacity": 20,
+    "area": 33.26,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "杉並区和田2丁目31番21号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.suginami.tokyo.jp/shisetsu/katsudo/shukaijo/1006959.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  }
+]

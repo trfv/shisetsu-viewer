@@ -1,0 +1,974 @@
+[
+  {
+    "id": "3dc315a8-5374-4417-930a-f5ee99056836",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "社会福祉会館",
+    "institution": "第１講習室",
+    "building_kana": "シャカイフクシカイカン",
+    "institution_kana": "ダイイチコウシュウシツ",
+    "building_system_name": "社会福祉会館",
+    "institution_system_name": "第１講習室",
+    "capacity": 30,
+    "area": 70.8,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "墨田区東墨田二丁目7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/hukusisisetu/syakaihukusikaikan/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "冷暖房料金別（ホール490,その他240）"
+  },
+  {
+    "id": "f4a361c6-647f-4331-b86e-231e5397bbbc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "社会福祉会館",
+    "institution": "第２講習室",
+    "building_kana": "シャカイフクシカイカン",
+    "institution_kana": "ダイニコウシュウシツ",
+    "building_system_name": "社会福祉会館",
+    "institution_system_name": "第２講習室",
+    "capacity": 20,
+    "area": 65.7,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "墨田区東墨田二丁目7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/hukusisisetu/syakaihukusikaikan/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "冷暖房料金別（ホール490,その他240）"
+  },
+  {
+    "id": "ad35d640-6568-45e5-b3c8-7d3921664327",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "社会福祉会館",
+    "institution": "ホール",
+    "building_kana": "シャカイフクシカイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "社会福祉会館",
+    "institution_system_name": "ホール",
+    "capacity": 190,
+    "area": 153.6,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1320,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1320,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "墨田区東墨田二丁目7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/hukusisisetu/syakaihukusikaikan/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "冷暖房料金別（ホール490,その他240）"
+  },
+  {
+    "id": "15ce985f-7e70-4411-9434-c3607dea6439",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "社会福祉会館",
+    "institution": "和室",
+    "building_kana": "シャカイフクシカイカン",
+    "institution_kana": "ワシツ",
+    "building_system_name": "社会福祉会館",
+    "institution_system_name": "和室",
+    "capacity": 15,
+    "area": 37.5,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "墨田区東墨田二丁目7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/hukusisisetu/syakaihukusikaikan/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "冷暖房料金別（ホール490,その他240）"
+  },
+  {
+    "id": "9122457f-ae0c-44e6-bc46-57250d3549a2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "音楽室",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "音楽室",
+    "capacity": 5,
+    "area": 22,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "e451973a-3ca3-45f7-bd20-0a005e0000c3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "音楽スタジオ",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "オンガクスタジオ",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "音楽スタジオ",
+    "capacity": 10,
+    "area": 41,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "e8c2d9d2-18dd-4d6b-9d82-1a2ecdec2cdf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "視聴覚スタジオ",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "シチョウカクスタジオ",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "視聴覚スタジオ",
+    "capacity": 15,
+    "area": 73,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "9b97b860-5c66-47a9-8aeb-f2862b096232",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "ドーム",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "ドーム",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "ドーム",
+    "capacity": 162,
+    "area": 217,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "3b3c8a45-7c0c-4dd8-acb3-1a36bd326d9e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "ホール",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "ホール",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "ホール",
+    "capacity": 200,
+    "area": 269,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 15750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 15750,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "3a700c3a-24b5-474a-9561-e025e8e98561",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "すみだ生涯学習センター（ユートリヤ）",
+    "institution": "リハーサル室",
+    "building_kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "すみだ生涯学習センター",
+    "institution_system_name": "リハーサル室",
+    "capacity": 20,
+    "area": 105,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区東向島二丁目38番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/yutoriya/index.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "利用延長は午前8時から9時、午後9時から10時までの前後の利用延長ができます。この場合は、利用日の4日前までに延長申請をしてください。"
+  },
+  {
+    "id": "682b639f-7ceb-4848-9bd6-a47a7632c927",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "曳舟文化センター",
+    "institution": "第１会議室",
+    "building_kana": "ヒキフネブンカセンター",
+    "institution_kana": "ダイイチカイギシツ",
+    "building_system_name": "曳舟文化センター",
+    "institution_system_name": "第１会議室",
+    "capacity": 42,
+    "area": 109.1,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区京島一丁目38番11号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/hikibunec.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前上旬",
+    "note": "利用時間延長可"
+  },
+  {
+    "id": "771b6dbb-781f-4041-9861-c5c0f7f866fe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "曳舟文化センター",
+    "institution": "レクリエーションホール（Ａ面）",
+    "building_kana": "ヒキフネブンカセンター",
+    "institution_kana": "レクリエーションホール（エイメン）",
+    "building_system_name": "曳舟文化センター",
+    "institution_system_name": "レクリエーションホール（Ａ面）",
+    "capacity": 125,
+    "area": 198,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4950,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15150,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区京島一丁目38番11号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/hikibunec.html",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前上旬",
+    "note": "利用時間延長可"
+  },
+  {
+    "id": "fb547594-32fa-4f1a-97c5-4ad8884f64ab",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "曳舟文化センター",
+    "institution": "レクリエーションホール（全面）",
+    "building_kana": "ヒキフネブンカセンター",
+    "institution_kana": "レクリエーションホール（ゼンメン）",
+    "building_system_name": "曳舟文化センター",
+    "institution_system_name": "レクリエーションホール（全面）",
+    "capacity": 250,
+    "area": 396.3,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 25000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 12100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 30300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区京島一丁目38番11号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/hikibunec.html",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前上旬",
+    "note": "利用時間延長可"
+  },
+  {
+    "id": "20e92d8b-edcb-466c-8822-565ac51fd2b2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "曳舟文化センター",
+    "institution": "レクリエーションホール（Ｂ面）",
+    "building_kana": "ヒキフネブンカセンター",
+    "institution_kana": "レクリエーションホール（ビーメン）",
+    "building_system_name": "曳舟文化センター",
+    "institution_system_name": "レクリエーションホール（Ｂ面）",
+    "capacity": 125,
+    "area": 198,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4950,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15150,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区京島一丁目38番11号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/hikibunec.html",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前上旬",
+    "note": "利用時間延長可"
+  },
+  {
+    "id": "6f7e40ce-d86b-4c9f-acb5-14305e6e4937",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "曳舟文化センター",
+    "institution": "和室",
+    "building_kana": "ヒキフネブンカセンター",
+    "institution_kana": "ワシツ",
+    "building_system_name": "曳舟文化センター",
+    "institution_system_name": "和室",
+    "capacity": 30,
+    "area": 60.1,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区京島一丁目38番11号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/hikibunec.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前上旬",
+    "note": "利用時間延長可"
+  },
+  {
+    "id": "f5abd7f0-d0ac-4045-ae19-ea228ef32bc5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "みどりコミュニティセンター",
+    "institution": "多目的ホール",
+    "building_kana": "ミドリコミュニティセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "みどりコミュニティセンター",
+    "institution_system_name": "多目的ホール",
+    "capacity": 200,
+    "area": 252,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区緑三丁目7番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/midori_communityc.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "ピアノはアップライト（有料）、前後1時間延長可"
+  },
+  {
+    "id": "9a4560fe-9ee2-4596-ae21-02bcadfa5085",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "みどりコミュニティセンター",
+    "institution": "発声練習室",
+    "building_kana": "ミドリコミュニティセンター",
+    "institution_kana": "ハッセイレンシュウシツ",
+    "building_system_name": "みどりコミュニティセンター",
+    "institution_system_name": "発声練習室",
+    "capacity": 15,
+    "area": 33,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区緑三丁目7番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/midori_communityc.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": "ピアノは電子ピアノ（無料）、前後1時間延長可"
+  },
+  {
+    "id": "50aa630c-abf3-413e-9846-c26ddf2e8a14",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "building": "みどりコミュニティセンター",
+    "institution": "和室",
+    "building_kana": "ミドリコミュニティセンター",
+    "institution_kana": "ワシツ",
+    "building_system_name": "みどりコミュニティセンター",
+    "institution_system_name": "和室",
+    "capacity": 80,
+    "area": 120.3,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "墨田区緑三丁目7番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.sumida.lg.jp/sisetu_info/tamokuteki/midori_communityc.html",
+    "layout_image_url": "",
+    "lottery_period": "（機械抽選）4か月前の15日から25日まで",
+    "note": ""
+  }
+]

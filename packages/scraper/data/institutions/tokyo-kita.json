@@ -1,0 +1,1475 @@
+[
+  {
+    "id": "f4d8d9d8-8594-b8b4-6885-d18cd83bd819",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "赤羽会館",
+    "institution": "講堂",
+    "building_kana": "アカバネカイカン",
+    "institution_kana": "コウドウ",
+    "building_system_name": "赤羽会館",
+    "institution_system_name": "講堂",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "北区赤羽南1丁目13−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.akabanekaikan.jp/hall-guide/facility/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "4c79dcb5-e7f1-18fd-992a-d0c273f97cfc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "赤羽会館",
+    "institution": "リハーサル室",
+    "building_kana": "アカバネカイカン",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "赤羽会館",
+    "institution_system_name": "リハ室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "北区赤羽南1丁目13−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.akabanekaikan.jp/hall-guide/facility/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "8b2af3af-0d88-41e9-a4b0-c100092bb9b8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "赤羽北ふれあい館",
+    "institution": "第1ホールA・B",
+    "building_kana": "アカバネキタフレアイカン",
+    "institution_kana": "ダイ1ホールA・B",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 190,
+    "area": 204.35,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "北区赤羽北2-25-8-201",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "fe7cffd1-a17c-4e11-93db-48ca4e7d7f46",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北区立元気ぷらざ",
+    "institution": "第1ホール",
+    "building_kana": "キタクリツゲンキプラザ",
+    "institution_kana": "ダイ1ホール",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 165,
+    "area": 150.4,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3840,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6630,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8640,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3840,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6630,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8640,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区志茂1-2-22",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://genkiplaza.tokyo.jp/facility.html#f2_hall1",
+    "layout_image_url": "https://genkiplaza.tokyo.jp/facility.html",
+    "lottery_period": "3ヵ月前月初（北区民以外は2か月前月初）",
+    "note": ""
+  },
+  {
+    "id": "c19a4549-a78c-4178-9865-e1b0784db2b4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北区立元気ぷらざ",
+    "institution": "第2ホール",
+    "building_kana": "キタクリツゲンキプラザ",
+    "institution_kana": "ダイ2ホール",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 105,
+    "area": 95.9,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区志茂1-2-22",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://genkiplaza.tokyo.jp/facility.html#f2_hall1",
+    "layout_image_url": "https://genkiplaza.tokyo.jp/facility.html",
+    "lottery_period": "3ヵ月前月初（北区民以外は2か月前月初）",
+    "note": ""
+  },
+  {
+    "id": "de894bdf-b94b-415f-bce8-087f81b28f3e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "ココキタ",
+    "institution": "音楽スタジオ1",
+    "building_kana": "ココキタ",
+    "institution_kana": "オンガクスタジオ1",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 8,
+    "area": 30,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "北区豊島5-3-13",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://kitabunka.or.jp/cocokita/room/facility_5/",
+    "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_5/",
+    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "note": ""
+  },
+  {
+    "id": "c64d9b07-4adc-4b52-84d8-e1eb58241bc1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "ココキタ",
+    "institution": "音楽スタジオ2",
+    "building_kana": "ココキタ",
+    "institution_kana": "オンガクスタジオ2",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 8,
+    "area": 30,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 300,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "北区豊島5-3-13",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://kitabunka.or.jp/cocokita/room/facility_6/",
+    "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_6/",
+    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "note": ""
+  },
+  {
+    "id": "d763f4bc-ab97-46f2-8314-ac9ca34fc414",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "ココキタ",
+    "institution": "スタジオ1",
+    "building_kana": "ココキタ",
+    "institution_kana": "スタジオ1",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 80,
+    "area": 126,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "北区豊島5-3-13",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
+    "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
+    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "note": ""
+  },
+  {
+    "id": "356b56f0-5da2-4767-9e76-68a1b713905a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "ココキタ",
+    "institution": "スタジオ4",
+    "building_kana": "ココキタ",
+    "institution_kana": "スタジオ4",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 60,
+    "area": 94,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "北区豊島5-3-13",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
+    "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
+    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "note": ""
+  },
+  {
+    "id": "d8510c4c-e606-4b0e-b886-71df35554b83",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "志茂東ふれあい館",
+    "institution": "ホールA・B",
+    "building_kana": "シモヒガシフレアイカン",
+    "institution_kana": "ホールA・B",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 160,
+    "area": 141.3,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "北区志茂4-44-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "cbf8c36c-4892-4c07-b0d5-fbef3bedc884",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "十条台ふれあい館",
+    "institution": "第1ホール",
+    "building_kana": "ジュウジョウダイフレアイカン",
+    "institution_kana": "ダイ1ホール",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 160,
+    "area": 157.5,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4650,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8220,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10650,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4650,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8220,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10650,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区中十条1-2-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/fureai/jujodai.html",
+    "layout_image_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/fureai/documents/zyuzyodai.pdf",
+    "lottery_period": "3ヶ月前の同日（北区民以外は2ヶ月前同日）",
+    "note": ""
+  },
+  {
+    "id": "f954e806-e4f9-4592-84e3-794cf9174f2f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "新町コミュニティアリーナ",
+    "institution": "アリーナ",
+    "building_kana": "シンマチコミュニティアリーナ",
+    "institution_kana": "アリーナ",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3090,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区田端新町2-27-17",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前の同日",
+    "note": ""
+  },
+  {
+    "id": "9e26ff54-abe3-4fb6-bda7-fe486983c072",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "新町コミュニティアリーナ",
+    "institution": "第1ホールA・B",
+    "building_kana": "シンマチコミュニティアリーナ",
+    "institution_kana": "ダイ1ホールA・B",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2820,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3930,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3930,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5550,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2820,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3930,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3930,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5550,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区田端新町2-27-17",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前の同日",
+    "note": ""
+  },
+  {
+    "id": "20345646-2ade-4487-ba80-e27abaf6876b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "新町コミュニティアリーナ",
+    "institution": "第2ホール",
+    "building_kana": "シンマチコミュニティアリーナ",
+    "institution_kana": "ダイ2ホール",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2970,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5850,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2970,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5850,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区田端新町2-27-17",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヵ月前の同日",
+    "note": ""
+  },
+  {
+    "id": "06dfb7ed-1261-4257-b1b1-80af1ac8eeb6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "滝野川会館",
+    "institution": "B201音楽スタジオ",
+    "building_kana": "タキノカワカイカン",
+    "institution_kana": "B201オンガクスタジオ",
+    "building_system_name": "滝野川会館",
+    "institution_system_name": "Ｂ２０１音楽スタジオ",
+    "capacity": 15,
+    "area": 70,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "北区西ヶ原1-23-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://takikan.com/about/98-2017-08-24-07-05-23",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "348939f1-6062-457e-9026-f90acc186c17",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "滝野川会館",
+    "institution": "B202音楽スタジオ",
+    "building_kana": "タキノカワカイカン",
+    "institution_kana": "B202オンガクスタジオ",
+    "building_system_name": "滝野川会館",
+    "institution_system_name": "Ｂ２０２音楽スタジオ",
+    "capacity": 15,
+    "area": 65,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "北区西ヶ原1-23-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://takikan.com/about/98-2017-08-24-07-05-23",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "ad6487eb-06bd-488f-a176-d78cef8b002e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "滝野川会館",
+    "institution": "小ホール",
+    "building_kana": "タキノカワカイカン",
+    "institution_kana": "ショウホール",
+    "building_system_name": "滝野川会館",
+    "institution_system_name": "小ホール",
+    "capacity": 90,
+    "area": 195,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9540,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16950,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9540,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16950,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区西ヶ原1-23-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://takikan.com/about/97-2017-08-24-07-05-3",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "b7b62b4d-bd32-48e7-941f-2c3136dd54f5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "滝野川会館",
+    "institution": "大ホール（客席）",
+    "building_kana": "タキノカワカイカン",
+    "institution_kana": "ダイホール（キャクセキ）",
+    "building_system_name": "滝野川会館",
+    "institution_system_name": "大ホール（客席）",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 23520,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 41760,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 53580,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 28120,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 50040,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 64260,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区西ヶ原1-23-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "9eb494f5-8dd0-4061-b967-c636108c7f44",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "滝野川会館",
+    "institution": "大ホール（平土間）",
+    "building_kana": "タキノカワカイカン",
+    "institution_kana": "ダイホール（ヒラドマ）",
+    "building_system_name": "滝野川会館",
+    "institution_system_name": "大ホール（平土間）",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 23520,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 41760,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 53580,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 28120,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 50040,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 64260,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区西ヶ原1-23-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "241c8056-5257-4005-9e98-d7c807ce834f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "東田端ふれあい館",
+    "institution": "ホール",
+    "building_kana": "ヒガシタバタフレアイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 140,
+    "area": 133,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "北区東田端2-20-51",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7e720b3a-6574-4d83-834a-860880f959d7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "カナリアホール",
+    "building_kana": "ホクトピア",
+    "institution_kana": "カナリアホール",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "カナリアホール",
+    "capacity": 110,
+    "area": 148,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7220,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12780,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 16500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8640,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15260,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19740,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/halls/canary_hall",
+    "layout_image_url": "https://www.hokutopia.jp/wp-content/uploads/2015/03/canary.pdf",
+    "lottery_period": "1年前月初（北区民以外は1年前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "af880795-1239-4be8-98da-466a648b8225",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "スカイホール",
+    "building_kana": "ホクトピア",
+    "institution_kana": "スカイホール",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "スカイホール",
+    "capacity": 138,
+    "area": 184,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8940,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15860,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20340,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 10620,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18960,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 24360,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/halls/sky_hall",
+    "layout_image_url": "https://www.hokutopia.jp/wp-content/uploads/2015/03/sky.pdf",
+    "lottery_period": "1年前月初（北区民以外は1年前月の15日から）",
+    "note": ""
+  },
+  {
+    "id": "1acc9d12-fb2c-48d5-b5f2-d74744156dc6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "第1音楽スタジオ",
+    "building_kana": "ホクトピア",
+    "institution_kana": "ダイ1オンガクスタジオ",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "第１音楽スタジオ",
+    "capacity": 20,
+    "area": 33,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 1380,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/music_studio/music_studio01",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "d80cda5c-cf16-4176-a6ed-1cf836c39339",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "第2音楽スタジオ",
+    "building_kana": "ホクトピア",
+    "institution_kana": "ダイ2オンガクスタジオ",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "第２音楽スタジオ",
+    "capacity": 15,
+    "area": 21,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/music_studio/music_studio02",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "57f2f1ec-0ab2-437e-baf3-fac6a7274e90",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "第3音楽スタジオ",
+    "building_kana": "ホクトピア",
+    "institution_kana": "ダイ3オンガクスタジオ",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "第３音楽スタジオ",
+    "capacity": 15,
+    "area": 22,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/music_studio/music_studio03",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "ff96c1b9-8fd5-4c54-a282-2c1a012d6232",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "つつじホールリハーサル室",
+    "building_kana": "ホクトピア",
+    "institution_kana": "ツツジホールリハーサルシツ",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "つつじリハーサル室",
+    "capacity": 50,
+    "area": 71,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2460,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4620,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2460,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4620,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/halls/tsutsuji_hall#rehe",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
+    "note": ""
+  },
+  {
+    "id": "a8db0273-2886-4c08-971d-9d71749098f5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "building": "北とぴあ",
+    "institution": "ドームホール",
+    "building_kana": "ホクトピア",
+    "institution_kana": "ドームホール",
+    "building_system_name": "北とぴあ",
+    "institution_system_name": "ドームホール",
+    "capacity": 150,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20040,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19260,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 13700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24060,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 23120,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "北区王子1丁目11−1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.hokutopia.jp/hall-guide/halls/dome_hall",
+    "layout_image_url": "https://www.hokutopia.jp/wp-content/uploads/2015/03/50bf1bd8e946fb0f43cfacbc8f43ba3b.pdf",
+    "lottery_period": "1年前月初（北区民以外は1年前の15日から）",
+    "note": ""
+  }
+]
