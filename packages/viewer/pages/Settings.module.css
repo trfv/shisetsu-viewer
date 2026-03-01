@@ -1,0 +1,9 @@
+.pageBox {
+  width: 100%;
+}
+
+.contentBox {
+  margin-inline: auto;
+  padding: 24px;
+  max-width: 1280px;
+}

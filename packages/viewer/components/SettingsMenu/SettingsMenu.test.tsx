@@ -81,7 +81,7 @@ describe("SettingsMenu", () => {
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      const authItem = screen.getByRole("menuitem");
+      const authItem = screen.getByRole("menuitem", { name: "読み込み中..." });
       expect(authItem).toBeDisabled();
       expect(authItem).toHaveTextContent("読み込み中...");
     });
@@ -91,7 +91,7 @@ describe("SettingsMenu", () => {
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      expect(screen.getByRole("menuitem")).toHaveTextContent("ログアウト");
+      expect(screen.getByRole("menuitem", { name: "ログアウト" })).toBeInTheDocument();
     });
 
     it("ログアウトをクリックするとlogoutが呼ばれる", async () => {
@@ -99,7 +99,7 @@ describe("SettingsMenu", () => {
       const { user } = renderSettingsMenu({ token: "some-token", logout });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
-      await user.click(screen.getByRole("menuitem"));
+      await user.click(screen.getByRole("menuitem", { name: "ログアウト" }));
 
       expect(logout).toHaveBeenCalledOnce();
       expect(logout).toHaveBeenCalledWith({

@@ -293,3 +293,64 @@ export type ReservationsQueryData = {
     pageInfo: { hasNextPage: boolean; endCursor: string };
   };
 };
+
+// ─── API Tokens ─────────────────────────────────────────────
+
+export const CREATE_API_TOKEN_MUTATION = `
+mutation createApiToken($name: String!, $tokenHash: String!, $expiresAt: timestamptz!) {
+  insert_api_tokens_one(object: { name: $name, token_hash: $tokenHash, expires_at: $expiresAt }) {
+    id
+    name
+    created_at
+    expires_at
+  }
+}`;
+
+export const LIST_API_TOKENS_QUERY = `
+query listApiTokens {
+  api_tokens_connection(order_by: { created_at: desc }, first: 100) {
+    edges {
+      node {
+        id
+        name
+        created_at
+        expires_at
+        last_used_at
+      }
+    }
+  }
+}`;
+
+export const DELETE_API_TOKEN_MUTATION = `
+mutation deleteApiToken($id: uuid!) {
+  delete_api_tokens_by_pk(id: $id) {
+    id
+  }
+}`;
+
+export type ApiTokenNode = {
+  id: string;
+  name: string;
+  created_at: string;
+  expires_at: string | null;
+  last_used_at: string | null;
+};
+
+export type ListApiTokensQueryData = {
+  api_tokens_connection: {
+    edges: Array<{ node: ApiTokenNode }>;
+  };
+};
+
+export type CreateApiTokenMutationData = {
+  insert_api_tokens_one: {
+    id: string;
+    name: string;
+    created_at: string;
+    expires_at: string | null;
+  };
+};
+
+export type DeleteApiTokenMutationData = {
+  delete_api_tokens_by_pk: { id: string } | null;
+};

@@ -11,13 +11,18 @@ on:
         required: true
         type: choice
         options:
-          - tokyo-koutou
-          - tokyo-arakawa
-          - tokyo-kita
-          - tokyo-chuo
-          - tokyo-sumida
-          - kanagawa-kawasaki
           - all
+          - tokyo-koutou
+          - tokyo-bunkyo
+          - tokyo-kita
+          - tokyo-toshima
+          - tokyo-edogawa
+          - tokyo-arakawa
+          - tokyo-sumida
+          - tokyo-ota
+          - tokyo-suginami
+          - tokyo-chuo
+          - kanagawa-kawasaki
 
 jobs:
   prepare:
@@ -81,6 +86,5 @@ jobs:
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
-          SCRIPT_ENDPOINT: ${{ secrets.SCRIPT_ENDPOINT }}
         run: |
-          node tools/updateInstitutions.mjs ${{ needs.prepare.outputs.municipality }}
+          node tools/updateInstitutions.ts ${{ needs.prepare.outputs.municipality }}

@@ -7,7 +7,14 @@ export {
   InstitutionSize,
 } from "./types";
 
-export type { Division, Status, Reservation, TransformOutput } from "./types";
+export type {
+  Division,
+  Status,
+  Reservation,
+  TransformOutput,
+  UsageFeeEntry,
+  Institution,
+} from "./types";
 
 export {
   MUNICIPALITIES,
@@ -15,6 +22,7 @@ export {
   getMunicipalityBySlug,
   getMunicipalityKeyBySlug,
   getReservationTargets,
+  getAllMunicipalityTargets,
 } from "./registry";
 
 export type { MunicipalityConfig, MunicipalityKey } from "./registry";

@@ -1,0 +1,15 @@
+{
+  "name": "@shisetsu-viewer/mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env index.ts",
+    "deploy": "npx wrangler deploy",
+    "preview:wrangler": "npx wrangler dev"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.25.0"
+  }
+}
