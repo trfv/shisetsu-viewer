@@ -20,6 +20,7 @@ if (container) {
         clientId={AUTH0_CLIENT_ID}
         domain={AUTH0_DOMAIN}
         useRefreshTokens
+        useRefreshTokensFallback
       >
         <App />
       </Auth0Provider>
