@@ -11,6 +11,7 @@ import {
 } from "../../api/queries";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useGraphQLQuery } from "../../hooks/useGraphQLQuery";
+import { extractSinglePkFromRelayId } from "../../utils/relay";
 import styles from "./ApiTokenManager.module.css";
 
 async function sha256(text: string): Promise<string> {
@@ -61,8 +62,9 @@ export const ApiTokenManager = () => {
   }, [name, token, refetch]);
 
   const handleDelete = useCallback(
-    async (id: string) => {
+    async (relayId: string) => {
       if (!token) return;
+      const id = extractSinglePkFromRelayId(relayId);
       await graphqlQuery<DeleteApiTokenMutationData>(DELETE_API_TOKEN_MUTATION, { id }, token);
       refetch();
     },
@@ -81,7 +83,7 @@ export const ApiTokenManager = () => {
     setCopied(false);
   }, []);
 
-  const tokens: ApiTokenNode[] = data?.api_tokens ?? [];
+  const tokens: ApiTokenNode[] = data?.api_tokens_connection?.edges.map((e) => e.node) ?? [];
 
   return (
     <div className={styles["container"]}>

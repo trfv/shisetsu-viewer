@@ -308,12 +308,16 @@ mutation createApiToken($name: String!, $tokenHash: String!, $expiresAt: timesta
 
 export const LIST_API_TOKENS_QUERY = `
 query listApiTokens {
-  api_tokens(order_by: { created_at: desc }) {
-    id
-    name
-    created_at
-    expires_at
-    last_used_at
+  api_tokens_connection(order_by: { created_at: desc }, first: 100) {
+    edges {
+      node {
+        id
+        name
+        created_at
+        expires_at
+        last_used_at
+      }
+    }
   }
 }`;
 
@@ -333,7 +337,9 @@ export type ApiTokenNode = {
 };
 
 export type ListApiTokensQueryData = {
-  api_tokens: ApiTokenNode[];
+  api_tokens_connection: {
+    edges: Array<{ node: ApiTokenNode }>;
+  };
 };
 
 export type CreateApiTokenMutationData = {
