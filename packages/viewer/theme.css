@@ -31,7 +31,7 @@
   --color-black: #000000;
 
   /* ─── Typography ───────────────────────────────────────── */
-  --font-family: "Noto Sans JP", Roboto, "Hiragino Sans", Meiryo, sans-serif;
+  --font-family: "Noto Sans JP Variable", "Hiragino Sans", Meiryo, sans-serif;
   --font-size-base: 13px;
   --font-size-small: 0.75rem;
   --font-size-medium: 0.9375rem;

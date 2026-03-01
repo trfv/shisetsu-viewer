@@ -122,7 +122,7 @@ test.describe("Mobile Responsiveness", () => {
     await page.waitForLoadState("networkidle");
 
     // モバイルではハンバーガーメニューボタンが表示される
-    const menuButton = page.locator('button svg[aria-label="MenuIcon"]');
+    const menuButton = page.getByRole("button", { name: "メニュー" });
     await expect(menuButton).toBeVisible();
   });
 });
@@ -133,7 +133,7 @@ test.describe("Institution Search Page", () => {
     await page.waitForLoadState("networkidle");
 
     // バックエンドがある場合は絞り込みボタン、ない場合はエラーメッセージが表示される
-    const searchButton = page.locator("text=絞り込み");
+    const searchButton = page.getByRole("button", { name: "絞り込み" });
     const errorMessage = page.locator("text=予期せぬエラーが発生しました");
     await expect(searchButton.or(errorMessage)).toBeVisible();
   });
@@ -170,14 +170,17 @@ test.describe("Color Mode", () => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
-    // テーマ切替ボタンを見つける
-    const themeButton = page.locator('button[aria-label*="テーマ"]');
-    await expect(themeButton).toBeVisible();
+    // 設定メニューを開く
+    const settingsButton = page.getByRole("button", { name: "設定" });
+    await expect(settingsButton).toBeVisible();
+    await settingsButton.click();
 
-    // クリックしてテーマが変更される
-    await themeButton.click();
+    // メニュー内のテーマラジオボタンを確認・クリック
+    const themeOption = page.getByRole("menuitemradio", { name: "ライト" });
+    await expect(themeOption).toBeVisible();
+    await themeOption.click();
 
-    // aria-labelが変わることを確認（system→light）
-    await expect(themeButton).toHaveAttribute("aria-label", /テーマ/);
+    // テーマが変更されたことを確認
+    await expect(themeOption).toHaveAttribute("aria-checked", "true");
   });
 });

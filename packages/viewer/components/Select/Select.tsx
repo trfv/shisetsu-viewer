@@ -20,17 +20,19 @@ export const Select: FC<Props> = ({ label, value, size = "auto", onChange, selec
   <BaseBox size={size} component="label" display="flex" flexDirection="column">
     <SmallLabel label={label} />
     <Spacer axis="vertical" size={4} />
-    <select
-      aria-label={label}
-      className={styles["select"]}
-      onChange={onChange as (event: ChangeEvent<HTMLSelectElement>) => void}
-      value={value}
-    >
-      {selectOptions.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <div className={styles["selectWrapper"]}>
+      <select
+        aria-label={label}
+        className={styles["select"]}
+        onChange={onChange as (event: ChangeEvent<HTMLSelectElement>) => void}
+        value={value}
+      >
+        {selectOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
   </BaseBox>
 );

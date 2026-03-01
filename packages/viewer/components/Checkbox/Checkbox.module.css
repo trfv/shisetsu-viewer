@@ -8,10 +8,35 @@
 }
 
 .checkbox {
-  accent-color: var(--color-primary);
+  appearance: none;
   width: 18px;
   height: 18px;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: 3px;
+  background: transparent;
   cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition:
+    background-color var(--transition-short),
+    border-color var(--transition-short);
+}
+
+.checkbox:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 .checkbox:focus-visible {

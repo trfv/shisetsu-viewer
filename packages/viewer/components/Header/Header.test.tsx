@@ -9,7 +9,7 @@ vi.mock("../../hooks/useIsMobile", () => ({
 }));
 
 vi.mock("../../contexts/ColorMode", () => ({
-  useColorMode: () => ({ mode: "system" as const, toggleMode: vi.fn() }),
+  useColorMode: () => ({ mode: "system" as const, toggleMode: vi.fn(), setMode: vi.fn() }),
 }));
 
 describe("Header Component", () => {
@@ -76,6 +76,6 @@ describe("Header Component", () => {
     mockUseIsMobile.mockReturnValue(true);
     renderWithProviders(<Header />);
 
-    expect(screen.getByLabelText("MenuIcon")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "メニュー" })).toBeInTheDocument();
   });
 });

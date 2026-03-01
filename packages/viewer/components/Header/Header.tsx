@@ -2,9 +2,8 @@ import { Link } from "wouter";
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { ColorModeButton } from "../ColorModeButton";
 import { HeaderMenuButton } from "../HeaderMenuButton";
-import { LoginButton } from "../LoginButton";
+import { SettingsMenu } from "../SettingsMenu";
 import styles from "./Header.module.css";
 
 export const Header = () => {
@@ -45,8 +44,7 @@ export const Header = () => {
           )}
         </div>
         <div className={styles["actions"]}>
-          <ColorModeButton />
-          <LoginButton />
+          <SettingsMenu />
         </div>
       </div>
     </header>
