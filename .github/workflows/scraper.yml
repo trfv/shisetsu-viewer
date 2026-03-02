@@ -109,9 +109,6 @@ jobs:
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
       - name: Start Scraper
         uses: ./.github/actions/scrape
-        env:
-          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -119,6 +116,8 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "false"
+          m2mToken: ${{ needs.prepare.outputs.m2mToken }}
+          graphqlEndpoint: ${{ secrets.GRAPHQL_ENDPOINT }}
 
   prepare_retry:
     runs-on: ubuntu-latest
@@ -170,9 +169,6 @@ jobs:
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
       - name: Start Scraper
         uses: ./.github/actions/scrape
-        env:
-          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -180,3 +176,5 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "true"
+          m2mToken: ${{ needs.prepare.outputs.m2mToken }}
+          graphqlEndpoint: ${{ secrets.GRAPHQL_ENDPOINT }}
