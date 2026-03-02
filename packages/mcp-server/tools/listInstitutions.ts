@@ -1,8 +1,11 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
+import { INSTITUTION_LIST_FIELDS } from "../fieldDefinitions.ts";
+import { buildFieldSelection } from "../buildFieldSelection.ts";
 
-const QUERY = `
+function buildQuery(fieldSelection: string): string {
+  return `
 query institutions(
   $first: Int
   $after: String
@@ -28,18 +31,7 @@ query institutions(
   ) {
     edges {
       node {
-        id
-        municipality
-        building
-        institution
-        institution_size
-        is_available_strings
-        is_available_woodwind
-        is_available_brass
-        is_available_percussion
-        is_equipped_music_stand
-        is_equipped_piano
-        updated_at
+        ${fieldSelection}
       }
       cursor
     }
@@ -49,6 +41,7 @@ query institutions(
     }
   }
 }`;
+}
 
 interface QueryData {
   institutions_connection: {
@@ -78,6 +71,13 @@ export function registerListInstitutions(server: McpServer): void {
         isAvailableWoodwind: z.string().optional().describe("木管楽器利用可否でフィルタ"),
         isAvailableBrass: z.string().optional().describe("金管楽器利用可否でフィルタ"),
         isAvailablePercussion: z.string().optional().describe("打楽器利用可否でフィルタ"),
+        fields: z
+          .array(z.enum(INSTITUTION_LIST_FIELDS))
+          .optional()
+          .describe(
+            "返却フィールドを指定 (省略時は全フィールド)。選択可能: " +
+              INSTITUTION_LIST_FIELDS.join(", ")
+          ),
         first: z
           .number()
           .int()
@@ -92,7 +92,8 @@ export function registerListInstitutions(server: McpServer): void {
       },
     },
     async (args) => {
-      const data = await graphqlRequest<QueryData>(QUERY, {
+      const query = buildQuery(buildFieldSelection(INSTITUTION_LIST_FIELDS, args.fields));
+      const data = await graphqlRequest<QueryData>(query, {
         first: args.first,
         after: args.after,
         municipality: args.municipality,

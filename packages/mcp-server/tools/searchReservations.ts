@@ -1,8 +1,11 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
+import { SEARCH_RESERVATION_FIELDS, SEARCH_INSTITUTION_FIELDS } from "../fieldDefinitions.ts";
+import { buildFieldSelection } from "../buildFieldSelection.ts";
 
-const QUERY = `
+function buildQuery(reservationFields: string, institutionFields: string): string {
+  return `
 query reservations(
   $first: Int
   $after: String
@@ -47,17 +50,10 @@ query reservations(
       node {
         id
         reservation {
-          id
-          date
-          reservation
-          updated_at
+          ${reservationFields}
         }
         institution {
-          id
-          municipality
-          building
-          institution
-          institution_size
+          ${institutionFields}
         }
       }
       cursor
@@ -68,6 +64,7 @@ query reservations(
     }
   }
 }`;
+}
 
 interface QueryData {
   searchable_reservations_connection: {
@@ -103,12 +100,38 @@ export function registerSearchReservations(server: McpServer): void {
         isAvailableBrass: z.string().optional().describe("金管楽器利用可否でフィルタ"),
         isAvailablePercussion: z.string().optional().describe("打楽器利用可否でフィルタ"),
         institutionSizes: z.array(z.string()).optional().describe("施設サイズでフィルタ"),
+        fields: z
+          .object({
+            reservation: z
+              .array(z.enum(SEARCH_RESERVATION_FIELDS))
+              .optional()
+              .describe(
+                "予約サブクエリのフィールド。選択可能: " + SEARCH_RESERVATION_FIELDS.join(", ")
+              ),
+            institution: z
+              .array(z.enum(SEARCH_INSTITUTION_FIELDS))
+              .optional()
+              .describe(
+                "施設サブクエリのフィールド。選択可能: " + SEARCH_INSTITUTION_FIELDS.join(", ")
+              ),
+          })
+          .optional()
+          .describe("返却フィールドを指定 (省略時は全フィールド)"),
         first: z.number().int().min(1).max(100).default(20).describe("取得件数 (最大100)"),
         after: z.string().optional().describe("ページネーション用カーソル"),
       },
     },
     async (args) => {
-      const data = await graphqlRequest<QueryData>(QUERY, {
+      const reservationFields = buildFieldSelection(
+        SEARCH_RESERVATION_FIELDS,
+        args.fields?.reservation
+      );
+      const institutionFields = buildFieldSelection(
+        SEARCH_INSTITUTION_FIELDS,
+        args.fields?.institution
+      );
+      const query = buildQuery(reservationFields, institutionFields);
+      const data = await graphqlRequest<QueryData>(query, {
         first: args.first,
         after: args.after,
         municipality: args.municipality,

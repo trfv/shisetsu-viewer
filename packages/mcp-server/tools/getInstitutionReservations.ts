@@ -1,8 +1,11 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
+import { RESERVATION_FIELDS } from "../fieldDefinitions.ts";
+import { buildFieldSelection } from "../buildFieldSelection.ts";
 
-const QUERY = `
+function buildQuery(fieldSelection: string): string {
+  return `
 query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
   reservations_connection(
     where: { institution_id: { _eq: $id }, date: { _gte: $startDate, _lte: $endDate } }
@@ -11,14 +14,12 @@ query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
   ) {
     edges {
       node {
-        id
-        date
-        reservation
-        updated_at
+        ${fieldSelection}
       }
     }
   }
 }`;
+}
 
 interface QueryData {
   reservations_connection: {
@@ -41,10 +42,18 @@ export function registerGetInstitutionReservations(server: McpServer): void {
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe("終了日 (YYYY-MM-DD)"),
+        fields: z
+          .array(z.enum(RESERVATION_FIELDS))
+          .optional()
+          .describe(
+            "返却フィールドを指定 (省略時は全フィールド)。選択可能: " +
+              RESERVATION_FIELDS.join(", ")
+          ),
       },
     },
     async (args) => {
-      const data = await graphqlRequest<QueryData>(QUERY, {
+      const query = buildQuery(buildFieldSelection(RESERVATION_FIELDS, args.fields));
+      const data = await graphqlRequest<QueryData>(query, {
         id: args.institutionId,
         startDate: args.startDate,
         endDate: args.endDate,
