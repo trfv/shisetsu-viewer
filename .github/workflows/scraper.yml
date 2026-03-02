@@ -91,7 +91,6 @@ jobs:
             echo "::error::Failed to fetch M2M token"
             exit 1
           fi
-          echo "::add-mask::${TOKEN}"
           echo "m2mToken=${TOKEN}" >> $GITHUB_OUTPUT
 
   scrape:
@@ -112,7 +111,6 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -120,6 +118,7 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "false"
+          m2mToken: ${{ needs.prepare.outputs.m2mToken }}
 
   prepare_retry:
     runs-on: ubuntu-latest
@@ -173,7 +172,6 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -181,3 +179,4 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "true"
+          m2mToken: ${{ needs.prepare.outputs.m2mToken }}
