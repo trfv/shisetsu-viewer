@@ -11,7 +11,7 @@
     "institution_system_name": "第一集会室",
     "capacity": 65,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -180,8 +180,8 @@
     "building_system_name": "大田区民ﾎｰﾙ･ｱﾌﾟﾘｺ",
     "institution_system_name": "Aスタジオ",
     "capacity": 40,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "area": 95,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_TWO_HOUR"
     ],
@@ -220,8 +220,8 @@
     "building_system_name": "大田区民ﾎｰﾙ･ｱﾌﾟﾘｺ",
     "institution_system_name": "Bスタジオ",
     "capacity": 15,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "area": 40,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_TWO_HOUR"
     ],
@@ -497,7 +497,7 @@
     "institution_system_name": "第一集会室",
     "capacity": 50,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -537,14 +537,14 @@
     ],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "",
+    "address": "大田区新蒲田一丁目18番16号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://shinkamata.jp/",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -561,7 +561,7 @@
     "institution_system_name": "第一多目的室A",
     "capacity": 60,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -619,7 +619,7 @@
     "institution_system_name": "第一多目的室B",
     "capacity": 60,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -735,7 +735,7 @@
     "institution_system_name": "第二集会室",
     "capacity": 27,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -767,7 +767,7 @@
     "institution_system_name": "第一集会室",
     "capacity": 60,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -799,7 +799,7 @@
     "institution_system_name": "第二集会室",
     "capacity": 30,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -831,7 +831,7 @@
     "institution_system_name": "第一集会室",
     "capacity": 70,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -863,7 +863,7 @@
     "institution_system_name": "第一集会室A",
     "capacity": 34,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -895,7 +895,7 @@
     "institution_system_name": "第一集会室B",
     "capacity": 36,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -927,7 +927,7 @@
     "institution_system_name": "第二集会室",
     "capacity": 30,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
@@ -959,7 +959,7 @@
     "institution_system_name": "和室",
     "capacity": 30,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",

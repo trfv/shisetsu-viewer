@@ -171,7 +171,7 @@
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "http://www.city.toshima.lg.jp/072/kurashi/kuminkatsudo/007314/shisetsu/1910040908.html",
     "layout_image_url": "",
     "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
@@ -363,7 +363,7 @@
     "institution_system_name": "防音室",
     "capacity": 8,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_ONE_HOUR"
     ],
