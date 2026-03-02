@@ -9,7 +9,14 @@ const playwrightArgs = ["playwright", "test"];
 if (municipality) playwrightArgs.push(municipality);
 if (process.env.WORKERS) playwrightArgs.push(`--workers=${process.env.WORKERS}`);
 
-execFileSync("npx", playwrightArgs, { stdio: "inherit" });
+let testsFailed = false;
+
+try {
+  execFileSync("npx", playwrightArgs, { stdio: "inherit" });
+} catch {
+  testsFailed = true;
+  console.error("Some tests failed. Will attempt to upload successful results.");
+}
 
 if (!testOnly) {
   if (!process.env.M2M_TOKEN) {
@@ -43,4 +50,8 @@ if (!testOnly) {
   const uploadArgs = ["tools/updateReservations.ts"];
   if (municipality) uploadArgs.push(municipality);
   execFileSync("node", uploadArgs, { stdio: "inherit" });
+}
+
+if (testsFailed) {
+  process.exit(1);
 }
