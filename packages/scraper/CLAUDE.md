@@ -22,13 +22,13 @@ Each municipality scraper implements the `ScraperModule<ExtractOutput, Page>` in
 2. `extract(page, maxCount)` — scrape table data across paginated results
 3. `transform(extractOutput)` — map raw data to `TransformOutput` (room_name, date, reservation record)
 
-Non-standard scrapers (tokyo-chuo, kanagawa-kawasaki) have hand-written tests instead of `testFactory`.
+Each scraper's `index.test.ts` is a self-contained Playwright test that calls prepare → extract → transform, validates output via `validateTransformOutput()`, and writes JSON via `writeTestResult()` from `common/testUtils.ts`.
 
 ### Test-Driven Scraping
 
-Scrapers run as Playwright tests via `createScraperTests()` from `common/testFactory.ts`:
+Scrapers run as Playwright tests:
 - Each facility is a separate test case
-- Test output is written to `test-results/<municipality>/<facility>.json`
+- Test output is written to `test-results/<municipality>/<facility>.json` via `writeTestResult()`
 - Validates output via `validateTransformOutput()` before writing
 
 ### Institution Data Management
@@ -49,13 +49,13 @@ Institution metadata is stored as JSON files in `data/institutions/{prefecture}-
 
 ```
 tokyo-arakawa/    — Arakawa ward scraper (index.ts + index.test.ts)
-tokyo-chuo/       — Chuo ward scraper (non-standard, hand-written tests)
+tokyo-chuo/       — Chuo ward scraper
 tokyo-kita/       — Kita ward scraper
 tokyo-koutou/     — Koutou ward scraper
 tokyo-sumida/     — Sumida ward scraper (ignored on CI)
-kanagawa-kawasaki/ — Kawasaki city scraper (non-standard)
+kanagawa-kawasaki/ — Kawasaki city scraper
 common/           — Shared utilities
-  testFactory.ts  — createScraperTests() factory
+  testUtils.ts    — writeTestResult() JSON output helper
   types.ts        — Re-exports from @shisetsu-viewer/shared
   validation.ts   — validateTransformOutput() data quality checks
   dateUtils.ts    — toISODateString() with Japanese calendar support
@@ -89,7 +89,7 @@ Config in `playwright.config.ts`:
 1. Create `<prefecture>-<city>/` directory with `index.ts` and `index.test.ts`
 2. Implement `prepare()`, `extract()`, `transform()` following `ScraperModule` interface
 3. Define `DIVISION_MAP` (raw text → `ReservationDivision`) and `STATUS_MAP` (raw text → `ReservationStatus`) based on the municipality's reservation system UI
-4. Use `createScraperTests()` from `common/testFactory.ts` if the scraper follows the standard pattern
+4. Write a self-contained `index.test.ts` following the existing test pattern (prepare → extract → transform → validate → `writeTestResult()`)
 5. Add municipality to `@shisetsu-viewer/shared` registry in `registry.ts`
 
 ## Environment Variables

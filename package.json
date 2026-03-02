@@ -39,6 +39,7 @@
     "start": "npm run start:viewer",
     "start:viewer": "npm run start -w @shisetsu-viewer/viewer",
     "start:scraper": "npm run test -w @shisetsu-viewer/scraper",
+    "scrape": "npm run scrape -w @shisetsu-viewer/scraper",
     "build": "npm run build:viewer",
     "build:viewer": "npm run build -w @shisetsu-viewer/viewer",
     "update:reservations": "npm run update:reservations -w @shisetsu-viewer/scraper",

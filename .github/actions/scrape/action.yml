@@ -22,6 +22,9 @@ inputs:
     description: "Enable debug mode"
     required: false
     default: "false"
+  m2mToken:
+    description: "Auth0 M2M access token for Hasura"
+    required: true
 
 runs:
   using: "composite"
@@ -69,6 +72,6 @@ runs:
       working-directory: packages/scraper
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
-        M2M_TOKEN: ${{ env.M2M_TOKEN }}
+        M2M_TOKEN: ${{ inputs.m2mToken }}
       run: |
         node tools/updateReservations.ts ${{ inputs.municipality }}
