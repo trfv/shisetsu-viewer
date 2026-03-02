@@ -1,8 +1,8 @@
-import fs from "fs/promises";
 import { test, expect } from "@playwright/test";
 import { addDays, addMonths, differenceInWeeks, endOfMonth, format } from "date-fns";
-import { validateTransformOutput } from "../common/validation";
-import { prepare, extract, transform } from "./index";
+import { validateTransformOutput } from "../common/validation.ts";
+import { writeTestResult } from "../common/testUtils.ts";
+import { prepare, extract, transform } from "./index.ts";
 
 function calculateCount(): number {
   const startData = addDays(new Date(), 1);
@@ -40,11 +40,7 @@ facilityNames.forEach((name) => {
 
     console.timeEnd(name);
 
-    await fs.mkdir("test-results/tokyo-sumida", { recursive: true });
-    await fs.writeFile(
-      `test-results/tokyo-sumida/${name}.json`,
-      JSON.stringify({ facility_name: name, data: transformOutput })
-    );
+    await writeTestResult("tokyo-sumida", name, name, transformOutput);
 
     await searchPage.close();
     await page.close();

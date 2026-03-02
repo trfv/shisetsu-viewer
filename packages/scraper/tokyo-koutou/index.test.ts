@@ -1,8 +1,8 @@
-import fs from "fs/promises";
 import { test, expect } from "@playwright/test";
 import { addDays, endOfMonth, format } from "date-fns";
-import { validateTransformOutput } from "../common/validation";
-import { prepare, extract, transform } from "./index";
+import { validateTransformOutput } from "../common/validation.ts";
+import { writeTestResult } from "../common/testUtils.ts";
+import { prepare, extract, transform } from "./index.ts";
 
 function buildDateRanges(): [Date, Date, number][] {
   let tmp = new Date();
@@ -51,10 +51,11 @@ facilityNames.forEach((name) => {
 
       console.timeEnd(title);
 
-      await fs.mkdir("test-results/tokyo-koutou", { recursive: true });
-      await fs.writeFile(
-        `test-results/tokyo-koutou/${name}_${format(dateRange[0], "yyyyMM")}.json`,
-        JSON.stringify({ facility_name: name, data: transformOutput })
+      await writeTestResult(
+        "tokyo-koutou",
+        `${name}_${format(dateRange[0], "yyyyMM")}`,
+        name,
+        transformOutput
       );
 
       await searchPage.close();
