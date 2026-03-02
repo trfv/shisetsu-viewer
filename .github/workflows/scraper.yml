@@ -91,7 +91,7 @@ jobs:
             echo "::error::Failed to fetch M2M token"
             exit 1
           fi
-          echo "m2mToken=${TOKEN}" >> $GITHUB_OUTPUT
+          echo "m2mToken=$(echo -n "$TOKEN" | base64 -w 0)" >> $GITHUB_OUTPUT
 
   scrape:
     name: Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
