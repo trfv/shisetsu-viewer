@@ -8,6 +8,7 @@
     "date-fns": "4.1.0"
   },
   "scripts": {
+    "typecheck": "tsgo",
     "test": "npx playwright test",
     "update:reservations": "node --env-file=.env tools/updateReservations.ts",
     "update:institutions": "node --env-file=.env tools/updateInstitutions.ts",

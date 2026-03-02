@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "typecheck": "tsgo",
     "start": "node --env-file=.env index.ts",
     "deploy": "npx wrangler deploy",
     "preview:wrangler": "npx wrangler dev"

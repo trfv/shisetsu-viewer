@@ -43,8 +43,11 @@
     "build:viewer": "npm run build -w @shisetsu-viewer/viewer",
     "update:reservations": "npm run update:reservations -w @shisetsu-viewer/scraper",
     "update:institutions": "npm run update:institutions -w @shisetsu-viewer/scraper",
-    "format:all": "prettier --write \"./packages/**/*.ts*\"",
-    "lint:all": "eslint --fix \"./packages/**/*.ts*\"",
+    "format:check:all": "prettier --check \"./packages/**/*.ts*\"",
+    "format:fix:all": "prettier --write \"./packages/**/*.ts*\"",
+    "lint:all": "eslint \"./packages/**/*.ts*\"",
+    "lint:fix:all": "eslint --fix \"./packages/**/*.ts*\"",
+    "typecheck:all": "npm run typecheck --workspaces",
     "knip": "knip",
     "prepare": "husky"
   },

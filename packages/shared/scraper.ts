@@ -1,4 +1,4 @@
-import type { TransformOutput } from "./types";
+import type { TransformOutput } from "./types.ts";
 
 /**
  * Standard scraper module interface for the most common pattern:

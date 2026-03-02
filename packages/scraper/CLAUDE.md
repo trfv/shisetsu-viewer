@@ -5,6 +5,7 @@ Playwright-based web scrapers that navigate municipal reservation systems, extra
 ## Commands
 
 ```bash
+npm run typecheck -w @shisetsu-viewer/scraper          # Type check with tsgo
 npm run test -w @shisetsu-viewer/scraper              # Run scraper tests (Playwright)
 npm run update:reservations -w @shisetsu-viewer/scraper  # Upload reservation data to Hasura
 npm run update:institutions -w @shisetsu-viewer/scraper  # Upload institution data from local JSON to Hasura
@@ -41,7 +42,8 @@ Institution metadata is stored as JSON files in `data/institutions/{prefecture}-
 
 1. Scraper tests produce JSON in `test-results/<municipality>/`
 2. `tools/updateReservations.ts` reads JSON, resolves institution IDs via GraphQL, upserts reservation records
-3. `tools/request.ts` — fetch-based GraphQL client with exponential backoff retry (3 retries, server errors only), authenticates via `X-Hasura-Admin-Secret` header
+3. `tools/request.ts` — fetch-based GraphQL client with exponential backoff retry (3 retries, server errors and 401), authenticates via Auth0 M2M Bearer token
+4. `tools/m2mToken.ts` — Auth0 Client Credentials Flow token fetch with in-memory caching (5-min expiry margin)
 
 ## Directory Structure
 
@@ -66,6 +68,7 @@ tools/            — Data upload/export scripts
   updateInstitutions.ts — Institution data uploader (reads from data/institutions/)
   exportInstitutions.ts — Institution data exporter (writes to data/institutions/)
   request.ts      — GraphQL client with retry
+  m2mToken.ts     — Auth0 M2M token fetch and cache
 ```
 
 ## Playwright Configuration
@@ -91,8 +94,12 @@ Config in `playwright.config.ts`:
 
 ## Environment Variables
 
-- `GRAPHQL_ENDPOINT` — Hasura GraphQL endpoint (admin access)
-- `ADMIN_SECRET` — Hasura admin secret for authenticated mutations
+- `M2M_TOKEN` — (optional) Pre-set M2M Bearer token. Skips Auth0 Client Credentials Flow when set (used in CI).
+- `GRAPHQL_ENDPOINT` — Hasura GraphQL endpoint
+- `AUTH0_DOMAIN` — Auth0 tenant domain (e.g., `your-tenant.auth0.com`)
+- `AUTH0_CLIENT_ID` — Auth0 M2M application client ID
+- `AUTH0_CLIENT_SECRET` — Auth0 M2M application client secret
+- `AUTH0_AUDIENCE` — Hasura API audience identifier
 - `SLOW_MO` — (optional) Playwright slowMo override in ms
 - `WORKERS` — (optional) Playwright worker count override
 

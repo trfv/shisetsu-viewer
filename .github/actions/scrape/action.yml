@@ -27,18 +27,18 @@ runs:
   using: "composite"
   steps:
     - name: Set Node.js
-      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
       with:
         cache: "npm"
         cache-dependency-path: "**/package-lock.json"
-        node-version: "lts/*"
+        node-version: "24"
     - name: Restore cached node_modules
-      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         path: "**/node_modules"
         key: ${{ inputs.nodeModulesCacheKey }}
     - name: Restore Playwright browsers
-      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         path: ~/.cache/ms-playwright
         key: ${{ inputs.playwrightCacheKey }}
@@ -69,6 +69,6 @@ runs:
       working-directory: packages/scraper
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
-        ADMIN_SECRET: ${{ env.ADMIN_SECRET }}
+        M2M_TOKEN: ${{ env.M2M_TOKEN }}
       run: |
         node tools/updateReservations.ts ${{ inputs.municipality }}

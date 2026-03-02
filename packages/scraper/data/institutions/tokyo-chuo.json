@@ -1,0 +1,408 @@
+[
+  {
+    "id": "01c4f022-c037-4157-9acc-9560394dc4f2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "アートはるみ",
+    "institution": "音楽室",
+    "building_kana": "アートハルミ",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "アートはるみ",
+    "institution_system_name": "音楽室",
+    "capacity": 35,
+    "area": 78,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区晴海1丁目4番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "f5b7d2a6-e862-4f44-92b9-9b243688e110",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "築地社会教育会館",
+    "institution": "音楽室",
+    "building_kana": "ツキジシャカイキョウイクカイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "築地社会教育会館",
+    "institution_system_name": "音楽室",
+    "capacity": 25,
+    "area": 56,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区築地4丁目15番地1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "764a65c8-08ca-4c5c-81f7-e3272a3a2b17",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "月島社会教育会館",
+    "institution": "ホール全体（舞台・客席付）",
+    "building_kana": "ツキシマシャカイキョウイクカイカン",
+    "institution_kana": "ホールゼンタイ（ブタイ・キャクセキヅケ）",
+    "building_system_name": "月島社会教育会館",
+    "institution_system_name": "ホール全体（舞台・客席付）",
+    "capacity": 240,
+    "area": 274,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 10900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 13100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 17500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区月島4丁目1番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#tsukishima",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "5c73ce5e-d414-42ef-b58a-597ca5820001",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "月島社会教育会館",
+    "institution": "ホールフロア（床のみ）",
+    "building_kana": "ツキシマシャカイキョウイクカイカン",
+    "institution_kana": "ホールフロア（ユカノミ）",
+    "building_system_name": "月島社会教育会館",
+    "institution_system_name": "ホールフロア（床のみ）",
+    "capacity": 100,
+    "area": 214,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区月島4丁目1番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#tsukishima",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "2a936ae0-786f-41b4-9d83-7b5edebfa194",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "日本橋社会教育会館",
+    "institution": "音楽室",
+    "building_kana": "ニホンバシシャカイキョウイクカイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "日本橋社会教育会館",
+    "institution_system_name": "音楽室",
+    "capacity": 20,
+    "area": 44,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区日本橋人形町1丁目1番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "4366f023-b73d-45b0-9780-31736a345fe1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "日本橋社会教育会館",
+    "institution": "ホール全体（舞台・客席付）",
+    "building_kana": "ニホンバシシャカイキョウイクカイカン",
+    "institution_kana": "ホールゼンタイ（ブタイ・キャクセキヅケ）",
+    "building_system_name": "日本橋社会教育会館",
+    "institution_system_name": "ホール全体（舞台・客席付）",
+    "capacity": 204,
+    "area": 230.5,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 14600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 10400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区日本橋人形町1丁目1番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#nihonbashi",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "150750fa-0f55-405f-8a2b-fbfb61078d8b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "building": "日本橋社会教育会館",
+    "institution": "ホールフロア（床のみ）",
+    "building_kana": "ニホンバシシャカイキョウイクカイカン",
+    "institution_kana": "ホールフロア（ユカノミ）",
+    "building_system_name": "日本橋社会教育会館",
+    "institution_system_name": "ホールフロア（床のみ）",
+    "capacity": 80,
+    "area": 186,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 27900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都中央区日本橋人形町1丁目1番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#nihonbashi",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  }
+]

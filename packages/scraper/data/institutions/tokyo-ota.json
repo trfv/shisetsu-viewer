@@ -1,0 +1,982 @@
+[
+  {
+    "id": "c9631780-1ef7-4851-91a1-96323db6fcfb",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "池上文化センター",
+    "institution": "第一集会室",
+    "building_kana": "イケカミブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツ",
+    "building_system_name": "池上文化センター",
+    "institution_system_name": "第一集会室",
+    "capacity": 65,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区池上四丁目21番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/ikegamibunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  },
+  {
+    "id": "6cf958ab-75f9-4c35-92a1-7e9edd7b955e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民プラザ",
+    "institution": "第一音楽スタジオ",
+    "building_kana": "オオタクミンプラザ",
+    "institution_kana": "ダイイチオンガクスタジオ",
+    "building_system_name": "大田区民プラザ",
+    "institution_system_name": "第一音楽スタジオ",
+    "capacity": 50,
+    "area": 130.4,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4300,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4300,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区下丸子3-1-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "打楽器の使用は他部屋の状況による。"
+  },
+  {
+    "id": "b6e31b2e-4c2c-4a54-b302-f708339256c8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民プラザ",
+    "institution": "第二音楽スタジオ",
+    "building_kana": "オオタクミンプラザ",
+    "institution_kana": "ダイニオンガクスタジオ",
+    "building_system_name": "大田区民プラザ",
+    "institution_system_name": "第二音楽スタジオ",
+    "capacity": 13,
+    "area": 65.2,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区下丸子3-1-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "打楽器の使用は他部屋の状況による。"
+  },
+  {
+    "id": "cba92486-ebef-42ac-97ad-5672a523d5fe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民プラザ",
+    "institution": "リハーサル室",
+    "building_kana": "オオタクミンプラザ",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "大田区民プラザ",
+    "institution_system_name": "リハーサル室",
+    "capacity": 54,
+    "area": 105.9,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区下丸子3-1-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "打楽器の使用は他部屋の状況による。アンプ不可。"
+  },
+  {
+    "id": "26aca74f-d76d-49ce-a21c-1ca3acb06ff7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民ホール・アプリコ",
+    "institution": "Aスタジオ",
+    "building_kana": "オオタクミンホール・アプリコ",
+    "institution_kana": "Aスタジオ",
+    "building_system_name": "大田区民ﾎｰﾙ･ｱﾌﾟﾘｺ",
+    "institution_system_name": "Aスタジオ",
+    "capacity": 40,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区蒲田五丁目37番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "2022年1月～2023年2月(予定)まで休館"
+  },
+  {
+    "id": "4309fc39-ac31-4583-ae7f-9a5d75b4978b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民ホール・アプリコ",
+    "institution": "Bスタジオ",
+    "building_kana": "オオタクミンホール・アプリコ",
+    "institution_kana": "Bスタジオ",
+    "building_system_name": "大田区民ﾎｰﾙ･ｱﾌﾟﾘｺ",
+    "institution_system_name": "Bスタジオ",
+    "capacity": 15,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区蒲田五丁目37番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "2022年1月～2023年2月(予定)まで休館"
+  },
+  {
+    "id": "34811088-ccd0-41bc-991c-5787960cf7d0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田区民ホール・アプリコ",
+    "institution": "小ホール",
+    "building_kana": "オオタクミンホール・アプリコ",
+    "institution_kana": "ショウホール",
+    "building_system_name": "大田区民ﾎｰﾙ･ｱﾌﾟﾘｺ",
+    "institution_system_name": "小ホール",
+    "capacity": 175,
+    "area": 170,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区蒲田五丁目37番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の1日",
+    "note": "2022年1月～2023年2月(予定)まで休館"
+  },
+  {
+    "id": "67876016-e731-4a5e-8b3f-75e3a15eb91d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田文化の森",
+    "institution": "第一音楽スタジオ",
+    "building_kana": "オオタブンカノモリ",
+    "institution_kana": "ダイイチオンガクスタジオ",
+    "building_system_name": "大田文化の森",
+    "institution_system_name": "第一音楽スタジオ",
+    "capacity": 20,
+    "area": 52,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区中央二丁目10番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "利用料金は2022年4月1日以降のものを記載した。"
+  },
+  {
+    "id": "523375eb-5653-4720-a066-46c77814d089",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田文化の森",
+    "institution": "第三音楽スタジオ",
+    "building_kana": "オオタブンカノモリ",
+    "institution_kana": "ダイサンオンガクスタジオ",
+    "building_system_name": "大田文化の森",
+    "institution_system_name": "第三音楽スタジオ",
+    "capacity": 15,
+    "area": 48,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区中央二丁目10番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "和太鼓OK,付帯設備に和太鼓あり"
+  },
+  {
+    "id": "f475e0a2-593a-44dc-af85-08e64dec5cc7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田文化の森",
+    "institution": "第二音楽スタジオ",
+    "building_kana": "オオタブンカノモリ",
+    "institution_kana": "ダイニオンガクスタジオ",
+    "building_system_name": "大田文化の森",
+    "institution_system_name": "第二音楽スタジオ",
+    "capacity": 20,
+    "area": 57,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_TWO_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_TWO_HOUR"
+      }
+    ],
+    "address": "大田区中央二丁目10番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前の1日",
+    "note": "和太鼓不可"
+  },
+  {
+    "id": "89befa40-1409-40b0-a311-cd8846ab49a5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "大田文化の森",
+    "institution": "ホール",
+    "building_kana": "オオタブンカノモリ",
+    "institution_kana": "ホール",
+    "building_system_name": "大田文化の森",
+    "institution_system_name": "ホール",
+    "capacity": 259,
+    "area": 549.4,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 14200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 21400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 28400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 17000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 25800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 34200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区中央二丁目10番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
+    "layout_image_url": "",
+    "lottery_period": "6ヶ月前の1日",
+    "note": "舞台のみの利用は約半額"
+  },
+  {
+    "id": "a894a208-197f-41f9-bc86-01506b25392f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "糀谷文化センター",
+    "institution": "第一集会室",
+    "building_kana": "コウジヤブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツ",
+    "building_system_name": "糀谷文化センター",
+    "institution_system_name": "第一集会室",
+    "capacity": 50,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区西糀谷二丁目14番5号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/kojiyabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  },
+  {
+    "id": "a4a4b91b-6f54-4950-b28f-62638fb72eeb",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "新蒲田区民活動施設",
+    "institution": "多目的室（大）",
+    "building_kana": "シンカマタクミンカツドウシセツ",
+    "institution_kana": "タモクテキシツ（ダイ）",
+    "building_system_name": "新蒲田区民活動施設",
+    "institution_system_name": "多目的室（大）",
+    "capacity": 450,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "de182661-ee8f-4297-9a83-4e647079ab02",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "田園調布せせらぎ館",
+    "institution": "第一多目的室A",
+    "building_kana": "デンエンチョウフセセラギカン",
+    "institution_kana": "ダイイチタモクテキシツA",
+    "building_system_name": "田園調布せせらぎ館",
+    "institution_system_name": "第一多目的室A",
+    "capacity": 60,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区田園調布一丁目53番12号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前",
+    "note": "使用不可楽器...管楽器：トランペット、トロンボーン、ホルン、チューバ、サクソフォーン、ファゴット等、弦楽器：エレクトリックギター、エレクトリックベース等、打楽器：ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等、その他：電子オルガン、電子ピアノ、シンセサイザー等"
+  },
+  {
+    "id": "fb1963d5-a363-454a-b1e6-e2a8bdf8222f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "田園調布せせらぎ館",
+    "institution": "第一多目的室B",
+    "building_kana": "デンエンチョウフセセラギカン",
+    "institution_kana": "ダイイチタモクテキシツB",
+    "building_system_name": "田園調布せせらぎ館",
+    "institution_system_name": "第一多目的室B",
+    "capacity": 60,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6480,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区田園調布一丁目53番12号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前",
+    "note": "使用不可楽器...管楽器：トランペット、トロンボーン、ホルン、チューバ、サクソフォーン、ファゴット等、弦楽器：エレクトリックギター、エレクトリックベース等、打楽器：ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等、その他：電子オルガン、電子ピアノ、シンセサイザー等"
+  },
+  {
+    "id": "33749ca1-dff9-49ce-a0a4-6a7a87887fcd",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "田園調布せせらぎ館",
+    "institution": "第二多目的室",
+    "building_kana": "デンエンチョウフセセラギカン",
+    "institution_kana": "ダイニタモクテキシツ",
+    "building_system_name": "田園調布せせらぎ館",
+    "institution_system_name": "第二多目的室",
+    "capacity": 8,
+    "area": 30,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "大田区田園調布一丁目53番12号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前",
+    "note": "使用不可楽器...ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等"
+  },
+  {
+    "id": "b7dc8861-de30-4471-a244-894d21f3773e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "萩中文化センター",
+    "institution": "第二集会室",
+    "building_kana": "ハギナカブンカセンター",
+    "institution_kana": "ダイニシュウカイシツ",
+    "building_system_name": "萩中文化センター",
+    "institution_system_name": "第二集会室",
+    "capacity": 27,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区萩中一丁目7番30号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/haginakabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  },
+  {
+    "id": "81f1fb54-054e-48ae-b833-6f5d5d30f8a8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "嶺町文化センター",
+    "institution": "第一集会室",
+    "building_kana": "ミネマチブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツ",
+    "building_system_name": "嶺町文化センター",
+    "institution_system_name": "第一集会室",
+    "capacity": 60,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区田園調布本町7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/minemachibunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  },
+  {
+    "id": "f7655848-1ff3-4a27-919c-2c2ba60b0114",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "嶺町文化センター",
+    "institution": "第二集会室",
+    "building_kana": "ミネマチブンカセンター",
+    "institution_kana": "ダイニシュウカイシツ",
+    "building_system_name": "嶺町文化センター",
+    "institution_system_name": "第二集会室",
+    "capacity": 30,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区田園調布本町7番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/minemachibunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  },
+  {
+    "id": "8f4102a6-8c0c-4b81-ae2e-7147857f27af",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "雪谷文化センター",
+    "institution": "第一集会室",
+    "building_kana": "ユキタニブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツ",
+    "building_system_name": "雪谷文化センター",
+    "institution_system_name": "第一集会室",
+    "capacity": 70,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区南雪谷五丁目18番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
+  },
+  {
+    "id": "a0fc7581-2b9e-4a40-94c9-ccc4839579f2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "雪谷文化センター",
+    "institution": "第一集会室A",
+    "building_kana": "ユキタニブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツA",
+    "building_system_name": "雪谷文化センター",
+    "institution_system_name": "第一集会室A",
+    "capacity": 34,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区南雪谷五丁目18番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
+  },
+  {
+    "id": "c8c2e05d-e094-447c-a39c-ab0669e7996f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "雪谷文化センター",
+    "institution": "第一集会室B",
+    "building_kana": "ユキタニブンカセンター",
+    "institution_kana": "ダイイチシュウカイシツB",
+    "building_system_name": "雪谷文化センター",
+    "institution_system_name": "第一集会室B",
+    "capacity": 36,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区南雪谷五丁目18番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
+  },
+  {
+    "id": "2261cc92-d02d-49ed-8b4b-5c2d1ebce819",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "雪谷文化センター",
+    "institution": "第二集会室",
+    "building_kana": "ユキタニブンカセンター",
+    "institution_kana": "ダイニシュウカイシツ",
+    "building_system_name": "雪谷文化センター",
+    "institution_system_name": "第二集会室",
+    "capacity": 30,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区南雪谷五丁目18番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
+  },
+  {
+    "id": "ff12409b-4497-4afd-bba1-80495e0268ce",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "building": "雪谷文化センター",
+    "institution": "和室",
+    "building_kana": "ユキタニブンカセンター",
+    "institution_kana": "ワシツ",
+    "building_system_name": "雪谷文化センター",
+    "institution_system_name": "和室",
+    "capacity": 30,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "大田区南雪谷五丁目18番3号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "文化センターは区内団体のみ利用可。"
+  }
+]

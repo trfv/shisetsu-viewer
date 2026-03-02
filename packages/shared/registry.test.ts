@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getReservationTargets, getMunicipalityBySlug, getMunicipalityKeyBySlug } from "./registry";
+import {
+  getReservationTargets,
+  getMunicipalityBySlug,
+  getMunicipalityKeyBySlug,
+} from "./registry.ts";
 
 describe("registry", () => {
   describe("getReservationTargets", () => {

@@ -2,10 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "noEmit": true
+    "lib": ["ESNext"],
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["./**/*.ts"],
   "references": []

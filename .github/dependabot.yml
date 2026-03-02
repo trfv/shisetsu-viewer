@@ -5,13 +5,73 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
   - package-ecosystem: "npm"
     target-branch: "develop"
     directory: "/"
     schedule:
       interval: "weekly"
     groups:
-      production-dependency:
-        dependency-type: production
-      development-dependency:
-        dependency-type: development
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      testing:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@testing-library/*"
+          - "@playwright/test"
+          - "msw"
+      build:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "esbuild"
+          - "@esbuild/*"
+          - "@swc/*"
+          - "@rollup/*"
+          - "wrangler"
+      linting:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "prettier"
+          - "prettier-*"
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "react"
+          - "react-dom"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@testing-library/*"
+          - "@playwright/test"
+          - "msw"
+          - "vite"
+          - "@vitejs/*"
+          - "esbuild"
+          - "@esbuild/*"
+          - "@swc/*"
+          - "@rollup/*"
+          - "wrangler"
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "prettier"
+          - "prettier-*"
+    ignore:
+      - dependency-name: "@typescript/native-preview"
+      - dependency-name: "@mizchi/lsmcp"

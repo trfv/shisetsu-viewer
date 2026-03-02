@@ -25,7 +25,7 @@ for (const target of targets) {
 
   const response = await graphqlRequest<ListInstitutionsResponse>(
     `
-    query list_institutions($prefecture: String!, $municipality: String!) {
+    query list_institutions($prefecture: prefecture!, $municipality: String!) {
       institutions(
         where: { prefecture: { _eq: $prefecture }, municipality: { _eq: $municipality } }
         order_by: [{ building_kana: asc }, { institution_kana: asc }]

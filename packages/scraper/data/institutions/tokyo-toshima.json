@@ -1,0 +1,2504 @@
+[
+  {
+    "id": "1a0f6aea-2e9e-4e29-865a-ae1e696c1ef1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "池袋本町第一区民集会室",
+    "institution": "会議室",
+    "building_kana": "イケブクロホンチョウダイイチクミンシュウカイシツ",
+    "institution_kana": "カイギシツ",
+    "building_system_name": "池袋本町第一区民集会室",
+    "institution_system_name": "会議室",
+    "capacity": 25,
+    "area": 40.25,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区池袋本町3-9-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/072/kurashi/kuminkatsudo/007314/shukaishitsu/005167.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "防音室だが音を出す場合は事前に問い合わせろとのこと"
+  },
+  {
+    "id": "a311175d-c2da-4b7e-9879-0e25fae03754",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "区民ひろば西巣鴨第一",
+    "institution": "洋室",
+    "building_kana": "クミンヒロバニシスガモテイイチ",
+    "institution_kana": "ヨウシツ",
+    "building_system_name": "区民ひろば西巣鴨第一",
+    "institution_system_name": "洋室",
+    "capacity": 50,
+    "area": 87.1,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西巣鴨2-35-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/082/kurashi/kuminkatsudo/007314/shisetsu/030599.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "日曜休館"
+  },
+  {
+    "id": "e653cc88-2529-4021-9baf-11620bf8f0a3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "区民ひろば富士見台",
+    "institution": "集会室（洋室1）",
+    "building_kana": "クミンヒロバフジミダイ",
+    "institution_kana": "シュウカイシツ（ヨウシツ1）",
+    "building_system_name": "区民ひろば富士見台",
+    "institution_system_name": "洋室１",
+    "capacity": 75,
+    "area": 104.6,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南長崎1-6-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/072/kurashi/kuminkatsudo/007314/shisetsu/030610.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "日曜休館"
+  },
+  {
+    "id": "6aaa7a22-f180-41aa-8b40-625997ca779c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "区民ひろば南池袋",
+    "institution": "集会室（洋室1）",
+    "building_kana": "クミンヒロバミナミイケブクロ",
+    "institution_kana": "シュウカイシツ（ヨウシツ1）",
+    "building_system_name": "区民ひろば南池袋",
+    "institution_system_name": "洋室１",
+    "capacity": 80,
+    "area": 120,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南池袋3-5-12",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/072/kurashi/kuminkatsudo/007314/shisetsu/1910040908.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "日曜休館"
+  },
+  {
+    "id": "44e3c27c-355c-4791-9e75-7a97294cdc47",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "駒込地域文化創造館",
+    "institution": "音楽室",
+    "building_kana": "コマゴメチイキブンカソウゾウカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "駒込地域文化創造館",
+    "institution_system_name": "音楽室",
+    "capacity": 50,
+    "area": 69,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区駒込2丁目2−2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_komagome/rooms.html",
+    "layout_image_url": "https://www.toshima-mirai.or.jp/Portals/0/resources/center/e_komagome/documents/heimen_000.pdf",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "280864b0-a71c-4eb3-8639-80fd0f154967",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "駒込地域文化創造館",
+    "institution": "第1会議室",
+    "building_kana": "コマゴメチイキブンカソウゾウカン",
+    "institution_kana": "ダイ1カイギシツ",
+    "building_system_name": "駒込地域文化創造館",
+    "institution_system_name": "第１会議室",
+    "capacity": 60,
+    "area": 82,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区駒込2丁目2−2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_komagome/rooms.html",
+    "layout_image_url": "https://www.toshima-mirai.or.jp/Portals/0/resources/center/e_komagome/documents/heimen_000.pdf",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "d3653b2a-db24-4452-9321-344aabd91e52",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "巣鴨地域文化創造館",
+    "institution": "多目的ホール",
+    "building_kana": "スガモチイキブンカソウゾウカン",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "巣鴨地域文化創造館",
+    "institution_system_name": "多目的ホール",
+    "capacity": 90,
+    "area": 139,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区巣鴨4-15-11",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_sugamo/index.html#list03",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能,フルオーケストラNG"
+  },
+  {
+    "id": "67468a94-58c8-7331-5b9e-93b4a0990833",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司が谷公園丘の上テラス",
+    "institution": "防音室",
+    "building_kana": "ゾウシガヤコウエンオカノウエテラス",
+    "institution_kana": "ボウオンシツ",
+    "building_system_name": "雑司が谷公園丘の上テラス",
+    "institution_system_name": "防音室",
+    "capacity": 8,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "豊島区雑司が谷2-12-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/454/shisetsu/koen/2008270918.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "38d522fa-159a-48cc-b904-b760d4e11749",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司ヶ谷地域文化創造館",
+    "institution": "音楽室",
+    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "雑司が谷地域文化創造館",
+    "institution_system_name": "音楽室",
+    "capacity": 80,
+    "area": 138,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区雑司が谷3-1-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_zoshigaya/#roomPR",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "4b2f19b9-5905-4556-8df8-d18da176269d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司ヶ谷地域文化創造館",
+    "institution": "第1練習室",
+    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "institution_kana": "ダイ1レンシュウシツ",
+    "building_system_name": "雑司が谷地域文化創造館",
+    "institution_system_name": "第１練習室",
+    "capacity": 70,
+    "area": 142,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区雑司が谷3-1-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_zoshigaya/#roomPR",
+    "layout_image_url": "https://www.toshima-mirai.or.jp/Portals/0/resources/center/e_zoshigaya/documents/layout_1ren_001.pdf",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "133c8525-ba25-413e-93f3-506ff9cfb6c9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司ヶ谷地域文化創造館",
+    "institution": "第2練習室",
+    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "institution_kana": "ダイ2レンシュウシツ",
+    "building_system_name": "雑司が谷地域文化創造館",
+    "institution_system_name": "第２練習室",
+    "capacity": 80,
+    "area": 220,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区雑司が谷3-1-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_zoshigaya/#roomPR",
+    "layout_image_url": "https://www.toshima-mirai.or.jp/Portals/0/resources/center/e_zoshigaya/documents/layout_2ren_001.pdf",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "97330d93-ab00-aa23-5d1f-d6e330c1871e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司ヶ谷地域文化創造館",
+    "institution": "第4会議室",
+    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "institution_kana": "ダイ4カイギシツ",
+    "building_system_name": "雑司が谷地域文化創造館",
+    "institution_system_name": "第４会議室",
+    "capacity": 50,
+    "area": 80,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区雑司が谷3-1-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_zoshigaya/#roomPR",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "5356ff3f-2d01-4b76-8569-4d9c59c01539",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "雑司ヶ谷地域文化創造館",
+    "institution": "多目的ホール",
+    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "雑司が谷地域文化創造館",
+    "institution_system_name": "多目的ホール",
+    "capacity": 120,
+    "area": 286,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区雑司が谷3-1-7",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_zoshigaya/#roomPR",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "7e8aacc4-c8f1-41b5-8980-db7a60e51972",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "高田第一区民集会室",
+    "institution": "会議室",
+    "building_kana": "タカダテイイチクミンシュウカイシツ",
+    "institution_kana": "カイギシツ",
+    "building_system_name": "高田第一区民集会室",
+    "institution_system_name": "会議室",
+    "capacity": 40,
+    "area": 59.12,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区高田2-11-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/089/kurashi/kuminkatsudo/007314/shukaishitsu/005170.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "室外への音漏れ禁止"
+  },
+  {
+    "id": "fa732db1-f2e1-4ce7-b241-0fa72f760f6c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "千早地域文化創造館",
+    "institution": "音楽室",
+    "building_kana": "チハヤチイキブンカソウゾウカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "千早地域文化創造館",
+    "institution_system_name": "音楽室",
+    "capacity": 50,
+    "area": 79,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区千早2-35-12",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_chihaya/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "12e5abfa-5aaa-7040-22f2-051474468465",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "千早地域文化創造館",
+    "institution": "第1会議室",
+    "building_kana": "チハヤチイキブンカソウゾウカン",
+    "institution_kana": "ダイ1カイギシツ",
+    "building_system_name": "千早地域文化創造館",
+    "institution_system_name": "第１会議室",
+    "capacity": 80,
+    "area": 118,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区千早2-35-12",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_chihaya/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "9c0491bf-4ff9-271d-381b-51be4712449a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "千早地域文化創造館",
+    "institution": "第3会議室",
+    "building_kana": "チハヤチイキブンカソウゾウカン",
+    "institution_kana": "ダイ3カイギシツ",
+    "building_system_name": "千早地域文化創造館",
+    "institution_system_name": "第３会議室",
+    "capacity": 30,
+    "area": 53,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区千早2-35-12",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_chihaya/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "c8a47397-3ebc-039b-9518-1181d98e4fb8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "千早地域文化創造館",
+    "institution": "和室",
+    "building_kana": "チハヤチイキブンカソウゾウカン",
+    "institution_kana": "ワシツ",
+    "building_system_name": "千早地域文化創造館",
+    "institution_system_name": "和室",
+    "capacity": 24,
+    "area": 41,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区千早2-35-12",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_chihaya/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "c3872168-791d-47e0-9f0a-89db83d4e3a2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "シンフォニースペース",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "シンフォニースペース",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 100,
+    "area": 170.8,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 19000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 24000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 19000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 24000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/symphony_space.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "b4ede96f-3eb1-483d-bbac-f0ba68b7fb73",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "ミーティングルーム5",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "ミーティングルーム5",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 28,
+    "area": 78.3,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/meeting_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "e5b5608f-ac45-4732-8fc4-129348c417e3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "ミーティングルーム7",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "ミーティングルーム7",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 28,
+    "area": 79.2,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/meeting_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "c9dae7b7-e3b0-4b0b-921a-acfb1bc74890",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームL",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームL",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 100,
+    "area": 162,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 30000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 30000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "fcc02928-23c5-4a7a-8da9-0df8dfb31ded",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームM1",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームM1",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 40,
+    "area": 80,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 14000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 14000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "2e3e283c-4fa1-47fc-b23d-e5c5cf5e02dd",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームM2",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームM2",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 30,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "3e487e18-325f-4b01-bfef-76e718328864",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームM3",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームM3",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 50,
+    "area": 100,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "f001710b-cbb8-40dd-afc5-50847c41dddb",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームS1",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームS1",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 10,
+    "area": 24,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "7aee8a70-30fe-40f1-96f6-ac23eb3a83f8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "東京藝術劇場",
+    "institution": "リハーサルルームS2",
+    "building_kana": "トウキョウゲイジュツゲキジョウ",
+    "institution_kana": "リハーサルルームS2",
+    "building_system_name": "",
+    "institution_system_name": "",
+    "capacity": 10,
+    "area": 24,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋1-8-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.geigeki.jp/rent/others/rehearsal_room.html",
+    "layout_image_url": "",
+    "lottery_period": "3ヶ月前初日（要団体予約）",
+    "note": "3ヶ月前初日,要団体予約"
+  },
+  {
+    "id": "7372c890-1497-0a0e-c579-9ba89d04b10e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "としま区民センター",
+    "institution": "小ホール",
+    "building_kana": "トシマクミンセンター",
+    "institution_kana": "ショウホール",
+    "building_system_name": "としま区民センター",
+    "institution_system_name": "小ホール",
+    "capacity": 160,
+    "area": 135,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 16400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区東池袋1-20-10",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://toshima-civic-center.jp/facilities/",
+    "layout_image_url": "https://toshima-civic-center.jp/facilities/",
+    "lottery_period": "13か月前10日（区民以外登録団体は12ヶ月前20日から）",
+    "note": "区民以外団体は料金2倍"
+  },
+  {
+    "id": "fd3351d1-ccfa-4db5-846b-14a191d1be35",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "としま区民センター",
+    "institution": "スタジオA",
+    "building_kana": "トシマクミンセンター",
+    "institution_kana": "スタジオA",
+    "building_system_name": "としま区民センター",
+    "institution_system_name": "スタジオＡ",
+    "capacity": 5,
+    "area": 16,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区東池袋1-20-10",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://toshima-civic-center.jp/facilities/",
+    "layout_image_url": "https://toshima-civic-center.jp/facilities/",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": "区民以外団体は料金2倍"
+  },
+  {
+    "id": "885d0685-b54b-4d8d-a786-f890c0d853d2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "としま区民センター",
+    "institution": "スタジオB",
+    "building_kana": "トシマクミンセンター",
+    "institution_kana": "スタジオB",
+    "building_system_name": "としま区民センター",
+    "institution_system_name": "スタジオＢ",
+    "capacity": 10,
+    "area": 37.5,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区東池袋1-20-10",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://toshima-civic-center.jp/facilities/",
+    "layout_image_url": "https://toshima-civic-center.jp/facilities/",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": "区民以外団体は料金2倍"
+  },
+  {
+    "id": "3bd571cc-3be8-4110-9e70-e6e29d8c2f59",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "としま区民センター",
+    "institution": "スタジオC",
+    "building_kana": "トシマクミンセンター",
+    "institution_kana": "スタジオC",
+    "building_system_name": "としま区民センター",
+    "institution_system_name": "スタジオＣ",
+    "capacity": 15,
+    "area": 57,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区東池袋1-20-10",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://toshima-civic-center.jp/facilities/",
+    "layout_image_url": "https://toshima-civic-center.jp/facilities/",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": "区民以外団体は料金2倍"
+  },
+  {
+    "id": "348789ac-be11-d700-03a2-ce5a6bada896",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "としま区民センター",
+    "institution": "多目的ホール",
+    "building_kana": "トシマクミンセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "としま区民センター",
+    "institution_system_name": "多目的ホール",
+    "capacity": 480,
+    "area": 330.4,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 26400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 35200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 35200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 33000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 44000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 44000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区東池袋1-20-10",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://toshima-civic-center.jp/facilities/",
+    "layout_image_url": "https://toshima-civic-center.jp/facilities/",
+    "lottery_period": "13か月前10日（区民以外登録団体は12ヶ月前20日から）",
+    "note": "区民以外団体は料金2倍"
+  },
+  {
+    "id": "11970315-08dd-47fd-941b-2ad5308ed3c8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "豊島産業振興プラザ",
+    "institution": "第1音楽室",
+    "building_kana": "トシマサンギョウシンコウプラザ",
+    "institution_kana": "ダイ1オンガクシツ",
+    "building_system_name": "ＩＫＥ・Ｂｉｚ※旧勤労福祉会館",
+    "institution_system_name": "第１音楽室",
+    "capacity": 20,
+    "area": 43,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋2-37-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-plaza.jp/facilities/musicroom.html",
+    "layout_image_url": "",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": ""
+  },
+  {
+    "id": "5c806fe9-1c22-4da1-8360-38bf80934e95",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "豊島産業振興プラザ",
+    "institution": "第2音楽室",
+    "building_kana": "トシマサンギョウシンコウプラザ",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "ＩＫＥ・Ｂｉｚ※旧勤労福祉会館",
+    "institution_system_name": "第２音楽室",
+    "capacity": 5,
+    "area": 11.8,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋2-37-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-plaza.jp/facilities/musicroom.html",
+    "layout_image_url": "",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": ""
+  },
+  {
+    "id": "7248e9ee-a473-46ce-b358-7f87f7580ac9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "豊島産業振興プラザ",
+    "institution": "第3音楽室",
+    "building_kana": "トシマサンギョウシンコウプラザ",
+    "institution_kana": "ダイ3オンガクシツ",
+    "building_system_name": "ＩＫＥ・Ｂｉｚ※旧勤労福祉会館",
+    "institution_system_name": "第３音楽室",
+    "capacity": 5,
+    "area": 12.5,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区西池袋2-37-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-plaza.jp/facilities/musicroom.html",
+    "layout_image_url": "",
+    "lottery_period": "4か月前10日（区民以外登録団体は3ヶ月前20日から）",
+    "note": ""
+  },
+  {
+    "id": "75e1ec39-2348-4b5e-b207-40b58b816d07",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "ふるさと千川館",
+    "institution": "多目的ホール",
+    "building_kana": "フルサトセンカワカン",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "ふるさと千川館",
+    "institution_system_name": "多目的ホール",
+    "capacity": 150,
+    "area": 356,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "豊島区要町3-55-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/069/kurashi/kuminkatsudo/007314/003516/furusatosenkawa.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": ""
+  },
+  {
+    "id": "8a7150db-aee1-43a4-b1df-995bcf41f591",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "ふるさと千川館",
+    "institution": "ふるさと千川の部屋",
+    "building_kana": "フルサトセンカワカン",
+    "institution_kana": "フルサトセンカワノヘヤ",
+    "building_system_name": "ふるさと千川館",
+    "institution_system_name": "ふるさと千川の部屋",
+    "capacity": 36,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 200,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "豊島区要町3-55-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/069/kurashi/kuminkatsudo/007314/003516/furusatosenkawa.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": ""
+  },
+  {
+    "id": "952b3c9c-bae1-4fa1-8f6f-409fd20f91ed",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "音楽室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "音楽室",
+    "capacity": 40,
+    "area": 119,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "006613e6-c010-55e1-44e2-c12f36a3116d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "第1会議室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ダイ1カイギシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "第１会議室",
+    "capacity": 127,
+    "area": 80,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "7ebd96cc-e2a3-6230-d090-024e6cc255db",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "第2会議室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ダイ2カイギシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "第２会議室",
+    "capacity": 30,
+    "area": 56,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "86669df4-d132-efc5-ce0f-30782a2a1c91",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "第3会議室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ダイ3カイギシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "第３会議室",
+    "capacity": 24,
+    "area": 49,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "39b970d6-0f19-48e2-a051-ce4b95502939",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "第4会議室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ダイ4カイギシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "第４会議室",
+    "capacity": 24,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "b2112f5f-4b5a-42a6-9750-22986779fd02",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "第5会議室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ダイ5カイギシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "第５会議室",
+    "capacity": 40,
+    "area": 140,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "5ce71867-fd59-96ee-5208-5f357f764a2c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南大塚地域文化創造館",
+    "institution": "和室",
+    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "institution_kana": "ワシツ",
+    "building_system_name": "南大塚地域文化創造館",
+    "institution_system_name": "和室",
+    "capacity": 24,
+    "area": 56,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南大塚2-36-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.toshima-mirai.or.jp/center/e_otsuka/",
+    "layout_image_url": "",
+    "lottery_period": "1か月前1日から3日（先着順予約）",
+    "note": "追加料金で08:30-09:00, 12:00-13:00も予約可能"
+  },
+  {
+    "id": "b92118f9-c3a0-4592-9c8d-c099ac8e8bef",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "building": "南長崎第一区民集会室",
+    "institution": "会議室",
+    "building_kana": "ミナミナガサキダイイチクミンシュウカイシツ",
+    "institution_kana": "カイギシツ",
+    "building_system_name": "南長崎第一区民集会室",
+    "institution_system_name": "会議室",
+    "capacity": 30,
+    "area": 46.8,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "豊島区南長崎1-6-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "http://www.city.toshima.lg.jp/072/kurashi/kuminkatsudo/007314/shukaishitsu/005174.html",
+    "layout_image_url": "",
+    "lottery_period": "2か月前初日からシステムor窓口で抽選予約、前月1日に結果発表",
+    "note": "出せる音条件不明"
+  }
+]

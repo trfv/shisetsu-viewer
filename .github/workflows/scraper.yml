@@ -30,6 +30,7 @@ jobs:
       shardTotal: ${{ steps.set-matrix.outputs.shardTotal }}
       nodeModulesCacheKey: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
       playwrightCacheKey: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
+      m2mToken: ${{ steps.fetch-token.outputs.m2mToken }}
     steps:
       - name: Set matrix
         id: set-matrix
@@ -55,7 +56,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          node-version: "lts/*"
+          node-version: "24"
       - name: Cache node_modules
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: node-modules-cache
@@ -73,6 +74,25 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
+      - name: Fetch M2M token
+        id: fetch-token
+        env:
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        run: |
+          TOKEN=$(curl -sf --request POST \
+            --url "https://${AUTH0_DOMAIN}/oauth/token" \
+            --header 'content-type: application/json' \
+            --data "{\"client_id\":\"${AUTH0_CLIENT_ID}\",\"client_secret\":\"${AUTH0_CLIENT_SECRET}\",\"audience\":\"${AUTH0_AUDIENCE}\",\"grant_type\":\"client_credentials\"}" \
+            | jq -r '.access_token')
+          if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
+            echo "::error::Failed to fetch M2M token"
+            exit 1
+          fi
+          echo "::add-mask::${TOKEN}"
+          echo "m2mToken=${TOKEN}" >> $GITHUB_OUTPUT
 
   scrape:
     name: Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
@@ -92,7 +112,7 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -153,7 +173,7 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
-          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+          M2M_TOKEN: ${{ needs.prepare.outputs.m2mToken }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
