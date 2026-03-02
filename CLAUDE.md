@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Shisetsu Viewer is a web application for viewing public facility reservation status across municipalities in Japan (Tokyo wards and Kawasaki). The project is a monorepo with three packages:
+Shisetsu Viewer is a web application for viewing public facility reservation status across municipalities in Japan (Tokyo wards and Kawasaki). The project is a monorepo with four packages:
 
 - **viewer** (`packages/viewer/`) — React 19 frontend application. See `packages/viewer/CLAUDE.md`.
 - **scraper** (`packages/scraper/`) — Playwright-based data scraping tools. See `packages/scraper/CLAUDE.md`.
 - **shared** (`packages/shared/`) — Shared types and municipality registry. See `packages/shared/CLAUDE.md`.
+- **mcp-server** (`packages/mcp-server/`) — MCP server for AI tool integration (Cloudflare Workers). See `packages/mcp-server/CLAUDE.md`.
 
 ## Monorepo Setup
 
@@ -43,5 +44,6 @@ npm run knip                  # Detect unused files, deps, exports
 ## Cross-Package Architecture
 
 - `@shisetsu-viewer/shared` is the source of truth for municipality data, enums (`ReservationStatus`, `ReservationDivision`, etc.), and types. Both viewer and scraper import from it.
-- Backend: Hasura GraphQL with role-based access control. Viewer authenticates via Auth0 Bearer token; scraper authenticates via `X-Hasura-Admin-Secret` header.
+- Backend: Hasura GraphQL with role-based access control. Viewer authenticates via Auth0 Bearer token; scraper authenticates via Auth0 M2M Bearer token.
 - Data flow: scrapers navigate municipal websites → extract/transform reservation data → upload to Hasura via GraphQL mutations. Viewer fetches and displays this data via custom fetch-based GraphQL client.
+- MCP server: exposes Hasura data as MCP tools/resources for AI assistants. Authenticates to Hasura via Auth0 M2M token. Local stdio mode enables write tools; Cloudflare Workers deployment is read-only with API token auth.
