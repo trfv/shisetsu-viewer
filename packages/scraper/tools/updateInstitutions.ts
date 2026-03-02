@@ -9,7 +9,6 @@ interface InsertInstitutionsResponse {
 }
 
 const columns = [
-  "id",
   "prefecture",
   "municipality",
   "building",
