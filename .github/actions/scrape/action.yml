@@ -69,6 +69,12 @@ runs:
           echo "test-results-exist=false" >> $GITHUB_OUTPUT
           echo "No test results found"
         fi
+    - name: Decode M2M token
+      shell: bash
+      run: |
+        TOKEN=$(echo -n "${{ inputs.m2mToken }}" | base64 -d)
+        echo "::add-mask::${TOKEN}"
+        echo "M2M_TOKEN=${TOKEN}" >> "$GITHUB_ENV"
     - name: Save scraped data
       if: ${{ steps.check-results.outputs.test-results-exist == 'true' }}
       shell: bash
@@ -76,5 +82,4 @@ runs:
       env:
         GRAPHQL_ENDPOINT: ${{ inputs.graphqlEndpoint }}
       run: |
-        export M2M_TOKEN=$(echo -n "${{ inputs.m2mToken }}" | base64 -d)
         node tools/updateReservations.ts ${{ inputs.municipality }}
