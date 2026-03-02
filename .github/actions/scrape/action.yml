@@ -71,8 +71,11 @@ runs:
         fi
     - name: Decode M2M token
       shell: bash
+      env:
+        M2M_TOKEN_B64: ${{ inputs.m2mToken }}
       run: |
-        TOKEN=$(echo -n "${{ inputs.m2mToken }}" | base64 -d)
+        echo "::add-mask::${M2M_TOKEN_B64}"
+        TOKEN=$(echo -n "$M2M_TOKEN_B64" | base64 -d)
         echo "::add-mask::${TOKEN}"
         echo "M2M_TOKEN=${TOKEN}" >> "$GITHUB_ENV"
     - name: Save scraped data
