@@ -10,6 +10,7 @@
   "scripts": {
     "typecheck": "tsgo",
     "test": "npx playwright test",
+    "scrape": "node --env-file=.env scripts/run.ts",
     "update:reservations": "node --env-file=.env tools/updateReservations.ts",
     "update:institutions": "node --env-file=.env tools/updateInstitutions.ts",
     "export:institutions": "node --env-file=.env tools/exportInstitutions.ts"
