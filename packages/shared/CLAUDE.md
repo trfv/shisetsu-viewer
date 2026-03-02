@@ -2,6 +2,12 @@
 
 Lightweight shared types and municipality registry consumed by both `@shisetsu-viewer/viewer` and `@shisetsu-viewer/scraper`. Zero runtime dependencies. No build step — uses `"main": "index.ts"` for direct TypeScript consumption.
 
+## Commands
+
+```bash
+npm run typecheck -w @shisetsu-viewer/shared           # Type check with tsgo
+```
+
 ## Exports
 
 ### Type Constants (`types.ts`)

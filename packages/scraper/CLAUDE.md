@@ -5,6 +5,7 @@ Playwright-based web scrapers that navigate municipal reservation systems, extra
 ## Commands
 
 ```bash
+npm run typecheck -w @shisetsu-viewer/scraper          # Type check with tsgo
 npm run test -w @shisetsu-viewer/scraper              # Run scraper tests (Playwright)
 npm run update:reservations -w @shisetsu-viewer/scraper  # Upload reservation data to Hasura
 npm run update:institutions -w @shisetsu-viewer/scraper  # Upload institution data from local JSON to Hasura
@@ -93,6 +94,7 @@ Config in `playwright.config.ts`:
 
 ## Environment Variables
 
+- `M2M_TOKEN` — (optional) Pre-set M2M Bearer token. Skips Auth0 Client Credentials Flow when set (used in CI).
 - `GRAPHQL_ENDPOINT` — Hasura GraphQL endpoint
 - `AUTH0_DOMAIN` — Auth0 tenant domain (e.g., `your-tenant.auth0.com`)
 - `AUTH0_CLIENT_ID` — Auth0 M2M application client ID

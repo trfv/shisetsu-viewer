@@ -23,6 +23,11 @@ export function resetTokenCache(): void {
  * Tokens are cached in memory and refreshed 5 minutes before expiry.
  */
 export async function getM2MToken(): Promise<string> {
+  const presetToken = process.env.M2M_TOKEN;
+  if (presetToken) {
+    return presetToken;
+  }
+
   if (cachedToken && Date.now() < expiresAt) {
     return cachedToken;
   }

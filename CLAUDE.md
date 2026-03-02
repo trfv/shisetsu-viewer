@@ -16,14 +16,18 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - npm workspaces. Use `-w @shisetsu-viewer/<package>` for package-specific commands.
 - Node >= 24, npm >= 10, ES Modules throughout.
 - Root `tsconfig.json` extends `@tsconfig/strictest` with composite project references.
+- Type checking: `tsgo` (`@typescript/native-preview`) — each package has `npm run typecheck` script.
 
 ## Root Commands
 
 ```bash
 npm start                     # Start viewer dev server (port 3000)
 npm run build                 # Build viewer for production
-npm run format:all            # Format all TypeScript files with Prettier
-npm run lint:all              # Lint all TypeScript files with ESLint
+npm run format:check:all      # Check formatting (Prettier, no write)
+npm run format:fix:all        # Fix formatting (Prettier, write)
+npm run lint:all              # Lint all TypeScript files (ESLint, no auto-fix)
+npm run lint:fix:all          # Lint and auto-fix (ESLint --fix)
+npm run typecheck:all         # Type check all packages with tsgo
 npm run knip                  # Detect unused files, deps, exports
 ```
 

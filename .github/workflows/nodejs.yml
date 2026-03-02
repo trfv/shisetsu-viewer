@@ -30,11 +30,11 @@ jobs:
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
       - name: Lint
-        run: npx eslint "./packages/**/*.ts*"
+        run: npm run lint:all
       - name: Format check
-        run: npx prettier --check "./packages/**/*.ts*"
+        run: npm run format:check:all
       - name: Typecheck
-        run: npm run typecheck -w @shisetsu-viewer/viewer
+        run: npm run typecheck:all
       - name: Check for unused files, dependencies and exports
         run: npm run knip
 

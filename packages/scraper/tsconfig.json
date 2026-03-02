@@ -2,15 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./",
-    "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
-    "types": ["node"],
-    "noEmit": true
+    "types": ["node"]
   },
   "include": ["./**/*.ts", "playwright.config.ts"],
-  "references": [] 
+  "references": []
 }

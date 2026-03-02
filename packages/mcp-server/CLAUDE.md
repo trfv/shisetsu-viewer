@@ -5,6 +5,7 @@ MCP (Model Context Protocol) server exposing Hasura GraphQL data as AI-consumabl
 ## Commands
 
 ```bash
+npm run typecheck -w @shisetsu-viewer/mcp-server       # Type check with tsgo
 npm run deploy -w @shisetsu-viewer/mcp-server           # Deploy to Cloudflare Workers
 npm run preview:wrangler -w @shisetsu-viewer/mcp-server # Local preview via wrangler dev
 npm run start -w @shisetsu-viewer/mcp-server            # Local stdio server (dev/debug用, write tools有効)
