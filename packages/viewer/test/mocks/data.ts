@@ -107,14 +107,22 @@ export const createMockReservationNode = (
   ...overrides,
 });
 
-export const createMockInstitutionReservationsConnection = (nodes: Record<string, unknown>[]) => ({
+export const createMockInstitutionReservationsConnection = (
+  nodes: Record<string, unknown>[],
+  hasNextPage = false
+) => ({
   data: {
     reservations_connection: {
       __typename: "reservationsConnection",
-      edges: nodes.map((node) => ({
+      edges: nodes.map((node, i) => ({
         __typename: "reservationsEdge",
+        cursor: btoa(`cursor-${i}`),
         node,
       })),
+      pageInfo: {
+        hasNextPage,
+        endCursor: nodes.length ? btoa(`cursor-${nodes.length - 1}`) : "",
+      },
     },
   },
 });

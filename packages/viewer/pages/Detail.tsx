@@ -1,5 +1,5 @@
 import { formatISO } from "date-fns";
-import { useCallback, useState, type ChangeEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 import {
   INSTITUTION_DETAIL_QUERY,
@@ -7,8 +7,10 @@ import {
   type InstitutionDetailNode,
   type InstitutionDetailQueryData,
   type InstitutionReservationsQueryData,
+  type ReservationNode,
 } from "../api/queries";
 import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
@@ -171,16 +173,36 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
   }
 
   const isMobile = useIsMobile();
-  const { loading, data, error } = useGraphQLQuery<InstitutionReservationsQueryData>(
+  const tableTarget = useRef<HTMLTableRowElement | null>(null);
+  const cardTarget = useRef<HTMLDivElement | null>(null);
+
+  const {
+    loading,
+    data: reservations,
+    error,
+    hasNextPage,
+    fetchMore,
+  } = usePaginatedQuery<InstitutionReservationsQueryData, ReservationNode>(
     INSTITUTION_RESERVATIONS_QUERY,
-    { id, startDate: formatISO(today, { representation: "date" }) }
+    { id, first: 100, startDate: formatISO(today, { representation: "date" }) },
+    (d) => d.reservations_connection
   );
+
+  useEffect(() => {
+    const element = isMobile ? cardTarget.current : tableTarget.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      (entries) => entries[0]?.isIntersecting && fetchMore()
+    );
+    observer.observe(element);
+    return () => {
+      observer.unobserve(element);
+    };
+  }, [fetchMore, isMobile]);
 
   if (error) {
     throw new Error(error.message);
   }
-
-  const reservations = data?.reservations_connection.edges.map((e) => e.node) ?? [];
 
   return (
     <div className={styles["reservationContainer"]}>
@@ -194,7 +216,11 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
       ) : isMobile ? (
         <div className={styles["reservationCardList"]}>
           {reservations.map((row, index) => (
-            <div className={styles["reservationCard"]} key={index}>
+            <div
+              className={styles["reservationCard"]}
+              key={index}
+              ref={index === reservations.length - 50 ? cardTarget : undefined}
+            >
               <div className={styles["reservationCardDate"]}>{formatMonthDate(row.date)}</div>
               <div className={styles["reservationCardDivisions"]}>
                 {sortByReservationDivision(row.reservation).map(([division, status], i) => (
@@ -209,18 +235,28 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
               </div>
             </div>
           ))}
+          {hasNextPage && (
+            <div className={styles["reservationCard"]}>
+              <Skeleton />
+              <Skeleton width="60%" />
+            </div>
+          )}
         </div>
       ) : (
         <TableContainer>
           <Table stickyHeader={true}>
             <TableHead>
               <TableRow>
-                <TableCell className={styles["reservationTableCell"]} size="small" variant="head">
+                <TableCell
+                  className={styles["reservationTableHeadCell"]}
+                  size="small"
+                  variant="head"
+                >
                   日付
                 </TableCell>
                 {sortByReservationDivision(reservations[0]?.reservation ?? {}).map(([division]) => (
                   <TableCell
-                    className={styles["reservationTableCell"]}
+                    className={styles["reservationTableHeadCell"]}
                     key={division}
                     size="small"
                     variant="head"
@@ -228,27 +264,42 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
                     {ReservationDivisionMap[municipality]?.[division]}
                   </TableCell>
                 ))}
-                <TableCell className={styles["reservationTableCell"]} size="small" variant="head">
+                <TableCell
+                  className={styles["reservationTableHeadCell"]}
+                  size="small"
+                  variant="head"
+                >
                   取得日時
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {reservations.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell className={styles["reservationTableCell"]} size="small">
+                <TableRow
+                  hover={true}
+                  key={index}
+                  ref={index === reservations.length - 50 ? tableTarget : undefined}
+                >
+                  <TableCell className={styles["reservationTableBodyCell"]} size="small">
                     {formatMonthDate(row.date)}
                   </TableCell>
                   {sortByReservationDivision(row.reservation).map(([, status], i) => (
-                    <TableCell className={styles["reservationTableCell"]} key={i} size="small">
+                    <TableCell className={styles["reservationTableBodyCell"]} key={i} size="small">
                       {ReservationStatusMap[municipality]?.[status]}
                     </TableCell>
                   ))}
-                  <TableCell className={styles["reservationTableCell"]} size="small">
+                  <TableCell className={styles["reservationTableBodyCell"]} size="small">
                     {formatDatetime(row.updated_at)}
                   </TableCell>
                 </TableRow>
               ))}
+              {hasNextPage && (
+                <TableRow>
+                  <TableCell size="small">
+                    <Skeleton />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
