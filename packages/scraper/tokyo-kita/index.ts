@@ -31,6 +31,7 @@ const STATUS_MAP: Record<string, Status> = {
   抽選確認中: "RESERVATION_STATUS_STATUS_9",
   保守: "RESERVATION_STATUS_STATUS_10",
   開放: "RESERVATION_STATUS_STATUS_11",
+  使用禁止: "RESERVATION_STATUS_STATUS_12",
 };
 
 type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];

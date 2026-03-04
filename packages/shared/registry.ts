@@ -99,6 +99,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_9]: "抽選確認中",
       [ReservationStatus.STATUS_10]: "保守",
       [ReservationStatus.STATUS_11]: "開放",
+      [ReservationStatus.STATUS_12]: "使用禁止",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "9:00-12:00",
