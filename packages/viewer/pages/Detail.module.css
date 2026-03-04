@@ -63,29 +63,38 @@
   justify-content: center;
 }
 
-.reservationTableCell {
+.reservationTableHeadCell {
   white-space: nowrap;
-  border-bottom-color: var(--color-divider);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom-color: var(--color-text-primary);
+}
+
+.reservationTableBodyCell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom-color: var(--color-text-secondary);
 }
 
 .reservationCardList {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 16px;
+  gap: 8px;
+  padding: 0 8px;
 }
 
 .reservationCard {
   border-radius: var(--border-radius);
-  padding: 16px;
+  padding: 12px 16px;
   background-color: var(--color-bg-paper);
   box-shadow: var(--shadow-2);
 }
 
 .reservationCardDate {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
 }
 
 .reservationCardDivisions {

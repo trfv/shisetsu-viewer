@@ -171,11 +171,12 @@ export type InstitutionDetailQueryData = {
 // ─── Institution Reservations ─────────────────────────────────
 
 export const INSTITUTION_RESERVATIONS_QUERY = `
-query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
+query institutionReservations($id: uuid!, $first: Int, $after: String, $startDate: date, $endDate: date) {
   reservations_connection(
     where: { institution_id: { _eq: $id }, date: { _gte: $startDate, _lte: $endDate } }
     order_by: { date: asc }
-    first: 1000
+    first: $first
+    after: $after
   ) {
     edges {
       node {
@@ -184,6 +185,11 @@ query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
         reservation
         updated_at
       }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }`;
@@ -197,7 +203,8 @@ export type ReservationNode = {
 
 export type InstitutionReservationsQueryData = {
   reservations_connection: {
-    edges: Array<{ node: ReservationNode }>;
+    edges: Array<{ node: ReservationNode; cursor: string }>;
+    pageInfo: { hasNextPage: boolean; endCursor: string };
   };
 };
 

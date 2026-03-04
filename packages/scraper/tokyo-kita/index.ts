@@ -2,86 +2,81 @@ import type { Page } from "@playwright/test";
 import type { Division, Status, TransformOutput } from "../common/types";
 import { toISODateString } from "../common/dateUtils";
 import { stripTrailingEmptyValue } from "../common/arrayUtils";
-import { getCellValue, selectAllOptions } from "../common/playwrightUtils";
+import { getCellValue } from "../common/playwrightUtils";
 
 const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
-  "09:00\n～\n12:00": "RESERVATION_DIVISION_MORNING",
-  "09:30\n～\n11:30": "RESERVATION_DIVISION_DIVISION_1",
-  "12:00\n～\n14:00": "RESERVATION_DIVISION_DIVISION_2",
-  "13:00\n～\n17:00": "RESERVATION_DIVISION_AFTERNOON",
-  "14:30\n～\n16:30": "RESERVATION_DIVISION_DIVISION_3",
-  "17:00\n～\n19:00": "RESERVATION_DIVISION_DIVISION_4",
-  "18:00\n～\n22:00": "RESERVATION_DIVISION_EVENING",
-  "19:30\n～\n21:30": "RESERVATION_DIVISION_DIVISION_5",
+  "9:00-12:00": "RESERVATION_DIVISION_MORNING",
+  "13:00-17:00": "RESERVATION_DIVISION_AFTERNOON",
+  "18:00-22:00": "RESERVATION_DIVISION_EVENING",
+  "9:30-11:30": "RESERVATION_DIVISION_DIVISION_1",
+  "12:00-14:00": "RESERVATION_DIVISION_DIVISION_2",
+  "14:30-16:30": "RESERVATION_DIVISION_DIVISION_3",
+  "17:00-19:00": "RESERVATION_DIVISION_DIVISION_4",
+  "19:30-21:30": "RESERVATION_DIVISION_DIVISION_5",
 };
 
 const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
-  "/shisetsu/jsp/images_jp/multi_images/timetable-o.gif": "RESERVATION_STATUS_VACANT",
-  Ｘ: "RESERVATION_STATUS_STATUS_1",
-  保守: "RESERVATION_STATUS_STATUS_2",
-  休館: "RESERVATION_STATUS_STATUS_3",
-  問: "RESERVATION_STATUS_STATUS_4",
+  "○": "RESERVATION_STATUS_VACANT",
+  "△": "RESERVATION_STATUS_STATUS_1",
+  "×": "RESERVATION_STATUS_STATUS_2",
+  "-": "RESERVATION_STATUS_STATUS_3",
+  休館: "RESERVATION_STATUS_STATUS_4",
+  休館日: "RESERVATION_STATUS_STATUS_4",
+  なし: "RESERVATION_STATUS_STATUS_5",
+  公開対象外: "RESERVATION_STATUS_STATUS_6",
+  抽選: "RESERVATION_STATUS_STATUS_7",
+  整備: "RESERVATION_STATUS_STATUS_8",
+  抽選確認中: "RESERVATION_STATUS_STATUS_9",
+  保守: "RESERVATION_STATUS_STATUS_10",
+  開放: "RESERVATION_STATUS_STATUS_11",
+  使用禁止: "RESERVATION_STATUS_STATUS_12",
 };
 
 type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
 
-export async function prepare(page: Page, facilityName: string): Promise<Page> {
-  await page.goto("https://yoyaku.city.kita.tokyo.jp/shisetsu/reserve/gin_menu");
-  await page.getByRole("button", { name: "多機能操作" }).click();
+export async function prepare(page: Page, links: string[]): Promise<Page> {
+  await page.goto("https://kita-yoyaku.openreaf02.jp/");
   await page.getByRole("link", { name: "空き状況の確認" }).click();
-  await page
-    .locator('select[name="g_bunruicd_1_show"]')
-    .selectOption([{ label: "会館" }, { label: "文化センター" }]);
-  await page.locator('form[name="selBunrui1"]').getByRole("button", { name: "確定" }).click();
-  await page.locator('select[name="riyosmk"]').selectOption({ label: "音楽" });
-  await page.locator('form[name="selForm_1"]').getByRole("button", { name: "確定" }).click();
-  await page.locator('form[name="futaisetubiform"]').getByRole("button", { name: "確定" }).click();
-  await page.locator('select[name="g_basyocd"]').selectOption({ label: facilityName });
-  await page.locator('form[name="basyoForm_3"]').getByRole("button", { name: "確定" }).click();
-  await selectAllOptions(page.locator('select[name="g_heyacd"]'));
-  await page.locator('form[name="heyaform"]').getByRole("button", { name: "確定" }).click();
-  await page.getByRole("button", { name: "検索" }).click();
+  await page.getByRole("link", { name: "施設で確認" }).click();
+  for (const link of links) {
+    await page.getByRole("link", { name: link, exact: true }).click();
+  }
+  while (true) {
+    if ((await page.locator("table.calendar a").count()) > 0) {
+      break;
+    }
+    await page.locator("a.day-next").click();
+  }
+  await page.locator("table.calendar a").nth(0).click();
 
   return page;
 }
 
 async function _extract(page: Page): Promise<ExtractOutput> {
-  const dateHeader = page.locator('//*[@id="contents"]/div[2]/div/h3');
-  await dateHeader.waitFor();
-  const date = await dateHeader.innerText();
-  const table = page.locator('//*[@id="contents"]/div[2]/div/div/table');
+  const caption = page.locator('//*[@id="right"]/form/table[1]');
+  await caption.waitFor();
+  const date = await caption.locator("th").innerText();
+  const table = page.locator('//*[@id="right"]/form/table[2]');
   await table.waitFor();
-  const allLines = await Promise.all(await table.locator("tr").all());
-  const lines = await Promise.all(allLines.map(async (line) => await line.locator("th,td").all()));
-  const lineThCounts = await Promise.all(
-    allLines.map(async (line) => await line.locator("th").count())
+  const lines = await Promise.all(
+    (await table.locator("tr").all()).map(async (line) => await line.locator("th,td").all())
   );
 
-  const output: ExtractOutput = [];
-  const lineGroups: [string[], string[][]] = [[], []];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i] ?? [];
-    const lineThCount = lineThCounts[i] ?? 0;
-    if (lineThCount > 1) {
-      const header = stripTrailingEmptyValue(await Promise.all(line.map((l) => l.innerText())));
-      if (lineGroups[0].length > 0) {
-        output.push({ date, header: lineGroups[0], rows: lineGroups[1] });
-        lineGroups[1] = [];
-      }
-      lineGroups[0] = header;
-    } else {
-      const row = stripTrailingEmptyValue(await Promise.all(line.map((l) => getCellValue(l))));
-      if (row.length > 1) {
-        lineGroups[1].push(row);
-      }
-    }
+  const allHeaders: string[] = [];
+  const allRow: string[] = [];
+  for (let i = 0; i < lines.length; i += 2) {
+    const h = stripTrailingEmptyValue(
+      (await Promise.all((lines[i] || []).map((l) => l.innerText()))).map((v) => v.trim())
+    );
+    const r = stripTrailingEmptyValue(
+      (await Promise.all((lines[i + 1] || []).map((l) => getCellValue(l)))).map((v) => v.trim())
+    );
+    allHeaders.push(...h);
+    allRow.push(...r);
   }
-  output.push({ date, header: lineGroups[0], rows: lineGroups[1] });
-
-  return output;
+  return [{ date, header: allHeaders, rows: [allRow] }];
 }
 
 export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> {
@@ -96,7 +91,7 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
       console.warn(`Failed to extract data from page ${i + 1}, saving current output.`);
       break;
     }
-    const nextLink = page.getByRole("link", { name: "次へ" });
+    const nextLink = page.locator("a.day-next");
     if ((await nextLink.count()) === 0) break;
     try {
       await nextLink.click();
@@ -110,23 +105,22 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
   return output;
 }
 
-export async function transform(extractOutput: ExtractOutput): Promise<TransformOutput> {
+export async function transform(
+  name: string,
+  extractOutput: ExtractOutput
+): Promise<TransformOutput> {
   return extractOutput.flatMap(({ date, header, rows }) => {
-    const divisions = header.slice(1);
-    return rows
-      .map((row) => {
-        const statuses = row.slice(1);
-        return {
-          room_name: row[0]?.split("\n")?.[1]?.split("（定員")?.[0] || "",
-          date: toISODateString(date),
-          reservation: [...new Array(row.length - 1)].reduce((acc, _, index) => {
-            const division = DIVISION_MAP[divisions[index] || ""] as Division;
-            const status = STATUS_MAP[statuses[index] || ""] as Status;
-            acc[division] = status;
-            return acc;
-          }, {}),
-        };
-      })
-      .filter((entry) => entry.room_name !== "");
+    return rows.map((row) => {
+      return {
+        room_name: name,
+        date: toISODateString(date),
+        reservation: [...new Array(row.length)].reduce((acc, _, index) => {
+          const division = DIVISION_MAP[header[index] || ""] as Division;
+          const status = STATUS_MAP[row[index] || ""] as Status;
+          acc[division] = status;
+          return acc;
+        }, {}),
+      };
+    });
   });
 }
