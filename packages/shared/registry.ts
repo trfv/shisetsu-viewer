@@ -54,7 +54,7 @@ export const MUNICIPALITIES = {
     slug: "bunkyo",
     prefecture: "tokyo",
     label: "文京区",
-    reservationExcluded: true,
+    reservationExcluded: false,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",
@@ -65,9 +65,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_6]: "休館",
     },
     reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
+      [ReservationDivision.DIVISION_1]: "全日",
     },
     feeDivision: {
       [FeeDivision.MORNING]: "午前",

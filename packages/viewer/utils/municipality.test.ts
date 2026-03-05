@@ -128,8 +128,8 @@ describe("MunicipalityOptions", () => {
 });
 
 describe("RESERVATION_EXCLUDED_MUNICIPALITIES", () => {
-  test("has 5 entries", () => {
-    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(5);
+  test("has 4 entries", () => {
+    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(4);
   });
 
   test("contains the expected excluded municipalities", () => {
@@ -137,11 +137,11 @@ describe("RESERVATION_EXCLUDED_MUNICIPALITIES", () => {
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_OTA");
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_SUGINAMI");
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_TOSHIMA");
-    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_BUNKYO");
   });
 
   test("does not contain non-excluded municipalities", () => {
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).not.toContain("MUNICIPALITY_KOUTOU");
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).not.toContain("MUNICIPALITY_KAWASAKI");
+    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).not.toContain("MUNICIPALITY_BUNKYO");
   });
 });
