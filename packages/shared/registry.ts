@@ -59,9 +59,9 @@ export const MUNICIPALITIES = {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",
       [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "抽選申込可能",
+      [ReservationStatus.STATUS_3]: "公開対象外",
       [ReservationStatus.STATUS_4]: "申込期間外",
-      [ReservationStatus.STATUS_5]: "公開対象外",
+      [ReservationStatus.STATUS_5]: "施設保守",
       [ReservationStatus.STATUS_6]: "休館",
     },
     reservationDivision: {

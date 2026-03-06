@@ -20,6 +20,8 @@ const STATUS_MAP: Record<string, Status> = {
   cross: "RESERVATION_STATUS_STATUS_2",
   asterisk: "RESERVATION_STATUS_STATUS_3",
   minus: "RESERVATION_STATUS_STATUS_4",
+  施設保守: "RESERVATION_STATUS_STATUS_5",
+  休館: "RESERVATION_STATUS_STATUS_6", // 本当は休館も取りたいが、disabledのセルになっているため取得が面倒です。
 };
 
 type ExtractOutput = {
@@ -92,7 +94,27 @@ async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
       if (!roomName) continue;
 
       const slotLis = nextLi.querySelectorAll('li[class*="btn-group-toggle"]');
+
+      // First pass: detect division type from normal slots
+      let hasKoma = false;
       for (const slotLi of slotLis) {
+        const spans = slotLi.querySelectorAll("span");
+        for (const span of spans) {
+          const t = span.textContent?.trim() || "";
+          if (/[１-５]コマ/.test(t)) {
+            hasKoma = true;
+            break;
+          }
+        }
+        if (hasKoma) break;
+      }
+      const orderedDivisions = hasKoma
+        ? ["１コマ", "２コマ", "３コマ", "４コマ", "５コマ"]
+        : ["午前", "午後", "夜間"];
+
+      // Second pass: extract data, inferring division from index if needed
+      for (let i = 0; i < slotLis.length; i++) {
+        const slotLi = slotLis[i]!;
         const spans = slotLi.querySelectorAll("span");
         let division = "";
         for (const span of spans) {
@@ -102,6 +124,7 @@ async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
             break;
           }
         }
+        if (!division) division = orderedDivisions[i] || "";
         if (!division) continue;
 
         const svgs = slotLi.querySelectorAll("svg");
@@ -110,7 +133,8 @@ async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
         );
         const use = visibleSvg?.querySelector("use");
         const href = use?.getAttribute("xlink:href") || use?.getAttribute("href") || "";
-        const status = href.split("#")[1] || "";
+        const lastSpanText = spans[spans.length - 1]?.textContent?.trim() || "";
+        const status = href.split("#")[1] || lastSpanText;
 
         results.push({ date, roomName, division, status });
       }
