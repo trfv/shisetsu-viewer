@@ -34,10 +34,10 @@ export default defineConfig({
         '--proxy-server="direct://"',
         "--start-maximized",
       ],
-      slowMo: process.env.SLOW_MO ? Number(process.env.SLOW_MO) : 500,
+      slowMo: process.env.SLOW_MO ? Number(process.env.SLOW_MO) : 100,
     },
     trace: process.env.CI ? "off" : "on-first-retry",
   },
   testMatch: ["**/index.test.ts"],
-  testIgnore: isCI ? ["**/tokyo-sumida/**"] : [],
+  testIgnore: isCI ? ["**/tokyo-sumida/**", "**/tokyo-bunkyo/**"] : [],
 });

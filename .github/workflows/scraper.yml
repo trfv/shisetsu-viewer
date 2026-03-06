@@ -15,6 +15,7 @@ on:
           - tokyo-kita
           - tokyo-chuo
           - tokyo-sumida
+          - tokyo-bunkyo
           - kanagawa-kawasaki
           - all
   schedule:

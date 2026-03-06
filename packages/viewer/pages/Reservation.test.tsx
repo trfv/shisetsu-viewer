@@ -211,12 +211,11 @@ describe("Reservation Page", () => {
       expect(optionTexts).toContain("荒川区");
 
       // Excluded municipalities should NOT be present
-      // RESERVATION_EXCLUDED_MUNICIPALITIES: edogawa, ota, suginami, toshima, bunkyo
+      // RESERVATION_EXCLUDED_MUNICIPALITIES: edogawa, ota, suginami, toshima
       expect(optionTexts).not.toContain("江戸川区");
       expect(optionTexts).not.toContain("大田区");
       expect(optionTexts).not.toContain("杉並区");
       expect(optionTexts).not.toContain("豊島区");
-      expect(optionTexts).not.toContain("文京区");
     });
   });
 
