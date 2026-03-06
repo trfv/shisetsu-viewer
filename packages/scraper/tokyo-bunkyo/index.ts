@@ -29,6 +29,8 @@ type ExtractOutput = {
   status: string;
 }[];
 
+const MAX_SELECTIONS = 10;
+
 export async function prepare(page: Page, facilityName: string): Promise<Page> {
   await page.goto("https://www.shisetsu.city.bunkyo.lg.jp/user/Home");
   await page.getByRole("tab", { name: "利用目的から探す" }).click();
@@ -111,14 +113,15 @@ async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
   });
 }
 
-async function toggleRowCells(page: Page, rowIndex: number): Promise<number> {
-  const row = page.locator("tbody tr").nth(rowIndex);
-  const labels = row.locator("td label:not(.disabled)");
-  const count = await labels.count();
-  for (let i = 0; i < count; i++) {
+async function toggleCells(page: Page, startIndex: number, count: number): Promise<number> {
+  const labels = page.locator("tbody td label:not(.disabled)");
+  const total = await labels.count();
+  let toggled = 0;
+  for (let i = startIndex; i < total && toggled < count; i++) {
     await labels.nth(i).click({ timeout: 10000 });
+    toggled++;
   }
-  return count;
+  return toggled;
 }
 
 export async function extract(
@@ -136,34 +139,38 @@ export async function extract(
   let weekIndex = 0;
   while (weekIndex < maxCount) {
     try {
-      await page.locator("table").first().waitFor();
+      await page.locator("tbody tr td label").first().waitFor({
+        state: "visible",
+        timeout: 30000,
+      });
 
-      const rowCount = await page.locator("tbody tr").count();
+      const totalCells = await page.locator("tbody td label:not(.disabled)").count();
+      if (totalCells === 0) {
+        // No selectable cells this period, try next
+      } else {
+        for (let offset = 0; offset < totalCells; offset += MAX_SELECTIONS) {
+          const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
+          if (batchSize === 0) break;
 
-      for (let rowIdx = 0; rowIdx < rowCount; rowIdx++) {
-        const toggledCount = await toggleRowCells(page, rowIdx);
-        if (toggledCount === 0) {
-          continue;
+          await page.locator("button").filter({ hasText: "次へ進む" }).click();
+          await page.waitForURL("**/AvailabilityCheckApplySelectTime**", { timeout: 15000 });
+          await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 15000 });
+
+          const slotData = await extractTimeSlots(page);
+          output.push(...slotData);
+
+          await page.locator("button").filter({ hasText: "前に戻る" }).click();
+          await page.waitForURL("**/AvailabilityCheckApplySelectDays**", { timeout: 15000 });
+          await page.locator("tbody tr td label").first().waitFor({
+            state: "visible",
+            timeout: 30000,
+          });
+
+          // Uncheck current batch to prepare for next (skip on last batch)
+          if (offset + MAX_SELECTIONS < totalCells) {
+            await toggleCells(page, offset, batchSize);
+          }
         }
-
-        await page.locator("button").filter({ hasText: "次へ進む" }).click();
-        await page.waitForURL("**/AvailabilityCheckApplySelectTime**", { timeout: 15000 });
-        await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 15000 });
-
-        const slotData = await extractTimeSlots(page);
-        output.push(...slotData);
-
-        await page.locator("button").filter({ hasText: "前に戻る" }).click();
-        await page.waitForURL("**/AvailabilityCheckApplySelectDays**", { timeout: 15000 });
-        await page.locator("table tbody tr").first().waitFor({ timeout: 30000 });
-        // Ensure labels are interactive before toggling
-        await page.locator("tbody tr").first().locator("td label").first().waitFor({
-          state: "visible",
-          timeout: 15000,
-        });
-
-        // Uncheck the row's cells to prepare for the next row
-        await toggleRowCells(page, rowIdx);
       }
     } catch (e) {
       console.warn(`Failed to extract data at week ${weekIndex + 1}, saving current output.`, e);
@@ -175,7 +182,6 @@ export async function extract(
     try {
       const prevTableContent = await page.locator("tbody").first().innerText();
       await nextButton.click();
-      // Wait for table content to actually change after period navigation
       await page.waitForFunction(
         (prev) => {
           const tbody = document.querySelector("tbody");
@@ -184,9 +190,7 @@ export async function extract(
         prevTableContent,
         { timeout: 15000 }
       );
-      await page.locator("table tbody tr").first().waitFor({ timeout: 15000 });
-      // Ensure labels are interactive after period change
-      await page.locator("tbody tr").first().locator("td label").first().waitFor({
+      await page.locator("tbody tr td label").first().waitFor({
         state: "visible",
         timeout: 15000,
       });
