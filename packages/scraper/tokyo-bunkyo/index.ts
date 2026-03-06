@@ -43,14 +43,20 @@ export async function prepare(page: Page, facilityName: string): Promise<Page> {
   await page.getByText("ピアノ（歌唱除く）", { exact: true }).click();
   await page.getByRole("button", { name: "検索" }).click();
 
+  const facilityLocator = page.getByText(facilityName, { exact: true });
   const loadMoreButton = page.getByRole("button", { name: "さらに読み込む" });
-  while (await loadMoreButton.isVisible()) {
+  while (!(await facilityLocator.isVisible())) {
+    const rowsBefore = await page.locator("tbody tr").count();
     try {
-      await loadMoreButton.click();
-      await page.waitForTimeout(500);
+      await loadMoreButton.click({ timeout: 10000 });
     } catch {
-      break;
+      throw new Error(`Facility "${facilityName}" not found after loading all items`);
     }
+    await page
+      .waitForFunction((prev) => document.querySelectorAll("tbody tr").length > prev, rowsBefore, {
+        timeout: 10000,
+      })
+      .catch(() => {});
   }
 
   await page.getByText(facilityName, { exact: true }).click();
