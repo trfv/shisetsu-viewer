@@ -11,7 +11,7 @@ function calculateCount(): number {
 }
 
 const facilityNames = [
-  "男女平等センター",
+  // "男女平等センター", // 改修工事休館中（〜令和8年6月）
   "大原地域活動センター",
   "駒込地域活動センター",
   "不忍通りふれあい館",

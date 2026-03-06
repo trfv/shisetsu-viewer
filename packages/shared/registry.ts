@@ -65,7 +65,14 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_6]: "休館",
     },
     reservationDivision: {
-      [ReservationDivision.DIVISION_1]: "全日",
+      [ReservationDivision.MORNING]: "午前",
+      [ReservationDivision.AFTERNOON]: "午後",
+      [ReservationDivision.EVENING]: "夜間",
+      [ReservationDivision.DIVISION_1]: "1コマ",
+      [ReservationDivision.DIVISION_2]: "2コマ",
+      [ReservationDivision.DIVISION_3]: "3コマ",
+      [ReservationDivision.DIVISION_4]: "4コマ",
+      [ReservationDivision.DIVISION_5]: "5コマ",
     },
     feeDivision: {
       [FeeDivision.MORNING]: "午前",
