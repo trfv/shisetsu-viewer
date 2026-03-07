@@ -57,6 +57,25 @@ describe("usePaginatedQuery", () => {
     });
   });
 
+  it("Auth0ロード中はクエリを実行しない", async () => {
+    let requestCount = 0;
+    worker.use(
+      http.post(TEST_ENDPOINT, () => {
+        requestCount++;
+        return HttpResponse.json(makeConnection([{ id: "1", name: "Item A" }], false, "cursor-0"));
+      })
+    );
+
+    renderWithProviders(<TestComponent variables={{ first: 10 }} />, {
+      auth0Config: { isLoading: true, token: "" },
+    });
+
+    expect(screen.getByText("loading")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(requestCount).toBe(0);
+    });
+  });
+
   it("fetchMoreで次のページを追加読み込みする", async () => {
     let callCount = 0;
 

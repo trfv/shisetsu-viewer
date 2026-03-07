@@ -60,6 +60,25 @@ describe("useGraphQLQuery", () => {
     });
   });
 
+  it("Auth0ロード中はクエリを実行しない", async () => {
+    let requestCount = 0;
+    worker.use(
+      http.post(TEST_ENDPOINT, () => {
+        requestCount++;
+        return HttpResponse.json({ data: { items: [] } });
+      })
+    );
+
+    renderWithProviders(<TestComponent query={QUERY} variables={{}} />, {
+      auth0Config: { isLoading: true, token: "" },
+    });
+
+    expect(screen.getByText("loading")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(requestCount).toBe(0);
+    });
+  });
+
   it("エラー時にerrorを返す", async () => {
     worker.use(
       http.post(TEST_ENDPOINT, () => {
