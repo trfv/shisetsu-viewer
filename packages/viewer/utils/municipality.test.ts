@@ -128,13 +128,12 @@ describe("MunicipalityOptions", () => {
 });
 
 describe("RESERVATION_EXCLUDED_MUNICIPALITIES", () => {
-  test("has 3 entries", () => {
-    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(3);
+  test("has 2 entries", () => {
+    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(2);
   });
 
   test("contains the expected excluded municipalities", () => {
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_EDOGAWA");
-    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_OTA");
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_SUGINAMI");
   });
 
