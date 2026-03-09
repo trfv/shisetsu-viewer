@@ -36,10 +36,8 @@ export async function prepare(page: Page, facilityName: string, startDate: Date)
   await page.goto("https://www.fureai-net.city.kawasaki.jp/web/index.jsp");
   await page.getByRole("link", { name: "予約", exact: true }).click();
   await page.getByRole("button", { name: "複合検索" }).click();
-  await page.getByRole("button", { name: "利用目的", exact: true }).click();
-  await page.getByRole("link", { name: "演奏・合唱" }).click();
   await page.getByRole("button", { name: "館" }).click();
-  await page.getByRole("link", { name: facilityName }).click();
+  await page.getByRole("link", { name: facilityName, exact: true }).click();
   await page.getByLabel("年").selectOption(startDate.getFullYear().toString());
   await page.getByLabel("月", { exact: true }).selectOption((startDate.getMonth() + 1).toString());
   await page.getByLabel("日から").selectOption(startDate.getDate().toString());
@@ -69,6 +67,9 @@ async function _extract(page: Page): Promise<ExtractOutput> {
 
 export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> {
   const output: ExtractOutput = [];
+
+  // Wait for the results page to fully load before counting rooms
+  await page.locator("#rsvaki3").waitFor();
 
   let roomCount = 1;
   while (true) {
