@@ -62,13 +62,14 @@ export async function prepare(
   }
 
   await page.getByRole("button", { name: "選択した施設で検索" }).click();
-  await page.locator("table.box_calendar").waitFor();
+  await page.waitForLoadState("networkidle");
+  await page.locator("table.box_calendar").first().waitFor();
 
   return page;
 }
 
 async function _extract(page: Page): Promise<ExtractOutput> {
-  const table = page.locator("table.box_calendar");
+  const table = page.locator("table.box_calendar").first();
   await table.waitFor();
 
   const year = await page.locator("#optYear").inputValue();
