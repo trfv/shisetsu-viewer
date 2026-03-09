@@ -39,5 +39,5 @@ export default defineConfig({
     trace: process.env.CI ? "off" : "on-first-retry",
   },
   testMatch: ["**/index.test.ts"],
-  testIgnore: isCI ? ["**/tokyo-sumida/**", "**/tokyo-bunkyo/**", "**/tokyo-toshima/**"] : [],
+  testIgnore: isCI ? ["**/tokyo-sumida/**"] : [],
 });
