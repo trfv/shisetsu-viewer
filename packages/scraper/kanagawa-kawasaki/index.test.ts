@@ -10,45 +10,65 @@ function calculateCount(): number {
   return differenceInCalendarWeeks(endDate, startData) + 1;
 }
 
-const facilityNames = [
-  "国際交流センター",
-  "すくらむ２１",
-  "ミューザ川崎シンフォニーホール",
-  "川崎市民プラザ",
-  "産業振興会館",
-  "かわさき老人福祉・地域交流Ｃ",
-  "総合福祉センター（エポック）",
-  "幸市民館",
-  "中原市民館",
-  "高津市民館",
-  "宮前市民館",
-  "多摩市民館",
-  "麻生市民館",
-  "川崎マリエン",
-  "とどろきアリーナ",
-  "カルッツかわさき",
+const scrapeTargets = [
+  { facilityName: "国際交流センター", roomNames: ["ホール", "レセプションルーム"] },
+  { facilityName: "すくらむ２１", roomNames: ["ホール"] },
+  {
+    facilityName: "ミューザ川崎シンフォニーホール",
+    roomNames: ["音楽ホール", "市民交流室", "練習室１", "練習室３", "練習室２"],
+  },
+  { facilityName: "川崎市民プラザ", roomNames: ["ステージ", "ふるさと劇場"] },
+  { facilityName: "産業振興会館", roomNames: ["ホール"] },
+  {
+    facilityName: "かわさき老人福祉・地域交流Ｃ",
+    roomNames: ["大広間", "工作室", "多目的室", "ホール"],
+  },
+  { facilityName: "総合福祉センター（エポック）", roomNames: ["ホール"] },
+  { facilityName: "幸市民館", roomNames: ["大ホール"] },
+  {
+    facilityName: "中原市民館",
+    roomNames: ["音楽室", "視聴覚室", "第５会議室", "多目的ホール"],
+  },
+  { facilityName: "高津市民館", roomNames: ["大ホール"] },
+  { facilityName: "宮前市民館", roomNames: ["大ホール"] },
+  { facilityName: "多摩市民館", roomNames: ["視聴覚室", "大会議室", "大ホール"] },
+  { facilityName: "麻生市民館", roomNames: ["大会議室", "大ホール"] },
+  { facilityName: "川崎マリエン", roomNames: ["体育室"] },
+  { facilityName: "とどろきアリーナ", roomNames: ["メインアリーナ"] },
+  {
+    facilityName: "カルッツかわさき",
+    roomNames: [
+      "アクトスタジオ",
+      "音楽練習室１",
+      "音楽練習室２",
+      "ホール１階",
+      "ホール１－３階",
+      "ホール１－２階",
+      "ホール練習利用",
+    ],
+  },
 ];
 
-facilityNames.forEach((name) => {
-  test(name, async ({ page }) => {
-    console.time(name);
+scrapeTargets.forEach(({ facilityName, roomNames }) => {
+  test(facilityName, async ({ page }) => {
+    console.time(facilityName);
 
     let searchPage;
     try {
-      searchPage = await prepare(page, name, new Date());
+      searchPage = await prepare(page, facilityName, new Date());
     } catch (e) {
-      console.error(`Failed to prepare page for ${name}, and skip to next.`);
+      console.error(`Failed to prepare page for ${facilityName}, and skip to next.`);
       throw e;
     }
-    const extractOutput = await extract(searchPage, calculateCount());
+    const extractOutput = await extract(searchPage, calculateCount(), facilityName, roomNames);
     expect(extractOutput.length).toBeGreaterThan(0);
-    const transformOutput = await transform(extractOutput, name);
+    const transformOutput = await transform(extractOutput, facilityName);
     expect(transformOutput.length).toBeGreaterThan(0);
     expect(validateTransformOutput(transformOutput)).toEqual([]);
 
-    console.timeEnd(name);
+    console.timeEnd(facilityName);
 
-    await writeTestResult("kanagawa-kawasaki", name, name, transformOutput);
+    await writeTestResult("kanagawa-kawasaki", facilityName, facilityName, transformOutput);
 
     await searchPage.close();
     await page.close();

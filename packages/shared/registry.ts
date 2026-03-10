@@ -63,6 +63,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_4]: "申込期間外",
       [ReservationStatus.STATUS_5]: "施設保守",
       [ReservationStatus.STATUS_6]: "休館",
+      [ReservationStatus.STATUS_7]: "工事",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "午前",
@@ -133,7 +134,7 @@ export const MUNICIPALITIES = {
     slug: "toshima",
     prefecture: "tokyo",
     label: "豊島区",
-    reservationExcluded: true,
+    reservationExcluded: false,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",
@@ -280,16 +281,15 @@ export const MUNICIPALITIES = {
     slug: "ota",
     prefecture: "tokyo",
     label: "大田区",
-    reservationExcluded: true,
+    reservationExcluded: false,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約済",
       [ReservationStatus.STATUS_2]: "空枠なし",
       [ReservationStatus.STATUS_3]: "休館日",
       [ReservationStatus.STATUS_4]: "保守点検",
-      [ReservationStatus.STATUS_5]: "施設整備",
-      [ReservationStatus.STATUS_6]: "工事",
-      [ReservationStatus.STATUS_7]: "×",
+      [ReservationStatus.STATUS_5]: "利用中止",
+      [ReservationStatus.STATUS_7]: "利用不可",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "午前",

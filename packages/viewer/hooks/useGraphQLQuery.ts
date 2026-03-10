@@ -13,7 +13,7 @@ export function useGraphQLQuery<T>(
   query: string,
   variables: Record<string, unknown>
 ): UseGraphQLQueryResult<T> {
-  const { token } = useAuth0();
+  const { token, isLoading: authLoading } = useAuth0();
   const [data, setData] = useState<T | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -23,6 +23,7 @@ export function useGraphQLQuery<T>(
   const variablesKey = JSON.stringify(variables);
 
   const fetchData = useCallback(async () => {
+    if (authLoading) return;
     setLoading(true);
     setError(undefined);
     try {
@@ -33,7 +34,7 @@ export function useGraphQLQuery<T>(
     } finally {
       setLoading(false);
     }
-  }, [query, variablesKey, token]);
+  }, [query, variablesKey, token, authLoading]);
 
   useEffect(() => {
     variablesRef.current = variables;

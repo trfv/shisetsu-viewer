@@ -56,14 +56,14 @@ describe("Top Page", () => {
       const supportedAreas = [
         "荒川区",
         "江戸川区（※現在、予約状況が表示できません）",
-        "大田区（※現在、予約状況が表示できません）",
+        "大田区",
         "北区",
         "江東区",
         "杉並区（※現在、予約状況が表示できません）",
         "墨田区",
-        "豊島区（※現在、予約状況が表示できません）",
+        "豊島区",
         "中央区",
-        "文京区（※現在、予約状況が表示できません）",
+        "文京区",
         "川崎市",
       ];
 
@@ -180,7 +180,7 @@ describe("Top Page", () => {
 
       // 予約状況表示不可の注記があることを確認
       const unavailableAreas = screen.getAllByText(/※現在、予約状況が表示できません/);
-      expect(unavailableAreas).toHaveLength(5);
+      expect(unavailableAreas).toHaveLength(2);
     });
   });
 

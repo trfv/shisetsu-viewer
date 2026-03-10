@@ -36,10 +36,8 @@ export async function prepare(page: Page, facilityName: string, startDate: Date)
   await page.goto("https://www.fureai-net.city.kawasaki.jp/web/index.jsp");
   await page.getByRole("link", { name: "予約", exact: true }).click();
   await page.getByRole("button", { name: "複合検索" }).click();
-  await page.getByRole("button", { name: "利用目的", exact: true }).click();
-  await page.getByRole("link", { name: "演奏・合唱" }).click();
   await page.getByRole("button", { name: "館" }).click();
-  await page.getByRole("link", { name: facilityName }).click();
+  await page.getByRole("link", { name: facilityName, exact: true }).click();
   await page.getByLabel("年").selectOption(startDate.getFullYear().toString());
   await page.getByLabel("月", { exact: true }).selectOption((startDate.getMonth() + 1).toString());
   await page.getByLabel("日から").selectOption(startDate.getDate().toString());
@@ -67,15 +65,38 @@ async function _extract(page: Page): Promise<ExtractOutput> {
   return [{ caption, header, rows }];
 }
 
-export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> {
+export async function extract(
+  page: Page,
+  maxCount: number,
+  facilityName: string,
+  roomNames?: string[]
+): Promise<ExtractOutput> {
   const output: ExtractOutput = [];
 
+  // Wait for the results page to fully load before counting rooms
+  await page.locator("#rsvaki3").waitFor();
+
+  // Phase 1: Scan all rooms and record indices of rooms to scrape
+  const targetIndices: number[] = [];
   let roomCount = 1;
+
+  const firstCaption = await page.locator("#rsvaki3 caption").innerText();
+  const firstName = toRoomName(firstCaption, facilityName);
+  if (!roomNames || roomNames.includes(firstName)) {
+    targetIndices.push(0);
+  }
+
   while (true) {
     const nextFacility = page.getByRole("button", { name: "次の施設" });
     if ((await nextFacility.count()) === 0) break;
     try {
       await nextFacility.click();
+      await page.locator("#rsvaki3").waitFor();
+      const caption = await page.locator("#rsvaki3 caption").innerText();
+      const name = toRoomName(caption, facilityName);
+      if (!roomNames || roomNames.includes(name)) {
+        targetIndices.push(roomCount);
+      }
       roomCount++;
     } catch {
       console.warn(`Failed to count rooms at room ${roomCount}.`);
@@ -85,11 +106,11 @@ export async function extract(page: Page, maxCount: number): Promise<ExtractOutp
   await page.getByRole("button", { name: "もどる" }).nth(0).click();
   await page.getByRole("button", { name: "検索開始" }).click();
 
-  for (let i = 0; i < roomCount; i++) {
-    let j = 0;
-    while (j < i) {
+  // Phase 2: Scrape only target rooms
+  for (const i of targetIndices) {
+    for (let j = 0; j < i; j++) {
       await page.getByRole("button", { name: "次の施設" }).click();
-      j++;
+      await page.locator("#rsvaki3").waitFor();
     }
     let k = 0;
     while (k < maxCount) {

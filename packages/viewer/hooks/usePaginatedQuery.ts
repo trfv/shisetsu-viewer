@@ -21,7 +21,7 @@ export function usePaginatedQuery<TData, TNode>(
   variables: Record<string, unknown>,
   getConnection: (data: TData) => RelayConnection<TNode>
 ): UsePaginatedQueryResult<TNode> {
-  const { token } = useAuth0();
+  const { token, isLoading: authLoading } = useAuth0();
   const [nodes, setNodes] = useState<TNode[] | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [fetchingMore, setFetchingMore] = useState(false);
@@ -38,6 +38,7 @@ export function usePaginatedQuery<TData, TNode>(
 
   // Initial fetch (resets on variable change)
   useEffect(() => {
+    if (authLoading) return;
     let cancelled = false;
 
     const fetchInitial = async () => {
@@ -65,7 +66,7 @@ export function usePaginatedQuery<TData, TNode>(
     return () => {
       cancelled = true;
     };
-  }, [query, variablesKey, token]);
+  }, [query, variablesKey, token, authLoading]);
 
   const fetchMore = useCallback(async () => {
     if (!hasNextPage || !endCursorRef.current) return;

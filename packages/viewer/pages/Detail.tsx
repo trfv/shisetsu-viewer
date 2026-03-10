@@ -313,7 +313,7 @@ type TabType = "institution" | "reservation";
 const today = new Date();
 
 // システムの改悪により更新困難な自治体
-const MUNICIPALITIES_WITHOUT_RESERVATION_DATA = ["MUNICIPALITY_EDOGAWA", "MUNICIPALITY_TOSHIMA"];
+const MUNICIPALITIES_WITHOUT_RESERVATION_DATA = ["MUNICIPALITY_EDOGAWA"];
 
 export default () => {
   const { id } = useParams();

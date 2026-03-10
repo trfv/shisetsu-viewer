@@ -21,7 +21,9 @@ const STATUS_MAP: Record<string, Status> = {
   asterisk: "RESERVATION_STATUS_STATUS_3",
   minus: "RESERVATION_STATUS_STATUS_4",
   施設保守: "RESERVATION_STATUS_STATUS_5",
+  休館日: "RESERVATION_STATUS_STATUS_6",
   休館: "RESERVATION_STATUS_STATUS_6", // 本当は休館も取りたいが、disabledのセルになっているため取得が面倒です。
+  工事: "RESERVATION_STATUS_STATUS_7",
 };
 
 type ExtractOutput = {
@@ -96,21 +98,11 @@ async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
       const slotLis = nextLi.querySelectorAll('li[class*="btn-group-toggle"]');
 
       // First pass: detect division type from normal slots
-      let hasKoma = false;
-      for (const slotLi of slotLis) {
-        const spans = slotLi.querySelectorAll("span");
-        for (const span of spans) {
-          const t = span.textContent?.trim() || "";
-          if (/[１-５]コマ/.test(t)) {
-            hasKoma = true;
-            break;
-          }
-        }
-        if (hasKoma) break;
-      }
-      const orderedDivisions = hasKoma
-        ? ["１コマ", "２コマ", "３コマ", "４コマ", "５コマ"]
-        : ["午前", "午後", "夜間"];
+      const divisionCount = slotLis.length;
+      const orderedDivisions =
+        divisionCount === 5
+          ? ["１コマ", "２コマ", "３コマ", "４コマ", "５コマ"]
+          : ["午前", "午後", "夜間"];
 
       // Second pass: extract data, inferring division from index if needed
       for (let i = 0; i < slotLis.length; i++) {
