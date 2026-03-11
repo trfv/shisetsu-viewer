@@ -28,6 +28,7 @@ export function usePaginatedQuery<TData, TNode>(
   const [error, setError] = useState<Error | undefined>(undefined);
   const [hasNextPage, setHasNextPage] = useState(false);
   const endCursorRef = useRef<string | null>(null);
+  const fetchingMoreRef = useRef(false);
   const variablesRef = useRef(variables);
 
   const variablesKey = JSON.stringify(variables);
@@ -69,8 +70,9 @@ export function usePaginatedQuery<TData, TNode>(
   }, [query, variablesKey, token, authLoading]);
 
   const fetchMore = useCallback(async () => {
-    if (!hasNextPage || !endCursorRef.current) return;
+    if (!hasNextPage || !endCursorRef.current || fetchingMoreRef.current) return;
 
+    fetchingMoreRef.current = true;
     setFetchingMore(true);
     try {
       const result = await graphqlQuery<TData>(
@@ -85,6 +87,7 @@ export function usePaginatedQuery<TData, TNode>(
     } catch (e) {
       setError(e instanceof Error ? e : new Error(String(e)));
     } finally {
+      fetchingMoreRef.current = false;
       setFetchingMore(false);
     }
   }, [query, hasNextPage, token]);

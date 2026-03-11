@@ -84,7 +84,7 @@ export const DataTable = <T extends Row>({
     return () => {
       observer.unobserve(element);
     };
-  }, [fetchMore, isMobile]);
+  }, [fetchMore, isMobile, rows.length]);
 
   const tableCols = columns.filter((column) => !column.hide);
   const cardCols = columns.filter((column) => !column.hide);

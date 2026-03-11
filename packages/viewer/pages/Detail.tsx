@@ -209,7 +209,7 @@ const ReservationTab = ({
     return () => {
       observer.unobserve(element);
     };
-  }, [fetchMore, isMobile]);
+  }, [fetchMore, isMobile, reservations?.length]);
 
   if (error) {
     throw new Error(error.message);
