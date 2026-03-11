@@ -18,6 +18,7 @@ on:
           - tokyo-bunkyo
           - tokyo-toshima
           - tokyo-ota
+          - tokyo-edogawa
           - kanagawa-kawasaki
           - all
   schedule:

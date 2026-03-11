@@ -34,7 +34,12 @@ import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUuid } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
-import { ReservationDivisionMap, ReservationStatusMap } from "../utils/municipality";
+import {
+  RESERVATION_EXCLUDED_MUNICIPALITIES,
+  ReservationDivisionMap,
+  ReservationStatusMap,
+  SupportedMunicipality,
+} from "../utils/municipality";
 import { sortByReservationDivision } from "../utils/reservation";
 import styles from "./Detail.module.css";
 
@@ -166,7 +171,13 @@ const InstitutionTab = ({
   );
 };
 
-const ReservationTab = ({ id, municipality }: { id: string; municipality: string }) => {
+const ReservationTab = ({
+  id,
+  municipality,
+}: {
+  id: string;
+  municipality: SupportedMunicipality | undefined;
+}) => {
   /* istanbul ignore next -- municipality is always defined */
   if (!municipality) {
     throw new Error("municipality is undefined");
@@ -210,8 +221,7 @@ const ReservationTab = ({ id, municipality }: { id: string; municipality: string
         <div className={styles["reservationNoData"]}>
           <Spinner />
         </div>
-      ) : !reservations?.length ||
-        MUNICIPALITIES_WITHOUT_RESERVATION_DATA.includes(municipality) ? (
+      ) : !reservations?.length || RESERVATION_EXCLUDED_MUNICIPALITIES.includes(municipality) ? (
         <div className={styles["reservationNoData"]}>表示するデータが存在しません</div>
       ) : isMobile ? (
         <div className={styles["reservationCardList"]}>
@@ -312,9 +322,6 @@ type TabType = "institution" | "reservation";
 
 const today = new Date();
 
-// システムの改悪により更新困難な自治体
-const MUNICIPALITIES_WITHOUT_RESERVATION_DATA = ["MUNICIPALITY_EDOGAWA"];
-
 export default () => {
   const { id } = useParams();
   const [tab, setTab] = useState<TabType>("institution");
@@ -367,7 +374,10 @@ export default () => {
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <ReservationTab id={id} municipality={institution?.municipality || ""} />
+          <ReservationTab
+            id={id}
+            municipality={institution?.municipality as SupportedMunicipality | undefined}
+          />
         )}
       </TabPanel>
     </main>
