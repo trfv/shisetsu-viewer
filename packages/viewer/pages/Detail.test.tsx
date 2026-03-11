@@ -281,7 +281,7 @@ describe("Detail Page", () => {
 
     it("予約状況除外対象の自治体の場合、データなしメッセージを表示する", async () => {
       const excludedNode = createMockInstitutionDetailNode({
-        municipality: "MUNICIPALITY_EDOGAWA",
+        municipality: "MUNICIPALITY_SUGINAMI",
       });
       const excludedResponse = createMockInstitutionDetailConnection(excludedNode);
 

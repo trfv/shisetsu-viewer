@@ -209,10 +209,10 @@ describe("Reservation Page", () => {
       expect(optionTexts).toContain("江東区");
       expect(optionTexts).toContain("北区");
       expect(optionTexts).toContain("荒川区");
+      expect(optionTexts).toContain("江戸川区");
 
       // Excluded municipalities should NOT be present
-      // RESERVATION_EXCLUDED_MUNICIPALITIES: edogawa, suginami
-      expect(optionTexts).not.toContain("江戸川区");
+      // RESERVATION_EXCLUDED_MUNICIPALITIES: suginami
       expect(optionTexts).not.toContain("杉並区");
     });
   });
