@@ -122,6 +122,39 @@ describe("usePaginatedQuery", () => {
     expect(screen.getByText("load more")).toBeDisabled();
   });
 
+  it("fetchMore中の重複呼び出しを防止する", async () => {
+    let callCount = 0;
+
+    worker.use(
+      http.post(TEST_ENDPOINT, async () => {
+        callCount++;
+        if (callCount === 1) {
+          return HttpResponse.json(makeConnection([{ id: "1", name: "Item A" }], true, "cursor-0"));
+        }
+        // Delay the second response to ensure the duplicate call would overlap
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        return HttpResponse.json(makeConnection([{ id: "2", name: "Item B" }], false, "cursor-1"));
+      })
+    );
+
+    const { user } = renderWithProviders(<TestComponent variables={{ first: 10 }} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Item A")).toBeInTheDocument();
+    });
+
+    // Click fetchMore twice rapidly
+    await user.click(screen.getByText("load more"));
+    await user.click(screen.getByText("load more"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Item B")).toBeInTheDocument();
+    });
+
+    // Only 2 requests total: initial + one fetchMore (not two)
+    expect(callCount).toBe(2);
+  });
+
   it("variablesが変更されるとデータをリセットして再取得する", async () => {
     let capturedVariables: Record<string, unknown> = {};
 

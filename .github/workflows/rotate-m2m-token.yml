@@ -5,9 +5,9 @@ permissions:
 
 on:
   workflow_dispatch:
-  schedule:
-    # Run 1 hour before each scraper run (scraper runs at 0 4,16 * * *)
-    - cron: "0 3,15 * * *"
+  # schedule:
+  #   # Run 1 hour before each scraper run (scraper runs at 0 4,16 * * *)
+  #   - cron: "0 3,15 * * *"
 
 jobs:
   rotate:
