@@ -25,7 +25,15 @@ export function registerUpsertReservations(server: McpServer): void {
   server.registerTool(
     "upsert_reservations",
     {
-      description: "予約データを一括 upsert（admin のみ、2000件ずつチャンク処理）",
+      description:
+        "予約データを一括 upsert します（admin のみ）。2000件ずつチャンク処理で送信します。",
+      annotations: {
+        title: "予約データ一括更新",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         data: z
           .array(

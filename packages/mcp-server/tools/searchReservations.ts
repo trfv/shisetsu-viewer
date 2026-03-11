@@ -3,6 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
 import { SEARCH_RESERVATION_FIELDS, SEARCH_INSTITUTION_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
+import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
 
 function buildQuery(reservationFields: string, institutionFields: string): string {
   return `
@@ -77,12 +78,22 @@ export function registerSearchReservations(server: McpServer): void {
   server.registerTool(
     "search_reservations",
     {
-      description: "予約を横断検索（施設フィルタ・時間帯空き・日付範囲・ページネーション対応）",
+      description: `複数施設を横断して空き状況を検索します。特定の日付範囲・時間帯で空いている施設を見つけるのに最適です。
+
+【使い方】startDate/endDate(YYYY-MM-DD)は必須。時間帯フィルタ: isMorningVacant(午前), isAfternoonVacant(午後), isEveningVacant(夜間)にtrueを指定。楽器フィルタ: isAvailableStrings等にtrueを指定で利用可のみ。
+【レスポンス】reservations: 配列(各エントリに reservation + institution サブオブジェクト), pageInfo: { hasNextPage, endCursor }, count`,
+      annotations: {
+        title: "予約横断検索",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         municipality: z
           .array(z.string())
           .optional()
-          .describe("自治体キーでフィルタ (例: ['MUNICIPALITY_KOUTOU'])"),
+          .describe(`自治体キーでフィルタ。指定可能な値: ${MUNICIPALITY_HELP}`),
         startDate: z
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
@@ -91,15 +102,30 @@ export function registerSearchReservations(server: McpServer): void {
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe("終了日 (YYYY-MM-DD)"),
-        isHoliday: z.boolean().optional().describe("祝日のみフィルタ"),
-        isMorningVacant: z.boolean().optional().describe("午前空きでフィルタ"),
-        isAfternoonVacant: z.boolean().optional().describe("午後空きでフィルタ"),
-        isEveningVacant: z.boolean().optional().describe("夜間空きでフィルタ"),
-        isAvailableStrings: z.string().optional().describe("弦楽器利用可否でフィルタ"),
-        isAvailableWoodwind: z.string().optional().describe("木管楽器利用可否でフィルタ"),
-        isAvailableBrass: z.string().optional().describe("金管楽器利用可否でフィルタ"),
-        isAvailablePercussion: z.string().optional().describe("打楽器利用可否でフィルタ"),
-        institutionSizes: z.array(z.string()).optional().describe("施設サイズでフィルタ"),
+        isHoliday: z.boolean().optional().describe("trueで祝日のみに絞り込み"),
+        isMorningVacant: z.boolean().optional().describe("trueで午前空きのみ"),
+        isAfternoonVacant: z.boolean().optional().describe("trueで午後空きのみ"),
+        isEveningVacant: z.boolean().optional().describe("trueで夜間空きのみ"),
+        isAvailableStrings: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("弦楽器利用可否 (true = 利用可)"),
+        isAvailableWoodwind: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("木管楽器利用可否 (true = 利用可)"),
+        isAvailableBrass: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("金管楽器利用可否 (true = 利用可)"),
+        isAvailablePercussion: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("打楽器利用可否 (true = 利用可)"),
+        institutionSizes: z
+          .array(z.string())
+          .optional()
+          .describe(`施設サイズでフィルタ。指定可能な値: ${INSTITUTION_SIZE_HELP}`),
         fields: z
           .object({
             reservation: z
@@ -116,7 +142,7 @@ export function registerSearchReservations(server: McpServer): void {
               ),
           })
           .optional()
-          .describe("返却フィールドを指定 (省略時は全フィールド)"),
+          .describe("返却フィールドを指定しトークンを節約 (省略時は全フィールド)"),
         first: z.number().int().min(1).max(100).default(20).describe("取得件数 (最大100)"),
         after: z.string().optional().describe("ページネーション用カーソル"),
       },
@@ -141,10 +167,10 @@ export function registerSearchReservations(server: McpServer): void {
         isMorningVacant: args.isMorningVacant,
         isAfternoonVacant: args.isAfternoonVacant,
         isEveningVacant: args.isEveningVacant,
-        isAvailableStrings: args.isAvailableStrings,
-        isAvailableWoodwind: args.isAvailableWoodwind,
-        isAvailableBrass: args.isAvailableBrass,
-        isAvailablePercussion: args.isAvailablePercussion,
+        isAvailableStrings: resolveAvailability(args.isAvailableStrings),
+        isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
+        isAvailableBrass: resolveAvailability(args.isAvailableBrass),
+        isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
         institutionSizes: args.institutionSizes,
       });
 

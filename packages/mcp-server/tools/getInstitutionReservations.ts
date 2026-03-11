@@ -31,7 +31,17 @@ export function registerGetInstitutionReservations(server: McpServer): void {
   server.registerTool(
     "get_institution_reservations",
     {
-      description: "施設の予約状況を取得（日付範囲指定、上限1000件）",
+      description: `特定施設の予約状況を日付範囲で取得します（上限1000件）。
+
+【使い方】list_institutions で取得した施設IDと日付範囲(YYYY-MM-DD)を指定。reservation フィールドは { 時間区分キー: ステータスキー } のマッピングです。ステータスの意味は自治体ごとに異なります。
+【レスポンス】reservations: 日付ごとの予約データ配列(date, reservation), count`,
+      annotations: {
+        title: "施設予約状況取得",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         institutionId: z.string().uuid().describe("施設のUUID"),
         startDate: z
@@ -46,7 +56,7 @@ export function registerGetInstitutionReservations(server: McpServer): void {
           .array(z.enum(RESERVATION_FIELDS))
           .optional()
           .describe(
-            "返却フィールドを指定 (省略時は全フィールド)。選択可能: " +
+            "返却フィールドを指定しトークンを節約 (省略時は全フィールド)。選択可能: " +
               RESERVATION_FIELDS.join(", ")
           ),
       },

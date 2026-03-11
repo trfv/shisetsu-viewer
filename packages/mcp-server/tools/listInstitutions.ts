@@ -3,6 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
 import { INSTITUTION_LIST_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
+import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
 
 function buildQuery(fieldSelection: string): string {
   return `
@@ -54,28 +55,47 @@ export function registerListInstitutions(server: McpServer): void {
   server.registerTool(
     "list_institutions",
     {
-      description: "施設一覧を取得（フィルタ・ページネーション対応）",
+      description: `施設一覧を取得します。自治体・施設サイズ・楽器利用可否でフィルタできます。
+
+【使い方】まずこのツールで施設を探し、IDを取得 → get_institution_detail で詳細 or get_institution_reservations / search_reservations で空き確認
+【レスポンス】institutions: 施設配列(id, municipality, building, institution 等), pageInfo: { hasNextPage, endCursor }, count`,
+      annotations: {
+        title: "施設一覧取得",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         municipality: z
           .array(z.string())
           .optional()
-          .describe("自治体キーでフィルタ (例: ['MUNICIPALITY_KOUTOU'])"),
+          .describe(`自治体キーでフィルタ。指定可能な値: ${MUNICIPALITY_HELP}`),
         institutionSizes: z
           .array(z.string())
           .optional()
-          .describe("施設サイズでフィルタ (例: ['INSTITUTION_SIZE_LARGE'])"),
+          .describe(`施設サイズでフィルタ。指定可能な値: ${INSTITUTION_SIZE_HELP}`),
         isAvailableStrings: z
-          .string()
+          .union([z.boolean(), z.string()])
           .optional()
-          .describe("弦楽器利用可否でフィルタ ('AVAILABILITY_DIVISION_AVAILABLE')"),
-        isAvailableWoodwind: z.string().optional().describe("木管楽器利用可否でフィルタ"),
-        isAvailableBrass: z.string().optional().describe("金管楽器利用可否でフィルタ"),
-        isAvailablePercussion: z.string().optional().describe("打楽器利用可否でフィルタ"),
+          .describe("弦楽器利用可否 (true = 利用可、false = 利用不可)"),
+        isAvailableWoodwind: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("木管楽器利用可否 (true = 利用可)"),
+        isAvailableBrass: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("金管楽器利用可否 (true = 利用可)"),
+        isAvailablePercussion: z
+          .union([z.boolean(), z.string()])
+          .optional()
+          .describe("打楽器利用可否 (true = 利用可)"),
         fields: z
           .array(z.enum(INSTITUTION_LIST_FIELDS))
           .optional()
           .describe(
-            "返却フィールドを指定 (省略時は全フィールド)。選択可能: " +
+            "返却フィールドを指定しトークンを節約 (省略時は全フィールド)。選択可能: " +
               INSTITUTION_LIST_FIELDS.join(", ")
           ),
         first: z
@@ -97,10 +117,10 @@ export function registerListInstitutions(server: McpServer): void {
         first: args.first,
         after: args.after,
         municipality: args.municipality,
-        isAvailableStrings: args.isAvailableStrings,
-        isAvailableWoodwind: args.isAvailableWoodwind,
-        isAvailableBrass: args.isAvailableBrass,
-        isAvailablePercussion: args.isAvailablePercussion,
+        isAvailableStrings: resolveAvailability(args.isAvailableStrings),
+        isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
+        isAvailableBrass: resolveAvailability(args.isAvailableBrass),
+        isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
         institutionSizes: args.institutionSizes,
       });
 
