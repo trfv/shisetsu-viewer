@@ -97,6 +97,7 @@ jobs:
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -158,6 +159,7 @@ jobs:
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
         with:
           municipality: ${{ needs.prepare.outputs.municipality }}
           shardIndex: ${{ matrix.shardIndex }}

@@ -10,6 +10,14 @@ function requireEnv(name: string): string {
 
 const GRAPHQL_ENDPOINT = requireEnv("GRAPHQL_ENDPOINT");
 
+function getAuthHeaders(): Record<string, string> {
+  const adminSecret = process.env["HASURA_ADMIN_SECRET"];
+  if (adminSecret) {
+    return { "x-hasura-admin-secret": adminSecret };
+  }
+  return { Authorization: `Bearer ${getM2MToken()}` };
+}
+
 const MAX_RETRIES = 3;
 const BASE_DELAY_MS = 1000;
 
@@ -37,7 +45,7 @@ export async function graphqlRequest<T>(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getM2MToken()}`,
+          ...getAuthHeaders(),
         },
         body: JSON.stringify({
           query,
