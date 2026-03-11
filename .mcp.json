@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shisetsu-viewer": {
+      "type": "url",
+      "url": "https://mcp.shisetsudb.com/mcp"
+    }
+  }
+}

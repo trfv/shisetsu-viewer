@@ -6,14 +6,19 @@ import { registerGetInstitutionReservations } from "./tools/getInstitutionReserv
 import { registerSearchReservations } from "./tools/searchReservations.ts";
 import { registerUpsertReservations } from "./tools/upsertReservations.ts";
 import { registerUpsertInstitutions } from "./tools/upsertInstitutions.ts";
+import { registerGuidePrompt } from "./prompts/guide.ts";
+import { registerSearchAvailableRoomsPrompt } from "./prompts/searchAvailableRooms.ts";
 
 export function createServer(options: { authMode: "admin" | "auth0" }): McpServer {
   const server = new McpServer({
     name: "shisetsu-viewer",
-    version: "0.1.0",
+    version: "0.2.0",
   });
 
   registerMunicipalitiesResource(server);
+
+  registerGuidePrompt(server);
+  registerSearchAvailableRoomsPrompt(server);
 
   registerListInstitutions(server);
   registerGetInstitutionDetail(server);

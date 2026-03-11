@@ -18,9 +18,6 @@ const Reservation = lazy(() => import("./pages/Reservation"));
 const Waiting = lazy(() => import("./pages/Waiting"));
 /* istanbul ignore next */
 const Top = lazy(() => import("./pages/Top"));
-/* istanbul ignore next */
-const Settings = lazy(() => import("./pages/Settings"));
-
 const App = () => {
   return (
     <ErrorBoundary>
@@ -42,9 +39,6 @@ const App = () => {
                 </Route>
                 <Route path={ROUTES.institution}>
                   <Institution />
-                </Route>
-                <Route path={ROUTES.settings}>
-                  <AuthGuard Component={<Settings />} />
                 </Route>
                 <Route path={ROUTES.top}>
                   <Top />

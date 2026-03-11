@@ -54,7 +54,14 @@ export function registerUpsertInstitutions(server: McpServer): void {
   server.registerTool(
     "upsert_institutions",
     {
-      description: "施設データを一括 upsert（admin のみ）",
+      description: "施設データを一括 upsert します（admin のみ）。競合時は既存データを更新します。",
+      annotations: {
+        title: "施設データ一括更新",
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       inputSchema: {
         data: z.array(z.record(z.string(), z.unknown())).describe("施設データ配列"),
         updateColumns: z
