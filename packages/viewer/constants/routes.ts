@@ -4,5 +4,4 @@ export const ROUTES = {
   reservation: "/reservation",
   institution: "/institution",
   detail: "/institution/:id",
-  settings: "/settings",
 };
