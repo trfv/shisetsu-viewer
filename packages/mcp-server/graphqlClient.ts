@@ -4,9 +4,11 @@ const MAX_RETRIES = 3;
 const BASE_DELAY_MS = 1000;
 
 let _endpoint = "";
+let _bearerToken = "";
 
-export function configureGraphQL(endpoint: string): void {
+export function configureGraphQL(endpoint: string, bearerToken?: string): void {
   _endpoint = endpoint;
+  _bearerToken = bearerToken ?? "";
 }
 
 function isRetryable(error: unknown): boolean {
@@ -27,7 +29,7 @@ export async function graphqlRequest<T>(
     try {
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${await getM2MToken()}`,
+        Authorization: `Bearer ${_bearerToken || (await getM2MToken())}`,
       };
 
       const response = await fetch(_endpoint, {

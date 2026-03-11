@@ -6,6 +6,20 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": true,
+      "persist": true,
+      "head_sampling_rate": 1,
+    },
+  },
+  // Required by @cloudflare/workers-oauth-provider for OAuth state (clients, grants, tokens)
+  "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "64528661f5e74163a2d6a80f60d40749" }],
 }
