@@ -14,10 +14,14 @@ describe("registry", () => {
       const expected = [
         "kanagawa-kawasaki",
         "tokyo-arakawa",
+        "tokyo-bunkyo",
         "tokyo-chuo",
+        "tokyo-edogawa",
         "tokyo-kita",
         "tokyo-koutou",
+        "tokyo-ota",
         "tokyo-sumida",
+        "tokyo-toshima",
       ];
 
       expect([...targets].sort()).toEqual([...expected].sort());
@@ -25,7 +29,7 @@ describe("registry", () => {
 
     it("excludes municipalities with reservationExcluded=true", () => {
       const targets = getReservationTargets();
-      const excludedSlugs = ["bunkyo", "toshima", "edogawa", "ota", "suginami"];
+      const excludedSlugs: string[] = ["suginami"];
 
       for (const slug of excludedSlugs) {
         expect(targets.some((t) => t.includes(slug))).toBe(false);
