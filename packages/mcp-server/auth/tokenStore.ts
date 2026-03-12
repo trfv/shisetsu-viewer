@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
-export interface Tokens {
+interface Tokens {
   access_token: string;
   refresh_token: string;
   expires_at: number;
@@ -18,7 +18,7 @@ function getTokenPath(): string {
   return join(getConfigDir(), "tokens.json");
 }
 
-export async function readTokens(): Promise<Tokens | null> {
+async function readTokens(): Promise<Tokens | null> {
   try {
     const data = await readFile(getTokenPath(), "utf-8");
     return JSON.parse(data) as Tokens;
@@ -84,7 +84,7 @@ async function refreshAccessToken(tokens: Tokens): Promise<Tokens | null> {
  * - `{ status: "no_tokens" }` — no stored tokens (user never logged in)
  * - `{ status: "refresh_failed" }` — tokens existed but refresh failed (removed)
  */
-export type TokenResult =
+type TokenResult =
   | { status: "ok"; token: string }
   | { status: "no_tokens" }
   | { status: "refresh_failed" };
