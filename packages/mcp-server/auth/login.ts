@@ -37,10 +37,18 @@ function successHtml(): string {
 <h1>ログイン成功</h1><p>このタブを閉じてCLIに戻ってください。</p></body></html>`;
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function errorHtml(message: string): string {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Login Error</title></head>
 <body style="font-family:sans-serif;text-align:center;padding:60px">
-<h1>ログインエラー</h1><p>${message}</p></body></html>`;
+<h1>ログインエラー</h1><p>${escapeHtml(message)}</p></body></html>`;
 }
 
 export async function login(): Promise<void> {
@@ -157,9 +165,15 @@ export async function login(): Promise<void> {
 
   const tokenData = (await tokenResponse.json()) as {
     access_token: string;
-    refresh_token: string;
+    refresh_token?: string;
     expires_in: number;
   };
+
+  if (!tokenData.refresh_token) {
+    throw new Error(
+      "Auth0 からリフレッシュトークンが返されませんでした。offline_access スコープを確認してください"
+    );
+  }
 
   await writeTokens({
     access_token: tokenData.access_token,
