@@ -16,9 +16,12 @@ The shisetsu CLI (`packages/mcp-server/cli.ts`) currently authenticates to Hasur
 ## Auth0 Configuration (Manual)
 
 Add to the Workers Regular Web App in Auth0 dashboard:
-- **Allowed Callback URLs**: `http://localhost` (Auth0 allows any port for localhost by default when the base URL is registered)
+- **Allowed Callback URLs**: `http://localhost:19876/callback` (fixed port, see Login Flow)
+- **Allow Offline Access**: Verify this is enabled in the Application settings (APIs tab). Required for `offline_access` scope to issue refresh tokens.
 
 No other Auth0 changes needed. The app already has `authorization_code` and `refresh_token` grant types enabled.
+
+**Note on port**: Auth0 does NOT implement RFC 8252's loopback exception (wildcard ports for localhost). The redirect_uri must exactly match a registered Allowed Callback URL, so a fixed port is required.
 
 ## Architecture
 
@@ -52,39 +55,61 @@ packages/mcp-server/
 ```
 User runs: shisetsu login
 
-1. Read AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_AUDIENCE from .env
-   (dynamic import of env.ts, or direct process.env reads)
-2. Generate PKCE code_verifier + code_challenge
+1. Read AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_AUDIENCE
+   from process.env (populated via node --env-file=.env)
+2. Generate PKCE code_verifier + code_challenge (using node:crypto)
 3. Generate random state parameter
-4. Start http.createServer on port 0 (OS-assigned random port)
+4. Start http.createServer on fixed port 19876
+   - If port is already in use: fail with clear error message
 5. Construct Auth0 /authorize URL:
    - response_type=code
    - client_id={AUTH0_CLIENT_ID}
-   - redirect_uri=http://localhost:{port}/callback
+   - redirect_uri=http://localhost:19876/callback
    - audience={AUTH0_AUDIENCE}
    - scope=openid offline_access
    - state={state}
    - code_challenge={code_challenge}
    - code_challenge_method=S256
-6. Open URL in default browser (using `open` command on macOS)
-7. Wait for callback request on localhost
-8. Verify state matches
-9. POST to Auth0 /oauth/token:
-   - grant_type=authorization_code
-   - client_id={AUTH0_CLIENT_ID}
-   - client_secret={AUTH0_CLIENT_SECRET}
-   - code={code}
-   - redirect_uri=http://localhost:{port}/callback
-   - code_verifier={code_verifier}
-10. Receive { access_token, refresh_token, expires_in }
-11. Save to ~/.config/shisetsu/tokens.json:
+6. Open URL in default browser:
+   - macOS: open
+   - Linux: xdg-open
+   - Windows: start
+7. Wait for callback request on localhost (timeout: 120s)
+   - On timeout: server.close(), fail with timeout error
+8. Parse callback query parameters:
+   - If `error` parameter present:
+     Respond to browser with error HTML, close server,
+     fail with `Auth0 error: {error} — {error_description}`
+   - If `code` and `state` present: continue
+9. Verify state matches the generated value
+10. POST to Auth0 /oauth/token:
+    - grant_type=authorization_code
+    - client_id={AUTH0_CLIENT_ID}
+    - client_secret={AUTH0_CLIENT_SECRET}
+    - code={code}
+    - redirect_uri=http://localhost:19876/callback
+    - code_verifier={code_verifier}
+11. Receive { access_token, refresh_token, expires_in }
+12. Save to ~/.config/shisetsu/tokens.json:
     { access_token, refresh_token, expires_at: now + expires_in }
-12. Respond to browser with success HTML page
-13. Close server
-14. Print "Login successful" to stderr
+13. Respond to browser with success HTML page
+14. Close server
+15. Print "Login successful" to stderr
 ```
 
 ## Token Store
+
+### TypeScript Type
+
+```typescript
+interface Tokens {
+  access_token: string;
+  refresh_token: string;  // always required in stored format
+  expires_at: number;
+}
+```
+
+`refresh_token` is non-optional in the stored format. When Auth0 refresh response omits `refresh_token`, the existing stored value is preserved (same pattern as `worker.ts` line 205: `fresh.refresh_token ?? typedProps.refreshToken`).
 
 ### File Location
 
@@ -92,42 +117,32 @@ User runs: shisetsu login
 
 Platform detection: `process.env.XDG_CONFIG_HOME || path.join(os.homedir(), '.config')`, then append `shisetsu/tokens.json`.
 
-### File Format
-
-```json
-{
-  "access_token": "eyJ...",
-  "refresh_token": "v1.xxx...",
-  "expires_at": 1741958400
-}
-```
-
 ### File Permissions
 
 Created with mode `0o600` (owner read/write only). Directory created with `0o700`.
 
 ### Operations
 
-- **read()**: Read and parse tokens.json. Return null if file doesn't exist.
-- **write(tokens)**: Write tokens.json with restricted permissions. Create directory if needed.
-- **remove()**: Delete tokens.json.
+- **read()**: Read and parse tokens.json. Return `null` if file doesn't exist.
+- **write(tokens: Tokens)**: Write tokens.json with restricted permissions. Create directory if needed.
+- **remove()**: Delete tokens.json. No-op if file doesn't exist.
 
 ## Token Refresh
 
 ### In tokenStore.ts
 
-`getValidToken()` function:
+`getValidToken()` function — return type: `Promise<string | null>` (never returns empty string).
 
 1. Read tokens from store
-2. If no tokens: return null (caller should prompt login)
+2. If no tokens: return `null` (caller should prompt login)
 3. If `expires_at > now + 60` (60s margin): return access_token
 4. If expired but refresh_token exists:
-   a. POST to Auth0 /oauth/token with grant_type=refresh_token
-   b. Save new tokens to store
-   c. Return new access_token
-5. If refresh fails: remove tokens, return null
-
-Auth0 credentials (domain, client_id, client_secret) needed for refresh are read from .env at call time.
+   a. Read AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET from process.env
+   b. POST to Auth0 /oauth/token with grant_type=refresh_token
+   c. Build new Tokens: `{ access_token: fresh.access_token, refresh_token: fresh.refresh_token ?? existing.refresh_token, expires_at: now + fresh.expires_in }`
+   d. Save new Tokens to store
+   e. Return new access_token
+5. If refresh fails: remove tokens, return `null`
 
 ## CLI Authentication Change
 
@@ -149,12 +164,12 @@ configureM2M({ domain, clientId, clientSecret, audience });
 // GRAPHQL_ENDPOINT read directly from process.env
 
 if (command === "login") {
-  // Dynamic import of env vars for Auth0 credentials
   await commandLogin();
 } else if (command === "logout") {
   await commandLogout();
+} else if (command === "municipalities") {
+  // No auth needed
 } else {
-  // Get stored/refreshed token
   const token = await getValidToken();
   if (!token) fail("認証が必要です。'shisetsu login' を実行してください");
   configureGraphQL(graphqlEndpoint, token);
@@ -162,7 +177,9 @@ if (command === "login") {
 }
 ```
 
-Key change: `configureGraphQL` now receives the access_token as second argument (pre-configured bearer token), so `graphqlClient.ts` uses it directly instead of calling `getM2MToken()`.
+Key change: `configureGraphQL` receives the access_token as second argument (pre-configured bearer token), so `graphqlClient.ts` uses it directly instead of calling `getM2MToken()`.
+
+**Note**: `getValidToken()` returns `string | null`, never `""`. This is important because `graphqlClient.ts` uses `_bearerToken || (await getM2MToken())` — an empty string would be falsy and trigger the M2M fallback path, which is no longer configured in CLI mode.
 
 ## Logout Flow
 
@@ -182,9 +199,11 @@ No Auth0 revocation API call (tokens expire naturally). Simple and sufficient fo
 | No tokens.json | `Error: 認証が必要です。'shisetsu login' を実行してください` |
 | Token expired, refresh succeeds | Transparent to user |
 | Token expired, refresh fails | Remove tokens, `Error: セッション期限切れ。'shisetsu login' を再実行してください` |
-| Login cancelled (browser closed) | Timeout after 120s, `Error: ログインがタイムアウトしました` |
-| Auth0 callback error | Display error, exit 1 |
+| Login: browser closed / timeout | After 120s, close server, `Error: ログインがタイムアウトしました` |
+| Login: Auth0 returns error | Parse `?error=` param, `Error: Auth0: {error} — {description}` |
+| Login: port 19876 in use | `Error: ポート 19876 が使用中です。他のプロセスを終了してください` |
 | GRAPHQL_ENDPOINT not set | `Error: GRAPHQL_ENDPOINT 環境変数が必要です` |
+| Login: Auth0 credentials missing | `Error: AUTH0_* 環境変数が必要です (.env を確認してください)` |
 
 ## Updated CLI Help
 
@@ -207,7 +226,7 @@ Commands:
 
 - tokens.json は `0600` パーミッションで保存
 - client_secret は .env で管理（既存と同じ）
-- PKCE を使用し、authorization code の横取り攻撃を防止
+- PKCE を使用（defense in depth）。Auth0 Regular Web App は confidential client であり client_secret が主要な認証手段だが、PKCE は authorization code の横取り攻撃に対する追加の保護層として機能する。これは内部ツールとして許容される設計判断。
 - state パラメータで CSRF を防止
 - refresh_token は Auth0 側で rotation 設定可能（推奨）
 
@@ -215,8 +234,9 @@ Commands:
 
 1. `shisetsu login` → ブラウザが開き、Auth0 認証画面が表示される
 2. 認証完了後、ブラウザに成功ページが表示される
-3. `~/.config/shisetsu/tokens.json` が作成される
+3. `~/.config/shisetsu/tokens.json` が作成される（パーミッション 0600）
 4. `shisetsu list --municipality MUNICIPALITY_KOUTOU --pretty` → データが返る
 5. `shisetsu logout` → tokens.json が削除される
 6. `shisetsu list` → `認証が必要です` エラー
-7. 型チェック・lint・knip が通る
+7. トークン期限切れ後に自動リフレッシュが動作する
+8. 型チェック・lint・knip が通る
