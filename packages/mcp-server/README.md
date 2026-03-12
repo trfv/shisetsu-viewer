@@ -37,8 +37,11 @@ https://mcp.shisetsudb.com/mcp
 {
   "mcpServers": {
     "shisetsu-viewer": {
-      "type": "url",
-      "url": "https://mcp.shisetsudb.com/mcp"
+      "command": "/path/to/npx_binary",
+      "args": ["-y", "mcp-remote", "https://mcp.shisetsudb.com/mcp"],
+      "env": {
+        "PATH": "PATH_TO_INCLUDE_NODE_AND_NPX"
+      }
     }
   }
 }
