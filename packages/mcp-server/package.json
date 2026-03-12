@@ -6,6 +6,7 @@
   "scripts": {
     "typecheck": "tsgo",
     "start": "node --env-file=.env index.ts",
+    "cli": "node --env-file=.env cli.ts",
     "deploy": "npx wrangler deploy",
     "preview:wrangler": "npx wrangler dev"
   },

@@ -9,6 +9,22 @@ npm run typecheck -w @shisetsu-viewer/mcp-server       # Type check with tsgo
 npm run deploy -w @shisetsu-viewer/mcp-server           # Deploy to Cloudflare Workers
 npm run preview:wrangler -w @shisetsu-viewer/mcp-server # Local preview via wrangler dev
 npm run start -w @shisetsu-viewer/mcp-server            # Local stdio server (dev/debug用, write tools有効)
+npm run cli -w @shisetsu-viewer/mcp-server -- <command>  # CLI tool (AI agent向け)
+```
+
+### CLI
+
+MCP プロトコルを介さず、shell コマンドとして施設データを取得する CLI。JSON を stdout に出力。
+
+```bash
+npm run cli -w @shisetsu-viewer/mcp-server -- login                    # ブラウザで Auth0 認証
+npm run cli -w @shisetsu-viewer/mcp-server -- logout                   # トークン削除
+npm run cli -w @shisetsu-viewer/mcp-server -- list --municipality MUNICIPALITY_KOUTOU --pretty
+npm run cli -w @shisetsu-viewer/mcp-server -- detail <uuid>
+npm run cli -w @shisetsu-viewer/mcp-server -- reservations <uuid> --start-date 2026-03-15 --end-date 2026-03-31
+npm run cli -w @shisetsu-viewer/mcp-server -- search --start-date 2026-03-15 --end-date 2026-03-31 --evening
+npm run cli -w @shisetsu-viewer/mcp-server -- municipalities
+npm run cli -w @shisetsu-viewer/mcp-server -- --help
 ```
 
 ## Architecture
@@ -16,6 +32,10 @@ npm run start -w @shisetsu-viewer/mcp-server            # Local stdio server (de
 - `server.ts` — Creates `McpServer`, registers all tools and resources
 - `worker.ts` — Cloudflare Workers entry point with MCP OAuth + Auth0 integration
 - `index.ts` — Local stdio entry point (dev/debug用, write tools有効)
+- `cli.ts` — CLI entry point (AI agent向け, JSON出力, OAuth認証)
+- `auth/tokenStore.ts` — CLI用 OAuth トークン永続化 (~/.config/shisetsu/tokens.json)
+- `auth/login.ts` — CLI用 OAuth ログインフロー (Authorization Code + PKCE)
+- `auth/logout.ts` — CLI用ログアウト（トークン削除）
 - `m2mToken.ts` — Auth0 M2M token acquisition and caching (local stdio用)
 - `graphqlClient.ts` — Hasura GraphQL client with retry logic
 - `env.ts` — Environment variable schema and validation (local stdio用)
@@ -30,6 +50,11 @@ npm run start -w @shisetsu-viewer/mcp-server            # Local stdio server (de
 
 **ローカル stdio (index.ts):**
 - Hasura: Auth0 M2M Bearer トークン（サービスアカウント権限）
+
+**CLI (cli.ts):**
+- Auth0 Authorization Code + PKCE でブラウザ認証
+- トークン永続化: `~/.config/shisetsu/tokens.json` (0600)
+- 自動リフレッシュ: `getValidToken()` がトークン期限切れ時に自動更新
 
 ### Tools
 
