@@ -80,7 +80,10 @@ User runs: shisetsu login
    - If `error` parameter present:
      Respond to browser with error HTML, close server,
      fail with `Auth0 error: {error} — {error_description}`
-   - If `code` and `state` present: continue
+   - If `code` and `state` both present: continue
+   - Otherwise (missing code or state, no error):
+     Respond with "Unexpected callback" HTML, close server,
+     fail with `Error: 予期しないコールバックパラメータ`
 9. Verify state matches the generated value
 10. POST to Auth0 /oauth/token:
     - grant_type=authorization_code
@@ -91,7 +94,9 @@ User runs: shisetsu login
     - code_verifier={code_verifier}
 11. Receive { access_token, refresh_token, expires_in }
 12. Save to ~/.config/shisetsu/tokens.json:
-    { access_token, refresh_token, expires_at: now + expires_in }
+    { access_token, refresh_token, expires_at: Math.floor(Date.now() / 1000) + expires_in }
+    Note: expires_at is Unix seconds. Auth0 returns expires_in in seconds,
+    Date.now() returns milliseconds, so division by 1000 is required.
 13. Respond to browser with success HTML page
 14. Close server
 15. Print "Login successful" to stderr
@@ -135,11 +140,11 @@ Created with mode `0o600` (owner read/write only). Directory created with `0o700
 
 1. Read tokens from store
 2. If no tokens: return `null` (caller should prompt login)
-3. If `expires_at > now + 60` (60s margin): return access_token
+3. If `expires_at > Math.floor(Date.now() / 1000) + 60` (60s margin, all in Unix seconds): return access_token
 4. If expired but refresh_token exists:
    a. Read AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET from process.env
    b. POST to Auth0 /oauth/token with grant_type=refresh_token
-   c. Build new Tokens: `{ access_token: fresh.access_token, refresh_token: fresh.refresh_token ?? existing.refresh_token, expires_at: now + fresh.expires_in }`
+   c. Build new Tokens: `{ access_token: fresh.access_token, refresh_token: fresh.refresh_token ?? existing.refresh_token, expires_at: Math.floor(Date.now() / 1000) + fresh.expires_in }`
    d. Save new Tokens to store
    e. Return new access_token
 5. If refresh fails: remove tokens, return `null`
