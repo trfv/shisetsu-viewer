@@ -74,6 +74,62 @@ interface QueryData {
   };
 }
 
+export async function executeSearchReservations(args: {
+  municipality?: string[] | undefined;
+  startDate: string;
+  endDate: string;
+  isHoliday?: boolean | undefined;
+  isMorningVacant?: boolean | undefined;
+  isAfternoonVacant?: boolean | undefined;
+  isEveningVacant?: boolean | undefined;
+  isAvailableStrings?: boolean | string | undefined;
+  isAvailableWoodwind?: boolean | string | undefined;
+  isAvailableBrass?: boolean | string | undefined;
+  isAvailablePercussion?: boolean | string | undefined;
+  institutionSizes?: string[] | undefined;
+  fields?:
+    | {
+        reservation?: readonly string[] | undefined;
+        institution?: readonly string[] | undefined;
+      }
+    | undefined;
+  first?: number | undefined;
+  after?: string | undefined;
+}) {
+  const reservationFields = buildFieldSelection(
+    SEARCH_RESERVATION_FIELDS,
+    args.fields?.reservation
+  );
+  const institutionFields = buildFieldSelection(
+    SEARCH_INSTITUTION_FIELDS,
+    args.fields?.institution
+  );
+  const query = buildQuery(reservationFields, institutionFields);
+  const data = await graphqlRequest<QueryData>(query, {
+    first: args.first ?? 20,
+    after: args.after,
+    municipality: args.municipality,
+    startDate: args.startDate,
+    endDate: args.endDate,
+    isHoliday: args.isHoliday,
+    isMorningVacant: args.isMorningVacant,
+    isAfternoonVacant: args.isAfternoonVacant,
+    isEveningVacant: args.isEveningVacant,
+    isAvailableStrings: resolveAvailability(args.isAvailableStrings),
+    isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
+    isAvailableBrass: resolveAvailability(args.isAvailableBrass),
+    isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
+    institutionSizes: args.institutionSizes,
+  });
+
+  const conn = data.searchable_reservations_connection;
+  return {
+    reservations: conn.edges.map((e) => e.node),
+    pageInfo: conn.pageInfo,
+    count: conn.edges.length,
+  };
+}
+
 export function registerSearchReservations(server: McpServer): void {
   server.registerTool(
     "search_reservations",
@@ -148,48 +204,9 @@ export function registerSearchReservations(server: McpServer): void {
       },
     },
     async (args) => {
-      const reservationFields = buildFieldSelection(
-        SEARCH_RESERVATION_FIELDS,
-        args.fields?.reservation
-      );
-      const institutionFields = buildFieldSelection(
-        SEARCH_INSTITUTION_FIELDS,
-        args.fields?.institution
-      );
-      const query = buildQuery(reservationFields, institutionFields);
-      const data = await graphqlRequest<QueryData>(query, {
-        first: args.first,
-        after: args.after,
-        municipality: args.municipality,
-        startDate: args.startDate,
-        endDate: args.endDate,
-        isHoliday: args.isHoliday,
-        isMorningVacant: args.isMorningVacant,
-        isAfternoonVacant: args.isAfternoonVacant,
-        isEveningVacant: args.isEveningVacant,
-        isAvailableStrings: resolveAvailability(args.isAvailableStrings),
-        isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
-        isAvailableBrass: resolveAvailability(args.isAvailableBrass),
-        isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
-        institutionSizes: args.institutionSizes,
-      });
-
-      const conn = data.searchable_reservations_connection;
+      const result = await executeSearchReservations(args);
       return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(
-              {
-                reservations: conn.edges.map((e) => e.node),
-                pageInfo: conn.pageInfo,
-                count: conn.edges.length,
-              },
-              null,
-              2
-            ),
-          },
-        ],
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
     }
   );

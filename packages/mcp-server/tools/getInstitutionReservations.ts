@@ -27,6 +27,23 @@ interface QueryData {
   };
 }
 
+export async function executeGetInstitutionReservations(args: {
+  institutionId: string;
+  startDate: string;
+  endDate: string;
+  fields?: readonly string[] | undefined;
+}) {
+  const query = buildQuery(buildFieldSelection(RESERVATION_FIELDS, args.fields));
+  const data = await graphqlRequest<QueryData>(query, {
+    id: args.institutionId,
+    startDate: args.startDate,
+    endDate: args.endDate,
+  });
+
+  const reservations = data.reservations_connection.edges.map((e) => e.node);
+  return { reservations, count: reservations.length };
+}
+
 export function registerGetInstitutionReservations(server: McpServer): void {
   server.registerTool(
     "get_institution_reservations",
@@ -62,21 +79,9 @@ export function registerGetInstitutionReservations(server: McpServer): void {
       },
     },
     async (args) => {
-      const query = buildQuery(buildFieldSelection(RESERVATION_FIELDS, args.fields));
-      const data = await graphqlRequest<QueryData>(query, {
-        id: args.institutionId,
-        startDate: args.startDate,
-        endDate: args.endDate,
-      });
-
-      const reservations = data.reservations_connection.edges.map((e) => e.node);
+      const result = await executeGetInstitutionReservations(args);
       return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify({ reservations, count: reservations.length }, null, 2),
-          },
-        ],
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
     }
   );

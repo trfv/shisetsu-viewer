@@ -51,6 +51,37 @@ interface QueryData {
   };
 }
 
+export async function executeListInstitutions(args: {
+  municipality?: string[] | undefined;
+  institutionSizes?: string[] | undefined;
+  isAvailableStrings?: boolean | string | undefined;
+  isAvailableWoodwind?: boolean | string | undefined;
+  isAvailableBrass?: boolean | string | undefined;
+  isAvailablePercussion?: boolean | string | undefined;
+  fields?: readonly string[] | undefined;
+  first?: number | undefined;
+  after?: string | undefined;
+}) {
+  const query = buildQuery(buildFieldSelection(INSTITUTION_LIST_FIELDS, args.fields));
+  const data = await graphqlRequest<QueryData>(query, {
+    first: args.first ?? 20,
+    after: args.after,
+    municipality: args.municipality,
+    isAvailableStrings: resolveAvailability(args.isAvailableStrings),
+    isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
+    isAvailableBrass: resolveAvailability(args.isAvailableBrass),
+    isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
+    institutionSizes: args.institutionSizes,
+  });
+
+  const conn = data.institutions_connection;
+  return {
+    institutions: conn.edges.map((e) => e.node),
+    pageInfo: conn.pageInfo,
+    count: conn.edges.length,
+  };
+}
+
 export function registerListInstitutions(server: McpServer): void {
   server.registerTool(
     "list_institutions",
@@ -112,34 +143,9 @@ export function registerListInstitutions(server: McpServer): void {
       },
     },
     async (args) => {
-      const query = buildQuery(buildFieldSelection(INSTITUTION_LIST_FIELDS, args.fields));
-      const data = await graphqlRequest<QueryData>(query, {
-        first: args.first,
-        after: args.after,
-        municipality: args.municipality,
-        isAvailableStrings: resolveAvailability(args.isAvailableStrings),
-        isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
-        isAvailableBrass: resolveAvailability(args.isAvailableBrass),
-        isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
-        institutionSizes: args.institutionSizes,
-      });
-
-      const conn = data.institutions_connection;
+      const result = await executeListInstitutions(args);
       return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(
-              {
-                institutions: conn.edges.map((e) => e.node),
-                pageInfo: conn.pageInfo,
-                count: conn.edges.length,
-              },
-              null,
-              2
-            ),
-          },
-        ],
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
     }
   );

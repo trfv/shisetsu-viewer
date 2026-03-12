@@ -23,6 +23,15 @@ interface QueryData {
   };
 }
 
+export async function executeGetInstitutionDetail(args: {
+  id: string;
+  fields?: readonly string[] | undefined;
+}): Promise<Record<string, unknown> | null> {
+  const query = buildQuery(buildFieldSelection(INSTITUTION_DETAIL_FIELDS, args.fields));
+  const data = await graphqlRequest<QueryData>(query, { id: args.id });
+  return data.institutions_connection.edges[0]?.node ?? null;
+}
+
 export function registerGetInstitutionDetail(server: McpServer): void {
   server.registerTool(
     "get_institution_detail",
@@ -50,9 +59,7 @@ export function registerGetInstitutionDetail(server: McpServer): void {
       },
     },
     async (args) => {
-      const query = buildQuery(buildFieldSelection(INSTITUTION_DETAIL_FIELDS, args.fields));
-      const data = await graphqlRequest<QueryData>(query, { id: args.id });
-      const node = data.institutions_connection.edges[0]?.node;
+      const node = await executeGetInstitutionDetail(args);
 
       if (!node) {
         return {

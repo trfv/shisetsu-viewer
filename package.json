@@ -43,6 +43,7 @@
     "build:viewer": "npm run build -w @shisetsu-viewer/viewer",
     "update:reservations": "npm run update:reservations -w @shisetsu-viewer/scraper",
     "update:institutions": "npm run update:institutions -w @shisetsu-viewer/scraper",
+    "cli": "npm run cli -w @shisetsu-viewer/mcp-server --",
     "format:check:all": "prettier --check \"./packages/**/*.ts*\"",
     "format:fix:all": "prettier --write \"./packages/**/*.ts*\"",
     "lint:all": "eslint \"./packages/**/*.ts*\"",
