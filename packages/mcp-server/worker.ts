@@ -185,6 +185,8 @@ function createOAuthProvider(env: Env) {
     authorizeEndpoint: "/authorize",
     tokenEndpoint: "/oauth/token",
     clientRegistrationEndpoint: "/oauth/register",
+    accessTokenTTL: 82800, // 23h (Auth0 access token TTL 24h より短く設定し、先にリフレッシュさせる)
+    refreshTokenTTL: 2592000, // 30 days
 
     tokenExchangeCallback: async ({ grantType, props }) => {
       const typedProps = props as UpstreamTokens;
@@ -198,13 +200,16 @@ function createOAuthProvider(env: Env) {
 
       // Refresh: obtain a fresh Auth0 access token via refresh token
       const fresh = await refreshAuth0Token(typedProps.refreshToken, env);
+      const rotated = fresh.refresh_token && fresh.refresh_token !== typedProps.refreshToken;
       return {
         accessTokenProps: { upstreamAccessToken: fresh.access_token },
-        // Persist the new refresh token if Auth0 rotated it
-        newProps: {
-          upstreamAccessToken: fresh.access_token,
-          refreshToken: fresh.refresh_token ?? typedProps.refreshToken,
-        } satisfies UpstreamTokens,
+        // Only persist newProps when Auth0 rotated the refresh token (saves a KV write)
+        ...(rotated && {
+          newProps: {
+            upstreamAccessToken: fresh.access_token,
+            refreshToken: fresh.refresh_token!,
+          } satisfies UpstreamTokens,
+        }),
       };
     },
   });
