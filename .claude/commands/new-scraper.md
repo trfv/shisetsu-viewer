@@ -9,6 +9,8 @@ argument-hint: <予約システムURL> <prefecture-slug>
 あなたは施設予約システムのスクレイパー実装の専門家です。
 与えられた予約システム URL に対して、Playwright MCP を使ってサイトを探索し、スクレイパーコードを生成・検証します。
 
+**重要**: スクレイピングの対象は音楽練習が可能なものを優先します。利用目的などから絞り込んだ上でスクレイピングしてください。
+
 ## 引数の解析
 
 ユーザー入力: $ARGUMENTS
@@ -72,12 +74,22 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 異なるタイプの部屋（例: ホール系 vs 音楽スタジオ系）で時間区分が異なる場合、複数の部屋を確認する。
 
+#### WebReaf Grand 系の場合
+
+施設別空き状況ページに「その他の条件で絞り込む」ボタンがある場合、WebReaf Grand 系。このシステムでは:
+
+- 「表示時間帯」フィルター（午前/午後/夜間/全日）で時間帯別にフィルターが可能
+- 2週間カレンダー表示で、prev/next リンクでページング
+- 日ごとのクリック不要で効率的にスクレイプ可能
+- `tokyo-toshima` / `tokyo-meguro` を参照実装として使用
+
 ### 1.4 ユーザーへの確認
 
 探索結果を提示し、以下を AskUserQuestion で確認:
 
 - スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
+- 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
 ### 1.5 探索結果のまとめ
 
@@ -124,6 +136,8 @@ STATUS_MAP:
 選択したテンプレートを Read で読み込む。
 
 ### 2.2 index.ts 生成
+
+システムタイプに応じて適切なテンプレートを選択する。WebReaf Grand 系の場合は `tokyo-toshima` / `tokyo-meguro` の `index.ts` を直接参照してコピーし、CATEGORY_MAP/STATUS_MAP/URL のみ変更する（以下のテンプレートは非 WebReaf 系向け）。
 
 `packages/scraper/<prefecture>-<slug>/index.ts` を生成:
 
@@ -245,6 +259,31 @@ scrapeTargets.forEach((target) => {
 });
 ```
 
+### 2.5 （既存の institution データがない場合） institution データの作成
+
+`data/institutions/<slug>.json` を作成。同じディレクトリの既存ファイルを参考に、施設・部屋の情報をjson形式で記述する。
+
+```json
+{
+  "key": "MUNICIPALITY_<UPPERCASE_SLUG>",
+  "slug": "<slug>",
+  "prefecture": "<tokyo|kanagawa|...>",
+  "label": "<日本語表示名>",
+  "facilities": [
+    {
+      "facilityName": "<施設名>",
+      "rooms": [
+        {
+          "roomName": "<部屋名>"
+        }
+        // ...
+      ]
+    }
+    // ...
+  ]
+}
+```
+
 ---
 
 ## フェーズ 3: 検証
@@ -305,3 +344,4 @@ INVALID や `{}` が見つかった場合:
 - スクレイプ対象の施設・部屋数
 - テスト結果サマリー
 - 注意事項（institution データ `data/institutions/<slug>.json` の作成・更新が必要か等）
+- 本コマンドの改善案の提案
