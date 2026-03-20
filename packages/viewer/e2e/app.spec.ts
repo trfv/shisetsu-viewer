@@ -23,11 +23,12 @@ test.describe("Shisetsu Viewer Application", () => {
   test("has proper heading structure", async ({ page }) => {
     // h2見出しが存在することを確認
     const h2Headings = page.locator("h2");
-    await expect(h2Headings).toHaveCount(4);
+    await expect(h2Headings).toHaveCount(5);
 
     // 特定の見出しが存在することを確認
     await expect(page.locator("h2#introduction")).toBeVisible();
     await expect(page.locator("h2#features")).toBeVisible();
+    await expect(page.locator("h2#ai-integration")).toBeVisible();
     await expect(page.locator("h2#supported-municipalities")).toBeVisible();
     await expect(page.locator("h2#notes")).toBeVisible();
   });
