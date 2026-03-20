@@ -385,6 +385,32 @@ export const MUNICIPALITIES = {
       [FeeDivision.EVENING]: "夜間",
     },
   },
+  MUNICIPALITY_MEGURO: {
+    key: "MUNICIPALITY_MEGURO",
+    slug: "meguro",
+    prefecture: "tokyo",
+    label: "目黒区",
+    reservationExcluded: false,
+    reservationStatus: {
+      [ReservationStatus.VACANT]: "空き",
+      [ReservationStatus.STATUS_1]: "一部空き",
+      [ReservationStatus.STATUS_2]: "空きなし",
+      [ReservationStatus.STATUS_3]: "申込期間外",
+      [ReservationStatus.STATUS_4]: "公開対象外",
+      [ReservationStatus.STATUS_5]: "休館",
+      [ReservationStatus.STATUS_6]: "抽選",
+    },
+    reservationDivision: {
+      [ReservationDivision.MORNING]: "午前",
+      [ReservationDivision.AFTERNOON]: "午後",
+      [ReservationDivision.EVENING]: "夜間",
+    },
+    feeDivision: {
+      [FeeDivision.MORNING]: "午前",
+      [FeeDivision.AFTERNOON]: "午後",
+      [FeeDivision.EVENING]: "夜間",
+    },
+  },
 } as const satisfies Record<string, MunicipalityConfig>;
 
 export type MunicipalityKey = keyof typeof MUNICIPALITIES;
