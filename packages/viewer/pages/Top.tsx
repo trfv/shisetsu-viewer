@@ -19,6 +19,21 @@ export default () => {
         <ul>
           <li>公共施設の施設情報をウェブサイトから取得し、加工して表示しています。</li>
         </ul>
+        <h2 id="ai-integration">AI アシスタント連携</h2>
+        <ul>
+          <li>
+            Claude などの AI
+            アシスタントから、施設の検索や予約状況の確認を自然言語で行えます。接続方法や使い方の詳細は
+            <a
+              href="https://github.com/trfv/shisetsu-viewer/blob/master/packages/mcp-server/README.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              MCP サーバーのドキュメント
+            </a>
+            をご覧ください。
+          </li>
+        </ul>
         <h2 id="supported-municipalities">対応地区</h2>
         <ul>
           <li>荒川区</li>

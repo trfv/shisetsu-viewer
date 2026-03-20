@@ -9,6 +9,9 @@ describe("Top Page", () => {
 
       expect(screen.getByRole("heading", { name: "はじめに", level: 2 })).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: "機能の説明", level: 2 })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "AI アシスタント連携", level: 2 })
+      ).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: "対応地区", level: 2 })).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: "備考", level: 2 })).toBeInTheDocument();
     });
@@ -113,7 +116,7 @@ describe("Top Page", () => {
 
       // h2見出しが存在する
       const h2Headings = screen.getAllByRole("heading", { level: 2 });
-      expect(h2Headings).toHaveLength(4);
+      expect(h2Headings).toHaveLength(5);
 
       // h3見出しが存在する
       const h3Headings = screen.getAllByRole("heading", { level: 3 });
@@ -163,6 +166,9 @@ describe("Top Page", () => {
       // 機能説明
       expect(screen.getByText(/予約状況を予約システムから取得/)).toBeInTheDocument();
       expect(screen.getByText(/施設情報をウェブサイトから取得/)).toBeInTheDocument();
+
+      // AI アシスタント連携
+      expect(screen.getByText(/MCP サーバーのドキュメント/)).toBeInTheDocument();
 
       // 利用上の注意
       expect(screen.getByText(/管理人の許可制/)).toBeInTheDocument();
