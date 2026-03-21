@@ -72,7 +72,7 @@ All page components are lazy-loaded via `React.lazy()`.
 - CSS Modules (`.module.css`) for component-scoped styles.
 - Global theme tokens in `theme.css` using CSS Custom Properties (`--color-*`, `--font-*`, etc.).
 - Light/dark mode via `[data-theme="dark"]` selector in `theme.css`.
-- Fonts served from `public/fonts/` (Roboto, Noto Sans JP). Externalized in Vite build config — not bundled.
+- Fonts: `@fontsource-variable/noto-sans-jp` imported via npm package (bundled by Vite).
 - Design constants in `constants/styles.ts`.
 
 ### Municipality Data
@@ -133,7 +133,6 @@ Copy `.env.sample` to `.env` and fill in values.
 ## Build & Deployment
 
 - Vite config: `vite.config.ts`. SWC plugin for fast refresh.
-- Font files externalized in Rollup config (served from public, not bundled).
 - Manual chunks: react/react-dom bundled together. wouter is in the index chunk (~6 kB gz).
 - Bundle analysis: `build:analyze` generates `dist/stats.json` (raw-data format with gzip/brotli sizes).
 - Cloudflare Workers via Wrangler. Config in `wrangler.jsonc`. SPA mode.

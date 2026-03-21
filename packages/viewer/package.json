@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "vite --port 3000",
-    "build": "tsc && vite build",
+    "build": "tsgo && vite build",
     "build:analyze": "vite build --mode analyze",
     "serve": "vite preview --port 3000",
     "typecheck": "tsgo",

@@ -13,7 +13,6 @@ export default defineConfig(
       sourcemap: mode !== "production",
       rollupOptions: {
         output: {
-          esModule: true,
           manualChunks(id) {
             for (const [chunkName, deps] of Object.entries(manualChunks)) {
               if (deps.some((dep) => id.includes(`/node_modules/${dep}/`))) {
