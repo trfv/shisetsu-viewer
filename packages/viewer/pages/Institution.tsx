@@ -12,6 +12,7 @@ import { CheckboxGroup } from "../components/CheckboxGroup";
 import { DataTable, type Columns } from "../components/DataTable";
 import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
+import { Snackbar } from "../components/SnackBar";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
@@ -129,11 +130,6 @@ export default () => {
     (d) => d.institutions_connection
   );
 
-  if (error) {
-    // TODO Snackbar を描画する
-    throw new Error(error.message);
-  }
-
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
 
   const handleMunicipalityChange = useCallback(
@@ -243,6 +239,7 @@ export default () => {
           />
         )}
       </div>
+      {error && <Snackbar open={true} message={error.message} />}
     </main>
   );
 };

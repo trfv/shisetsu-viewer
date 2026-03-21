@@ -100,7 +100,7 @@ export const DataTable = <T extends Row>({
           return (
             <div
               className={styles["card"]}
-              key={`${row.id}-${index}`}
+              key={row.id}
               onClick={() => onRowClick?.(rowParams)}
               ref={index === rows.length - 50 ? cardTarget : undefined}
             >
@@ -153,25 +153,29 @@ export const DataTable = <T extends Row>({
             return (
               <TableRow
                 hover={true}
-                key={`${row.id}-${index}`} // FIXME
+                key={row.id}
                 onClick={() => onRowClick?.(rowParams)}
                 ref={index === rows.length - 50 ? target : undefined}
                 style={{ cursor: "pointer" }}
               >
-                {tableCols.map((col) => (
-                  <TableCell
-                    align={col.type === "number" ? "right" : "left"}
-                    key={`${row.id}-${col.field}`}
-                    size="small"
-                    style={{
-                      ...cellStyle(col as Column<unknown>),
-                      borderBottomColor: "var(--color-text-secondary)",
-                    }}
-                    variant="body"
-                  >
-                    {getCellValue(col, row, columns)}
-                  </TableCell>
-                ))}
+                {tableCols.map((col) => {
+                  const value = getCellValue(col, row, columns);
+                  return (
+                    <TableCell
+                      align={col.type === "number" ? "right" : "left"}
+                      key={`${row.id}-${col.field}`}
+                      size="small"
+                      style={{
+                        ...cellStyle(col as Column<unknown>),
+                        borderBottomColor: "var(--color-text-secondary)",
+                      }}
+                      title={value}
+                      variant="body"
+                    >
+                      {value}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             );
           })}
