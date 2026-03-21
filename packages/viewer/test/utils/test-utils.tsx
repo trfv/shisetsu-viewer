@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { Route, Router } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
-import { userEvent as browserUserEvent } from "vitest/browser";
+import { userEvent as browserUserEvent } from "@vitest/browser/context";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
 
