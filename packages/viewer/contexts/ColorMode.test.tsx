@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, act } from "@testing-library/react";
-import { userEvent } from "vitest/browser";
+import { userEvent } from "@vitest/browser/context";
 import { ColorModeProvider, useColorMode } from "./ColorMode";
 
 const STORAGE_KEY = "shisetsu-viewer-color-mode";
