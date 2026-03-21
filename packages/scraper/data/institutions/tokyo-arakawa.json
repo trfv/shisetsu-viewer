@@ -3799,7 +3799,7 @@
     "institution_kana": "ムーブホール",
     "building_system_name": "ムーブ町屋",
     "institution_system_name": "ムーブホール",
-    "capacity": null,
+    "capacity": 296,
     "area": 230,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import { userEvent } from "vitest/browser";
+import { userEvent } from "@vitest/browser/context";
 import { Auth0Client } from "@auth0/auth0-spa-js";
 import { Auth0Provider, useAuth0 } from "./Auth0";
 

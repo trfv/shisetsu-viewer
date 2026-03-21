@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@auth0/auth0-spa-js": "2.17.0",
+    "@auth0/auth0-spa-js": "2.18.0",
     "@fontsource-variable/noto-sans-jp": "5.2.10",
     "date-fns": "4.1.0",
     "react": "19.2.4",
@@ -18,24 +18,24 @@
     "@testing-library/react": "16.3.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react-swc": "4.2.3",
-    "@vitest/browser": "4.0.18",
-    "@vitest/browser-playwright": "4.0.18",
-    "@vitest/coverage-istanbul": "4.0.18",
+    "@vitejs/plugin-react-swc": "4.3.0",
+    "@vitest/browser": "4.1.0",
+    "@vitest/browser-playwright": "4.1.0",
+    "@vitest/coverage-istanbul": "4.1.0",
     "dotenv": "17.3.1",
-    "esbuild": "0.27.3",
-    "msw": "2.12.10",
+    "esbuild": "0.27.4",
+    "msw": "2.12.13",
     "rollup-plugin-visualizer": "7.0.1",
-    "vite": "7.3.1",
-    "vitest": "4.0.18",
-    "wrangler": "4.72.0"
+    "vite": "8.0.0",
+    "vitest": "4.1.0",
+    "wrangler": "4.75.0"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "0.27.3"
+    "@esbuild/linux-x64": "0.27.4"
   },
   "scripts": {
     "start": "vite --port 3000",
-    "build": "tsc && vite build",
+    "build": "tsgo && vite build",
     "build:analyze": "vite build --mode analyze",
     "serve": "vite preview --port 3000",
     "typecheck": "tsgo",

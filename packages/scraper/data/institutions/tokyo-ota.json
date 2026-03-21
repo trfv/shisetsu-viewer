@@ -528,7 +528,7 @@
     "building_system_name": "新蒲田区民活動施設",
     "institution_system_name": "多目的室（大）",
     "capacity": 450,
-    "area": null,
+    "area": 380,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",

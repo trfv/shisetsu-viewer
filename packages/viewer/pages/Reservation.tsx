@@ -14,6 +14,7 @@ import { DataTable, type Columns } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
+import { Snackbar } from "../components/SnackBar";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
@@ -84,7 +85,6 @@ export const COLUMNS: Columns<SearchableReservationNode> = [
       const obj = params.row.reservation?.reservation as Record<string, string>;
       return formatReservationMap(municipality, obj);
     },
-    /** TODO hover したときに中身がすべて表示されるように修正する */
   },
   {
     field: "updated_at",
@@ -139,11 +139,6 @@ export default () => {
     toReservationQueryVariables(resevationSearchParams),
     (d) => d.searchable_reservations_connection
   );
-
-  if (error) {
-    // TODO Snackbar を描画する
-    throw new Error(error.message);
-  }
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     resevationSearchParams;
@@ -313,6 +308,7 @@ export default () => {
           />
         )}
       </div>
+      {error && <Snackbar open={true} message={error.message} />}
     </main>
   );
 };

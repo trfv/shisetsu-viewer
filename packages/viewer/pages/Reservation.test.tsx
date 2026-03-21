@@ -6,8 +6,6 @@ import {
   createMockSearchableReservationNode,
   createMockSearchableReservationsConnection,
 } from "../test/mocks/data";
-import { ErrorBoundary } from "../components/utils/ErrorBoundary";
-
 vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,
 }));
@@ -419,10 +417,7 @@ describe("Reservation Page", () => {
   });
 
   describe("エラー処理", () => {
-    it("クエリエラーが発生した場合、ErrorBoundaryがエラーをキャッチする", async () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-      const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
+    it("クエリエラーが発生した場合、Snackbarでエラーを表示する", async () => {
       worker.use(
         http.post(TEST_ENDPOINT, () => {
           return HttpResponse.json({
@@ -431,25 +426,14 @@ describe("Reservation Page", () => {
         })
       );
 
-      renderWithProviders(
-        <ErrorBoundary>
-          <ReservationPage />
-        </ErrorBoundary>,
-        {
-          initialEntries: ["/reservation?m=koutou"],
-        }
-      );
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-          )
-        ).toBeInTheDocument();
+      renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
       });
 
-      consoleSpy.mockRestore();
-      consoleLogSpy.mockRestore();
+      await waitFor(() => {
+        expect(screen.getByRole("alert")).toBeInTheDocument();
+        expect(screen.getByText("Network error")).toBeInTheDocument();
+      });
     });
   });
 
