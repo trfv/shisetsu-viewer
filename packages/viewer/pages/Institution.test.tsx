@@ -3,7 +3,6 @@ import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
 import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
 import { createMockInstitutionNode, createMockInstitutionsConnection } from "../test/mocks/data";
-import { ErrorBoundary } from "../components/utils/ErrorBoundary";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
@@ -289,10 +288,7 @@ describe("Institution Page", () => {
   });
 
   describe("エラー処理", () => {
-    it("クエリエラーが発生した場合、ErrorBoundaryがエラーをキャッチする", async () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-      const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
+    it("クエリエラーが発生した場合、Snackbarでエラーを表示する", async () => {
       worker.use(
         http.post(TEST_ENDPOINT, () => {
           return HttpResponse.json({
@@ -301,25 +297,14 @@ describe("Institution Page", () => {
         })
       );
 
-      renderWithProviders(
-        <ErrorBoundary>
-          <InstitutionPage />
-        </ErrorBoundary>,
-        {
-          initialEntries: ["/institution?m=koutou"],
-        }
-      );
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-          )
-        ).toBeInTheDocument();
+      renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
       });
 
-      consoleSpy.mockRestore();
-      consoleLogSpy.mockRestore();
+      await waitFor(() => {
+        expect(screen.getByRole("alert")).toBeInTheDocument();
+        expect(screen.getByText("Network error")).toBeInTheDocument();
+      });
     });
   });
 
