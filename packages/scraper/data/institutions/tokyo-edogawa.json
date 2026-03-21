@@ -587,7 +587,7 @@
     "institution_kana": "ホール",
     "building_system_name": "小岩アーバンプラザ",
     "institution_system_name": "ホール",
-    "capacity": null,
+    "capacity": 386,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -1539,7 +1539,7 @@
     "institution_kana": "ケンシュウシツ",
     "building_system_name": "総合文化センター",
     "institution_system_name": "研修室",
-    "capacity": null,
+    "capacity": 204,
     "area": 370,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -1615,7 +1615,7 @@
     "institution_kana": "ショウホール",
     "building_system_name": "総合文化センター",
     "institution_system_name": "小ホール",
-    "capacity": null,
+    "capacity": 502,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -1691,7 +1691,7 @@
     "institution_kana": "ダイホール",
     "building_system_name": "総合文化センター",
     "institution_system_name": "大ホール",
-    "capacity": null,
+    "capacity": 1497,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -1901,7 +1901,7 @@
     "institution_kana": "ショウホール",
     "building_system_name": "タワーホール船堀",
     "institution_system_name": "小ホール",
-    "capacity": null,
+    "capacity": 300,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -1959,7 +1959,7 @@
     "institution_kana": "ダイホール",
     "building_system_name": "タワーホール船堀",
     "institution_system_name": "大ホール",
-    "capacity": null,
+    "capacity": 750,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
@@ -3044,7 +3044,7 @@
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/guide.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -3084,7 +3084,7 @@
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/guide.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""

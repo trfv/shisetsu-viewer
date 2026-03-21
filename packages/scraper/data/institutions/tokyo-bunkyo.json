@@ -301,7 +301,7 @@
     "institution_system_name": "洋室Ｂ",
     "capacity": 8,
     "area": 14,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
