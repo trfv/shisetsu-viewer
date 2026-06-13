@@ -1,20 +1,32 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
-    target-branch: "develop"
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 5
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 3
+      include:
+        - "*"
     groups:
       github-actions:
         patterns:
           - "*"
 
   - package-ecosystem: "npm"
-    target-branch: "develop"
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 5
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 3
+      include:
+        - "*"
     groups:
       react:
         patterns:
