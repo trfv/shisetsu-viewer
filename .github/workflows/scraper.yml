@@ -26,7 +26,7 @@ on:
 
 jobs:
   prepare:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     outputs:
       municipality: ${{ steps.set-matrix.outputs.municipality }}
@@ -70,13 +70,26 @@ jobs:
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
       - name: Cache Playwright browsers
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: |
+          for attempt in 1 2 3; do
+            echo "::group::playwright install (attempt ${attempt})"
+            if timeout -k 30 180 npx playwright install --with-deps chromium; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "playwright install attempt ${attempt} timed out or failed; retrying" >&2
+          done
+          echo "playwright install failed after 3 attempts" >&2
+          exit 1
 
   scrape:
     name: Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
