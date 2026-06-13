@@ -6,16 +6,15 @@ const TRANSIENT_PATTERNS: RegExp[] = [
   /net::ERR_/i,
   /ECONNRESET|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN/i,
   /socket hang up/i,
-  /page\.goto/i, // ナビゲーションタイムアウトは通常ネットワーク起因
+  /page\.goto.*Timeout/i, // ナビゲーションのタイムアウト（通常はネットワーク起因）
 ];
 
 // 構造変化のシグネチャ。要素が消えた／移動した時の典型的なメッセージ。
 const STRUCTURAL_PATTERNS: RegExp[] = [
-  /waiting for/i,
-  /locator/i,
+  /locator\.\w+:/i, // 例: "locator.click: Timeout ..."（要素操作の失敗）
   /getByRole|getByText|getByLabel/i,
   /resolved to 0 element/i,
-  /strict mode violation/i,
+  /strict mode violation/i, // セレクタが複数要素にヒット
 ];
 
 export function classifyFailure(

@@ -2,8 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { classifyFailure } from "./classifyFailure.ts";
 
-test("validate 失敗は常に structural", () => {
-  assert.equal(classifyFailure("validate", new Error("x"), ["err"]), "structural");
+test("validate 失敗は step だけで structural", () => {
+  assert.equal(classifyFailure("validate", new Error("x")), "structural");
 });
 
 test("transform 失敗は常に structural", () => {
@@ -40,4 +40,12 @@ test("要素が見つからない locator タイムアウトは structural", () 
 
 test("認識できないエラーは unknown", () => {
   assert.equal(classifyFailure("prepare", new Error("something weird happened")), "unknown");
+});
+
+test("Error 以外の値が throw されても分類できる", () => {
+  assert.equal(classifyFailure("prepare", "net::ERR_CONNECTION_RESET"), "transient");
+  assert.equal(
+    classifyFailure("extract", { toString: () => "locator.click: Timeout 5000ms exceeded" }),
+    "structural"
+  );
 });
