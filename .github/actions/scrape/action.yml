@@ -75,7 +75,7 @@ runs:
         node tools/updateReservations.ts ${{ inputs.municipality }}
     - name: Upload failure records
       if: ${{ always() }}
-      uses: actions/upload-artifact@v4 # pin to SHA per repo convention
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: failures-${{ inputs.shardIndex }}-${{ inputs.shardTotal }}
         path: packages/scraper/test-results/*/_failures/
