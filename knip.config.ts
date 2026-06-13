@@ -20,7 +20,7 @@ const config: KnipConfig = {
       ],
     },
     "packages/scraper": {
-      entry: ["**/index.test.ts", "scripts/run.ts", "tools/*.ts"],
+      entry: ["**/index.test.ts", "scripts/run.ts", "tools/**/*.ts"],
       ignoreDependencies: [
         "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
       ],

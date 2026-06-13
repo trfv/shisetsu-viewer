@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { Page } from "@playwright/test";
-import type { FailedStep, FailureRecord } from "./failureTypes.ts";
+import type { FailedStep, FailureClassification, FailureRecord } from "./failureTypes.ts";
 import { classifyFailure } from "./classifyFailure.ts";
 
 export interface CaptureFailureInput {
@@ -25,12 +25,29 @@ function slugify(value: string): string {
   return value.replace(/[^\p{L}\p{N}]+/gu, "_").replace(/^_+|_+$/g, "");
 }
 
+function recordSlug(facility: string, context: Record<string, unknown>): string {
+  const roomName = typeof context["roomName"] === "string" ? context["roomName"] : "";
+  return [slugify(facility), slugify(roomName)].filter(Boolean).join("-") || "failure";
+}
+
+function safeErrorMessage(error: unknown): string {
+  try {
+    return error instanceof Error ? error.message : String(error);
+  } catch {
+    return "<unstringifiable error>";
+  }
+}
+
 export async function captureFailure(input: CaptureFailureInput): Promise<FailureRecord> {
   const validationErrors = input.validationErrors ?? [];
-  const classification = classifyFailure(input.failedStep, input.error, validationErrors);
+  let classification: FailureClassification;
+  try {
+    classification = classifyFailure(input.failedStep, input.error, validationErrors);
+  } catch {
+    classification = "unknown";
+  }
   const baseDir = input.baseDir ?? "test-results";
-  const roomName = typeof input.context["roomName"] === "string" ? input.context["roomName"] : "";
-  const slug = [slugify(input.facility), slugify(roomName)].filter(Boolean).join("-") || "failure";
+  const slug = recordSlug(input.facility, input.context);
   const dir = path.join(baseDir, input.municipality, "_failures");
 
   let domSnapshotPath: string | null = null;
@@ -70,7 +87,7 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
     context: input.context,
     failedStep: input.failedStep,
     classification,
-    errorMessage: error instanceof Error ? error.message : String(error),
+    errorMessage: safeErrorMessage(error),
     errorStack: error instanceof Error ? (error.stack ?? null) : null,
     validationErrors,
     domSnapshotPath,
@@ -85,4 +102,22 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
     // JSON 書き出し失敗も握りつぶす（テストは別途 red になるため検知は失われない）。
   }
   return record;
+}
+
+export async function clearFailure(input: {
+  municipality: string;
+  facility: string;
+  context: Record<string, unknown>;
+  baseDir?: string;
+}): Promise<void> {
+  const baseDir = input.baseDir ?? "test-results";
+  const slug = recordSlug(input.facility, input.context);
+  const dir = path.join(baseDir, input.municipality, "_failures");
+  try {
+    await Promise.all(
+      ["json", "html", "png"].map((ext) => fs.rm(path.join(dir, `${slug}.${ext}`), { force: true }))
+    );
+  } catch {
+    // ベストエフォート。成功パスから呼ばれるため、削除失敗で合格テストを落とさない。
+  }
 }

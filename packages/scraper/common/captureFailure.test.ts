@@ -4,7 +4,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import type { Page } from "@playwright/test";
-import { captureFailure } from "./captureFailure.ts";
+import { captureFailure, clearFailure } from "./captureFailure.ts";
 
 function fakePage(): Page {
   return {
@@ -89,4 +89,40 @@ test("スナップショットが throw しても capture は throw せず JSON 
   const jsonPath = path.join(baseDir, "tokyo-kita", "_failures", "北とぴあ-スカイホール.json");
   const json = JSON.parse(await fs.readFile(jsonPath, "utf8"));
   assert.equal(json.classification, "structural");
+});
+
+test("clearFailure は当該 slug の失敗レコードを削除する", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "capture-"));
+  await captureFailure({
+    municipality: "tokyo-kita",
+    facility: "北とぴあ",
+    context: { roomName: "ドームホール" },
+    failedStep: "extract",
+    error: new Error("locator.click: Timeout"),
+    sourceRef: "tokyo-kita/index.ts",
+    baseDir,
+  });
+  const jsonPath = path.join(baseDir, "tokyo-kita", "_failures", "北とぴあ-ドームホール.json");
+  // 事前条件: レコードが存在する
+  await fs.access(jsonPath);
+
+  await clearFailure({
+    municipality: "tokyo-kita",
+    facility: "北とぴあ",
+    context: { roomName: "ドームホール" },
+    baseDir,
+  });
+  await assert.rejects(() => fs.access(jsonPath));
+});
+
+test("clearFailure はレコードが無くても throw しない", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "capture-"));
+  await clearFailure({
+    municipality: "tokyo-kita",
+    facility: "無い施設",
+    context: { roomName: "無い室" },
+    baseDir,
+  });
+  // 例外が出なければ成功（明示アサーション）
+  assert.ok(true);
 });

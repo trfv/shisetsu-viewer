@@ -59,6 +59,8 @@ jobs:
       - name: Run npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
+      - name: Scraper unit tests
+        run: npm run test:unit -w @shisetsu-viewer/scraper
       - name: Cache Playwright browsers
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         id: playwright-cache

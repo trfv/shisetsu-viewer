@@ -3,7 +3,7 @@ import type { Page } from "@playwright/test";
 import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
 import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
-import { captureFailure } from "../common/captureFailure.ts";
+import { captureFailure, clearFailure } from "../common/captureFailure.ts";
 import type { FailedStep } from "../common/failureTypes.ts";
 import { prepare, extract, transform } from "./index.ts";
 
@@ -140,6 +140,11 @@ scrapeTargets.forEach((target) => {
         facilityName,
         transformOutput
       );
+      await clearFailure({
+        municipality: "tokyo-kita",
+        facility: facilityName,
+        context: { roomName },
+      });
     } catch (e) {
       await captureFailure({
         municipality: "tokyo-kita",
