@@ -31,9 +31,7 @@ runs:
       with:
         cache: "npm"
         cache-dependency-path: "**/package-lock.json"
-        # Pinned to match the prepare job: Node 24.16.0 hangs `playwright install`
-        # (microsoft/playwright#41000). Unpin once Playwright is bumped to >= 1.60.
-        node-version: "24.15.0"
+        node-version: "24"
     - name: Restore cached node_modules
       uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
