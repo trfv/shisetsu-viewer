@@ -38,6 +38,7 @@ argument-hint: <municipality-slug>
 2. 失敗レコードの `domSnapshotPath`（失敗時の HTML）を Read し、`index.ts` が期待するセレクタ（リンク名・XPath・ステータス記号など）が現在の DOM のどこに・どう変わったかを突き合わせる。
 3. 必要なら **Playwright MCP** で実サイトを開いて最新構造を確認する（`browser_navigate` → `browser_snapshot`）。
 4. 「どのセレクタが・何に変わったか」を1行で言語化する。推測が複数ある場合は最も確度の高いものから試す。
+5. **変更の規模を見極める**: 局所的なセレクタ／XPath／マッピングの変更で追従できるか、それとも予約システム自体が別物に置き換わった（URL 体系・ページ遷移・DOM 構造が丸ごと変わり、`prepare`/`extract`/`transform` の前提が崩れている）かを判断する。後者の**全面リニューアル**は最小差分での修復対象外なので、フェーズ 3 の修復ループには入らず、フェーズ 5（エスカレーション）へ直行する。
 
 ### フェーズ 3: 修復ループ（上限 5 回）
 
@@ -54,7 +55,7 @@ argument-hint: <municipality-slug>
 3. 出力末尾の `REPAIR_VERIFY_RESULT` の JSON を確認:
    - `pass: true` → この施設は修復成功。次の失敗施設へ。全施設が pass したらフェーズ 4 へ。
    - `pass: false` → `failures` 配列の新しい `errorMessage` / `validationErrors` を読み、フェーズ 2 に戻って次の仮説を立てる。
-4. 5 回試しても pass しない施設があれば、フェーズ 5（エスカレーション）へ。
+4. 5 回試しても pass しない施設、または途中でサイトの全面リニューアル（局所修正では追従不能）と判明した施設は、フェーズ 5（エスカレーション）へ。
 
 **型・lint の維持**: 修正後は `npm run typecheck -w @shisetsu-viewer/scraper` が通ること。pre-commit でも検証されるが、ループ中に都度確認してよい。
 
@@ -95,10 +96,10 @@ EOF
 
 4. マージは人間が行う（このコマンドはマージしない）。
 
-### フェーズ 5: エスカレーション（5 回で収束しない場合）
+### フェーズ 5: エスカレーション（5 回で収束しない／全面リニューアルの場合）
 
 1. PR は作らない。
-2. 何を試し、なぜ pass しなかったか（最後の `errorMessage` / `validationErrors`、残った仮説）を要約する。
+2. 何を試し、なぜ pass しなかったか（最後の `errorMessage` / `validationErrors`、残った仮説）を要約する。サイトの**全面リニューアル**と判断した場合は、その旨と「セレクタ修復ではなくスクレイパー（`prepare`/`extract`/`transform`）の再設計・書き換えが必要」である根拠を明記する。
 3. tracker Issue（タイトル `[scraper-repair] 構造変化の疑い`）に `gh issue comment` でエスカレーション要約を追記し、人間に引き継ぐ:
 
    ```bash
