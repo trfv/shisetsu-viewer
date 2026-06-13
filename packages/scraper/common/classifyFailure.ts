@@ -23,6 +23,8 @@ export function classifyFailure(
   validationErrors: string[] = []
 ): FailureClassification {
   // データ品質・パース失敗は常に構造系。
+  // （persist = 結果の書き出し失敗はサイト構造とは無関係なので、ここでは structural 扱いせず
+  //  下のパターンマッチに委ねる。通常は unknown に落ちて「安全側で要確認」フラグになる。）
   if (failedStep === "validate" || failedStep === "transform") {
     return "structural";
   }

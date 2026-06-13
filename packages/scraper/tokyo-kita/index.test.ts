@@ -134,6 +134,7 @@ scrapeTargets.forEach((target) => {
 
       console.timeEnd(title);
 
+      step = "persist";
       await writeTestResult(
         "tokyo-kita",
         `${facilityName}-${roomName}`,

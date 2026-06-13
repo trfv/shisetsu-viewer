@@ -1,4 +1,4 @@
-export type FailedStep = "prepare" | "extract" | "transform" | "validate";
+export type FailedStep = "prepare" | "extract" | "transform" | "validate" | "persist";
 
 export type FailureClassification = "transient" | "structural" | "unknown";
 
