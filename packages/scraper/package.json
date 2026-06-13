@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@playwright/test": "1.60.0",
-    "date-fns": "4.1.0"
+    "date-fns": "4.4.0"
   },
   "scripts": {
     "typecheck": "tsgo",
