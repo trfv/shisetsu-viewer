@@ -1,0 +1,63 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import type { Page } from "@playwright/test";
+import { captureFailure } from "./captureFailure.ts";
+
+function fakePage(): Page {
+  return {
+    content: async () => "<html>broken</html>",
+    screenshot: async ({ path: p }: { path: string }) => {
+      await fs.writeFile(p, "fake-png");
+      return Buffer.from("");
+    },
+  } as unknown as Page;
+}
+
+test("validate 失敗を structural レコードとして書き出す", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "capture-"));
+  const record = await captureFailure({
+    municipality: "tokyo-kita",
+    facility: "北とぴあ",
+    context: { roomName: "カナリアホール", links: ["集会施設", "北とぴあ"] },
+    failedStep: "validate",
+    error: new Error("boom"),
+    validationErrors: ["Empty room_name for date 2026-06-13"],
+    sourceRef: "tokyo-kita/index.ts",
+    baseDir,
+    page: fakePage(),
+    now: () => new Date("2026-06-13T00:00:00.000Z"),
+  });
+
+  assert.equal(record.classification, "structural");
+  assert.equal(record.failedStep, "validate");
+  assert.equal(record.capturedAt, "2026-06-13T00:00:00.000Z");
+
+  const jsonPath = path.join(baseDir, "tokyo-kita", "_failures", "北とぴあ-カナリアホール.json");
+  const json = JSON.parse(await fs.readFile(jsonPath, "utf8"));
+  assert.equal(json.municipality, "tokyo-kita");
+  assert.equal(json.facility, "北とぴあ");
+  assert.deepEqual(json.validationErrors, ["Empty room_name for date 2026-06-13"]);
+  assert.ok(json.domSnapshotPath.endsWith(".html"));
+  assert.ok(json.screenshotPath.endsWith(".png"));
+
+  assert.equal(await fs.readFile(json.domSnapshotPath, "utf8"), "<html>broken</html>");
+});
+
+test("page なしでもレコードを書ける（スナップショットは null）", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "capture-"));
+  const record = await captureFailure({
+    municipality: "tokyo-kita",
+    facility: "赤羽会館",
+    context: { roomName: "講堂" },
+    failedStep: "prepare",
+    error: new Error("net::ERR_CONNECTION_RESET"),
+    sourceRef: "tokyo-kita/index.ts",
+    baseDir,
+  });
+  assert.equal(record.classification, "transient");
+  assert.equal(record.domSnapshotPath, null);
+  assert.equal(record.screenshotPath, null);
+});
