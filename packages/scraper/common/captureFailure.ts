@@ -7,6 +7,10 @@ import { classifyFailure } from "./classifyFailure.ts";
 export interface CaptureFailureInput {
   municipality: string;
   facility: string;
+  /**
+   * 失敗時の任意コンテキスト（修復エージェントが読む）。`roomName` キーが
+   * 文字列で存在する場合はファイル名の slug 生成に使われる。
+   */
   context: Record<string, unknown>;
   failedStep: FailedStep;
   error: unknown;
@@ -28,31 +32,38 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
   const roomName = typeof input.context["roomName"] === "string" ? input.context["roomName"] : "";
   const slug = [slugify(input.facility), slugify(roomName)].filter(Boolean).join("-") || "failure";
   const dir = path.join(baseDir, input.municipality, "_failures");
-  await fs.mkdir(dir, { recursive: true });
 
   let domSnapshotPath: string | null = null;
   let screenshotPath: string | null = null;
   const page = input.page;
-  if (page) {
-    // スナップショットはベストエフォート。元のエラーを決してマスクしない。
-    try {
-      const html = await page.content();
-      const p = path.join(dir, `${slug}.html`);
-      await fs.writeFile(p, html);
-      domSnapshotPath = p;
-    } catch {
-      domSnapshotPath = null;
+
+  // 永続化はすべてベストエフォート。capture は元のスクレイパー失敗を決してマスク
+  // してはならないため、ここから先の IO 例外はすべて握りつぶす。
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    if (page) {
+      try {
+        const html = await page.content();
+        const p = path.join(dir, `${slug}.html`);
+        await fs.writeFile(p, html);
+        domSnapshotPath = p;
+      } catch {
+        domSnapshotPath = null;
+      }
+      try {
+        const p = path.join(dir, `${slug}.png`);
+        await page.screenshot({ path: p, fullPage: true });
+        screenshotPath = p;
+      } catch {
+        screenshotPath = null;
+      }
     }
-    try {
-      const p = path.join(dir, `${slug}.png`);
-      await page.screenshot({ path: p, fullPage: true });
-      screenshotPath = p;
-    } catch {
-      screenshotPath = null;
-    }
+  } catch {
+    // ディレクトリ作成に失敗した場合はスナップショットなしで続行する。
   }
 
   const error = input.error;
+  const now = input.now ?? (() => new Date());
   const record: FailureRecord = {
     municipality: input.municipality,
     facility: input.facility,
@@ -65,8 +76,13 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
     domSnapshotPath,
     screenshotPath,
     sourceRef: input.sourceRef,
-    capturedAt: (input.now ?? (() => new Date()))().toISOString(),
+    capturedAt: now().toISOString(),
   };
-  await fs.writeFile(path.join(dir, `${slug}.json`), JSON.stringify(record, null, 2));
+
+  try {
+    await fs.writeFile(path.join(dir, `${slug}.json`), JSON.stringify(record, null, 2));
+  } catch {
+    // JSON 書き出し失敗も握りつぶす（テストは別途 red になるため検知は失われない）。
+  }
   return record;
 }

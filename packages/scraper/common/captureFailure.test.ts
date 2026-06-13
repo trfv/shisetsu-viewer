@@ -61,3 +61,32 @@ test("page なしでもレコードを書ける（スナップショットは nu
   assert.equal(record.domSnapshotPath, null);
   assert.equal(record.screenshotPath, null);
 });
+
+test("スナップショットが throw しても capture は throw せず JSON は書かれる", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "capture-"));
+  const throwingPage = {
+    content: async () => {
+      throw new Error("content failed");
+    },
+    screenshot: async () => {
+      throw new Error("screenshot failed");
+    },
+  } as unknown as Page;
+
+  const record = await captureFailure({
+    municipality: "tokyo-kita",
+    facility: "北とぴあ",
+    context: { roomName: "スカイホール" },
+    failedStep: "extract",
+    error: new Error("locator.click: Timeout 5000ms exceeded"),
+    sourceRef: "tokyo-kita/index.ts",
+    baseDir,
+    page: throwingPage,
+  });
+
+  assert.equal(record.domSnapshotPath, null);
+  assert.equal(record.screenshotPath, null);
+  const jsonPath = path.join(baseDir, "tokyo-kita", "_failures", "北とぴあ-スカイホール.json");
+  const json = JSON.parse(await fs.readFile(jsonPath, "utf8"));
+  assert.equal(json.classification, "structural");
+});
