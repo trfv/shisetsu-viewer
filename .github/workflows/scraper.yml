@@ -180,6 +180,7 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "true"
+          phase: "retry"
 
   collect_failures:
     name: Collect structural failures
@@ -196,7 +197,7 @@ jobs:
       - name: Download failure artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: failures-*
+          pattern: failures-retry-*
           path: failures
           merge-multiple: true
       - name: Aggregate and upsert tracker issue
@@ -255,8 +256,9 @@ jobs:
             body += `修復するには手元の Claude Code で \`/repair-scraper <municipality>\` を実行してください。\n\n`;
             body += `| 自治体 | 施設 | 失敗ステップ | 分類 | エラー |\n|---|---|---|---|---|\n`;
             for (const r of records) {
-              const msg = String(r.errorMessage || '').replace(/\|/g, '\\|').replace(/\n/g, ' ').slice(0, 120);
-              body += `| ${r.municipality} | ${r.facility} | ${r.failedStep} | ${r.classification} | ${msg} |\n`;
+              const esc = (v) => String(v ?? '').replace(/\|/g, '\\|');
+              const msg = esc(r.errorMessage).replace(/\n/g, ' ').slice(0, 120);
+              body += `| ${esc(r.municipality)} | ${esc(r.facility)} | ${r.failedStep} | ${r.classification} | ${msg} |\n`;
             }
             body += `\n[失敗時のアーティファクト（DOM/screenshot）をダウンロード](${runUrl})\n\n`;
             body += `_最終更新: run ${context.runId}_`;
