@@ -10,6 +10,11 @@ updates:
         - "*"
     groups:
       github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      github-actions-security:
+        applies-to: security-updates
         patterns:
           - "*"
 
@@ -26,12 +31,14 @@ updates:
         - "*"
     groups:
       react:
+        applies-to: version-updates
         patterns:
           - "react"
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
       testing:
+        applies-to: version-updates
         patterns:
           - "vitest"
           - "@vitest/*"
@@ -39,6 +46,7 @@ updates:
           - "@playwright/test"
           - "msw"
       build:
+        applies-to: version-updates
         patterns:
           - "vite"
           - "@vitejs/*"
@@ -48,6 +56,7 @@ updates:
           - "@rollup/*"
           - "wrangler"
       linting:
+        applies-to: version-updates
         patterns:
           - "eslint"
           - "eslint-*"
@@ -56,11 +65,13 @@ updates:
           - "prettier"
           - "prettier-*"
       production-dependencies:
+        applies-to: version-updates
         dependency-type: "production"
         exclude-patterns:
           - "react"
           - "react-dom"
       development-dependencies:
+        applies-to: version-updates
         dependency-type: "development"
         exclude-patterns:
           - "vitest"
@@ -81,6 +92,16 @@ updates:
           - "typescript-eslint"
           - "prettier"
           - "prettier-*"
+      security-production:
+        applies-to: security-updates
+        dependency-type: "production"
+        patterns:
+          - "*"
+      security-development:
+        applies-to: security-updates
+        dependency-type: "development"
+        patterns:
+          - "*"
     ignore:
       - dependency-name: "@typescript/native-preview"
       - dependency-name: "@mizchi/lsmcp"
