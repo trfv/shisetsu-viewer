@@ -31,7 +31,7 @@
     "wrangler": "4.98.0"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "0.28.0"
+    "@esbuild/linux-x64": "0.28.1"
   },
   "scripts": {
     "start": "vite --port 3000",
