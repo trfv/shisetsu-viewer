@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
+import { runScrapeTest } from "../common/runScrapeTest.ts";
 import { prepare, extract, transform } from "./index.ts";
 
 function calculateCount(): number {
@@ -58,29 +58,27 @@ const scrapeTargets = [
 scrapeTargets.forEach((target) => {
   const { facilityName, category } = target;
   test(facilityName, async ({ page }) => {
-    console.time(facilityName);
-
-    let searchPage;
-    try {
-      searchPage = await prepare(page, facilityName, category);
-    } catch (e) {
-      console.error(`Failed to prepare page for ${facilityName}, and skip to next.`);
-      throw e;
-    }
-    const extractOutput = await extract(searchPage, calculateCount());
-    expect(extractOutput.length).toBeGreaterThan(0);
-    const transformOutput = await transform(extractOutput);
-    expect(transformOutput.length).toBeGreaterThan(0);
-    expect(validateTransformOutput(transformOutput)).toEqual([]);
-
-    console.timeEnd(facilityName);
-
-    const roomNames = [...new Set(transformOutput.map((t) => t.room_name))];
-    for (const roomName of roomNames) {
-      const roomData = transformOutput.filter((t) => t.room_name === roomName);
-      await writeTestResult("tokyo-edogawa", `${facilityName}-${roomName}`, facilityName, roomData);
-    }
-
-    await page.close();
+    await runScrapeTest({
+      municipality: "tokyo-edogawa",
+      facility: facilityName,
+      context: { category },
+      sourceRef: "tokyo-edogawa/index.ts",
+      page,
+      prepare: () => prepare(page, facilityName, category),
+      extract: (sp) => extract(sp, calculateCount()),
+      transform: (eo) => transform(eo),
+      persist: async (to) => {
+        const roomNames = [...new Set(to.map((t) => t.room_name))];
+        for (const roomName of roomNames) {
+          const roomData = to.filter((t) => t.room_name === roomName);
+          await writeTestResult(
+            "tokyo-edogawa",
+            `${facilityName}-${roomName}`,
+            facilityName,
+            roomData
+          );
+        }
+      },
+    });
   });
 });
