@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
+import { runScrapeTest } from "../common/runScrapeTest.ts";
 import { prepare, extract, transform } from "./index.ts";
 
 function calculateCount(): number {
@@ -72,31 +72,18 @@ scrapeTargets.forEach((target) => {
   const { facilityName, roomName, links } = target;
   const title = `${facilityName} ${roomName}`;
   test(title, async ({ page }) => {
-    console.time(title);
-
-    let searchPage;
-    try {
-      searchPage = await prepare(page, links);
-    } catch (e) {
-      console.error(`Failed to prepare page for ${title}, and skip to next.`);
-      throw e;
-    }
-    const extractOutput = await extract(searchPage, calculateCount());
-    expect(extractOutput.length).toBeGreaterThan(0);
-    const transformOutput = await transform(roomName, extractOutput);
-    expect(transformOutput.length).toBeGreaterThan(0);
-    expect(validateTransformOutput(transformOutput)).toEqual([]);
-
-    console.timeEnd(title);
-
-    await writeTestResult(
-      "tokyo-chuo",
-      `${facilityName}-${roomName}`,
-      facilityName,
-      transformOutput
-    );
-
-    await searchPage.close();
-    await page.close();
+    await runScrapeTest({
+      municipality: "tokyo-chuo",
+      facility: facilityName,
+      context: { roomName, links },
+      sourceRef: "tokyo-chuo/index.ts",
+      page,
+      label: title,
+      prepare: () => prepare(page, links),
+      extract: (sp) => extract(sp, calculateCount()),
+      transform: (eo) => transform(roomName, eo),
+      persist: (to) =>
+        writeTestResult("tokyo-chuo", `${facilityName}-${roomName}`, facilityName, to),
+    });
   });
 });
