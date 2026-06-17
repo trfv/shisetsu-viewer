@@ -1,10 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
-import { captureFailure, clearFailure } from "../common/captureFailure.ts";
-import type { FailedStep } from "../common/failureTypes.ts";
+import { runScrapeTest } from "../common/runScrapeTest.ts";
 import { prepare, extract, transform } from "./index.ts";
 
 function calculateCount(): number {
@@ -114,53 +112,19 @@ const scrapeTargets = [
 scrapeTargets.forEach((target) => {
   const { facilityName, roomName, links } = target;
   const title = `${facilityName} ${roomName}`;
-  test(title, async ({ page }) => {
-    console.time(title);
-
-    let searchPage: Page | undefined;
-    let step: FailedStep = "prepare";
-    let validationErrors: string[] = [];
-    try {
-      searchPage = await prepare(page, links);
-      step = "extract";
-      const extractOutput = await extract(searchPage, calculateCount());
-      expect(extractOutput.length).toBeGreaterThan(0);
-      step = "transform";
-      const transformOutput = await transform(roomName, extractOutput);
-      expect(transformOutput.length).toBeGreaterThan(0);
-      step = "validate";
-      validationErrors = validateTransformOutput(transformOutput);
-      expect(validationErrors).toEqual([]);
-
-      console.timeEnd(title);
-
-      step = "persist";
-      await writeTestResult(
-        "tokyo-kita",
-        `${facilityName}-${roomName}`,
-        facilityName,
-        transformOutput
-      );
-      await clearFailure({
-        municipality: "tokyo-kita",
-        facility: facilityName,
-        context: { roomName },
-      });
-    } catch (e) {
-      await captureFailure({
-        municipality: "tokyo-kita",
-        facility: facilityName,
-        context: { roomName, links },
-        failedStep: step,
-        error: e,
-        validationErrors,
-        sourceRef: "tokyo-kita/index.ts",
-        page: searchPage ?? page,
-      });
-      throw e;
-    } finally {
-      await searchPage?.close();
-      await page.close();
-    }
+  test(title, async ({ page }: { page: Page }) => {
+    await runScrapeTest({
+      municipality: "tokyo-kita",
+      facility: facilityName,
+      context: { roomName, links },
+      sourceRef: "tokyo-kita/index.ts",
+      page,
+      label: title,
+      prepare: () => prepare(page, links),
+      extract: (sp) => extract(sp, calculateCount()),
+      transform: (eo) => transform(roomName, eo),
+      persist: (to) =>
+        writeTestResult("tokyo-kita", `${facilityName}-${roomName}`, facilityName, to),
+    });
   });
 });
