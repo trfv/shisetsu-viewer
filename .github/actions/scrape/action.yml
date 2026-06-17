@@ -22,6 +22,10 @@ inputs:
     description: "Enable debug mode"
     required: false
     default: "false"
+  phase:
+    description: "Phase label for failure artifact namespacing (scrape or retry)"
+    required: false
+    default: "scrape"
 
 runs:
   using: "composite"
@@ -73,3 +77,12 @@ runs:
         HASURA_ADMIN_SECRET: ${{ env.HASURA_ADMIN_SECRET }}
       run: |
         node tools/updateReservations.ts ${{ inputs.municipality }}
+    - name: Upload failure records
+      if: ${{ always() }}
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      with:
+        name: failures-${{ inputs.phase }}-${{ inputs.shardIndex }}-${{ inputs.shardTotal }}
+        path: packages/scraper/test-results/*/_failures/
+        if-no-files-found: ignore
+        overwrite: true
+        retention-days: 7
