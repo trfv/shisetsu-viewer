@@ -36,12 +36,20 @@ const STATUS_MAP: Record<string, Status> = {
 
 type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export async function prepare(page: Page, links: string[]): Promise<Page> {
   await page.goto("https://kita-yoyaku.openreaf02.jp/");
   await page.getByRole("link", { name: "空き状況の確認" }).click();
   await page.getByRole("link", { name: "施設で確認" }).click();
-  for (const link of links) {
-    await page.getByRole("link", { name: link, exact: true }).click();
+  for (const [index, link] of links.entries()) {
+    // 末尾要素は室場リンク。サイト側で定員サフィックス（例「（定員90名）」「(定員646名)」）が
+    // 付与されることがあるため前方一致で照合する。施設分類・施設・「次の一覧」は exact のまま。
+    const isRoom = index === links.length - 1;
+    const name = isRoom ? new RegExp("^" + escapeRegExp(link)) : link;
+    await page.getByRole("link", { name, exact: !isRoom }).click();
   }
   while (true) {
     if ((await page.locator("table.calendar a").count()) > 0) {
