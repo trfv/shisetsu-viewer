@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { addMonths, differenceInCalendarWeeks, endOfMonth } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
+import { runScrapeTest } from "../common/runScrapeTest.ts";
 import { prepare, extract, transform } from "./index.ts";
 
 function calculateCount(): number {
@@ -51,26 +51,16 @@ const scrapeTargets = [
 
 scrapeTargets.forEach(({ facilityName, roomNames }) => {
   test(facilityName, async ({ page }) => {
-    console.time(facilityName);
-
-    let searchPage;
-    try {
-      searchPage = await prepare(page, facilityName, new Date());
-    } catch (e) {
-      console.error(`Failed to prepare page for ${facilityName}, and skip to next.`);
-      throw e;
-    }
-    const extractOutput = await extract(searchPage, calculateCount(), facilityName, roomNames);
-    expect(extractOutput.length).toBeGreaterThan(0);
-    const transformOutput = await transform(extractOutput, facilityName);
-    expect(transformOutput.length).toBeGreaterThan(0);
-    expect(validateTransformOutput(transformOutput)).toEqual([]);
-
-    console.timeEnd(facilityName);
-
-    await writeTestResult("kanagawa-kawasaki", facilityName, facilityName, transformOutput);
-
-    await searchPage.close();
-    await page.close();
+    await runScrapeTest({
+      municipality: "kanagawa-kawasaki",
+      facility: facilityName,
+      context: { roomNames },
+      sourceRef: "kanagawa-kawasaki/index.ts",
+      page,
+      prepare: () => prepare(page, facilityName, new Date()),
+      extract: (sp) => extract(sp, calculateCount(), facilityName, roomNames),
+      transform: (eo) => transform(eo, facilityName),
+      persist: (to) => writeTestResult("kanagawa-kawasaki", facilityName, facilityName, to),
+    });
   });
 });
