@@ -1,5 +1,4 @@
 import { test } from "@playwright/test";
-import type { Page } from "@playwright/test";
 import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
 import { writeTestResult } from "../common/testUtils.ts";
 import { runScrapeTest } from "../common/runScrapeTest.ts";
@@ -112,7 +111,7 @@ const scrapeTargets = [
 scrapeTargets.forEach((target) => {
   const { facilityName, roomName, links } = target;
   const title = `${facilityName} ${roomName}`;
-  test(title, async ({ page }: { page: Page }) => {
+  test(title, async ({ page }) => {
     await runScrapeTest({
       municipality: "tokyo-kita",
       facility: facilityName,
