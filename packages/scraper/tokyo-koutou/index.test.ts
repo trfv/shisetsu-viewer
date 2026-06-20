@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { addDays, endOfMonth, format } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
 import { writeTestResult } from "../common/testUtils.ts";
+import { runScrapeTest } from "../common/runScrapeTest.ts";
 import { prepare, extract, transform } from "./index.ts";
 
 function buildDateRanges(): [Date, Date, number][] {
@@ -34,32 +34,19 @@ facilityNames.forEach((name) => {
   dateRanges.forEach((dateRange, index) => {
     const title = `${name} (${index + 1} / ${dateRanges.length})`;
     test(title, async ({ page }) => {
-      console.time(title);
-
-      let searchPage;
-      try {
-        searchPage = await prepare(page, name, dateRange[0], index);
-      } catch (e) {
-        console.error(`Failed to prepare page for ${title}, and skip to next.`);
-        throw e;
-      }
-      const extractOutput = await extract(searchPage, dateRange[2]);
-      expect(extractOutput.length).toBeGreaterThan(0);
-      const transformOutput = await transform(extractOutput);
-      expect(transformOutput.length).toBeGreaterThan(0);
-      expect(validateTransformOutput(transformOutput)).toEqual([]);
-
-      console.timeEnd(title);
-
-      await writeTestResult(
-        "tokyo-koutou",
-        `${name}_${format(dateRange[0], "yyyyMM")}`,
-        name,
-        transformOutput
-      );
-
-      await searchPage.close();
-      await page.close();
+      await runScrapeTest({
+        municipality: "tokyo-koutou",
+        facility: name,
+        context: { dateRangeStart: format(dateRange[0], "yyyyMM") },
+        sourceRef: "tokyo-koutou/index.ts",
+        page,
+        label: title,
+        prepare: () => prepare(page, name, dateRange[0], index),
+        extract: (sp) => extract(sp, dateRange[2]),
+        transform: (eo) => transform(eo),
+        persist: (to) =>
+          writeTestResult("tokyo-koutou", `${name}_${format(dateRange[0], "yyyyMM")}`, name, to),
+      });
     });
   });
 });
