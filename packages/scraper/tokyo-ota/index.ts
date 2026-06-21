@@ -39,6 +39,13 @@ export async function prepare(
   roomName: string
 ): Promise<Page> {
   await page.goto(BASE_URL);
+  // サイトのメンテナンス窓（02:00-05:00 JST）にスクレイプが当たると "システム休止"
+  // ページが返り、以降の操作はすべて「ログインせずに〜」リンク不在で失敗する。
+  // ここで明示的に検出し、transient として分類されるメッセージで throw する
+  // （classifyFailure の TRANSIENT_PATTERNS と合わせて構造変化と誤分類されないようにする）。
+  if (await page.getByText("システム休止", { exact: false }).first().isVisible()) {
+    throw new Error("システム休止: site under maintenance window (02:00-05:00 JST)");
+  }
   await page.getByRole("link", { name: "ログインせずに空き状況を検索" }).click();
   await page.getByText("カテゴリで検索").click();
   await page.getByText(category, { exact: true }).click();
