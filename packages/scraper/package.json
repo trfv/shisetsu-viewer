@@ -10,7 +10,7 @@
   "scripts": {
     "typecheck": "tsgo",
     "test": "npx playwright test",
-    "test:unit": "node --test 'common/*.test.ts'",
+    "test:unit": "node --test --test-isolation=none 'common/*.test.ts'",
     "scrape": "node --env-file=.env scripts/run.ts",
     "update:reservations": "node --env-file=.env tools/updateReservations.ts",
     "update:institutions": "node --env-file=.env tools/updateInstitutions.ts",
