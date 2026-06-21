@@ -32,6 +32,20 @@ test("Turnstile 検知は transient", () => {
   );
 });
 
+test("自治体サイトのメンテナンス窓は transient", () => {
+  assert.equal(
+    classifyFailure(
+      "prepare",
+      new Error("システム休止: site under maintenance window (02:00-05:00 JST)")
+    ),
+    "transient"
+  );
+  assert.equal(
+    classifyFailure("prepare", new Error("受付時間外のためご利用いただけません")),
+    "transient"
+  );
+});
+
 test("要素が見つからない locator タイムアウトは structural", () => {
   const message =
     "locator.click: Timeout 10000ms exceeded.\nCall log: waiting for getByRole('link', { name: '次の一覧' })";

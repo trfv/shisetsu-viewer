@@ -7,6 +7,7 @@ const TRANSIENT_PATTERNS: RegExp[] = [
   /ECONNRESET|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN/i,
   /socket hang up/i,
   /page\.goto.*Timeout/i, // ナビゲーションのタイムアウト（通常はネットワーク起因）
+  /システム休止|受付時間外|システムメンテナンス/, // 自治体サイトの定期メンテナンス窓
 ];
 
 // 構造変化のシグネチャ。要素が消えた／移動した時の典型的なメッセージ。
