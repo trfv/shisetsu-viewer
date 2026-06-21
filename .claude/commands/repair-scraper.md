@@ -96,6 +96,40 @@ EOF
 
 4. マージは人間が行う（このコマンドはマージしない）。
 
+### フェーズ 4.5: CI 実走確認（PR 作成後・マージ前）
+
+ローカルの `verify.ts` は単発の Playwright テストを 1 シャードで実行するだけで、CI の並列性・GitHub Actions の IP / レイテンシ・retry フェーズの挙動までは再現できない。PR を出した後、**PR ブランチに対して `Run Scraper` workflow を dispatch** し、本番と同じ環境で全シャードを走らせて修正が効くことを確認する。
+
+1. dispatch を投げる:
+
+   ```bash
+   gh workflow run scraper.yml --ref fix/repair-<municipality>-$(date +%Y%m%d) -f municipality=<municipality>
+   ```
+
+   - `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
+   - `municipality` を絞ると prepare ジョブが `shardTotal=20` で起動して所要時間が短い（`all` 指定時は `100` シャード）。
+
+2. 実行 ID を取得し、進捗を watch:
+
+   ```bash
+   gh run list --workflow=scraper.yml --branch fix/repair-<municipality>-$(date +%Y%m%d) --limit 1 --json databaseId,status,conclusion,url
+   gh run watch <run-id>
+   ```
+
+3. 完了後、失敗ジョブの有無を確認:
+
+   ```bash
+   gh run view <run-id> --json jobs --jq '.jobs[] | select(.conclusion=="failure") | .name'
+   ```
+
+4. 失敗ジョブがあれば、対象施設の `_failures/*.json` をダウンロードして再診断（フェーズ 1 へ戻る）。失敗が無ければ PR 本文に CI 実走結果を追記:
+
+   ```bash
+   gh pr comment <pr-number> --body "CI 実走確認 (Run Scraper workflow #<run-id>) でも全シャード成功: <run-url>"
+   ```
+
+**いつ省略してよいか**: メンテナンス窓ヒットや classifier 修正のような「コード上は構造変化に触れていない／touched files が `index.ts` を含まない」ケースは、PR の主目的が分類ロジックだけなので CI 実走確認は任意。逆に **`<municipality>/index.ts` を編集した修復はすべて CI 実走確認を必須**とする（ローカルで passしても CI で flaky になるパターンが多発するため）。
+
 ### フェーズ 5: エスカレーション（5 回で収束しない／全面リニューアルの場合）
 
 1. PR は作らない。
@@ -113,4 +147,5 @@ EOF
 - セレクタの before/after と原因
 - 検証結果（全施設 pass / 一部エスカレーション）
 - 作成した PR 番号、またはエスカレーション内容
+- CI 実走確認（フェーズ 4.5）の run ID / URL、または省略理由
 - 本コマンドの改善案
