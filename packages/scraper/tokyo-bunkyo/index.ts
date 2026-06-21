@@ -174,19 +174,40 @@ export async function extract(
           const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
           if (batchSize === 0) break;
 
-          await page.locator("button").filter({ hasText: "次へ進む" }).click();
-          await page.waitForURL("**/AvailabilityCheckApplySelectTime**", { timeout: 15000 });
-          await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 15000 });
+          // バッチ単位の navigation 失敗が週ループ全体を巻き込まないよう、try で囲んで
+          // バッチ間で復帰できるようにする。コンテンツ指標（heading）を待つ方が URL
+          // パターンマッチより堅牢なため、waitForURL は使わない。
+          try {
+            await page.locator("button").filter({ hasText: "次へ進む" }).click();
+            await page
+              .getByRole("heading", { name: "時間帯別空き状況" })
+              .waitFor({ timeout: 30000 });
 
-          const slotData = await extractTimeSlots(page);
-          output.push(...slotData);
+            const slotData = await extractTimeSlots(page);
+            output.push(...slotData);
 
-          await page.locator("button").filter({ hasText: "前に戻る" }).click();
-          await page.waitForURL("**/AvailabilityCheckApplySelectDays**", { timeout: 15000 });
-          await page.locator("tbody tr td label").first().waitFor({
-            state: "visible",
-            timeout: 30000,
-          });
+            await page.locator("button").filter({ hasText: "前に戻る" }).click();
+            await page.locator("tbody tr td label").first().waitFor({
+              state: "visible",
+              timeout: 30000,
+            });
+          } catch (batchErr) {
+            console.warn(
+              `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
+              batchErr
+            );
+            // SelectTime に居る可能性があるので、SelectDays に戻ることを試みる。
+            try {
+              await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
+              await page.locator("tbody tr td label").first().waitFor({
+                state: "visible",
+                timeout: 15000,
+              });
+            } catch {
+              // 復帰失敗 → この週の残りはあきらめて次の期間へ進む。
+              throw batchErr;
+            }
+          }
 
           // Uncheck current batch to prepare for next (skip on last batch)
           if (offset + MAX_SELECTIONS < totalCells) {
@@ -195,8 +216,7 @@ export async function extract(
         }
       }
     } catch (e) {
-      console.warn(`Failed to extract data at week ${weekIndex + 1}, saving current output.`, e);
-      break;
+      console.warn(`Failed to extract data at week ${weekIndex + 1}, skipping week.`, e);
     }
 
     const nextButton = page.locator("button").filter({ hasText: "次の期間" });
