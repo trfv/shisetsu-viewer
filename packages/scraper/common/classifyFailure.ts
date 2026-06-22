@@ -16,6 +16,7 @@ const STRUCTURAL_PATTERNS: RegExp[] = [
   /getByRole|getByText|getByLabel/i,
   /resolved to 0 element/i,
   /strict mode violation/i, // セレクタが複数要素にヒット
+  /partial extraction/i, // runScrapeTest の期待日数比チェックで欠落検出
 ];
 
 export function classifyFailure(

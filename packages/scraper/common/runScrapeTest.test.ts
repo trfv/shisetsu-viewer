@@ -143,6 +143,66 @@ test("検証失敗で step=validate・classification=structural・validationErro
   assert.ok(json.validationErrors.length > 0);
 });
 
+test("expectedDateCount に対し distinct date が閾値未満なら partial extraction として throw", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "runscrape-"));
+  const closed = { count: 0 };
+  const partialOutput = [
+    {
+      room_name: "ホールA",
+      date: "2026-06-17",
+      reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT" },
+    },
+    {
+      room_name: "ホールA",
+      date: "2026-06-18",
+      reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT" },
+    },
+  ] as unknown as TransformOutput;
+  await assert.rejects(
+    runScrapeTest({
+      municipality: "tokyo-test",
+      facility: "施設F",
+      context: {},
+      sourceRef: "tokyo-test/index.ts",
+      page: fakePage(closed),
+      baseDir,
+      expectedDateCount: 30,
+      prepare: async () => fakePage(closed),
+      extract: async () => [1, 2],
+      transform: async () => partialOutput,
+      persist: async () => {},
+    }),
+    /partial extraction.*2\/30/
+  );
+  const json = JSON.parse(
+    await fs.readFile(path.join(baseDir, "tokyo-test", "_failures", "施設F.json"), "utf8")
+  );
+  assert.equal(json.failedStep, "validate");
+  assert.equal(json.classification, "structural");
+});
+
+test("expectedDateCount を満たせば partial extraction にならない", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "runscrape-"));
+  const closed = { count: 0 };
+  let persisted = false;
+  await runScrapeTest({
+    municipality: "tokyo-test",
+    facility: "施設G",
+    context: {},
+    sourceRef: "tokyo-test/index.ts",
+    page: fakePage(closed),
+    baseDir,
+    expectedDateCount: 1,
+    prepare: async () => fakePage(closed),
+    extract: async () => [1],
+    transform: async () => validOutput,
+    persist: async () => {
+      persisted = true;
+    },
+  });
+  assert.equal(persisted, true);
+});
+
 test("searchPage === page のとき二重 close しない", async () => {
   const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "runscrape-"));
   const closed = { count: 0 };

@@ -52,6 +52,16 @@ test("要素が見つからない locator タイムアウトは structural", () 
   assert.equal(classifyFailure("extract", new Error(message)), "structural");
 });
 
+test("期待日数比チェック未満は structural", () => {
+  assert.equal(
+    classifyFailure(
+      "validate",
+      new Error("partial extraction for 施設A: covered 5/30 expected days (17%, threshold 50%)")
+    ),
+    "structural"
+  );
+});
+
 test("認識できないエラーは unknown", () => {
   assert.equal(classifyFailure("prepare", new Error("something weird happened")), "unknown");
 });
