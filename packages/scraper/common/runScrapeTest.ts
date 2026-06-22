@@ -10,7 +10,7 @@ import { captureFailure, clearFailure } from "./captureFailure.ts";
  * 季節休館などのノイズで誤検出しない最低ラインで、サイト構造変化で半減
  * 以上欠落するケース（次へ進む不能・テーブル消失）はしっかり拾う。
  */
-export const PARTIAL_EXTRACTION_THRESHOLD = 0.5;
+const PARTIAL_EXTRACTION_THRESHOLD = 0.5;
 
 export interface RunScrapeTestOptions<E extends { length: number }> {
   /** 自治体スラッグ（例 "tokyo-arakawa"）。 */
