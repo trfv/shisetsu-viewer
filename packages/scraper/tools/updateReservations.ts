@@ -38,7 +38,8 @@ for (const target of targets) {
   const dir = `test-results/${target}`;
   let files: string[] = [];
   try {
-    files = await fs.readdir(dir);
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    files = entries.filter((e) => e.isFile() && e.name.endsWith(".json")).map((e) => e.name);
   } catch {
     console.warn(`Directory ${dir} does not exist.`);
     continue;
