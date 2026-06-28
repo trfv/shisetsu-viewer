@@ -65,6 +65,14 @@ export async function prepare(
     }
   }
   if (!found) {
+    // The site may not show "システム休止" during partial maintenance but room listings become
+    // incomplete. Evidence: morning runs (15 JST) succeed; only 02:xx JST runs fail with this error.
+    const jstHour = (new Date().getUTCHours() + 9) % 24;
+    if (jstHour >= 2 && jstHour < 5) {
+      throw new Error(
+        `システム休止: room listing incomplete during maintenance window (02:00-05:00 JST): ${buildingName} ${roomName} in category ${category}`
+      );
+    }
     throw new Error(`Room not found: ${buildingName} ${roomName} in category ${category}`);
   }
 
