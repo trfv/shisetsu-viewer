@@ -21,7 +21,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "24"
       - name: Cache node_modules
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -51,7 +51,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "24"
       - name: Cache node_modules
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -62,7 +62,7 @@ jobs:
       - name: Scraper unit tests
         run: npm run test:unit -w @shisetsu-viewer/scraper
       - name: Cache Playwright browsers
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -97,7 +97,7 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
           node-version: "24"
       - name: Cache node_modules
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: node-modules-cache
         with:
           path: "**/node_modules"
@@ -108,7 +108,7 @@ jobs:
       - name: Build application
         run: npm run build -w @shisetsu-viewer/viewer
       - name: Cache Playwright browsers
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
