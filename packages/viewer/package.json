@@ -26,9 +26,9 @@
     "esbuild": "0.28.1",
     "msw": "2.14.6",
     "rollup-plugin-visualizer": "7.0.1",
-    "vite": "8.0.16",
+    "vite": "8.1.0",
     "vitest": "4.1.8",
-    "wrangler": "4.103.0"
+    "wrangler": "4.104.0"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "0.28.1"
