@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import { addDays, format } from "date-fns";
+import { type DiscoveredTarget, isMusicLikely } from "../common/discover.ts";
 import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
@@ -30,9 +31,9 @@ type WebrGrandTable = { division: string; header: string[]; rows: string[][] };
 /** ヘッダー "2026年3月" と日セル列から ISO 日付列を組み立てる */
 function buildISODateStrings(monthHeader: string, dateCells: string[]): string[] {
   const match = monthHeader.match(/(\d{4})年(\d{1,2})月/);
-  if (!match) return [];
-  const year = parseInt(match[1] as string);
-  const month = parseInt(match[2] as string);
+  if (!match?.[1] || !match[2]) return [];
+  const year = parseInt(match[1]);
+  const month = parseInt(match[2]);
   const firstDay = parseInt(dateCells[0] || "");
   if (isNaN(firstDay)) return [];
   const startDate = new Date(year, month - 1, firstDay);
@@ -46,9 +47,9 @@ async function extractTables(page: Page, division: string): Promise<WebrGrandTab
   for (const table of tables) {
     await table.waitFor();
     const lines = await table.locator("tr").all();
-    if (lines.length < 2) continue;
+    const headerRow = lines[0];
+    if (lines.length < 2 || !headerRow) continue;
 
-    const headerRow = lines[0] as NonNullable<(typeof lines)[0]>;
     const header = await Promise.all(
       (await headerRow.locator("th").all()).map((th) => th.innerText())
     );
@@ -70,10 +71,61 @@ async function extractTables(page: Page, division: string): Promise<WebrGrandTab
   return output;
 }
 
+/** トップページのカテゴリボタン以外（列挙対象から除外） */
+const NAV_BUTTON_RE = /ログイン|検索|メニュー|閉じる|次へ|戻る|もどる|表示|絞り込む/;
+
+/**
+ * トップページのカテゴリボタン → 施設一覧（「さらに読み込む」全展開）を走査して
+ * targets 候補を列挙する。WebR Grand の targets は施設単位（部屋はテーブル行として
+ * 抽出時に取れる）なので、部屋の列挙は行わない。
+ */
+export async function discoverWebrGrandTargets(
+  page: Page,
+  opts: Pick<WebrGrandConfig, "baseUrl">
+): Promise<DiscoveredTarget[]> {
+  const MAX_LOAD_MORE = 50;
+
+  await page.goto(opts.baseUrl);
+  const buttonTexts = await page.getByRole("button").allInnerTexts();
+  const categories = buttonTexts
+    .map((t) => t.trim())
+    .filter((t) => t !== "" && !NAV_BUTTON_RE.test(t));
+
+  const targets: DiscoveredTarget[] = [];
+  for (const category of categories) {
+    await page.goto(opts.baseUrl);
+    await page.getByRole("button", { name: category }).click();
+    await page.locator("table").first().waitFor();
+
+    for (let i = 0; i < MAX_LOAD_MORE; i++) {
+      const loadMore = page.getByRole("link", { name: "さらに読み込む" });
+      if ((await loadMore.count()) === 0) break;
+      await loadMore.click();
+      await page.waitForTimeout(1000);
+    }
+
+    const rows = await page.locator("table tr").all();
+    for (const row of rows) {
+      const firstCell = row.locator("th,td").first();
+      if ((await firstCell.count()) === 0) continue;
+      const facilityName = (await firstCell.innerText()).trim().split("\n")[0]?.trim() ?? "";
+      if (facilityName === "") continue;
+      targets.push({
+        facilityName,
+        category,
+        musicLikely: isMusicLikely(facilityName),
+        target: { facilityName },
+      });
+    }
+  }
+  return targets;
+}
+
 export function webrGrandHooks(config: WebrGrandConfig): {
   prepare: (page: Page, target: WebrGrandTarget) => Promise<Page>;
   extract: (page: Page, target: WebrGrandTarget, pageCount: number) => Promise<WebrGrandTable[]>;
   transform: (extracted: WebrGrandTable[], target: WebrGrandTarget) => TransformOutput;
+  discover: (page: Page) => Promise<DiscoveredTarget[]>;
 } {
   const divisions = Object.keys(config.divisionMap).filter(Boolean);
 
@@ -146,10 +198,10 @@ export function webrGrandHooks(config: WebrGrandConfig): {
     transform(extracted) {
       // header[0] = "2026年3月"（ナビ矢印含む）、header[1] = "定員"、header[2:] = "12\n木", ...
       const slots: RawSlot[] = extracted.flatMap(({ division, header, rows }) => {
-        const dates = buildISODateStrings(header[0] as string, header.slice(2));
+        const dates = buildISODateStrings(header[0] ?? "", header.slice(2));
         return dates.flatMap((date, i) =>
           rows.map((row) => ({
-            roomName: ((row[0] || "").trim().split(" ")[0] as string) || "",
+            roomName: (row[0] || "").trim().split(" ")[0] || "",
             date,
             division,
             status: (row[i + 2] || "").trim(),
@@ -157,6 +209,10 @@ export function webrGrandHooks(config: WebrGrandConfig): {
         );
       });
       return rawSlotsToOutput(slots, config.divisionMap, config.statusMap);
+    },
+
+    discover(page) {
+      return discoverWebrGrandTargets(page, config);
     },
   };
 }

@@ -56,7 +56,15 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 ### 1.2 施設階層の探索
 
-トップから空き状況テーブルまでのナビゲーションパスを記録する。
+**既知エンジン（OpenReaf / WebR Grand）の製品なら、まず discovery で一覧を自動列挙する**:
+
+```bash
+npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl> --name <prefecture>-<slug>
+```
+
+`data/targets/<prefecture>-<slug>.candidates.json` に全施設・全部屋の候補（`musicLikely` フラグ付き）が書き出されるので、手作業での一覧転記は不要。musicLikely を目印に音楽練習可能な対象をキュレーションし、各候補の `target` フィールドをそのまま targets に貼る。
+
+未知のシステムの場合はトップから空き状況テーブルまでのナビゲーションパスを記録する。
 典型的な階層: 施設分類 → 施設 → 部屋 → カレンダー → 日次テーブル
 
 `browser_run_code` を活用して効率的に一括取得:
@@ -90,7 +98,7 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 探索結果を提示し、以下を AskUserQuestion で確認:
 
-- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）
+- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
 - 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
@@ -178,6 +186,7 @@ export const scraper = defineScraper({
 
 - `extract` は `collectPaginated({ maxPages: pageCount, extractPage, goNext })` でページ送り
 - `transform` は生データを `RawSlot[]`（roomName / date(ISO) / division(生テキスト) / status(生テキスト)）に平坦化して `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` を返す
+- 可能なら `discover` フック（施設階層をクロールして `DiscoveredTarget[]` を返す）も実装する。将来の対象一覧の棚卸し（`npm run discover -- <municipality>` で新設施設・閉館を差分検知）に使える
 
 #### DIVISION マッピングルール:
 

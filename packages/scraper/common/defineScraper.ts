@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
-import type { TransformOutput } from "./types.ts";
+import type { DiscoveredTarget } from "./discover.ts";
 import type { HorizonSpec } from "./horizon.ts";
+import type { TransformOutput } from "./types.ts";
 
 /** persist ステップで書き出す 1 ファイル分の内容 */
 export interface OutputFile {
@@ -52,6 +53,11 @@ export interface ScraperDefinition<T, E> {
    * 指定すると runScrapeTest がしきい値未満の欠落を structural として扱う。
    */
   expectedDateCount?: (target: T, pageCount: number) => number;
+  /**
+   * サイトの施設階層をクロールして targets の候補を列挙する
+   * （scripts/discover.ts から実行。エンジン使用時は hooks が提供する）。
+   */
+  discover?: (page: Page) => Promise<DiscoveredTarget[]>;
 }
 
 /** 型推論のためのヘルパー。定義オブジェクトをそのまま返す */

@@ -121,7 +121,7 @@ export const scraper = defineScraper({
       const dates = buildISODateStrings(header[0] ?? "", header.slice(2));
       return dates.flatMap((date, i) =>
         rows.map((row) => ({
-          roomName: (row[0]?.split(" ")?.[0] as string) || "",
+          roomName: row[0]?.split(" ")?.[0] || "",
           date,
           division,
           status: row[i + 2] ?? "",

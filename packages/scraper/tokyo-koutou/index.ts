@@ -1,4 +1,4 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { addDays, endOfMonth, format } from "date-fns";
 import { defineScraper } from "../common/defineScraper.ts";
 import { toISODateString } from "../common/dateUtils.ts";
@@ -83,12 +83,11 @@ async function extractGroups(page: Page): Promise<KoutouGroup[]> {
     (await table.locator("tr").all()).map(async (line) => await line.locator("td").all())
   );
   // 部屋タイプごとに時間区分の列数が異なるため、列数でグルーピングする
-  const lineGroups = Object.values(
-    Object.groupBy(allLines, (line) => line.length)
-  ) as Locator[][][];
+  const lineGroups = Object.values(Object.groupBy(allLines, (line) => line.length));
 
   const output: KoutouGroup[] = [];
   for (const lines of lineGroups) {
+    if (!lines) continue;
     const header = await Promise.all((lines[0] || []).map((l) => l.innerText()));
     const rows: string[][] = [];
     for (const line of lines.slice(1)) {

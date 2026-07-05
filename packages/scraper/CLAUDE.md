@@ -8,6 +8,7 @@ Playwright-based web scrapers that navigate municipal reservation systems, extra
 npm run typecheck -w @shisetsu-viewer/scraper          # Type check with tsgo
 npm run test -w @shisetsu-viewer/scraper              # Run scraper tests (Playwright)
 npm run test:unit -w @shisetsu-viewer/scraper         # Run common/ unit tests (node --test)
+npm run discover -w @shisetsu-viewer/scraper -- <municipality>  # Crawl site and list scrape-target candidates
 npm run update:reservations -w @shisetsu-viewer/scraper  # Upload reservation data to Hasura
 npm run update:institutions -w @shisetsu-viewer/scraper  # Upload institution data from local JSON to Hasura
 npm run export:institutions -w @shisetsu-viewer/scraper  # Export institution data from Hasura to local JSON
@@ -65,6 +66,17 @@ Usage: `...openreafHooks({ baseUrl, divisionMap, statusMap })` spread into `defi
 
 `horizon` declares how far ahead to scrape instead of hand-written date math per municipality: `startOffsetDays` (0 = today, 1 = tomorrow), `monthsAhead` (added to endOfMonth of start), and `unit` ("day" | "week" | "twoWeeks" | "calendarWeek" — what one page-turn covers). Pass a function `(target) => number` when the page count differs per target (e.g. tokyo-koutou scrapes month-sized ranges).
 
+### Target Discovery (`common/discover.ts` + `scripts/discover.ts`)
+
+Instead of hand-transcribing facility/room lists, crawl the site to enumerate target candidates:
+
+```bash
+npm run discover -w @shisetsu-viewer/scraper -- tokyo-kita                 # 既存自治体: 現行 targets との差分も表示（新設施設・閉館の検知）
+npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url https://example.openreaf02.jp/ --name tokyo-example  # スクレイパー未作成の新地区（既知エンジンのみ）
+```
+
+Output goes to `data/targets/<name>.candidates.json`. Each candidate has a `musicLikely` flag (name-based heuristic: 音楽/スタジオ/ホール/リハーサル/練習...) and a `target` field that can be pasted into `index.ts` targets verbatim. Curation (music-capable or not) is done by a human or the /new-scraper flow — sites with purpose filters (arakawa, koutou, bunkyo, sumida) already narrow to music in `prepare`, so discovery matters most for room-list sites (OpenReaf, kawasaki). Engines provide `discover` automatically; standalone scrapers can implement the optional `discover` hook in `defineScraper()`.
+
 ### Test-Driven Scraping
 
 Scrapers run as Playwright tests:
@@ -99,6 +111,7 @@ engines/          — shared implementations per reservation-system vendor
 common/           — core runtime + utilities
   defineScraper.ts — ScraperDefinition contract + defineScraper()
   scrapeTest.ts   — runScrapeTarget()/scrapeTestTitle() test driver
+  discover.ts     — DiscoveredTarget + music heuristic + diff report
   runScrapeTest.ts — prepare→extract→transform→validate→persist skeleton
   horizon.ts      — declarative scrape-window → page count
   paginate.ts     — collectPaginated() standard pagination loop
@@ -111,11 +124,13 @@ common/           — core runtime + utilities
   testUtils.ts    — writeTestResult() JSON output helper
 data/             — Local data files (source of truth for institution metadata)
   institutions/   — JSON files per municipality (e.g., tokyo-koutou.json)
+data/targets/     — Generated target candidates (discovery output, for curation)
 tools/            — Data upload/export scripts
   updateReservations.ts — Reservation data uploader
   updateInstitutions.ts — Institution data uploader (reads from data/institutions/)
   exportInstitutions.ts — Institution data exporter (writes to data/institutions/)
   repair/verify.ts — deterministic verify harness for the repair workflow
+scripts/          — run.ts (scrape+upload), discover.ts (target enumeration)
   request.ts      — GraphQL client with retry
   m2mToken.ts     — Auth0 M2M token fetch and cache
 ```
