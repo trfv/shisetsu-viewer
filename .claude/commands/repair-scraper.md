@@ -35,7 +35,8 @@ argument-hint: <municipality-slug>
 ### フェーズ 2: 原因特定
 
 1. 現行スクレイパーを Read: `packages/scraper/<municipality>/index.ts`
-2. 失敗レコードの `domSnapshotPath`（失敗時の HTML）を Read し、`index.ts` が期待するセレクタ（リンク名・XPath・ステータス記号など）が現在の DOM のどこに・どう変わったかを突き合わせる。
+   - `index.ts` がエンジン（`engines/openreaf.ts` / `engines/webrGrand.ts` 等）を使っている場合はエンジン本体も Read する。セレクタ・ナビゲーションはエンジン側、URL・マッピング・対象一覧は `index.ts` 側にある。
+2. 失敗レコードの `domSnapshotPath`（失敗時の HTML）を Read し、スクレイパーが期待するセレクタ（リンク名・XPath・ステータス記号など）が現在の DOM のどこに・どう変わったかを突き合わせる。
 3. 必要なら **Playwright MCP** で実サイトを開いて最新構造を確認する（`browser_navigate` → `browser_snapshot`）。
 4. 「どのセレクタが・何に変わったか」を1行で言語化する。推測が複数ある場合は最も確度の高いものから試す。
 5. **変更の規模を見極める**: 局所的なセレクタ／XPath／マッピングの変更で追従できるか、それとも予約システム自体が別物に置き換わった（URL 体系・ページ遷移・DOM 構造が丸ごと変わり、`prepare`/`extract`/`transform` の前提が崩れている）かを判断する。後者の**全面リニューアル**は最小差分での修復対象外なので、フェーズ 3 の修復ループには入らず、フェーズ 5（エスカレーション）へ直行する。
@@ -44,7 +45,8 @@ argument-hint: <municipality-slug>
 
 以下を pass するまで、または 5 回まで繰り返す:
 
-1. `index.ts` に**最小の差分**で修正を適用（Edit）。マッピング（DIVISION_MAP/STATUS_MAP）の追加・セレクタ文字列の変更・テーブル XPath の修正など、原因に対応する一点のみ変更する。
+1. **最小の差分**で修正を適用（Edit）。マッピング（DIVISION_MAP/STATUS_MAP）の追加・対象一覧の変更は `index.ts`、セレクタ・ナビゲーションの修正はエンジン使用時はエンジンファイル、それ以外は `index.ts` を変更する。原因に対応する一点のみ変更すること。
+   - **エンジン修正時の注意**: エンジンは同一製品の複数自治体で共有されている。修正後は同エンジンを使う他自治体も 1 施設ずつ verify して巻き添え破壊が無いことを確認する（例: openreaf 修正 → tokyo-kita と tokyo-chuo の両方を verify）。
 2. 決定論ハーネスで実サイト検証:
 
    ```bash
@@ -52,6 +54,7 @@ argument-hint: <municipality-slug>
    ```
 
    - `<facility>` / `<roomName>` は失敗レコードの `facility` と `context.roomName`。
+
 3. 出力末尾の `REPAIR_VERIFY_RESULT` の JSON を確認:
    - `pass: true` → この施設は修復成功。次の失敗施設へ。全施設が pass したらフェーズ 4 へ。
    - `pass: false` → `failures` 配列の新しい `errorMessage` / `validationErrors` を読み、フェーズ 2 に戻って次の仮説を立てる。
@@ -67,10 +70,10 @@ argument-hint: <municipality-slug>
    git switch -c fix/repair-<municipality>-$(date +%Y%m%d)
    ```
 
-2. 変更をコミット（`index.ts` のみ）:
+2. 変更をコミット（修正したスクレイパー/エンジンのファイルのみ）:
 
    ```bash
-   git add packages/scraper/<municipality>/index.ts
+   git add packages/scraper/<municipality>/index.ts  # エンジン修正時は packages/scraper/engines/<engine>.ts も
    git commit -m "fix(scraper): repair <municipality> selectors after site change"
    ```
 
@@ -78,21 +81,28 @@ argument-hint: <municipality-slug>
 
    ```bash
    gh pr create --title "fix(scraper): repair <municipality> selectors" --body "$(cat <<'EOF'
+   ```
+
 ## 背景
+
 <municipality> のサイト構造変化により定期スクレイプが構造系失敗。
 
 ## 変更
+
 - セレクタ修正: `<before>` → `<after>`（理由を1行）
 
 ## 検証
+
 決定論ハーネス `tools/repair/verify.ts` により実サイトで検証済み（全対象施設 pass）:
+
 - <facility> <roomName>: REPAIR_VERIFY_RESULT pass=true
 - ...
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 EOF
 )"
-   ```
+
+````
 
 4. マージは人間が行う（このコマンドはマージしない）。
 
@@ -102,12 +112,12 @@ EOF
 
 1. dispatch を投げる:
 
-   ```bash
-   gh workflow run scraper.yml --ref fix/repair-<municipality>-$(date +%Y%m%d) -f municipality=<municipality>
-   ```
+```bash
+gh workflow run scraper.yml --ref fix/repair-<municipality>-$(date +%Y%m%d) -f municipality=<municipality>
+````
 
-   - `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
-   - `municipality` を絞ると prepare ジョブが `shardTotal=20` で起動して所要時間が短い（`all` 指定時は `100` シャード）。
+- `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
+- `municipality` を絞ると prepare ジョブが `shardTotal=20` で起動して所要時間が短い（`all` 指定時は `100` シャード）。
 
 2. 実行 ID を取得し、進捗を watch:
 
@@ -128,7 +138,7 @@ EOF
    gh pr comment <pr-number> --body "CI 実走確認 (Run Scraper workflow #<run-id>) でも全シャード成功: <run-url>"
    ```
 
-**いつ省略してよいか**: メンテナンス窓ヒットや classifier 修正のような「コード上は構造変化に触れていない／touched files が `index.ts` を含まない」ケースは、PR の主目的が分類ロジックだけなので CI 実走確認は任意。逆に **`<municipality>/index.ts` を編集した修復はすべて CI 実走確認を必須**とする（ローカルで passしても CI で flaky になるパターンが多発するため）。
+**いつ省略してよいか**: メンテナンス窓ヒットや classifier 修正のような「コード上は構造変化に触れていない／touched files が `index.ts` を含まない」ケースは、PR の主目的が分類ロジックだけなので CI 実走確認は任意。逆に **`<municipality>/index.ts` または `engines/*.ts` を編集した修復はすべて CI 実走確認を必須**とする（ローカルで passしても CI で flaky になるパターンが多発するため）。エンジン修正時は同エンジンの全自治体分を dispatch する。
 
 ### フェーズ 5: エスカレーション（5 回で収束しない／全面リニューアルの場合）
 

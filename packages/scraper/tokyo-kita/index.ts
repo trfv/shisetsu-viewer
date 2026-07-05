@@ -1,8 +1,6 @@
-import type { Page } from "@playwright/test";
-import type { Division, Status, TransformOutput } from "../common/types";
-import { toISODateString } from "../common/dateUtils";
-import { stripTrailingEmptyValue } from "../common/arrayUtils";
-import { getCellValue } from "../common/playwrightUtils";
+import { defineScraper } from "../common/defineScraper.ts";
+import type { Division, Status } from "../common/types.ts";
+import { openreafHooks, type OpenreafTarget } from "../engines/openreaf.ts";
 
 const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
@@ -34,101 +32,119 @@ const STATUS_MAP: Record<string, Status> = {
   使用禁止: "RESERVATION_STATUS_STATUS_12",
 };
 
-type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
+const targets: OpenreafTarget[] = [
+  {
+    facilityName: "赤羽会館",
+    roomName: "講堂",
+    links: ["集会施設", "赤羽会館", "講堂"],
+  },
+  {
+    facilityName: "滝野川会館",
+    roomName: "大ホール （平土間）",
+    links: ["集会施設", "滝野川会館", "大ホール （平土間）"],
+  },
+  {
+    facilityName: "滝野川会館",
+    roomName: "大ホール （客席）",
+    links: ["集会施設", "滝野川会館", "大ホール （客席）"],
+  },
+  {
+    facilityName: "滝野川会館",
+    roomName: "小ホール",
+    links: ["集会施設", "滝野川会館", "小ホール"],
+  },
+  {
+    facilityName: "滝野川会館",
+    roomName: "B201音楽スタジオ",
+    links: ["集会施設", "滝野川会館", "次の一覧", "B201音楽スタジオ"],
+  },
+  {
+    facilityName: "滝野川会館",
+    roomName: "B202音楽スタジオ",
+    links: ["集会施設", "滝野川会館", "次の一覧", "B202音楽スタジオ"],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "カナリアホール",
+    links: ["集会施設", "北とぴあ", "カナリアホール（定員110名）"],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "スカイホール",
+    links: ["集会施設", "北とぴあ", "スカイホール（定員138名）"],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "ドームホール",
+    links: ["集会施設", "北とぴあ", "ドームホール（定員150名）"],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "つつじホールリハーサル室",
+    links: [
+      "集会施設",
+      "北とぴあ",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "つつじホールリハーサル室（定員50名）",
+    ],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "第1音楽スタジオ",
+    links: [
+      "集会施設",
+      "北とぴあ",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "第1音楽スタジオ（定員20名）",
+    ],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "第2音楽スタジオ",
+    links: [
+      "集会施設",
+      "北とぴあ",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "第2音楽スタジオ（定員15名）",
+    ],
+  },
+  {
+    facilityName: "北とぴあ",
+    roomName: "第3音楽スタジオ",
+    links: [
+      "集会施設",
+      "北とぴあ",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "次の一覧",
+      "第3音楽スタジオ（定員15名）",
+    ],
+  },
+];
 
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-export async function prepare(page: Page, links: string[]): Promise<Page> {
-  await page.goto("https://kita-yoyaku.openreaf02.jp/");
-  await page.getByRole("link", { name: "空き状況の確認" }).click();
-  await page.getByRole("link", { name: "施設で確認" }).click();
-  for (const [index, link] of links.entries()) {
-    // 末尾要素は室場リンク。サイト側で定員サフィックス（例「（定員90名）」「(定員646名)」）が
-    // 付与されることがあるため前方一致で照合する。施設分類・施設・「次の一覧」は exact のまま。
-    const isRoom = index === links.length - 1;
-    const name = isRoom ? new RegExp("^" + escapeRegExp(link)) : link;
-    await page.getByRole("link", { name, exact: !isRoom }).click();
-  }
-  while (true) {
-    if ((await page.locator("table.calendar a").count()) > 0) {
-      break;
-    }
-    await page.locator("a.day-next").click();
-  }
-  await page.locator("table.calendar a").nth(0).click();
-
-  return page;
-}
-
-async function _extract(page: Page): Promise<ExtractOutput> {
-  const caption = page.locator('//*[@id="right"]/form/table[1]');
-  await caption.waitFor();
-  const date = await caption.locator("th").innerText();
-  const table = page.locator('//*[@id="right"]/form/table[2]');
-  await table.waitFor();
-  const lines = await Promise.all(
-    (await table.locator("tr").all()).map(async (line) => await line.locator("th,td").all())
-  );
-
-  const allHeaders: string[] = [];
-  const allRow: string[] = [];
-  for (let i = 0; i < lines.length; i += 2) {
-    const h = stripTrailingEmptyValue(
-      (await Promise.all((lines[i] || []).map((l) => l.innerText()))).map((v) => v.trim())
-    );
-    const r = stripTrailingEmptyValue(
-      (await Promise.all((lines[i + 1] || []).map((l) => getCellValue(l)))).map((v) => v.trim())
-    );
-    allHeaders.push(...h);
-    allRow.push(...r);
-  }
-  return [{ date, header: allHeaders, rows: [allRow] }];
-}
-
-export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> {
-  const output: ExtractOutput = [];
-
-  let i = 0;
-  while (i < maxCount) {
-    try {
-      const o = await _extract(page);
-      output.push(...o);
-    } catch {
-      console.warn(`Failed to extract data from page ${i + 1}, saving current output.`);
-      break;
-    }
-    const nextLink = page.locator("a.day-next");
-    if ((await nextLink.count()) === 0) break;
-    try {
-      await nextLink.click();
-    } catch {
-      console.warn(`Failed to navigate to next page at page ${i + 1}.`);
-      break;
-    }
-    i++;
-  }
-
-  return output;
-}
-
-export async function transform(
-  name: string,
-  extractOutput: ExtractOutput
-): Promise<TransformOutput> {
-  return extractOutput.flatMap(({ date, header, rows }) => {
-    return rows.map((row) => {
-      return {
-        room_name: name,
-        date: toISODateString(date),
-        reservation: [...new Array(row.length)].reduce((acc, _, index) => {
-          const division = DIVISION_MAP[header[index] || ""] as Division;
-          const status = STATUS_MAP[row[index] || ""] as Status;
-          acc[division] = status;
-          return acc;
-        }, {}),
-      };
-    });
-  });
-}
+export const scraper = defineScraper({
+  municipality: "tokyo-kita",
+  targets,
+  horizon: { startOffsetDays: 1, monthsAhead: 5, unit: "day" },
+  facility: (t) => t.facilityName,
+  title: (t) => `${t.facilityName} ${t.roomName}`,
+  context: (t) => ({ roomName: t.roomName, links: t.links }),
+  outputs: (data, t) => [
+    { fileName: `${t.facilityName}-${t.roomName}`, facilityName: t.facilityName, data },
+  ],
+  ...openreafHooks({
+    baseUrl: "https://kita-yoyaku.openreaf02.jp/",
+    divisionMap: DIVISION_MAP,
+    statusMap: STATUS_MAP,
+    // サイト側で室場リンクに定員サフィックス（例「（定員90名）」）が付くため前方一致
+    roomLinkMatch: "prefix",
+  }),
+});

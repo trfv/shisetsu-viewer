@@ -26,5 +26,3 @@ export {
 } from "./registry.ts";
 
 export type { MunicipalityConfig, MunicipalityKey } from "./registry.ts";
-
-export type { ScraperModule } from "./scraper.ts";
