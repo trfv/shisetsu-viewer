@@ -32,12 +32,15 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 以下のユーティリティは新規コードを書かず、既存のものをインポートして使うこと:
 
-- `getCellValue(cell)` — `../common/playwrightUtils` — テーブルセルからテキスト or img src を取得
-- `selectAllOptions(selectLocator)` — `../common/playwrightUtils` — セレクトボックスの全選択
-- `toISODateString(dateString)` — `../common/dateUtils` — 和暦・西暦日付を ISO 変換
-- `stripTrailingEmptyValue(arr)` — `../common/arrayUtils` — 配列末尾の空文字除去
-- `validateTransformOutput(output)` — `../common/validation` — 出力データ品質チェック
-- `writeTestResult(outputDir, fileName, facilityName, data)` — `../common/testUtils` — テスト結果 JSON 出力
+- `defineScraper(definition)` — `../common/defineScraper.ts` — スクレイパー定義（必須。全自治体この形式）
+- `collectPaginated(opts)` — `../common/paginate.ts` — 「抽出 → 次ページ」の標準ページ送りループ
+- `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` — `../common/reservation.ts` — transform の最終工程（`as` キャスト禁止。未マッピング値は INVALID フォールバック + 警告）
+- `getCellValue(cell)` — `../common/playwrightUtils.ts` — テーブルセルからテキスト or img src を取得
+- `selectAllOptions(selectLocator)` — `../common/playwrightUtils.ts` — セレクトボックスの全選択
+- `toISODateString(dateString)` — `../common/dateUtils.ts` — 和暦・西暦日付を ISO 変換
+- `stripTrailingEmptyValue(arr)` — `../common/arrayUtils.ts` — 配列末尾の空文字除去
+
+スクレイプ期間は `horizon: { startOffsetDays, monthsAhead, unit }` で宣言する（`../common/horizon.ts`）。日付計算コードを自前で書かないこと。
 
 ---
 
@@ -53,7 +56,15 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 ### 1.2 施設階層の探索
 
-トップから空き状況テーブルまでのナビゲーションパスを記録する。
+**既知エンジン（OpenReaf / WebR Grand）の製品なら、まず discovery で一覧を自動列挙する**:
+
+```bash
+npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl> --name <prefecture>-<slug>
+```
+
+`data/targets/<prefecture>-<slug>.candidates.json` に全施設・全部屋の候補（`musicLikely` フラグ付き）が書き出されるので、手作業での一覧転記は不要。musicLikely を目印に音楽練習可能な対象をキュレーションし、各候補の `target` フィールドをそのまま targets に貼る。
+
+未知のシステムの場合はトップから空き状況テーブルまでのナビゲーションパスを記録する。
 典型的な階層: 施設分類 → 施設 → 部屋 → カレンダー → 日次テーブル
 
 `browser_run_code` を活用して効率的に一括取得:
@@ -87,7 +98,7 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 探索結果を提示し、以下を AskUserQuestion で確認:
 
-- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）
+- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
 - 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
@@ -123,49 +134,59 @@ STATUS_MAP:
 
 ## フェーズ 2: コード生成
 
-### 2.1 テンプレート選択
+### 2.1 エンジン / テンプレート選択
 
-既存スクレイパーの中から、最も構造が近いものを参照実装として選択する:
+まず既知の予約システム製品かを判定する。**既知製品ならエンジンを使い、index.ts は設定（URL・マップ・targets）だけになる**:
 
-- **リンクチェーン + カレンダー + day-next 方式** → `tokyo-chuo` or `tokyo-kita` を参照
-- **ドロップダウン + フォーム送信 + 「次へ」方式** → `tokyo-arakawa` を参照
-- **ポップアップ + 翌日リンク方式** → `tokyo-koutou` を参照
-- **週表示 + 次の週ボタン方式** → `kanagawa-kawasaki` を参照
-- **タブ + 利用目的検索方式** → `tokyo-sumida` を参照
+- **OpenReaf 系**（URL が `*.openreaf02.jp`、リンクチェーン + カレンダー + day-next 方式） → `engines/openreaf.ts` の `openreafHooks()` を使用。参照実装: `tokyo-kita`, `tokyo-chuo`
+- **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`
 
-選択したテンプレートを Read で読み込む。
+同一製品の自治体が既に2つ以上あるのに対応エンジンが無い場合は、新しいエンジンを `engines/` に切り出すことを検討する。
+
+未知のシステムの場合、構造が最も近い既存スクレイパーを参照実装として Read する:
+
+- **ドロップダウン + フォーム送信 + 「次へ」方式** → `tokyo-arakawa`
+- **ポップアップ + 翌日リンク方式** → `tokyo-koutou`
+- **週表示 + 次の週ボタン方式** → `kanagawa-kawasaki`
+- **タブ + 利用目的検索方式（/user/Home 系 SPA）** → `tokyo-sumida` / `tokyo-edogawa` / `tokyo-bunkyo`
 
 ### 2.2 index.ts 生成
 
-システムタイプに応じて適切なテンプレートを選択する。WebReaf Grand 系の場合は `tokyo-toshima` / `tokyo-meguro` の `index.ts` を直接参照してコピーし、CATEGORY_MAP/STATUS_MAP/URL のみ変更する（以下のテンプレートは非 WebReaf 系向け）。
+`packages/scraper/<prefecture>-<slug>/index.ts` を生成。全自治体が `defineScraper()` で単一の `scraper` オブジェクトを export する。
 
-`packages/scraper/<prefecture>-<slug>/index.ts` を生成:
+エンジン使用時:
 
 ```typescript
-import type { Page } from "@playwright/test";
-import type { Division, Status, TransformOutput } from "../common/types";
-import { toISODateString } from "../common/dateUtils";
-import { stripTrailingEmptyValue } from "../common/arrayUtils";
-import { getCellValue } from "../common/playwrightUtils";
-// selectAllOptions は必要な場合のみインポート
+import { defineScraper } from "../common/defineScraper.ts";
+import type { Division, Status } from "../common/types.ts";
+import { openreafHooks, type OpenreafTarget } from "../engines/openreaf.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
-  "": "RESERVATION_DIVISION_INVALID",
-  // フェーズ1で収集した時間区分を記述
-};
+const DIVISION_MAP: Record<string, Division> = { "": "RESERVATION_DIVISION_INVALID" /* ... */ };
+const STATUS_MAP: Record<string, Status> = { "": "RESERVATION_STATUS_INVALID" /* ... */ };
 
-const STATUS_MAP: Record<string, Status> = {
-  "": "RESERVATION_STATUS_INVALID",
-  // フェーズ1で収集したステータス記号を記述
-};
+const targets: OpenreafTarget[] = [
+  /* フェーズ1で収集した対象 */
+];
 
-type ExtractOutput = { date: string; header: string[]; rows: string[][] }[];
-
-export async function prepare(page: Page, ...): Promise<Page> { ... }
-async function _extract(page: Page): Promise<ExtractOutput> { ... }
-export async function extract(page: Page, maxCount: number): Promise<ExtractOutput> { ... }
-export async function transform(...): Promise<TransformOutput> { ... }
+export const scraper = defineScraper({
+  municipality: "<prefecture>-<slug>",
+  targets,
+  horizon: { startOffsetDays: 1, monthsAhead: 5, unit: "day" }, // サイトの公開期間に合わせる
+  facility: (t) => t.facilityName,
+  title: (t) => `${t.facilityName} ${t.roomName}`,
+  context: (t) => ({ roomName: t.roomName, links: t.links }),
+  outputs: (data, t) => [
+    { fileName: `${t.facilityName}-${t.roomName}`, facilityName: t.facilityName, data },
+  ],
+  ...openreafHooks({ baseUrl: "<url>", divisionMap: DIVISION_MAP, statusMap: STATUS_MAP }),
+});
 ```
+
+自前実装時は `prepare` / `extract` / `transform` を definition に直接書く:
+
+- `extract` は `collectPaginated({ maxPages: pageCount, extractPage, goNext })` でページ送り
+- `transform` は生データを `RawSlot[]`（roomName / date(ISO) / division(生テキスト) / status(生テキスト)）に平坦化して `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` を返す
+- 可能なら `discover` フック（施設階層をクロールして `DiscoveredTarget[]` を返す）も実装する。将来の対象一覧の棚卸し（`npm run discover -- <municipality>` で新設施設・閉館を差分検知）に使える
 
 #### DIVISION マッピングルール:
 
@@ -235,28 +256,18 @@ npm run typecheck -w @shisetsu-viewer/shared
 
 ### 2.4 index.test.ts 生成
 
-`packages/scraper/<prefecture>-<slug>/index.test.ts` を生成:
+`packages/scraper/<prefecture>-<slug>/index.test.ts` を生成。**全自治体共通の固定ボイラープレート**であり、自治体固有のロジックを書いてはならない:
 
 ```typescript
-import { test, expect } from "@playwright/test";
-import { addDays, addMonths, differenceInDays, endOfMonth } from "date-fns";
-import { validateTransformOutput } from "../common/validation.ts";
-import { writeTestResult } from "../common/testUtils.ts";
-import { prepare, extract, transform } from "./index.ts";
+import { test } from "@playwright/test";
+import { runScrapeTarget, scrapeTestTitle } from "../common/scrapeTest.ts";
+import { scraper } from "./index.ts";
 
-function calculateCount(): number {
-  const startData = addDays(new Date(), 1);
-  const endDate = addMonths(endOfMonth(startData), 5); // サイトの予約可能期間に合わせて調整
-  return differenceInDays(endDate, startData) + 1;
+for (const target of scraper.targets) {
+  test(scrapeTestTitle(scraper, target), async ({ page }) => {
+    await runScrapeTarget(scraper, target, page);
+  });
 }
-
-const scrapeTargets = [
-  // フェーズ1で収集した対象部屋を記述
-];
-
-scrapeTargets.forEach((target) => {
-  // 標準テストパターン: prepare → extract → transform → validate → writeTestResult
-});
 ```
 
 ### 2.5 （既存の institution データがない場合） institution データの作成

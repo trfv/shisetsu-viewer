@@ -1,66 +1,9 @@
 import { test } from "@playwright/test";
-import { addMonths, differenceInCalendarWeeks, endOfMonth } from "date-fns";
-import { writeTestResult } from "../common/testUtils.ts";
-import { runScrapeTest } from "../common/runScrapeTest.ts";
-import { prepare, extract, transform } from "./index.ts";
+import { runScrapeTarget, scrapeTestTitle } from "../common/scrapeTest.ts";
+import { scraper } from "./index.ts";
 
-function calculateCount(): number {
-  const startData = new Date();
-  const endDate = addMonths(endOfMonth(startData), 13);
-  return differenceInCalendarWeeks(endDate, startData) + 1;
-}
-
-const scrapeTargets = [
-  { facilityName: "国際交流センター", roomNames: ["ホール", "レセプションルーム"] },
-  { facilityName: "すくらむ２１", roomNames: ["ホール"] },
-  {
-    facilityName: "ミューザ川崎シンフォニーホール",
-    roomNames: ["音楽ホール", "市民交流室", "練習室１", "練習室３", "練習室２"],
-  },
-  { facilityName: "川崎市民プラザ", roomNames: ["ステージ", "ふるさと劇場"] },
-  { facilityName: "産業振興会館", roomNames: ["ホール"] },
-  {
-    facilityName: "かわさき老人福祉・地域交流Ｃ",
-    roomNames: ["大広間", "工作室", "多目的室", "ホール"],
-  },
-  { facilityName: "総合福祉センター（エポック）", roomNames: ["ホール"] },
-  { facilityName: "幸市民館", roomNames: ["大ホール"] },
-  {
-    facilityName: "中原市民館",
-    roomNames: ["音楽室", "視聴覚室", "第５会議室", "多目的ホール"],
-  },
-  { facilityName: "高津市民館", roomNames: ["大ホール"] },
-  { facilityName: "宮前市民館", roomNames: ["大ホール"] },
-  { facilityName: "多摩市民館", roomNames: ["視聴覚室", "大会議室", "大ホール"] },
-  { facilityName: "麻生市民館", roomNames: ["大会議室", "大ホール"] },
-  { facilityName: "川崎マリエン", roomNames: ["体育室"] },
-  { facilityName: "とどろきアリーナ", roomNames: ["メインアリーナ"] },
-  {
-    facilityName: "カルッツかわさき",
-    roomNames: [
-      "アクトスタジオ",
-      "音楽練習室１",
-      "音楽練習室２",
-      "ホール１階",
-      "ホール１－３階",
-      "ホール１－２階",
-      "ホール練習利用",
-    ],
-  },
-];
-
-scrapeTargets.forEach(({ facilityName, roomNames }) => {
-  test(facilityName, async ({ page }) => {
-    await runScrapeTest({
-      municipality: "kanagawa-kawasaki",
-      facility: facilityName,
-      context: { roomNames },
-      sourceRef: "kanagawa-kawasaki/index.ts",
-      page,
-      prepare: () => prepare(page, facilityName, new Date()),
-      extract: (sp) => extract(sp, calculateCount(), facilityName, roomNames),
-      transform: (eo) => transform(eo, facilityName),
-      persist: (to) => writeTestResult("kanagawa-kawasaki", facilityName, facilityName, to),
-    });
+for (const target of scraper.targets) {
+  test(scrapeTestTitle(scraper, target), async ({ page }) => {
+    await runScrapeTarget(scraper, target, page);
   });
-});
+}

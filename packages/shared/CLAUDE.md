@@ -31,10 +31,7 @@ Uses `as const` objects with dual-export pattern (`export const Foo = { ... } as
 - `getMunicipalityBySlug(slug)`, `getMunicipalityKeyBySlug(slug)`, `getReservationTargets()`, `getAllMunicipalityTargets()`
 - Types: `MunicipalityConfig`, `MunicipalityKey`
 
-### ScraperModule Interface (`scraper.ts`)
-
-- `ScraperModule<ExtractOutput, Page>` — generic interface: `prepare()`, `extract()`, `transform()`
-- Page type is generic to avoid `@playwright/test` dependency in shared
+Note: the scraper contract (`ScraperDefinition`) lives in `packages/scraper/common/defineScraper.ts`, not here — it depends on Playwright types.
 
 ## Adding a Municipality
 

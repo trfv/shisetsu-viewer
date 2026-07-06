@@ -49,6 +49,9 @@ runs:
     - name: Run Playwright tests
       shell: bash
       working-directory: packages/scraper
+      env:
+        # horizon（取得期間）や開始日の計算はサイトと同じ JST で行う
+        TZ: Asia/Tokyo
       run: |
         if [ "${{ inputs.debug }}" == "true" ]; then
           DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}

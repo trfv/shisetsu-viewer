@@ -1,6 +1,9 @@
 import type { Page } from "@playwright/test";
-import type { Division, Status, Reservation, TransformOutput } from "../common/types";
 import { addDays, format } from "date-fns";
+import { defineScraper } from "../common/defineScraper.ts";
+import { collectPaginated } from "../common/paginate.ts";
+import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
+import type { Division, Status } from "../common/types.ts";
 
 const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
@@ -22,8 +25,20 @@ const STATUS_MAP: Record<string, Status> = {
   抽選: "RESERVATION_STATUS_STATUS_7",
 };
 
-type ExtractOutput = { division: string; header: string[]; rows: string[][] }[];
+const FACILITY_NAMES = [
+  "社会福祉会館",
+  "すみだ生涯学習センター",
+  "曳舟文化センター",
+  "みどりコミュニティセンター",
+];
 
+interface SumidaTarget {
+  facilityName: string;
+}
+
+type SumidaTable = { division: string; header: string[]; rows: string[][] };
+
+/** ヘッダーの期間表示（例 "2026/3/10(火)～"）から ISO 日付列を組み立てる */
 function buildISODateStrings(headerStartDate: string, dates: string[]): string[] {
   const base = new Date(
     headerStartDate
@@ -37,21 +52,7 @@ function buildISODateStrings(headerStartDate: string, dates: string[]): string[]
   return dates.map((_, index) => format(addDays(base, index), "yyyy-MM-dd"));
 }
 
-export async function prepare(page: Page, facilityName: string): Promise<Page> {
-  await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home");
-  await page.getByRole("tab", { name: "利用目的から探す" }).click();
-  await page.getByText("器楽演奏", { exact: true }).click();
-  await page.getByText("器楽演奏（現地相談）", { exact: true }).click();
-  await page.getByText("合唱・歌唱・詩吟", { exact: true }).click();
-  await page.getByText("合唱・歌唱・詩吟（現地相談）", { exact: true }).click();
-  await page.getByRole("button", { name: "検索" }).click();
-  await page.getByText(facilityName, { exact: true }).click();
-  await page.getByRole("button", { name: "次へ進む" }).click();
-
-  return page;
-}
-
-async function _extract(page: Page, division: string): Promise<ExtractOutput> {
+async function extractTable(page: Page, division: string): Promise<SumidaTable> {
   const table = page.locator(
     '//*[@id="app"]/div[3]/form/div[1]/div/div[3]/div[2]/div[2]/div/div/div/div[3]/div[2]/table'
   );
@@ -64,73 +65,69 @@ async function _extract(page: Page, division: string): Promise<ExtractOutput> {
   const rows = await Promise.all(
     lines.slice(1).map(async (line) => await Promise.all(line.map((l) => l.innerText())))
   );
-  return [{ division, header, rows }];
+  return { division, header, rows };
 }
 
-export async function extract(
-  page: Page,
-  startDateString: string,
-  maxCount: number
-): Promise<ExtractOutput> {
-  const output: ExtractOutput = [];
+export const scraper = defineScraper({
+  municipality: "tokyo-sumida",
+  targets: FACILITY_NAMES.map((facilityName): SumidaTarget => ({ facilityName })),
+  horizon: { startOffsetDays: 1, monthsAhead: 7, unit: "week" },
+  facility: (t) => t.facilityName,
 
-  for (const division of Object.keys(DIVISION_MAP).filter(Boolean)) {
-    await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
-    await page.getByRole("textbox", { name: "表示期間" }).fill(startDateString);
-    await page.getByText(division, { exact: true }).click();
-    await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
-    await page.getByRole("button", { name: "表示" }).click();
+  async prepare(page, target) {
+    await page.goto("https://yoyaku03.city.sumida.lg.jp/user/Home");
+    await page.getByRole("tab", { name: "利用目的から探す" }).click();
+    await page.getByText("器楽演奏", { exact: true }).click();
+    await page.getByText("器楽演奏（現地相談）", { exact: true }).click();
+    await page.getByText("合唱・歌唱・詩吟", { exact: true }).click();
+    await page.getByText("合唱・歌唱・詩吟（現地相談）", { exact: true }).click();
+    await page.getByRole("button", { name: "検索" }).click();
+    await page.getByText(target.facilityName, { exact: true }).click();
+    await page.getByRole("button", { name: "次へ進む" }).click();
+    return page;
+  },
 
-    let i = 0;
-    while (i < maxCount) {
-      try {
-        const o = await _extract(page, division);
-        output.push(...o);
-      } catch {
-        console.warn(
-          `Failed to extract data for division ${division} page ${i + 1}, saving current output.`
-        );
-        break;
-      }
-      const nextButton = page.getByRole("button", { name: "次の期間" });
-      if ((await nextButton.count()) === 0) break;
-      try {
-        await nextButton.click();
-      } catch {
-        console.warn(`Failed to navigate to next period at page ${i + 1}.`);
-        break;
-      }
-      i++;
+  async extract(page, target, pageCount) {
+    const startDateString = format(new Date(), "yyyy-MM-dd");
+    const output: SumidaTable[] = [];
+
+    for (const division of Object.keys(DIVISION_MAP).filter(Boolean)) {
+      await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
+      await page.getByRole("textbox", { name: "表示期間" }).fill(startDateString);
+      await page.getByText(division, { exact: true }).click();
+      await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
+      await page.getByRole("button", { name: "表示" }).click();
+
+      const tables = await collectPaginated({
+        maxPages: pageCount,
+        label: `${target.facilityName} ${division}`,
+        extractPage: async () => [await extractTable(page, division)],
+        goNext: async () => {
+          const nextButton = page.getByRole("button", { name: "次の期間" });
+          if ((await nextButton.count()) === 0) return false;
+          await nextButton.click();
+          return true;
+        },
+      });
+      output.push(...tables);
     }
-  }
 
-  return output;
-}
+    return output;
+  },
 
-export async function transform(extractOutput: ExtractOutput): Promise<TransformOutput> {
-  // date -> room -> reservation
-  const dateRoomReservationMap = extractOutput.reduce<{
-    [key: string]: { [key: string]: Reservation };
-  }>((acc, { division, header, rows }) => {
-    const dates = buildISODateStrings(header[0] as string, header.slice(2));
-    for (let i = 0; i < dates.length; i++) {
-      const date = dates[i] as string;
-      acc[date] ||= {};
-      for (const row of rows) {
-        const roomName = row[0]?.split(" ")?.[0] as string;
-        const status = row.slice(2);
-        acc[date][roomName] ||= {};
-        acc[date][roomName][DIVISION_MAP[division] || "RESERVATION_DIVISION_INVALID"] =
-          STATUS_MAP[status[i] || ""] || "RESERVATION_STATUS_INVALID";
-      }
-    }
-    return acc;
-  }, {});
-  return Object.entries(dateRoomReservationMap).flatMap(([date, roomReservation]) => {
-    return Object.entries(roomReservation).map(([roomName, reservation]) => ({
-      room_name: roomName,
-      date,
-      reservation,
-    }));
-  });
-}
+  transform(extracted) {
+    // header[0] = 期間表示、header[2:] = 日付列。row[0] = "部屋名 定員"、row[2:] = ステータス
+    const slots: RawSlot[] = extracted.flatMap(({ division, header, rows }) => {
+      const dates = buildISODateStrings(header[0] ?? "", header.slice(2));
+      return dates.flatMap((date, i) =>
+        rows.map((row) => ({
+          roomName: row[0]?.split(" ")?.[0] || "",
+          date,
+          division,
+          status: row[i + 2] ?? "",
+        }))
+      );
+    });
+    return rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP);
+  },
+});

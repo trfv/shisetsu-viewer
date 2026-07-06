@@ -1,5 +1,9 @@
 import type { Page } from "@playwright/test";
-import type { Status, Division, Reservation, TransformOutput } from "../common/types";
+import { format } from "date-fns";
+import { defineScraper } from "../common/defineScraper.ts";
+import { collectPaginated } from "../common/paginate.ts";
+import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
+import type { Division, Status } from "../common/types.ts";
 
 const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
@@ -26,55 +30,32 @@ const STATUS_MAP: Record<string, Status> = {
   工事: "RESERVATION_STATUS_STATUS_7",
 };
 
-type ExtractOutput = {
-  date: string;
-  roomName: string;
-  division: string;
-  status: string;
-}[];
+const FACILITY_NAMES = [
+  // "男女平等センター", // 改修工事休館中（〜令和8年6月）
+  "大原地域活動センター",
+  "駒込地域活動センター",
+  "不忍通りふれあい館",
+  "福祉センター江戸川橋",
+  "勤労福祉会館",
+  // "シビックホール大ホール", // 有効なデータが取得できないためテストから除外
+  "シビックホール小ホール",
+  "シビックホールその他施設",
+  "アカデミー文京",
+  "アカデミー湯島",
+  "アカデミー音羽",
+  "アカデミー茗台",
+  "アカデミー向丘",
+];
+
+interface BunkyoTarget {
+  facilityName: string;
+}
+
+type BunkyoSlot = { date: string; roomName: string; division: string; status: string };
 
 const MAX_SELECTIONS = 10;
 
-export async function prepare(page: Page, facilityName: string): Promise<Page> {
-  await page.goto("https://www.shisetsu.city.bunkyo.lg.jp/user/Home");
-  await page.getByRole("tab", { name: "利用目的から探す" }).click();
-  await page.getByText("楽器演奏").click();
-  await page.getByText("和太鼓", { exact: true }).click();
-  await page.getByText("バンド（アンプ使用）", { exact: true }).click();
-  await page.getByText("打楽器（編成利用可）", { exact: true }).click();
-  await page.getByText("管楽器", { exact: true }).click();
-  await page.getByText("弦楽器（アコースティック）", { exact: true }).click();
-  await page.getByText("ピアノ（歌唱除く）", { exact: true }).click();
-  await page.getByRole("button", { name: "検索" }).click();
-
-  const facilityLocator = page.getByText(facilityName, { exact: true });
-  const loadMoreButton = page.getByRole("button", { name: "さらに読み込む" });
-  while (!(await facilityLocator.isVisible())) {
-    const rowsBefore = await page.locator("tbody tr").count();
-    try {
-      await loadMoreButton.click({ timeout: 10000 });
-    } catch {
-      throw new Error(`Facility "${facilityName}" not found after loading all items`);
-    }
-    await page
-      .waitForFunction((prev) => document.querySelectorAll("tbody tr").length > prev, rowsBefore, {
-        timeout: 10000,
-      })
-      .catch(() => {});
-  }
-
-  await page.getByText(facilityName, { exact: true }).click();
-  await page.locator("button").filter({ hasText: "次へ進む" }).click();
-  await page.locator("table").first().waitFor();
-
-  page.on("dialog", async (dialog) => {
-    await dialog.accept();
-  });
-
-  return page;
-}
-
-async function extractTimeSlots(page: Page): Promise<ExtractOutput> {
+async function extractTimeSlots(page: Page): Promise<BunkyoSlot[]> {
   return await page.evaluate(() => {
     const results: { date: string; roomName: string; division: string; status: string }[] = [];
     const dateLis = document.querySelectorAll("li.events-date");
@@ -146,122 +127,161 @@ async function toggleCells(page: Page, startIndex: number, count: number): Promi
   return toggled;
 }
 
-export async function extract(
-  page: Page,
-  startDateString: string,
-  maxCount: number
-): Promise<ExtractOutput> {
-  const output: ExtractOutput = [];
+/** 1期間（週表示）分: セルをバッチ選択 → 時間帯別ページで抽出 → 戻る、を繰り返す */
+async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]> {
+  const output: BunkyoSlot[] = [];
 
-  await page.locator("button").filter({ hasText: "その他の条件で絞り込む" }).click();
-  await page.locator('input[type="date"]').fill(startDateString);
-  await page.locator("button").filter({ hasText: "その他の条件で絞り込む" }).click();
-  await page.locator("button").filter({ hasText: "表示" }).click();
+  await page.locator("tbody tr td label").first().waitFor({
+    state: "visible",
+    timeout: 30000,
+  });
 
-  let weekIndex = 0;
-  while (weekIndex < maxCount) {
+  const totalCells = await page.locator("tbody td label:not(.disabled)").count();
+  if (totalCells === 0) {
+    // 選択可能なセルが無い期間はスキップして次へ
+    return output;
+  }
+
+  for (let offset = 0; offset < totalCells; offset += MAX_SELECTIONS) {
+    const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
+    if (batchSize === 0) break;
+
+    // バッチ単位の navigation 失敗が週ループ全体を巻き込まないよう、try で囲んで
+    // バッチ間で復帰できるようにする。コンテンツ指標（heading）を待つ方が URL
+    // パターンマッチより堅牢なため、waitForURL は使わない。
     try {
+      await page.locator("button").filter({ hasText: "次へ進む" }).click();
+      await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 30000 });
+
+      const slotData = await extractTimeSlots(page);
+      output.push(...slotData);
+
+      await page.locator("button").filter({ hasText: "前に戻る" }).click();
       await page.locator("tbody tr td label").first().waitFor({
         state: "visible",
         timeout: 30000,
       });
-
-      const totalCells = await page.locator("tbody td label:not(.disabled)").count();
-      if (totalCells === 0) {
-        // No selectable cells this period, try next
-      } else {
-        for (let offset = 0; offset < totalCells; offset += MAX_SELECTIONS) {
-          const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
-          if (batchSize === 0) break;
-
-          // バッチ単位の navigation 失敗が週ループ全体を巻き込まないよう、try で囲んで
-          // バッチ間で復帰できるようにする。コンテンツ指標（heading）を待つ方が URL
-          // パターンマッチより堅牢なため、waitForURL は使わない。
-          try {
-            await page.locator("button").filter({ hasText: "次へ進む" }).click();
-            await page
-              .getByRole("heading", { name: "時間帯別空き状況" })
-              .waitFor({ timeout: 30000 });
-
-            const slotData = await extractTimeSlots(page);
-            output.push(...slotData);
-
-            await page.locator("button").filter({ hasText: "前に戻る" }).click();
-            await page.locator("tbody tr td label").first().waitFor({
-              state: "visible",
-              timeout: 30000,
-            });
-          } catch (batchErr) {
-            console.warn(
-              `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
-              batchErr
-            );
-            // SelectTime に居る可能性があるので、SelectDays に戻ることを試みる。
-            try {
-              await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
-              await page.locator("tbody tr td label").first().waitFor({
-                state: "visible",
-                timeout: 15000,
-              });
-            } catch {
-              // 復帰失敗 → この週の残りはあきらめて次の期間へ進む。
-              throw batchErr;
-            }
-          }
-
-          // Uncheck current batch to prepare for next (skip on last batch)
-          if (offset + MAX_SELECTIONS < totalCells) {
-            await toggleCells(page, offset, batchSize);
-          }
-        }
-      }
-    } catch (e) {
-      console.warn(`Failed to extract data at week ${weekIndex + 1}, skipping week.`, e);
-    }
-
-    const nextButton = page.locator("button").filter({ hasText: "次の期間" });
-    if ((await nextButton.count()) === 0) break;
-    try {
-      const prevTableContent = await page.locator("tbody").first().innerText();
-      await nextButton.click();
-      await page.waitForFunction(
-        (prev) => {
-          const tbody = document.querySelector("tbody");
-          return tbody !== null && tbody.innerText !== prev;
-        },
-        prevTableContent,
-        { timeout: 15000 }
+    } catch (batchErr) {
+      console.warn(
+        `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
+        batchErr
       );
-      await page.locator("tbody tr td label").first().waitFor({
-        state: "visible",
-        timeout: 15000,
-      });
-    } catch {
-      console.warn(`Failed to navigate to next period at week ${weekIndex + 1}.`);
-      break;
+      // SelectTime に居る可能性があるので、SelectDays に戻ることを試みる。
+      try {
+        await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
+        await page.locator("tbody tr td label").first().waitFor({
+          state: "visible",
+          timeout: 15000,
+        });
+      } catch {
+        // 復帰失敗 → この週の残りはあきらめて次の期間へ進む。
+        throw batchErr;
+      }
     }
-    weekIndex++;
+
+    // 次のバッチに備えて現在のバッチのチェックを外す（最終バッチはスキップ）
+    if (offset + MAX_SELECTIONS < totalCells) {
+      await toggleCells(page, offset, batchSize);
+    }
   }
 
   return output;
 }
 
-export async function transform(extractOutput: ExtractOutput): Promise<TransformOutput> {
-  const dateRoomReservationMap: Record<string, Record<string, Reservation>> = {};
+export const scraper = defineScraper({
+  municipality: "tokyo-bunkyo",
+  targets: FACILITY_NAMES.map((facilityName): BunkyoTarget => ({ facilityName })),
+  horizon: { startOffsetDays: 1, monthsAhead: 7, unit: "week" },
+  facility: (t) => t.facilityName,
 
-  for (const { date, roomName, division, status } of extractOutput) {
-    dateRoomReservationMap[date] ||= {};
-    dateRoomReservationMap[date][roomName] ||= {};
-    const divKey = DIVISION_MAP[division] || "RESERVATION_DIVISION_INVALID";
-    dateRoomReservationMap[date][roomName][divKey] =
-      STATUS_MAP[status] || "RESERVATION_STATUS_INVALID";
-  }
+  async prepare(page, target) {
+    await page.goto("https://www.shisetsu.city.bunkyo.lg.jp/user/Home");
+    await page.getByRole("tab", { name: "利用目的から探す" }).click();
+    await page.getByText("楽器演奏").click();
+    await page.getByText("和太鼓", { exact: true }).click();
+    await page.getByText("バンド（アンプ使用）", { exact: true }).click();
+    await page.getByText("打楽器（編成利用可）", { exact: true }).click();
+    await page.getByText("管楽器", { exact: true }).click();
+    await page.getByText("弦楽器（アコースティック）", { exact: true }).click();
+    await page.getByText("ピアノ（歌唱除く）", { exact: true }).click();
+    await page.getByRole("button", { name: "検索" }).click();
 
-  return Object.entries(dateRoomReservationMap).flatMap(([date, roomReservation]) => {
-    return Object.entries(roomReservation).map(([roomName, reservation]) => ({
-      room_name: roomName.replace(/\s*≪《[^》]*》≫$/, ""),
+    const facilityLocator = page.getByText(target.facilityName, { exact: true });
+    const loadMoreButton = page.getByRole("button", { name: "さらに読み込む" });
+    while (!(await facilityLocator.isVisible())) {
+      const rowsBefore = await page.locator("tbody tr").count();
+      try {
+        await loadMoreButton.click({ timeout: 10000 });
+      } catch {
+        throw new Error(`Facility "${target.facilityName}" not found after loading all items`);
+      }
+      await page
+        .waitForFunction(
+          (prev) => document.querySelectorAll("tbody tr").length > prev,
+          rowsBefore,
+          { timeout: 10000 }
+        )
+        .catch(() => {});
+    }
+
+    await page.getByText(target.facilityName, { exact: true }).click();
+    await page.locator("button").filter({ hasText: "次へ進む" }).click();
+    await page.locator("table").first().waitFor();
+
+    page.on("dialog", async (dialog) => {
+      await dialog.accept();
+    });
+
+    return page;
+  },
+
+  async extract(page, target, pageCount) {
+    await page.locator("button").filter({ hasText: "その他の条件で絞り込む" }).click();
+    await page.locator('input[type="date"]').fill(format(new Date(), "yyyy-MM-dd"));
+    await page.locator("button").filter({ hasText: "その他の条件で絞り込む" }).click();
+    await page.locator("button").filter({ hasText: "表示" }).click();
+
+    return collectPaginated({
+      maxPages: pageCount,
+      label: target.facilityName,
+      extractPage: async (weekIndex) => {
+        // 週単位の失敗はこの週をあきらめて次の期間に進む（打ち切らない）
+        try {
+          return await extractWeek(page, weekIndex);
+        } catch (e) {
+          console.warn(`Failed to extract data at week ${weekIndex + 1}, skipping week.`, e);
+          return [];
+        }
+      },
+      goNext: async () => {
+        const nextButton = page.locator("button").filter({ hasText: "次の期間" });
+        if ((await nextButton.count()) === 0) return false;
+        const prevTableContent = await page.locator("tbody").first().innerText();
+        await nextButton.click();
+        await page.waitForFunction(
+          (prev) => {
+            const tbody = document.querySelector("tbody");
+            return tbody !== null && tbody.innerText !== prev;
+          },
+          prevTableContent,
+          { timeout: 15000 }
+        );
+        await page.locator("tbody tr td label").first().waitFor({
+          state: "visible",
+          timeout: 15000,
+        });
+        return true;
+      },
+    });
+  },
+
+  transform(extracted) {
+    const slots: RawSlot[] = extracted.map(({ date, roomName, division, status }) => ({
+      roomName: roomName.replace(/\s*≪《[^》]*》≫$/, ""),
       date,
-      reservation,
+      division,
+      status,
     }));
-  });
-}
+    return rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP);
+  },
+});
