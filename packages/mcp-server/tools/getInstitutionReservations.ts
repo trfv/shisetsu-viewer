@@ -3,6 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
 import { RESERVATION_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
+import { institutionIdSchema } from "../paramHelpers.ts";
 
 function buildQuery(fieldSelection: string): string {
   return `
@@ -60,7 +61,7 @@ export function registerGetInstitutionReservations(server: McpServer): void {
         openWorldHint: false,
       },
       inputSchema: {
-        institutionId: z.string().uuid().describe("施設のUUID"),
+        institutionId: institutionIdSchema.describe("施設のUUID"),
         startDate: z
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)

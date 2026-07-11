@@ -3,6 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
 import { INSTITUTION_DETAIL_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
+import { institutionIdSchema } from "../paramHelpers.ts";
 
 function buildQuery(fieldSelection: string): string {
   return `
@@ -48,7 +49,7 @@ export function registerGetInstitutionDetail(server: McpServer): void {
         openWorldHint: false,
       },
       inputSchema: {
-        id: z.string().uuid().describe("施設のUUID"),
+        id: institutionIdSchema.describe("施設のUUID"),
         fields: z
           .array(z.enum(INSTITUTION_DETAIL_FIELDS))
           .optional()
