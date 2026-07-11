@@ -323,7 +323,7 @@ type TabType = "institution" | "reservation";
 const today = new Date();
 
 const DetailPage = () => {
-const { id } = useParams();
+  const { id } = useParams();
   if (!id || !isValidUuid(id)) {
     return <Redirect to={ROUTES.top} replace />;
   }
