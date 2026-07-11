@@ -1,5 +1,5 @@
 import { formatISO } from "date-fns";
-import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
+import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 import {
   INSTITUTION_DETAIL_QUERY,
@@ -10,6 +10,7 @@ import {
   type ReservationNode,
 } from "../api/queries";
 import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
@@ -184,8 +185,6 @@ const ReservationTab = ({
   }
 
   const isMobile = useIsMobile();
-  const tableTarget = useRef<HTMLTableRowElement | null>(null);
-  const cardTarget = useRef<HTMLDivElement | null>(null);
   // 「今日」はモジュール読み込み時ではなくタブ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
   const today = useMemo(() => new Date(), []);
 
@@ -201,17 +200,7 @@ const ReservationTab = ({
     (d) => d.reservations_connection
   );
 
-  useEffect(() => {
-    const element = isMobile ? cardTarget.current : tableTarget.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(
-      (entries) => entries[0]?.isIntersecting && fetchMore()
-    );
-    observer.observe(element);
-    return () => {
-      observer.unobserve(element);
-    };
-  }, [fetchMore, isMobile, reservations?.length]);
+  const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations?.length ?? 0);
 
   if (error) {
     throw new Error(error.message);
@@ -231,7 +220,7 @@ const ReservationTab = ({
             <div
               className={styles["reservationCard"]}
               key={index}
-              ref={index === reservations.length - 50 ? cardTarget : undefined}
+              ref={index === sentinelIndex ? sentinelRef : undefined}
             >
               <div className={styles["reservationCardDate"]}>{formatMonthDate(row.date)}</div>
               <div className={styles["reservationCardDivisions"]}>
@@ -290,7 +279,7 @@ const ReservationTab = ({
                 <TableRow
                   hover={true}
                   key={index}
-                  ref={index === reservations.length - 50 ? tableTarget : undefined}
+                  ref={index === sentinelIndex ? sentinelRef : undefined}
                 >
                   <TableCell className={styles["reservationTableBodyCell"]} size="small">
                     {formatMonthDate(row.date)}
