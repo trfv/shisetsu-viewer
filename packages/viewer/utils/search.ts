@@ -28,7 +28,7 @@ const LARGE = "l";
 const MEDIUM = "m";
 const SMALL = "s";
 
-export const INSTUTITON_SIZE_MAP = {
+export const INSTITUTION_SIZE_MAP = {
   [LARGE]: InstitutionSizeMap[InstitutionSizeEnum.LARGE]!,
   [MEDIUM]: InstitutionSizeMap[InstitutionSizeEnum.MEDIUM]!,
   [SMALL]: InstitutionSizeMap[InstitutionSizeEnum.SMALL]!,
@@ -45,7 +45,7 @@ export const getInstitutionSizeFromUrlParam = (
   ) as InstitutionSize[];
 };
 
-const INSTUTITON_SIZE_PARAM_MAP = {
+const INSTITUTION_SIZE_PARAM_MAP = {
   [LARGE]: InstitutionSizeEnum.LARGE,
   [MEDIUM]: InstitutionSizeEnum.MEDIUM,
   [SMALL]: InstitutionSizeEnum.SMALL,
@@ -54,6 +54,6 @@ const INSTUTITON_SIZE_PARAM_MAP = {
 export const toInstitutionSizeParam = (
   institutionSizes: InstitutionSize[]
 ): InstitutionSizeEnum[] | undefined => {
-  const params = institutionSizes.map((s) => INSTUTITON_SIZE_PARAM_MAP[s]).filter((s) => !!s);
+  const params = institutionSizes.map((s) => INSTITUTION_SIZE_PARAM_MAP[s]).filter((s) => !!s);
   return params.length > 0 ? params : undefined;
 };

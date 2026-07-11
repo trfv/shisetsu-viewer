@@ -4,7 +4,7 @@ import {
   AVAILABLE_INSTRUMENT_MAP,
   getAvailableInstrumentFromUrlParam,
   getInstitutionSizeFromUrlParam,
-  INSTUTITON_SIZE_MAP,
+  INSTITUTION_SIZE_MAP,
   toInstitutionSizeParam,
 } from "./search";
 
@@ -115,14 +115,14 @@ describe("AVAILABLE_INSTRUMENT_MAP", () => {
   });
 });
 
-describe("INSTUTITON_SIZE_MAP", () => {
+describe("INSTITUTION_SIZE_MAP", () => {
   test("has 3 entries", () => {
-    expect(Object.keys(INSTUTITON_SIZE_MAP)).toHaveLength(3);
+    expect(Object.keys(INSTITUTION_SIZE_MAP)).toHaveLength(3);
   });
 
   test("maps size codes to Japanese labels", () => {
-    expect(INSTUTITON_SIZE_MAP["l"]).toBe("大（100㎡~）");
-    expect(INSTUTITON_SIZE_MAP["m"]).toBe("中（50㎡~100㎡）");
-    expect(INSTUTITON_SIZE_MAP["s"]).toBe("小（~50㎡）");
+    expect(INSTITUTION_SIZE_MAP["l"]).toBe("大（100㎡~）");
+    expect(INSTITUTION_SIZE_MAP["m"]).toBe("中（50㎡~100㎡）");
+    expect(INSTITUTION_SIZE_MAP["s"]).toBe("小（~50㎡）");
   });
 });

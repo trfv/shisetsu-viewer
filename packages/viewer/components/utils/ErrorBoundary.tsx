@@ -1,5 +1,5 @@
 import { Component, type ReactNode, type ErrorInfo } from "react";
-import { Snackbar } from "../SnackBar";
+import { Snackbar } from "../Snackbar";
 
 type Props = { children?: ReactNode };
 type State = { hasError: boolean };
