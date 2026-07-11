@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
 import type { ScraperDefinition } from "./defineScraper.ts";
 import { pagesForHorizon } from "./horizon.ts";
 import { runScrapeTest } from "./runScrapeTest.ts";
@@ -36,6 +37,9 @@ export async function runScrapeTarget<T, E extends { length: number }>(
   const pageCount =
     typeof def.horizon === "function" ? def.horizon(target) : pagesForHorizon(def.horizon);
   const expectedDateCount = def.expectedDateCount?.(target, pageCount);
+  // registry の maintenanceWindowJst（"tokyo-ota" → slug "ota"）
+  const slug = def.municipality.slice(def.municipality.indexOf("-") + 1);
+  const maintenanceWindowJst = getMunicipalityBySlug(slug)?.maintenanceWindowJst;
 
   await runScrapeTest({
     municipality: def.municipality,
@@ -56,5 +60,6 @@ export async function runScrapeTarget<T, E extends { length: number }>(
       }
     },
     ...(expectedDateCount !== undefined && { expectedDateCount }),
+    ...(maintenanceWindowJst !== undefined && { maintenanceWindowJst }),
   });
 }

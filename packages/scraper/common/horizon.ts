@@ -46,3 +46,14 @@ export function pagesForHorizon(spec: HorizonSpec, now: Date = new Date()): numb
       return differenceInCalendarWeeks(end, start) + 1;
   }
 }
+
+/**
+ * HorizonSpec がカバーする暦日数を計算する（unit 非依存）。
+ * partial-extraction 検出の期待 distinct-date 件数の導出に使う
+ * （1 ページ = 1 日でないサイトでも「取得すべき日数」は暦日数で決まる）。
+ */
+export function daysForHorizon(spec: HorizonSpec, now: Date = new Date()): number {
+  const start = addDays(now, spec.startOffsetDays);
+  const end = addMonths(endOfMonth(start), spec.monthsAhead);
+  return differenceInDays(end, start) + 1;
+}
