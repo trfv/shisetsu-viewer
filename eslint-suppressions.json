@@ -13,9 +13,6 @@
     }
   },
   "packages/viewer/components/DataTable/DataTable.tsx": {
-    "@eslint-react/naming-convention-ref-name": {
-      "count": 2
-    },
     "@eslint-react/no-array-index-key": {
       "count": 1
     }
@@ -55,9 +52,6 @@
     }
   },
   "packages/viewer/pages/Detail.tsx": {
-    "@eslint-react/naming-convention-ref-name": {
-      "count": 2
-    },
     "@eslint-react/no-array-index-key": {
       "count": 4
     }

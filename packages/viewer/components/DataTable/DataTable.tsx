@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { formatDate, formatDatetime } from "../../utils/format";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
@@ -69,29 +69,13 @@ export const DataTable = <T extends Row>({
   hasNextPage,
 }: Props<T>) => {
   const isMobile = useIsMobile();
-  const target = useRef<HTMLTableRowElement | null>(null);
-  const cardTarget = useRef<HTMLDivElement | null>(null);
+  const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, rows.length);
 
-  useEffect(() => {
-    const element = isMobile ? cardTarget.current : target.current;
-    if (!element) {
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => entries[0]?.isIntersecting && fetchMore?.()
-    );
-    observer.observe(element);
-    return () => {
-      observer.unobserve(element);
-    };
-  }, [fetchMore, isMobile, rows.length]);
-
-  const tableCols = columns.filter((column) => !column.hide);
-  const cardCols = columns.filter((column) => !column.hide);
+  const visibleCols = columns.filter((column) => !column.hide);
 
   if (isMobile) {
-    const titleCol = cardCols[0];
-    const detailCols = cardCols.slice(1);
+    const titleCol = visibleCols[0];
+    const detailCols = visibleCols.slice(1);
 
     return (
       <div className={styles["cardList"]}>
@@ -102,7 +86,7 @@ export const DataTable = <T extends Row>({
               className={styles["card"]}
               key={row.id}
               onClick={() => onRowClick?.(rowParams)}
-              ref={index === rows.length - 50 ? cardTarget : undefined}
+              ref={index === sentinelIndex ? sentinelRef : undefined}
             >
               {titleCol && (
                 <div className={styles["cardTitle"]}>{getCellValue(titleCol, row, columns)}</div>
@@ -131,7 +115,7 @@ export const DataTable = <T extends Row>({
       <Table stickyHeader={true}>
         <TableHead>
           <TableRow>
-            {tableCols.map((col) => (
+            {visibleCols.map((col) => (
               <TableCell
                 align={col.type === "number" ? "right" : "left"}
                 key={col.field}
@@ -155,10 +139,10 @@ export const DataTable = <T extends Row>({
                 hover={true}
                 key={row.id}
                 onClick={() => onRowClick?.(rowParams)}
-                ref={index === rows.length - 50 ? target : undefined}
+                ref={index === sentinelIndex ? sentinelRef : undefined}
                 style={{ cursor: "pointer" }}
               >
-                {tableCols.map((col) => {
+                {visibleCols.map((col) => {
                   const value = getCellValue(col, row, columns);
                   return (
                     <TableCell
@@ -181,7 +165,7 @@ export const DataTable = <T extends Row>({
           })}
           {hasNextPage && (
             <TableRow>
-              {tableCols.map((_, index) => (
+              {visibleCols.map((_, index) => (
                 <TableCell key={index} size="small">
                   <Skeleton />
                 </TableCell>

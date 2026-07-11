@@ -235,6 +235,31 @@ describe("DataTable Component", () => {
       expect(fetchMore).toHaveBeenCalled();
     });
 
+    it("行数が50未満でもhasNextPage=trueならfetchMoreが発火する", async () => {
+      // sentinel を `index === rows.length - 50` に置くと、行数<50 で負値になり
+      // どの行にも付かず observer が何も監視しない → fetchMore が発火しないバグ。
+      // Math.max(0, rows.length - 50) にクランプすれば先頭行に付き、少数件でも発火する。
+      const fewRows: TestRow[] = Array.from({ length: 5 }, (_, i) => ({
+        id: String(i),
+        name: `Name${i}`,
+        age: `${i}`,
+        secret: `Secret${i}`,
+        label: "",
+        createdAt: "2025-01-01",
+        updatedAt: "2025-01-01T00:00:00",
+        score: `${i}`,
+      }));
+
+      const fetchMore = vi.fn().mockResolvedValue(undefined);
+      renderWithProviders(
+        <DataTable columns={columns} rows={fewRows} fetchMore={fetchMore} hasNextPage={true} />
+      );
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      expect(fetchMore).toHaveBeenCalled();
+    });
+
     it("アンマウント時にIntersectionObserverがクリーンアップされる", async () => {
       const manyRows: TestRow[] = Array.from({ length: 51 }, (_, i) => ({
         id: String(i),
