@@ -94,18 +94,21 @@ describe("DateParam", () => {
 
 describe("useQueryParams", () => {
   test("all pattern", () => {
-    const { result, rerender } = renderHook(() =>
-      useQueryParams(
-        {
-          a: NumberParam,
-          b: StringParam,
-          c: ArrayParam,
-          d: DateParam,
-        },
-        () => {},
-        "a=12345&b=ABCDE&c=XXX&c=YYY&c=ZZZ&d=2022-02-26",
-        ""
-      )
+    const setLocationMock = vi.fn();
+    const { result, rerender } = renderHook(
+      ({ search }) =>
+        useQueryParams(
+          {
+            a: NumberParam,
+            b: StringParam,
+            c: ArrayParam,
+            d: DateParam,
+          },
+          setLocationMock,
+          search,
+          ""
+        ),
+      { initialProps: { search: "a=12345&b=ABCDE&c=XXX&c=YYY&c=ZZZ&d=2022-02-26" } }
     );
     expect(result.current[0].a).toBe(12345);
     expect(result.current[0].b).toBe("ABCDE");
@@ -119,13 +122,34 @@ describe("useQueryParams", () => {
         c: ["PPP", "QQQ", "RRR"],
         d: new Date("2022-02-27"),
       });
-      rerender(); // TODO なぜこれが必要かを検討する
     });
 
+    // setQueryParams は内部 state を持たず、setLocation で URL 更新を要求する。
+    expect(setLocationMock).toHaveBeenCalledTimes(1);
+    const [to, options] = setLocationMock.mock.calls[0] ?? [];
+    expect(options).toEqual({ replace: true });
+
+    // 要求された URL で再レンダされた（= wouter が URL を更新した）体で復号値を検証する。
+    rerender({ search: (to as string).split("?")[1] ?? "" });
     expect(result.current[0].a).toBe(54321);
     expect(result.current[0].b).toBe("EDCBA");
     expect(result.current[0].c?.sort().toString()).toBe(["PPP", "QQQ", "RRR"].sort().toString());
     expect(result.current[0].d?.toISOString()).toBe(new Date("2022-02-27").toISOString());
+  });
+  test("search prop の変更で復号値が再同期する", () => {
+    // ブラウザの戻る/進むで wouter の useSearch() が新しい値を返す状況の再現。
+    // 内部 state に固定していると search 変更を無視してしまう（このテストが再同期を強制する）。
+    const { result, rerender } = renderHook(
+      ({ search }) => useQueryParams({ a: NumberParam, b: StringParam }, () => {}, search, ""),
+      { initialProps: { search: "a=1&b=first" } }
+    );
+    expect(result.current[0].a).toBe(1);
+    expect(result.current[0].b).toBe("first");
+
+    rerender({ search: "a=2&b=second" });
+
+    expect(result.current[0].a).toBe(2);
+    expect(result.current[0].b).toBe("second");
   });
   test("empty parameters", () => {
     const { result } = renderHook(() =>
@@ -172,7 +196,7 @@ describe("useQueryParams", () => {
 
   test("setQueryParams with array values exercises toQueryParams array branch", () => {
     const setLocationMock = vi.fn();
-    const { result, rerender } = renderHook(() =>
+    const { result } = renderHook(() =>
       useQueryParams(
         {
           tags: ArrayParam,
@@ -189,19 +213,19 @@ describe("useQueryParams", () => {
         tags: ["a", "b", "c"],
         count: 5,
       });
-      rerender();
     });
 
-    expect(setLocationMock).toHaveBeenCalledWith(expect.stringContaining("/test?"), {
-      replace: true,
-    });
-    expect(result.current[0].tags?.sort().toString()).toBe(["a", "b", "c"].sort().toString());
-    expect(result.current[0].count).toBe(5);
+    expect(setLocationMock).toHaveBeenCalledTimes(1);
+    const [to, options] = setLocationMock.mock.calls[0] ?? [];
+    expect(options).toEqual({ replace: true });
+    const params = new URLSearchParams((to as string).split("?")[1]);
+    expect(params.getAll("tags")).toEqual(["a", "b", "c"]);
+    expect(params.get("count")).toBe("5");
   });
 
   test("setQueryParams with null encode result deletes parameter from URL", () => {
     const setLocationMock = vi.fn();
-    const { result, rerender } = renderHook(() =>
+    const { result } = renderHook(() =>
       useQueryParams(
         {
           name: StringParam,
@@ -216,19 +240,13 @@ describe("useQueryParams", () => {
     expect(result.current[0].name).toBe("hello");
     expect(result.current[0].value).toBe("world");
 
-    // Setting a param to null should delete it from URLSearchParams
+    // name を null にすると URL から削除され、value は残る。
     act(() => {
       result.current[1]({
         name: null as unknown as string,
       });
-      rerender();
     });
 
-    // name should be removed, value should remain unchanged
-    expect(result.current[0].name).toBeUndefined();
-    expect(result.current[0].value).toBe("world");
-
-    // setLocation should be called with URL without name param
     expect(setLocationMock).toHaveBeenCalledWith("/test?value=world", { replace: true });
   });
 

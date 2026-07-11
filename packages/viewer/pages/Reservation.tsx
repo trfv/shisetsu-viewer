@@ -42,9 +42,6 @@ import {
 } from "../utils/search";
 import styles from "./Reservation.module.css";
 
-const minDate = new Date();
-const maxDate = addMonths(endOfMonth(new Date()), 6);
-
 export const COLUMNS: Columns<SearchableReservationNode> = [
   {
     field: "building_and_institution",
@@ -98,6 +95,10 @@ const ReservationPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
 
+  // 「今」はモジュール読み込み時ではなくページ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
+  const minDate = useMemo(() => new Date(), []);
+  const maxDate = useMemo(() => addMonths(endOfMonth(new Date()), 6), []);
+
   const [values, setQueryParams] = useQueryParams(
     {
       m: StringParam,
@@ -124,7 +125,7 @@ const ReservationPage = () => {
         minDate,
         maxDate
       ),
-    [values]
+    [values, minDate, maxDate]
   );
 
   const {
@@ -155,7 +156,7 @@ const ReservationPage = () => {
       /* istanbul ignore next -- date is always provided by DatePicker onChange */
       setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
     },
-    [setQueryParams, endDate]
+    [setQueryParams, endDate, maxDate]
   );
 
   const handleEndDateChange = useCallback(
@@ -163,7 +164,7 @@ const ReservationPage = () => {
       /* istanbul ignore next -- date is always provided by DatePicker onChange */
       setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
     },
-    [setQueryParams, startDate]
+    [setQueryParams, startDate, minDate]
   );
 
   const handleFilterChange = useCallback(

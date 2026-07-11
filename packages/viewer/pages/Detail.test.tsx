@@ -9,6 +9,7 @@ import {
   createMockInstitutionReservationsConnection,
 } from "../test/mocks/data";
 import { ErrorBoundary } from "../components/utils/ErrorBoundary";
+import DetailPage from "./Detail";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
 
@@ -20,15 +21,10 @@ vi.mock("../hooks/useIsMobile", () => ({
 const VALID_UUID = "b3ed861c-c057-4b71-8678-93b7fea06202";
 const FAKE_NOW = new Date("2025-06-15T12:00:00+09:00");
 
-let DetailPage: React.ComponentType;
-
-beforeEach(async () => {
+beforeEach(() => {
   mockIsMobile.value = false;
   vi.useFakeTimers({ shouldAdvanceTime: true });
   vi.setSystemTime(FAKE_NOW);
-  vi.resetModules();
-  const mod = await import("./Detail");
-  DetailPage = mod.default;
 });
 
 afterEach(() => {
@@ -255,6 +251,44 @@ describe("Detail Page", () => {
         expect(screen.getByText("日付")).toBeInTheDocument();
       });
       expect(screen.getByText("取得日時")).toBeInTheDocument();
+    });
+
+    it("予約クエリの startDate にレンダ時点の本日を渡す", async () => {
+      let capturedStartDate: unknown = null;
+      worker.use(
+        http.post(TEST_ENDPOINT, async ({ request }) => {
+          const body = (await request.json()) as GraphQLBody;
+          const queryName = body.query.trim().split(/[\s(]/)[1];
+          if (queryName === "institutionDetail") {
+            return HttpResponse.json(defaultDetailResponse);
+          }
+          if (queryName === "institutionReservations") {
+            capturedStartDate = body.variables["startDate"];
+            return HttpResponse.json(createMockInstitutionReservationsConnection([]));
+          }
+          return HttpResponse.json({ data: null });
+        })
+      );
+
+      const { user } = renderWithProviders(<DetailPage />, {
+        initialEntries: [`/institution/${VALID_UUID}`],
+        route: "/institution/:id",
+        auth0Config: { userInfo: { anonymous: false, trial: false } },
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole("tab", { name: "予約状況" }));
+
+      // module-level `new Date()` だと import 時刻（実時刻）を固定してしまう。
+      // レンダ時評価なら setSystemTime(FAKE_NOW) を読むため 2025-06-15 になる。
+      await waitFor(() => {
+        expect(capturedStartDate).toBe("2025-06-15");
+      });
     });
 
     it("予約データが空の場合、データなしメッセージを表示する", async () => {
