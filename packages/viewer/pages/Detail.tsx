@@ -1,5 +1,5 @@
 import { formatISO } from "date-fns";
-import { useCallback, useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 import {
   INSTITUTION_DETAIL_QUERY,
@@ -186,6 +186,8 @@ const ReservationTab = ({
   const isMobile = useIsMobile();
   const tableTarget = useRef<HTMLTableRowElement | null>(null);
   const cardTarget = useRef<HTMLDivElement | null>(null);
+  // 「今日」はモジュール読み込み時ではなくタブ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
+  const today = useMemo(() => new Date(), []);
 
   const {
     loading,
@@ -319,8 +321,6 @@ const ReservationTab = ({
 };
 
 type TabType = "institution" | "reservation";
-
-const today = new Date();
 
 const DetailPage = () => {
   const { id } = useParams();

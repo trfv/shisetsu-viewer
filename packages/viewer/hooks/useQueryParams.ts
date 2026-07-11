@@ -1,5 +1,5 @@
 import { formatISO, isValid } from "date-fns";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 export const NumberParam = {
   encode: (value: number) => (!!value || value === 0 ? value.toString() : null),
@@ -76,18 +76,18 @@ export const useQueryParams = <QPM extends QueryParamsMap>(
   search: string,
   pathname: string
 ): [DecodedValues<QPM>, (args: DecodedValues<QPM>) => void] => {
-  const [qp, setQP] = useState(new URLSearchParams(search));
+  // search（URL のクエリ文字列）を単一ソースとして復号する。
+  // setQueryParams が setLocation で URL を更新すると search が変わり再レンダされるため、
+  // ブラウザの戻る/進む等の外部由来の URL 変更もそのまま反映される。
+  const qp = useMemo(() => new URLSearchParams(search), [search]);
 
   const setQueryParams = useCallback(
     (dv: DecodedValues<QPM>) => {
-      setQP((prev) => {
-        const next = toQueryParams(dv, prev, qpm);
-        const qs = next.toString();
-        setLocation(qs ? `${pathname}?${qs}` : pathname, { replace: true });
-        return next;
-      });
+      const next = toQueryParams(dv, qp, qpm);
+      const qs = next.toString();
+      setLocation(qs ? `${pathname}?${qs}` : pathname, { replace: true });
     },
-    [qpm, setLocation, pathname]
+    [qp, qpm, setLocation, pathname]
   );
 
   return [toDecodedValues(qp, qpm), setQueryParams];
