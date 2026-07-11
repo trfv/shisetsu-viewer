@@ -85,9 +85,7 @@ async function refreshAccessToken(tokens: Tokens): Promise<Tokens | null> {
  * - `{ status: "refresh_failed" }` — tokens existed but refresh failed (removed)
  */
 type TokenResult =
-  | { status: "ok"; token: string }
-  | { status: "no_tokens" }
-  | { status: "refresh_failed" };
+  { status: "ok"; token: string } | { status: "no_tokens" } | { status: "refresh_failed" };
 
 export async function getValidToken(): Promise<TokenResult> {
   const tokens = await readTokens();

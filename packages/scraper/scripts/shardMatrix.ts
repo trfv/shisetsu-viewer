@@ -41,7 +41,7 @@ function main(): void {
   }
 
   // --list は tests があると exit 0、0 件だと非ゼロで終わるため、出力は常に受け取る
-  let listOutput = "";
+  let listOutput: string;
   try {
     listOutput = execFileSync("npx", args, {
       encoding: "utf8",

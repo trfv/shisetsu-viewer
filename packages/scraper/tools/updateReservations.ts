@@ -36,7 +36,7 @@ console.time(title);
 
 for (const target of targets) {
   const dir = `test-results/${target}`;
-  let files: string[] = [];
+  let files: string[];
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     files = entries.filter((e) => e.isFile() && e.name.endsWith(".json")).map((e) => e.name);
