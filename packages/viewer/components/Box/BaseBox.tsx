@@ -1,10 +1,5 @@
 import { type ComponentProps, type ElementType, type FC, type ReactNode } from "react";
 import { WIDTHS } from "../../constants/styles";
-import { AutoBox } from "./AutoBox";
-import { FullBox } from "./FullBox";
-import { LargeBox } from "./LargeBox";
-import { MediumBox } from "./MediumBox";
-import { SmallBox } from "./SmallBox";
 
 export type BoxSize = "small" | "medium" | "large" | "auto" | "full";
 
@@ -70,19 +65,4 @@ export const BaseBox: FC<BaseBoxProps> = ({
       {children}
     </Component>
   );
-};
-
-export const box = (size: BoxSize) => {
-  switch (size) {
-    case "small":
-      return SmallBox;
-    case "medium":
-      return MediumBox;
-    case "large":
-      return LargeBox;
-    case "auto":
-      return AutoBox;
-    case "full":
-      return FullBox;
-  }
 };

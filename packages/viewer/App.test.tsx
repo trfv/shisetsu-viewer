@@ -1,61 +1,25 @@
-import { describe, it, expect, vi } from "vitest";
-
-// Mock the router to avoid creating a real browser router
-vi.mock("./router", () => ({
-  router: {
-    navigate: vi.fn(),
-    state: { location: { pathname: "/" } },
-    subscribe: vi.fn(() => vi.fn()),
-    enableScrollRestoration: vi.fn(),
-  },
-}));
-
-// Mock the client to avoid real GraphQL connections
-vi.mock("./utils/client", () => ({
-  client: () => ({
-    link: {},
-    cache: {
-      read: vi.fn(),
-      write: vi.fn(),
-      diff: vi.fn(),
-      watch: vi.fn(),
-      restore: vi.fn(),
-      extract: vi.fn(),
-      reset: vi.fn(),
-      evict: vi.fn(),
-      gc: vi.fn(),
-      identify: vi.fn(),
-      modify: vi.fn(),
-      readQuery: vi.fn(),
-      readFragment: vi.fn(),
-      writeQuery: vi.fn(),
-      writeFragment: vi.fn(),
-      transformDocument: vi.fn(),
-      transformForLink: vi.fn(),
-      acquire: vi.fn(),
-      release: vi.fn(),
-      performTransaction: vi.fn(),
-      retain: vi.fn(),
-      addTypenameToDocument: vi.fn(),
-    },
-    watchQuery: vi.fn(),
-    query: vi.fn(),
-    mutate: vi.fn(),
-    subscribe: vi.fn(),
-    readQuery: vi.fn(),
-    readFragment: vi.fn(),
-    writeQuery: vi.fn(),
-    writeFragment: vi.fn(),
-  }),
-  ClientProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-}));
-
-import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import App from "./App";
+import { Auth0Context } from "./contexts/Auth0";
+
+const auth0Value = {
+  isLoading: false,
+  token: "mock-token",
+  userInfo: { anonymous: false, trial: false },
+  login: vi.fn(),
+  logout: vi.fn(),
+};
 
 describe("App", () => {
-  it("エラーなくレンダリングされる", () => {
-    expect(() => render(<App />)).not.toThrow();
+  it("プロバイダ構成を通してヘッダーごとマウントされる", () => {
+    render(
+      <Auth0Context.Provider value={auth0Value}>
+        <App />
+      </Auth0Context.Provider>
+    );
+    // App は自前の Router を持つため二重ラップしない。ヘッダー（banner）が
+    // 描画されれば ErrorBoundary/ColorModeProvider/Router/Header の合成が成立している。
+    expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 });
