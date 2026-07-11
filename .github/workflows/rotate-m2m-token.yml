@@ -5,14 +5,19 @@ permissions:
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   # Run 1 hour before each scraper run (scraper runs at 0 4,16 * * *)
-  #   - cron: "0 3,15 * * *"
+  schedule:
+    # Run ~1 hour before each scraper run (scraper runs at 0 4,16 * * *) so the
+    # M2M token (24h TTL) is always fresh. Interim measure until the backend
+    # migration (GitHub OIDC) removes M2M tokens entirely.
+    - cron: "23 3,15 * * *"
 
 jobs:
   rotate:
     timeout-minutes: 5
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Fetch M2M token from Auth0
         id: fetch-token
@@ -61,3 +66,12 @@ jobs:
             exit 1
           fi
           echo "M2M_TOKEN last updated: ${UPDATED_AT}"
+
+      - name: File issue on rotation failure
+        if: ${{ failure() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "[rotate-m2m-token] M2M トークンの自動ローテーションが失敗" \
+            --body "定期ローテーションが失敗しました。M2M_TOKEN が失効するとスクレイプの Hasura 認証が失敗し続けます。Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { graphqlRequest } from "../graphqlClient.ts";
+import { institutionIdSchema } from "../paramHelpers.ts";
 
 const MUTATION = `
 mutation update_reservations($data: [reservations_insert_input!]!) {
@@ -38,7 +39,7 @@ export function registerUpsertReservations(server: McpServer): void {
         data: z
           .array(
             z.object({
-              institution_id: z.string().uuid().describe("施設UUID"),
+              institution_id: institutionIdSchema.describe("施設UUID"),
               date: z
                 .string()
                 .regex(/^\d{4}-\d{2}-\d{2}$/)
