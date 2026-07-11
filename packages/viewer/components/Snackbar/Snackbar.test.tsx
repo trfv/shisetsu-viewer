@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
-import { Snackbar } from "./SnackBar";
+import { Snackbar } from "./Snackbar";
 
 describe("Snackbar Component", () => {
   it("open=trueの場合にメッセージを表示する", () => {

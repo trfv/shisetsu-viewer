@@ -14,7 +14,7 @@ import { DataTable, type Columns } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
-import { Snackbar } from "../components/SnackBar";
+import { Snackbar } from "../components/Snackbar";
 import { Spinner } from "../components/Spinner";
 import { ROUTES } from "../constants/routes";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
@@ -36,7 +36,7 @@ import {
 } from "../utils/reservation";
 import {
   AVAILABLE_INSTRUMENT_MAP,
-  INSTUTITON_SIZE_MAP,
+  INSTITUTION_SIZE_MAP,
   type AvailableInstrument,
   type InstitutionSize,
 } from "../utils/search";
@@ -113,7 +113,7 @@ const ReservationPage = () => {
     pathname
   );
 
-  const resevationSearchParams = useMemo(
+  const reservationSearchParams = useMemo(
     () =>
       toReservationSearchParams(
         values.m,
@@ -137,12 +137,12 @@ const ReservationPage = () => {
     fetchingMore,
   } = usePaginatedQuery<ReservationsQueryData, SearchableReservationNode>(
     RESERVATIONS_QUERY,
-    toReservationQueryVariables(resevationSearchParams),
+    toReservationQueryVariables(reservationSearchParams),
     (d) => d.searchable_reservations_connection
   );
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
-    resevationSearchParams;
+    reservationSearchParams;
 
   const handleMunicipalityChange = useCallback(
     (event: SelectChangeEvent<string>): void => {
@@ -189,7 +189,7 @@ const ReservationPage = () => {
     [setQueryParams, availableInstruments]
   );
 
-  const handleInstitutoinSizesChange = useCallback(
+  const handleInstitutionSizesChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
       const next = checked
@@ -222,7 +222,7 @@ const ReservationPage = () => {
         label,
         onDelete: () => setQueryParams({ a: availableInstruments.filter((a) => a !== v) }),
       })),
-    ...Object.entries(INSTUTITON_SIZE_MAP)
+    ...Object.entries(INSTITUTION_SIZE_MAP)
       .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
       .map(([v, label]) => ({
         label,
@@ -276,10 +276,10 @@ const ReservationPage = () => {
             </CheckboxGroup>
             <CheckboxGroup
               label="施設サイズ"
-              onChange={handleInstitutoinSizesChange}
+              onChange={handleInstitutionSizesChange}
               values={institutionSizes}
             >
-              {Object.entries(INSTUTITON_SIZE_MAP).map(([value, label]) => (
+              {Object.entries(INSTITUTION_SIZE_MAP).map(([value, label]) => (
                 <Checkbox key={value} label={label} value={value} />
               ))}
             </CheckboxGroup>

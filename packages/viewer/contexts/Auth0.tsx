@@ -30,7 +30,7 @@ type Auth0Context = {
   logout(o: LogoutOptions): void;
 };
 
-const initlalContext: Auth0Context = {
+const initialContext: Auth0Context = {
   isLoading: true,
   token: "",
   userInfo: { anonymous: true, trial: false },
@@ -38,14 +38,14 @@ const initlalContext: Auth0Context = {
   logout: () => null,
 };
 
-export const Auth0Context = createContext<Auth0Context>(initlalContext);
+export const Auth0Context = createContext<Auth0Context>(initialContext);
 export const useAuth0 = () => useContext(Auth0Context);
 
 export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   const [auth0Client, setAuth0Client] = useState<Auth0Client | null>(null);
-  const [isLoading, setIsLoading] = useState(initlalContext.isLoading);
-  const [token, setToken] = useState(initlalContext.token);
-  const [userInfo, setUserInfo] = useState(initlalContext.userInfo);
+  const [isLoading, setIsLoading] = useState(initialContext.isLoading);
+  const [token, setToken] = useState(initialContext.token);
+  const [userInfo, setUserInfo] = useState(initialContext.userInfo);
   // Type assertion needed: Auth0 2.8.0 allows authorizationParams.scope to be
   // string | Record<string, string>, but GetTokenSilentlyOptions type still expects
   // only string. The runtime supports both formats, so this assertion is safe.
