@@ -62,7 +62,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
       setAuth0Client(new Client(clientOptions));
     });
     // clientOptions are stable environment constants from index.tsx
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, []);
 
   const getIdTokenClaims = useCallback(async () => {
