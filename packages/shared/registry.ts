@@ -5,7 +5,15 @@ export interface MunicipalityConfig {
   readonly slug: string;
   readonly prefecture: string;
   readonly label: string;
+  /** true = スクレイパー自体が存在しない（ビューア専用データのみ） */
   readonly reservationExcluded: boolean;
+  /**
+   * true = スクレイパーは存在するが定期 CI から除外する（workflow_dispatch では
+   * SCRAPER_FORCE_INCLUDE により実行可能）。playwright.config.ts の testIgnore が参照する。
+   */
+  readonly scraperCiExcluded?: boolean;
+  /** サイトのメンテナンス時間帯 [開始時, 終了時)（JST の時、半開区間） */
+  readonly maintenanceWindowJst?: readonly [number, number];
   readonly reservationStatus: Readonly<Record<string, string>>;
   readonly reservationDivision: Readonly<Record<string, string>>;
   readonly feeDivision: Readonly<Record<string, string>>;
@@ -222,6 +230,8 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "墨田区",
     reservationExcluded: false,
+    // 2026-07-10 からサイト構造変化で故障中。userHome エンジン統合（再構築 PR 1-5b）で解除予定
+    scraperCiExcluded: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",
@@ -250,6 +260,8 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "大田区",
     reservationExcluded: false,
+    // サイトのメンテナンス時間帯（JST 02:00-05:00）。窓内のスクレイプは transient 扱いにする
+    maintenanceWindowJst: [2, 5],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約済",
@@ -257,6 +269,8 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_3]: "休館日",
       [ReservationStatus.STATUS_4]: "保守点検",
       [ReservationStatus.STATUS_5]: "利用中止",
+      // STATUS_6 は歴史的経緯による欠番（DB 保存値と scraper 側 STATUS_MAP が STATUS_7 で
+      // 一貫しているため、renumber は保存データの書き換えを伴う。D1 移行時に吸収する）
       [ReservationStatus.STATUS_7]: "利用不可",
     },
     reservationDivision: {
@@ -315,12 +329,13 @@ export const MUNICIPALITIES = {
       [ReservationDivision.DIVISION_11]: "19時-",
       [ReservationDivision.DIVISION_12]: "20時-",
     },
-    // NOTE: Uses ReservationDivision keys for AFTERNOON_ONE/TWO (existing behavior preserved)
+    // data/institutions/tokyo-suginami.json は FEE_DIVISION_* キーを使うため、
+    // ReservationDivision キーの流用（旧実装）では料金ラベルが引けなかった
     feeDivision: {
       [FeeDivision.MORNING]: "午前",
       [FeeDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
+      [FeeDivision.AFTERNOON_ONE]: "午後1",
+      [FeeDivision.AFTERNOON_TWO]: "午後2",
       [FeeDivision.EVENING]: "夜間",
       [FeeDivision.ONE_HOUR]: "1時間",
     },
@@ -391,6 +406,8 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "目黒区",
     reservationExcluded: false,
+    // 定期実行での安定性が未検証（予約データ 0 行）。dispatch 観測後に解除予定（再構築 PR 1-6）
+    scraperCiExcluded: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",

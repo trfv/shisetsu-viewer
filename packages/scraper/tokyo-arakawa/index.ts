@@ -7,7 +7,7 @@ import { getCellValue, selectAllOptions } from "../common/playwrightUtils.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status } from "../common/types.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   "09:00\n～\n12:00": "RESERVATION_DIVISION_MORNING",
   "09:00\n～\n12:30": "RESERVATION_DIVISION_MORNING",
@@ -26,7 +26,7 @@ const DIVISION_MAP: Record<string, Division> = {
   "19:00\n～\n22:00": "RESERVATION_DIVISION_EVENING",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "/stagia/jsp/images_jp/multi_images/timetable-o.gif": "RESERVATION_STATUS_VACANT",
   Ｘ: "RESERVATION_STATUS_STATUS_1",

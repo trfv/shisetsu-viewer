@@ -52,6 +52,8 @@ runs:
       env:
         # horizon（取得期間）や開始日の計算はサイトと同じ JST で行う
         TZ: Asia/Tokyo
+        # dispatch で自治体を指定した場合は registry の CI 除外（scraperCiExcluded）を解除する
+        SCRAPER_FORCE_INCLUDE: ${{ inputs.municipality }}
       run: |
         if [ "${{ inputs.debug }}" == "true" ]; then
           DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}

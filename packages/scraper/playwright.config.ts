@@ -1,6 +1,20 @@
 import { defineConfig } from "@playwright/test";
+import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
 
 const isCI = !!process.env.CI;
+
+// CI 除外の単一ソースは registry の scraperCiExcluded。
+// SCRAPER_FORCE_INCLUDE（カンマ区切りの target 名）で個別解除できる —
+// workflow_dispatch では対象自治体を渡し、除外中でも実サイト検証を可能にする。
+const forceInclude = (process.env["SCRAPER_FORCE_INCLUDE"] ?? "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+const ciExcludedTargets = Object.values<MunicipalityConfig>(MUNICIPALITIES)
+  .filter((m) => m.scraperCiExcluded)
+  .map((m) => `${m.prefecture}-${m.slug}`)
+  .filter((target) => !forceInclude.includes(target));
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -39,5 +53,5 @@ export default defineConfig({
     trace: process.env.CI ? "off" : "on-first-retry",
   },
   testMatch: ["**/index.test.ts"],
-  testIgnore: isCI ? ["**/tokyo-sumida/**", "**/tokyo-meguro/**"] : [],
+  testIgnore: isCI ? ciExcludedTargets.map((target) => `**/${target}/**`) : [],
 });

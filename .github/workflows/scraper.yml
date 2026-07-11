@@ -19,6 +19,7 @@ on:
           - tokyo-toshima
           - tokyo-ota
           - tokyo-edogawa
+          - tokyo-meguro
           - kanagawa-kawasaki
           - all
   schedule:
