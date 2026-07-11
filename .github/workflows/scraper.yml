@@ -22,31 +22,26 @@ on:
           - tokyo-meguro
           - kanagawa-kawasaki
           - all
+      density:
+        description: "Tests per shard (higher = fewer shards)"
+        required: false
+        default: "5"
+        type: string
   schedule:
-    - cron: "0 4,16 * * *"
+    # JST 17:23 / 05:23 起点。GitHub cron の実測遅延（最大 ~3.7h）を足しても
+    # ota のメンテナンス窓（JST 02:00-05:00）に到達しない時刻に置く。
+    # 分を 23 にするのは毎時 0 分の混雑を避けるため。
+    - cron: "23 8,20 * * *"
 
 jobs:
   prepare:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     outputs:
-      municipality: ${{ steps.set-matrix.outputs.municipality }}
-      shardIndex: ${{ steps.set-matrix.outputs.shardIndex }}
-      shardTotal: ${{ steps.set-matrix.outputs.shardTotal }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
       nodeModulesCacheKey: ${{ steps.set-cache-keys.outputs.nodeModulesCacheKey }}
       playwrightCacheKey: ${{ steps.set-cache-keys.outputs.playwrightCacheKey }}
     steps:
-      - name: Set matrix
-        id: set-matrix
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ github.event.inputs.municipality }}" != "all" ]; then
-            echo "municipality=${{ github.event.inputs.municipality }}" >> $GITHUB_OUTPUT
-            echo "shardIndex=[$(seq -s ',' 1 20)]" >> $GITHUB_OUTPUT
-            echo "shardTotal=[20]" >> $GITHUB_OUTPUT
-          else
-            echo "shardIndex=[$(seq -s ',' 1 100)]" >> $GITHUB_OUTPUT
-            echo "shardTotal=[100]" >> $GITHUB_OUTPUT
-          fi
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Set cache keys
@@ -91,18 +86,28 @@ jobs:
           done
           echo "playwright install failed after 3 attempts" >&2
           exit 1
+      - name: Set matrix
+        id: set-matrix
+        working-directory: packages/scraper
+        env:
+          # dispatch で自治体を指定した場合は registry の CI 除外を解除して --list に含める
+          SCRAPER_FORCE_INCLUDE: ${{ github.event.inputs.municipality }}
+          CI: "true"
+        run: |
+          MUNICIPALITY="${{ github.event.inputs.municipality }}"
+          DENSITY="${{ github.event.inputs.density || '5' }}"
+          MATRIX=$(node scripts/shardMatrix.ts "${MUNICIPALITY:-all}" --density "${DENSITY}")
+          echo "matrix=${MATRIX}" >> "$GITHUB_OUTPUT"
 
   scrape:
-    name: Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
+    name: Scrape ${{ matrix.municipality }} (${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
     needs: prepare
     timeout-minutes: 60
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
       fail-fast: false
-      matrix:
-        shardIndex: ${{ fromJson(needs.prepare.outputs.shardIndex) }}
-        shardTotal: ${{ fromJson(needs.prepare.outputs.shardTotal) }}
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -112,7 +117,7 @@ jobs:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
         with:
-          municipality: ${{ needs.prepare.outputs.municipality }}
+          municipality: ${{ matrix.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
           shardTotal: ${{ matrix.shardTotal }}
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
@@ -141,10 +146,10 @@ jobs:
               });
               console.log(`Found ${jobs.length} total jobs via pagination.`);
               const failedShards = jobs
-                .filter((job) => job.name.startsWith('Scrape') && job.conclusion === 'failure')
-                .map((job) => job.name.match(/Scrape \((\d+),\s(\d+)\)/).slice(1))
-                .filter((arr) => arr.length === 2)
-                .map((arr) => ({ shardIndex: arr[0], shardTotal: arr[1] }));
+                .filter((job) => job.name.startsWith('Scrape ') && job.conclusion === 'failure')
+                .map((job) => job.name.match(/^Scrape (\S+) \((\d+)\/(\d+)\)$/))
+                .filter((m) => m !== null)
+                .map((m) => ({ municipality: m[1], shardIndex: m[2], shardTotal: m[3] }));
               console.log(`Failed shards: ${JSON.stringify(failedShards)}`);
               core.setOutput('failedShards', JSON.stringify(failedShards));
             } catch (error) {
@@ -153,7 +158,7 @@ jobs:
             }
 
   retry_scrape:
-    name: Retry Scrape (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})
+    name: Retry Scrape ${{ matrix.municipality }} (${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
     needs:
       - prepare
       - prepare_retry
@@ -173,7 +178,7 @@ jobs:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
         with:
-          municipality: ${{ needs.prepare.outputs.municipality }}
+          municipality: ${{ matrix.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
           shardTotal: ${{ matrix.shardTotal }}
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}

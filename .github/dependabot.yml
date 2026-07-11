@@ -1,7 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
-    directory: "/"
+    # 複合アクション (.github/actions/scrape) 内の action は "/" では追跡されないため明示する
+    directories:
+      - "/"
+      - "/.github/actions/scrape"
     schedule:
       interval: "daily"
     cooldown:
