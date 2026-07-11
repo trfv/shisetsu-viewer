@@ -14,7 +14,7 @@ import {
  * - "twoWeeks": 1ページ = 2週間（WebR Grand 系のカレンダー表示）
  * - "calendarWeek": 1ページ = 暦週（日曜起点。週の途中開始でも1ページと数える）
  */
-export type HorizonUnit = "day" | "week" | "twoWeeks" | "calendarWeek";
+type HorizonUnit = "day" | "week" | "twoWeeks" | "calendarWeek";
 
 /**
  * スクレイプ対象期間の宣言的な指定。

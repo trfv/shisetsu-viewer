@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  ignoreBinaries: ["open", "playwright"],
+  ignoreBinaries: ["open", "playwright", "xdg-open"],
   exclude: ["enumMembers"],
   workspaces: {
     ".": {

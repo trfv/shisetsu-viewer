@@ -4,7 +4,7 @@ import type { HorizonSpec } from "./horizon.ts";
 import type { TransformOutput } from "./types.ts";
 
 /** persist ステップで書き出す 1 ファイル分の内容 */
-export interface OutputFile {
+interface OutputFile {
   /** test-results/<municipality>/<fileName>.json */
   fileName: string;
   /** JSON の facility_name（updateReservations が institution 解決に使う） */

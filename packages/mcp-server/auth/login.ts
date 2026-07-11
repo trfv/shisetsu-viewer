@@ -27,6 +27,7 @@ function openBrowser(url: string): void {
   } else if (process.platform === "win32") {
     execFile("cmd", ["/c", "start", url], onError);
   } else {
+    // knip:ignore-binary xdg-open
     execFile("xdg-open", [url], onError);
   }
 }

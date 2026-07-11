@@ -13,7 +13,7 @@ export const AVAILABLE_INSTRUMENT_MAP = {
   [PERCUSSION]: "打楽器",
 } as const;
 
-export const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as const;
+const AvailableInstruments = [STRINGS, WOODWIND, BRASS, PERCUSSION] as const;
 export type AvailableInstrument = (typeof AvailableInstruments)[number];
 
 export const getAvailableInstrumentFromUrlParam = (
@@ -34,7 +34,7 @@ export const INSTUTITON_SIZE_MAP = {
   [SMALL]: InstitutionSizeMap[InstitutionSizeEnum.SMALL]!,
 } as const;
 
-export const InstitutionSizes = [LARGE, MEDIUM, SMALL] as const;
+const InstitutionSizes = [LARGE, MEDIUM, SMALL] as const;
 export type InstitutionSize = (typeof InstitutionSizes)[number];
 
 export const getInstitutionSizeFromUrlParam = (
