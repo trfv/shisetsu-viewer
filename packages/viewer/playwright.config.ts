@@ -62,9 +62,10 @@ export default defineConfig({
     },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Run your local dev server before starting the tests.
+     On CI, serve the built dist via `vite preview` so E2E verifies the deploy artifact. */
   webServer: {
-    command: "npm run start",
+    command: process.env.CI ? "npm run serve" : "npm run start",
     url: "http://localhost:3000",
     reuseExistingServer: false,
     timeout: 120000,

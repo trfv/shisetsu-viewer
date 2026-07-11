@@ -46,7 +46,7 @@
     "cli": "npm run cli -w @shisetsu-viewer/mcp-server --",
     "format:check:all": "prettier --check \"./packages/**/*.ts*\"",
     "format:fix:all": "prettier --write \"./packages/**/*.ts*\"",
-    "lint:all": "eslint \"./packages/**/*.ts*\"",
+    "lint:all": "eslint --max-warnings=0 \"./packages/**/*.ts*\"",
     "lint:fix:all": "eslint --fix \"./packages/**/*.ts*\"",
     "typecheck:all": "npm run typecheck --workspaces",
     "knip": "knip",

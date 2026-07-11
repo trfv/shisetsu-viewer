@@ -25,12 +25,7 @@ const config: KnipConfig = {
         "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
       ],
     },
-    "packages/shared": {
-      entry: ["registry.test.ts"],
-      ignoreDependencies: [
-        "vitest", // provided by root workspace
-      ],
-    },
+    "packages/shared": {},
     "packages/mcp-server": {
       entry: ["worker.ts"],
       ignoreBinaries: ["wrangler"],

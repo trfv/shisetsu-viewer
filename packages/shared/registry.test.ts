@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vitest";
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
 import {
-  getReservationTargets,
   getMunicipalityBySlug,
   getMunicipalityKeyBySlug,
+  getReservationTargets,
 } from "./registry.ts";
 
 describe("registry", () => {
@@ -10,7 +11,6 @@ describe("registry", () => {
     it("returns only municipalities with reservationExcluded=false in prefecture-slug format", () => {
       const targets = getReservationTargets();
 
-      // Must match the hardcoded list in scraper tools exactly
       const expected = [
         "kanagawa-kawasaki",
         "tokyo-arakawa",
@@ -19,12 +19,13 @@ describe("registry", () => {
         "tokyo-edogawa",
         "tokyo-kita",
         "tokyo-koutou",
+        "tokyo-meguro",
         "tokyo-ota",
         "tokyo-sumida",
         "tokyo-toshima",
       ];
 
-      expect([...targets].sort()).toEqual([...expected].sort());
+      assert.deepEqual([...targets].sort(), [...expected].sort());
     });
 
     it("excludes municipalities with reservationExcluded=true", () => {
@@ -32,7 +33,10 @@ describe("registry", () => {
       const excludedSlugs: string[] = ["suginami"];
 
       for (const slug of excludedSlugs) {
-        expect(targets.some((t) => t.includes(slug))).toBe(false);
+        assert.equal(
+          targets.some((t) => t.includes(slug)),
+          false
+        );
       }
     });
   });
@@ -40,22 +44,22 @@ describe("registry", () => {
   describe("getMunicipalityBySlug", () => {
     it("returns the config for a known slug", () => {
       const result = getMunicipalityBySlug("arakawa");
-      expect(result).toBeDefined();
-      expect(result?.label).toBe("荒川区");
+      assert.ok(result);
+      assert.equal(result.label, "荒川区");
     });
 
     it("returns undefined for unknown slug", () => {
-      expect(getMunicipalityBySlug("unknown")).toBeUndefined();
+      assert.equal(getMunicipalityBySlug("unknown"), undefined);
     });
   });
 
   describe("getMunicipalityKeyBySlug", () => {
     it("returns the key for a known slug", () => {
-      expect(getMunicipalityKeyBySlug("kawasaki")).toBe("MUNICIPALITY_KAWASAKI");
+      assert.equal(getMunicipalityKeyBySlug("kawasaki"), "MUNICIPALITY_KAWASAKI");
     });
 
     it("returns undefined for unknown slug", () => {
-      expect(getMunicipalityKeyBySlug("unknown")).toBeUndefined();
+      assert.equal(getMunicipalityKeyBySlug("unknown"), undefined);
     });
   });
 });
