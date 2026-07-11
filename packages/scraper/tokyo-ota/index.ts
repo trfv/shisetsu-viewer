@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
 import { defineScraper } from "../common/defineScraper.ts";
 import { toISODateString } from "../common/dateUtils.ts";
+import { MaintenanceWindowError, TargetNotFoundError } from "../common/errors.ts";
 import { collectPaginated } from "../common/paginate.ts";
 import { getCellValue } from "../common/playwrightUtils.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
@@ -239,12 +240,11 @@ export const scraper = defineScraper({
 
   async prepare(page, target) {
     await page.goto(BASE_URL);
-    // サイトのメンテナンス窓（02:00-05:00 JST）にスクレイプが当たると "システム休止"
-    // ページが返り、以降の操作はすべて「ログインせずに〜」リンク不在で失敗する。
-    // ここで明示的に検出し、transient として分類されるメッセージで throw する
-    // （classifyFailure の TRANSIENT_PATTERNS と合わせて構造変化と誤分類されないようにする）。
+    // メンテナンス窓（JST 02:00-05:00）自体は registry の maintenanceWindowJst を使って
+    // runScrapeTest 側で fast-fail する。ここでは窓の縁で "システム休止" ページが
+    // 返ったケースを保険で検出し、transient 分類の型付きエラーで throw する。
     if (await page.getByText("システム休止", { exact: false }).first().isVisible()) {
-      throw new Error("システム休止: site under maintenance window (02:00-05:00 JST)");
+      throw new MaintenanceWindowError("システム休止: site under maintenance");
     }
     await page.getByRole("link", { name: "ログインせずに空き状況を検索" }).click();
     await page.getByText("カテゴリで検索").click();
@@ -266,15 +266,9 @@ export const scraper = defineScraper({
       }
     }
     if (!found) {
-      // メンテナンス窓では "システム休止" 表示なしで部屋一覧が不完全になることがある。
-      // 実績: 15時 JST の実行は成功し、02時台の実行のみこのエラーで失敗する。
-      const jstHour = (new Date().getUTCHours() + 9) % 24;
-      if (jstHour >= 2 && jstHour < 5) {
-        throw new Error(
-          `システム休止: room listing incomplete during maintenance window (02:00-05:00 JST): ${target.buildingName} ${siteRoomName} in category ${target.category}`
-        );
-      }
-      throw new Error(
+      // 窓内は runScrapeTest の guard が先に fast-fail するため、ここに到達する
+      // 「部屋が見つからない」は構造変化（施設一覧の変化）とみなしてよい。
+      throw new TargetNotFoundError(
         `Room not found: ${target.buildingName} ${siteRoomName} in category ${target.category}`
       );
     }

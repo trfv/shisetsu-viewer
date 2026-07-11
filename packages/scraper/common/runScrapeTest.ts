@@ -1,8 +1,15 @@
 import type { Page } from "@playwright/test";
-import type { TransformOutput } from "./types.ts";
-import type { FailedStep } from "./failureTypes.ts";
-import { validateTransformOutput } from "./validation.ts";
 import { captureFailure, clearFailure } from "./captureFailure.ts";
+import { MaintenanceWindowError, PartialExtractionError } from "./errors.ts";
+import type { FailedStep } from "./failureTypes.ts";
+import { isWithinMaintenanceWindow } from "./maintenanceWindow.ts";
+import {
+  drainPaginationEvents,
+  resetPaginationEvents,
+  type PaginationTruncation,
+} from "./paginate.ts";
+import type { TransformOutput } from "./types.ts";
+import { validateTransformOutput } from "./validation.ts";
 
 /**
  * partial extraction 検出のしきい値。distinct date / expectedDateCount が
@@ -41,6 +48,14 @@ export interface RunScrapeTestOptions<E extends { length: number }> {
    * 各 scraper の calculateCount() などから渡す。
    */
   expectedDateCount?: number;
+  /**
+   * サイトのメンテナンス窓 [開始時, 終了時)（JST の時）。指定時、現在時刻が
+   * 窓内なら prepare を実行せず MaintenanceWindowError（transient 分類）で
+   * fast-fail する。registry の maintenanceWindowJst から渡す。
+   */
+  maintenanceWindowJst?: readonly [number, number];
+  /** テスト用シーム。メンテナンス窓判定に使う現在時刻（既定 new Date()）。 */
+  now?: Date;
 }
 
 /**
@@ -58,10 +73,23 @@ export async function runScrapeTest<E extends { length: number }>(
   let searchPage: Page | undefined;
   let step: FailedStep = "prepare";
   let validationErrors: string[] = [];
+  let truncations: PaginationTruncation[] = [];
+  resetPaginationEvents();
   try {
+    if (
+      opts.maintenanceWindowJst &&
+      isWithinMaintenanceWindow(opts.maintenanceWindowJst, opts.now ?? new Date())
+    ) {
+      const [start, end] = opts.maintenanceWindowJst;
+      throw new MaintenanceWindowError(
+        `${label}: within site maintenance window (${start}:00-${end}:00 JST)`
+      );
+    }
     searchPage = await opts.prepare();
     step = "extract";
     const extractOutput = await opts.extract(searchPage);
+    // ページ送りの打ち切りがあれば記録（partial 検出のメッセージと失敗コンテキストに使う）
+    truncations = drainPaginationEvents();
     if (extractOutput.length === 0) {
       throw new Error(`extract returned no rows for ${label}`);
     }
@@ -79,8 +107,13 @@ export async function runScrapeTest<E extends { length: number }>(
       const distinctDates = new Set(transformOutput.map((r) => r.date)).size;
       const ratio = distinctDates / opts.expectedDateCount;
       if (ratio < PARTIAL_EXTRACTION_THRESHOLD) {
-        throw new Error(
-          `partial extraction for ${label}: covered ${distinctDates}/${opts.expectedDateCount} expected days (${Math.round(ratio * 100)}%, threshold ${Math.round(PARTIAL_EXTRACTION_THRESHOLD * 100)}%)`
+        // 打ち切りの根本原因があれば末尾に添える（修復エージェントが比率でなく原因から直せる）
+        const cause = truncations.at(-1);
+        const causeSuffix = cause
+          ? ` (pagination aborted at page ${cause.page} during ${cause.phase}: ${cause.message})`
+          : "";
+        throw new PartialExtractionError(
+          `partial extraction for ${label}: covered ${distinctDates}/${opts.expectedDateCount} expected days (${Math.round(ratio * 100)}%, threshold ${Math.round(PARTIAL_EXTRACTION_THRESHOLD * 100)}%)${causeSuffix}`
         );
       }
     }
@@ -95,10 +128,14 @@ export async function runScrapeTest<E extends { length: number }>(
       ...(baseDir !== undefined && { baseDir }),
     });
   } catch (e) {
+    // extract で throw した場合はまだ drain していないので拾う
+    if (truncations.length === 0) truncations = drainPaginationEvents();
+    const failureContext =
+      truncations.length > 0 ? { ...context, paginationTruncations: truncations } : context;
     await captureFailure({
       municipality,
       facility,
-      context,
+      context: failureContext,
       failedStep: step,
       error: e,
       validationErrors,

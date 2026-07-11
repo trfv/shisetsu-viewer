@@ -1,6 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { classifyFailure } from "./classifyFailure.ts";
+import {
+  MaintenanceWindowError,
+  PartialExtractionError,
+  ScrapeStructureError,
+  TargetNotFoundError,
+} from "./errors.ts";
 
 test("validate 失敗は step だけで structural", () => {
   assert.equal(classifyFailure("validate", new Error("x")), "structural");
@@ -72,4 +78,37 @@ test("Error 以外の値が throw されても分類できる", () => {
     classifyFailure("extract", { toString: () => "locator.click: Timeout 5000ms exceeded" }),
     "structural"
   );
+});
+
+test("型付きエラーは文言に依存せず instanceof で分類される", () => {
+  // メッセージが構造系パターンに一致しても、型が transient なら transient
+  assert.equal(
+    classifyFailure("prepare", new MaintenanceWindowError("locator.click failed somehow")),
+    "transient"
+  );
+  assert.equal(classifyFailure("prepare", new PartialExtractionError("...")), "structural");
+  assert.equal(classifyFailure("prepare", new ScrapeStructureError("...")), "structural");
+  assert.equal(classifyFailure("prepare", new TargetNotFoundError("Room not found")), "structural");
+});
+
+test("Node システムエラーコードは transient（cause 連鎖も辿る）", () => {
+  const direct = Object.assign(new Error("fetch failed"), { code: "ECONNRESET" });
+  assert.equal(classifyFailure("prepare", direct), "transient");
+
+  const wrapped = new Error("upload failed", {
+    cause: Object.assign(new Error("socket"), { code: "ETIMEDOUT" }),
+  });
+  assert.equal(classifyFailure("persist", wrapped), "transient");
+});
+
+test("Playwright TimeoutError は name で分類（navigation は transient、要素待ちは structural）", () => {
+  const navTimeout = Object.assign(new Error("page.goto: Timeout 30000ms exceeded"), {
+    name: "TimeoutError",
+  });
+  assert.equal(classifyFailure("prepare", navTimeout), "transient");
+
+  const locatorTimeout = Object.assign(new Error("Timeout 5000ms exceeded waiting for element"), {
+    name: "TimeoutError",
+  });
+  assert.equal(classifyFailure("extract", locatorTimeout), "structural");
 });

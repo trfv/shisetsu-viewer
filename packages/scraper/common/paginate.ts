@@ -1,3 +1,30 @@
+/**
+ * collectPaginated がページ送りを途中で打ち切ったときの記録。
+ * 打ち切り自体は resilience（部分結果を保存）として許容するが、
+ * 「なぜ打ち切ったか」を可観測にして partial-extraction 検出や修復に役立てる。
+ */
+export interface PaginationTruncation {
+  readonly label: string;
+  readonly page: number;
+  readonly phase: "extract" | "goNext";
+  readonly message: string;
+}
+
+// Playwright は 1 worker プロセス内でテストを逐次実行するため、モジュールグローバルで安全。
+let truncationBuffer: PaginationTruncation[] = [];
+
+/** 蓄積された打ち切りイベントを消去する（各テストの開始時に呼ぶ）。 */
+export function resetPaginationEvents(): void {
+  truncationBuffer = [];
+}
+
+/** 蓄積された打ち切りイベントを取り出してバッファを空にする。 */
+export function drainPaginationEvents(): PaginationTruncation[] {
+  const events = truncationBuffer;
+  truncationBuffer = [];
+  return events;
+}
+
 export interface PaginateOptions<Item> {
   /** ページ送り回数の上限（HorizonSpec から計算した値を渡す） */
   maxPages: number;
@@ -31,7 +58,9 @@ export async function collectPaginated<Item>(opts: PaginateOptions<Item>): Promi
     let items: Item[] | null;
     try {
       items = await opts.extractPage(i);
-    } catch {
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      truncationBuffer.push({ label, page: i + 1, phase: "extract", message });
       console.warn(`[${label}] Failed to extract data at page ${i + 1}, saving current output.`);
       break;
     }
@@ -44,7 +73,9 @@ export async function collectPaginated<Item>(opts: PaginateOptions<Item>): Promi
     let moved: boolean;
     try {
       moved = await opts.goNext(i);
-    } catch {
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      truncationBuffer.push({ label, page: i + 1, phase: "goNext", message });
       console.warn(`[${label}] Failed to navigate to next page at page ${i + 1}.`);
       break;
     }
