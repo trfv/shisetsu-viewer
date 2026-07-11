@@ -6,14 +6,7 @@ import globals from "globals";
 
 export default tseslint.config([
   {
-    ignores: [
-      "**/*.json",
-      "build/**",
-      "coverage/**",
-      "node_modules/**",
-      "public/**",
-      "packages/viewer/api/graphql-client.tsx",
-    ],
+    ignores: ["**/*.json", "build/**", "coverage/**", "node_modules/**", "public/**"],
   },
   js.configs.recommended,
   tseslint.configs.recommended,
@@ -51,8 +44,19 @@ export default tseslint.config([
       "react/display-name": "off",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      "react-hooks/rules-of-hooks": "warn",
-      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+      // 匿名の default export アロー（`export default () => {}`）は
+      // rules-of-hooks が発火しない（コンポーネント名を認識できない）ため禁止する。
+      // 名前付き const にして `export default Name;` とする。
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "ExportDefaultDeclaration > ArrowFunctionExpression",
+          message:
+            "匿名の default export アローは禁止。名前付き const にして `export default Name;` としてください（rules-of-hooks 発火のため）。",
+        },
+      ],
     },
   },
 ]);

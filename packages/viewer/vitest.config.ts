@@ -29,12 +29,11 @@ export default defineConfig({
         "test/",
         "*.config.ts",
         "*.config.js",
-        "api/graphql-client.tsx",
         "dist/",
         "coverage/",
         "**/*.d.ts",
         "**/index.ts",
-        "**/main.tsx",
+        "index.tsx",
       ],
       thresholds: {
         branches: 60,

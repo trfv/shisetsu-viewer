@@ -1,6 +1,6 @@
 import styles from "./Top.module.css";
 
-export default () => {
+const TopPage = () => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["contentBox"]}>
@@ -62,3 +62,5 @@ export default () => {
     </main>
   );
 };
+
+export default TopPage;

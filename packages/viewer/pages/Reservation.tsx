@@ -94,7 +94,7 @@ export const COLUMNS: Columns<SearchableReservationNode> = [
   },
 ];
 
-export default () => {
+const ReservationPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
 
@@ -312,3 +312,5 @@ export default () => {
     </main>
   );
 };
+
+export default ReservationPage;

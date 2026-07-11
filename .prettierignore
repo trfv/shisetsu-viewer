@@ -1,5 +1,4 @@
 *.json
-graphql-client.tsx
 
 /node_modules
 /build

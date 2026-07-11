@@ -322,8 +322,18 @@ type TabType = "institution" | "reservation";
 
 const today = new Date();
 
-export default () => {
+// 外側は id の検証と Redirect のみ。Hooks は一切呼ばないので、
+// 不正な id での早期 return が rules-of-hooks に抵触しない。
+const DetailPage = () => {
   const { id } = useParams();
+  if (!id || !isValidUuid(id)) {
+    return <Redirect to={ROUTES.top} replace />;
+  }
+  return <DetailContent id={id} />;
+};
+
+// 検証済みの id を受け取り、全ての Hooks はここで無条件に呼ぶ。
+const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
     userInfo: { anonymous, trial },
@@ -333,10 +343,6 @@ export default () => {
     (_: ChangeEvent<unknown>, newValue: string) => setTab(newValue as TabType),
     []
   );
-
-  if (!id || !isValidUuid(id)) {
-    return <Redirect to={ROUTES.top} replace />;
-  }
 
   const { loading, data, error } = useGraphQLQuery<InstitutionDetailQueryData>(
     INSTITUTION_DETAIL_QUERY,
@@ -383,3 +389,5 @@ export default () => {
     </main>
   );
 };
+
+export default DetailPage;

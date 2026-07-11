@@ -97,7 +97,7 @@ export const COLUMNS: Columns<InstitutionNode> = [
   },
 ];
 
-export default () => {
+const InstitutionPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
 
@@ -243,3 +243,5 @@ export default () => {
     </main>
   );
 };
+
+export default InstitutionPage;
