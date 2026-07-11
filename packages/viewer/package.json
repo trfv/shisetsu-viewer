@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@auth0/auth0-spa-js": "2.22.0",
+    "@auth0/auth0-spa-js": "2.23.0",
     "@fontsource-variable/noto-sans-jp": "5.2.10",
     "date-fns": "4.4.0",
     "react": "19.2.7",
