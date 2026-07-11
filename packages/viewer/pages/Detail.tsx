@@ -322,8 +322,15 @@ type TabType = "institution" | "reservation";
 
 const today = new Date();
 
-export default () => {
-  const { id } = useParams();
+const DetailPage = () => {
+const { id } = useParams();
+  if (!id || !isValidUuid(id)) {
+    return <Redirect to={ROUTES.top} replace />;
+  }
+  return <DetailContent id={id} />;
+};
+
+const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
     userInfo: { anonymous, trial },
@@ -333,10 +340,6 @@ export default () => {
     (_: ChangeEvent<unknown>, newValue: string) => setTab(newValue as TabType),
     []
   );
-
-  if (!id || !isValidUuid(id)) {
-    return <Redirect to={ROUTES.top} replace />;
-  }
 
   const { loading, data, error } = useGraphQLQuery<InstitutionDetailQueryData>(
     INSTITUTION_DETAIL_QUERY,
@@ -383,3 +386,5 @@ export default () => {
     </main>
   );
 };
+
+export default DetailPage;
