@@ -1,39 +1,29 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  ignoreBinaries: ["open", "playwright", "xdg-open"],
+  ignoreBinaries: ["open", "xdg-open"],
   exclude: ["enumMembers"],
   workspaces: {
     ".": {
       ignoreDependencies: [
-        "@mizchi/lsmcp", // MCP server (external dev tool, not imported)
         "prettier-plugin-organize-imports", // loaded by prettier via config
       ],
     },
     "packages/viewer": {
       ignoreDependencies: [
-        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
         "@swc/core", // used internally by @vitejs/plugin-react-swc
-        "@vitest/browser", // required for vitest browser mode (test.browser.enabled)
         "dotenv", // used via --require dotenv/config in generate script
-        "esbuild", // used internally by vite for dependency pre-bundling
       ],
     },
     "packages/scraper": {
-      // */index.ts: 自治体スクレイパー。registryContract.test.ts が動的 import で
-      // DIVISION_MAP/STATUS_MAP を参照するため (静的解析不能)、entry として扱う
-      entry: ["**/index.test.ts", "*/index.ts", "scripts/run.ts", "tools/**/*.ts"],
-      ignoreDependencies: [
-        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
-      ],
+      entry: ["**/index.test.ts", "*/index.ts", "tools/**/*.ts"],
+      ignoreDependencies: [],
     },
     "packages/shared": {},
     "packages/mcp-server": {
       entry: ["worker.ts"],
-      ignoreBinaries: ["wrangler"],
-      ignoreDependencies: [
-        "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
-      ],
+      ignoreBinaries: [],
+      ignoreDependencies: [],
     },
   },
 };
