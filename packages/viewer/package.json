@@ -35,10 +35,10 @@
   },
   "scripts": {
     "start": "vite --port 3000",
-    "build": "tsgo && vite build",
+    "build": "node ../../node_modules/typescript7/bin/tsc && vite build",
     "build:analyze": "vite build --mode analyze",
     "serve": "vite preview --port 3000",
-    "typecheck": "tsgo",
+    "typecheck": "node ../../node_modules/typescript7/bin/tsc",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",

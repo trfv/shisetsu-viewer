@@ -8,12 +8,10 @@
     ],
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
-    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["node_modules"],
-  "references": []
+  "exclude": ["node_modules"]
 }

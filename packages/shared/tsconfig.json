@@ -3,9 +3,9 @@
   "compilerOptions": {
     "rootDir": "./",
     "lib": ["ESNext"],
+    "types": ["node"],
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true
   },
-  "include": ["./**/*.ts"],
-  "references": []
+  "include": ["./**/*.ts"]
 }

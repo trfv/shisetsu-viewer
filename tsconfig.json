@@ -1,25 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ESNext"
-    ],
+    "lib": ["dom", "dom.iterable", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "jsx": "react-jsx",
-    "ignoreDeprecations": "5.0",
-    "composite": true,
+    "jsx": "react-jsx"
   },
   "extends": "@tsconfig/strictest/tsconfig.json",
   "files": [],
-  "include": [],
-  "references": [
-    { "path": "./packages/shared" },
-    { "path": "./packages/scraper" },
-    { "path": "./packages/viewer" },
-    { "path": "./packages/mcp-server" }
-  ]
+  "include": []
 }

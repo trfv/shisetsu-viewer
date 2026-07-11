@@ -16,7 +16,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - npm workspaces. Use `-w @shisetsu-viewer/<package>` for package-specific commands.
 - Node >= 24, npm >= 10, ES Modules throughout.
 - Root `tsconfig.json` extends `@tsconfig/strictest` with composite project references.
-- Type checking: `tsgo` (`@typescript/native-preview`) — each package has `npm run typecheck` script.
+- Type checking: TypeScript 7 (`typescript7` = npm alias for `typescript@7`). Each package's `typecheck` script invokes `node ../../node_modules/typescript7/bin/tsc` directly. **Do not call bare `tsc`** — `typescript` (5.9, kept for typescript-eslint / knip / prettier-plugin-organize-imports which need TS API < 6.1) also provides a `tsc` bin, so the direct path is the only deterministic invocation. Collapse the alias to plain `typescript@7` once typescript-eslint supports TS7 (≈2026 autumn).
 
 ## Root Commands
 
@@ -27,7 +27,7 @@ npm run format:check:all      # Check formatting (Prettier, no write)
 npm run format:fix:all        # Fix formatting (Prettier, write)
 npm run lint:all              # Lint all TypeScript files (ESLint, no auto-fix)
 npm run lint:fix:all          # Lint and auto-fix (ESLint --fix)
-npm run typecheck:all         # Type check all packages with tsgo
+npm run typecheck:all         # Type check all packages with TypeScript 7 (typescript7 alias)
 npm run knip                  # Detect unused files, deps, exports
 ```
 
