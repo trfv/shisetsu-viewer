@@ -5,14 +5,14 @@ import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status } from "../common/types.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
   夜間: "RESERVATION_DIVISION_EVENING",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   空き: "RESERVATION_STATUS_VACANT",
   一部空き: "RESERVATION_STATUS_STATUS_1",

@@ -8,7 +8,7 @@ import type { Division, Status } from "../common/types.ts";
 
 const BASE_URL = "https://www.yoyaku.city.ota.tokyo.jp/eshisetsu/menu/Welcome.cgi";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   // 集会室系 (午前/午後/夜間)
   "09:00 - 12:00": "RESERVATION_DIVISION_MORNING",
@@ -22,7 +22,7 @@ const DIVISION_MAP: Record<string, Division> = {
   "19:30 - 21:30": "RESERVATION_DIVISION_EVENING_TWO",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "../img/std/common/icn_scche_ok.png": "RESERVATION_STATUS_VACANT",
   "../img/std/common/icn_scche_noset.png": "RESERVATION_STATUS_STATUS_1",

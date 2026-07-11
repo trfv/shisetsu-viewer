@@ -161,8 +161,9 @@ import { defineScraper } from "../common/defineScraper.ts";
 import type { Division, Status } from "../common/types.ts";
 import { openreafHooks, type OpenreafTarget } from "../engines/openreaf.ts";
 
-const DIVISION_MAP: Record<string, Division> = { "": "RESERVATION_DIVISION_INVALID" /* ... */ };
-const STATUS_MAP: Record<string, Status> = { "": "RESERVATION_STATUS_INVALID" /* ... */ };
+// export は必須（common/registryContract.test.ts が registry との整合を検証する）
+export const DIVISION_MAP: Record<string, Division> = { "": "RESERVATION_DIVISION_INVALID" /* ... */ };
+export const STATUS_MAP: Record<string, Status> = { "": "RESERVATION_STATUS_INVALID" /* ... */ };
 
 const targets: OpenreafTarget[] = [
   /* フェーズ1で収集した対象 */
@@ -245,6 +246,8 @@ MUNICIPALITY_<UPPERCASE_SLUG>: {
 
 - `reservationStatus` の値は viewer で表示されるラベル。スクレイパーの STATUS_MAP のキー（生テキスト）ではなく、人間が読める日本語名にする
 - `reservationDivision` も同様。`"9:00-12:00"` のような生テキストではなく `"午前"` のような表示名
+- `feeDivision` のキーは必ず `FeeDivision.*` を使う。`ReservationDivision.*` を流用すると施設 JSON の `FEE_DIVISION_*` 値と食い違い、viewer で料金ラベルが引けなくなる（杉並区で実際に起きた不具合）
+- 追加後は `npm run test:unit -w @shisetsu-viewer/scraper` の registry ドリフト検査が、scraper.yml / database.yml の choice・README の対応地区・施設 JSON の追記漏れを指摘する。全て緑にすること
 - 既存の同じ予約システム（OpenReaf 等）を使う自治体のエントリを参考にする
 - `reservationExcluded: false` にすることで、viewer のフィルターに表示される
 
@@ -272,28 +275,42 @@ for (const target of scraper.targets) {
 
 ### 2.5 （既存の institution データがない場合） institution データの作成
 
-`data/institutions/<slug>.json` を作成。同じディレクトリの既存ファイルを参考に、施設・部屋の情報をjson形式で記述する。
+`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。最小の実例は `data/institutions/tokyo-chuo.json`、enum 値の判定基準は `tasks/institution-data-prompt.md` を参照。
 
 ```json
-{
-  "key": "MUNICIPALITY_<UPPERCASE_SLUG>",
-  "slug": "<slug>",
-  "prefecture": "<tokyo|kanagawa|...>",
-  "label": "<日本語表示名>",
-  "facilities": [
-    {
-      "facilityName": "<施設名>",
-      "rooms": [
-        {
-          "roomName": "<部屋名>"
-        }
-        // ...
-      ]
-    }
-    // ...
-  ]
-}
+[
+  {
+    "id": "<uuidgen 等で採番した UUID>",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_<UPPERCASE_SLUG>",
+    "building": "<施設名>",
+    "institution": "<部屋名>",
+    "building_kana": "<シセツメイ（カタカナ）>",
+    "institution_kana": "<ヘヤメイ（カタカナ）>",
+    "building_system_name": "<予約システム上の施設名>",
+    "institution_system_name": "<予約システム上の部屋名>",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  }
+]
 ```
+
+`building_system_name` + `institution_system_name` はスクレイパー出力と施設レコードを突合するキーなので、予約システム上の表記と正確に一致させること。楽器利用可否はサイトに明示的な記載がある場合のみ設定する（推測禁止）。
 
 ---
 
@@ -311,6 +328,15 @@ npm run typecheck -w @shisetsu-viewer/scraper
 npx prettier --check packages/scraper/<slug>/index.ts packages/scraper/<slug>/index.test.ts
 npx eslint packages/scraper/<slug>/index.ts packages/scraper/<slug>/index.test.ts
 ```
+
+### 2.6 registry 整合検査
+
+```bash
+npm run test:unit -w @shisetsu-viewer/scraper
+```
+
+- `registryContract.test.ts` — DIVISION_MAP / STATUS_MAP（要 `export`）の値域が registry と整合しているか
+- `registryDrift.test.ts` — scraper.yml / database.yml の choice、README の対応地区、施設 JSON の存在。**失敗が新自治体の追記漏れ箇所を教えてくれる**
 
 ### 3.3 単一部屋テスト
 

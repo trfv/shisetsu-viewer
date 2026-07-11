@@ -5,7 +5,7 @@ import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status } from "../common/types.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
@@ -17,7 +17,7 @@ const DIVISION_MAP: Record<string, Division> = {
   "５コマ": "RESERVATION_DIVISION_DIVISION_5",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   circle: "RESERVATION_STATUS_VACANT",
   triangle: "RESERVATION_STATUS_STATUS_1",

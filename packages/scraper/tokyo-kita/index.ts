@@ -2,7 +2,7 @@ import { defineScraper } from "../common/defineScraper.ts";
 import type { Division, Status } from "../common/types.ts";
 import { openreafHooks, type OpenreafTarget } from "../engines/openreaf.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   "9:00-12:00": "RESERVATION_DIVISION_MORNING",
   "13:00-17:00": "RESERVATION_DIVISION_AFTERNOON",
@@ -14,7 +14,7 @@ const DIVISION_MAP: Record<string, Division> = {
   "19:30-21:30": "RESERVATION_DIVISION_DIVISION_5",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "○": "RESERVATION_STATUS_VACANT",
   "△": "RESERVATION_STATUS_STATUS_1",

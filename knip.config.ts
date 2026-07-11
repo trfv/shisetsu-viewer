@@ -20,7 +20,9 @@ const config: KnipConfig = {
       ],
     },
     "packages/scraper": {
-      entry: ["**/index.test.ts", "scripts/run.ts", "tools/**/*.ts"],
+      // */index.ts: 自治体スクレイパー。registryContract.test.ts が動的 import で
+      // DIVISION_MAP/STATUS_MAP を参照するため (静的解析不能)、entry として扱う
+      entry: ["**/index.test.ts", "*/index.ts", "scripts/run.ts", "tools/**/*.ts"],
       ignoreDependencies: [
         "@shisetsu-viewer/shared", // workspace dependency resolved by npm workspaces
       ],

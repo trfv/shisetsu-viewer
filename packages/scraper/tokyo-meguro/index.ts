@@ -2,14 +2,14 @@ import { defineScraper } from "../common/defineScraper.ts";
 import type { Division, Status } from "../common/types.ts";
 import { webrGrandHooks, type WebrGrandTarget } from "../engines/webrGrand.ts";
 
-const DIVISION_MAP: Record<string, Division> = {
+export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
   午前: "RESERVATION_DIVISION_MORNING",
   午後: "RESERVATION_DIVISION_AFTERNOON",
   夜間: "RESERVATION_DIVISION_EVENING",
 };
 
-const STATUS_MAP: Record<string, Status> = {
+export const STATUS_MAP: Record<string, Status> = {
   "": "RESERVATION_STATUS_INVALID",
   "○": "RESERVATION_STATUS_VACANT",
   "△": "RESERVATION_STATUS_STATUS_1",
