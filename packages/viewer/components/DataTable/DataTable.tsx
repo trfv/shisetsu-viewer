@@ -5,9 +5,9 @@ import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
 import styles from "./DataTable.module.css";
 
-type Row = { id: string } & { [key: string]: unknown };
+export type Row = { id: string } & { [key: string]: unknown };
 
-type RowParams<T> = {
+export type RowParams<T> = {
   id: string;
   value: unknown;
   row: T;
