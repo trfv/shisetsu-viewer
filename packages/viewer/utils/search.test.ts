@@ -1,10 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { InstitutionSize as InstitutionSizeEnum } from "../constants/enums";
 import {
+  type AvailableInstrument,
   AVAILABLE_INSTRUMENT_MAP,
+  buildFilterChips,
   getAvailableInstrumentFromUrlParam,
   getInstitutionSizeFromUrlParam,
   INSTITUTION_SIZE_MAP,
+  toggleArrayParam,
   toInstitutionSizeParam,
 } from "./search";
 
@@ -124,5 +127,45 @@ describe("INSTITUTION_SIZE_MAP", () => {
     expect(INSTITUTION_SIZE_MAP["l"]).toBe("大（100㎡~）");
     expect(INSTITUTION_SIZE_MAP["m"]).toBe("中（50㎡~100㎡）");
     expect(INSTITUTION_SIZE_MAP["s"]).toBe("小（~50㎡）");
+  });
+});
+
+describe("toggleArrayParam", () => {
+  test("checked のとき value を追加する", () => {
+    expect(toggleArrayParam<AvailableInstrument>(["s"], "w", true)).toEqual(["s", "w"]);
+  });
+
+  test("unchecked のとき value を除去する", () => {
+    expect(toggleArrayParam<AvailableInstrument>(["s", "w"], "w", false)).toEqual(["s"]);
+  });
+
+  test("unchecked で存在しない value なら変化しない", () => {
+    expect(toggleArrayParam<AvailableInstrument>(["s"], "w", false)).toEqual(["s"]);
+  });
+
+  test("元の配列を破壊しない", () => {
+    const current: AvailableInstrument[] = ["s"];
+    toggleArrayParam(current, "w", true);
+    expect(current).toEqual(["s"]);
+  });
+});
+
+describe("buildFilterChips", () => {
+  test("選択済みの値だけを chip 化する", () => {
+    const chips = buildFilterChips(AVAILABLE_INSTRUMENT_MAP, ["s", "b"], () => {});
+    expect(chips.map((c) => c.label)).toEqual(["弦楽器", "金管楽器"]);
+  });
+
+  test("選択が空なら空配列", () => {
+    expect(buildFilterChips(AVAILABLE_INSTRUMENT_MAP, [], () => {})).toEqual([]);
+  });
+
+  test("onDelete は対象値を除いた配列で onChange を呼ぶ", () => {
+    let received: string[] | undefined;
+    const chips = buildFilterChips(AVAILABLE_INSTRUMENT_MAP, ["s", "b"], (next) => {
+      received = next;
+    });
+    chips[0]!.onDelete();
+    expect(received).toEqual(["b"]);
   });
 });
