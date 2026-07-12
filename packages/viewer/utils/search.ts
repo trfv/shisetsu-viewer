@@ -57,3 +57,21 @@ export const toInstitutionSizeParam = (
   const params = institutionSizes.map((s) => INSTITUTION_SIZE_PARAM_MAP[s]).filter((s) => !!s);
   return params.length > 0 ? params : undefined;
 };
+
+export const toggleArrayParam = <T extends string>(
+  current: T[],
+  value: string,
+  checked: boolean
+): T[] => (checked ? current.concat(value as T) : current.filter((v) => v !== value));
+
+export const buildFilterChips = <T extends string>(
+  map: Record<T, string>,
+  selected: T[],
+  onChange: (next: T[]) => void
+): { label: string; onDelete: () => void }[] =>
+  (Object.entries(map) as [T, string][])
+    .filter(([v]) => selected.includes(v))
+    .map(([v, label]) => ({
+      label,
+      onDelete: () => onChange(selected.filter((s) => s !== v)),
+    }));

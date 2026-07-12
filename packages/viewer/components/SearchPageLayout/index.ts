@@ -1,0 +1,1 @@
+export { SearchPageLayout } from "./SearchPageLayout";

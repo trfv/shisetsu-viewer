@@ -10,12 +10,10 @@ import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import { DataTable, type Columns } from "../components/DataTable";
+import { type Columns } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { SearchForm } from "../components/SearchForm";
 import { Select, type SelectChangeEvent } from "../components/Select";
-import { Snackbar } from "../components/Snackbar";
-import { Spinner } from "../components/Spinner";
+import { SearchPageLayout } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
@@ -32,15 +30,13 @@ import {
   formatReservationMap,
   toReservationQueryVariables,
   toReservationSearchParams,
-  type ReservationSearchFilter,
 } from "../utils/reservation";
 import {
   AVAILABLE_INSTRUMENT_MAP,
   INSTITUTION_SIZE_MAP,
-  type AvailableInstrument,
-  type InstitutionSize,
+  buildFilterChips,
+  toggleArrayParam,
 } from "../utils/search";
-import styles from "./Reservation.module.css";
 
 export const COLUMNS: Columns<SearchableReservationNode> = [
   {
@@ -170,10 +166,7 @@ const ReservationPage = () => {
   const handleFilterChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
-      const next = checked
-        ? filter.concat(value as ReservationSearchFilter)
-        : filter.filter((v) => v !== value);
-      setQueryParams({ f: next });
+      setQueryParams({ f: toggleArrayParam(filter, value, checked) });
     },
     [setQueryParams, filter]
   );
@@ -181,10 +174,7 @@ const ReservationPage = () => {
   const handleAvailableInstrumentsChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
-      const next = checked
-        ? availableInstruments.concat(value as AvailableInstrument)
-        : availableInstruments.filter((v) => v !== value);
-      setQueryParams({ a: next });
+      setQueryParams({ a: toggleArrayParam(availableInstruments, value, checked) });
     },
     [setQueryParams, availableInstruments]
   );
@@ -192,10 +182,7 @@ const ReservationPage = () => {
   const handleInstitutionSizesChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
-      const next = checked
-        ? institutionSizes.concat(value as InstitutionSize)
-        : institutionSizes.filter((v) => v !== value);
-      setQueryParams({ i: next });
+      setQueryParams({ i: toggleArrayParam(institutionSizes, value, checked) });
     },
     [setQueryParams, institutionSizes]
   );
@@ -210,107 +197,77 @@ const ReservationPage = () => {
           },
         ]),
     { label: `${formatDate(startDate)} 〜 ${formatDate(endDate)}` },
-    ...Object.entries(RESERVATION_SEARCH_FILTER_MAP)
-      .filter(([v]) => filter.includes(v as ReservationSearchFilter))
-      .map(([v, label]) => ({
-        label,
-        onDelete: () => setQueryParams({ f: filter.filter((f) => f !== v) }),
-      })),
-    ...Object.entries(AVAILABLE_INSTRUMENT_MAP)
-      .filter(([v]) => availableInstruments.includes(v as AvailableInstrument))
-      .map(([v, label]) => ({
-        label,
-        onDelete: () => setQueryParams({ a: availableInstruments.filter((a) => a !== v) }),
-      })),
-    ...Object.entries(INSTITUTION_SIZE_MAP)
-      .filter(([v]) => institutionSizes.includes(v as InstitutionSize))
-      .map(([v, label]) => ({
-        label,
-        onDelete: () => setQueryParams({ i: institutionSizes.filter((i) => i !== v) }),
-      })),
+    ...buildFilterChips(RESERVATION_SEARCH_FILTER_MAP, filter, (next) =>
+      setQueryParams({ f: next })
+    ),
+    ...buildFilterChips(AVAILABLE_INSTRUMENT_MAP, availableInstruments, (next) =>
+      setQueryParams({ a: next })
+    ),
+    ...buildFilterChips(INSTITUTION_SIZE_MAP, institutionSizes, (next) =>
+      setQueryParams({ i: next })
+    ),
   ];
 
   return (
-    <main className={styles["pageBox"]}>
-      <div className={styles["searchBox"]}>
-        <div className={styles["searchBoxForm"]}>
-          <SearchForm chips={chips}>
-            <Select
-              label="地区"
-              onChange={handleMunicipalityChange}
-              selectOptions={MunicipalityOptions.filter(
-                (m) =>
-                  !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m.value as SupportedMunicipality)
-              )}
-              size="small"
-              value={municipality}
-            />
-            <DateRangePicker
-              endDateProps={{
-                value: endDate,
-                onChange: handleEndDateChange,
-                minDate,
-                maxDate,
-              }}
-              label="期間指定"
-              startDateProps={{
-                value: startDate,
-                onChange: handleStartDateChange,
-                minDate,
-                maxDate,
-              }}
-            />
-            <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
-              {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label} value={value} />
-              ))}
-            </CheckboxGroup>
-            <CheckboxGroup
-              label="利用可能楽器"
-              onChange={handleAvailableInstrumentsChange}
-              values={availableInstruments}
-            >
-              {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label} value={value} />
-              ))}
-            </CheckboxGroup>
-            <CheckboxGroup
-              label="施設サイズ"
-              onChange={handleInstitutionSizesChange}
-              values={institutionSizes}
-            >
-              {Object.entries(INSTITUTION_SIZE_MAP).map(([value, label]) => (
-                <Checkbox key={value} label={label} value={value} />
-              ))}
-            </CheckboxGroup>
-          </SearchForm>
-        </div>
-      </div>
-      <div className={styles["resultBox"]}>
-        {loading && !fetchingMore ? (
-          <div className={styles["resultBoxNoData"]}>
-            <Spinner />
-          </div>
-        ) : !municipality || !reservations?.length ? (
-          <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>
-        ) : (
-          <DataTable
-            columns={COLUMNS}
-            fetchMore={fetchMore}
-            hasNextPage={hasMore}
-            onRowClick={(params) => {
-              const institutionId =
-                params.row.institution?.id && extractSinglePkFromRelayId(params.row.institution.id);
-              if (institutionId) {
-                setLocation(ROUTES.detail.replace(":id", institutionId as string));
-              }
-            }}
-            rows={reservations}
+    <SearchPageLayout
+      chips={chips}
+      columns={COLUMNS}
+      controls={
+        <>
+          <Select
+            label="地区"
+            onChange={handleMunicipalityChange}
+            selectOptions={MunicipalityOptions.filter(
+              (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m.value as SupportedMunicipality)
+            )}
+            size="small"
+            value={municipality}
           />
-        )}
-      </div>
-      {error && <Snackbar open={true} message={error.message} />}
-    </main>
+          <DateRangePicker
+            endDateProps={{ value: endDate, onChange: handleEndDateChange, minDate, maxDate }}
+            label="期間指定"
+            startDateProps={{ value: startDate, onChange: handleStartDateChange, minDate, maxDate }}
+          />
+          <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
+            {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
+              <Checkbox key={value} label={label} value={value} />
+            ))}
+          </CheckboxGroup>
+          <CheckboxGroup
+            label="利用可能楽器"
+            onChange={handleAvailableInstrumentsChange}
+            values={availableInstruments}
+          >
+            {Object.entries(AVAILABLE_INSTRUMENT_MAP).map(([value, label]) => (
+              <Checkbox key={value} label={label} value={value} />
+            ))}
+          </CheckboxGroup>
+          <CheckboxGroup
+            label="施設サイズ"
+            onChange={handleInstitutionSizesChange}
+            values={institutionSizes}
+          >
+            {Object.entries(INSTITUTION_SIZE_MAP).map(([value, label]) => (
+              <Checkbox key={value} label={label} value={value} />
+            ))}
+          </CheckboxGroup>
+        </>
+      }
+      empty={!municipality || !reservations?.length}
+      error={error}
+      fetchMore={fetchMore}
+      fetchingMore={fetchingMore}
+      hasNextPage={hasMore}
+      loading={loading}
+      onRowClick={(params) => {
+        const institutionId =
+          params.row.institution?.id && extractSinglePkFromRelayId(params.row.institution.id);
+        if (institutionId) {
+          setLocation(ROUTES.detail.replace(":id", institutionId as string));
+        }
+      }}
+      rows={reservations ?? []}
+    />
   );
 };
 
