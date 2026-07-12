@@ -5,7 +5,7 @@ Playwright-based web scrapers that navigate municipal reservation systems, extra
 ## Commands
 
 ```bash
-npm run typecheck -w @shisetsu-viewer/scraper          # Type check with tsgo
+npm run typecheck -w @shisetsu-viewer/scraper          # Type check with typescript7
 npm run test -w @shisetsu-viewer/scraper              # Run scraper tests (Playwright)
 npm run test:unit -w @shisetsu-viewer/scraper         # Run common/ unit tests (node --test)
 npm run discover -w @shisetsu-viewer/scraper -- <municipality>  # Crawl site and list scrape-target candidates
@@ -130,9 +130,9 @@ tools/            — Data upload/export scripts
   updateInstitutions.ts — Institution data uploader (reads from data/institutions/)
   exportInstitutions.ts — Institution data exporter (writes to data/institutions/)
   repair/verify.ts — deterministic verify harness for the repair workflow
-scripts/          — run.ts (scrape+upload), discover.ts (target enumeration)
   request.ts      — GraphQL client with retry
   m2mToken.ts     — Auth0 M2M token fetch and cache
+scripts/          — run.ts (scrape+upload), discover.ts (target enumeration), shardMatrix.ts (CI シャード matrix 生成)
 ```
 
 ## Playwright Configuration
@@ -142,10 +142,10 @@ Config in `playwright.config.ts`:
 - Test match: `**/index.test.ts`
 - Workers: 4 local (override via `WORKERS` env), 1 on CI
 - Timeout: 15 min local, 60 min CI
-- `slowMo`: 500ms default (override via `SLOW_MO` env)
+- `slowMo`: 100ms default (override via `SLOW_MO` env)
 - Chromium launch args: disable GPU, images, extensions for performance
 - Trace: on-first-retry locally, off on CI
-- `tokyo-sumida` excluded on CI via `testIgnore`
+- CI exclusion is registry-driven, not hardcoded: `testIgnore` is built from every municipality whose `scraperCiExcluded` flag is set in `@shisetsu-viewer/shared`'s `registry.ts` (source of truth), with per-run override via `SCRAPER_FORCE_INCLUDE`
 - TypeScript: `erasableSyntaxOnly` + `allowImportingTsExtensions` (runs directly via Node, no build)
 
 ## Adding a New Municipality Scraper
