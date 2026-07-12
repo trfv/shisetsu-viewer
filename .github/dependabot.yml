@@ -116,3 +116,8 @@ updates:
       # プラグイン対応後に解除する。
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+      # @types/node は実行時 Node (engines: >=24, .node-version) に合わせて 24.x に固定する。
+      # 型だけ先行すると Node 24 に存在しない API がコンパイルを通ってしまう。
+      # Node 26 LTS 化 (2026-10) で .node-version ごと一斉更新する。
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
