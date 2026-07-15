@@ -82,6 +82,9 @@ runs:
       env:
         GRAPHQL_ENDPOINT: ${{ env.GRAPHQL_ENDPOINT }}
         M2M_TOKEN: ${{ env.M2M_TOKEN }}
+        # dual-write（未設定なら D1 書き込みをスキップ）。OIDC トークンはジョブの
+        # permissions: id-token: write により ACTIONS_ID_TOKEN_REQUEST_* が自動注入される
+        D1_API_ENDPOINT: ${{ env.D1_API_ENDPOINT }}
       run: |
         node tools/updateReservations.ts ${{ inputs.municipality }}
     - name: Upload failure records
