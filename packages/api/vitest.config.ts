@@ -8,8 +8,14 @@ export default defineConfig({
       const migrations = await readD1Migrations(path.join(import.meta.dirname, "migrations"));
       return {
         wrangler: { configPath: "./wrangler.jsonc" },
-        // テスト専用 binding。setup.ts が applyD1Migrations で適用する
-        miniflare: { bindings: { TEST_MIGRATIONS: migrations } },
+        miniflare: {
+          bindings: {
+            // setup.ts が applyD1Migrations で適用するマイグレーション
+            TEST_MIGRATIONS: migrations,
+            // wrangler.jsonc の "" を上書き（JWT audience 検証に非空の値が要る）
+            AUTH0_AUDIENCE: "https://api.test/",
+          },
+        },
       };
     }),
   ],

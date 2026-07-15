@@ -247,7 +247,12 @@ const IS_HOLIDAY_EXPR = (dateCol: string) =>
 export async function listInstitutionReservations(
   db: D1Database,
   id: string,
-  params: { startDate?: string; endDate?: string; limit?: number; cursor?: string },
+  params: {
+    startDate?: string | undefined;
+    endDate?: string | undefined;
+    limit?: number | undefined;
+    cursor?: string | undefined;
+  },
   holidays: string[]
 ): Promise<Page<ReservationDto>> {
   const limit = clampLimit(params.limit);

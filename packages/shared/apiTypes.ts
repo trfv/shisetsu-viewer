@@ -79,30 +79,32 @@ export interface UpsertResponse {
   deferred: boolean;
 }
 
+// 以下 2 つは URL クエリ由来の「不在または値」の入力。exactOptionalPropertyTypes 下で
+// パーサの `T | undefined` をそのまま渡せるよう、任意フィールドは明示的に `| undefined`。
 export interface InstitutionsQueryParams {
-  municipality?: string[];
-  isAvailableStrings?: boolean;
-  isAvailableWoodwind?: boolean;
-  isAvailableBrass?: boolean;
-  isAvailablePercussion?: boolean;
-  institutionSizes?: string[];
-  limit?: number;
-  cursor?: string;
+  municipality?: string[] | undefined;
+  isAvailableStrings?: boolean | undefined;
+  isAvailableWoodwind?: boolean | undefined;
+  isAvailableBrass?: boolean | undefined;
+  isAvailablePercussion?: boolean | undefined;
+  institutionSizes?: string[] | undefined;
+  limit?: number | undefined;
+  cursor?: string | undefined;
 }
 
 export interface ReservationSearchQueryParams {
-  municipality?: string[];
+  municipality?: string[] | undefined;
   startDate: string; // YYYY-MM-DD
   endDate: string;
-  isHoliday?: boolean;
-  isMorningVacant?: boolean;
-  isAfternoonVacant?: boolean;
-  isEveningVacant?: boolean;
-  isAvailableStrings?: boolean;
-  isAvailableWoodwind?: boolean;
-  isAvailableBrass?: boolean;
-  isAvailablePercussion?: boolean;
-  institutionSizes?: string[];
-  limit?: number;
-  cursor?: string;
+  isHoliday?: boolean | undefined;
+  isMorningVacant?: boolean | undefined;
+  isAfternoonVacant?: boolean | undefined;
+  isEveningVacant?: boolean | undefined;
+  isAvailableStrings?: boolean | undefined;
+  isAvailableWoodwind?: boolean | undefined;
+  isAvailableBrass?: boolean | undefined;
+  isAvailablePercussion?: boolean | undefined;
+  institutionSizes?: string[] | undefined;
+  limit?: number | undefined;
+  cursor?: string | undefined;
 }

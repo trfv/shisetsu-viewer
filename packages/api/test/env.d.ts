@@ -6,6 +6,8 @@ declare global {
   namespace Cloudflare {
     interface Env {
       TEST_MIGRATIONS: D1Migration[];
+      // 認可テストで beforeAll がローカル JWKS を書き込む（同一 isolate なので worker から見える）
+      TEST_JWKS_JSON?: string;
     }
   }
 }
