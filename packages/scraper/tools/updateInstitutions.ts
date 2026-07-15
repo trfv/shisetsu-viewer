@@ -2,39 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
 import type { Institution } from "@shisetsu-viewer/shared";
-import { graphqlRequest } from "./request.ts";
-
-interface InsertInstitutionsResponse {
-  insert_institutions: { affected_rows: number };
-}
-
-const columns = [
-  "prefecture",
-  "municipality",
-  "building",
-  "institution",
-  "building_kana",
-  "institution_kana",
-  "building_system_name",
-  "institution_system_name",
-  "capacity",
-  "area",
-  "institution_size",
-  "fee_divisions",
-  "weekday_usage_fee",
-  "holiday_usage_fee",
-  "address",
-  "is_available_strings",
-  "is_available_woodwind",
-  "is_available_brass",
-  "is_available_percussion",
-  "is_equipped_music_stand",
-  "is_equipped_piano",
-  "website_url",
-  "layout_image_url",
-  "lottery_period",
-  "note",
-];
+import { upsertInstitutions } from "./backend/hasura.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data/institutions");
 
@@ -54,31 +22,8 @@ for (const target of targets) {
     continue;
   }
 
-  const response = await graphqlRequest<InsertInstitutionsResponse>(
-    `
-    mutation update_institutions(
-        $data: [institutions_insert_input!]!
-        $columns: [institutions_update_column!]!
-    ) {
-        insert_institutions(
-            objects: $data,
-            on_conflict: {
-                constraint: institutions_id_key,
-                update_columns: $columns
-            }
-        ) {
-            affected_rows
-        }
-    }`,
-    {
-      data,
-      columns,
-    }
-  );
-
-  console.log(
-    `${target}: data: ${data.length}, affected_rows: ${response.insert_institutions.affected_rows}`
-  );
+  const affected = await upsertInstitutions(data);
+  console.log(`${target}: data: ${data.length}, affected_rows: ${affected}`);
 }
 
 console.timeEnd("update institutions");
