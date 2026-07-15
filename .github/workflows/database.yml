@@ -2,6 +2,7 @@ name: Update Database
 
 permissions:
   contents: read
+  id-token: write # D1 API への GitHub OIDC 認証（dual-write）
 
 on:
   workflow_dispatch:
@@ -87,5 +88,7 @@ jobs:
         env:
           GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
+          # dual-write のキルスイッチ（未設定なら D1 書き込みをスキップ）
+          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
         run: |
           node tools/updateInstitutions.ts ${{ needs.prepare.outputs.municipality }}
