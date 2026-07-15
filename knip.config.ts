@@ -20,6 +20,12 @@ const config: KnipConfig = {
       ignoreDependencies: [],
     },
     "packages/shared": {},
+    "packages/api": {
+      entry: ["test/**/*.ts"],
+      // `cloudflare:test` は Workers ランタイムの仮想モジュール（npm パッケージではない）。
+      // knip が `cloudflare` パッケージとして誤検出するため無視する。
+      ignoreDependencies: ["cloudflare"],
+    },
     "packages/mcp-server": {
       entry: ["worker.ts"],
       ignoreBinaries: [],
