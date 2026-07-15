@@ -1,0 +1,24 @@
+{
+  "name": "@shisetsu-viewer/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/worker.ts",
+  "scripts": {
+    "typecheck": "wrangler types && node ../../node_modules/typescript7/bin/tsc",
+    "test": "vitest run",
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "migrate:local": "wrangler d1 migrations apply shisetsu-db --local",
+    "migrate:remote": "wrangler d1 migrations apply shisetsu-db --remote"
+  },
+  "dependencies": {
+    "@shisetsu-viewer/shared": "0.0.1",
+    "jose": "6.2.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.4",
+    "vitest": "4.1.8",
+    "wrangler": "4.107.0"
+  }
+}

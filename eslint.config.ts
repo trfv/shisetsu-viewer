@@ -5,7 +5,15 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["**/*.json", "build/**", "coverage/**", "node_modules/**", "public/**"]),
+  globalIgnores([
+    "**/*.json",
+    "build/**",
+    "coverage/**",
+    "node_modules/**",
+    "public/**",
+    // `wrangler types` が生成する巨大な型定義。lint 対象外（gitignore 済み）
+    "**/worker-configuration.d.ts",
+  ]),
   js.configs.recommended,
   tseslint.configs.recommended,
   {

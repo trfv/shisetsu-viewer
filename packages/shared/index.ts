@@ -26,3 +26,19 @@ export {
 } from "./registry.ts";
 
 export type { MunicipalityConfig, MunicipalityKey } from "./registry.ts";
+
+export { canonicalizeReservation } from "./reservationJson.ts";
+
+export type {
+  PageInfo,
+  Page,
+  InstitutionSummary,
+  InstitutionDetail,
+  ReservationDto,
+  ReservationSearchHit,
+  ScrapeRun,
+  UpsertReservationsRequest,
+  UpsertResponse,
+  InstitutionsQueryParams,
+  ReservationSearchQueryParams,
+} from "./apiTypes.ts";
