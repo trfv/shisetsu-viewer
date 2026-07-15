@@ -144,16 +144,20 @@ export async function recordScrapeRun(
   runId: string,
   written: number
 ): Promise<void> {
-  await db
-    .prepare(
-      `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written)
+  await db.batch([
+    db
+      .prepare(
+        `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written)
        VALUES (?1, ?2, date('now'), ${NOW}, ?3)
        ON CONFLICT (municipality, run_id) DO UPDATE SET
          rows_written = scrape_runs.rows_written + excluded.rows_written,
          fetched_at   = excluded.fetched_at`
-    )
-    .bind(municipality, runId, written)
-    .run();
+      )
+      .bind(municipality, runId, written),
+    // 台帳は放置すると無限成長し、todayRowsWritten と /v1/scrape-runs の全表スキャンが
+    // 線形に太る。予算集計は当日、最終取得時刻の表示は直近しか見ないため 35 日で剪定する。
+    db.prepare(`DELETE FROM scrape_runs WHERE run_date < date('now', '-35 days')`),
+  ]);
 }
 
 /** 当日（UTC）の rows_written 概算。書き込み予算ガードに使う。 */

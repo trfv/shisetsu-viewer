@@ -107,36 +107,36 @@ describe("upsertReservations（差分 upsert）", () => {
   });
 });
 
-describe("upsertInstitutions", () => {
-  const base: Institution = {
-    id: INST_ID,
-    prefecture: "PREFECTURE_TOKYO",
-    municipality: "MUNICIPALITY_KOUTOU",
-    building: "館",
-    institution: "室",
-    building_kana: "かん",
-    institution_kana: "しつ",
-    building_system_name: "bsys",
-    institution_system_name: "isys",
-    capacity: 100,
-    area: 50.5,
-    institution_size: "INSTITUTION_SIZE_LARGE",
-    fee_divisions: ["FEE_DIVISION_MORNING"],
-    weekday_usage_fee: [{ division: "FEE_DIVISION_MORNING", fee: 1000 }],
-    holiday_usage_fee: [],
-    address: "東京都",
-    is_available_strings: "AVAILABILITY_DIVISION_AVAILABLE",
-    is_available_woodwind: "AVAILABILITY_DIVISION_UNKNOWN",
-    is_available_brass: "AVAILABILITY_DIVISION_UNKNOWN",
-    is_available_percussion: "AVAILABILITY_DIVISION_UNKNOWN",
-    is_equipped_music_stand: "EQUIPMENT_DIVISION_UNKNOWN",
-    is_equipped_piano: "EQUIPMENT_DIVISION_UNKNOWN",
-    website_url: "",
-    layout_image_url: "",
-    lottery_period: "",
-    note: "",
-  };
+const base: Institution = {
+  id: INST_ID,
+  prefecture: "PREFECTURE_TOKYO",
+  municipality: "MUNICIPALITY_KOUTOU",
+  building: "館",
+  institution: "室",
+  building_kana: "かん",
+  institution_kana: "しつ",
+  building_system_name: "bsys",
+  institution_system_name: "isys",
+  capacity: 100,
+  area: 50.5,
+  institution_size: "INSTITUTION_SIZE_LARGE",
+  fee_divisions: ["FEE_DIVISION_MORNING"],
+  weekday_usage_fee: [{ division: "FEE_DIVISION_MORNING", fee: 1000 }],
+  holiday_usage_fee: [],
+  address: "東京都",
+  is_available_strings: "AVAILABILITY_DIVISION_AVAILABLE",
+  is_available_woodwind: "AVAILABILITY_DIVISION_UNKNOWN",
+  is_available_brass: "AVAILABILITY_DIVISION_UNKNOWN",
+  is_available_percussion: "AVAILABILITY_DIVISION_UNKNOWN",
+  is_equipped_music_stand: "EQUIPMENT_DIVISION_UNKNOWN",
+  is_equipped_piano: "EQUIPMENT_DIVISION_UNKNOWN",
+  website_url: "",
+  layout_image_url: "",
+  lottery_period: "",
+  note: "",
+};
 
+describe("upsertInstitutions", () => {
   it("新規 insert 後、同一データ再送は rows_written = 0", async () => {
     const first = await upsertInstitutions(env.DB, [base]);
     expect(first.rowsWritten).toBeGreaterThanOrEqual(1);
@@ -168,6 +168,31 @@ describe("upsertInstitutions", () => {
   });
 });
 
+describe("institutions の schema 制約", () => {
+  const OTHER_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+
+  it("enum 外の値は CHECK 制約で拒否される", async () => {
+    await expect(
+      upsertInstitutions(env.DB, [{ ...base, institution_size: "INSTITUTION_SIZE_HUGE" }])
+    ).rejects.toThrow();
+    await expect(
+      upsertInstitutions(env.DB, [{ ...base, is_available_brass: "yes" }])
+    ).rejects.toThrow();
+  });
+
+  it("同一自治体で解決キー（system_name の組）が重複する別 id は UNIQUE で拒否される", async () => {
+    await upsertInstitutions(env.DB, [base]);
+    await expect(upsertInstitutions(env.DB, [{ ...base, id: OTHER_ID }])).rejects.toThrow();
+  });
+
+  it("system_name が空の施設（スクレイプ対象外の手動登録）は重複しても許容される", async () => {
+    const manual = { ...base, building_system_name: "", institution_system_name: "" };
+    await upsertInstitutions(env.DB, [manual]);
+    const res = await upsertInstitutions(env.DB, [{ ...manual, id: OTHER_ID }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+  });
+});
+
 describe("holidays / scrape_runs / 予算台帳", () => {
   it("upsertHolidays と recordScrapeRun / todayRowsWritten", async () => {
     await upsertHolidays(env.DB, [{ date: "2026-08-11", name: "山の日" }]);
@@ -180,5 +205,30 @@ describe("holidays / scrape_runs / 予算台帳", () => {
     await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 20); // 同 run は加算
     await recordScrapeRun(env.DB, "MUNICIPALITY_BUNKYO", "run-1", 50);
     expect(await todayRowsWritten(env.DB)).toBe(170);
+  });
+
+  it("recordScrapeRun は 35 日より古い台帳行を剪定し、新しい行は残す", async () => {
+    const insert = `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written)
+                    VALUES (?, ?, ?, ?, ?)`;
+    await env.DB.prepare(insert)
+      .bind("MUNICIPALITY_KOUTOU", "old-run", "2026-01-01", "2026-01-01T05:00:00.000Z", 10)
+      .run();
+    await env.DB.prepare(insert)
+      .bind(
+        "MUNICIPALITY_KOUTOU",
+        "recent-run",
+        // 10 日前（保持期間内）
+        new Date(Date.now() - 10 * 86400_000).toISOString().slice(0, 10),
+        "2026-07-05T05:00:00.000Z",
+        10
+      )
+      .run();
+
+    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 100);
+
+    const { results } = await env.DB.prepare(`SELECT run_id FROM scrape_runs ORDER BY run_id`).all<{
+      run_id: string;
+    }>();
+    expect(results.map((r) => r.run_id)).toEqual(["recent-run", "run-1"]);
   });
 });
