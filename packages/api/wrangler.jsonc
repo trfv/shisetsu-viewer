@@ -18,9 +18,11 @@
     },
   ],
   "vars": {
-    "AUTH0_DOMAIN": "trfv.jp.auth0.com",
-    // TODO(PR3-1 Task 3-1-0): VITE_AUTH0_AUDIENCE と同値を確認して記入する
-    "AUTH0_AUDIENCE": "",
+    // Auth0 カスタムドメイン。実トークンの iss / jwks_uri が auth.shisetsudb.com のため、
+    // issuer 検証と JWKS 取得の両方でこの値を使う（trfv.jp.auth0.com だと全トークンが弾かれる）。
+    "AUTH0_DOMAIN": "auth.shisetsudb.com",
+    // access token の aud 配列に含まれる値（末尾スラッシュ付き）。
+    "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
     "GITHUB_REPOSITORY": "trfv/shisetsu-viewer",
     "OIDC_AUDIENCE": "https://api.shisetsudb.com",
   },
