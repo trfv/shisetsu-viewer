@@ -92,3 +92,41 @@ export async function upsertInstitutions(rows: Institution[]): Promise<number> {
   const res = await putJson<UpsertResponse>("/v1/admin/institutions", { rows });
   return res.rowsWritten;
 }
+
+export async function upsertHolidays(rows: { date: string; name: string }[]): Promise<number> {
+  const res = await putJson<UpsertResponse>("/v1/admin/holidays", { rows });
+  return res.rowsWritten;
+}
+
+/** パリティ突合用: D1 の予約を全列 dump（keyset 追跡） */
+export async function exportReservations(
+  municipality: string
+): Promise<{ institution_id: string; date: string; reservation: Record<string, string> }[]> {
+  const endpoint = requireEnv("D1_API_ENDPOINT");
+  const headers = await getAuthHeaders();
+  const all: { institution_id: string; date: string; reservation: Record<string, string> }[] = [];
+  let cursor: string | null = null;
+  do {
+    const qs = new URLSearchParams({ municipality, limit: "1000" });
+    if (cursor) qs.set("cursor", cursor);
+    const res = await fetch(`${endpoint}/v1/admin/reservations/export?${qs.toString()}`, {
+      headers,
+    });
+    if (!res.ok) throw new Error(`D1 export error ${res.status}: ${await res.text()}`);
+    const page = (await res.json()) as {
+      items: {
+        reservation: { institution_id: string; date: string; reservation: Record<string, string> };
+      }[];
+      pageInfo: { hasNextPage: boolean; endCursor: string | null };
+    };
+    for (const hit of page.items) {
+      all.push({
+        institution_id: hit.reservation.institution_id,
+        date: hit.reservation.date,
+        reservation: hit.reservation.reservation,
+      });
+    }
+    cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
+  } while (cursor);
+  return all;
+}
