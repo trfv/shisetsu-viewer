@@ -94,10 +94,17 @@ Institution metadata is stored as JSON files in `data/institutions/{prefecture}-
 
 ### Reservation Data Upload Pipeline
 
-1. Scraper tests produce JSON in `test-results/<municipality>/`
-2. `tools/updateReservations.ts` reads JSON, resolves institution IDs via GraphQL, upserts reservation records
-3. `tools/request.ts` — fetch-based GraphQL client with exponential backoff retry (3 retries, server errors and 401), authenticates via Auth0 M2M Bearer token
-4. `tools/m2mToken.ts` — Auth0 Client Credentials Flow token fetch with in-memory caching (5-min expiry margin)
+1. Scraper tests produce JSON in `test-results/<municipality>/` (FileData 形状 — 境界契約):
+   - `{ facility_name: string; data: { room_name: string; date: "YYYY-MM-DD"; reservation: Record<string, string> }[] }`
+   - キー対応: `facility_name` ↔ `institutions.building_system_name` / `room_name` ↔ `institutions.institution_system_name`。
+     institution 解決キーは `` `${facility_name}-${room_name}` ``。
+2. `tools/updateReservations.ts` — 薄いオーケストレーション。ファイル読み込み → `tools/backend/transform.ts` の
+   `buildReservationRows()`（純関数、テスト付き）→ backend の `upsertReservations()`
+3. `tools/backend/hasura.ts` — 書き込み先バックエンドの Hasura 実装
+   （`fetchInstitutionKeyMap` / `upsertReservations` / `upsertInstitutions` / `listInstitutions`）。
+   GraphQL はこのファイルにのみ存在する
+4. `tools/request.ts` — fetch-based GraphQL client with retry / `tools/m2mToken.ts` — `getM2MToken()`（env から M2M Bearer を読む） /
+   `tools/m2mAuth.ts` — `fetchM2MToken()`（Auth0 Client Credentials Flow でトークン取得。`scripts/run.ts` が使う）
 
 ## Directory Structure
 
