@@ -107,7 +107,7 @@ updates:
           - "*"
     ignore:
       - dependency-name: "@mizchi/lsmcp"
-      # typecheck は typescript7 (npm alias) で行い、typescript(5.9) は
+      # typecheck は typescript7 (npm alias) で行い、素の typescript (版は root package.json 参照) は
       # typescript-eslint / knip / prettier-plugin-organize-imports の API 提供役。
       # これらが TS7 対応 (7.1 の新 API 以降、目安 2026 秋) するまで semver-major を固定。
       - dependency-name: "typescript"
