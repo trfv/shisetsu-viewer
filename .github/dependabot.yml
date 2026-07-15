@@ -107,7 +107,7 @@ updates:
           - "*"
     ignore:
       - dependency-name: "@mizchi/lsmcp"
-      # typecheck は typescript7 (npm alias) で行い、typescript(5.9) は
+      # typecheck は typescript7 (npm alias) で行い、素の typescript (版は root package.json 参照) は
       # typescript-eslint / knip / prettier-plugin-organize-imports の API 提供役。
       # これらが TS7 対応 (7.1 の新 API 以降、目安 2026 秋) するまで semver-major を固定。
       - dependency-name: "typescript"
@@ -115,4 +115,9 @@ updates:
       # ESLint 10 は eslint-plugin-react が peer 未対応 (#3977) のため major を固定。
       # プラグイン対応後に解除する。
       - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      # @types/node は実行時 Node (engines: >=24, .node-version) に合わせて 24.x に固定する。
+      # 型だけ先行すると Node 24 に存在しない API がコンパイルを通ってしまう。
+      # Node 26 LTS 化 (2026-10) で .node-version ごと一斉更新する。
+      - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]

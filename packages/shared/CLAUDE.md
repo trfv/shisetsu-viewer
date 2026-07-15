@@ -5,7 +5,7 @@ Lightweight shared types and municipality registry consumed by both `@shisetsu-v
 ## Commands
 
 ```bash
-npm run typecheck -w @shisetsu-viewer/shared           # Type check with tsgo
+npm run typecheck -w @shisetsu-viewer/shared           # Type check with typescript7
 ```
 
 ## Exports
@@ -21,7 +21,7 @@ Uses `as const` objects with dual-export pattern (`export const Foo = { ... } as
 - `EquipmentDivision` — EQUIPPED, UNEQUIPPED, UNKNOWN
 - `InstitutionSize` — LARGE, MEDIUM, SMALL, UNKNOWN
 - `UsageFeeEntry` — `{ division: string, fee: number }` for fee schedule entries
-- `Institution` — full institution record type (25 fields: id, names, location, fees, availability, equipment, etc.)
+- `Institution` — full institution record type (26 fields: id, names, location, fees, availability, equipment, etc.)
 - Aliases: `Division = ReservationDivision`, `Status = ReservationStatus`, `Reservation`, `TransformOutput`
 
 ### Municipality Registry (`registry.ts`)

@@ -2,7 +2,7 @@
 
 React 19 SPA for browsing public facility reservation data. Deployed to Cloudflare Workers.
 
-Key dependencies: React 19, wouter 3 (lightweight router), @auth0/auth0-spa-js (dynamic import), date-fns 4. Build: Vite 7 + SWC.
+Key dependencies: React 19, wouter 3 (lightweight router), @auth0/auth0-spa-js (dynamic import), date-fns 4. Build: Vite 8 + SWC.
 
 ## Commands
 
@@ -11,7 +11,7 @@ Key dependencies: React 19, wouter 3 (lightweight router), @auth0/auth0-spa-js (
 npm run start -w @shisetsu-viewer/viewer        # Dev server (port 3000)
 npm run build -w @shisetsu-viewer/viewer        # tsc && vite build
 npm run build:analyze -w @shisetsu-viewer/viewer # Build + bundle analysis (raw-data JSON)
-npm run typecheck -w @shisetsu-viewer/viewer    # Type check with tsgo
+npm run typecheck -w @shisetsu-viewer/viewer    # Type check with typescript7
 
 # Testing
 npm run test -w @shisetsu-viewer/viewer         # Vitest watch mode
@@ -29,7 +29,7 @@ npm run test:all -w @shisetsu-viewer/viewer     # Unit + E2E
 # Coverage & Deploy
 npm run coverage -w @shisetsu-viewer/viewer     # Coverage report
 npm run deploy -w @shisetsu-viewer/viewer       # Deploy via wrangler
-npm run preview:wrangler -w @shisetsu-viewer/viewer  # Local preview via wrangler dev
+npm run preview -w @shisetsu-viewer/viewer      # Local preview via wrangler dev
 ```
 
 ## Architecture
@@ -87,7 +87,7 @@ api/          — GraphQL client (graphqlClient.ts) and queries (queries.ts)
 components/   — Reusable UI components, each in own directory with .tsx, .test.tsx, .module.css
 constants/    — App constants: env vars, routes, styles, enums
 contexts/     — Auth0 and ColorMode React contexts
-hooks/        — useGraphQLQuery, usePaginatedQuery, useQueryParams, useIsMobile
+hooks/        — useGraphQLQuery, usePaginatedQuery, useQueryParams, useIsMobile, useInfiniteScroll
 pages/        — Route page components: Top, Institution, Detail, Reservation, Waiting, Loading
 utils/        — Utility functions: enums, format, id, institution, interval, municipality, relay, reservation, search
 test/         — Test infrastructure
