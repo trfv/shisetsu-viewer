@@ -14,7 +14,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "5.12.1",
+    "@eslint-react/eslint-plugin": "5.13.2",
     "@eslint/js": "10.0.1",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
