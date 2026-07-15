@@ -8,6 +8,8 @@ declare global {
       TEST_MIGRATIONS: D1Migration[];
       // 認可テストで beforeAll がローカル JWKS を書き込む（同一 isolate なので worker から見える）
       TEST_JWKS_JSON?: string;
+      TEST_GITHUB_JWKS_JSON?: string;
+      ADMIN_API_KEY?: string;
     }
   }
 }
