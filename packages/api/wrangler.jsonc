@@ -5,7 +5,10 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
-  "routes": [{ "pattern": "api.shisetsudb.com", "custom_domain": true }],
+  // dual-write 期間の一時ホスト名。api.shisetsudb.com は現行 Hasura（本番稼働中）が占有しているため、
+  // Hasura 撤去（PR 3-5）時のカットオーバーで api.shisetsudb.com へ張り替える。
+  // 認可 audience（AUTH0_AUDIENCE / OIDC_AUDIENCE）は識別子なのでホスト名変更に非依存。
+  "routes": [{ "pattern": "d1-api.shisetsudb.com", "custom_domain": true }],
   "observability": { "enabled": true },
   "d1_databases": [
     {
