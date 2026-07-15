@@ -86,6 +86,15 @@ async function seedReservations(targets: string[]): Promise<void> {
 }
 
 const mode = process.argv[2];
+
+// institutions 以外は Hasura を読むため M2M トークンが要る。run.ts と同様に、
+// M2M_TOKEN も HASURA_ADMIN_SECRET も無ければ Auth0 Client Credentials で自動取得する。
+if (mode !== "institutions" && !process.env.M2M_TOKEN && !process.env["HASURA_ADMIN_SECRET"]) {
+  const { fetchM2MToken } = await import("../m2mAuth.ts");
+  process.env.M2M_TOKEN = await fetchM2MToken();
+  console.log("M2M_TOKEN fetched from Auth0.");
+}
+
 switch (mode) {
   case "institutions":
     await seedInstitutions();
