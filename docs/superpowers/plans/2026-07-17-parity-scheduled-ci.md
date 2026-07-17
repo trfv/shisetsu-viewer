@@ -36,8 +36,11 @@
   - `interface MunicipalityReport { target: string; hasuraRows: number; d1Rows: number; missing: number; extra: number; diff: number; samples: string[] }`
   - `function compareMunicipality(target: string, hasura: Map<string, string>, d1: Map<string, string>): MunicipalityReport`
   - `function totalMismatches(reports: MunicipalityReport[]): number`
+  - `function reservationWindow(now: Date): { from: string; to: string }` — 突合対象の日付窓 `[from, to]`（ともに `"YYYY-MM-DD"`）。`from` = 今日、`to` = `addMonths(endOfMonth(今日), 5)`。上限 5 は全自治体の `horizon.monthsAhead` の最小値。
 
 引数の `Map` は「行キー（`` `${institution_id} ${date}` ``）→ canonicalize 済み reservation 文字列」である。
+
+**なぜ窓が要るか（実装者向け）:** Hasura は `date >= 今日` で引く一方、D1 の `exportReservations()` は全期間を dump する。両側の母集団がずれると、過去日の D1 行が `EXTRA`、遠い未来の Hasura 遺物が `MISSING` として偽陽性になる。両側を同じ窓に絞ることでこれを消す。ISO 日付文字列は辞書順 = 時系列順なので、フィルタは素の文字列比較でよい。
 
 - [ ] **Step 1: 失敗するテストを書く**
 
@@ -46,7 +49,14 @@
 ```typescript
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { compareMunicipality, totalMismatches } from "./parityReport.ts";
+import { compareMunicipality, reservationWindow, totalMismatches } from "./parityReport.ts";
+
+test("reservationWindow は今日を from、その 5 ヶ月後の月末を to にする", () => {
+  // 2026-07-18 → to = addMonths(endOfMonth(2026-07-18)=2026-07-31, 5) = 2026-12-31
+  const w = reservationWindow(new Date("2026-07-18T09:00:00+09:00"));
+  assert.equal(w.from, "2026-07-18");
+  assert.equal(w.to, "2026-12-31");
+});
 
 test("一致していれば乖離ゼロのレポートを返す", () => {
   const hasura = new Map([
@@ -119,6 +129,25 @@ Expected: FAIL（`Cannot find module './parityReport.ts'`）
  * export しないのは knip が未使用 export として検出するため。
  */
 const SAMPLE_LIMIT = 5;
+
+/** 突合窓の上限に足す月数。全自治体の horizon.monthsAhead の最小値。 */
+const WINDOW_MONTHS_AHEAD = 5;
+
+/**
+ * 突合対象の日付窓 [from, to]（ともに "YYYY-MM-DD"）を返す。
+ * from = 今日、to = 今日の月末 + WINDOW_MONTHS_AHEAD ヶ月の月末。
+ * 既存 parity.ts が from を toISOString()（UTC）で作っているため、
+ * date-fns（ローカル時刻）ではなく UTC 演算で揃える。月境界の TZ ずれを避ける。
+ */
+export function reservationWindow(now: Date): { from: string; to: string } {
+  const from = now.toISOString().slice(0, 10);
+  const y = now.getUTCFullYear();
+  const m = now.getUTCMonth();
+  // Date.UTC(y, monthIndex, 0) は「その monthIndex の前月の末日」。
+  // m + WINDOW_MONTHS_AHEAD + 1 を渡すと (m + WINDOW_MONTHS_AHEAD) 月の末日になる。
+  const to = new Date(Date.UTC(y, m + WINDOW_MONTHS_AHEAD + 1, 0)).toISOString().slice(0, 10);
+  return { from, to };
+}
 
 export interface MunicipalityReport {
   target: string;
@@ -218,7 +247,7 @@ EOF
 
 **背景（実装者向け）:**
 現在の `key()` は `` `${r.institution_id}\0${r.date}` `` と NUL バイト（0x00）で区切っており、この 1 バイトのために git が parity.ts をバイナリ判定して差分がレビューできない。コミット `fe5e480` から入っている既存の問題である。`institution_id` は UUID、`date` は ISO 日付なので、区切りをスペースにしても一意性は保たれる。
-`fetchAllHasura`（Hasura を 1 回で全件取得してクライアント側で自治体に振り分ける版）は作業ツリーに既にあるので、そのまま活かす。
+`fetchAllHasura`（Hasura を 1 回で全件取得してクライアント側で自治体に振り分ける版）は作業ツリーに既にあるので、それをベースに突合窓の上限（`_lte`）を足す。D1 側は `exportReservations()` が全期間を返すのでクライアントフィルタで同じ窓に絞る。
 
 - [ ] **Step 1: NUL バイトを除去し、バイナリ判定が解けることを確認**
 
@@ -235,13 +264,56 @@ function key(r: { institution_id: string; date: string }): string {
 Run: `cd packages/scraper && LC_ALL=C grep -c $'\000' tools/backend/parity.ts`
 Expected: `0`（出力が `0`。NUL が 1 つも無い）
 
-- [ ] **Step 2: import と突合ループを載せ替える**
+- [ ] **Step 2: import を足す**
 
-`packages/scraper/tools/backend/parity.ts` の import に 1 行足す:
+`packages/scraper/tools/backend/parity.ts` の import に足す:
 
 ```typescript
-import { compareMunicipality, totalMismatches } from "./parityReport.ts";
+import { compareMunicipality, reservationWindow, totalMismatches } from "./parityReport.ts";
 import type { MunicipalityReport } from "./parityReport.ts";
+```
+
+- [ ] **Step 3: `fetchAllHasura` に窓の上限（`_lte`）を足す**
+
+`fetchAllHasura` は現在シグネチャが `fetchAllHasura(): Promise<...>` で、内部で `const from = new Date().toISOString().slice(0, 10);` を計算している。これを引数で窓を受け取る形に変える。
+
+シグネチャと `from` の行を次のように変える:
+
+```typescript
+async function fetchAllHasura(
+  window: { from: string; to: string }
+): Promise<Map<string, Map<string, string>>> {
+  // ...instRes 取得はそのまま...
+  const byMunicipality = new Map<string, Map<string, string>>();
+  const { from, to } = window;
+  let offset = 0;
+```
+
+GraphQL クエリに `$to` と `_lte` を足す（`where` と変数宣言と呼び出しの 3 箇所）:
+
+```typescript
+    const response = await graphqlRequest<{
+      reservations: { institution_id: string; date: string; reservation: Record<string, string> }[];
+    }>(
+      `query parity($from: date!, $to: date!, $limit: Int!, $offset: Int!) {
+        reservations(
+          where: { date: { _gte: $from, _lte: $to } }
+          order_by: { id: asc }
+          limit: $limit
+          offset: $offset
+        ) { institution_id date reservation }
+      }`,
+      { from, to, limit: HASURA_PAGE, offset }
+    );
+```
+
+- [ ] **Step 4: 呼び出し側で窓を計算し、D1 をクライアントフィルタし、突合ループを載せ替える**
+
+`const hasuraByMunicipality = await fetchAllHasura();` を次に変える:
+
+```typescript
+const window = reservationWindow(new Date());
+const hasuraByMunicipality = await fetchAllHasura(window);
 ```
 
 ファイル末尾の突合ループ（`let mismatches = 0;` から `if (mismatches > 0) process.exit(1);` まで）を、まるごと次で置き換える:
@@ -255,7 +327,12 @@ for (const target of targets) {
 
   const hasura = hasuraByMunicipality.get(municipality) ?? new Map<string, string>();
   const d1Rows = await exportReservations(municipality);
-  const d1 = new Map(d1Rows.map((r) => [key(r), canonicalizeReservation(r.reservation)]));
+  // D1 は全期間を返すので Hasura と同じ窓に絞る（ISO 日付は辞書順 = 時系列順）。
+  const d1 = new Map(
+    d1Rows
+      .filter((r) => r.date >= window.from && r.date <= window.to)
+      .map((r) => [key(r), canonicalizeReservation(r.reservation)])
+  );
 
   const report = compareMunicipality(target, hasura, d1);
   reports.push(report);
@@ -279,23 +356,24 @@ console.log(`PARITY_REPORT ${JSON.stringify(reports)}`);
 if (totalMismatches(reports) > 0) process.exit(1);
 ```
 
-ファイル冒頭の使い方コメント（`* 乖離 0 なら "PARITY OK"、あれば行キーと差分を列挙して exit 1。`）の後ろに 1 行足す:
+ファイル冒頭の使い方コメント（`* 乖離 0 なら "PARITY OK"、あれば行キーと差分を列挙して exit 1。`）の後ろに 2 行足す:
 
 ```typescript
+ * 突合対象は [今日, 今日の月末 + 5 ヶ月] の窓に両側そろえる（母集団ずれの偽陽性を防ぐ）。
  * 併せて最終行に `PARITY_REPORT <json>`（MunicipalityReport[]）を出す。CI がこれを読む。
 ```
 
-- [ ] **Step 3: git がテキストとして差分を出せることを確認**
+- [ ] **Step 5: git がテキストとして差分を出せることを確認**
 
 Run: `cd /Users/yushi/src/shisetsu-viewer && git diff --numstat packages/scraper/tools/backend/parity.ts`
 Expected: `-	-	packages/...`（バイナリ）ではなく、`45	27	packages/scraper/tools/backend/parity.ts` のように**数字**の増減が出る
 
-- [ ] **Step 4: 型チェックと lint**
+- [ ] **Step 6: 型チェックと lint**
 
 Run: `npm run typecheck -w @shisetsu-viewer/scraper && npm run lint:all && npm run format:check:all`
 Expected: すべてエラーなし
 
-- [ ] **Step 5: 実プロダクションに対して 1 回実行し、出力の形を確認**
+- [ ] **Step 7: 実プロダクションに対して 1 回実行し、出力の形と偽陽性の消失を確認**
 
 `.env` に `M2M_TOKEN` は無い（`scripts/run.ts` が Auth0 から都度取得する設計のため）。Hasura を admin secret 無しで叩くには、トークンを注入して実行する:
 
@@ -311,9 +389,10 @@ grep -o '^PARITY_REPORT .*' /tmp/parity.log | head -c 400
 ```
 
 Expected: `PARITY_REPORT [{"target":"tokyo-koutou","hasuraRows":...,"d1Rows":...,"missing":...,...}]` が 1 行出る。
-所要時間を控えておく（Hasura の全件ページングが支配的。Task 3 の `timeout-minutes` の妥当性確認に使う）。乖離の有無自体はこの Task の合否と無関係である（充填直後は乖離が出うる）。
+窓を入れる前に見えていた偽陽性（`EXTRA in D1: ... 2026-07-15` のような過去日、`MISSING in D1: ... 2027-09-10` のような遠い未来日）が消えていることを確認する。
+所要時間を控えておく（Hasura のページングが支配的。Task 3 の `timeout-minutes` の妥当性確認に使う）。窓内に残る乖離の有無自体はこの Task の合否と無関係である（充填直後は乖離が出うる）。
 
-- [ ] **Step 6: コミット**
+- [ ] **Step 8: コミット**
 
 ```bash
 cd /Users/yushi/src/shisetsu-viewer
@@ -324,8 +403,12 @@ feat(scraper): parity.ts が PARITY_REPORT の JSON を出力する
 CI が突合結果を Issue 本文に組み立てられるよう、自治体別の集計を 1 行の
 JSON で stdout に出す。人間向けログと exit 1 は据え置き。
 
-あわせて key() の区切りに紛れていた NUL バイトを除去した。この 1 バイトの
-ために git が parity.ts をバイナリ判定し、差分がレビューできなかった。
+あわせて突合窓を [今日, 今日の月末 + 5 ヶ月] に両側そろえた。従来は
+Hasura だけ date>=今日 で絞り D1 は全期間 dump だったため、過去日が
+EXTRA、遠い未来の Hasura 遺物が MISSING という偽陽性が出ていた。
+
+key() の区切りに紛れていた NUL バイトも除去した。この 1 バイトのために
+git が parity.ts をバイナリ判定し、差分がレビューできなかった。
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
@@ -401,7 +484,24 @@ EOF
           D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
         run: |
           set -o pipefail
-          node tools/backend/parity.ts 2>&1 | tee parity.log
+          # Hasura の全件ページングは単一リクエストが 5 分ストリームタイムアウト
+          # （UND_ERR_INFO: fetch failed）を踏むことがある。request.ts のリトライは
+          # HTTP 5xx のみ対象で fetch タイムアウトを拾わないので、実行ごとリトライする。
+          for attempt in 1 2 3; do
+            echo "::group::parity (attempt ${attempt})"
+            if node tools/backend/parity.ts 2>&1 | tee parity.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            # exit 1 は「乖離あり」で PARITY_REPORT は出ている。リトライ不要。
+            if grep -q '^PARITY_REPORT ' parity.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "parity attempt ${attempt} failed before emitting PARITY_REPORT; retrying" >&2
+          done
+          echo "parity failed after 3 attempts" >&2
       - name: Upsert parity tracker issue
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:

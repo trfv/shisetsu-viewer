@@ -24,7 +24,7 @@ PR 3-3（viewer 切替）に進む判断材料を、Actions の履歴と GitHub 
 
 - 独立したワークフローファイルの新設（スクレイプ完了後の最終状態を突合したいので、scraper.yml に相乗りする）
 - 乖離の自動修復
-- parity の突合ロジック自体の変更（後述の `fetchAllHasura` 取り込みを除く）
+- `packages/api` の export エンドポイントへの日付パラメータ追加（後述の突合窓はクライアント側で解決する）
 
 ## 認証の前提（実測で確定）
 
@@ -54,6 +54,29 @@ PR 3-3（viewer 切替）に進む判断材料を、Actions の履歴と GitHub 
 自治体ごとに Hasura を叩く旧実装をやめ、全 `reservations` を 1 回だけページングで取得し、`institutions` から作った `institution_id → municipality` の写像でクライアント側に振り分ける。
 `reservations` には institution へのリレーションが無いこと、`searchable_reservations` は音楽室フィルタで母集団がずれることが理由である。
 CI の実行時間に直結するため、この版を前提とする。
+
+**突合窓の統一（実データで判明した必須の修正）。**
+`fetchAllHasura` は Hasura を `date >= 本日` で絞る一方、D1 の `exportReservations()` は**全期間を dump する**。
+このため両側の母集団がずれ、実プロダクションでの突合は偽陽性で埋まる:
+
+- 過去日（例 `2026-07-15`）の D1 行が全部 `EXTRA in D1` になる（D1 は過去日も保持、Hasura は本日以降しか引かない）。
+- 遠い未来日（例 kawasaki の `2027-09-10`）の Hasura 行が `MISSING in D1` になる。これは dual-write の漏れではなく、Hasura に残った古い遺物で、どのスクレイパーの現在の取得地平（kawasaki でも本日 + 13 ヶ月 = 2027-08 まで）も届かない日付である。D1 は 2026-07-15 に空から作り直したのでこの種のレガシー行を持たない。
+
+対策として、突合窓を**両側そろえて** `[本日, endOfMonth(本日) + 5 ヶ月]` に限定する。
+上限を 5 ヶ月にする根拠は、全自治体の `horizon.monthsAhead` の**最小が 5**（中央 / 北 / 江戸川 / 大田）だからである。
+全自治体で「両側とも確実に取得しているはず」の範囲だけを比べることになり、偽陽性が原理的に出ない。
+実装:
+
+- Hasura クエリに `date: { _lte: $to }` を追加する（`$to` = 上限日）。
+- D1 側は `exportReservations()` の戻り行を `本日 <= date <= 上限` でクライアントフィルタする（api の export エンドポイントは変えない）。
+
+副次効果として、上限を入れると Hasura の取得行数が大きく減り（arakawa/kawasaki は 13 ヶ月先まで持つ）、下記のタイムアウトも起きにくくなる。
+
+**Hasura 全件取得のタイムアウト耐性。**
+`fetchAllHasura` の offset ページングは、実プロダクションで単一リクエストが 5 分ストリームタイムアウト（`UND_ERR_INFO: fetch failed`）を踏むことがある。
+`tools/request.ts` のリトライは HTTP 5xx のみが対象で、この fetch レベルのタイムアウトは拾わない。
+CI では parity 実行 step 自体を `for attempt in 1 2 3` のリトライループで包む（scraper.yml の Playwright インストールと同じ実績パターン）。
+これは job のインフラ堅牢性の問題であり、突合ロジックとは独立に扱う。
 
 **`PARITY_REPORT <json>` 出力の追加。**
 自治体ごとに以下を集計し、最後に stdout へ 1 行の JSON として出す。
