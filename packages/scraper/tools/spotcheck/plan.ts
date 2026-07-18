@@ -10,7 +10,7 @@ import path from "node:path";
 import { parseArgs } from "node:util";
 import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
 import type { ExpectedSample, PlanSample } from "./judgeReport.ts";
-import { parseTrackerSamples, selectSamples, type SampleKey } from "./sampling.ts";
+import { parseTrackerSamples, SAMPLE_CAP, selectSamples, type SampleKey } from "./sampling.ts";
 
 const OUT_DIR = path.join("test-results", "_spotcheck");
 const TRACKER_MARKER = "<!-- parity-tracker -->";
@@ -126,12 +126,15 @@ const trackerKeys = trackerBody ? parseTrackerSamples(trackerBody) : [];
 const cap = values.samples !== undefined ? Number(values.samples) : undefined;
 if (cap !== undefined && (!Number.isInteger(cap) || cap < 1))
   fail("--samples は正の整数で指定してください");
+// SAMPLE_CAP はコスト規律のハードキャップ。ここで一度だけクランプし、selectSamples への
+// 引き渡しと乱択フォールバックのループ条件の両方で同じ値を使う（クランプの迂回を防ぐ）。
+const clampedCap = Math.min(cap ?? 8, SAMPLE_CAP);
 
 const keys = selectSamples({
   trackerKeys,
   explicitKeys,
   municipalityFilter: values.municipality,
-  cap,
+  cap: clampedCap,
 });
 
 // 乖離ゼロ（または tracker 不在）のときの乱択フォールバック。
@@ -146,7 +149,7 @@ if (keys.length === 0) {
           .filter((m) => !m.reservationExcluded && !m.scraperCiExcluded)
           .map((m) => `${m.prefecture}-${m.slug}`);
   for (const target of targets) {
-    if (keys.length >= (cap ?? 8)) break;
+    if (keys.length >= clampedCap) break;
     const rows = d1Query<FallbackRow>(
       `SELECT r.institution_id, r.date, r.reservation, i.building_system_name, i.institution_system_name
        FROM reservations r JOIN institutions i ON i.id = r.institution_id
