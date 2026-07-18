@@ -154,18 +154,29 @@ if (cap !== undefined && (!Number.isInteger(cap) || cap < 1))
 // 引き渡しと乱択フォールバックのループ条件の両方で同じ値を使う（クランプの迂回を防ぐ）。
 const clampedCap = Math.min(cap ?? 8, SAMPLE_CAP);
 
+// --key 明示指定時は明示キーのみを対象にする（挙動は変えない）。
+// 既定（--key 未指定）は cap の半分を tracker の MISSING キー、残り半分を乱択にする。
+// MISSING キーだけだと D1 に行が無いことが前提のサンプルしか引けず、判定は
+// SITE_HAS_DATA_D1_MISSING か SITE_NO_DATA にしかならない。スクレイパー解釈バグの検出
+// （MISMATCH 経路）を既定実行でも踏むように、乱択半分を混ぜる。
+const trackerCap = explicitKeys.length > 0 ? clampedCap : Math.ceil(clampedCap / 2);
 const keys = selectSamples({
   trackerKeys,
   explicitKeys,
   municipalityFilter: values.municipality,
-  cap: clampedCap,
+  cap: trackerCap,
 });
 
-// 乖離ゼロ（または tracker 不在）のときの乱択フォールバック。
+// 乱択フォールバック。--key 指定時は元の挙動どおり keys が 0 件のときだけ発動する。
+// 既定時は tracker 分だけでは cap に届かない残りを乱択で埋める
+// （乖離ゼロ・tracker 不在なら全部乱択になる）。
 // CI 除外自治体（scraperCiExcluded）は外すが、--municipality の明示指定は除外より優先する
 // （resolveParityTargets と同じ規則）。各自治体の先頭 1 施設 × 直近日を決定論的に取る。
 const fallbackNames = new Map<string, { building: string; institution: string }>();
-if (keys.length === 0) {
+const shouldFillRandom = explicitKeys.length > 0 ? keys.length === 0 : keys.length < clampedCap;
+if (shouldFillRandom) {
+  // tracker 由来のキーと乱択で二重に同じサンプルを含めないための排他集合。
+  const trackerKeySet = new Set(keys.map((k) => `${k.target}:${k.institutionId}:${k.date}`));
   const targets =
     values.municipality !== undefined
       ? [values.municipality]
@@ -181,7 +192,7 @@ if (keys.length === 0) {
        ORDER BY r.institution_id, r.date LIMIT 1`
     );
     const row = rows[0];
-    if (row) {
+    if (row && !trackerKeySet.has(`${target}:${row.institution_id}:${row.date}`)) {
       keys.push({ target, institutionId: row.institution_id, date: row.date });
       fallbackNames.set(row.institution_id, {
         building: row.building_system_name,

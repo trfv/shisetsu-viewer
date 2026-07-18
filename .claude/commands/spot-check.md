@@ -32,6 +32,7 @@ cd packages/scraper && node tools/spotcheck/plan.ts <引数をパススルー>; 
 
 - `SPOTCHECK_PLAN` の JSON からサンプル数を確認し、`packages/scraper/test-results/_spotcheck/plan.json` を Read する（あなたの Read/Write はリポジトリルート基準。`cd packages/scraper` した Bash とは基準が違うので、必ずこのフルパスで読み書きすること）
 - エラーで止まったら（wrangler 未ログイン等）、メッセージをそのままユーザーに伝えて停止する
+- 既定（`--key` 未指定時）はサンプル数上限の半分を parity tracker の MISSING キー、残り半分を乱択で選ぶ（乖離ゼロ・tracker 不在なら全部乱択にフォールバックする）。`--key` を指定したときは明示キーのみが対象になる
 
 ## フェーズ 2: サイト観測（Playwright MCP）
 

@@ -44,10 +44,18 @@
 
 サンプルを選定し、D1 から期待値を取得して 2 ファイルを出力する。
 
-サンプル選定は乖離駆動を既定とする。
-パリティ tracker Issue（マーカー `<!-- parity-tracker -->`）の本文から `MunicipalityReport[]` を復元し、`MISSING in D1` のサンプルキー（`institution_id` + `date`）を対象にする。
-乖離が無い、または Issue が無い場合は、CI 対象自治体の予約を持つ施設からの乱択にフォールバックする。
+サンプル選定は既定で乖離駆動と乱択を半々に混ぜる。
+パリティ tracker Issue（マーカー `<!-- parity-tracker -->`）の本文から `MunicipalityReport[]` を復元し、`MISSING in D1` のサンプルキー（`institution_id` + `date`）を対象数の半分に充てる。
+残り半分は CI 対象自治体の予約を持つ施設からの乱択で埋める。
+tracker のキーが半分に満たない場合や、乖離が無い・Issue が無い場合は、不足分をすべて乱択で埋める（tracker が完全に不在なら全数が乱択になる）。
 乱択といっても `Math.random` は使わず、ソートと先頭 N 件で決定論的に選ぶ（同じ日に再実行したとき同じサンプルを引き、比較可能にするため）。
+乱択で選ぶキーは tracker 由来のキーと重複させない。
+
+半々に混ぜるのは、MISSING キーだけをサンプルにすると検出できる silent failure の種類が偏るためである。
+MISSING は「D1 に行が無い」ことが前提のサンプルなので、判定は `SITE_HAS_DATA_D1_MISSING` か `SITE_NO_DATA` にしかならない。
+D1 に行はあるが値の解釈を誤っているケース（`MISMATCH`）を一度も踏まない。
+spot check の目的はスクレイパー解釈バグの検出であり、その経路が既定実行で一度も検証されないのでは本末転倒である。
+乱択半分を混ぜることで、デフォルト実行でも MISMATCH 経路を最低限踏むようにする。
 
 引数は次のとおり。
 
@@ -61,7 +69,7 @@ D1 アクセスは `npx wrangler d1 execute shisetsu-db --remote --json --config
 
 出力は 2 ファイルに分ける。
 
-- `test-results/_spotcheck/plan.json`：エージェント用。自治体、施設名、部屋名、日付だけを含み、**期待値を含めない**
+- `test-results/_spotcheck/plan.json`：エージェント用。自治体、施設名、部屋名、日付、その自治体の区分表示ラベル一覧（`divisionLabels`。区分の呼び名であって空き状況の値ではない）だけを含み、**期待値を含めない**
 - `test-results/_spotcheck/expected.json`：judge 用。各サンプルの D1 の reservation JSON、または「D1 に行なし」
 
 サンプルは自治体をまたぎうるため、出力ディレクトリは自治体別に切らず `_spotcheck/` 直下の 1 世代とする。
