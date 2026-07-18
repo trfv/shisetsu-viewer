@@ -10,7 +10,7 @@
   "scripts": {
     "typecheck": "node ../../node_modules/typescript7/bin/tsc",
     "test": "npx playwright test",
-    "test:unit": "node --test --test-isolation=none 'common/*.test.ts' 'tools/backend/*.test.ts'",
+    "test:unit": "node --test --test-isolation=none 'common/*.test.ts' 'tools/backend/*.test.ts' 'tools/spotcheck/*.test.ts'",
     "scrape": "node --env-file=.env scripts/run.ts",
     "discover": "node scripts/discover.ts",
     "update:reservations": "node --env-file=.env tools/updateReservations.ts",
