@@ -110,9 +110,13 @@ STATUS_MAP 自体の誤りを検出したいのに、それを判定に使えば
 
 ### Issue #1622 への適用
 
-有力仮説は「Hasura は累積で、dual-write 開始前の行やスクレイプ窓外の行が残り続けるため、D1 に永久に来ない」である。
-MISSING キーをサンプルにした spot check はこの仮説を直接判定する。
-たとえば koutou の「D1 の最終日 2026-11-30 に対し欠落が 12-01」というケースは、サイトが 12-01 を表示していなければ SITE_NO_DATA（遺物仮説の支持）、表示していれば SITE_HAS_DATA_D1_MISSING（書き込み経路の実バグ）に落ちる。
+parity は「Hasura は累積で、遺物行が D1 に永久に来ない」という仮説を、`updated_at < DUAL_WRITE_LIVE_SINCE`（2026-07-16）の行を STALE として乖離件数から除外する形で既に運用化している（`tools/backend/parityReport.ts`）。
+ただし STALE 判定は updated_at という代理指標に依るもので、実サイトの確認はしていない。
+また除外後に残る MISSING は「dual-write 稼働後に Hasura が更新したのに D1 に無い」行であり、書き込み経路バグの筆頭候補である。
+
+spot check はこの残 MISSING キーをサンプルにし、実地で決着させる。
+SITE_HAS_DATA_D1_MISSING が出れば書き込み経路の実バグが確定する。
+SITE_NO_DATA が出れば「updated_at の境界では拾えない遺物が残っている」ことを示し、ゲート基準（STALE 境界の引き方）の再検討に進む。
 初回の実運用はこの乖離サンプルで行い、結果を本 spec に追記する。
 
 ## エラー処理
