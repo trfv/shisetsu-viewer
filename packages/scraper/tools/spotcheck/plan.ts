@@ -60,7 +60,17 @@ function d1Query<T>(sql: string): T[] {
   // wrangler がバナー等を先頭に出す場合に備え、JSON 配列の開始位置から読む。
   const start = out.indexOf("[");
   if (start < 0) fail(`wrangler の出力に JSON がありません:\n${out}`);
-  const parsed = JSON.parse(out.slice(start)) as { results: T[] }[];
+  let parsed: { success?: boolean; error?: string; results: T[] }[];
+  try {
+    parsed = JSON.parse(out.slice(start)) as { success?: boolean; error?: string; results: T[] }[];
+  } catch (e) {
+    fail(`wrangler の出力の JSON parse に失敗しました:\n${out}\n${String(e)}`);
+  }
+  if (parsed[0]?.success === false) {
+    fail(
+      `wrangler d1 execute がエラーを返しました: ${parsed[0].error ?? JSON.stringify(parsed[0])}`
+    );
+  }
   return parsed[0]?.results ?? [];
 }
 

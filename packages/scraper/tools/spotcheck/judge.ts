@@ -43,6 +43,14 @@ for (const file of observedFiles) {
   observedById.set(sample.id, sample);
 }
 
+// plan に無い id の observed はここで捨てられる（該当サンプルは判定に使われない）。
+// エージェントの id タイプミスは黙って UNREACHABLE を誘発するため、ここで可視化する。
+const planIds = new Set(plan.samples.map((s) => s.id));
+const orphanIds = [...observedById.keys()].filter((id) => !planIds.has(id));
+if (orphanIds.length > 0) {
+  console.warn(`WARN: plan.json に無い id の observed を無視しました: ${orphanIds.join(", ")}`);
+}
+
 const judgements: SampleJudgement[] = plan.samples.map((sample) =>
   judgeSample(sample, expectedById.get(sample.id), observedById.get(sample.id))
 );
