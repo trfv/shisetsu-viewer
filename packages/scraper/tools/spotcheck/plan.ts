@@ -185,10 +185,14 @@ if (shouldFillRandom) {
           .map((m) => `${m.prefecture}-${m.slug}`);
   for (const target of targets) {
     if (keys.length >= clampedCap) break;
+    // SQLite の date('now') は UTC 基準。このプロジェクトは JST 運用で、予約サイトも D1 も
+    // JST の日付で動くため、JST 早朝（00:00〜08:59）は UTC 日付が 1 日ずれて「JST では
+    // 既に過去の日付」を拾ってしまう。予約サイトは過去日を表示しないため観測が
+    // dateDisplayed: false になり、judge が SITE_NO_DATA_D1_STALE（要調査）を毎回誤検出する。
     const rows = d1Query<FallbackRow>(
       `SELECT r.institution_id, r.date, r.reservation, i.building_system_name, i.institution_system_name
        FROM reservations r JOIN institutions i ON i.id = r.institution_id
-       WHERE i.municipality = ${quote(municipalityValue(target))} AND r.date >= date('now')
+       WHERE i.municipality = ${quote(municipalityValue(target))} AND r.date >= date('now', '+9 hours')
        ORDER BY r.institution_id, r.date LIMIT 1`
     );
     const row = rows[0];
