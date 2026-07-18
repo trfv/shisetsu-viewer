@@ -1,6 +1,39 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { compareMunicipality, reservationWindow, totalMismatches } from "./parityReport.ts";
+import {
+  compareMunicipality,
+  reservationWindow,
+  resolveParityTargets,
+  totalMismatches,
+} from "./parityReport.ts";
+
+test("resolveParityTargets は引数なしなら CI 除外を外す", () => {
+  const targets = resolveParityTargets({
+    allTargets: ["tokyo-kita", "tokyo-sumida", "tokyo-meguro"],
+    ciExcludedTargets: ["tokyo-sumida", "tokyo-meguro"],
+    forceInclude: [],
+  });
+  assert.deepEqual(targets, ["tokyo-kita"]);
+});
+
+test("resolveParityTargets は forceInclude で CI 除外を個別解除する", () => {
+  const targets = resolveParityTargets({
+    allTargets: ["tokyo-kita", "tokyo-sumida", "tokyo-meguro"],
+    ciExcludedTargets: ["tokyo-sumida", "tokyo-meguro"],
+    forceInclude: ["tokyo-sumida"],
+  });
+  assert.deepEqual(targets, ["tokyo-kita", "tokyo-sumida"]);
+});
+
+test("resolveParityTargets は明示引数なら CI 除外でもその 1 件だけ返す", () => {
+  const targets = resolveParityTargets({
+    allTargets: ["tokyo-kita", "tokyo-sumida", "tokyo-meguro"],
+    ciExcludedTargets: ["tokyo-sumida", "tokyo-meguro"],
+    forceInclude: [],
+    filterArg: "tokyo-sumida",
+  });
+  assert.deepEqual(targets, ["tokyo-sumida"]);
+});
 
 test("reservationWindow は今日を from、その 5 ヶ月後の月末を to にする", () => {
   // 2026-07-18 → to = addMonths(endOfMonth(2026-07-18)=2026-07-31, 5) = 2026-12-31

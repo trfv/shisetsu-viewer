@@ -78,3 +78,23 @@ export function compareMunicipality(
 export function totalMismatches(reports: MunicipalityReport[]): number {
   return reports.reduce((sum, r) => sum + r.missing + r.extra + r.diff, 0);
 }
+
+/**
+ * 突合対象の target 一覧を決める。
+ * - filterArg 指定時はその 1 件だけ（明示要求は CI 除外でも尊重する）。
+ * - 未指定時は CI 除外自治体を外す。CI では scraperCiExcluded の自治体が
+ *   dual-write されず D1 に届かないため、突合すると永久 MISSING になるのを防ぐ。
+ *   playwright.config.ts の testIgnore と同じ registry 駆動の除外。
+ * - forceInclude に載る target は CI 除外から個別解除する（SCRAPER_FORCE_INCLUDE 相当）。
+ */
+export function resolveParityTargets(opts: {
+  allTargets: string[];
+  ciExcludedTargets: string[];
+  forceInclude: string[];
+  filterArg?: string | undefined;
+}): string[] {
+  const { allTargets, ciExcludedTargets, forceInclude, filterArg } = opts;
+  if (filterArg) return allTargets.filter((t) => t === filterArg);
+  const excluded = new Set(ciExcludedTargets.filter((t) => !forceInclude.includes(t)));
+  return allTargets.filter((t) => !excluded.has(t));
+}
