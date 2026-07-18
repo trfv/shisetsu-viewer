@@ -1,87 +1,18 @@
 # MCP Server Package
 
-MCP (Model Context Protocol) server exposing Hasura GraphQL data as AI-consumable tools and resources. Deployed to Cloudflare Workers. Dependencies: `@modelcontextprotocol/sdk`, `zod`, `@cloudflare/workers-oauth-provider`. Uses `node --env-file=.env` for local environment loading.
+Hasura のデータを AI 向けツールとして公開する MCP サーバー。Deps: `@modelcontextprotocol/sdk`, `zod`, `@cloudflare/workers-oauth-provider`。Commands: see `package.json` scripts (`typecheck`, `deploy`, `preview:wrangler`, `start` = local stdio, `cli`).
 
-## Commands
+## Entry Points と認証モード
 
-```bash
-npm run typecheck -w @shisetsu-viewer/mcp-server       # Type check with typescript7
-npm run deploy -w @shisetsu-viewer/mcp-server           # Deploy to Cloudflare Workers
-npm run preview:wrangler -w @shisetsu-viewer/mcp-server # Local preview via wrangler dev
-npm run start -w @shisetsu-viewer/mcp-server            # Local stdio server (dev/debug用, write tools有効)
-npm run cli -w @shisetsu-viewer/mcp-server -- <command>  # CLI tool (AI agent向け)
-```
+| Entry       | 用途                                  | クライアント認証                                                                        | Hasura への認証                                  | Write tools |
+| ----------- | ------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------ | ----------- |
+| `worker.ts` | Cloudflare Workers デプロイ           | MCP OAuth（Auth0 + Dynamic Client Registration、トークンは KV `OAUTH_KV` に暗号化保存） | ユーザーの Auth0 トークンを転送（per-user 権限） | 無効        |
+| `index.ts`  | local stdio（dev/debug）              | なし                                                                                    | Auth0 M2M                                        | 有効        |
+| `cli.ts`    | shell から JSON 取得（AI agent 向け） | Auth0 Authorization Code + PKCE（`~/.config/shisetsu/tokens.json`、自動リフレッシュ）   | 同トークン転送                                   | —           |
 
-### CLI
+- Tools: read = `listInstitutions` / `getInstitutionDetail` / `getInstitutionReservations` / `searchReservations`、write = `upsertReservations` / `upsertInstitutions`。Resource: `municipalities`（shared registry）。
+- CLI 例: `npm run cli -w @shisetsu-viewer/mcp-server -- search --start-date 2026-03-15 --end-date 2026-03-31 --evening`（`login` / `logout` / `--help` あり）。
 
-MCP プロトコルを介さず、shell コマンドとして施設データを取得する CLI。JSON を stdout に出力。
+## Environment
 
-```bash
-npm run cli -w @shisetsu-viewer/mcp-server -- login                    # ブラウザで Auth0 認証
-npm run cli -w @shisetsu-viewer/mcp-server -- logout                   # トークン削除
-npm run cli -w @shisetsu-viewer/mcp-server -- list --municipality MUNICIPALITY_KOUTOU --pretty
-npm run cli -w @shisetsu-viewer/mcp-server -- detail <uuid>
-npm run cli -w @shisetsu-viewer/mcp-server -- reservations <uuid> --start-date 2026-03-15 --end-date 2026-03-31
-npm run cli -w @shisetsu-viewer/mcp-server -- search --start-date 2026-03-15 --end-date 2026-03-31 --evening
-npm run cli -w @shisetsu-viewer/mcp-server -- municipalities
-npm run cli -w @shisetsu-viewer/mcp-server -- --help
-```
-
-## Architecture
-
-- `server.ts` — Creates `McpServer`, registers all tools and resources
-- `worker.ts` — Cloudflare Workers entry point with MCP OAuth + Auth0 integration
-- `index.ts` — Local stdio entry point (dev/debug用, write tools有効)
-- `cli.ts` — CLI entry point (AI agent向け, JSON出力, OAuth認証)
-- `auth/tokenStore.ts` — CLI用 OAuth トークン永続化 (~/.config/shisetsu/tokens.json)
-- `auth/login.ts` — CLI用 OAuth ログインフロー (Authorization Code + PKCE)
-- `auth/logout.ts` — CLI用ログアウト（トークン削除）
-- `m2mToken.ts` — Auth0 M2M token acquisition and caching (local stdio用)
-- `graphqlClient.ts` — Hasura GraphQL client with retry logic
-- `env.ts` — Environment variable schema and validation (local stdio用)
-
-### Authentication
-
-**Workers デプロイ (worker.ts):**
-- クライアント → Workers: MCP OAuth (`@cloudflare/workers-oauth-provider` + Auth0)
-- Workers → Hasura: ユーザーの Auth0 アクセストークンを転送（per-user 権限）
-- OAuth フロー: Dynamic Client Registration → Auth0 認証 → token exchange
-- トークン保存: Cloudflare KV (`OAUTH_KV`) に暗号化して自動管理
-
-**ローカル stdio (index.ts):**
-- Hasura: Auth0 M2M Bearer トークン（サービスアカウント権限）
-
-**CLI (cli.ts):**
-- Auth0 Authorization Code + PKCE でブラウザ認証
-- トークン永続化: `~/.config/shisetsu/tokens.json` (0600)
-- 自動リフレッシュ: `getValidToken()` がトークン期限切れ時に自動更新
-
-### Tools
-
-- **Read**: `listInstitutions`, `getInstitutionDetail`, `getInstitutionReservations`, `searchReservations`
-- **Write**: `upsertReservations`, `upsertInstitutions`（Cloudflare Workers デプロイでは無効）
-
-### Resources
-
-- `municipalities` — Municipality registry data from `@shisetsu-viewer/shared`
-
-## Environment Variables
-
-### ローカル stdio 用 (.env)
-
-- `GRAPHQL_ENDPOINT` — Hasura GraphQL endpoint
-- `AUTH0_DOMAIN` — Auth0 domain (for M2M token)
-- `AUTH0_CLIENT_ID` — Auth0 M2M client ID
-- `AUTH0_CLIENT_SECRET` — Auth0 M2M client secret
-- `AUTH0_AUDIENCE` — Auth0 API audience
-
-### Workers 用 (wrangler secrets)
-
-- `GRAPHQL_ENDPOINT` — Hasura GraphQL endpoint
-- `AUTH0_DOMAIN` — Auth0 domain
-- `AUTH0_CLIENT_ID` — Auth0 Regular Web App client ID
-- `AUTH0_CLIENT_SECRET` — Auth0 Regular Web App client secret
-- `AUTH0_AUDIENCE` — Auth0 API audience
-- `OAUTH_KV` — KV namespace binding (wrangler.jsonc で設定)
-
-Copy `.env.sample` to `.env` and fill in values for local development.
+local stdio は `.env`（`GRAPHQL_ENDPOINT`, `AUTH0_*` は M2M app の値）。Workers は wrangler secrets（同名だが Auth0 は Regular Web App の値）+ KV binding `OAUTH_KV`。
