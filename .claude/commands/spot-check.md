@@ -30,20 +30,21 @@ argument-hint: "[municipality-slug] [--key <institution_id>:<date>]... [--sample
 cd packages/scraper && node tools/spotcheck/plan.ts <引数をパススルー>; cd ../..
 ```
 
-- `SPOTCHECK_PLAN` の JSON からサンプル数を確認し、`test-results/_spotcheck/plan.json` を Read する
+- `SPOTCHECK_PLAN` の JSON からサンプル数を確認し、`packages/scraper/test-results/_spotcheck/plan.json` を Read する（あなたの Read/Write はリポジトリルート基準。`cd packages/scraper` した Bash とは基準が違うので、必ずこのフルパスで読み書きすること）
 - エラーで止まったら（wrangler 未ログイン等）、メッセージをそのままユーザーに伝えて停止する
 
 ## フェーズ 2: サイト観測（Playwright MCP）
 
-plan.json の各サンプル（`id` / `target` / `date` / `buildingSystemName` / `institutionSystemName`）について:
+plan.json の各サンプル（`id` / `target` / `date` / `buildingSystemName` / `institutionSystemName` / `divisionLabels`）について:
 
 1. その自治体のサイト URL と到達経路を知るために `packages/scraper/<target>/index.ts` を Read する（エンジン使用時はエンジンファイルも）。**STATUS_MAP の解釈は読み取っても使わない**
 2. `browser_navigate` でサイトを開き、対象施設（buildingSystemName / institutionSystemName）の `date` の空き状況ページへ遷移する
 3. 表示を記録する:
    - 区分ごとの**生の記号・文言**（「○」「×」「予約あり」等）を、画面の区分ラベル（「午前」「①」等）と対にして記録する
+   - 観測した区分ラベルは、可能なら `divisionLabels`（そのサンプルの `plan.json` に入っている、当該自治体の区分ラベル一覧）のいずれかに正規化して `divisionLabel` に書く（全角/半角や区切り文字の表記ゆれを judge 側の突合で拾いやすくするため。`divisionLabels` は区分の呼び名の一覧であって空き状況の値ではないので、これを使っても盲検は破れない）
    - ページに凡例（「○=空き」等）があれば `legend` に記録する
-   - `browser_take_screenshot` で `test-results/_spotcheck/screenshots/<連番>.png` に保存する
-4. サンプルごとに `test-results/_spotcheck/observed/<連番>.json` を Write する（1 サンプル 1 ファイル）:
+   - `browser_take_screenshot` で `packages/scraper/test-results/_spotcheck/screenshots/<連番>.png` に保存する
+4. サンプルごとに `packages/scraper/test-results/_spotcheck/observed/<連番>.json` を Write する（1 サンプル 1 ファイル）:
 
 ```json
 {

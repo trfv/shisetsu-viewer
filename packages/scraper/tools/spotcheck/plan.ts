@@ -8,7 +8,11 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { parseArgs } from "node:util";
-import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
+import {
+  MUNICIPALITIES,
+  getMunicipalityBySlug,
+  type MunicipalityConfig,
+} from "@shisetsu-viewer/shared";
 import type { ExpectedSample, PlanSample } from "./judgeReport.ts";
 import { parseTrackerSamples, SAMPLE_CAP, selectSamples, type SampleKey } from "./sampling.ts";
 
@@ -102,6 +106,16 @@ function municipalityValue(target: string): string {
   const slug = target.split("-")[1];
   if (!slug) fail(`不正な自治体指定: ${target}`);
   return `MUNICIPALITY_${slug.toUpperCase()}`;
+}
+
+/**
+ * target（tokyo-koutou）の reservationDivision 表示ラベル一覧。
+ * エージェントが観測区分をこの一覧に正規化して書けるよう plan.json に載せる（期待値ではない）。
+ */
+function divisionLabelsForTarget(target: string): string[] {
+  const slug = target.split("-")[1];
+  const municipality = slug !== undefined ? getMunicipalityBySlug(slug) : undefined;
+  return municipality ? Object.values(municipality.reservationDivision) : [];
 }
 
 interface InstitutionRow {
@@ -202,6 +216,7 @@ for (const key of keys) {
     date: key.date,
     buildingSystemName: inst?.building_system_name ?? names?.building ?? "",
     institutionSystemName: inst?.institution_system_name ?? names?.institution ?? "",
+    divisionLabels: divisionLabelsForTarget(key.target),
   });
   const raw = reservations.get(`${key.institutionId}:${key.date}`);
   expectedSamples.push({

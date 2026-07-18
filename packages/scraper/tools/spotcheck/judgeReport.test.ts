@@ -10,6 +10,7 @@ const PLAN: PlanSample = {
   date: "2026-12-01",
   buildingSystemName: "豊洲文化センター",
   institutionSystemName: "音楽練習室",
+  divisionLabels: ["午前", "午後", "夜間", "①", "②", "③", "④", "⑤", "⑥"],
 };
 
 function observed(overrides: Partial<ObservedSample>): ObservedSample {
@@ -137,6 +138,7 @@ test("registry のラベルが記号そのものでも期待側を categorizeSym
     date: "2026-08-01",
     buildingSystemName: "北区某会館",
     institutionSystemName: "音楽室",
+    divisionLabels: ["9:00-12:00", "13:00-17:00", "18:00-22:00"],
   };
   const result = judgeSample(
     plan,
@@ -144,6 +146,31 @@ test("registry のラベルが記号そのものでも期待側を categorizeSym
     observed({
       id: plan.id,
       cells: [{ divisionLabel: "9:00-12:00", symbol: "○" }],
+    })
+  );
+  assert.equal(result.verdict, "MATCH");
+});
+
+test("区分ラベルの表記ゆれ（全角/半角、範囲記号）を正規化して同一視する（I2）", () => {
+  // kanagawa-kawasaki の registry は「午後１」（全角数字）。サイト観測が半角「午後1」でも一致させる。
+  const plan: PlanSample = {
+    id: "kanagawa-kawasaki:d1a12a0c-aaaa-bbbb-cccc-000000000099:2026-08-01",
+    target: "kanagawa-kawasaki",
+    institutionId: "d1a12a0c-aaaa-bbbb-cccc-000000000099",
+    date: "2026-08-01",
+    buildingSystemName: "川崎市某会館",
+    institutionSystemName: "音楽室",
+    divisionLabels: ["午前", "午後", "午後１", "午後２", "夜間"],
+  };
+  const result = judgeSample(
+    plan,
+    {
+      id: plan.id,
+      reservation: { RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_VACANT" },
+    },
+    observed({
+      id: plan.id,
+      cells: [{ divisionLabel: "午後1", symbol: "○" }],
     })
   );
   assert.equal(result.verdict, "MATCH");

@@ -11,6 +11,8 @@ export interface PlanSample {
   date: string;
   buildingSystemName: string;
   institutionSystemName: string;
+  /** その自治体の reservationDivision の表示ラベル一覧。エージェントが観測区分を正規化する手掛かり（期待値ではない）。 */
+  divisionLabels: string[];
 }
 
 export interface ExpectedSample {
@@ -51,6 +53,17 @@ export function needsInvestigation(verdict: Verdict): boolean {
   return verdict !== "MATCH" && verdict !== "SITE_NO_DATA" && verdict !== "OUT_OF_WINDOW";
 }
 
+/**
+ * 区分ラベル突合の表記ゆれを吸収する（全角数字→半角、範囲記号の統一、前後空白の除去）。
+ * registry 側のラベルと観測側のラベルの両方に同じ関数を適用する。
+ */
+function normalizeDivisionLabel(label: string): string {
+  const halfWidthDigits = label.replace(/[０-９]/g, (d) =>
+    String.fromCharCode(d.charCodeAt(0) - 0xfee0)
+  );
+  return halfWidthDigits.replace(/[～〜\-−ー]/g, "-").trim();
+}
+
 export function judgeSample(
   plan: PlanSample,
   expected: ExpectedSample | undefined,
@@ -87,12 +100,15 @@ export function judgeSample(
     return judgement("UNMAPPED", `未知の自治体: ${plan.target}`);
   }
   const labelToDivision = new Map(
-    Object.entries(municipality.reservationDivision).map(([division, label]) => [label, division])
+    Object.entries(municipality.reservationDivision).map(([division, label]) => [
+      normalizeDivisionLabel(label),
+      division,
+    ])
   );
 
   const mismatches: string[] = [];
   for (const cell of observed.cells) {
-    const division = labelToDivision.get(cell.divisionLabel);
+    const division = labelToDivision.get(normalizeDivisionLabel(cell.divisionLabel));
     if (division === undefined) {
       return judgement("UNMAPPED", `区分ラベル不明: ${cell.divisionLabel}`);
     }
