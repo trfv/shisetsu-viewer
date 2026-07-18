@@ -127,6 +127,28 @@ test("凡例があれば記号表より優先される", () => {
   assert.equal(result.verdict, "MATCH");
 });
 
+test("registry のラベルが記号そのものでも期待側を categorizeSymbol でカテゴリ化して MATCH になる（C1）", () => {
+  // tokyo-kita は reservationStatus に記号そのものを格納している（VACANT: "○"）。
+  // categorizeLabel だけでは UNKNOWN になっていたが、categorizeSymbol は記号表にフォールバックする。
+  const plan: PlanSample = {
+    id: "tokyo-kita:4c79dcb5-e7f1-18fd-8f9a-000000000003:2026-08-01",
+    target: "tokyo-kita",
+    institutionId: "4c79dcb5-e7f1-18fd-8f9a-000000000003",
+    date: "2026-08-01",
+    buildingSystemName: "北区某会館",
+    institutionSystemName: "音楽室",
+  };
+  const result = judgeSample(
+    plan,
+    { id: plan.id, reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT" } },
+    observed({
+      id: plan.id,
+      cells: [{ divisionLabel: "9:00-12:00", symbol: "○" }],
+    })
+  );
+  assert.equal(result.verdict, "MATCH");
+});
+
 test("needsInvestigation は要調査の判定だけ true", () => {
   assert.equal(needsInvestigation("MATCH"), false);
   assert.equal(needsInvestigation("SITE_NO_DATA"), false);

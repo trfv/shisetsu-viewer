@@ -2,7 +2,7 @@
 // 観測側（記号 + 凡例）と期待側（D1 enum + registry ラベル）を独立にカテゴリ化して比べる。
 // scraper の STATUS_MAP は import しない（同じ誤りを再現して MATCH を出さないため）。
 import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
-import { categorizeLabel, categorizeSymbol } from "./symbolMap.ts";
+import { categorizeSymbol } from "./symbolMap.ts";
 
 export interface PlanSample {
   id: string;
@@ -105,7 +105,10 @@ export function judgeSample(
     if (observedCategory === "UNKNOWN") {
       return judgement("UNMAPPED", `記号不明: ${cell.symbol}（凡例にも無い）`);
     }
-    const expectedCategory = categorizeLabel(municipality.reservationStatus[enumValue] ?? "");
+    // 期待側も categorizeSymbol を使う（凡例は渡さない。凡例はサイト側の情報であって
+    // registry のラベル解釈に使うものではない）。registry の一部自治体は表示ラベルに
+    // 記号そのものを格納しているため、記号表→ラベル正規表現の順で解釈する。
+    const expectedCategory = categorizeSymbol(municipality.reservationStatus[enumValue] ?? "");
     if (expectedCategory === "UNKNOWN") {
       return judgement("UNMAPPED", `enum の表示ラベルをカテゴリ化できない: ${enumValue}`);
     }

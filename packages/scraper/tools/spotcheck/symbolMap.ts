@@ -21,11 +21,16 @@ const SYMBOL_CATEGORIES: Readonly<Record<string, SlotCategory>> = {
   "*": "OUT_OF_SCOPE",
 };
 
-// UNAVAILABLE を先に置く（「空きなし」が「空き」に誤マッチしないように順序で優先度を表す）。
+// UNAVAILABLE を先に置く（「空きなし」「空枠なし」が「空き」に誤マッチしないように順序で優先度を表す）。
+// 「受付」は「受付中」（空き系の意味になりうる）を誤分類するため含めない。
+// 「受付期間外」は「期間外」側で拾えるので別枠は不要。
 const LABEL_CATEGORIES: readonly (readonly [RegExp, SlotCategory])[] = [
-  [/空きなし|予約あり|予約済|予約不可|使用中|音出し|抽選/, "UNAVAILABLE"],
+  [
+    /空きなし|空枠なし|予約あり|予約済|予約不可|使用中|使用禁止|利用不可|利用中止|取消|音出し|抽選/,
+    "UNAVAILABLE",
+  ],
   [/一部空き|空き/, "AVAILABLE"],
-  [/休館|保守|点検|期間外|受付|対象外|閉館|休止/, "OUT_OF_SCOPE"],
+  [/休館|保守|点検|期間外|対象外|閉館|休止|工事|整備|なし|開放|雨天|時間外/, "OUT_OF_SCOPE"],
 ];
 
 export function categorizeLabel(label: string): SlotCategory {
