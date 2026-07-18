@@ -14,14 +14,14 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "5.12.1",
+    "@eslint-react/eslint-plugin": "5.14.2",
     "@eslint/js": "10.0.1",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
     "eslint": "10.7.0",
     "globals": "17.7.0",
     "husky": "9.1.7",
-    "knip": "6.25.0",
+    "knip": "6.26.0",
     "lint-staged": "17.0.8",
     "prettier": "3.9.5",
     "prettier-plugin-organize-imports": "4.3.0",
