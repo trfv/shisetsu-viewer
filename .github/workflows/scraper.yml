@@ -393,7 +393,7 @@ jobs:
               if (tracker) {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
-                  body: '直近の定期実行で Hasura と D1 の乖離は検出されませんでした。自動クローズします。',
+                  body: `直近の定期実行で Hasura と D1 の乖離は検出されませんでした（STALE ${reports.reduce((s, r) => s + (r.stale ?? 0), 0)} 件はゲート対象外）。自動クローズします。`,
                 });
                 await github.rest.issues.update({
                   owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
@@ -408,10 +408,12 @@ jobs:
             let body = `${MARKER}\n\n`;
             body += `定期実行で Hasura と D1 の予約データに **${total} 件の乖離** を検出しました。\n\n`;
             body += `- MISSING: Hasura にあり D1 に無い / EXTRA: D1 にあり Hasura に無い / DIFF: 両方にあるが reservation が異なる\n`;
+            body += `- STALE: Hasura にあり D1 に無いが、Hasura 側の更新が dual-write 開始前で止まっている行。`;
+            body += `スクレイプ対象から外れた施設や horizon 外の日付で、D1 へは原理的に届かない。**乖離件数には含めない**（Issue #1622）\n`;
             body += `- 突合対象は [今日, 今日の月末 + 5 ヶ月] の窓内のみ。行キーは \`<institution_id> <date>\`\n\n`;
-            body += `| 自治体 | Hasura | D1 | MISSING | EXTRA | DIFF |\n|---|---|---|---|---|---|\n`;
+            body += `| 自治体 | Hasura | D1 | MISSING | EXTRA | DIFF | STALE |\n|---|---|---|---|---|---|---|\n`;
             for (const r of reports) {
-              body += `| ${r.target} | ${r.hasuraRows} | ${r.d1Rows} | ${r.missing} | ${r.extra} | ${r.diff} |\n`;
+              body += `| ${r.target} | ${r.hasuraRows} | ${r.d1Rows} | ${r.missing} | ${r.extra} | ${r.diff} | ${r.stale ?? 0} |\n`;
             }
             // Issue body は最大 65,536 文字。サンプルは自治体あたり 5 件だが、念のため上限を設ける。
             const MAX_SAMPLE_LINES = 100;

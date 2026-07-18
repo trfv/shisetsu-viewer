@@ -23,44 +23,78 @@ export function reservationWindow(now: Date): { from: string; to: string } {
   return { from, to };
 }
 
+/**
+ * dual-write が全自治体で稼働し始めた日（この日より前に更新が止まった Hasura 行は
+ * 構造的に D1 へ来ないため、突合対象から外す）。
+ *
+ * 実測（D1 reservations の MIN(updated_at)）: chuo 2026-07-15T03:17Z、
+ * 他 8 自治体 2026-07-15T10:20〜10:38Z。全自治体が揃った翌日を安全側の境界とする。
+ * Hasura の updated_at は "YYYY-MM-DDTHH:MM:SS.ffffff" 形式で、日付前方一致の
+ * 辞書順比較がそのまま時系列比較になる。
+ */
+export const DUAL_WRITE_LIVE_SINCE = "2026-07-16";
+
+/** Hasura 側の 1 行。updatedAt は遺物（stale）判定に使う。 */
+export interface HasuraRow {
+  /** canonicalize 済み reservation 文字列 */
+  reservation: string;
+  /** Hasura の updated_at（ISO 風文字列。辞書順比較する） */
+  updatedAt: string;
+}
+
 export interface MunicipalityReport {
   target: string;
   hasuraRows: number;
   d1Rows: number;
-  /** Hasura にあり D1 に無い */
+  /** Hasura にあり D1 に無い（dual-write 開始以降に更新された行のみ）= 実バグ */
   missing: number;
   /** D1 にあり Hasura に無い */
   extra: number;
   /** 両方にあるが reservation が異なる */
   diff: number;
+  /**
+   * Hasura にあり D1 に無いが、Hasura 側の更新が dual-write 開始前で止まっている行。
+   * スクレイプ対象から外れた施設や horizon 外の日付の「Hasura にだけ残る死んだ行」で、
+   * D1 へは原理的に届かない。ゲートには含めず件数のみ報告する（Issue #1622）。
+   */
+  stale: number;
   samples: string[];
 }
 
 /**
  * 1 自治体分の Hasura / D1 を突合する。
- * 引数の Map は「行キー → canonicalize 済み reservation 文字列」。
- * 値は canonicalize 済みである前提なので、比較は素の文字列比較でよい。
+ * 値は両側とも canonicalize 済みである前提なので、比較は素の文字列比較でよい。
+ *
+ * D1 に行が存在するのに内容が違う場合（DIFF）は、Hasura 側の更新が古くても実バグとして数える。
+ * 行が届いている以上「dual-write に来なかった」では説明できないため。
  */
 export function compareMunicipality(
   target: string,
-  hasura: Map<string, string>,
-  d1: Map<string, string>
+  hasura: Map<string, HasuraRow>,
+  d1: Map<string, string>,
+  liveSince: string = DUAL_WRITE_LIVE_SINCE
 ): MunicipalityReport {
   const samples: string[] = [];
   let missing = 0;
   let extra = 0;
   let diff = 0;
+  let stale = 0;
 
   const addSample = (line: string): void => {
     if (samples.length < SAMPLE_LIMIT) samples.push(line);
   };
 
-  for (const [k, hval] of hasura) {
+  for (const [k, hrow] of hasura) {
     const dval = d1.get(k);
     if (dval === undefined) {
-      missing++;
-      addSample(`MISSING in D1: ${k}`);
-    } else if (dval !== hval) {
+      if (hrow.updatedAt < liveSince) {
+        // 遺物。サンプルにも載せない（本物の乖離を埋もれさせないため）
+        stale++;
+      } else {
+        missing++;
+        addSample(`MISSING in D1: ${k}`);
+      }
+    } else if (dval !== hrow.reservation) {
       diff++;
       addSample(`DIFF: ${k}`);
     }
@@ -72,9 +106,10 @@ export function compareMunicipality(
     }
   }
 
-  return { target, hasuraRows: hasura.size, d1Rows: d1.size, missing, extra, diff, samples };
+  return { target, hasuraRows: hasura.size, d1Rows: d1.size, missing, extra, diff, stale, samples };
 }
 
+/** ゲート判定に使う乖離件数。stale は原理的に解消しないため含めない。 */
 export function totalMismatches(reports: MunicipalityReport[]): number {
   return reports.reduce((sum, r) => sum + r.missing + r.extra + r.diff, 0);
 }
