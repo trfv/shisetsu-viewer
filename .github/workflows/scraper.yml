@@ -287,3 +287,156 @@ jobs:
                 owner: context.repo.owner, repo: context.repo.repo, title: TITLE, body,
               });
             }
+
+  parity:
+    name: Hasura/D1 parity
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - scrape
+      - prepare_retry
+      - retry_scrape
+    # collect_failures と同条件: retry まで終わった最終状態を 1 回だけ突合する。
+    # D1_API_ENDPOINT（dual-write キルスイッチ）が空なら D1 に書いていないので突合しない。
+    if: ${{ !cancelled() && vars.D1_API_ENDPOINT != '' }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write # D1 API への GitHub OIDC 認証
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Set Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version-file: .node-version
+      - name: Cache node_modules
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Run parity
+        id: parity
+        continue-on-error: true
+        working-directory: packages/scraper
+        env:
+          GRAPHQL_ENDPOINT: ${{ secrets.GRAPHQL_ENDPOINT }}
+          # HASURA_ADMIN_SECRET は渡さない: 未設定なら request.ts が M2M Bearer に
+          # フォールバックする。role machine で reservations/institutions は読める。
+          M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
+          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+        run: |
+          set -o pipefail
+          # Hasura の全件ページングは単一リクエストが 5 分ストリームタイムアウト
+          # （UND_ERR_INFO: fetch failed）を踏むことがある。request.ts のリトライは
+          # HTTP 5xx のみ対象で fetch タイムアウトを拾わないので、実行ごとリトライする。
+          for attempt in 1 2 3; do
+            echo "::group::parity (attempt ${attempt})"
+            if node tools/backend/parity.ts 2>&1 | tee parity.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            # exit 1 は「乖離あり」で PARITY_REPORT は出ている。リトライ不要。
+            if grep -q '^PARITY_REPORT ' parity.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "parity attempt ${attempt} failed before emitting PARITY_REPORT; retrying" >&2
+          done
+          echo "parity failed after 3 attempts" >&2
+      - name: Upsert parity tracker issue
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const MARKER = '<!-- parity-tracker -->';
+            const TITLE = '[parity] Hasura と D1 の乖離';
+
+            let log = '';
+            try { log = fs.readFileSync('packages/scraper/parity.log', 'utf8'); } catch (_) { /* 下で失敗扱い */ }
+            const line = log.split('\n').find((l) => l.startsWith('PARITY_REPORT '));
+            if (!line) {
+              // 突合そのものに到達していない = Hasura/D1 への接続障害。
+              // 乖離（緑 + Issue）とは区別して job を赤にする。
+              core.setFailed('PARITY_REPORT が出力されていません。突合が完遂していない可能性があります。');
+              return;
+            }
+
+            let reports;
+            try {
+              reports = JSON.parse(line.slice('PARITY_REPORT '.length));
+            } catch (error) {
+              core.setFailed(`PARITY_REPORT の JSON を解析できません: ${error.message}`);
+              return;
+            }
+
+            const total = reports.reduce((s, r) => s + r.missing + r.extra + r.diff, 0);
+
+            const open = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100,
+            });
+            const tracker = open.find(
+              (i) => i.title === TITLE && (i.body || '').includes(MARKER)
+            );
+
+            if (total === 0) {
+              core.info(`パリティ OK（${reports.length} 自治体）`);
+              if (tracker) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                  body: '直近の定期実行で Hasura と D1 の乖離は検出されませんでした。自動クローズします。',
+                });
+                await github.rest.issues.update({
+                  owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                  state: 'closed',
+                });
+              }
+              return;
+            }
+
+            const runUrl =
+              `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            let body = `${MARKER}\n\n`;
+            body += `定期実行で Hasura と D1 の予約データに **${total} 件の乖離** を検出しました。\n\n`;
+            body += `- MISSING: Hasura にあり D1 に無い / EXTRA: D1 にあり Hasura に無い / DIFF: 両方にあるが reservation が異なる\n`;
+            body += `- 突合対象は [今日, 今日の月末 + 5 ヶ月] の窓内のみ。行キーは \`<institution_id> <date>\`\n\n`;
+            body += `| 自治体 | Hasura | D1 | MISSING | EXTRA | DIFF |\n|---|---|---|---|---|---|\n`;
+            for (const r of reports) {
+              body += `| ${r.target} | ${r.hasuraRows} | ${r.d1Rows} | ${r.missing} | ${r.extra} | ${r.diff} |\n`;
+            }
+            // Issue body は最大 65,536 文字。サンプルは自治体あたり 5 件だが、念のため上限を設ける。
+            const MAX_SAMPLE_LINES = 100;
+            const sampleLines = [];
+            for (const r of reports) {
+              for (const s of r.samples) sampleLines.push(`${r.target}: ${s}`);
+            }
+            if (sampleLines.length > 0) {
+              body += `\n<details><summary>サンプル（自治体あたり最大 5 件）</summary>\n\n\`\`\`\n`;
+              body += sampleLines.slice(0, MAX_SAMPLE_LINES).join('\n');
+              if (sampleLines.length > MAX_SAMPLE_LINES) {
+                body += `\n... 他 ${sampleLines.length - MAX_SAMPLE_LINES} 件`;
+              }
+              body += `\n\`\`\`\n</details>\n`;
+            }
+            body += `\n[実行ログ](${runUrl})\n\n`;
+            body += `_最終更新: run ${context.runId}_`;
+
+            if (tracker) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                body, state: 'open',
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title: TITLE, body,
+              });
+            }
