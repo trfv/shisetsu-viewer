@@ -37,6 +37,7 @@
   - `function compareMunicipality(target: string, hasura: Map<string, string>, d1: Map<string, string>): MunicipalityReport`
   - `function totalMismatches(reports: MunicipalityReport[]): number`
   - `function reservationWindow(now: Date): { from: string; to: string }` — 突合対象の日付窓 `[from, to]`（ともに `"YYYY-MM-DD"`）。`from` = 今日、`to` = `addMonths(endOfMonth(今日), 5)`。上限 5 は全自治体の `horizon.monthsAhead` の最小値。
+  - `function resolveParityTargets(opts: { allTargets: string[]; ciExcludedTargets: string[]; forceInclude: string[]; filterArg?: string | undefined }): string[]` — 突合対象を決める。filterArg 指定時はその 1 件のみ。未指定時は CI 除外自治体（`scraperCiExcluded`）を外す（`forceInclude` で個別解除）。CI 除外自治体は dual-write されず D1 に届かないため、含めると恒久 MISSING でゲートが壊れる。`playwright.config.ts` の `testIgnore` と同じ registry 駆動。
 
 引数の `Map` は「行キー（`` `${institution_id} ${date}` ``）→ canonicalize 済み reservation 文字列」である。
 
@@ -260,9 +261,10 @@ function key(r: { institution_id: string; date: string }): string {
 ```
 
 エディタ上は見た目が変わらないので、必ず次で確認する。
+zsh では `$'\000'` が空文字列に展開され `grep -c` が全行マッチする（偽の 0/全件）ので使わない。`tr` で実バイトを数える:
 
-Run: `cd packages/scraper && LC_ALL=C grep -c $'\000' tools/backend/parity.ts`
-Expected: `0`（出力が `0`。NUL が 1 つも無い）
+Run: `cd packages/scraper && tr -cd '\000' < tools/backend/parity.ts | wc -c`
+Expected: `0`（NUL バイトが 1 つも無い）。`file tools/backend/parity.ts` が `data` ではなく `UTF-8 text` を返すことも確認
 
 - [ ] **Step 2: import を足す**
 

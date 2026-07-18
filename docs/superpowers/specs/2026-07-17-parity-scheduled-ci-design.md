@@ -114,7 +114,7 @@ parity:
 
 - `needs` と `if: !cancelled()` は `collect_failures` job と同じ条件である。retry が無い run でも走り、retry で直った分を乖離として誤検出しない。
 - `vars.D1_API_ENDPOINT` が空なら job ごとスキップする。dual-write のキルスイッチを引いたときにパリティだけが騒ぎ続ける事態を避ける。
-- 対象は常に全自治体とする。Hasura 側は全件を 1 回で取るので、自治体を絞ってもコストはほとんど変わらない。CI 除外自治体（目黒 / 墨田 / 杉並）の状態もここで可視化される。
+- 対象は **CI 除外自治体（`scraperCiExcluded: true` = 墨田 / 目黒）を外した集合**とする。これらは CI でスクレイパーが走らず dual-write されないため、Hasura にある過去データが D1 に永久に届かず、突合すると恒久 MISSING になる（実データで墨田 3006 件を確認）。含めるとトラッカー Issue が永久乖離で埋まり 2 週間ゲートが到達不能になる。除外は `playwright.config.ts` の `testIgnore` と同じ registry 駆動で、`SCRAPER_FORCE_INCLUDE` と明示引数で個別解除できる。
 - parity 実行 step は `continue-on-error: true` で受け、後続の github-script step が Issue を upsert する。job 自体は緑を保つ。
 
 ### 3. トラッカー Issue
