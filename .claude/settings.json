@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm run:*)",
+      "Bash(npm view:*)",
+      "Bash(npm ls:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(gh:*)",
+      "Bash(jq:*)",
+      "Bash(wc:*)",
+      "Bash(TZ=Asia/Tokyo npx:*)",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "WebFetch(domain:docs.github.com)"
+    ]
+  }
+}
