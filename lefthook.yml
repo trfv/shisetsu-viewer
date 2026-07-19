@@ -1,0 +1,25 @@
+pre-commit:
+  # CI (GitHub Actions) では lefthook を動かさない。lint/format/typecheck は workflow 側で実行する
+  skip:
+    - run: test -n "$CI"
+  jobs:
+    - name: gitleaks
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --verbose
+        else
+          echo "warning: gitleaks is not installed. Skipping secret detection."
+          echo "  Install with: brew install gitleaks"
+        fi
+
+    - name: typecheck
+      run: npm run typecheck:all
+
+    - name: lint
+      glob: "*.{ts,tsx}"
+      run: npx eslint {staged_files}
+
+    - name: format
+      glob: "*.{ts,tsx}"
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
