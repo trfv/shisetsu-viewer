@@ -1,6 +1,5 @@
-import { defineConfig, type PluginOption, type UserConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import { visualizer } from "rollup-plugin-visualizer";
 
 const manualChunks: Record<string, string[]> = {
   "react-vendor": ["react", "react-dom"],
@@ -25,18 +24,5 @@ export default defineConfig(({ mode }): UserConfig => ({
       },
     },
   },
-  plugins: [
-    react(),
-    ...(mode === "analyze"
-      ? [
-          visualizer({
-            open: false,
-            filename: "dist/stats.json",
-            template: "raw-data",
-            gzipSize: true,
-            brotliSize: true,
-          }),
-        ]
-      : []),
-  ] as PluginOption[],
+  plugins: [react()],
 }));
