@@ -69,7 +69,7 @@ Mac（常時稼働）
 proxy の要否も registry を単一ソースとして扱う。
 
 - `packages/shared/registry.ts` に `scraperViaJpProxy: true` のフラグを追加し、sumida の `scraperCiExcluded` を解除する。コメントも実態（GitHub Actions からの L4 遮断のため国内 proxy 経由）に改める
-- `shardMatrix.ts` が matrix エントリにこのフラグを載せる
+- scrape アクションが municipality 名から registry を引いて proxy の要否を判定する（`scripts/viaJpProxy.ts`）。retry ジョブの matrix はジョブ名から再構成されるため、matrix にフラグを載せる方式では retry で失われる。判定をアクション内に置くことで scrape と retry が同じ経路を通る
 - scrape アクション（`.github/actions/scrape`）は、フラグ付きジョブでだけ Tailscale join のステップを実行し、`SCRAPER_PROXY` を設定する
 - `playwright.config.ts` は `SCRAPER_PROXY` が設定されていれば `use.proxy` に渡す。未設定なら従来どおり
 
