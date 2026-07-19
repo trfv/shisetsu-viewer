@@ -16,6 +16,16 @@
       "migrations_dir": "migrations",
     },
   ],
+  // 無認証で叩ける公開 GET（/v1/institutions, /v1/scrape-runs 等）の濫用対策。
+  // クエリを変えれば Cache-Control を迂回できるため、D1 読み取り無料枠の枯渇を防ぐ。
+  "ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "1001",
+      // period は 10 または 60 のみ指定可能
+      "simple": { "limit": 100, "period": 60 },
+    },
+  ],
   "vars": {
     // Auth0 カスタムドメイン。実トークンの iss / jwks_uri が auth.shisetsudb.com のため、
     // issuer 検証と JWKS 取得の両方でこの値を使う（trfv.jp.auth0.com だと全トークンが弾かれる）。

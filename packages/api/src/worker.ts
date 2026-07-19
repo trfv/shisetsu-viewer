@@ -25,6 +25,8 @@ export interface Env {
   GITHUB_REPOSITORY: string;
   OIDC_AUDIENCE: string;
   ADMIN_API_KEY?: string;
+  // 無認証の公開エンドポイント向けレート制限。テスト環境では未定義になりうるため optional
+  RATE_LIMITER?: RateLimit;
   // テスト専用: 設定されていればローカル JWKS を使う（本番 wrangler.jsonc には無い）
   TEST_JWKS_JSON?: string;
   TEST_GITHUB_JWKS_JSON?: string;
@@ -32,6 +34,11 @@ export interface Env {
 
 // 1 リクエストの最大予約行数（Workers Free CPU / D1 バインド上限に余裕）
 const MAX_RESERVATION_ROWS = 500;
+// institutions は自治体単位で一括送信される（全自治体でも実測 591 行）。
+// holidays は数年分でも数百行。いずれも ADMIN_API_KEY 漏洩時に D1 無料枠を
+// 一撃で使い切られないための上限で、実運用の 3 倍以上の余裕を取っている。
+const MAX_INSTITUTION_ROWS = 2_000;
+const MAX_HOLIDAY_ROWS = 1_000;
 // 当日書き込み予算。超過分は 202 で受け流し次回 run に委ねる（全行変化日への防御）
 const DAILY_WRITE_BUDGET = 80_000;
 
@@ -196,6 +203,7 @@ async function handleAdminInstitutions(request: Request, env: Env): Promise<Resp
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const body = (await request.json().catch(() => null)) as { rows?: Institution[] } | null;
   if (!body || !Array.isArray(body.rows)) return error(400, "invalid body");
+  if (body.rows.length > MAX_INSTITUTION_ROWS) return error(400, "too many rows");
   const { rowsWritten } = await upsertInstitutions(env.DB, body.rows);
   return json({ received: body.rows.length, rowsWritten, deferred: false });
 }
@@ -206,6 +214,7 @@ async function handleAdminHolidays(request: Request, env: Env): Promise<Response
     rows?: { date: string; name: string }[];
   } | null;
   if (!body || !Array.isArray(body.rows)) return error(400, "invalid body");
+  if (body.rows.length > MAX_HOLIDAY_ROWS) return error(400, "too many rows");
   const { rowsWritten } = await upsertHolidays(env.DB, body.rows);
   return json({ received: body.rows.length, rowsWritten, deferred: false });
 }
@@ -234,6 +243,19 @@ export default {
     const url = new URL(request.url);
     const { pathname } = url;
     try {
+      // admin 系は除外する。scraper が 500 行ずつのチャンクを短時間に大量 PUT するため、
+      // 一律に適用すると本番のデータ投入が壊れる（admin は OIDC / API キーで保護済み）。
+      if (env.RATE_LIMITER && !pathname.startsWith("/v1/admin/")) {
+        const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
+        const { success } = await env.RATE_LIMITER.limit({ key });
+        if (!success) {
+          return json(
+            { error: "rate limit exceeded" },
+            { status: 429, headers: { "Retry-After": "60" } }
+          );
+        }
+      }
+
       if (request.method === "GET") {
         if (pathname === "/v1/health") return json({ ok: true });
         if (pathname === "/v1/institutions") return await handleListInstitutions(url, env);

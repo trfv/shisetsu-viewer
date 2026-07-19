@@ -5,7 +5,7 @@ import {
   type AuthRequest,
 } from "@cloudflare/workers-oauth-provider";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
-import { configureGraphQL } from "./graphqlClient.ts";
+import { createGraphQLClient } from "./graphqlClient.ts";
 import { createServer } from "./server.ts";
 
 // Minimal Cloudflare Workers type declarations (avoids pulling in full @cloudflare/workers-types)
@@ -164,9 +164,11 @@ const mcpHandler = {
     env: Env,
     ctx: CloudflareExecutionContext & { props: { upstreamAccessToken: string } }
   ): Promise<Response> {
-    configureGraphQL(env.GRAPHQL_ENDPOINT, ctx.props.upstreamAccessToken);
+    // クライアントはこのリクエストのスコープに閉じ込める。モジュールスコープに置くと
+    // isolate 内で並行する他リクエストのトークンに差し替わり、per-user 権限が破れる。
+    const client = createGraphQLClient(env.GRAPHQL_ENDPOINT, ctx.props.upstreamAccessToken);
 
-    const server = createServer({ authMode: "auth0" });
+    const server = createServer({ authMode: "auth0", client });
     const transport = new WebStandardStreamableHTTPServerTransport({});
     await server.connect(transport);
     return transport.handleRequest(request);

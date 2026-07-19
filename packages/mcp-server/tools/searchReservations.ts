@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { graphqlRequest } from "../graphqlClient.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 import { SEARCH_RESERVATION_FIELDS, SEARCH_INSTITUTION_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
 import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
@@ -74,28 +74,31 @@ interface QueryData {
   };
 }
 
-export async function executeSearchReservations(args: {
-  municipality?: string[] | undefined;
-  startDate: string;
-  endDate: string;
-  isHoliday?: boolean | undefined;
-  isMorningVacant?: boolean | undefined;
-  isAfternoonVacant?: boolean | undefined;
-  isEveningVacant?: boolean | undefined;
-  isAvailableStrings?: boolean | string | undefined;
-  isAvailableWoodwind?: boolean | string | undefined;
-  isAvailableBrass?: boolean | string | undefined;
-  isAvailablePercussion?: boolean | string | undefined;
-  institutionSizes?: string[] | undefined;
-  fields?:
-    | {
-        reservation?: readonly string[] | undefined;
-        institution?: readonly string[] | undefined;
-      }
-    | undefined;
-  first?: number | undefined;
-  after?: string | undefined;
-}) {
+export async function executeSearchReservations(
+  args: {
+    municipality?: string[] | undefined;
+    startDate: string;
+    endDate: string;
+    isHoliday?: boolean | undefined;
+    isMorningVacant?: boolean | undefined;
+    isAfternoonVacant?: boolean | undefined;
+    isEveningVacant?: boolean | undefined;
+    isAvailableStrings?: boolean | string | undefined;
+    isAvailableWoodwind?: boolean | string | undefined;
+    isAvailableBrass?: boolean | string | undefined;
+    isAvailablePercussion?: boolean | string | undefined;
+    institutionSizes?: string[] | undefined;
+    fields?:
+      | {
+          reservation?: readonly string[] | undefined;
+          institution?: readonly string[] | undefined;
+        }
+      | undefined;
+    first?: number | undefined;
+    after?: string | undefined;
+  },
+  client: GraphQLClient
+) {
   const reservationFields = buildFieldSelection(
     SEARCH_RESERVATION_FIELDS,
     args.fields?.reservation
@@ -105,7 +108,7 @@ export async function executeSearchReservations(args: {
     args.fields?.institution
   );
   const query = buildQuery(reservationFields, institutionFields);
-  const data = await graphqlRequest<QueryData>(query, {
+  const data = await client.request<QueryData>(query, {
     first: args.first ?? 20,
     after: args.after,
     municipality: args.municipality,
@@ -130,7 +133,7 @@ export async function executeSearchReservations(args: {
   };
 }
 
-export function registerSearchReservations(server: McpServer): void {
+export function registerSearchReservations(server: McpServer, client: GraphQLClient): void {
   server.registerTool(
     "search_reservations",
     {
@@ -204,7 +207,7 @@ export function registerSearchReservations(server: McpServer): void {
       },
     },
     async (args) => {
-      const result = await executeSearchReservations(args);
+      const result = await executeSearchReservations(args, client);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { graphqlRequest } from "../graphqlClient.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 import { INSTITUTION_LIST_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
 import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
@@ -51,19 +51,22 @@ interface QueryData {
   };
 }
 
-export async function executeListInstitutions(args: {
-  municipality?: string[] | undefined;
-  institutionSizes?: string[] | undefined;
-  isAvailableStrings?: boolean | string | undefined;
-  isAvailableWoodwind?: boolean | string | undefined;
-  isAvailableBrass?: boolean | string | undefined;
-  isAvailablePercussion?: boolean | string | undefined;
-  fields?: readonly string[] | undefined;
-  first?: number | undefined;
-  after?: string | undefined;
-}) {
+export async function executeListInstitutions(
+  args: {
+    municipality?: string[] | undefined;
+    institutionSizes?: string[] | undefined;
+    isAvailableStrings?: boolean | string | undefined;
+    isAvailableWoodwind?: boolean | string | undefined;
+    isAvailableBrass?: boolean | string | undefined;
+    isAvailablePercussion?: boolean | string | undefined;
+    fields?: readonly string[] | undefined;
+    first?: number | undefined;
+    after?: string | undefined;
+  },
+  client: GraphQLClient
+) {
   const query = buildQuery(buildFieldSelection(INSTITUTION_LIST_FIELDS, args.fields));
-  const data = await graphqlRequest<QueryData>(query, {
+  const data = await client.request<QueryData>(query, {
     first: args.first ?? 20,
     after: args.after,
     municipality: args.municipality,
@@ -82,7 +85,7 @@ export async function executeListInstitutions(args: {
   };
 }
 
-export function registerListInstitutions(server: McpServer): void {
+export function registerListInstitutions(server: McpServer, client: GraphQLClient): void {
   server.registerTool(
     "list_institutions",
     {
@@ -143,7 +146,7 @@ export function registerListInstitutions(server: McpServer): void {
       },
     },
     async (args) => {
-      const result = await executeListInstitutions(args);
+      const result = await executeListInstitutions(args, client);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };

@@ -121,6 +121,37 @@ describe("書き込み予算ガード", () => {
   });
 });
 
+describe("行数上限", () => {
+  it("institutions は上限(2000)超過で 400", async () => {
+    const rows = Array.from({ length: 2001 }, (_, i) => ({
+      id: `aaaaaaaa-aaaa-4aaa-8aaa-${String(i).padStart(12, "0")}`,
+      prefecture: "PREFECTURE_TOKYO",
+      municipality: "MUNICIPALITY_KOUTOU",
+    }));
+    const res = await SELF.fetch(`${BASE}/v1/admin/institutions`, {
+      method: "PUT",
+      headers: adminHeaders(),
+      body: JSON.stringify({ rows }),
+    });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: "too many rows" });
+  });
+
+  it("holidays は上限(1000)超過で 400", async () => {
+    const rows = Array.from({ length: 1001 }, (_, i) => ({
+      date: `2026-01-${String((i % 28) + 1).padStart(2, "0")}`,
+      name: `祝日${i}`,
+    }));
+    const res = await SELF.fetch(`${BASE}/v1/admin/holidays`, {
+      method: "PUT",
+      headers: adminHeaders(),
+      body: JSON.stringify({ rows }),
+    });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: "too many rows" });
+  });
+});
+
 describe("PUT /v1/admin/holidays / export", () => {
   it("holidays を書いて search の is_holiday に反映される", async () => {
     const res = await SELF.fetch(`${BASE}/v1/admin/holidays`, {

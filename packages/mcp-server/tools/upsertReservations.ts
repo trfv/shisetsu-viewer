@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { graphqlRequest } from "../graphqlClient.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
 
 const MUTATION = `
@@ -22,7 +22,7 @@ interface MutationData {
 
 const CHUNK_SIZE = 2000;
 
-export function registerUpsertReservations(server: McpServer): void {
+export function registerUpsertReservations(server: McpServer, client: GraphQLClient): void {
   server.registerTool(
     "upsert_reservations",
     {
@@ -57,7 +57,7 @@ export function registerUpsertReservations(server: McpServer): void {
 
       for (let i = 0; i < args.data.length; i += CHUNK_SIZE) {
         const chunk = args.data.slice(i, i + CHUNK_SIZE);
-        const result = await graphqlRequest<MutationData>(MUTATION, { data: chunk });
+        const result = await client.request<MutationData>(MUTATION, { data: chunk });
         totalAffected += result.insert_reservations.affected_rows;
       }
 
