@@ -119,6 +119,8 @@ jobs:
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
           # dual-write のキルスイッチ: repository variable が未設定なら空 → scraper は D1 書き込みをスキップ
           D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
         with:
           municipality: ${{ matrix.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -126,6 +128,7 @@ jobs:
           nodeModulesCacheKey: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "false"
+          jpProxyUrl: ${{ vars.JP_PROXY_URL }}
 
   prepare_retry:
     runs-on: ubuntu-latest
@@ -182,6 +185,8 @@ jobs:
           M2M_TOKEN: ${{ secrets.M2M_TOKEN }}
           # dual-write のキルスイッチ: repository variable が未設定なら空 → scraper は D1 書き込みをスキップ
           D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
         with:
           municipality: ${{ matrix.municipality }}
           shardIndex: ${{ matrix.shardIndex }}
@@ -190,6 +195,7 @@ jobs:
           playwrightCacheKey: ${{ needs.prepare.outputs.playwrightCacheKey }}
           debug: "true"
           phase: "retry"
+          jpProxyUrl: ${{ vars.JP_PROXY_URL }}
 
   collect_failures:
     name: Collect structural failures

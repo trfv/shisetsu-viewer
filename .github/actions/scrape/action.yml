@@ -26,6 +26,10 @@ inputs:
     description: "Phase label for failure artifact namespacing (scrape or retry)"
     required: false
     default: "scrape"
+  jpProxyUrl:
+    description: "JP proxy URL (repository variable JP_PROXY_URL)。scraperViaJpProxy の自治体で必須"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -49,6 +53,24 @@ runs:
         path: ~/.cache/ms-playwright
         key: ${{ inputs.playwrightCacheKey }}
         fail-on-cache-miss: true
+    - name: Check JP proxy requirement
+      id: jp-proxy
+      shell: bash
+      working-directory: packages/scraper
+      run: |
+        VIA=$(node scripts/viaJpProxy.ts "${{ inputs.municipality }}")
+        if [ "${VIA}" = "true" ] && [ -z "${{ inputs.jpProxyUrl }}" ]; then
+          echo "::error::${{ inputs.municipality }} は国内 proxy が必要ですが jpProxyUrl が空です（repository variable JP_PROXY_URL を確認）"
+          exit 1
+        fi
+        echo "viaJpProxy=${VIA}" >> "$GITHUB_OUTPUT"
+    - name: Connect to Tailscale
+      if: steps.jp-proxy.outputs.viaJpProxy == 'true'
+      uses: tailscale/github-action@780049a30b6ff5c378a9e7b389d15ece7a204888 # v4.1.3
+      with:
+        oauth-client-id: ${{ env.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ env.TS_OAUTH_SECRET }}
+        tags: tag:ci
     - name: Run Playwright tests
       shell: bash
       working-directory: packages/scraper
@@ -57,6 +79,7 @@ runs:
         TZ: Asia/Tokyo
         # dispatch で自治体を指定した場合は registry の CI 除外（scraperCiExcluded）を解除する
         SCRAPER_FORCE_INCLUDE: ${{ inputs.municipality }}
+        SCRAPER_PROXY: ${{ steps.jp-proxy.outputs.viaJpProxy == 'true' && inputs.jpProxyUrl || '' }}
       run: |
         if [ "${{ inputs.debug }}" == "true" ]; then
           DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
