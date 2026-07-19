@@ -19,6 +19,7 @@ export const STATUS_MAP: Record<string, Status> = {
   申込期間外: "RESERVATION_STATUS_STATUS_3",
   公開対象外: "RESERVATION_STATUS_STATUS_4",
   抽選: "RESERVATION_STATUS_STATUS_5",
+  休館: "RESERVATION_STATUS_STATUS_6",
 };
 
 interface EdogawaTarget {

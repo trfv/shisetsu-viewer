@@ -179,6 +179,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_3]: "申込期間外",
       [ReservationStatus.STATUS_4]: "公開対象外",
       [ReservationStatus.STATUS_5]: "抽選",
+      [ReservationStatus.STATUS_6]: "休館",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "午前",
