@@ -94,9 +94,11 @@ jobs:
           # dispatch で自治体を指定した場合は registry の CI 除外を解除して --list に含める
           SCRAPER_FORCE_INCLUDE: ${{ github.event.inputs.municipality }}
           CI: "true"
+          # dispatch 入力は必ず env 経由で渡す。run: に ${{ }} で直接展開すると
+          # shell のパース前にテキスト置換されるため、任意コマンド実行を許してしまう
+          MUNICIPALITY: ${{ github.event.inputs.municipality }}
+          DENSITY: ${{ github.event.inputs.density || '5' }}
         run: |
-          MUNICIPALITY="${{ github.event.inputs.municipality }}"
-          DENSITY="${{ github.event.inputs.density || '5' }}"
           MATRIX=$(node scripts/shardMatrix.ts "${MUNICIPALITY:-all}" --density "${DENSITY}")
           echo "matrix=${MATRIX}" >> "$GITHUB_OUTPUT"
 

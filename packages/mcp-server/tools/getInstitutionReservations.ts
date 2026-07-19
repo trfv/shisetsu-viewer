@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { graphqlRequest } from "../graphqlClient.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 import { RESERVATION_FIELDS } from "../fieldDefinitions.ts";
 import { buildFieldSelection } from "../buildFieldSelection.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
@@ -28,14 +28,17 @@ interface QueryData {
   };
 }
 
-export async function executeGetInstitutionReservations(args: {
-  institutionId: string;
-  startDate: string;
-  endDate: string;
-  fields?: readonly string[] | undefined;
-}) {
+export async function executeGetInstitutionReservations(
+  args: {
+    institutionId: string;
+    startDate: string;
+    endDate: string;
+    fields?: readonly string[] | undefined;
+  },
+  client: GraphQLClient
+) {
   const query = buildQuery(buildFieldSelection(RESERVATION_FIELDS, args.fields));
-  const data = await graphqlRequest<QueryData>(query, {
+  const data = await client.request<QueryData>(query, {
     id: args.institutionId,
     startDate: args.startDate,
     endDate: args.endDate,
@@ -45,7 +48,7 @@ export async function executeGetInstitutionReservations(args: {
   return { reservations, count: reservations.length };
 }
 
-export function registerGetInstitutionReservations(server: McpServer): void {
+export function registerGetInstitutionReservations(server: McpServer, client: GraphQLClient): void {
   server.registerTool(
     "get_institution_reservations",
     {
@@ -80,7 +83,7 @@ export function registerGetInstitutionReservations(server: McpServer): void {
       },
     },
     async (args) => {
-      const result = await executeGetInstitutionReservations(args);
+      const result = await executeGetInstitutionReservations(args, client);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };

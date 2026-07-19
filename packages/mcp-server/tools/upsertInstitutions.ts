@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { graphqlRequest } from "../graphqlClient.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 
 const MUTATION = `
 mutation update_institutions(
@@ -50,7 +50,7 @@ const DEFAULT_COLUMNS = [
   "note",
 ];
 
-export function registerUpsertInstitutions(server: McpServer): void {
+export function registerUpsertInstitutions(server: McpServer, client: GraphQLClient): void {
   server.registerTool(
     "upsert_institutions",
     {
@@ -71,7 +71,7 @@ export function registerUpsertInstitutions(server: McpServer): void {
       },
     },
     async (args) => {
-      const result = await graphqlRequest<MutationData>(MUTATION, {
+      const result = await client.request<MutationData>(MUTATION, {
         data: args.data,
         columns: args.updateColumns ?? DEFAULT_COLUMNS,
       });

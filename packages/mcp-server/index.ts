@@ -6,11 +6,10 @@ import {
   AUTH0_DOMAIN,
   GRAPHQL_ENDPOINT,
 } from "./env.ts";
-import { configureGraphQL } from "./graphqlClient.ts";
+import { createGraphQLClient } from "./graphqlClient.ts";
 import { configureM2M } from "./m2mToken.ts";
 import { createServer } from "./server.ts";
 
-configureGraphQL(GRAPHQL_ENDPOINT);
 configureM2M({
   domain: AUTH0_DOMAIN,
   clientId: AUTH0_CLIENT_ID,
@@ -18,6 +17,11 @@ configureM2M({
   audience: AUTH0_AUDIENCE,
 });
 
-const server = createServer({ authMode: "admin" });
+// stdio は 1 プロセス 1 ユーザーなので、プロセス起動時に 1 つ作れば足りる
+// （トークンは未指定 = M2M フォールバック）
+const server = createServer({
+  authMode: "admin",
+  client: createGraphQLClient(GRAPHQL_ENDPOINT),
+});
 const transport = new StdioServerTransport();
 await server.connect(transport);

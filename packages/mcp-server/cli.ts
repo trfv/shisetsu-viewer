@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { parseArgs } from "node:util";
-import { configureGraphQL } from "./graphqlClient.ts";
+import { createGraphQLClient, type GraphQLClient } from "./graphqlClient.ts";
 import { getValidToken } from "./auth/tokenStore.ts";
 import { login } from "./auth/login.ts";
 import { logout } from "./auth/logout.ts";
@@ -48,7 +48,7 @@ function splitCSV(value: string | undefined): string[] | undefined {
   return value.split(",").map((s) => s.trim());
 }
 
-async function commandList(argv: string[]): Promise<unknown> {
+async function commandList(argv: string[], client: GraphQLClient): Promise<unknown> {
   const { values } = parseArgs({
     args: argv,
     options: {
@@ -86,20 +86,23 @@ Options:
     process.exit(0);
   }
 
-  return executeListInstitutions({
-    municipality: splitCSV(values.municipality),
-    institutionSizes: splitCSV(values.size),
-    isAvailableStrings: values.strings,
-    isAvailableWoodwind: values.woodwind,
-    isAvailableBrass: values.brass,
-    isAvailablePercussion: values.percussion,
-    fields: splitCSV(values.fields),
-    first: values.first ? Number(values.first) : undefined,
-    after: values.after,
-  });
+  return executeListInstitutions(
+    {
+      municipality: splitCSV(values.municipality),
+      institutionSizes: splitCSV(values.size),
+      isAvailableStrings: values.strings,
+      isAvailableWoodwind: values.woodwind,
+      isAvailableBrass: values.brass,
+      isAvailablePercussion: values.percussion,
+      fields: splitCSV(values.fields),
+      first: values.first ? Number(values.first) : undefined,
+      after: values.after,
+    },
+    client
+  );
 }
 
-async function commandDetail(argv: string[]): Promise<unknown> {
+async function commandDetail(argv: string[], client: GraphQLClient): Promise<unknown> {
   const { values, positionals } = parseArgs({
     args: argv,
     options: {
@@ -126,16 +129,19 @@ Options:
   const id = positionals[0];
   if (!id) fail("施設 ID (UUID) を指定してください");
 
-  const result = await executeGetInstitutionDetail({
-    id,
-    fields: splitCSV(values.fields),
-  });
+  const result = await executeGetInstitutionDetail(
+    {
+      id,
+      fields: splitCSV(values.fields),
+    },
+    client
+  );
 
   if (!result) fail("施設が見つかりません");
   return result;
 }
 
-async function commandReservations(argv: string[]): Promise<unknown> {
+async function commandReservations(argv: string[], client: GraphQLClient): Promise<unknown> {
   const { values, positionals } = parseArgs({
     args: argv,
     options: {
@@ -168,15 +174,18 @@ Options:
   if (!values["start-date"]) fail("--start-date は必須です");
   if (!values["end-date"]) fail("--end-date は必須です");
 
-  return executeGetInstitutionReservations({
-    institutionId: id,
-    startDate: values["start-date"],
-    endDate: values["end-date"],
-    fields: splitCSV(values.fields),
-  });
+  return executeGetInstitutionReservations(
+    {
+      institutionId: id,
+      startDate: values["start-date"],
+      endDate: values["end-date"],
+      fields: splitCSV(values.fields),
+    },
+    client
+  );
 }
 
-async function commandSearch(argv: string[]): Promise<unknown> {
+async function commandSearch(argv: string[], client: GraphQLClient): Promise<unknown> {
   const { values } = parseArgs({
     args: argv,
     options: {
@@ -227,22 +236,25 @@ Options:
   if (!values["start-date"]) fail("--start-date は必須です");
   if (!values["end-date"]) fail("--end-date は必須です");
 
-  return executeSearchReservations({
-    startDate: values["start-date"],
-    endDate: values["end-date"],
-    municipality: splitCSV(values.municipality),
-    institutionSizes: splitCSV(values.size),
-    isAvailableStrings: values.strings,
-    isAvailableWoodwind: values.woodwind,
-    isAvailableBrass: values.brass,
-    isAvailablePercussion: values.percussion,
-    isMorningVacant: values.morning,
-    isAfternoonVacant: values.afternoon,
-    isEveningVacant: values.evening,
-    isHoliday: values.holiday,
-    first: values.first ? Number(values.first) : undefined,
-    after: values.after,
-  });
+  return executeSearchReservations(
+    {
+      startDate: values["start-date"],
+      endDate: values["end-date"],
+      municipality: splitCSV(values.municipality),
+      institutionSizes: splitCSV(values.size),
+      isAvailableStrings: values.strings,
+      isAvailableWoodwind: values.woodwind,
+      isAvailableBrass: values.brass,
+      isAvailablePercussion: values.percussion,
+      isMorningVacant: values.morning,
+      isAfternoonVacant: values.afternoon,
+      isEveningVacant: values.evening,
+      isHoliday: values.holiday,
+      first: values.first ? Number(values.first) : undefined,
+      after: values.after,
+    },
+    client
+  );
 }
 
 function commandMunicipalities(argv: string[]): unknown {
@@ -289,7 +301,10 @@ const noAuthCommands: Record<string, (argv: string[]) => unknown | Promise<unkno
 };
 
 // Commands that need GraphQL auth
-const authCommands: Record<string, (argv: string[]) => unknown | Promise<unknown>> = {
+const authCommands: Record<
+  string,
+  (argv: string[], client: GraphQLClient) => unknown | Promise<unknown>
+> = {
   list: commandList,
   detail: commandDetail,
   reservations: commandReservations,
@@ -321,8 +336,8 @@ try {
     fail("セッション期限切れ。'shisetsu login' を再実行してください");
   }
 
-  configureGraphQL(graphqlEndpoint, tokenResult.token);
-  const result = await authHandler(commandArgv);
+  const client = createGraphQLClient(graphqlEndpoint, tokenResult.token);
+  const result = await authHandler(commandArgv, client);
   printResult(result, isPretty);
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
