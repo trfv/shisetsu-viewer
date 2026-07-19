@@ -26,7 +26,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - Prettier: printWidth 100, double quotes, trailing commas es5. ESLint: flat config `eslint.config.ts`.
 - File naming: components PascalCase, utils/hooks camelCase, tests co-located `*.test.ts(x)`, CSS Modules `*.module.css`.
 - Primary language Japanese, timezone Asia/Tokyo.
-- Pre-commit: Husky + lint-staged (ESLint/Prettier on staged files) + gitleaks secret scan (`brew install gitleaks`).
+- Pre-commit: lefthook (`lefthook.yml`)。gitleaks + typecheck + staged な ts/tsx への ESLint/Prettier。lefthook と gitleaks は brew 管理で npm 依存ではない（`brew install lefthook gitleaks`）。clone 直後に `lefthook install` を一度実行してフックを登録する。`CI` が設定された環境では pre-commit 全体を skip する。
 
 ## Cross-Package Architecture
 
