@@ -74,3 +74,48 @@ function matchesRoom<T>(target: T, buildingName: string, roomName: string): bool
   }
   return false;
 }
+
+/** page.evaluate が集めた 1 つの表 */
+export interface RawTable {
+  rows: RawCell[][];
+}
+
+/**
+ * 室名を含む行と、その表のヘッダ行を返す。
+ *
+ * 行の先頭セルは自治体によって形式が違う（「第１会議室」だけの場合と
+ * 「石浜ふれあい館 ３階和室２」のように建物名を含む場合がある）ため、
+ * 完全一致ではなく部分一致で探す。
+ * 江東区は区分数の異なる表が同じページに並ぶため、全ての表を走査する。
+ *
+ * 部分一致であるため、同一表内に複数の行が室名を含む可能性がある
+ * （例:「第１会議室」で検索したとき「第１会議室」と「第１会議室控室」が
+ * 両方ある場合）。その場合は最初に見つかった行を返しつつ console.warn で
+ * 警告する。selectTarget の複数一致警告と同じ方針。
+ */
+export function findRoomRow(
+  tables: readonly RawTable[],
+  roomName: string
+): { header: string[]; cells: string[] } | undefined {
+  for (const table of tables) {
+    const header = table.rows[0];
+    if (!header) continue;
+    const matches = table.rows.slice(1).filter((row) => {
+      const first = row[0];
+      return first !== undefined && cellToSymbol(first).includes(roomName);
+    });
+    if (matches.length === 0) continue;
+    if (matches.length > 1) {
+      console.warn(
+        `findRoomRow: 室名「${roomName}」に ${matches.length} 件一致。先頭を採用します。`
+      );
+    }
+    const row = matches[0];
+    if (!row) continue;
+    return {
+      header: header.map(cellToSymbol),
+      cells: row.map(cellToSymbol),
+    };
+  }
+  return undefined;
+}
