@@ -238,8 +238,6 @@ export const MUNICIPALITIES = {
     reservationExcluded: false,
     // サイト側が GitHub Actions（Azure レンジ）からの TCP SYN を L4 で silent drop している
     // （2026-07-19 に層別診断で確定。構造変化ではない）。国内 proxy 経由で運用する。
-    // 除外は proxy 経路の E2E 検証後に解除する。
-    scraperCiExcluded: true,
     scraperViaJpProxy: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
