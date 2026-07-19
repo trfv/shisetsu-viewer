@@ -236,8 +236,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "墨田区",
     reservationExcluded: false,
-    // サイト側が GitHub Actions（Azure レンジ）からの TCP SYN を L4 で silent drop している
-    // （2026-07-19 に層別診断で確定。構造変化ではない）。国内 proxy 経由で運用する。
     scraperViaJpProxy: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
