@@ -77,6 +77,7 @@ cd packages/scraper && node tools/spotcheck/judge.ts; echo "exit=$?"; cd ../..
 ```
 
 `SPOTCHECK_RESULT` の JSON を読む。exit code は 0=要調査なし / 1=要調査あり（`investigate` の件数が JSON にある）/ 2=入力不備（plan.ts を先に実行したか確認する）。
+出力に `WARN:` 行があれば、観測ファイルの `id` が `plan.json` の `id` と一致していない（タイプミス）ことを意味する。該当する観測ファイルの `id` を修正して judge を再実行する。サイト構造変化とは結論しない。
 
 ## フェーズ 4: 報告
 
