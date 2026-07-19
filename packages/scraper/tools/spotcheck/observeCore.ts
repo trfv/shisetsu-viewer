@@ -24,3 +24,22 @@ export function cellToSymbol(cell: RawCell): string {
   const fileName = src.split("/").pop() ?? "";
   return fileName.replace(/\.[^.]+$/, "");
 }
+
+/**
+ * plan の建物名・室名から観測対象の target を選ぶ。
+ *
+ * 自治体によって target の粒度が違う（北区は室ごと、豊島区は建物ごと）。
+ * 建物名で絞ったあと室名の部分一致を試し、一致が無ければ建物単位の
+ * target とみなして先頭を返す。
+ */
+export function selectTarget<T>(
+  targets: readonly T[],
+  facilityOf: (t: T) => string,
+  buildingName: string,
+  roomName: string
+): T | undefined {
+  const inBuilding = targets.filter((t) => facilityOf(t) === buildingName);
+  if (inBuilding.length === 0) return undefined;
+  const byRoom = inBuilding.filter((t) => JSON.stringify(t).includes(roomName));
+  return byRoom[0] ?? inBuilding[0];
+}

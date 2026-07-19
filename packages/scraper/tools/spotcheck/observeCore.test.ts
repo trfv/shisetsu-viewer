@@ -31,3 +31,28 @@ test("cellToSymbol は alt も無ければ src のファイル名を返す", () 
 test("cellToSymbol は何も無ければ空文字を返す", () => {
   assert.equal(cellToSymbol({ text: "", imgAlt: "", imgSrc: "" }), "");
 });
+
+import { selectTarget } from "./observeCore.ts";
+
+const facilityOf = (t: { facilityName: string }) => t.facilityName;
+
+test("selectTarget は室名で絞り込む（北区のように室ごとに target がある場合）", () => {
+  const targets = [
+    { facilityName: "滝野川会館", roomName: "大ホール （平土間）" },
+    { facilityName: "滝野川会館", roomName: "B201音楽スタジオ" },
+    { facilityName: "赤羽会館", roomName: "講堂" },
+  ];
+  const selected = selectTarget(targets, facilityOf, "滝野川会館", "B201音楽スタジオ");
+  assert.deepEqual(selected, { facilityName: "滝野川会館", roomName: "B201音楽スタジオ" });
+});
+
+test("selectTarget は室名が一致しなければ建物単位の先頭を返す（豊島区のように室を持たない場合）", () => {
+  const targets = [{ facilityName: "南大塚地域文化創造館" }, { facilityName: "巣鴨地域文化創造館" }];
+  const selected = selectTarget(targets, facilityOf, "南大塚地域文化創造館", "第１会議室");
+  assert.deepEqual(selected, { facilityName: "南大塚地域文化創造館" });
+});
+
+test("selectTarget は建物名が一致しなければ undefined を返す", () => {
+  const targets = [{ facilityName: "南大塚地域文化創造館" }];
+  assert.equal(selectTarget(targets, facilityOf, "存在しない館", "第１会議室"), undefined);
+});
