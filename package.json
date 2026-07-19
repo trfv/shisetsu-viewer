@@ -20,7 +20,7 @@
     "@types/node": "24.13.3",
     "eslint": "10.7.0",
     "globals": "17.7.0",
-    "knip": "6.26.0",
+    "knip": "6.27.0",
     "prettier": "3.9.5",
     "prettier-plugin-organize-imports": "4.3.0",
     "typescript": "6.0.3",
