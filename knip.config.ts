@@ -10,9 +10,7 @@ const config: KnipConfig = {
       ],
     },
     "packages/viewer": {
-      ignoreDependencies: [
-        "@swc/core", // used internally by @vitejs/plugin-react-swc
-      ],
+      ignoreDependencies: [],
     },
     "packages/scraper": {
       entry: ["**/index.test.ts", "*/index.ts", "tools/**/*.ts"],

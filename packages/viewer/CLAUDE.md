@@ -1,6 +1,6 @@
 # Viewer Package
 
-React 19 SPA for browsing facility reservation data. Deployed to Cloudflare Workers (`wrangler.jsonc`, SPA mode). Key deps: wouter 3 (router), @auth0/auth0-spa-js (dynamic import), date-fns 4. Build: Vite 8 + SWC. Source files live at package root (no `src/`). Commands: see `package.json` scripts (`start`, `test:*`, `coverage`, `deploy`, `preview`; tests run with `TZ=Asia/Tokyo`).
+React 19 SPA for browsing facility reservation data. Deployed to Cloudflare Workers (`wrangler.jsonc`, SPA mode). Key deps: wouter 3 (router), @auth0/auth0-spa-js (dynamic import), date-fns 4. Build: Vite 8 + Oxc (@vitejs/plugin-react v6). Source files live at package root (no `src/`). Commands: see `package.json` scripts (`start`, `test:*`, `coverage`, `deploy`, `preview`; tests run with `TZ=Asia/Tokyo`).
 
 ## Non-obvious Constraints
 
