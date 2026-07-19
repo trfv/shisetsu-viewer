@@ -10,9 +10,7 @@ const config: KnipConfig = {
       ],
     },
     "packages/viewer": {
-      ignoreDependencies: [
-        "dotenv", // used via --require dotenv/config in generate script
-      ],
+      ignoreDependencies: [],
     },
     "packages/scraper": {
       entry: ["**/index.test.ts", "*/index.ts", "tools/**/*.ts"],

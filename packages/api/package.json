@@ -17,8 +17,8 @@
     "jose": "6.2.3"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "0.18.4",
+    "@cloudflare/vitest-pool-workers": "0.18.5",
     "vitest": "4.1.10",
-    "wrangler": "4.110.0"
+    "wrangler": "4.111.0"
   }
 }
