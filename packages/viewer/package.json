@@ -25,7 +25,6 @@
     "dotenv": "17.4.2",
     "esbuild": "0.28.1",
     "msw": "2.15.0",
-    "rollup-plugin-visualizer": "7.0.1",
     "vite": "8.1.4",
     "vitest": "4.1.10",
     "wrangler": "4.110.0"
@@ -36,7 +35,6 @@
   "scripts": {
     "start": "vite --port 3000",
     "build": "node ../../node_modules/typescript7/bin/tsc && vite build",
-    "build:analyze": "vite build --mode analyze",
     "serve": "vite preview --port 3000",
     "typecheck": "node ../../node_modules/typescript7/bin/tsc",
     "test": "TZ=Asia/Tokyo vitest",

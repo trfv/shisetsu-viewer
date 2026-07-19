@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  ignoreBinaries: ["open", "xdg-open"],
+  ignoreBinaries: ["xdg-open"],
   exclude: ["enumMembers"],
   workspaces: {
     ".": {
