@@ -39,6 +39,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 - testMatch は `**/index.test.ts`。非 index の `*.test.ts` は `node --test` 用ユニットテスト（`npm run test:unit`）で、Playwright には拾われない。
 - Workers: 4 local / 1 CI。`WORKERS` / `SLOW_MO` env で上書き。
 - CI 除外は registry 駆動: shared `registry.ts` の `scraperCiExcluded` から `testIgnore` を構築（`SCRAPER_FORCE_INCLUDE` で個別上書き）。
+- 国内 proxy: registry の `scraperViaJpProxy` の自治体は、CI で Tailscale + Mac の tinyproxy 経由（`SCRAPER_PROXY`）。セットアップは `tools/jp-proxy/README.md`。
 
 ## Adding a New Municipality
 

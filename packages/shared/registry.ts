@@ -12,6 +12,12 @@ export interface MunicipalityConfig {
    * SCRAPER_FORCE_INCLUDE により実行可能）。playwright.config.ts の testIgnore が参照する。
    */
   readonly scraperCiExcluded?: boolean;
+  /**
+   * true = サイトが GitHub Actions からの接続を遮断しているため、CI では
+   * 国内 proxy 経由でスクレイプする。scrape アクションが Tailscale join と
+   * SCRAPER_PROXY 設定を行う（判定は scripts/viaJpProxy.ts）。
+   */
+  readonly scraperViaJpProxy?: boolean;
   /** サイトのメンテナンス時間帯 [開始時, 終了時)（JST の時、半開区間） */
   readonly maintenanceWindowJst?: readonly [number, number];
   readonly reservationStatus: Readonly<Record<string, string>>;
@@ -231,8 +237,7 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "墨田区",
     reservationExcluded: false,
-    // 2026-07-10 からサイト構造変化で故障中。userHome エンジン統合（再構築 PR 1-5b）で解除予定
-    scraperCiExcluded: true,
+    scraperViaJpProxy: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",

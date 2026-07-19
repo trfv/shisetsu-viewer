@@ -3,6 +3,10 @@ import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared
 
 const isCI = !!process.env.CI;
 
+// GitHub Actions から遮断されている自治体（registry の scraperViaJpProxy）向けに、
+// scrape アクションが対象ジョブでのみ設定する。未設定なら従来どおり直接続。
+const scraperProxy = process.env["SCRAPER_PROXY"];
+
 // CI 除外の単一ソースは registry の scraperCiExcluded。
 // SCRAPER_FORCE_INCLUDE（カンマ区切りの target 名）で個別解除できる —
 // workflow_dispatch では対象自治体を渡し、除外中でも実サイト検証を可能にする。
@@ -30,6 +34,7 @@ export default defineConfig({
   use: {
     actionTimeout: 10 * 1000,
     navigationTimeout: 30 * 1000,
+    ...(scraperProxy ? { proxy: { server: scraperProxy } } : {}),
     launchOptions: {
       args: [
         "--disable-application-cache",
@@ -44,9 +49,9 @@ export default defineConfig({
         "--disable-translate",
         "--ignore-certificate-errors",
         "--no-first-run",
-        "--proxy-bypass-list=*",
-        '--proxy-server="direct://"',
         "--start-maximized",
+        // SCRAPER_PROXY 未設定時は直接続を強制する（proxy 利用時は use.proxy に任せる）
+        ...(scraperProxy ? [] : ["--proxy-bypass-list=*", '--proxy-server="direct://"']),
       ],
       slowMo: process.env.SLOW_MO ? Number(process.env.SLOW_MO) : 100,
     },
