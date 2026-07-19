@@ -12,7 +12,6 @@ const config: KnipConfig = {
     "packages/viewer": {
       ignoreDependencies: [
         "@swc/core", // used internally by @vitejs/plugin-react-swc
-        "dotenv", // used via --require dotenv/config in generate script
       ],
     },
     "packages/scraper": {
