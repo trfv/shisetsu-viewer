@@ -53,10 +53,7 @@ updates:
         patterns:
           - "vite"
           - "@vitejs/*"
-          - "esbuild"
-          - "@esbuild/*"
           - "@swc/*"
-          - "@rollup/*"
           - "wrangler"
       linting:
         applies-to: version-updates
@@ -84,10 +81,7 @@ updates:
           - "msw"
           - "vite"
           - "@vitejs/*"
-          - "esbuild"
-          - "@esbuild/*"
           - "@swc/*"
-          - "@rollup/*"
           - "wrangler"
           - "eslint"
           - "eslint-*"
