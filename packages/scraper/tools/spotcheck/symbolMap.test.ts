@@ -25,6 +25,12 @@ test("categorizeSymbol は記号表で判定する", () => {
   assert.equal(categorizeSymbol("?"), "UNKNOWN");
 });
 
+test("categorizeSymbol は全角/半角の X も UNAVAILABLE として扱う（荒川区が実サイトで使用）", () => {
+  assert.equal(categorizeSymbol("Ｘ"), "UNAVAILABLE"); // 全角ラテン大文字 X (U+FF38)
+  assert.equal(categorizeSymbol("X"), "UNAVAILABLE"); // 半角大文字 X (U+0058)
+  assert.equal(categorizeSymbol("x"), "UNAVAILABLE"); // 半角小文字 x (U+0078)
+});
+
 test("categorizeSymbol は凡例を記号表より優先する", () => {
   // このサイトでは △ が「抽選申込あり」= 埋まり系だと凡例が言っている
   assert.equal(categorizeSymbol("△", { "△": "抽選申込あり" }), "UNAVAILABLE");
