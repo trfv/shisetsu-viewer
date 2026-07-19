@@ -1,5 +1,5 @@
 import { defineConfig, type UserConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 
 const manualChunks: Record<string, string[]> = {
   "react-vendor": ["react", "react-dom"],
