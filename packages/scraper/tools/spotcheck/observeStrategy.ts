@@ -3,6 +3,8 @@
 // 戦略をスクレイパー側ではなくここに置くのは、借りている範囲を prepare だけに
 // 限るためである。スクレイパーに spot check 専用のフックを足すと、フックが
 // 増えるたびに境界が曖昧になる。
+import type { Page } from "@playwright/test";
+import type { RawTable } from "./observeCore.ts";
 
 /**
  * direct        : prepare 後に描画されている表をそのまま読む
@@ -26,4 +28,58 @@ export const STRATEGY_BY_MUNICIPALITY: Readonly<Record<string, ObserveStrategy>>
 
 export function strategyFor(municipality: string): ObserveStrategy {
   return STRATEGY_BY_MUNICIPALITY[municipality] ?? "direct";
+}
+
+/**
+ * ページ上の全ての表からセルの生データを集める。
+ *
+ * evaluate の中では text / alt / src を機械的に集めるだけにし、
+ * どれを記号として採るかの判断は observeCore.cellToSymbol に出す
+ * （evaluate の中身はブラウザ側で実行されるためテストできない）。
+ */
+export async function collectTables(page: Page): Promise<RawTable[]> {
+  return page.evaluate(() =>
+    [...document.querySelectorAll("table")]
+      .map((table) => ({
+        rows: [...table.querySelectorAll("tr")].map((tr) =>
+          [...tr.querySelectorAll("td,th")].map((cellEl) => {
+            const img = cellEl.querySelector("img");
+            return {
+              text: (cellEl as HTMLElement).innerText.replace(/\s+/g, " ").trim(),
+              imgAlt: img?.getAttribute("alt") ?? "",
+              imgSrc: img?.getAttribute("src") ?? "",
+            };
+          })
+        ),
+      }))
+      .filter((t) => t.rows.length >= 2)
+  );
+}
+
+/**
+ * 区分フィルタを切り替える。切り替えられたら true を返す。
+ *
+ * 豊島区と江戸川区で共通の UI（「その他の条件で絞り込む」→ 区分ラベル →
+ * 「表示」）を操作する。いずれかの要素が見つからなければ false を返し、
+ * 呼び出し側がその区分を欠落として記録する。
+ */
+export async function applyDivisionFilter(page: Page, divisionLabel: string): Promise<boolean> {
+  try {
+    const opener = page.locator('button:has-text("その他の条件で絞り込む")');
+    if ((await opener.count()) > 0 && (await opener.first().isVisible())) {
+      await opener.first().click();
+      await page.waitForTimeout(500);
+    }
+    const label = page.getByText(divisionLabel, { exact: true });
+    if ((await label.count()) === 0) return false;
+    await label.first().click();
+    const show = page.locator('button:has-text("表示")');
+    if ((await show.count()) === 0) return false;
+    await show.first().click();
+    await page.locator("table").first().waitFor({ timeout: 15000 });
+    await page.waitForTimeout(500);
+    return true;
+  } catch {
+    return false;
+  }
 }
