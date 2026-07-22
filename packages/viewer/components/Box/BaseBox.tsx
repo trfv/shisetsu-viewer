@@ -1,4 +1,5 @@
 import { type ComponentProps, type ElementType, type FC, type ReactNode } from "react";
+
 import { WIDTHS } from "../../constants/styles";
 
 export type BoxSize = "small" | "medium" | "large" | "auto" | "full";

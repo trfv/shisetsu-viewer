@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
+
 import { screen } from "../test/utils/test-utils";
 import { ColorModeProvider, useColorMode } from "./ColorMode";
 

@@ -1,6 +1,7 @@
 import type { Institution } from "@shisetsu-viewer/shared";
 import { env } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
+
 import {
   recordScrapeRun,
   todayRowsWritten,

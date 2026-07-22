@@ -1,8 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import type { Page } from "@playwright/test";
-import type { FailedStep, FailureClassification, FailureRecord } from "./failureTypes.ts";
+
 import { classifyFailure } from "./classifyFailure.ts";
+import type { FailedStep, FailureClassification, FailureRecord } from "./failureTypes.ts";
 
 export interface CaptureFailureInput {
   municipality: string;

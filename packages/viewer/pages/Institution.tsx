@@ -1,18 +1,18 @@
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
+
 import {
   INSTITUTIONS_QUERY,
   type InstitutionNode,
   type InstitutionsQueryData,
 } from "../api/queries";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
-import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
-import { Select, type SelectChangeEvent } from "../components/Select";
 import { SearchPageLayout } from "../components/SearchPageLayout";
+import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
@@ -21,6 +21,7 @@ import {
   SupportedMunicipalityMap,
   convertMunicipalityToUrlParam,
 } from "../utils/municipality";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import {
   AVAILABLE_INSTRUMENT_MAP,
   INSTITUTION_SIZE_MAP,

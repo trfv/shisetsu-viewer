@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { ErrorBoundary } from "./ErrorBoundary";
 

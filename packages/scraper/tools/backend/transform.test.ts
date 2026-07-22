@@ -1,5 +1,6 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import { buildReservationRows } from "./transform.ts";
 import type { FileData, InstitutionKeyMap } from "./types.ts";
 

@@ -1,14 +1,15 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
+import { ErrorBoundary } from "../components/utils/ErrorBoundary";
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen } from "../test/utils/test-utils";
 import {
   createMockInstitutionDetailNode,
   createMockInstitutionDetailConnection,
   createMockReservationNode,
   createMockInstitutionReservationsConnection,
 } from "../test/mocks/data";
-import { ErrorBoundary } from "../components/utils/ErrorBoundary";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import DetailPage from "./Detail";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;

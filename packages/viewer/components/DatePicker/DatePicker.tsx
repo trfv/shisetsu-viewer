@@ -1,6 +1,8 @@
 import { formatISO, parseISO } from "date-fns";
 import type { ChangeEvent, FC } from "react";
+
 import { SmallBox } from "../Box";
+
 import styles from "./DatePicker.module.css";
 
 type Props = {

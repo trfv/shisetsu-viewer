@@ -1,5 +1,6 @@
-import { describe, expect, test } from "vitest";
 import { addMonths } from "date-fns";
+import { describe, expect, test } from "vitest";
+
 import { AvailabilityDivision, ReservationDivision } from "../constants/enums";
 import { RESERVATION_EXCLUDED_MUNICIPALITIES, SupportedMunicipalities } from "./municipality";
 import {

@@ -1,8 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
 import { http, HttpResponse } from "msw";
+import { describe, it, expect, vi } from "vitest";
+
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { createMockInstitutionNode, createMockInstitutionsConnection } from "../test/mocks/data";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;

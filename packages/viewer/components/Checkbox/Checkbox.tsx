@@ -1,5 +1,7 @@
 import type { ChangeEvent, FC } from "react";
+
 import { BaseBox, type BoxSize } from "../Box";
+
 import styles from "./Checkbox.module.css";
 
 type Props = {

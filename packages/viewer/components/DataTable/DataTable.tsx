@@ -1,8 +1,9 @@
-import { useIsMobile } from "../../hooks/useIsMobile";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
+
 import styles from "./DataTable.module.css";
 
 export type Row = { id: string } & { [key: string]: unknown };

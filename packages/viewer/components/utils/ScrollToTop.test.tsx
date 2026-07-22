@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
+
 import { renderWithProviders } from "../../test/utils/test-utils";
 import { ScrollToTop } from "./ScrollToTop";
 

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+
 import styles from "./Chip.module.css";
 
 type Props = {

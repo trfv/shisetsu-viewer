@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { renderWithProviders, screen } from "../utils/test-utils";
+
 import Detail from "../../pages/Detail";
 import Waiting from "../../pages/Waiting";
+import { renderWithProviders, screen } from "../utils/test-utils";
 
 describe("Navigation", () => {
   describe("Detail page", () => {

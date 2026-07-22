@@ -1,11 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen } from "../test/utils/test-utils";
 import {
   createMockSearchableReservationNode,
   createMockSearchableReservationsConnection,
 } from "../test/mocks/data";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import ReservationPage from "./Reservation";
 vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,

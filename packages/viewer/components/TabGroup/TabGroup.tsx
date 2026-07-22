@@ -1,6 +1,8 @@
 import { Children, cloneElement, type ComponentProps, type FC, type ReactNode } from "react";
+
 import { BaseBox } from "../Box";
 import type { Tab } from "../Tab";
+
 import styles from "./TabGroup.module.css";
 
 type Props = {

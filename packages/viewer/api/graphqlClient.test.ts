@@ -1,5 +1,6 @@
-import { describe, it, expect } from "vitest";
 import { http, HttpResponse } from "msw";
+import { describe, it, expect } from "vitest";
+
 import { worker } from "../test/mocks/browser";
 import { graphqlQuery } from "./graphqlClient";
 

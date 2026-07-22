@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
+
 import type { ScraperDefinition } from "./defineScraper.ts";
 import { pagesForHorizon } from "./horizon.ts";
 import { runScrapeTest } from "./runScrapeTest.ts";

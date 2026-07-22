@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { act } from "react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook } from "vitest-browser-react";
+
 import { useIsMobile } from "./useIsMobile";
 
 describe("useIsMobile Hook", () => {

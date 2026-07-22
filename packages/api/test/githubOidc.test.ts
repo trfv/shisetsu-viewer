@@ -1,5 +1,6 @@
 import { SignJWT, exportJWK, generateKeyPair, importJWK, type JWTVerifyGetKey } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
+
 import { verifyGithubOidc } from "../src/auth/githubOidc.ts";
 
 const ENV = {

@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { MenuIcon } from "../icons";
+
 import styles from "./HeaderMenuButton.module.css";
 
 export const HeaderMenuButton = () => {

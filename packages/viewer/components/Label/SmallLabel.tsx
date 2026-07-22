@@ -1,4 +1,5 @@
 import type { FC } from "react";
+
 import { BaseLabel } from "./BaseLabel";
 
 type Props = {

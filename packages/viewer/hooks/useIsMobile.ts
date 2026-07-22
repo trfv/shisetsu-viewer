@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { BREAKPOINTS } from "../constants/styles";
 
 const query = `(max-width: ${BREAKPOINTS.sm - 1}px)`;

@@ -21,5 +21,5 @@ pre-commit:
 
     - name: format
       glob: "*.{ts,tsx}"
-      run: npx prettier --write {staged_files}
+      run: npx oxfmt {staged_files}
       stage_fixed: true

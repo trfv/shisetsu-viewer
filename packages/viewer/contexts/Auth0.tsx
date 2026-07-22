@@ -14,6 +14,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+
 import { requestInterval } from "../utils/interval";
 
 const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";

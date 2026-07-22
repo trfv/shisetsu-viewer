@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { diffDiscovered, type DiscoveredTarget, isMusicLikely } from "./discover.ts";
 
 function candidate(facilityName: string, roomName?: string): DiscoveredTarget {

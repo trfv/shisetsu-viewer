@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "sortImports": true,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "*.json",
+    "/node_modules",
+    "/build",
+    "**/worker-configuration.d.ts"
+  ]
+}

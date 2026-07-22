@@ -1,8 +1,10 @@
 import type { FC, InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+
 import { BaseBox, type BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Skeleton } from "../Skeleton";
 import { Spacer } from "../Spacer";
+
 import inputStyles from "./Input.module.css";
 
 type Props = {

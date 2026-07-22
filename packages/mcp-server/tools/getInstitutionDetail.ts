@@ -1,8 +1,9 @@
-import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { GraphQLClient } from "../graphqlClient.ts";
-import { INSTITUTION_DETAIL_FIELDS } from "../fieldDefinitions.ts";
+import { z } from "zod";
+
 import { buildFieldSelection } from "../buildFieldSelection.ts";
+import { INSTITUTION_DETAIL_FIELDS } from "../fieldDefinitions.ts";
+import type { GraphQLClient } from "../graphqlClient.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
 
 function buildQuery(fieldSelection: string): string {

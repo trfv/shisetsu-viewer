@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, FC, ReactNode } from "react";
+
 import styles from "./IconButton.module.css";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {

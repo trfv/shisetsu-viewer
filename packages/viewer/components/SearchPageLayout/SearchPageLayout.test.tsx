@@ -1,4 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
+
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import type { Columns, Row } from "../DataTable";
 import { SearchPageLayout } from "./SearchPageLayout";

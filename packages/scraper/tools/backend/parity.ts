@@ -4,6 +4,7 @@ import {
   MUNICIPALITIES,
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
+
 import { graphqlRequest } from "../request.ts";
 import { exportReservations } from "./d1Api.ts";
 import {

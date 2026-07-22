@@ -1,7 +1,8 @@
 import type { Page } from "@playwright/test";
 import { addDays, endOfMonth, format } from "date-fns";
-import { defineScraper } from "../common/defineScraper.ts";
+
 import { toISODateString } from "../common/dateUtils.ts";
+import { defineScraper } from "../common/defineScraper.ts";
 import { collectPaginated } from "../common/paginate.ts";
 import { getCellValue } from "../common/playwrightUtils.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";

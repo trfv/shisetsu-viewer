@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import { InstitutionSize as InstitutionSizeEnum } from "../constants/enums";
 import {
   type AvailableInstrument,

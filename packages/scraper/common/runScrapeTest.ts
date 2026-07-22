@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+
 import { captureFailure, clearFailure } from "./captureFailure.ts";
 import { MaintenanceWindowError, PartialExtractionError } from "./errors.ts";
 import type { FailedStep } from "./failureTypes.ts";

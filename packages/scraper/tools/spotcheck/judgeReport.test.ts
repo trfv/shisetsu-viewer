@@ -1,5 +1,6 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import { judgeSample, needsInvestigation } from "./judgeReport.ts";
 import type { ExpectedSample, ObservedSample, PlanSample } from "./judgeReport.ts";
 

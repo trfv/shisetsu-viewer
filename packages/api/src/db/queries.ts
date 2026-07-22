@@ -9,6 +9,7 @@ import type {
   ScrapeRun,
   UsageFeeEntry,
 } from "@shisetsu-viewer/shared";
+
 import { decodeCursor, encodeCursor } from "./cursor.ts";
 
 const DEFAULT_LIMIT = 50;

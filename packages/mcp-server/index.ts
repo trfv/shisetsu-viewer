@@ -1,4 +1,5 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
 import {
   AUTH0_AUDIENCE,
   AUTH0_CLIENT_ID,

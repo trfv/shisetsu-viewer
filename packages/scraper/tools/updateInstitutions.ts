@@ -1,7 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
+
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
 import type { Institution } from "@shisetsu-viewer/shared";
+
 import { upsertInstitutions as d1UpsertInstitutions } from "./backend/d1Api.ts";
 import { upsertInstitutions } from "./backend/hasura.ts";
 

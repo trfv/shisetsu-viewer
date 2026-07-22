@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+
 import { requestInterval } from "./interval";
 
 describe("requestInterval", () => {

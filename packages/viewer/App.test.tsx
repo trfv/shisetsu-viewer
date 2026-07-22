@@ -1,6 +1,7 @@
+import { describe, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { page } from "vitest/browser";
-import { describe, expect, it, vi } from "vitest";
+
 import App from "./App";
 import { Auth0Context } from "./contexts/Auth0";
 

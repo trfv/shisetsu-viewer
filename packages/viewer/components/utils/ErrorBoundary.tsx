@@ -1,4 +1,5 @@
 import { Component, type ReactNode, type ErrorInfo } from "react";
+
 import { Snackbar } from "../Snackbar";
 
 type Props = { children?: ReactNode };

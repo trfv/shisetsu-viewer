@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { daysForHorizon, pagesForHorizon } from "./horizon.ts";
 
 // 2026-07-05 (土) を基準に旧 calculateCount 実装と同値であることを固定する。

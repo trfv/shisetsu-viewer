@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Redirect, Route, Router, Switch } from "wouter";
+
 import { Header } from "./components/Header";
 import { AuthGuard } from "./components/utils/AuthGuard";
 import { ErrorBoundary } from "./components/utils/ErrorBoundary";

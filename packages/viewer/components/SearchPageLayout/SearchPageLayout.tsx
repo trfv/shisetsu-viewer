@@ -1,8 +1,10 @@
 import { type ReactNode } from "react";
+
 import { DataTable, type Columns, type Row, type RowParams } from "../DataTable";
 import { SearchForm } from "../SearchForm";
 import { Snackbar } from "../Snackbar";
 import { Spinner } from "../Spinner";
+
 import styles from "./SearchPageLayout.module.css";
 
 type ChipItem = {
