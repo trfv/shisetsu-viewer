@@ -81,6 +81,46 @@ export interface RawTable {
 }
 
 /**
+ * 区分ラベル照合の表記ゆれを吸収する。judgeReport.ts の normalizeDivisionLabel と
+ * 同じ方針（全角数字→半角、範囲記号の統一、前後空白の除去）だが、観測側は空白も
+ * 落とす（「09:00 - 12:00」と「09:00-12:00」を同一視するため）。
+ */
+export function normalizeLabel(label: string): string {
+  const halfWidth = label.replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xfee0));
+  return halfWidth
+    .replace(/[～〜\-−ー]/g, "-")
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+/**
+ * ヘッダ行から対象日の列インデックスを返す。
+ *
+ * 日付セルは「数字 + 曜日」の形をとる（「19 日」「7/19 日」「7月19日 日」）。
+ * 曜日文字の有無を手掛かりにし、末尾の数字を日、その手前の数字があれば月として扱う。
+ *
+ * index 0 は表題（「2026年7月」「2026/7/19(日)～」）が入るため常に除外する。
+ * 除外しないと江戸川区の表題「2026/7/19(日)～」が日付セルとして先に一致してしまう。
+ */
+export function findDateColumn(header: readonly string[], isoDate: string): number | undefined {
+  const parts = isoDate.split("-");
+  const month = Number(parts[1]);
+  const day = Number(parts[2]);
+  for (let i = 1; i < header.length; i++) {
+    const cell = header[i] ?? "";
+    if (!/[日月火水木金土]/.test(cell)) continue;
+    const numbers = [...cell.matchAll(/\d+/g)].map((m) => Number(m[0]));
+    if (numbers.length === 0) continue;
+    const cellDay = numbers[numbers.length - 1];
+    if (cellDay !== day) continue;
+    const cellMonth = numbers.length >= 2 ? numbers[numbers.length - 2] : undefined;
+    if (cellMonth !== undefined && cellMonth !== month) continue;
+    return i;
+  }
+  return undefined;
+}
+
+/**
  * 室名を含む行と、その表のヘッダ行を返す。
  *
  * 行の先頭セルは自治体によって形式が違う（「第１会議室」だけの場合と
@@ -92,30 +132,201 @@ export interface RawTable {
  * （例:「第１会議室」で検索したとき「第１会議室」と「第１会議室控室」が
  * 両方ある場合）。その場合は最初に見つかった行を返しつつ console.warn で
  * 警告する。selectTarget の複数一致警告と同じ方針。
+ *
+ * ヘッダ行は必ずしも table.rows[0] ではない。江東区は 1 つの表に区分数の
+ * 異なるヘッダ+室グループが複数並ぶ（4 セルのヘッダ+室が 5 行続いた後、
+ * 7 セルのヘッダ+室が続く、等）。そのため、一致した室の行より前にある
+ * 「ヘッダ候補」のうち、セル数が一致する最も近いものをヘッダとして採用する。
+ *
+ * ヘッダ候補は table.rows[0]、またはセル数が直前の行と異なる行（新しい
+ * 区分グループの境界）に限る。単に「セル数が同じ最も近い行」だけで探すと、
+ * 単一ヘッダの通常の表（全行が同じセル数）で室のすぐ上のデータ行を
+ * ヘッダと誤認してしまう。境界行に限ることで、通常の表では自然に
+ * table.rows[0] に落ち着き、江東区のような混在ヘッダでは正しい区分グループの
+ * ヘッダを選べる。該当する境界行が無ければ従来どおり table.rows[0] を使う。
  */
 export function findRoomRow(
   tables: readonly RawTable[],
   roomName: string
 ): { header: string[]; cells: string[] } | undefined {
   for (const table of tables) {
-    const header = table.rows[0];
-    if (!header) continue;
-    const matches = table.rows.slice(1).filter((row) => {
-      const first = row[0];
-      return first !== undefined && cellToSymbol(first).includes(roomName);
-    });
-    if (matches.length === 0) continue;
-    if (matches.length > 1) {
+    const candidates = table.rows
+      .map((row, index) => ({ row, index }))
+      .slice(1)
+      .filter(({ row }) => {
+        const first = row[0];
+        return first !== undefined && cellToSymbol(first).includes(roomName);
+      });
+    if (candidates.length === 0) continue;
+    if (candidates.length > 1) {
       console.warn(
-        `findRoomRow: 室名「${roomName}」に ${matches.length} 件一致。先頭を採用します。`
+        `findRoomRow: 室名「${roomName}」に ${candidates.length} 件一致。先頭を採用します。`
       );
     }
-    const row = matches[0];
-    if (!row) continue;
+    const first = candidates[0];
+    if (!first) continue;
+    const { row, index } = first;
+
+    let header = table.rows[0];
+    for (let j = index - 1; j >= 0; j--) {
+      const current = table.rows[j];
+      if (current === undefined) continue;
+      const previous = j > 0 ? table.rows[j - 1] : undefined;
+      const isBoundary = j === 0 || previous === undefined || previous.length !== current.length;
+      if (isBoundary && current.length === row.length) {
+        header = current;
+        break;
+      }
+    }
+    if (!header) continue;
+
     return {
       header: header.map(cellToSymbol),
       cells: row.map(cellToSymbol),
     };
   }
   return undefined;
+}
+
+/** どの類型として表を読んだか。note に残して人が検証できるようにする。 */
+export type TableLayout =
+  "divisionColumn" | "singleRoomDivisionColumn" | "divisionRow" | "dateColumn";
+
+export interface ExtractedCells {
+  cells: { divisionLabel: string; symbol: string }[];
+  /** どの類型として読んだか。note に残して人が検証できるようにする */
+  layout: TableLayout;
+}
+
+/**
+ * ヘッダ/行ラベルのセルが「区分ラベルらしい」かを判定する。
+ *
+ * plan.json の divisionLabels（shared registry の表示ラベル）への正規化一致を
+ * 基本とするが、それだけでは足りない。registry の表示ラベルは自治体ごとに
+ * 「午前」のような抽象名の場合と「9:00-12:00」のような時刻表記そのものの場合が
+ * 混在する（例: 大田区・中央区は抽象名、北区は時刻表記）。サイトの実表示が
+ * 時刻表記の自治体では、抽象名の registry ラベルと文字列としては一致しない
+ * （大田区の実データで確認済み。詳細は task-5-report.md の deviation 記録を参照）。
+ * そのため、時刻範囲の形（「9:00-12:00」等）も区分ラベルとして扱う。
+ * 記号表（symbolMap.ts）や DIVISION_MAP は参照しない。あくまで文字列の形の話。
+ */
+const TIME_RANGE_PATTERN = /^\d{1,2}:\d{2}-\d{1,2}:\d{2}$/;
+
+function looksLikeDivisionLabel(
+  cell: string,
+  normalizedDivisionLabels: ReadonlySet<string>
+): boolean {
+  const normalized = normalizeLabel(cell);
+  if (!normalized) return false;
+  return normalizedDivisionLabels.has(normalized) || TIME_RANGE_PATTERN.test(normalized);
+}
+
+/**
+ * 表の集合から観測セルを抽出する。表の類型（4 種）は区分ラベルとの照合を軸に
+ * 自動判別する。戦略（区分フィルタを操作したかどうか）は呼び出し側
+ * （observe.ts）の責務であり、ここでは filterLabel の有無だけで分岐する。
+ *
+ * 1. filterLabel が指定された場合（区分フィルタで絞った表を渡された場合）は
+ *    無条件に類型D（dateColumn）として扱う。室の行と対象日の列を特定し、
+ *    その 1 セルを filterLabel と対にする。
+ * 2. 指定が無い場合は表の形から自動判別する。
+ *    - 室の行が見つかり、そのヘッダに区分ラベルが 2 つ以上あれば類型A（divisionColumn）
+ *    - 室の行が見つからない場合、ヘッダ（表の先頭行）に区分ラベルが 2 つ以上あり、
+ *      次の行が値の行としてある表があれば類型B（singleRoomDivisionColumn）
+ *      （凡例の表はヘッダが区分ラベルに一致しないため選ばれない）
+ *    - 先頭列に区分ラベルが 2 つ以上ある表があれば類型C（divisionRow）。
+ *      対象日の列は findDateColumn で特定する
+ *
+ * 複数の表が該当する場合は最初に該当した表を使う。どの表も該当しなければ
+ * 空の cells を返す。
+ */
+export function extractCells(
+  tables: readonly RawTable[],
+  divisionLabels: readonly string[],
+  roomName: string,
+  isoDate: string,
+  filterLabel?: string
+): ExtractedCells {
+  const normalizedDivisionLabels = new Set(divisionLabels.map(normalizeLabel));
+
+  // 類型D: 区分フィルタで絞った表。呼び出し側の指定に従う。
+  if (filterLabel !== undefined) {
+    const found = findRoomRow(tables, roomName);
+    if (!found) return { cells: [], layout: "dateColumn" };
+    const dateColumn = findDateColumn(found.header, isoDate);
+    if (dateColumn === undefined) return { cells: [], layout: "dateColumn" };
+    const symbol = found.cells[dateColumn];
+    if (symbol === undefined) return { cells: [], layout: "dateColumn" };
+    return { cells: [{ divisionLabel: filterLabel, symbol }], layout: "dateColumn" };
+  }
+
+  // 類型A: 行=室、列=区分。室の行のヘッダに区分ラベルが 2 つ以上あるかで判別する。
+  const roomRow = findRoomRow(tables, roomName);
+  if (roomRow) {
+    const divisionColumns = roomRow.header
+      .map((label, i) => ({ label, i }))
+      .slice(1)
+      .filter(({ label }) => looksLikeDivisionLabel(label, normalizedDivisionLabels));
+    if (divisionColumns.length >= 2) {
+      const cells = divisionColumns
+        .map(({ label, i }) => {
+          const symbol = roomRow.cells[i];
+          return symbol === undefined ? undefined : { divisionLabel: label, symbol };
+        })
+        .filter((c): c is { divisionLabel: string; symbol: string } => c !== undefined);
+      return { cells, layout: "divisionColumn" };
+    }
+    // 室の行はあるがヘッダが区分ラベルに一致しない。類型B/Cは室名列を持たないため
+    // ここで確定的に空を返す（他の表を類型B/Cとして誤って選ばない）。
+    return { cells: [], layout: "divisionColumn" };
+  }
+
+  // 類型B: 室名の列が無い。ヘッダ=区分、次の行=値。凡例の表と区別するため、
+  // ヘッダのセルが 2 つ以上区分ラベルに一致することを必須とする。
+  for (const table of tables) {
+    const header = table.rows[0];
+    const valueRow = table.rows[1];
+    if (!header || !valueRow) continue;
+    const headerSymbols = header.map(cellToSymbol);
+    const divisionColumns = headerSymbols
+      .map((label, i) => ({ label, i }))
+      .filter(({ label }) => looksLikeDivisionLabel(label, normalizedDivisionLabels));
+    if (divisionColumns.length < 2) continue;
+    const valueSymbols = valueRow.map(cellToSymbol);
+    const cells = divisionColumns
+      .map(({ label, i }) => {
+        const symbol = valueSymbols[i];
+        return symbol === undefined ? undefined : { divisionLabel: label, symbol };
+      })
+      .filter((c): c is { divisionLabel: string; symbol: string } => c !== undefined);
+    return { cells, layout: "singleRoomDivisionColumn" };
+  }
+
+  // 類型C: 行=区分、列=日付。先頭列に区分ラベルが 2 つ以上あるかで判別する。
+  for (const table of tables) {
+    const header = table.rows[0];
+    if (!header) continue;
+    const dataRows = table.rows.slice(1);
+    const matchingRows = dataRows.filter((row) => {
+      const first = row[0];
+      return (
+        first !== undefined && looksLikeDivisionLabel(cellToSymbol(first), normalizedDivisionLabels)
+      );
+    });
+    if (matchingRows.length < 2) continue;
+    const dateColumn = findDateColumn(header.map(cellToSymbol), isoDate);
+    if (dateColumn === undefined) return { cells: [], layout: "divisionRow" };
+    const cells = matchingRows
+      .map((row) => {
+        const symbolCell = row[dateColumn];
+        if (symbolCell === undefined) return undefined;
+        const first = row[0];
+        if (first === undefined) return undefined;
+        return { divisionLabel: cellToSymbol(first), symbol: cellToSymbol(symbolCell) };
+      })
+      .filter((c): c is { divisionLabel: string; symbol: string } => c !== undefined);
+    return { cells, layout: "divisionRow" };
+  }
+
+  return { cells: [], layout: "divisionRow" };
 }

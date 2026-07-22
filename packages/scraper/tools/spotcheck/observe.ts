@@ -8,8 +8,13 @@ import { chromium, type Page } from "@playwright/test";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ObservedSample, PlanSample } from "./judgeReport.ts";
-import { cellToSymbol, findRoomRow, selectTarget, type RawTable } from "./observeCore.ts";
+import { cellToSymbol, extractCells, selectTarget, type RawTable } from "./observeCore.ts";
 import { applyDivisionFilter, collectTables, strategyFor } from "./observeStrategy.ts";
+
+/** 既存の note を保ちつつ追記する（修正6: 無条件上書きで既存 note が消える問題の修正） */
+function appendNote(note: string, addition: string): string {
+  return note ? `${note} / ${addition}` : addition;
+}
 
 const OUT_DIR = path.join("test-results", "_spotcheck");
 
@@ -91,7 +96,10 @@ for (const [index, sample] of samples.entries()) {
         rawTablesByDivision[label] = await collectTables(active);
       }
       if (failed.length > 0) {
-        observed.note = `区分フィルタを操作できませんでした: ${failed.join(", ")}`;
+        observed.note = appendNote(
+          observed.note,
+          `区分フィルタを操作できませんでした: ${failed.join(", ")}`
+        );
       }
     } else {
       rawTablesByDivision[""] = await collectTables(active);
@@ -101,22 +109,29 @@ for (const [index, sample] of samples.entries()) {
       .replace(/\n{2,}/g, "\n")
       .slice(0, 6000);
 
-    // 区分ごとに読んだ場合はラベルと値が 1 対 1 に決まる。
-    // 一括で読んだ場合はヘッダの区分ラベルと室の行を突き合わせる。
+    // 表の類型（4 種）は区分ラベルとの照合を軸に自動判別する（observeCore.extractCells）。
+    // divisionFilter 戦略のときは区分ごとに絞った表を読んだので、必ず類型D（dateColumn）
+    // として抽出する。direct 戦略のときは一括で読んだ表から類型を自動判別する。
+    const isDivisionFilter = strategyFor(sample.target) === "divisionFilter";
+    const layouts = new Set<string>();
     for (const [label, tables] of Object.entries(rawTablesByDivision)) {
-      const found = findRoomRow(tables, sample.institutionSystemName);
-      if (!found) continue;
+      const extracted = isDivisionFilter
+        ? extractCells(
+            tables,
+            sample.divisionLabels,
+            sample.institutionSystemName,
+            sample.date,
+            label
+          )
+        : extractCells(tables, sample.divisionLabels, sample.institutionSystemName, sample.date);
+      layouts.add(extracted.layout);
+      if (extracted.cells.length === 0) continue;
       observed.reached = true;
       observed.dateDisplayed = true;
-      if (label) {
-        const value = found.cells.slice(1).find((c) => c !== "");
-        if (value !== undefined) observed.cells.push({ divisionLabel: label, symbol: value });
-      } else {
-        for (const [i, symbol] of found.cells.slice(1).entries()) {
-          const divisionLabel = found.header[i + 1] ?? "";
-          if (divisionLabel) observed.cells.push({ divisionLabel, symbol });
-        }
-      }
+      observed.cells.push(...extracted.cells);
+    }
+    if (layouts.size > 0) {
+      observed.note = appendNote(observed.note, `layout=${[...layouts].join(",")}`);
     }
 
     if (!observed.reached) {
@@ -126,9 +141,11 @@ for (const [index, sample] of samples.entries()) {
           t.rows.map((r) => cellToSymbol(r[0] ?? { text: "", imgAlt: "", imgSrc: "" }))
         )
         .filter(Boolean);
-      observed.note =
+      observed.note = appendNote(
+        observed.note,
         `室「${sample.institutionSystemName}」の行が見つかりません。読めた行: ` +
-        [...new Set(rows)].slice(0, 40).join(" / ");
+          [...new Set(rows)].slice(0, 40).join(" / ")
+      );
     }
 
     await active.screenshot({
@@ -138,7 +155,8 @@ for (const [index, sample] of samples.entries()) {
   } catch (e) {
     if (!observed.note) observed.note = String((e as Error).message).slice(0, 500);
   } finally {
-    await context.close();
+    // context.close() が例外を投げても残りのサンプルの処理と browser.close() を続ける（修正7）。
+    await context.close().catch(() => {});
   }
 
   await fs.writeFile(
