@@ -22,7 +22,7 @@ export default defineConfig({
     exclude: ["node_modules", "e2e/**", "playwright-*/**"],
     silent: true,
     coverage: {
-      provider: "istanbul",
+      provider: "v8",
       reporter: ["text"],
       exclude: [
         "node_modules/",
