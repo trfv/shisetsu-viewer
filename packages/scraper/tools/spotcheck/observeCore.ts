@@ -190,7 +190,7 @@ export function findRoomRow(
 
 /** どの類型として表を読んだか。note に残して人が検証できるようにする。 */
 export type TableLayout =
-  "divisionColumn" | "singleRoomDivisionColumn" | "divisionRow" | "dateColumn";
+  "divisionColumn" | "singleRoomDivisionColumn" | "divisionRow" | "dateColumn" | "none";
 
 export interface ExtractedCells {
   cells: { divisionLabel: string; symbol: string }[];
@@ -281,24 +281,46 @@ export function extractCells(
     return { cells: [], layout: "divisionColumn" };
   }
 
-  // 類型B: 室名の列が無い。ヘッダ=区分、次の行=値。凡例の表と区別するため、
-  // ヘッダのセルが 2 つ以上区分ラベルに一致することを必須とする。
+  // 類型B: 室名の列が無い。ヘッダ=区分、次の行=値。区分ブロック（ヘッダ行+値行の
+  // 2 行 1 組）が表の中に複数段積まれることがある（北区・滝野川会館の実データ:
+  // 4 区分のブロックの後に 19:30-21:30 の 1 区分だけのブロックが続く）。
+  // 1 組目だけ読むと後続ブロックの区分が観測結果からサイレントに欠落するため、
+  // 表全体を 2 行ずつのブロックに分けて走査する。
+  // 凡例の表と区別するため、表全体で区分ラベルに一致するヘッダーセルの合計が
+  // 2 つ以上であることを必須とする（各ブロック単独では 1 つしか無くてもよい）。
   for (const table of tables) {
-    const header = table.rows[0];
-    const valueRow = table.rows[1];
-    if (!header || !valueRow) continue;
-    const headerSymbols = header.map(cellToSymbol);
-    const divisionColumns = headerSymbols
-      .map((label, i) => ({ label, i }))
-      .filter(({ label }) => looksLikeDivisionLabel(label, normalizedDivisionLabels));
-    if (divisionColumns.length < 2) continue;
-    const valueSymbols = valueRow.map(cellToSymbol);
-    const cells = divisionColumns
-      .map(({ label, i }) => {
-        const symbol = valueSymbols[i];
-        return symbol === undefined ? undefined : { divisionLabel: label, symbol };
-      })
-      .filter((c): c is { divisionLabel: string; symbol: string } => c !== undefined);
+    const blocks: { header: string[]; values: string[] }[] = [];
+    for (let i = 0; i + 1 < table.rows.length; i += 2) {
+      const header = table.rows[i];
+      const valueRow = table.rows[i + 1];
+      if (!header || !valueRow) continue;
+      blocks.push({ header: header.map(cellToSymbol), values: valueRow.map(cellToSymbol) });
+    }
+    if (blocks.length === 0) continue;
+
+    const blockDivisionColumns = blocks.map((block) =>
+      block.header
+        .map((label, i) => ({ label, i }))
+        .filter(({ label }) => looksLikeDivisionLabel(label, normalizedDivisionLabels))
+    );
+    const totalDivisionColumns = blockDivisionColumns.reduce(
+      (sum, columns) => sum + columns.length,
+      0
+    );
+    if (totalDivisionColumns < 2) continue;
+
+    const cells = blocks.flatMap((block, blockIndex) => {
+      const divisionColumns = blockDivisionColumns[blockIndex];
+      if (!divisionColumns || divisionColumns.length === 0) return [];
+      return divisionColumns
+        .map(({ label, i }) => {
+          const symbol = block.values[i];
+          return symbol === undefined || symbol === ""
+            ? undefined
+            : { divisionLabel: label, symbol };
+        })
+        .filter((c): c is { divisionLabel: string; symbol: string } => c !== undefined);
+    });
     return { cells, layout: "singleRoomDivisionColumn" };
   }
 
@@ -328,5 +350,5 @@ export function extractCells(
     return { cells, layout: "divisionRow" };
   }
 
-  return { cells: [], layout: "divisionRow" };
+  return { cells: [], layout: "none" };
 }
