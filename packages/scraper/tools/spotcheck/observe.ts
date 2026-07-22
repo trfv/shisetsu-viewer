@@ -84,6 +84,12 @@ for (const [index, sample] of samples.entries()) {
     }
 
     const active = await scraper.prepare(page, target);
+    // prepare は空き状況が描画される前に戻ることがある。検索実行直後に return する
+    // 実装（江東区）や、SPA のポストバック遷移が未完了なのに旧ページの table で
+    // waitFor が満たされて返る実装（豊島区）、body 自体がまだ空の実装（荒川区）が
+    // ある。本番の extract は直後に要素へアクセスして auto-wait で吸収するが、
+    // observe は即読みするため、ここでネットワークが静まるのを待って描画を待つ。
+    await active.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => {});
     observed.url = active.url();
 
     if (strategyFor(sample.target) === "divisionFilter") {
@@ -105,7 +111,7 @@ for (const [index, sample] of samples.entries()) {
       rawTablesByDivision[""] = await collectTables(active);
     }
 
-    bodyText = (await active.evaluate(() => document.body.innerText))
+    bodyText = (await active.evaluate(() => document.body?.innerText ?? ""))
       .replace(/\n{2,}/g, "\n")
       .slice(0, 6000);
 
