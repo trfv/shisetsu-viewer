@@ -1,8 +1,8 @@
-import { render } from "@testing-library/react";
+import { render } from "vitest-browser-react";
 import { ReactElement, ReactNode } from "react";
 import { Route, Router } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
-import { userEvent as browserUserEvent } from "@vitest/browser/context";
+import { page, userEvent as browserUserEvent } from "vitest/browser";
 import { vi } from "vitest";
 import { Auth0Context } from "../../contexts/Auth0";
 
@@ -37,9 +37,9 @@ interface CustomRenderOptions {
   auth0Config?: Auth0MockConfig;
 }
 
-export function renderWithProviders(
+export async function renderWithProviders(
   ui: ReactElement,
-  { initialEntries = ["/"], route, auth0Config = {}, ...renderOptions }: CustomRenderOptions = {}
+  { initialEntries = ["/"], route, auth0Config = {} }: CustomRenderOptions = {}
 ) {
   // Use browser's native userEvent
   const user = browserUserEvent;
@@ -57,11 +57,16 @@ export function renderWithProviders(
     );
   }
 
+  const result = await render(ui, { wrapper: Wrapper });
+
   return {
     user,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+    ...result,
   };
 }
 
-// Re-export everything from testing library
-export * from "@testing-library/react";
+// ページ全体を対象とする locator セレクタ。Testing Library の `screen` の後継。
+// getBy* は Locator を返す（遅延評価・自動リトライ）。queryBy*/findBy*/getAllBy* は
+// 存在しないため、不在アサーションは expect.element(...).not.toBeInTheDocument()、
+// 複数要素は getBy*(...).all() を使う。
+export const screen = page;

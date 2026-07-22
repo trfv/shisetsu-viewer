@@ -3,17 +3,17 @@ import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { Tab } from "./Tab";
 
 describe("Tab", () => {
-  it("正しいa11y属性を持つ", () => {
-    renderWithProviders(<Tab label="予約" value="reservation" />);
+  it("正しいa11y属性を持つ", async () => {
+    await renderWithProviders(<Tab label="予約" value="reservation" />);
     const tab = screen.getByRole("tab", { name: "予約" });
-    expect(tab).toHaveAttribute("id", "tab-reservation");
-    expect(tab).toHaveAttribute("aria-controls", "tabpanel-reservation");
-    expect(tab).toHaveAttribute("tabindex", "0");
+    await expect.element(tab).toHaveAttribute("id", "tab-reservation");
+    await expect.element(tab).toHaveAttribute("aria-controls", "tabpanel-reservation");
+    await expect.element(tab).toHaveAttribute("tabindex", "0");
   });
 
-  it("minWidthが0pxに設定される", () => {
-    renderWithProviders(<Tab label="施設" value="institution" />);
+  it("minWidthが0pxに設定される", async () => {
+    await renderWithProviders(<Tab label="施設" value="institution" />);
     const tab = screen.getByRole("tab", { name: "施設" });
-    expect(tab.style.minWidth).toBe("0px");
+    expect(tab.element().style.minWidth).toBe("0px");
   });
 });

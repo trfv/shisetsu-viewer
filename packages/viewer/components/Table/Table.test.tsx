@@ -3,8 +3,8 @@ import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "./Table";
 
 describe("Table components", () => {
-  it("テーブルが正しくレンダリングされる", () => {
-    renderWithProviders(
+  it("テーブルが正しくレンダリングされる", async () => {
+    await renderWithProviders(
       <TableContainer>
         <Table>
           <TableHead>
@@ -21,8 +21,8 @@ describe("Table components", () => {
       </TableContainer>
     );
 
-    expect(screen.getByRole("table")).toBeInTheDocument();
-    expect(screen.getByText("ヘッダー")).toBeInTheDocument();
-    expect(screen.getByText("データ")).toBeInTheDocument();
+    await expect.element(screen.getByRole("table")).toBeInTheDocument();
+    await expect.element(screen.getByText("ヘッダー")).toBeInTheDocument();
+    await expect.element(screen.getByText("データ")).toBeInTheDocument();
   });
 });

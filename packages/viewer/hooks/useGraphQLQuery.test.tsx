@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { useGraphQLQuery } from "./useGraphQLQuery";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
@@ -39,9 +39,9 @@ describe("useGraphQLQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
+    await renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
 
-    expect(screen.getByText("loading")).toBeInTheDocument();
+    await expect.element(screen.getByText("loading")).toBeInTheDocument();
   });
 
   it("フェッチ成功後にdataを返す", async () => {
@@ -53,11 +53,9 @@ describe("useGraphQLQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
+    await renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Item A")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
   });
 
   it("Auth0ロード中はクエリを実行しない", async () => {
@@ -69,12 +67,12 @@ describe("useGraphQLQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent query={QUERY} variables={{}} />, {
+    await renderWithProviders(<TestComponent query={QUERY} variables={{}} />, {
       auth0Config: { isLoading: true, token: "" },
     });
 
-    expect(screen.getByText("loading")).toBeInTheDocument();
-    await waitFor(() => {
+    await expect.element(screen.getByText("loading")).toBeInTheDocument();
+    await vi.waitFor(() => {
       expect(requestCount).toBe(0);
     });
   });
@@ -88,10 +86,8 @@ describe("useGraphQLQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
+    await renderWithProviders(<TestComponent query={QUERY} variables={{}} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("error: Something went wrong")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("error: Something went wrong")).toBeInTheDocument();
   });
 });

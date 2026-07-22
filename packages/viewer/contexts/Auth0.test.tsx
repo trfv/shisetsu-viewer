@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor, act } from "@testing-library/react";
-import { userEvent } from "@vitest/browser/context";
+import { render } from "vitest-browser-react";
+import { userEvent } from "vitest/browser";
+import { screen } from "../test/utils/test-utils";
 import { Auth0Client } from "@auth0/auth0-spa-js";
 import { Auth0Provider, useAuth0 } from "./Auth0";
 
@@ -75,43 +76,41 @@ describe("Auth0Provider", () => {
 
   describe("子コンポーネントのレンダリング", () => {
     it("子コンポーネントを正しくレンダリングする", async () => {
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <div data-testid="child">Hello</div>
         </Auth0Provider>
       );
 
-      expect(screen.getByTestId("child")).toBeInTheDocument();
-      expect(screen.getByTestId("child").textContent).toBe("Hello");
+      await expect.element(screen.getByTestId("child")).toBeInTheDocument();
+      expect(screen.getByTestId("child").element().textContent).toBe("Hello");
     });
   });
 
   describe("初期ローディング状態", () => {
-    it("初期状態でisLoadingがtrueである", () => {
+    it("初期状態でisLoadingがtrueである", async () => {
       // Configure checkSession to never resolve so we can observe initial loading state
       configureMockClient({
         checkSession: vi.fn().mockReturnValue(new Promise(() => {})),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      expect(screen.getByTestId("is-loading").textContent).toBe("true");
+      expect(screen.getByTestId("is-loading").element().textContent).toBe("true");
     });
 
     it("checkSession完了後にisLoadingがfalseになる", async () => {
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
     });
   });
 
@@ -119,15 +118,13 @@ describe("Auth0Provider", () => {
     it("マウント時にcheckSessionが呼ばれる", async () => {
       const methods = configureMockClient();
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(methods.checkSession).toHaveBeenCalled();
-      });
+      await vi.waitFor(() => expect(methods.checkSession).toHaveBeenCalled());
     });
   });
 
@@ -136,15 +133,13 @@ describe("Auth0Provider", () => {
       const methods = configureMockClient();
       window.history.pushState({}, "", "/waiting?code=test-code&state=test-state");
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(methods.handleRedirectCallback).toHaveBeenCalled();
-      });
+      await vi.waitFor(() => expect(methods.handleRedirectCallback).toHaveBeenCalled());
       expect(methods.checkSession).not.toHaveBeenCalled();
 
       window.history.pushState({}, "", "/");
@@ -154,15 +149,13 @@ describe("Auth0Provider", () => {
       const methods = configureMockClient();
       window.history.pushState({}, "", "/");
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(methods.checkSession).toHaveBeenCalled();
-      });
+      await vi.waitFor(() => expect(methods.checkSession).toHaveBeenCalled());
       expect(methods.handleRedirectCallback).not.toHaveBeenCalled();
     });
   });
@@ -176,15 +169,13 @@ describe("Auth0Provider", () => {
         }),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("token").textContent).toBe("test-token-123");
-      });
+      await expect.element(screen.getByTestId("token")).toHaveTextContent(/^test-token-123$/);
     });
 
     it("トークン取得後にuserInfoが正しくセットされる", async () => {
@@ -195,16 +186,14 @@ describe("Auth0Provider", () => {
         }),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("anonymous").textContent).toBe("false");
-        expect(screen.getByTestId("trial").textContent).toBe("true");
-      });
+      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("trial")).toHaveTextContent(/^true$/);
     });
 
     it("anonymousロールの場合、userInfo.anonymousがtrueになる", async () => {
@@ -215,16 +204,14 @@ describe("Auth0Provider", () => {
         }),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("anonymous").textContent).toBe("true");
-        expect(screen.getByTestId("trial").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent(/^true$/);
+      await expect.element(screen.getByTestId("trial")).toHaveTextContent(/^false$/);
     });
   });
 
@@ -232,23 +219,21 @@ describe("Auth0Provider", () => {
     it("loginがloginWithRedirectを呼び出す", async () => {
       const methods = configureMockClient();
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
 
-      await act(async () => {
-        await userEvent.click(screen.getByTestId("login-btn"));
-      });
+      await userEvent.click(screen.getByTestId("login-btn"));
 
-      expect(methods.loginWithRedirect).toHaveBeenCalledWith({
-        authorizationParams: { redirect_uri: "http://localhost" },
-      });
+      await vi.waitFor(() =>
+        expect(methods.loginWithRedirect).toHaveBeenCalledWith({
+          authorizationParams: { redirect_uri: "http://localhost" },
+        })
+      );
     });
   });
 
@@ -256,21 +241,17 @@ describe("Auth0Provider", () => {
     it("logoutがauth0Client.logoutを呼び出す", async () => {
       const methods = configureMockClient();
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
 
-      await act(async () => {
-        await userEvent.click(screen.getByTestId("logout-btn"));
-      });
+      await userEvent.click(screen.getByTestId("logout-btn"));
 
-      expect(methods.logout).toHaveBeenCalledWith({ logoutParams: {} });
+      await vi.waitFor(() => expect(methods.logout).toHaveBeenCalledWith({ logoutParams: {} }));
     });
   });
 
@@ -280,15 +261,13 @@ describe("Auth0Provider", () => {
         checkSession: vi.fn().mockRejectedValue(new Error("Session check failed")),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
     });
 
     it("checkSessionが失敗した場合、トークンは空のままである", async () => {
@@ -296,18 +275,16 @@ describe("Auth0Provider", () => {
         checkSession: vi.fn().mockRejectedValue(new Error("Session check failed")),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
 
       // Token should remain empty since checkSession failed before getTokenSilently
-      expect(screen.getByTestId("token").textContent).toBe("");
+      expect(screen.getByTestId("token").element().textContent).toBe("");
     });
 
     it("getTokenSilentlyが失敗した場合、トークンは空のままである", async () => {
@@ -315,17 +292,15 @@ describe("Auth0Provider", () => {
         getTokenSilently: vi.fn().mockRejectedValue(new Error("Token fetch failed")),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
 
-      expect(screen.getByTestId("token").textContent).toBe("");
+      expect(screen.getByTestId("token").element().textContent).toBe("");
     });
   });
 
@@ -335,71 +310,65 @@ describe("Auth0Provider", () => {
         getTokenSilently: vi.fn().mockResolvedValue(""),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getByTestId("is-loading").textContent).toBe("false");
-      });
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
 
       // Token should remain empty because getTokenSilently returned falsy
-      expect(screen.getByTestId("token").textContent).toBe("");
+      expect(screen.getByTestId("token").element().textContent).toBe("");
     });
   });
 
   describe("デフォルトコンテキスト", () => {
     it("Auth0Providerの外でuseAuth0を使用するとデフォルトのlogin/logoutが呼べる", async () => {
-      render(<Auth0Consumer />);
+      await render(<Auth0Consumer />);
 
-      expect(screen.getByTestId("is-loading").textContent).toBe("true");
-      expect(screen.getByTestId("token").textContent).toBe("");
+      expect(screen.getByTestId("is-loading").element().textContent).toBe("true");
+      expect(screen.getByTestId("token").element().textContent).toBe("");
 
       // Default login and logout (from initialContext) should not throw when called
-      await act(async () => {
-        await userEvent.click(screen.getByTestId("login-btn"));
-      });
-      await act(async () => {
-        await userEvent.click(screen.getByTestId("logout-btn"));
-      });
+      await userEvent.click(screen.getByTestId("login-btn"));
+      await userEvent.click(screen.getByTestId("logout-btn"));
 
       // Should still be in initial state (no crash)
-      expect(screen.getByTestId("is-loading").textContent).toBe("true");
+      expect(screen.getByTestId("is-loading").element().textContent).toBe("true");
     });
   });
 
   describe("初期コンテキスト値", () => {
-    it("初期状態のトークンは空文字列である", () => {
+    it("初期状態のトークンは空文字列である", async () => {
       // Configure checkSession to never resolve so we can observe initial state
       configureMockClient({
         checkSession: vi.fn().mockReturnValue(new Promise(() => {})),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      expect(screen.getByTestId("token").textContent).toBe("");
+      expect(screen.getByTestId("token").element().textContent).toBe("");
     });
 
-    it("初期状態のuserInfoはanonymous=true, trial=falseである", () => {
+    it("初期状態のuserInfoはanonymous=true, trial=falseである", async () => {
       // Configure checkSession to never resolve so we can observe initial state
       configureMockClient({
         checkSession: vi.fn().mockReturnValue(new Promise(() => {})),
       });
 
-      render(
+      await render(
         <Auth0Provider {...defaultProviderProps}>
           <Auth0Consumer />
         </Auth0Provider>
       );
 
-      expect(screen.getByTestId("anonymous").textContent).toBe("true");
-      expect(screen.getByTestId("trial").textContent).toBe("false");
+      expect(screen.getByTestId("anonymous").element().textContent).toBe("true");
+      expect(screen.getByTestId("trial").element().textContent).toBe("false");
     });
   });
 });

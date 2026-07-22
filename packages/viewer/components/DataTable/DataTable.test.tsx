@@ -61,45 +61,45 @@ describe("DataTable Component", () => {
     mockIsMobile.value = false;
   });
 
-  it("カラムヘッダーを表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("カラムヘッダーを表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    expect(screen.getByText("名前")).toBeInTheDocument();
-    expect(screen.getByText("年齢")).toBeInTheDocument();
-    expect(screen.getByText("ラベル")).toBeInTheDocument();
+    await expect.element(screen.getByText("名前")).toBeInTheDocument();
+    await expect.element(screen.getByText("年齢")).toBeInTheDocument();
+    await expect.element(screen.getByText("ラベル")).toBeInTheDocument();
   });
 
-  it("行データを正しく表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("行データを正しく表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    expect(screen.getByText("東京")).toBeInTheDocument();
-    expect(screen.getByText("100")).toBeInTheDocument();
-    expect(screen.getByText("川崎")).toBeInTheDocument();
-    expect(screen.getByText("200")).toBeInTheDocument();
+    await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
+    await expect.element(screen.getByText("100", { exact: true })).toBeInTheDocument();
+    await expect.element(screen.getByText("川崎", { exact: true })).toBeInTheDocument();
+    await expect.element(screen.getByText("200", { exact: true })).toBeInTheDocument();
   });
 
-  it("getter型のカラムはvalueGetterの結果を表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("getter型のカラムはvalueGetterの結果を表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    expect(screen.getByText("東京-100")).toBeInTheDocument();
-    expect(screen.getByText("川崎-200")).toBeInTheDocument();
+    await expect.element(screen.getByText("東京-100")).toBeInTheDocument();
+    await expect.element(screen.getByText("川崎-200")).toBeInTheDocument();
   });
 
-  it("hide=trueのカラムは表示しない", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("hide=trueのカラムは表示しない", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    expect(screen.queryByText("非表示列")).not.toBeInTheDocument();
-    expect(screen.queryByText("秘密1")).not.toBeInTheDocument();
-    expect(screen.queryByText("秘密2")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("非表示列")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("秘密1")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("秘密2")).not.toBeInTheDocument();
   });
 
   it("行クリックでonRowClickコールバックが呼ばれる", async () => {
     const onRowClick = vi.fn();
-    const { user } = renderWithProviders(
+    const { user } = await renderWithProviders(
       <DataTable columns={columns} rows={rows} onRowClick={onRowClick} />
     );
 
-    await user.click(screen.getByText("東京"));
+    await user.click(screen.getByText("東京", { exact: true }));
 
     expect(onRowClick).toHaveBeenCalledOnce();
     expect(onRowClick).toHaveBeenCalledWith({
@@ -110,71 +110,71 @@ describe("DataTable Component", () => {
     });
   });
 
-  it("hasNextPage=trueの場合にスケルトンローディングを表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
+  it("hasNextPage=trueの場合にスケルトンローディングを表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
 
     // The skeleton row should contain skeleton elements (one per visible column)
     const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(3);
   });
 
-  it("hasNextPage=falseの場合はスケルトンを表示しない", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
+  it("hasNextPage=falseの場合はスケルトンを表示しない", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
 
     const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBe(0);
   });
 
-  it("行がない場合はヘッダーのみ表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={[]} />);
+  it("行がない場合はヘッダーのみ表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={[]} />);
 
-    expect(screen.getByText("名前")).toBeInTheDocument();
-    expect(screen.getByText("年齢")).toBeInTheDocument();
-    expect(screen.getByText("ラベル")).toBeInTheDocument();
+    await expect.element(screen.getByText("名前")).toBeInTheDocument();
+    await expect.element(screen.getByText("年齢")).toBeInTheDocument();
+    await expect.element(screen.getByText("ラベル")).toBeInTheDocument();
   });
 
-  it("getter型でvalueGetterが未定義の場合は空文字を表示する", () => {
+  it("getter型でvalueGetterが未定義の場合は空文字を表示する", async () => {
     const colsWithoutGetter: Columns<TestRow> = [
       { field: "name", headerName: "名前", type: "string" },
       { field: "label", headerName: "ラベル", type: "getter" },
     ];
-    renderWithProviders(<DataTable columns={colsWithoutGetter} rows={rows} />);
+    await renderWithProviders(<DataTable columns={colsWithoutGetter} rows={rows} />);
 
-    expect(screen.getByText("名前")).toBeInTheDocument();
-    expect(screen.getByText("ラベル")).toBeInTheDocument();
+    await expect.element(screen.getByText("名前")).toBeInTheDocument();
+    await expect.element(screen.getByText("ラベル")).toBeInTheDocument();
   });
 
   describe("Column Types", () => {
-    it("date型のカラムはformatDateの結果を表示する", () => {
-      renderWithProviders(<DataTable columns={columns} rows={rows} />);
+    it("date型のカラムはformatDateの結果を表示する", async () => {
+      await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
       // formatDate uses Intl.DateTimeFormat "ja-JP" with year/month/day/weekday
       // 2025-01-15 → "2025/01/15(水)"
-      expect(screen.getByText("作成日")).toBeInTheDocument();
+      await expect.element(screen.getByText("作成日")).toBeInTheDocument();
       const cells = document.querySelectorAll("td");
       const cellTexts = Array.from(cells).map((c) => c.textContent);
       expect(cellTexts.some((t) => t?.includes("2025"))).toBe(true);
     });
 
-    it("datetime型のカラムはformatDatetimeの結果を表示する", () => {
-      renderWithProviders(<DataTable columns={columns} rows={rows} />);
+    it("datetime型のカラムはformatDatetimeの結果を表示する", async () => {
+      await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-      expect(screen.getByText("更新日時")).toBeInTheDocument();
+      await expect.element(screen.getByText("更新日時")).toBeInTheDocument();
       const cells = document.querySelectorAll("td");
       const cellTexts = Array.from(cells).map((c) => c.textContent);
       // datetime format includes time components
       expect(cellTexts.some((t) => t?.includes("2025") && t?.includes(":"))).toBe(true);
     });
 
-    it("number型のカラムは数値を表示する", () => {
-      renderWithProviders(<DataTable columns={columns} rows={rows} />);
+    it("number型のカラムは数値を表示する", async () => {
+      await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-      expect(screen.getByText("スコア")).toBeInTheDocument();
-      expect(screen.getByText("95")).toBeInTheDocument();
-      expect(screen.getByText("80")).toBeInTheDocument();
+      await expect.element(screen.getByText("スコア")).toBeInTheDocument();
+      await expect.element(screen.getByText("95")).toBeInTheDocument();
+      await expect.element(screen.getByText("80")).toBeInTheDocument();
     });
 
-    it("number型でNaNの場合は空文字を表示する", () => {
+    it("number型でNaNの場合は空文字を表示する", async () => {
       const nanRows: TestRow[] = [
         {
           id: "3",
@@ -187,7 +187,7 @@ describe("DataTable Component", () => {
           score: "not-a-number",
         },
       ];
-      renderWithProviders(<DataTable columns={columns} rows={nanRows} />);
+      await renderWithProviders(<DataTable columns={columns} rows={nanRows} />);
 
       // The score column should render empty string for NaN
       const tableCells = document.querySelectorAll("td");
@@ -201,14 +201,14 @@ describe("DataTable Component", () => {
   });
 
   describe("IntersectionObserver", () => {
-    it("fetchMoreが設定されている場合にIntersectionObserverが動作する", () => {
+    it("fetchMoreが設定されている場合にIntersectionObserverが動作する", async () => {
       const fetchMore = vi.fn().mockResolvedValue(undefined);
-      renderWithProviders(
+      await renderWithProviders(
         <DataTable columns={columns} rows={rows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
       // The component should render without error with fetchMore
-      expect(screen.getByText("東京")).toBeInTheDocument();
+      await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
     });
 
     it("十分な行数がある場合にIntersectionObserverが要素をobserveする", async () => {
@@ -224,7 +224,7 @@ describe("DataTable Component", () => {
       }));
 
       const fetchMore = vi.fn().mockResolvedValue(undefined);
-      renderWithProviders(
+      await renderWithProviders(
         <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
@@ -251,7 +251,7 @@ describe("DataTable Component", () => {
       }));
 
       const fetchMore = vi.fn().mockResolvedValue(undefined);
-      renderWithProviders(
+      await renderWithProviders(
         <DataTable columns={columns} rows={fewRows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
@@ -273,7 +273,7 @@ describe("DataTable Component", () => {
       }));
 
       const fetchMore = vi.fn().mockResolvedValue(undefined);
-      const { unmount } = renderWithProviders(
+      const { unmount } = await renderWithProviders(
         <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
@@ -281,7 +281,7 @@ describe("DataTable Component", () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Unmounting should trigger cleanup (observer.unobserve)
-      unmount();
+      await unmount();
     });
   });
 });
@@ -295,37 +295,37 @@ describe("Mobile Card View", () => {
     mockIsMobile.value = false;
   });
 
-  it("モバイルではカードビューを表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("モバイルではカードビューを表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
     // In card view, the first column becomes the title, remaining become label-value pairs
     // Should NOT have a <table> element
     expect(document.querySelector("table")).toBeNull();
 
     // Should display row data as cards
-    expect(screen.getByText("東京")).toBeInTheDocument();
-    expect(screen.getByText("川崎")).toBeInTheDocument();
+    await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
+    await expect.element(screen.getByText("川崎", { exact: true })).toBeInTheDocument();
 
     // Detail columns should show labels (headerName) for non-title columns
-    expect(screen.getAllByText("年齢").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("ラベル").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("年齢").all().length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("ラベル").all().length).toBeGreaterThanOrEqual(1);
   });
 
-  it("モバイルでhide=trueのカラムは表示しない", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("モバイルでhide=trueのカラムは表示しない", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
     // hide=true columns should not appear even in card view
-    expect(screen.queryByText("秘密1")).not.toBeInTheDocument();
-    expect(screen.queryByText("秘密2")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("秘密1")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("秘密2")).not.toBeInTheDocument();
   });
 
   it("モバイルで行クリックでonRowClickが呼ばれる", async () => {
     const onRowClick = vi.fn();
-    const { user } = renderWithProviders(
+    const { user } = await renderWithProviders(
       <DataTable columns={columns} rows={rows} onRowClick={onRowClick} />
     );
 
-    await user.click(screen.getByText("東京"));
+    await user.click(screen.getByText("東京", { exact: true }));
 
     expect(onRowClick).toHaveBeenCalledOnce();
     expect(onRowClick).toHaveBeenCalledWith({
@@ -336,36 +336,36 @@ describe("Mobile Card View", () => {
     });
   });
 
-  it("モバイルでhasNextPage=trueの場合にスケルトンを表示する", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
+  it("モバイルでhasNextPage=trueの場合にスケルトンを表示する", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
 
     const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(1);
   });
 
-  it("モバイルでhasNextPage=falseの場合はスケルトンを表示しない", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
+  it("モバイルでhasNextPage=falseの場合はスケルトンを表示しない", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={false} />);
 
     const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBe(0);
   });
 
-  it("モバイルでgetterやdate型の値がカードに表示される", () => {
-    renderWithProviders(<DataTable columns={columns} rows={rows} />);
+  it("モバイルでgetterやdate型の値がカードに表示される", async () => {
+    await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
     // getter column values
-    expect(screen.getByText("東京-100")).toBeInTheDocument();
-    expect(screen.getByText("川崎-200")).toBeInTheDocument();
+    await expect.element(screen.getByText("東京-100")).toBeInTheDocument();
+    await expect.element(screen.getByText("川崎-200")).toBeInTheDocument();
   });
 
-  it("モバイルでfetchMoreが設定されている場合にIntersectionObserverが動作する", () => {
+  it("モバイルでfetchMoreが設定されている場合にIntersectionObserverが動作する", async () => {
     const fetchMore = vi.fn().mockResolvedValue(undefined);
-    renderWithProviders(
+    await renderWithProviders(
       <DataTable columns={columns} rows={rows} fetchMore={fetchMore} hasNextPage={true} />
     );
 
     // Should render without error in mobile mode with fetchMore
-    expect(screen.getByText("東京")).toBeInTheDocument();
+    await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
   });
 
   it("モバイルで十分な行数がある場合にcardTargetのIntersectionObserverが動作する", async () => {
@@ -381,7 +381,7 @@ describe("Mobile Card View", () => {
     }));
 
     const fetchMore = vi.fn().mockResolvedValue(undefined);
-    renderWithProviders(
+    await renderWithProviders(
       <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
     );
 

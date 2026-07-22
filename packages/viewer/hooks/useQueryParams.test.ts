@@ -1,4 +1,5 @@
-import { act, renderHook } from "@testing-library/react";
+import { act } from "react";
+import { renderHook } from "vitest-browser-react";
 import { describe, expect, test, vi } from "vitest";
 import { ArrayParam, DateParam, NumberParam, StringParam, useQueryParams } from "./useQueryParams";
 
@@ -93,10 +94,10 @@ describe("DateParam", () => {
 });
 
 describe("useQueryParams", () => {
-  test("all pattern", () => {
+  test("all pattern", async () => {
     const setLocationMock = vi.fn();
-    const { result, rerender } = renderHook(
-      ({ search }) =>
+    const { result, rerender } = await renderHook(
+      (props?: { search: string }) =>
         useQueryParams(
           {
             a: NumberParam,
@@ -105,7 +106,7 @@ describe("useQueryParams", () => {
             d: DateParam,
           },
           setLocationMock,
-          search,
+          props?.search ?? "",
           ""
         ),
       { initialProps: { search: "a=12345&b=ABCDE&c=XXX&c=YYY&c=ZZZ&d=2022-02-26" } }
@@ -115,7 +116,7 @@ describe("useQueryParams", () => {
     expect(result.current[0].c?.sort().toString()).toBe(["XXX", "YYY", "ZZZ"].sort().toString());
     expect(result.current[0].d?.toISOString()).toBe(new Date("2022-02-26").toISOString());
 
-    act(() => {
+    await act(() => {
       result.current[1]({
         a: 54321,
         b: "EDCBA",
@@ -130,29 +131,30 @@ describe("useQueryParams", () => {
     expect(options).toEqual({ replace: true });
 
     // 要求された URL で再レンダされた（= wouter が URL を更新した）体で復号値を検証する。
-    rerender({ search: (to as string).split("?")[1] ?? "" });
+    await rerender({ search: (to as string).split("?")[1] ?? "" });
     expect(result.current[0].a).toBe(54321);
     expect(result.current[0].b).toBe("EDCBA");
     expect(result.current[0].c?.sort().toString()).toBe(["PPP", "QQQ", "RRR"].sort().toString());
     expect(result.current[0].d?.toISOString()).toBe(new Date("2022-02-27").toISOString());
   });
-  test("search prop の変更で復号値が再同期する", () => {
+  test("search prop の変更で復号値が再同期する", async () => {
     // ブラウザの戻る/進むで wouter の useSearch() が新しい値を返す状況の再現。
     // 内部 state に固定していると search 変更を無視してしまう（このテストが再同期を強制する）。
-    const { result, rerender } = renderHook(
-      ({ search }) => useQueryParams({ a: NumberParam, b: StringParam }, () => {}, search, ""),
+    const { result, rerender } = await renderHook(
+      (props?: { search: string }) =>
+        useQueryParams({ a: NumberParam, b: StringParam }, () => {}, props?.search ?? "", ""),
       { initialProps: { search: "a=1&b=first" } }
     );
     expect(result.current[0].a).toBe(1);
     expect(result.current[0].b).toBe("first");
 
-    rerender({ search: "a=2&b=second" });
+    await rerender({ search: "a=2&b=second" });
 
     expect(result.current[0].a).toBe(2);
     expect(result.current[0].b).toBe("second");
   });
-  test("empty parameters", () => {
-    const { result } = renderHook(() =>
+  test("empty parameters", async () => {
+    const { result } = await renderHook(() =>
       useQueryParams(
         {
           a: NumberParam,
@@ -170,8 +172,8 @@ describe("useQueryParams", () => {
     expect(result.current[0].c).toBeUndefined();
     expect(result.current[0].d).toBeUndefined();
   });
-  test("other parameters", () => {
-    const { result } = renderHook(() =>
+  test("other parameters", async () => {
+    const { result } = await renderHook(() =>
       useQueryParams(
         {
           a: NumberParam,
@@ -194,9 +196,9 @@ describe("useQueryParams", () => {
     expect(result.current[0].f).toBeNull();
   });
 
-  test("setQueryParams with array values exercises toQueryParams array branch", () => {
+  test("setQueryParams with array values exercises toQueryParams array branch", async () => {
     const setLocationMock = vi.fn();
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useQueryParams(
         {
           tags: ArrayParam,
@@ -208,7 +210,7 @@ describe("useQueryParams", () => {
       )
     );
 
-    act(() => {
+    await act(() => {
       result.current[1]({
         tags: ["a", "b", "c"],
         count: 5,
@@ -223,9 +225,9 @@ describe("useQueryParams", () => {
     expect(params.get("count")).toBe("5");
   });
 
-  test("setQueryParams with null encode result deletes parameter from URL", () => {
+  test("setQueryParams with null encode result deletes parameter from URL", async () => {
     const setLocationMock = vi.fn();
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useQueryParams(
         {
           name: StringParam,
@@ -241,7 +243,7 @@ describe("useQueryParams", () => {
     expect(result.current[0].value).toBe("world");
 
     // name を null にすると URL から削除され、value は残る。
-    act(() => {
+    await act(() => {
       result.current[1]({
         name: null as unknown as string,
       });
@@ -250,8 +252,8 @@ describe("useQueryParams", () => {
     expect(setLocationMock).toHaveBeenCalledWith("/test?value=world", { replace: true });
   });
 
-  test("toDecodedValues with existing query params maps all keys", () => {
-    const { result } = renderHook(() =>
+  test("toDecodedValues with existing query params maps all keys", async () => {
+    const { result } = await renderHook(() =>
       useQueryParams(
         {
           name: StringParam,

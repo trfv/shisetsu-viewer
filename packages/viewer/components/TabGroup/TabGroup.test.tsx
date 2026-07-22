@@ -4,8 +4,8 @@ import { Tab } from "../Tab";
 import { TabGroup, TabPanel } from "./TabGroup";
 
 describe("TabGroup Component", () => {
-  it("タブを表示する", () => {
-    renderWithProviders(
+  it("タブを表示する", async () => {
+    await renderWithProviders(
       <TabGroup value="tab1">
         <Tab label="タブ1" value="tab1" />
         <Tab label="タブ2" value="tab2" />
@@ -13,62 +13,63 @@ describe("TabGroup Component", () => {
       </TabGroup>
     );
 
-    expect(screen.getByRole("tablist")).toBeInTheDocument();
-    expect(screen.getByText("タブ1")).toBeInTheDocument();
-    expect(screen.getByText("タブ2")).toBeInTheDocument();
-    expect(screen.getByText("タブ3")).toBeInTheDocument();
+    await expect.element(screen.getByRole("tablist")).toBeInTheDocument();
+    await expect.element(screen.getByText("タブ1")).toBeInTheDocument();
+    await expect.element(screen.getByText("タブ2")).toBeInTheDocument();
+    await expect.element(screen.getByText("タブ3")).toBeInTheDocument();
   });
 
-  it("正しい数のタブを表示する", () => {
-    renderWithProviders(
+  it("正しい数のタブを表示する", async () => {
+    await renderWithProviders(
       <TabGroup value="tab1">
         <Tab label="タブA" value="tab1" />
         <Tab label="タブB" value="tab2" />
       </TabGroup>
     );
 
-    const tabs = screen.getAllByRole("tab");
+    await expect.element(screen.getByRole("tab").first()).toBeInTheDocument();
+    const tabs = screen.getByRole("tab").all();
     expect(tabs).toHaveLength(2);
   });
 
-  it("選択されたタブにaria-selected属性を持つ", () => {
-    renderWithProviders(
+  it("選択されたタブにaria-selected属性を持つ", async () => {
+    await renderWithProviders(
       <TabGroup value="tab2">
         <Tab label="タブ1" value="tab1" />
         <Tab label="タブ2" value="tab2" />
       </TabGroup>
     );
 
-    const tab1 = screen.getByText("タブ1").closest('[role="tab"]');
-    const tab2 = screen.getByText("タブ2").closest('[role="tab"]');
-    expect(tab1).toHaveAttribute("aria-selected", "false");
-    expect(tab2).toHaveAttribute("aria-selected", "true");
+    const tab1 = screen.getByText("タブ1").element().closest<HTMLElement>('[role="tab"]');
+    const tab2 = screen.getByText("タブ2").element().closest<HTMLElement>('[role="tab"]');
+    await expect.element(tab1!).toHaveAttribute("aria-selected", "false");
+    await expect.element(tab2!).toHaveAttribute("aria-selected", "true");
   });
 });
 
 describe("TabPanel Component", () => {
-  it("currentValueがtabValueと一致する場合にコンテンツを表示する", () => {
-    renderWithProviders(
+  it("currentValueがtabValueと一致する場合にコンテンツを表示する", async () => {
+    await renderWithProviders(
       <TabPanel tabValue="tab1" currentValue="tab1">
         <div>パネルの内容</div>
       </TabPanel>
     );
 
-    expect(screen.getByText("パネルの内容")).toBeInTheDocument();
+    await expect.element(screen.getByText("パネルの内容")).toBeInTheDocument();
   });
 
-  it("currentValueがtabValueと一致しない場合にnullを返す", () => {
-    renderWithProviders(
+  it("currentValueがtabValueと一致しない場合にnullを返す", async () => {
+    await renderWithProviders(
       <TabPanel tabValue="tab1" currentValue="tab2">
         <div>非表示の内容</div>
       </TabPanel>
     );
 
-    expect(screen.queryByText("非表示の内容")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("非表示の内容")).not.toBeInTheDocument();
   });
 
-  it("異なるtabValueで別々のパネルを切り替える", () => {
-    renderWithProviders(
+  it("異なるtabValueで別々のパネルを切り替える", async () => {
+    await renderWithProviders(
       <>
         <TabPanel tabValue="tab1" currentValue="tab1">
           <div>パネル1の内容</div>
@@ -79,7 +80,7 @@ describe("TabPanel Component", () => {
       </>
     );
 
-    expect(screen.getByText("パネル1の内容")).toBeInTheDocument();
-    expect(screen.queryByText("パネル2の内容")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("パネル1の内容")).toBeInTheDocument();
+    await expect.element(screen.getByText("パネル2の内容")).not.toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
+import { act } from "react";
+import { renderHook } from "vitest-browser-react";
 import { useIsMobile } from "./useIsMobile";
 
 describe("useIsMobile Hook", () => {
@@ -53,61 +54,61 @@ describe("useIsMobile Hook", () => {
   };
 
   describe("基本機能", () => {
-    it("初期状態でデスクトップの場合falseを返す", () => {
+    it("初期状態でデスクトップの場合falseを返す", async () => {
       mediaQueryMatches = false;
-      const { result } = renderHook(() => useIsMobile());
+      const { result } = await renderHook(() => useIsMobile());
       expect(result.current).toBe(false);
     });
 
-    it("初期状態でモバイルの場合trueを返す", () => {
+    it("初期状態でモバイルの場合trueを返す", async () => {
       mediaQueryMatches = true;
-      const { result } = renderHook(() => useIsMobile());
+      const { result } = await renderHook(() => useIsMobile());
       expect(result.current).toBe(true);
     });
 
-    it("適切なmax-widthクエリを使用する", () => {
-      renderHook(() => useIsMobile());
+    it("適切なmax-widthクエリを使用する", async () => {
+      await renderHook(() => useIsMobile());
       expect(window.matchMedia).toHaveBeenCalledWith(expect.stringContaining("max-width"));
     });
   });
 
   describe("リアクティブな変更", () => {
-    it("メディアクエリの変更に応じて値が更新される", () => {
+    it("メディアクエリの変更に応じて値が更新される", async () => {
       mediaQueryMatches = false;
-      const { result } = renderHook(() => useIsMobile());
+      const { result } = await renderHook(() => useIsMobile());
 
       expect(result.current).toBe(false);
 
-      act(() => {
+      await act(() => {
         fireMediaChange(true);
       });
 
       expect(result.current).toBe(true);
     });
 
-    it("複数回の変更に対応する", () => {
+    it("複数回の変更に対応する", async () => {
       mediaQueryMatches = false;
-      const { result } = renderHook(() => useIsMobile());
+      const { result } = await renderHook(() => useIsMobile());
 
       expect(result.current).toBe(false);
 
-      act(() => fireMediaChange(true));
+      await act(() => fireMediaChange(true));
       expect(result.current).toBe(true);
 
-      act(() => fireMediaChange(false));
+      await act(() => fireMediaChange(false));
       expect(result.current).toBe(false);
     });
   });
 
   describe("クリーンアップ", () => {
-    it("アンマウント時にイベントリスナーを解除する", () => {
-      const { unmount } = renderHook(() => useIsMobile());
+    it("アンマウント時にイベントリスナーを解除する", async () => {
+      const { unmount } = await renderHook(() => useIsMobile());
 
       // Listeners are registered
       const changeListeners = [...listeners.entries()].filter(([k]) => k.endsWith(":change"));
       expect(changeListeners.length).toBeGreaterThan(0);
 
-      unmount();
+      await unmount();
 
       // After unmount, the change handler for our query should be removed
       for (const [key, handlers] of listeners) {
@@ -119,8 +120,8 @@ describe("useIsMobile Hook", () => {
   });
 
   describe("TypeScript型安全性", () => {
-    it("正しいboolean型を返す", () => {
-      const { result } = renderHook(() => useIsMobile());
+    it("正しいboolean型を返す", async () => {
+      const { result } = await renderHook(() => useIsMobile());
       expect(typeof result.current).toBe("boolean");
     });
   });

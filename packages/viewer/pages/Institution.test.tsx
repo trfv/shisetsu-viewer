@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { createMockInstitutionNode, createMockInstitutionsConnection } from "../test/mocks/data";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
@@ -106,38 +106,36 @@ describe("Institution Page", () => {
     it("絞り込みボタンを押すと地区のSelect、利用可能楽器、施設サイズが表示される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("地区")).toBeInTheDocument();
-      });
-      expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      expect(screen.getByText("施設サイズ")).toBeInTheDocument();
+      await expect.element(screen.getByText("地区")).toBeInTheDocument();
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
     });
 
-    it("選択した地区がチップとして表示される", () => {
+    it("選択した地区がチップとして表示される", async () => {
       useMswMock([]);
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      expect(screen.getByText("江東区")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
     });
 
-    it("municipality=allの場合、地区チップが表示されない", () => {
+    it("municipality=allの場合、地区チップが表示されない", async () => {
       useMswMock([]);
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution"],
       });
 
-      expect(screen.queryByText("江東区")).not.toBeInTheDocument();
-      expect(screen.queryByText("すべて")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("すべて")).not.toBeInTheDocument();
     });
   });
 
@@ -145,23 +143,21 @@ describe("Institution Page", () => {
     it("地区を変更するとチップが更新される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      expect(screen.getByText("江東区")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
 
       const selectElement = screen.getByRole("combobox", { name: "地区" });
       await user.selectOptions(selectElement, "MUNICIPALITY_KITA");
 
-      await waitFor(() => {
-        const elements = screen.getAllByText("北区");
+      await vi.waitFor(() => {
+        const elements = screen.getByText("北区").all();
         expect(elements.length).toBeGreaterThanOrEqual(1);
       });
     });
@@ -169,20 +165,18 @@ describe("Institution Page", () => {
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
 
       await user.click(screen.getByRole("checkbox", { name: "弦楽器" }));
 
-      await waitFor(() => {
-        const chips = screen.getAllByText("弦楽器");
+      await vi.waitFor(() => {
+        const chips = screen.getByText("弦楽器").all();
         expect(chips.length).toBeGreaterThanOrEqual(2);
       });
     });
@@ -190,66 +184,56 @@ describe("Institution Page", () => {
     it("利用可能楽器チェックボックスをオフにするとチップが削除される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou&a=s"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
 
       const checkbox = screen.getByRole("checkbox", { name: "弦楽器" });
-      expect(checkbox).toBeChecked();
+      await expect.element(checkbox).toBeChecked();
 
       await user.click(checkbox);
 
-      await waitFor(() => {
-        expect(checkbox).not.toBeChecked();
-      });
+      await expect.element(checkbox).not.toBeChecked();
     });
 
     it("施設サイズチェックボックスをオフにするとチップが削除される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou&i=l"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("施設サイズ")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
 
       const checkbox = screen.getByRole("checkbox", { name: "大（100㎡~）" });
-      expect(checkbox).toBeChecked();
+      await expect.element(checkbox).toBeChecked();
 
       await user.click(checkbox);
 
-      await waitFor(() => {
-        expect(checkbox).not.toBeChecked();
-      });
+      await expect.element(checkbox).not.toBeChecked();
     });
 
     it("施設サイズチェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("施設サイズ")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
 
       await user.click(screen.getByRole("checkbox", { name: "大（100㎡~）" }));
 
-      await waitFor(() => {
-        const chips = screen.getAllByText("大（100㎡~）");
+      await vi.waitFor(() => {
+        const chips = screen.getByText("大（100㎡~）").all();
         expect(chips.length).toBeGreaterThanOrEqual(2);
       });
     });
@@ -259,18 +243,16 @@ describe("Institution Page", () => {
     it("データが存在しないメッセージを表示する", async () => {
       useMswMock([]);
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
     });
   });
 
   describe("ローディング状態", () => {
-    it("データ取得中にスピナーを表示する", () => {
+    it("データ取得中にスピナーを表示する", async () => {
       // Use a handler that delays indefinitely
       worker.use(
         http.post(TEST_ENDPOINT, async () => {
@@ -279,11 +261,13 @@ describe("Institution Page", () => {
         })
       );
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      expect(screen.getByRole("progressbar", { name: "読み込み中" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("progressbar", { name: "読み込み中" }))
+        .toBeInTheDocument();
     });
   });
 
@@ -297,14 +281,12 @@ describe("Institution Page", () => {
         })
       );
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByRole("alert")).toBeInTheDocument();
-        expect(screen.getByText("Network error")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("alert")).toBeInTheDocument();
+      await expect.element(screen.getByText("Network error")).toBeInTheDocument();
     });
   });
 
@@ -324,16 +306,14 @@ describe("Institution Page", () => {
 
       useMswMock([node1, node2]);
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("施設名")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設名")).toBeInTheDocument();
 
-      expect(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      expect(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
+      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
+      await expect.element(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
     });
 
     it("hasNextPageがtrueでendCursorが存在する場合、IntersectionObserver発火時にfetchMoreが呼ばれる", async () => {
@@ -365,16 +345,14 @@ describe("Institution Page", () => {
         })
       );
 
-      renderWithProviders(<InstitutionPage />, {
+      await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("施設ビル0 練習室0")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設ビル0 練習室0")).toBeInTheDocument();
 
       // Wait for the IntersectionObserver to fire and fetchMore to be called
-      await waitFor(
+      await vi.waitFor(
         () => {
           expect(requestCount).toBeGreaterThanOrEqual(2);
         },
@@ -390,17 +368,15 @@ describe("Institution Page", () => {
 
       useMswMock([node]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
 
       const cell = screen.getByText("テスト文化センター 音楽練習室A");
-      const row = cell.closest("tr");
-      expect(row).toHaveStyle({ cursor: "pointer" });
+      const row = cell.element().closest("tr");
+      await expect.element(row).toHaveStyle({ cursor: "pointer" });
 
       await user.click(cell);
     });
@@ -414,17 +390,15 @@ describe("Institution Page", () => {
 
       useMswMock([invalidNode]);
 
-      const { user } = renderWithProviders(<InstitutionPage />, {
+      const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
 
       await user.click(screen.getByText("無効ID施設 テスト室"));
 
-      expect(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
+      await expect.element(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
     });
   });
 });

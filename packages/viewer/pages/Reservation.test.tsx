@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
-import { fireEvent, renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import {
   createMockSearchableReservationNode,
   createMockSearchableReservationsConnection,
@@ -140,64 +140,62 @@ describe("Reservation Page", () => {
     it("絞り込みボタンを押すとSelect、DateRangePicker、CheckboxGroupが表示される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("地区")).toBeInTheDocument();
-      });
-      expect(screen.getByText("期間指定")).toBeInTheDocument();
-      expect(screen.getByText("絞り込み", { selector: "span" })).toBeInTheDocument();
-      expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      expect(screen.getByText("施設サイズ")).toBeInTheDocument();
+      await expect.element(screen.getByText("地区")).toBeInTheDocument();
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
+      await expect.element(screen.getByText("絞り込み", { exact: true })).toBeInTheDocument();
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
     });
 
-    it("選択した地区と日付範囲がチップとして表示される", () => {
+    it("選択した地区と日付範囲がチップとして表示される", async () => {
       useMswMock([]);
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      expect(screen.getByText("江東区")).toBeInTheDocument();
-      expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
+      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
-    it("municipality=allの場合、地区チップが表示されない", () => {
+    it("municipality=allの場合、地区チップが表示されない", async () => {
       useMswMock([]);
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation"],
       });
 
       // When no municipality param is set, defaults to "all"
       // The municipality chip should not appear, only the date range chip
-      expect(screen.queryByText("江東区")).not.toBeInTheDocument();
-      expect(screen.queryByText("すべて")).not.toBeInTheDocument();
-      expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("すべて")).not.toBeInTheDocument();
+      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
     it("予約状況除外対象の自治体がSelectの選択肢から除外されている", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer to access Select
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
 
       // For native <select>, check <option> elements directly (always in the DOM)
       const select = screen.getByRole("combobox", { name: "地区" });
-      const optionTexts = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+      const optionTexts = Array.from(select.element().querySelectorAll("option")).map(
+        (o) => o.textContent
+      );
 
       // Non-excluded municipalities should be present as options
       expect(optionTexts).toContain("江東区");
@@ -215,27 +213,25 @@ describe("Reservation Page", () => {
     it("地区を変更するとチップが更新される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Verify initial chip
-      expect(screen.getByText("江東区")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
 
-      // For native <select>, use fireEvent.change to change the value
+      // For native <select>, use selectOptions to change the value
       const select = screen.getByRole("combobox", { name: "地区" });
-      fireEvent.change(select, { target: { value: "MUNICIPALITY_KITA" } });
+      await user.selectOptions(select, "MUNICIPALITY_KITA");
 
       // The chip should update to "北区"
-      await waitFor(() => {
-        const elements = screen.getAllByText("北区");
+      await vi.waitFor(() => {
+        const elements = screen.getByText("北区").all();
         expect(elements.length).toBeGreaterThanOrEqual(1);
       });
     });
@@ -243,23 +239,21 @@ describe("Reservation Page", () => {
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
 
       // Click the "弦楽器" checkbox
       await user.click(screen.getByRole("checkbox", { name: "弦楽器" }));
 
       // The chip "弦楽器" should appear (label + chip)
-      await waitFor(() => {
-        const chips = screen.getAllByText("弦楽器");
+      await vi.waitFor(() => {
+        const chips = screen.getByText("弦楽器").all();
         expect(chips.length).toBeGreaterThanOrEqual(2);
       });
     });
@@ -267,23 +261,21 @@ describe("Reservation Page", () => {
     it("施設サイズチェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("施設サイズ")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
 
       // Click the "大（100㎡~）" checkbox
       await user.click(screen.getByRole("checkbox", { name: "大（100㎡~）" }));
 
       // The chip should appear (label + chip)
-      await waitFor(() => {
-        const chips = screen.getAllByText("大（100㎡~）");
+      await vi.waitFor(() => {
+        const chips = screen.getByText("大（100㎡~）").all();
         expect(chips.length).toBeGreaterThanOrEqual(2);
       });
     });
@@ -291,90 +283,75 @@ describe("Reservation Page", () => {
     it("利用可能楽器チェックボックスをオフにするとチップが削除される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&a=s"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("利用可能楽器")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
 
       const checkbox = screen.getByRole("checkbox", { name: "弦楽器" });
-      expect(checkbox).toBeChecked();
+      await expect.element(checkbox).toBeChecked();
 
       await user.click(checkbox);
 
-      await waitFor(() => {
-        expect(checkbox).not.toBeChecked();
-      });
+      await expect.element(checkbox).not.toBeChecked();
     });
 
     it("施設サイズチェックボックスをオフにするとチップが削除される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&i=l"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("施設サイズ")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
 
       const checkbox = screen.getByRole("checkbox", { name: "大（100㎡~）" });
-      expect(checkbox).toBeChecked();
+      await expect.element(checkbox).toBeChecked();
 
       await user.click(checkbox);
 
-      await waitFor(() => {
-        expect(checkbox).not.toBeChecked();
-      });
+      await expect.element(checkbox).not.toBeChecked();
     });
 
     it("絞り込みチェックボックスをオフにするとチップが削除される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&f=m"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        const checkbox = screen.getByRole("checkbox", { name: "午前空き" });
-        expect(checkbox).toBeChecked();
-      });
+      await expect.element(screen.getByRole("checkbox", { name: "午前空き" })).toBeChecked();
 
       await user.click(screen.getByRole("checkbox", { name: "午前空き" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("checkbox", { name: "午前空き" })).not.toBeChecked();
-      });
+      await expect.element(screen.getByRole("checkbox", { name: "午前空き" })).not.toBeChecked();
     });
 
     it("絞り込みチェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("checkbox", { name: "午前空き" })).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("checkbox", { name: "午前空き" })).toBeInTheDocument();
 
       // Click the "午前空き" checkbox
       await user.click(screen.getByRole("checkbox", { name: "午前空き" }));
 
       // The chip "午前空き" should appear (label + chip)
-      await waitFor(() => {
-        const chips = screen.getAllByText("午前空き");
+      await vi.waitFor(() => {
+        const chips = screen.getByText("午前空き").all();
         expect(chips.length).toBeGreaterThanOrEqual(2);
       });
     });
@@ -384,18 +361,16 @@ describe("Reservation Page", () => {
     it("データが存在しないメッセージを表示する", async () => {
       useMswMock([]);
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
     });
   });
 
   describe("ローディング状態", () => {
-    it("データ取得中にスピナーを表示する", () => {
+    it("データ取得中にスピナーを表示する", async () => {
       // Use a handler that delays indefinitely
       worker.use(
         http.post(TEST_ENDPOINT, async () => {
@@ -404,11 +379,13 @@ describe("Reservation Page", () => {
         })
       );
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      expect(screen.getByRole("progressbar", { name: "読み込み中" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("progressbar", { name: "読み込み中" }))
+        .toBeInTheDocument();
     });
   });
 
@@ -422,14 +399,12 @@ describe("Reservation Page", () => {
         })
       );
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByRole("alert")).toBeInTheDocument();
-        expect(screen.getByText("Network error")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("alert")).toBeInTheDocument();
+      await expect.element(screen.getByText("Network error")).toBeInTheDocument();
     });
   });
 
@@ -437,109 +412,93 @@ describe("Reservation Page", () => {
     it("handleStartDateChange: 新しい開始日が終了日より前の場合、終了日は変更されない", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("期間指定")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
 
       // Find the start date input (first input[type="date"])
       const dateInputs = document.querySelectorAll('input[type="date"]');
       expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
       // Change start date to June 20 (before July 15 endDate)
-      fireEvent.change(dateInputs[0]!, { target: { value: "2025-06-20" } });
+      await user.fill(dateInputs[0]!, "2025-06-20");
 
       // Wait for chip to update: startDate = June 20, endDate = July 15 (unchanged)
-      await waitFor(() => {
-        expect(screen.getByText(/2025\/06\/20.*〜.*2025\/07\/15/)).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
     it("handleStartDateChange: 新しい開始日が終了日より後の場合、終了日も更新される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&dt=2025-06-20"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("期間指定")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
 
       // Find the start date input (first input[type="date"])
       const dateInputs = document.querySelectorAll('input[type="date"]');
       expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
       // Change start date to June 25 (after June 20 endDate)
-      fireEvent.change(dateInputs[0]!, { target: { value: "2025-06-25" } });
+      await user.fill(dateInputs[0]!, "2025-06-25");
 
       // Wait for chip to update: both start and end should be June 25
-      await waitFor(() => {
-        expect(screen.getByText(/2025\/06\/25.*〜.*2025\/06\/25/)).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText(/2025\/06\/25.*〜.*2025\/06\/25/)).toBeInTheDocument();
     });
 
     it("handleEndDateChange: 新しい終了日が開始日より後の場合、開始日は変更されない", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("期間指定")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
 
       // Find the end date input (second input[type="date"])
       const dateInputs = document.querySelectorAll('input[type="date"]');
       expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
       // Change end date to July 10 (after June 15 startDate)
-      fireEvent.change(dateInputs[1]!, { target: { value: "2025-07-10" } });
+      await user.fill(dateInputs[1]!, "2025-07-10");
 
       // startDate unchanged (June 15), endDate = July 10
-      await waitFor(() => {
-        expect(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/10/)).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/10/)).toBeInTheDocument();
     });
 
     it("handleEndDateChange: 新しい終了日が開始日より前の場合、開始日も更新される", async () => {
       useMswMock([]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou&df=2025-06-20"],
       });
 
       // Open the drawer
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("期間指定")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
 
       // Find the end date input (second input[type="date"])
       const dateInputs = document.querySelectorAll('input[type="date"]');
       expect(dateInputs.length).toBeGreaterThanOrEqual(2);
 
       // Change end date to June 18 (before June 20 startDate)
-      fireEvent.change(dateInputs[1]!, { target: { value: "2025-06-18" } });
+      await user.fill(dateInputs[1]!, "2025-06-18");
 
       // Wait for chip to update: both start and end should be June 18
-      await waitFor(() => {
-        expect(screen.getByText(/2025\/06\/18.*〜.*2025\/06\/18/)).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText(/2025\/06\/18.*〜.*2025\/06\/18/)).toBeInTheDocument();
     });
   });
 
@@ -572,6 +531,10 @@ describe("Reservation Page", () => {
           requestCount++;
           const body = (await request.json()) as { variables: Record<string, unknown> };
           if (body.variables["after"]) {
+            // fetchMore 応答を遅らせ、スケルトン行（hasNextPage=true の間だけ表示）を
+            // 検証できる時間窓を確保する。即座に空ページを返すと、負荷の高い全体実行では
+            // スケルトンのカウント前に hasNextPage=false へ遷移して消えることがある。
+            await new Promise((resolve) => setTimeout(resolve, 500));
             // Return empty page for fetchMore
             return HttpResponse.json(createMockSearchableReservationsConnection([], false));
           }
@@ -579,24 +542,25 @@ describe("Reservation Page", () => {
         })
       );
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Wait for initial data to load
-      await waitFor(() => {
-        expect(screen.getByText("テスト文化センター0 音楽練習室A")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("テスト文化センター0 音楽練習室A")).toBeInTheDocument();
 
       // The skeleton loading row should appear because hasNextPage=true
-      const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
-      expect(skeletons.length).toBeGreaterThanOrEqual(1);
+      await vi.waitFor(() => {
+        expect(
+          document.querySelectorAll('[data-testid="skeleton"]').length
+        ).toBeGreaterThanOrEqual(1);
+      });
 
       // Wait for IntersectionObserver to fire and trigger fetchMore
       await new Promise((resolve) => setTimeout(resolve, 300));
 
       // Verify that fetchMore was called with the correct after cursor
-      await waitFor(
+      await vi.waitFor(
         () => {
           expect(requestCount).toBeGreaterThanOrEqual(2);
         },
@@ -628,14 +592,12 @@ describe("Reservation Page", () => {
 
       useMswMock(nodes, false);
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       // Wait for initial data to load
-      await waitFor(() => {
-        expect(screen.getByText("施設0 練習室")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設0 練習室")).toBeInTheDocument();
 
       // With hasNextPage=false, no skeleton should appear
       const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
@@ -685,16 +647,14 @@ describe("Reservation Page", () => {
 
       useMswMock([node1, node2]);
 
-      renderWithProviders(<ReservationPage />, {
+      await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("施設名")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("施設名")).toBeInTheDocument();
 
-      expect(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      expect(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
+      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
+      await expect.element(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
     });
 
     it("予約行はクリック可能で、クリック時にonRowClickが実行される", async () => {
@@ -713,18 +673,16 @@ describe("Reservation Page", () => {
 
       useMswMock([node]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
 
       // Verify the row has cursor pointer style (clickable via onRowClick)
       const cell = screen.getByText("テスト文化センター 音楽練習室A");
-      const row = cell.closest("tr");
-      expect(row).toHaveStyle({ cursor: "pointer" });
+      const row = cell.element().closest("tr");
+      await expect.element(row!).toHaveStyle({ cursor: "pointer" });
 
       // Click the row - this exercises the onRowClick handler
       await user.click(cell);
@@ -744,19 +702,17 @@ describe("Reservation Page", () => {
 
       useMswMock([node]);
 
-      const { user } = renderWithProviders(<ReservationPage />, {
+      const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
 
       // Click row with null institution.id - onRowClick short-circuits
       await user.click(screen.getByText("テスト施設 音楽室"));
 
       // Should still be on the same page (no navigation occurred)
-      expect(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
+      await expect.element(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
     });
   });
 });
