@@ -551,9 +551,9 @@ describe("Reservation Page", () => {
 
       // The skeleton loading row should appear because hasNextPage=true
       await vi.waitFor(() => {
-        expect(
-          document.querySelectorAll('[data-testid="skeleton"]').length
-        ).toBeGreaterThanOrEqual(1);
+        expect(document.querySelectorAll('[data-testid="skeleton"]').length).toBeGreaterThanOrEqual(
+          1
+        );
       });
 
       // Wait for IntersectionObserver to fire and trigger fetchMore
