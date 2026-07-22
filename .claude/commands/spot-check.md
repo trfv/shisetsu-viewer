@@ -1,6 +1,6 @@
 ---
 description: 実サイトの空き表示と D1 の保存値を少数サンプルで突合し、silent failure を検出する。例：/spot-check tokyo-koutou
-allowed-tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_click, mcp__plugin_playwright_playwright__browser_run_code, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot
+allowed-tools: Read, Write, Glob, Grep, Bash, AskUserQuestion
 argument-hint: "[municipality-slug] [--key <institution_id>:<date>]... [--samples N]"
 ---
 
@@ -34,41 +34,49 @@ cd packages/scraper && node tools/spotcheck/plan.ts <引数をパススルー>; 
 - エラーで止まったら（wrangler 未ログイン等）、メッセージをそのままユーザーに伝えて停止する
 - 既定（`--key` 未指定時）はサンプル数上限の半分を parity tracker の MISSING キー、残り半分を乱択で選ぶ（乖離ゼロ・tracker 不在なら全部乱択にフォールバックする）。`--key` を指定したときは明示キーのみが対象になる
 
-## フェーズ 2: サイト観測（Playwright MCP）
+## フェーズ 2: サイト観測（observe.ts）
 
-plan.json の各サンプル（`id` / `target` / `date` / `buildingSystemName` / `institutionSystemName` / `divisionLabels`）について:
-
-1. その自治体のサイト URL と到達経路を知るために `packages/scraper/<target>/index.ts` を Read する（エンジン使用時はエンジンファイルも）。**STATUS_MAP の解釈は読み取っても使わない**
-2. `browser_navigate` でサイトを開き、対象施設（buildingSystemName / institutionSystemName）の `date` の空き状況ページへ遷移する
-3. 表示を記録する:
-   - 区分ごとの**生の記号・文言**（「○」「×」「予約あり」等）を、画面の区分ラベル（「午前」「①」等）と対にして記録する
-   - 観測した区分ラベルは、可能なら `divisionLabels`（そのサンプルの `plan.json` に入っている、当該自治体の区分ラベル一覧）のいずれかに正規化して `divisionLabel` に書く（全角/半角や区切り文字の表記ゆれを judge 側の突合で拾いやすくするため。`divisionLabels` は区分の呼び名の一覧であって空き状況の値ではないので、これを使っても盲検は破れない）
-   - ページに凡例（「○=空き」等）があれば `legend` に記録する
-   - `browser_take_screenshot` で `packages/scraper/test-results/_spotcheck/screenshots/<連番>.png` に保存する
-4. サンプルごとに `packages/scraper/test-results/_spotcheck/observed/<連番>.json` を Write する（1 サンプル 1 ファイル）:
-
-```json
-{
-  "id": "<plan.json の id>",
-  "reached": true,
-  "dateDisplayed": true,
-  "outOfWindow": false,
-  "cells": [{ "divisionLabel": "午前", "symbol": "○" }],
-  "legend": { "○": "空き", "×": "予約あり" },
-  "url": "<観測したページの URL>",
-  "screenshotPath": "screenshots/<連番>.png",
-  "note": ""
-}
+```bash
+cd packages/scraper && node tools/spotcheck/observe.ts; cd ../..
 ```
 
-- 対象日がカレンダーに表示されない場合: `dateDisplayed: false`。それがサイトの受付期間（表示可能な日付範囲）の外だからなら `outOfWindow: true` とし、`note` に受付期間を書く
-- 到達失敗は 1 サンプルにつき**試行 2 回まで**。2 回失敗したら `reached: false` + `note` に状況を書いて次のサンプルへ進む（深追いしない）
+`observe.ts` が plan.json の各サンプルについて実サイトを観測し、`observed/<連番>.json` と `raw/<連番>.json` とスクリーンショット（`screenshots/<連番>.png`）を書く。`SPOTCHECK_OBSERVE {"samples":N,"reached":M}` を出力する。1 サンプルにつき 1-3 分かかる（実サイト接続）。特定サンプルだけ再観測するなら `--id "<plan の id>"` を渡す。
 
-**コスト規律**:
+**observe.ts が借りるもの**: スクレイパーの `prepare` フック（サイトへの到達経路）だけである。
+`extract` / `transform` / `STATUS_MAP` は借りない。
+借りると観測が scraper の解釈をなぞることになり、同じ誤りを再現して MATCH を出すためである。
+この線引きは `observeStrategy.test.ts` の盲検検査が機械的に守っている。
 
-- タブは 1 つを使い回す
-- `browser_snapshot` はページ遷移ごとに 1 回まで。同一ページを再 snapshot しない
-- observed はサンプルごとに逐次 Write し、snapshot の内容を会話に持ち越さない
+**表の類型は自動判別する**: `observeCore.extractCells` が、対象室の行と区分ラベルとの照合を軸に表の 4 類型を判別してセルを組む。手で類型を指定する必要はない。
+
+- 類型A `divisionColumn`（行=室、列=区分。江東・荒川）
+- 類型B `singleRoomDivisionColumn`（室名列が無く、ヘッダ=区分・次の行=値のブロックが積まれる。北・中央）
+- 類型C `divisionRow`（行=区分、列=日付。大田）
+- 類型D `dateColumn`（行=室、列=日付。区分はフィルタで切り替える。豊島・江戸川）
+
+**あなたの仕事**: 出力を確認し、`raw/<連番>.json` を読んで observed に不足している文脈を補う。observed の生成自体は observe.ts が行うので、記号を手で読み取る必要はない。
+
+1. `raw` の `bodyText` に凡例（「○=空き」等）があり observed の `legend` が空なら、`observed/<連番>.json` の `legend` に書き足す（judge は legend を記号表より優先する）
+2. `bodyText` に施設の状態を説明するお知らせがあれば `note` に書く。表の記号だけでは読み取れない文脈がある（例: 2026-07-22 の江戸川区 総合文化センターは「令和8年4月から令和9年11月まで全館休館による改修工事」というお知らせがページ上部にあり、全室が「休館」と表示されていた）
+3. `reached: false` のサンプルは `note` の「読めた行」を見て、室名の表記ゆれが原因なら plan の `institutionSystemName` と突き合わせる
+4. `cells` の `divisionLabel` が `divisionLabels` のいずれとも対応しない場合、対応するラベルに書き換える。judge の `normalizeDivisionLabel` は全角半角と範囲記号のゆれしか吸収しない（サイトが「09:00 〜 12:00」のような時間帯レンジ表記で、D1 が午前/午後/夜間のときは対応表を判断して書き換える）
+
+**深追いしない**: 1 サンプルが観測できなくても全体は成立する。`reached: false` のまま次へ進む。
+
+### 区分フィルタ型サイトの罠（類型D）
+
+豊島区と江戸川区は、施設別空き状況の画面で「その他の条件で絞り込む」から時間帯を選ぶと表が描き直される。
+フィルタを操作せずに読むと全区分の集約表が読めてしまい、それらしい観測結果が得られる。
+2026-07-19 の初回実行で実際にこの罠を踏み、豊島区が MATCH と判定された（その日の記号がたまたま全区分で同じだった）。
+
+`observe.ts` は `observeStrategy.ts` の `STRATEGY_BY_MUNICIPALITY` でこの 2 自治体を `divisionFilter` として扱い、区分ごとにフィルタを切り替えて表を読み直す（`raw` の `rawTablesByDivision` が区分ラベルごとにキーを持つ）。
+新しい自治体で `cells` の区分ラベルが 1 種類しか出ない、あるいは全区分が同じ記号になる場合は、この罠を疑って `raw` の `rawTablesByDivision` のキーを確認する。
+
+文京区も同系の集約表を持つが、区分別データが「時間帯別空き状況」の詳細ページ経由の別機構のため未対応で、`reached: false`（集約表を誤読せず fail-safe する）になる。これは既知で、専用戦略は将来課題。
+
+### prepare 直後の描画待ち（既知の落とし穴）
+
+スクレイパーの `prepare` は、空き状況が描画される前に return することがある（検索実行直後に返す・SPA のポストバック遷移が未完了・body 自体がまだ空、など）。本番の `extract` は直後に要素へアクセスして auto-wait で吸収するが、observe は即読みするため踏む。`observe.ts` は prepare 直後に `networkidle` を待ってこれを吸収している。新規自治体で `reached: false` かつ `raw` の `bodyText` が検索フォームや空になっている場合は、この描画待ちが足りていない可能性を疑う。
 
 ## フェーズ 3: judge(決定論)
 
