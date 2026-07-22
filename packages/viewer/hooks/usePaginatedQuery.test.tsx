@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { usePaginatedQuery, type RelayConnection } from "./usePaginatedQuery";
 
 const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
@@ -50,11 +50,9 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent variables={{ first: 10 }} />);
+    await renderWithProviders(<TestComponent variables={{ first: 10 }} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Item A")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
   });
 
   it("Auth0ロード中はクエリを実行しない", async () => {
@@ -66,12 +64,12 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent variables={{ first: 10 }} />, {
+    await renderWithProviders(<TestComponent variables={{ first: 10 }} />, {
       auth0Config: { isLoading: true, token: "" },
     });
 
-    expect(screen.getByText("loading")).toBeInTheDocument();
-    await waitFor(() => {
+    await expect.element(screen.getByText("loading")).toBeInTheDocument();
+    await vi.waitFor(() => {
       expect(requestCount).toBe(0);
     });
   });
@@ -89,21 +87,17 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    const { user } = renderWithProviders(<TestComponent variables={{ first: 10 }} />);
+    const { user } = await renderWithProviders(<TestComponent variables={{ first: 10 }} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Item A")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
 
     await user.click(screen.getByText("load more"));
 
-    await waitFor(() => {
-      expect(screen.getByText("Item B")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item B")).toBeInTheDocument();
 
     // Both items should be present
-    expect(screen.getByText("Item A")).toBeInTheDocument();
-    expect(screen.getByText("Item B")).toBeInTheDocument();
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
+    await expect.element(screen.getByText("Item B")).toBeInTheDocument();
   });
 
   it("hasNextPageがfalseの場合fetchMoreボタンが無効になる", async () => {
@@ -113,13 +107,11 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    renderWithProviders(<TestComponent variables={{ first: 10 }} />);
+    await renderWithProviders(<TestComponent variables={{ first: 10 }} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Item A")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
 
-    expect(screen.getByText("load more")).toBeDisabled();
+    await expect.element(screen.getByText("load more")).toBeDisabled();
   });
 
   it("fetchMore中の重複呼び出しを防止する", async () => {
@@ -137,19 +129,15 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    const { user } = renderWithProviders(<TestComponent variables={{ first: 10 }} />);
+    const { user } = await renderWithProviders(<TestComponent variables={{ first: 10 }} />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Item A")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item A")).toBeInTheDocument();
 
     // Click fetchMore twice rapidly
     await user.click(screen.getByText("load more"));
     await user.click(screen.getByText("load more"));
 
-    await waitFor(() => {
-      expect(screen.getByText("Item B")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Item B")).toBeInTheDocument();
 
     // Only 2 requests total: initial + one fetchMore (not two)
     expect(callCount).toBe(2);
@@ -167,17 +155,15 @@ describe("usePaginatedQuery", () => {
       })
     );
 
-    const { rerender } = renderWithProviders(
+    const { rerender } = await renderWithProviders(
       <TestComponent variables={{ first: 10, filter: "X" }} />
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("Filtered X")).toBeInTheDocument();
-    });
+    await expect.element(screen.getByText("Filtered X")).toBeInTheDocument();
 
-    rerender(<TestComponent variables={{ first: 10, filter: "Y" }} />);
+    await rerender(<TestComponent variables={{ first: 10, filter: "Y" }} />);
 
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(capturedVariables["filter"]).toBe("Y");
     });
   });

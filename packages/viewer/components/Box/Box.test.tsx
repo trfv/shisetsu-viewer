@@ -6,25 +6,25 @@ import { FullBox } from "./FullBox";
 import { SmallBox } from "./SmallBox";
 
 describe("BaseBox", () => {
-  it("正しくレンダリングされる", () => {
-    renderWithProviders(<BaseBox data-testid="base-box">テスト</BaseBox>);
-    expect(screen.getByTestId("base-box")).toBeInTheDocument();
+  it("正しくレンダリングされる", async () => {
+    await renderWithProviders(<BaseBox data-testid="base-box">テスト</BaseBox>);
+    await expect.element(screen.getByTestId("base-box")).toBeInTheDocument();
   });
 });
 
 describe("Sized Box variants", () => {
-  it("SmallBoxがレンダリングされる", () => {
-    renderWithProviders(<SmallBox data-testid="small-box">小</SmallBox>);
-    expect(screen.getByTestId("small-box")).toBeInTheDocument();
+  it("SmallBoxがレンダリングされる", async () => {
+    await renderWithProviders(<SmallBox data-testid="small-box">小</SmallBox>);
+    await expect.element(screen.getByTestId("small-box")).toBeInTheDocument();
   });
 
-  it("AutoBoxがレンダリングされる", () => {
-    renderWithProviders(<AutoBox data-testid="auto-box">自動</AutoBox>);
-    expect(screen.getByTestId("auto-box")).toBeInTheDocument();
+  it("AutoBoxがレンダリングされる", async () => {
+    await renderWithProviders(<AutoBox data-testid="auto-box">自動</AutoBox>);
+    await expect.element(screen.getByTestId("auto-box")).toBeInTheDocument();
   });
 
-  it("FullBoxがレンダリングされる", () => {
-    renderWithProviders(<FullBox data-testid="full-box">全幅</FullBox>);
-    expect(screen.getByTestId("full-box")).toBeInTheDocument();
+  it("FullBoxがレンダリングされる", async () => {
+    await renderWithProviders(<FullBox data-testid="full-box">全幅</FullBox>);
+    await expect.element(screen.getByTestId("full-box")).toBeInTheDocument();
   });
 });

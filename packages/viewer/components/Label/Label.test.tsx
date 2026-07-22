@@ -4,21 +4,21 @@ import { BaseLabel } from "./BaseLabel";
 import { SmallLabel } from "./SmallLabel";
 
 describe("BaseLabel", () => {
-  it("ラベルテキストをレンダリングする", () => {
-    renderWithProviders(<BaseLabel label="テスト" size="medium" />);
-    expect(screen.getByText("テスト")).toBeInTheDocument();
+  it("ラベルテキストをレンダリングする", async () => {
+    await renderWithProviders(<BaseLabel label="テスト" size="medium" />);
+    await expect.element(screen.getByText("テスト")).toBeInTheDocument();
   });
 
-  it("カスタムas propでレンダリングする", () => {
-    renderWithProviders(<BaseLabel label="見出し" size="large" as="h2" />);
+  it("カスタムas propでレンダリングする", async () => {
+    await renderWithProviders(<BaseLabel label="見出し" size="large" as="h2" />);
     const heading = screen.getByText("見出し");
-    expect(heading.tagName).toBe("H2");
+    expect(heading.element().tagName).toBe("H2");
   });
 });
 
 describe("SmallLabel", () => {
-  it("正しくレンダリングされる", () => {
-    renderWithProviders(<SmallLabel label="小ラベル" />);
-    expect(screen.getByText("小ラベル")).toBeInTheDocument();
+  it("正しくレンダリングされる", async () => {
+    await renderWithProviders(<SmallLabel label="小ラベル" />);
+    await expect.element(screen.getByText("小ラベル")).toBeInTheDocument();
   });
 });

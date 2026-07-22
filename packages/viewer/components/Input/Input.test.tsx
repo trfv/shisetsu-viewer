@@ -3,53 +3,53 @@ import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { Input } from "./Input";
 
 describe("Input Component", () => {
-  it("ラベルを表示する", () => {
-    renderWithProviders(<Input label="名前" />);
+  it("ラベルを表示する", async () => {
+    await renderWithProviders(<Input label="名前" />);
 
-    expect(screen.getByText("名前")).toBeInTheDocument();
+    await expect.element(screen.getByText("名前")).toBeInTheDocument();
   });
 
-  it("値を表示する", () => {
-    renderWithProviders(<Input label="名前" value="テスト値" readOnly />);
+  it("値を表示する", async () => {
+    await renderWithProviders(<Input label="名前" value="テスト値" readOnly />);
 
     const input = screen.getByRole("textbox");
-    expect(input).toHaveValue("テスト値");
+    await expect.element(input).toHaveValue("テスト値");
   });
 
-  it("loading=trueのときSkeletonを表示する", () => {
-    const { container } = renderWithProviders(<Input label="名前" loading={true} />);
+  it("loading=trueのときSkeletonを表示する", async () => {
+    const { container } = await renderWithProviders(<Input label="名前" loading={true} />);
 
     // Skeleton is rendered, no textbox should be present
-    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
-    const skeleton = container.querySelector('[data-testid="skeleton"]');
-    expect(skeleton).toBeInTheDocument();
+    await expect.element(screen.getByRole("textbox")).not.toBeInTheDocument();
+    const skeleton = container.querySelector<HTMLElement>('[data-testid="skeleton"]');
+    await expect.element(skeleton).toBeInTheDocument();
   });
 
-  it("loading=falseのときInputを表示する", () => {
-    renderWithProviders(<Input label="名前" loading={false} />);
+  it("loading=falseのときInputを表示する", async () => {
+    await renderWithProviders(<Input label="名前" loading={false} />);
 
-    expect(screen.getByRole("textbox")).toBeInTheDocument();
+    await expect.element(screen.getByRole("textbox")).toBeInTheDocument();
   });
 
-  it("readOnly属性を処理する", () => {
-    renderWithProviders(<Input label="名前" readOnly value="読み取り専用" />);
+  it("readOnly属性を処理する", async () => {
+    await renderWithProviders(<Input label="名前" readOnly value="読み取り専用" />);
 
     const input = screen.getByRole("textbox");
-    expect(input).toHaveAttribute("readonly");
+    await expect.element(input).toHaveAttribute("readonly");
   });
 
-  it("multiline属性を処理する", () => {
-    renderWithProviders(<Input label="説明" multiline rows={3} />);
+  it("multiline属性を処理する", async () => {
+    await renderWithProviders(<Input label="説明" multiline rows={3} />);
 
     const textarea = screen.getByRole("textbox");
-    expect(textarea).toBeInTheDocument();
-    expect(textarea.tagName.toLowerCase()).toBe("textarea");
+    await expect.element(textarea).toBeInTheDocument();
+    expect(textarea.element().tagName.toLowerCase()).toBe("textarea");
   });
 
-  it("値が未指定の場合は空文字を表示する", () => {
-    renderWithProviders(<Input label="名前" />);
+  it("値が未指定の場合は空文字を表示する", async () => {
+    await renderWithProviders(<Input label="名前" />);
 
     const input = screen.getByRole("textbox");
-    expect(input).toHaveValue("");
+    await expect.element(input).toHaveValue("");
   });
 });

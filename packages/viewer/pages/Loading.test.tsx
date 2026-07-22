@@ -3,20 +3,20 @@ import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { Loading } from "./Loading";
 
 describe("Loading Page", () => {
-  it("Spinnerコンポーネントをレンダリングする", () => {
-    renderWithProviders(<Loading />);
+  it("Spinnerコンポーネントをレンダリングする", async () => {
+    await renderWithProviders(<Loading />);
 
     const spinner = screen.getByRole("progressbar");
-    expect(spinner).toBeInTheDocument();
+    await expect.element(spinner).toBeInTheDocument();
   });
 
-  it("main要素内にSpinnerを表示する", () => {
-    renderWithProviders(<Loading />);
+  it("main要素内にSpinnerを表示する", async () => {
+    await renderWithProviders(<Loading />);
 
     const main = screen.getByRole("main");
-    expect(main).toBeInTheDocument();
+    await expect.element(main).toBeInTheDocument();
 
     const spinner = screen.getByRole("progressbar");
-    expect(main).toContainElement(spinner);
+    await expect.element(main).toContainElement(spinner.element());
   });
 });

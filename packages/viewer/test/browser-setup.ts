@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { afterEach, beforeAll, afterAll, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
-import "@testing-library/jest-dom/vitest";
 
 // Mock @auth0/auth0-spa-js to prevent it from interfering with React module resolution
 vi.mock("@auth0/auth0-spa-js", () => ({
@@ -95,9 +93,8 @@ beforeAll(async () => {
   };
 });
 
-// Clean up after each test
+// Clean up after each test (unmount 自体は vitest-browser-react が自動で行う)
 afterEach(() => {
-  cleanup();
   if (worker) {
     worker.resetHandlers();
   }

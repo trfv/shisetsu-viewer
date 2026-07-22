@@ -12,91 +12,98 @@ const renderSettingsMenu = (auth0Config = {}) =>
   );
 
 describe("SettingsMenu", () => {
-  it("歯車ボタンが常にレンダリングされる", () => {
-    renderSettingsMenu();
+  it("歯車ボタンが常にレンダリングされる", async () => {
+    await renderSettingsMenu();
 
-    expect(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
+    await expect.element(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
   });
 
-  it("isLoading中でも歯車ボタンが表示される", () => {
-    renderSettingsMenu({ isLoading: true });
+  it("isLoading中でも歯車ボタンが表示される", async () => {
+    await renderSettingsMenu({ isLoading: true });
 
-    expect(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
+    await expect.element(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
   });
 
   it("クリックでメニューが開く", async () => {
-    const { user } = renderSettingsMenu();
+    const { user } = await renderSettingsMenu();
 
     await user.click(screen.getByRole("button", { name: "設定" }));
 
-    expect(screen.getByRole("menu", { name: "設定メニュー" })).toBeInTheDocument();
+    await expect.element(screen.getByRole("menu", { name: "設定メニュー" })).toBeInTheDocument();
   });
 
   it("再クリックでメニューが閉じる", async () => {
-    const { user } = renderSettingsMenu();
+    const { user } = await renderSettingsMenu();
 
     await user.click(screen.getByRole("button", { name: "設定" }));
-    expect(screen.getByRole("menu")).toBeInTheDocument();
+    await expect.element(screen.getByRole("menu")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "設定" }));
-    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    await expect.element(screen.getByRole("menu")).not.toBeInTheDocument();
   });
 
   it("Escapeキーでメニューが閉じる", async () => {
-    const { user } = renderSettingsMenu();
+    const { user } = await renderSettingsMenu();
 
     await user.click(screen.getByRole("button", { name: "設定" }));
-    expect(screen.getByRole("menu")).toBeInTheDocument();
+    await expect.element(screen.getByRole("menu")).toBeInTheDocument();
 
     await user.keyboard("{Escape}");
-    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    await expect.element(screen.getByRole("menu")).not.toBeInTheDocument();
   });
 
   describe("カラーモード", () => {
     it("3つのモード選択肢が表示される", async () => {
-      const { user } = renderSettingsMenu();
+      const { user } = await renderSettingsMenu();
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      expect(screen.getByRole("menuitemradio", { name: "システム設定" })).toBeInTheDocument();
-      expect(screen.getByRole("menuitemradio", { name: "ライト" })).toBeInTheDocument();
-      expect(screen.getByRole("menuitemradio", { name: "ダーク" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("menuitemradio", { name: "システム設定" }))
+        .toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("menuitemradio", { name: "ライト" }))
+        .toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("menuitemradio", { name: "ダーク" }))
+        .toBeInTheDocument();
     });
 
     it("デフォルトでシステム設定がアクティブ", async () => {
-      const { user } = renderSettingsMenu();
+      const { user } = await renderSettingsMenu();
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      expect(screen.getByRole("menuitemradio", { name: "システム設定" })).toHaveAttribute(
-        "aria-checked",
-        "true"
-      );
+      await expect
+        .element(screen.getByRole("menuitemradio", { name: "システム設定" }))
+        .toHaveAttribute("aria-checked", "true");
     });
   });
 
   describe("ログイン/ログアウト", () => {
     it("isLoading中は無効化される", async () => {
-      const { user } = renderSettingsMenu({ isLoading: true });
+      const { user } = await renderSettingsMenu({ isLoading: true });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
       const authItem = screen.getByRole("menuitem", { name: "読み込み中..." });
-      expect(authItem).toBeDisabled();
-      expect(authItem).toHaveTextContent("読み込み中...");
+      await expect.element(authItem).toBeDisabled();
+      await expect.element(authItem).toHaveTextContent("読み込み中...");
     });
 
     it("tokenありの場合はログアウトを表示する", async () => {
-      const { user } = renderSettingsMenu({ token: "some-token" });
+      const { user } = await renderSettingsMenu({ token: "some-token" });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      expect(screen.getByRole("menuitem", { name: "ログアウト" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("menuitem", { name: "ログアウト" }))
+        .toBeInTheDocument();
     });
 
     it("ログアウトをクリックするとlogoutが呼ばれる", async () => {
       const logout = vi.fn();
-      const { user } = renderSettingsMenu({ token: "some-token", logout });
+      const { user } = await renderSettingsMenu({ token: "some-token", logout });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem", { name: "ログアウト" }));
@@ -108,16 +115,16 @@ describe("SettingsMenu", () => {
     });
 
     it("tokenなしの場合はログインを表示する", async () => {
-      const { user } = renderSettingsMenu({ token: "" });
+      const { user } = await renderSettingsMenu({ token: "" });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
-      expect(screen.getByRole("menuitem")).toHaveTextContent("ログイン");
+      await expect.element(screen.getByRole("menuitem")).toHaveTextContent("ログイン");
     });
 
     it("ログインをクリックするとloginが呼ばれる", async () => {
       const login = vi.fn();
-      const { user } = renderSettingsMenu({ token: "", login });
+      const { user } = await renderSettingsMenu({ token: "", login });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem"));

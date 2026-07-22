@@ -11,18 +11,18 @@ describe("CheckboxGroup Component", () => {
     onChange: vi.fn(),
   };
 
-  it("ラベルを表示する", () => {
-    renderWithProviders(
+  it("ラベルを表示する", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps}>
         <Checkbox label="体育館" value="gym" />
       </CheckboxGroup>
     );
 
-    expect(screen.getByText("施設種別")).toBeInTheDocument();
+    await expect.element(screen.getByText("施設種別")).toBeInTheDocument();
   });
 
-  it("子要素のチェックボックスをレンダリングする", () => {
-    renderWithProviders(
+  it("子要素のチェックボックスをレンダリングする", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps}>
         <Checkbox label="体育館" value="gym" />
         <Checkbox label="テニスコート" value="tennis" />
@@ -30,13 +30,13 @@ describe("CheckboxGroup Component", () => {
       </CheckboxGroup>
     );
 
-    expect(screen.getByText("体育館")).toBeInTheDocument();
-    expect(screen.getByText("テニスコート")).toBeInTheDocument();
-    expect(screen.getByText("プール")).toBeInTheDocument();
+    await expect.element(screen.getByText("体育館")).toBeInTheDocument();
+    await expect.element(screen.getByText("テニスコート")).toBeInTheDocument();
+    await expect.element(screen.getByText("プール")).toBeInTheDocument();
   });
 
-  it("valuesに含まれるチェックボックスがチェック状態になる", () => {
-    renderWithProviders(
+  it("valuesに含まれるチェックボックスがチェック状態になる", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={["gym", "pool"]}>
         <Checkbox label="体育館" value="gym" />
         <Checkbox label="テニスコート" value="tennis" />
@@ -44,57 +44,57 @@ describe("CheckboxGroup Component", () => {
       </CheckboxGroup>
     );
 
-    const checkboxes = screen.getAllByRole("checkbox");
+    const checkboxes = screen.getByRole("checkbox").all();
     // gym should be checked
-    expect(checkboxes[0]).toBeChecked();
+    await expect.element(checkboxes[0]!).toBeChecked();
     // tennis should not be checked
-    expect(checkboxes[1]).not.toBeChecked();
+    await expect.element(checkboxes[1]!).not.toBeChecked();
     // pool should be checked
-    expect(checkboxes[2]).toBeChecked();
+    await expect.element(checkboxes[2]!).toBeChecked();
   });
 
-  it("valuesが空の場合すべて未チェック状態", () => {
-    renderWithProviders(
+  it("valuesが空の場合すべて未チェック状態", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={[]}>
         <Checkbox label="体育館" value="gym" />
         <Checkbox label="テニスコート" value="tennis" />
       </CheckboxGroup>
     );
 
-    const checkboxes = screen.getAllByRole("checkbox");
-    checkboxes.forEach((checkbox) => {
-      expect(checkbox).not.toBeChecked();
-    });
+    const checkboxes = screen.getByRole("checkbox").all();
+    for (const checkbox of checkboxes) {
+      await expect.element(checkbox).not.toBeChecked();
+    }
   });
 
   it("チェックボックスをクリックするとonChangeが呼ばれる", async () => {
     const handleChange = vi.fn();
-    const { user } = renderWithProviders(
+    const { user } = await renderWithProviders(
       <CheckboxGroup {...defaultProps} onChange={handleChange}>
         <Checkbox label="体育館" value="gym" />
         <Checkbox label="テニスコート" value="tennis" />
       </CheckboxGroup>
     );
 
-    const checkbox = screen.getAllByRole("checkbox")[0]!;
+    const checkbox = screen.getByRole("checkbox").all()[0]!;
     await user.click(checkbox);
 
     expect(handleChange).toHaveBeenCalledTimes(1);
   });
 
-  it("チェックボックスのvalue属性が正しく設定される", () => {
-    renderWithProviders(
+  it("チェックボックスのvalue属性が正しく設定される", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={["gym"]}>
         <Checkbox label="体育館" value="gym" />
       </CheckboxGroup>
     );
 
     const checkbox = screen.getByRole("checkbox");
-    expect(checkbox).toHaveAttribute("value", "gym");
+    await expect.element(checkbox).toHaveAttribute("value", "gym");
   });
 
-  it("ネストされた要素内のチェックボックスを再帰的に処理する", () => {
-    renderWithProviders(
+  it("ネストされた要素内のチェックボックスを再帰的に処理する", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={["gym", "pool"]}>
         <div>
           <Checkbox label="体育館" value="gym" />
@@ -103,13 +103,13 @@ describe("CheckboxGroup Component", () => {
       </CheckboxGroup>
     );
 
-    const checkboxes = screen.getAllByRole("checkbox");
-    expect(checkboxes[0]).toBeChecked();
-    expect(checkboxes[1]).toBeChecked();
+    const checkboxes = screen.getByRole("checkbox").all();
+    await expect.element(checkboxes[0]!).toBeChecked();
+    await expect.element(checkboxes[1]!).toBeChecked();
   });
 
-  it("Checkbox以外の子要素はnullを返す", () => {
-    renderWithProviders(
+  it("Checkbox以外の子要素はnullを返す", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={[]}>
         <Checkbox label="体育館" value="gym" />
         {null}
@@ -117,12 +117,12 @@ describe("CheckboxGroup Component", () => {
       </CheckboxGroup>
     );
 
-    const checkboxes = screen.getAllByRole("checkbox");
+    const checkboxes = screen.getByRole("checkbox").all();
     expect(checkboxes).toHaveLength(1);
   });
 
-  it("子要素なしのCheckbox以外の要素はnullを返す", () => {
-    renderWithProviders(
+  it("子要素なしのCheckbox以外の要素はnullを返す", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={["gym"]}>
         <Checkbox label="体育館" value="gym" />
         <hr />
@@ -131,22 +131,22 @@ describe("CheckboxGroup Component", () => {
 
     // The <hr /> element is not a Checkbox and has no children,
     // so mapChildren returns null for it
-    const checkboxes = screen.getAllByRole("checkbox");
+    const checkboxes = screen.getByRole("checkbox").all();
     expect(checkboxes).toHaveLength(1);
-    expect(checkboxes[0]).toBeChecked();
+    await expect.element(checkboxes[0]!).toBeChecked();
   });
 
-  it("value属性のないCheckboxはchecked=falseになる", () => {
-    renderWithProviders(
+  it("value属性のないCheckboxはchecked=falseになる", async () => {
+    await renderWithProviders(
       <CheckboxGroup {...defaultProps} values={["gym"]}>
         <Checkbox label="体育館" value="gym" />
         <Checkbox label="不明" value="" />
       </CheckboxGroup>
     );
 
-    const checkboxes = screen.getAllByRole("checkbox");
-    expect(checkboxes[0]).toBeChecked();
+    const checkboxes = screen.getByRole("checkbox").all();
+    await expect.element(checkboxes[0]!).toBeChecked();
     // Checkbox with empty string value should not be checked
-    expect(checkboxes[1]).not.toBeChecked();
+    await expect.element(checkboxes[1]!).not.toBeChecked();
   });
 });

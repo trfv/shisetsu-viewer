@@ -19,35 +19,36 @@ describe("DateRangePicker Component", () => {
     },
   };
 
-  it("ラベルを表示する", () => {
-    renderWithProviders(<DateRangePicker {...defaultProps} />);
+  it("ラベルを表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
-    expect(screen.getByText("期間")).toBeInTheDocument();
+    await expect.element(screen.getByText("期間")).toBeInTheDocument();
   });
 
-  it("2つの日付ピッカーを表示する", () => {
-    renderWithProviders(<DateRangePicker {...defaultProps} />);
+  it("2つの日付ピッカーを表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
     const dateInputs = document.querySelectorAll('input[type="date"]');
     expect(dateInputs).toHaveLength(2);
   });
 
-  it("開始日と終了日の間に「〜」セパレーターを表示する", () => {
-    renderWithProviders(<DateRangePicker {...defaultProps} />);
+  it("開始日と終了日の間に「〜」セパレーターを表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
-    expect(screen.getByText("〜")).toBeInTheDocument();
+    await expect.element(screen.getByText("〜")).toBeInTheDocument();
   });
 
-  it("開始日と終了日の値を正しく表示する", () => {
-    renderWithProviders(<DateRangePicker {...defaultProps} />);
+  it("開始日と終了日の値を正しく表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
-    expect(screen.getByDisplayValue("2021-01-01")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("2021-02-01")).toBeInTheDocument();
+    const dateInputs = document.querySelectorAll<HTMLInputElement>('input[type="date"]');
+    await expect.element(dateInputs[0]!).toHaveValue("2021-01-01");
+    await expect.element(dateInputs[1]!).toHaveValue("2021-02-01");
   });
 
-  it("異なるラベルテキストを表示する", () => {
-    renderWithProviders(<DateRangePicker {...defaultProps} label="日付範囲" />);
+  it("異なるラベルテキストを表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} label="日付範囲" />);
 
-    expect(screen.getByText("日付範囲")).toBeInTheDocument();
+    await expect.element(screen.getByText("日付範囲")).toBeInTheDocument();
   });
 });

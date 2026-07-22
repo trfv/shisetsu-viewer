@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
 import { worker } from "../test/mocks/browser";
-import { renderWithProviders, screen, waitFor } from "../test/utils/test-utils";
+import { renderWithProviders, screen } from "../test/utils/test-utils";
 import {
   createMockInstitutionDetailNode,
   createMockInstitutionDetailConnection,
@@ -70,14 +70,14 @@ const useMswDetailMock = (
 
 describe("Detail Page", () => {
   describe("無効なUUID", () => {
-    it("無効なUUIDの場合、トップページにリダイレクトする", () => {
-      renderWithProviders(<DetailPage />, {
+    it("無効なUUIDの場合、トップページにリダイレクトする", async () => {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: ["/institution/not-a-uuid"],
         route: "/institution/:id",
       });
 
-      expect(screen.queryByText("施設情報")).not.toBeInTheDocument();
-      expect(screen.queryByText("予約状況")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("施設情報")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("予約状況")).not.toBeInTheDocument();
     });
   });
 
@@ -85,16 +85,14 @@ describe("Detail Page", () => {
     it("施設名（建物名＋施設名）を表示する", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
     });
 
     it("website_urlがある場合にリンクアイコンが表示される", async () => {
@@ -104,14 +102,14 @@ describe("Detail Page", () => {
       const responseWithUrl = createMockInstitutionDetailConnection(nodeWithUrl);
       useMswDetailMock(responseWithUrl);
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
       });
 
-      await waitFor(() => {
+      await vi.waitFor(() => {
         const link = document.querySelector('a[href="https://example.com"]');
-        expect(link).toBeInTheDocument();
+        expect(link).not.toBeNull();
       });
     });
 
@@ -123,94 +121,89 @@ describe("Detail Page", () => {
       const responseWithNull = createMockInstitutionDetailConnection(nodeWithNull);
       useMswDetailMock(responseWithNull);
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
       });
 
-      await waitFor(() => {
-        const heading = screen.getByRole("heading", { level: 2 });
-        expect(heading).toBeInTheDocument();
-      });
+      await expect.element(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
     });
 
     it("「施設情報」タブがデフォルトでアクティブである", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
       });
 
       const institutionTab = screen.getByRole("tab", { name: "施設情報" });
-      expect(institutionTab).toHaveAttribute("aria-selected", "true");
+      await expect.element(institutionTab).toHaveAttribute("aria-selected", "true");
     });
 
     it("施設の詳細情報のInput項目を表示する", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
       });
 
-      await waitFor(() => {
-        expect(screen.getByText("定員（人）")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("定員（人）")).toBeInTheDocument();
 
-      expect(screen.getByText("面積（㎡）")).toBeInTheDocument();
-      expect(screen.getByText("利用料金（平日）")).toBeInTheDocument();
-      expect(screen.getByText("利用料金（休日）")).toBeInTheDocument();
-      expect(screen.getByText("弦楽器")).toBeInTheDocument();
-      expect(screen.getByText("木管楽器")).toBeInTheDocument();
-      expect(screen.getByText("金管楽器")).toBeInTheDocument();
-      expect(screen.getByText("打楽器")).toBeInTheDocument();
-      expect(screen.getByText("譜面台")).toBeInTheDocument();
-      expect(screen.getByText("ピアノ")).toBeInTheDocument();
-      expect(screen.getByText("住所")).toBeInTheDocument();
-      expect(screen.getByText("抽選期間")).toBeInTheDocument();
-      expect(screen.getByText("備考")).toBeInTheDocument();
+      await expect.element(screen.getByText("面積（㎡）")).toBeInTheDocument();
+      await expect.element(screen.getByText("利用料金（平日）")).toBeInTheDocument();
+      await expect.element(screen.getByText("利用料金（休日）")).toBeInTheDocument();
+      await expect.element(screen.getByText("弦楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("木管楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("金管楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("打楽器")).toBeInTheDocument();
+      await expect.element(screen.getByText("譜面台")).toBeInTheDocument();
+      await expect.element(screen.getByText("ピアノ")).toBeInTheDocument();
+      await expect.element(screen.getByText("住所")).toBeInTheDocument();
+      await expect.element(screen.getByText("抽選期間")).toBeInTheDocument();
+      await expect.element(screen.getByText("備考")).toBeInTheDocument();
     });
   });
 
   describe("認証状態による「予約状況」タブの制御", () => {
-    it("anonymousユーザーの場合、「予約状況」タブが無効になる", () => {
+    it("anonymousユーザーの場合、「予約状況」タブが無効になる", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: true, trial: false } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
-      expect(reservationTab).toBeDisabled();
+      await expect.element(reservationTab).toBeDisabled();
     });
 
-    it("trialユーザーの場合、「予約状況」タブが無効になる", () => {
+    it("trialユーザーの場合、「予約状況」タブが無効になる", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: true } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
-      expect(reservationTab).toBeDisabled();
+      await expect.element(reservationTab).toBeDisabled();
     });
 
-    it("認証済みユーザーの場合、「予約状況」タブが有効になる", () => {
+    it("認証済みユーザーの場合、「予約状況」タブが有効になる", async () => {
       useMswDetailMock();
 
-      renderWithProviders(<DetailPage />, {
+      await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
-      expect(reservationTab).toBeEnabled();
+      await expect.element(reservationTab).toBeEnabled();
     });
   });
 
@@ -233,24 +226,20 @@ describe("Detail Page", () => {
         createMockInstitutionReservationsConnection([reservationNode1, reservationNode2])
       );
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("日付")).toBeInTheDocument();
-      });
-      expect(screen.getByText("取得日時")).toBeInTheDocument();
+      await expect.element(screen.getByText("日付")).toBeInTheDocument();
+      await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
     });
 
     it("予約クエリの startDate にレンダ時点の本日を渡す", async () => {
@@ -270,23 +259,21 @@ describe("Detail Page", () => {
         })
       );
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
       // module-level `new Date()` だと import 時刻（実時刻）を固定してしまう。
       // レンダ時評価なら setSystemTime(FAKE_NOW) を読むため 2025-06-15 になる。
-      await waitFor(() => {
+      await vi.waitFor(() => {
         expect(capturedStartDate).toBe("2025-06-15");
       });
     });
@@ -294,23 +281,19 @@ describe("Detail Page", () => {
     it("予約データが空の場合、データなしメッセージを表示する", async () => {
       useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]));
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
     });
 
     it("予約状況除外対象の自治体の場合、データなしメッセージを表示する", async () => {
@@ -324,23 +307,19 @@ describe("Detail Page", () => {
         createMockInstitutionReservationsConnection([createMockReservationNode()])
       );
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
-        expect(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      });
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
     });
 
     it("予約データ取得中にスピナーを表示する", async () => {
@@ -349,23 +328,21 @@ describe("Detail Page", () => {
         reservationDelay: 60000,
       });
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
-        expect(screen.getByRole("progressbar", { name: "読み込み中" })).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("progressbar", { name: "読み込み中" }))
+        .toBeInTheDocument();
     });
 
     it("予約データ取得でエラーが発生した場合、ErrorBoundaryがエラーをキャッチする", async () => {
@@ -376,7 +353,7 @@ describe("Detail Page", () => {
         reservationError: true,
       });
 
-      const { user } = renderWithProviders(
+      const { user } = await renderWithProviders(
         <ErrorBoundary>
           <DetailPage />
         </ErrorBoundary>,
@@ -387,21 +364,19 @@ describe("Detail Page", () => {
         }
       );
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
-        expect(
+      await expect
+        .element(
           screen.getByText(
             "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
           )
-        ).toBeInTheDocument();
-      });
+        )
+        .toBeInTheDocument();
 
       consoleSpy.mockRestore();
       consoleLogSpy.mockRestore();
@@ -415,7 +390,7 @@ describe("Detail Page", () => {
         detailError: true,
       });
 
-      renderWithProviders(
+      await renderWithProviders(
         <ErrorBoundary>
           <DetailPage />
         </ErrorBoundary>,
@@ -426,13 +401,13 @@ describe("Detail Page", () => {
         }
       );
 
-      await waitFor(() => {
-        expect(
+      await expect
+        .element(
           screen.getByText(
             "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
           )
-        ).toBeInTheDocument();
-      });
+        )
+        .toBeInTheDocument();
 
       consoleSpy.mockRestore();
       consoleLogSpy.mockRestore();
@@ -465,21 +440,19 @@ describe("Detail Page", () => {
         createMockInstitutionReservationsConnection([reservationNode1, reservationNode2])
       );
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ })
-        ).toBeInTheDocument();
-      });
+      await expect
+        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await waitFor(() => {
+      await vi.waitFor(() => {
         const allText = document.body.textContent || "";
         expect(allText).toContain("2024");
         expect(allText).toContain("2025");
@@ -491,7 +464,7 @@ describe("Detail Page", () => {
     it("タブをクリックするとタブが切り替わる", async () => {
       useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]));
 
-      const { user } = renderWithProviders(<DetailPage />, {
+      const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
         auth0Config: { userInfo: { anonymous: false, trial: false } },
@@ -499,13 +472,13 @@ describe("Detail Page", () => {
 
       const institutionTab = screen.getByRole("tab", { name: "施設情報" });
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
-      expect(institutionTab).toHaveAttribute("aria-selected", "true");
-      expect(reservationTab).toHaveAttribute("aria-selected", "false");
+      await expect.element(institutionTab).toHaveAttribute("aria-selected", "true");
+      await expect.element(reservationTab).toHaveAttribute("aria-selected", "false");
 
       await user.click(reservationTab);
 
-      expect(reservationTab).toHaveAttribute("aria-selected", "true");
-      expect(institutionTab).toHaveAttribute("aria-selected", "false");
+      await expect.element(reservationTab).toHaveAttribute("aria-selected", "true");
+      await expect.element(institutionTab).toHaveAttribute("aria-selected", "false");
     });
   });
 });

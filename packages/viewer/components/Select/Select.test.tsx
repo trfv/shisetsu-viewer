@@ -10,35 +10,35 @@ const selectOptions = [
 ];
 
 describe("Select Component", () => {
-  it("ラベルを表示する", () => {
-    renderWithProviders(
+  it("ラベルを表示する", async () => {
+    await renderWithProviders(
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
-    expect(screen.getByText("地域")).toBeInTheDocument();
+    await expect.element(screen.getByText("地域")).toBeInTheDocument();
   });
 
-  it("選択された値を正しく表示する", () => {
-    renderWithProviders(
+  it("選択された値を正しく表示する", async () => {
+    await renderWithProviders(
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
-    const select = screen.getByRole("combobox", { name: "地域" }) as HTMLSelectElement;
-    expect(select.value).toBe("tokyo");
+    const select = screen.getByRole("combobox", { name: "地域" });
+    await expect.element(select).toHaveValue("tokyo");
   });
 
-  it("すべてのオプションが存在する", () => {
-    renderWithProviders(
+  it("すべてのオプションが存在する", async () => {
+    await renderWithProviders(
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
-    const options = screen.getAllByRole("option");
+    const options = screen.getByRole("option").all();
     expect(options).toHaveLength(3);
   });
 
   it("オプション選択時にonChangeが呼ばれる", async () => {
     const handleChange = vi.fn();
-    const { user } = renderWithProviders(
+    const { user } = await renderWithProviders(
       <Select label="地域" value="tokyo" onChange={handleChange} selectOptions={selectOptions} />
     );
 
@@ -48,12 +48,12 @@ describe("Select Component", () => {
     expect(handleChange).toHaveBeenCalled();
   });
 
-  it("適切なaria-label属性を持つ", () => {
-    renderWithProviders(
+  it("適切なaria-label属性を持つ", async () => {
+    await renderWithProviders(
       <Select label="地域" value="tokyo" onChange={vi.fn()} selectOptions={selectOptions} />
     );
 
     const select = screen.getByRole("combobox", { name: "地域" });
-    expect(select).toBeInTheDocument();
+    await expect.element(select).toBeInTheDocument();
   });
 });

@@ -4,26 +4,26 @@ import { AuthGuard } from "../../components/utils/AuthGuard";
 
 describe("Authentication Flow", () => {
   describe("AuthGuard", () => {
-    it("匿名ユーザーの場合、保護されたコンテンツを表示しない", () => {
-      renderWithProviders(<AuthGuard Component={<div>Protected Content</div>} />, {
+    it("匿名ユーザーの場合、保護されたコンテンツを表示しない", async () => {
+      await renderWithProviders(<AuthGuard Component={<div>Protected Content</div>} />, {
         auth0Config: {
           isLoading: false,
           userInfo: { anonymous: true, trial: false },
         },
       });
 
-      expect(screen.queryByText("Protected Content")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("Protected Content")).not.toBeInTheDocument();
     });
 
-    it("認証済みユーザーの場合、保護されたコンテンツを表示する", () => {
-      renderWithProviders(<AuthGuard Component={<div>Protected Content</div>} />, {
+    it("認証済みユーザーの場合、保護されたコンテンツを表示する", async () => {
+      await renderWithProviders(<AuthGuard Component={<div>Protected Content</div>} />, {
         auth0Config: {
           isLoading: false,
           userInfo: { anonymous: false, trial: false },
         },
       });
 
-      expect(screen.getByText("Protected Content")).toBeInTheDocument();
+      await expect.element(screen.getByText("Protected Content")).toBeInTheDocument();
     });
   });
 });

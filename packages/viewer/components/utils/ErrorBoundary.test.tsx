@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderWithProviders, screen, waitFor } from "../../test/utils/test-utils";
+import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 const ThrowingChild = () => {
@@ -22,38 +22,40 @@ describe("ErrorBoundary Component", () => {
     consoleLogSpy.mockRestore();
   });
 
-  it("エラーがない場合に子コンポーネントを正常にレンダリングする", () => {
-    renderWithProviders(
+  it("エラーがない場合に子コンポーネントを正常にレンダリングする", async () => {
+    await renderWithProviders(
       <ErrorBoundary>
         <GoodChild />
       </ErrorBoundary>
     );
 
-    expect(screen.getByText("正常な子コンポーネント")).toBeInTheDocument();
+    await expect.element(screen.getByText("正常な子コンポーネント")).toBeInTheDocument();
   });
 
-  it("子コンポーネントがエラーをスローした場合にエラーSnackbarを表示する", () => {
-    renderWithProviders(
+  it("子コンポーネントがエラーをスローした場合にエラーSnackbarを表示する", async () => {
+    await renderWithProviders(
       <ErrorBoundary>
         <ThrowingChild />
       </ErrorBoundary>
     );
 
-    expect(
-      screen.getByText(
-        "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
+    await expect
+      .element(
+        screen.getByText(
+          "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
+        )
       )
-    ).toBeInTheDocument();
+      .toBeInTheDocument();
   });
 
   it("unhandledrejectionイベントでエラー表示する", async () => {
-    renderWithProviders(
+    await renderWithProviders(
       <ErrorBoundary>
         <div>正常</div>
       </ErrorBoundary>
     );
 
-    expect(screen.getByText("正常")).toBeInTheDocument();
+    await expect.element(screen.getByText("正常")).toBeInTheDocument();
 
     const rejectedPromise = Promise.reject(new Error("test rejection"));
     // Prevent actual unhandled rejection noise
@@ -66,12 +68,12 @@ describe("ErrorBoundary Component", () => {
       })
     );
 
-    await waitFor(() => {
-      expect(
+    await expect
+      .element(
         screen.getByText(
           "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
         )
-      ).toBeInTheDocument();
-    });
+      )
+      .toBeInTheDocument();
   });
 });

@@ -13,69 +13,73 @@ vi.mock("../../contexts/ColorMode", () => ({
 }));
 
 describe("Header Component", () => {
-  it("ロゴがトップページにリンクされている", () => {
+  it("ロゴがトップページにリンクされている", async () => {
     mockUseIsMobile.mockReturnValue(false);
-    renderWithProviders(<Header />);
+    await renderWithProviders(<Header />);
 
     const logo = screen.getByAltText("Shisetsu Viewer");
-    expect(logo).toBeInTheDocument();
+    await expect.element(logo).toBeInTheDocument();
 
-    const link = logo.closest("a");
-    expect(link).toHaveAttribute("href", "/");
+    const link = logo.element().closest("a");
+    await expect.element(link!).toHaveAttribute("href", "/");
   });
 
-  it("デスクトップで施設検索リンクを表示する", () => {
+  it("デスクトップで施設検索リンクを表示する", async () => {
     mockUseIsMobile.mockReturnValue(false);
-    renderWithProviders(<Header />);
+    await renderWithProviders(<Header />);
 
     const institutionLink = screen.getByText("施設検索");
-    expect(institutionLink).toBeInTheDocument();
-    expect(institutionLink.closest("a")).toHaveAttribute("href", "/institution");
+    await expect.element(institutionLink).toBeInTheDocument();
+    await expect
+      .element(institutionLink.element().closest("a")!)
+      .toHaveAttribute("href", "/institution");
   });
 
-  it("デスクトップで予約検索リンクを表示する", () => {
+  it("デスクトップで予約検索リンクを表示する", async () => {
     mockUseIsMobile.mockReturnValue(false);
-    renderWithProviders(<Header />, {
+    await renderWithProviders(<Header />, {
       auth0Config: { userInfo: { anonymous: false, trial: false } },
     });
 
     const reservationLink = screen.getByText("予約検索");
-    expect(reservationLink).toBeInTheDocument();
-    expect(reservationLink.closest("a")).toHaveAttribute("href", "/reservation");
+    await expect.element(reservationLink).toBeInTheDocument();
+    await expect
+      .element(reservationLink.element().closest("a")!)
+      .toHaveAttribute("href", "/reservation");
   });
 
-  it("anonymousユーザーの場合、予約検索はリンクではなくspanとして表示される", () => {
+  it("anonymousユーザーの場合、予約検索はリンクではなくspanとして表示される", async () => {
     mockUseIsMobile.mockReturnValue(false);
-    renderWithProviders(<Header />, {
+    await renderWithProviders(<Header />, {
       auth0Config: { userInfo: { anonymous: true, trial: false } },
     });
 
     const reservationText = screen.getByText("予約検索");
-    expect(reservationText).toBeInTheDocument();
-    expect(reservationText.tagName.toLowerCase()).toBe("span");
-    expect(reservationText.closest("a")).toBeNull();
+    await expect.element(reservationText).toBeInTheDocument();
+    expect(reservationText.element().tagName.toLowerCase()).toBe("span");
+    expect(reservationText.element().closest("a")).toBeNull();
   });
 
-  it("trialユーザーの場合、予約検索に（トライアル）が付与される", () => {
+  it("trialユーザーの場合、予約検索に（トライアル）が付与される", async () => {
     mockUseIsMobile.mockReturnValue(false);
-    renderWithProviders(<Header />, {
+    await renderWithProviders(<Header />, {
       auth0Config: { userInfo: { anonymous: false, trial: true } },
     });
 
-    expect(screen.getByText("予約検索（トライアル）")).toBeInTheDocument();
+    await expect.element(screen.getByText("予約検索（トライアル）")).toBeInTheDocument();
   });
 
-  it("モバイルではナビゲーションリンクを表示しない", () => {
+  it("モバイルではナビゲーションリンクを表示しない", async () => {
     mockUseIsMobile.mockReturnValue(true);
-    renderWithProviders(<Header />);
+    await renderWithProviders(<Header />);
 
-    expect(screen.queryByText("施設検索")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("施設検索")).not.toBeInTheDocument();
   });
 
-  it("モバイルではハンバーガーメニューボタンを表示する", () => {
+  it("モバイルではハンバーガーメニューボタンを表示する", async () => {
     mockUseIsMobile.mockReturnValue(true);
-    renderWithProviders(<Header />);
+    await renderWithProviders(<Header />);
 
-    expect(screen.getByRole("button", { name: "メニュー" })).toBeInTheDocument();
+    await expect.element(screen.getByRole("button", { name: "メニュー" })).toBeInTheDocument();
   });
 });
