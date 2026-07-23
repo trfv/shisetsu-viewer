@@ -212,7 +212,11 @@ export function findRoomRow(
 
 /** どの類型として表を読んだか。note に残して人が検証できるようにする。 */
 export type TableLayout =
-  "divisionColumn" | "singleRoomDivisionColumn" | "divisionRow" | "dateColumn" | "none";
+  | "divisionColumn"
+  | "singleRoomDivisionColumn"
+  | "divisionRow"
+  | "dateColumn"
+  | "none";
 
 export interface ExtractedCells {
   cells: { divisionLabel: string; symbol: string }[];
