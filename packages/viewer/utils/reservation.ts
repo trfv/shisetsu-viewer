@@ -1,7 +1,7 @@
-import { addMonths, isAfter, isBefore, isSameDay } from "date-fns";
+import type { ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
+import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 
-import type { ReservationsQueryVariables } from "../api/queries";
-import { AvailabilityDivision, ReservationDivision } from "../constants/enums";
+import { ReservationDivision } from "../constants/enums";
 import {
   ReservationDivisionMap,
   ReservationStatusMap,
@@ -167,39 +167,32 @@ export const toReservationSearchParams = (
   };
 };
 
-export const toReservationQueryVariables = ({
+export const toReservationSearchQueryParams = ({
   municipality,
   startDate,
   endDate,
   filter,
   availableInstruments,
   institutionSizes,
-}: ReservationSearchParams): ReservationsQueryVariables => {
+}: ReservationSearchParams): ReservationSearchQueryParams => {
   return {
-    first: 100,
-    after: null,
+    limit: 100,
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
         : SupportedMunicipalities.filter(
             (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
           ).map((m) => m.toString()),
-    isAvailableStrings: availableInstruments.includes(STRINGS)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    isAvailableWoodwind: availableInstruments.includes(WOODWIND)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    isAvailableBrass: availableInstruments.includes(BRASS) ? AvailabilityDivision.AVAILABLE : null,
-    isAvailablePercussion: availableInstruments.includes(PERCUSSION)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
-    startDate: startDate?.toDateString(),
-    endDate: endDate?.toDateString(),
-    isHoliday: filter.includes(IS_ONLY_HOLIDAY) ? true : null,
-    isMorningVacant: filter.includes(IS_ONLY_MORNING_VACANT) ? true : null,
-    isAfternoonVacant: filter.includes(IS_ONLY_AFTERNOON_VACANT) ? true : null,
-    isEveningVacant: filter.includes(IS_ONLY_EVENING_VACANT) ? true : null,
+    isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
+    isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
+    isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,
+    isAvailablePercussion: availableInstruments.includes(PERCUSSION) ? true : undefined,
+    institutionSizes: toInstitutionSizeParam(institutionSizes),
+    startDate: format(startDate, "yyyy-MM-dd"),
+    endDate: format(endDate, "yyyy-MM-dd"),
+    isHoliday: filter.includes(IS_ONLY_HOLIDAY) ? true : undefined,
+    isMorningVacant: filter.includes(IS_ONLY_MORNING_VACANT) ? true : undefined,
+    isAfternoonVacant: filter.includes(IS_ONLY_AFTERNOON_VACANT) ? true : undefined,
+    isEveningVacant: filter.includes(IS_ONLY_EVENING_VACANT) ? true : undefined,
   };
 };

@@ -1,72 +1,62 @@
+import type { InstitutionSummary } from "@shisetsu-viewer/shared";
 import { http, HttpResponse } from "msw";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { worker } from "../test/mocks/browser";
-import { createMockInstitutionNode, createMockInstitutionsConnection } from "../test/mocks/data";
+import { createMockInstitutionsPage, createMockInstitutionSummary } from "../test/mocks/data";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
-const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
+const BASE = import.meta.env.VITE_API_ENDPOINT;
 
 vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,
 }));
 
-const useMswMock = (nodes: Record<string, unknown>[], hasNextPage = false) => {
+const useMswMock = (items: InstitutionSummary[], hasNextPage = false) => {
   worker.use(
-    http.post(TEST_ENDPOINT, () => {
-      return HttpResponse.json(createMockInstitutionsConnection(nodes, hasNextPage));
-    })
+    http.get(`${BASE}/v1/institutions`, () =>
+      HttpResponse.json(createMockInstitutionsPage(items, hasNextPage))
+    )
   );
 };
 
+const paramsFor = (row: InstitutionSummary) => ({
+  id: row.id,
+  value: undefined,
+  row,
+  columns: COLUMNS,
+});
+
 describe("COLUMNS定義", () => {
   it("隠しカラム(municipality)のvalueGetterが正しい値を返す", () => {
-    const mockRow = createMockInstitutionNode();
+    const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "municipality");
-    const params = {
-      id: mockRow["id"] as string,
-      value: mockRow["municipality"],
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBe("江東区");
+    expect(col?.valueGetter?.({ ...paramsFor(row), value: row.municipality } as never)).toBe(
+      "江東区"
+    );
   });
 
   it("隠しカラム(municipality)のvalueGetterが不明な値に対して空文字を返す", () => {
-    const mockRow = createMockInstitutionNode({ municipality: "UNKNOWN" });
+    const row = createMockInstitutionSummary({ municipality: "UNKNOWN" });
     const col = COLUMNS.find((c) => c.field === "municipality");
-    const params = {
-      id: mockRow["id"] as string,
-      value: mockRow["municipality"],
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBe("");
+    expect(col?.valueGetter?.({ ...paramsFor(row), value: row.municipality } as never)).toBe("");
   });
 
   it("隠しカラム(is_equipped_music_stand)のvalueGetterが正しい値を返す", () => {
-    const mockRow = createMockInstitutionNode();
+    const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "is_equipped_music_stand");
-    const params = {
-      id: mockRow["id"] as string,
-      value: mockRow["is_equipped_music_stand"],
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBeTruthy();
+    expect(
+      col?.valueGetter?.({ ...paramsFor(row), value: row.is_equipped_music_stand } as never)
+    ).toBeTruthy();
   });
 
   it("隠しカラム(is_equipped_piano)のvalueGetterが正しい値を返す", () => {
-    const mockRow = createMockInstitutionNode();
+    const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "is_equipped_piano");
-    const params = {
-      id: mockRow["id"] as string,
-      value: mockRow["is_equipped_piano"],
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBeTruthy();
+    expect(
+      col?.valueGetter?.({ ...paramsFor(row), value: row.is_equipped_piano } as never)
+    ).toBeTruthy();
   });
 
   it.each([
@@ -78,27 +68,20 @@ describe("COLUMNS定義", () => {
     ["is_equipped_music_stand", { is_equipped_music_stand: "INVALID" }],
     ["is_equipped_piano", { is_equipped_piano: "INVALID" }],
   ] as const)("%sのvalueGetterが不明な値に対して空文字を返す", (field, overrides) => {
-    const mockRow = createMockInstitutionNode(overrides);
+    const row = createMockInstitutionSummary(overrides);
     const col = COLUMNS.find((c) => c.field === field);
-    const params = {
-      id: mockRow["id"] as string,
-      value: mockRow[field as string],
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBe("");
+    expect(
+      col?.valueGetter?.({
+        ...paramsFor(row),
+        value: row[field as keyof InstitutionSummary],
+      } as never)
+    ).toBe("");
   });
 
-  it("building_and_institutionのvalueGetterがnull値にフォールバックする", () => {
-    const mockRow = createMockInstitutionNode({ building: null, institution: null });
+  it("building_and_institutionのvalueGetterが空値にフォールバックする", () => {
+    const row = createMockInstitutionSummary({ building: "", institution: "" });
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
-    const params = {
-      id: mockRow["id"] as string,
-      value: undefined,
-      row: mockRow,
-      columns: COLUMNS,
-    };
-    expect(col?.valueGetter?.(params as never)).toBe(" ");
+    expect(col?.valueGetter?.(paramsFor(row) as never)).toBe(" ");
   });
 });
 
@@ -254,11 +237,10 @@ describe("Institution Page", () => {
 
   describe("ローディング状態", () => {
     it("データ取得中にスピナーを表示する", async () => {
-      // Use a handler that delays indefinitely
       worker.use(
-        http.post(TEST_ENDPOINT, async () => {
+        http.get(`${BASE}/v1/institutions`, async () => {
           await new Promise(() => {}); // never resolves
-          return HttpResponse.json(createMockInstitutionsConnection([]));
+          return HttpResponse.json(createMockInstitutionsPage([]));
         })
       );
 
@@ -275,11 +257,10 @@ describe("Institution Page", () => {
   describe("エラー処理", () => {
     it("クエリエラーが発生した場合、Snackbarでエラーを表示する", async () => {
       worker.use(
-        http.post(TEST_ENDPOINT, () => {
-          return HttpResponse.json({
-            errors: [{ message: "Network error" }],
-          });
-        })
+        http.get(
+          `${BASE}/v1/institutions`,
+          () => new HttpResponse("Network error", { status: 500 })
+        )
       );
 
       await renderWithProviders(<InstitutionPage />, {
@@ -293,19 +274,17 @@ describe("Institution Page", () => {
 
   describe("データが返却された場合", () => {
     it("DataTableに施設データを表示する", async () => {
-      const node1 = createMockInstitutionNode({
+      const item1 = createMockInstitutionSummary({
         building: "テスト文化センター",
         institution: "音楽練習室A",
       });
-      const node2 = createMockInstitutionNode({
-        id: btoa(
-          JSON.stringify([1, "public", "institutions", "a1234567-b890-cdef-1234-567890abcdef"])
-        ),
+      const item2 = createMockInstitutionSummary({
+        id: "a1234567-b890-cdef-1234-567890abcdef",
         building: "サンプル会館",
         institution: "リハーサル室B",
       });
 
-      useMswMock([node1, node2]);
+      useMswMock([item1, item2]);
 
       await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
@@ -318,16 +297,9 @@ describe("Institution Page", () => {
     });
 
     it("hasNextPageがtrueでendCursorが存在する場合、IntersectionObserver発火時にfetchMoreが呼ばれる", async () => {
-      const nodes = Array.from({ length: 51 }, (_, i) =>
-        createMockInstitutionNode({
-          id: btoa(
-            JSON.stringify([
-              1,
-              "public",
-              "institutions",
-              `aaaaaaaa-bbbb-cccc-dddd-${String(i).padStart(12, "0")}`,
-            ])
-          ),
+      const items = Array.from({ length: 51 }, (_, i) =>
+        createMockInstitutionSummary({
+          id: `aaaaaaaa-bbbb-cccc-dddd-${String(i).padStart(12, "0")}`,
           building: `施設ビル${i}`,
           institution: `練習室${i}`,
         })
@@ -335,14 +307,13 @@ describe("Institution Page", () => {
 
       let requestCount = 0;
       worker.use(
-        http.post(TEST_ENDPOINT, async ({ request }) => {
+        http.get(`${BASE}/v1/institutions`, ({ request }) => {
           requestCount++;
-          const body = (await request.json()) as { variables: Record<string, unknown> };
-          if (body.variables["after"]) {
-            // Return empty page for fetchMore
-            return HttpResponse.json(createMockInstitutionsConnection([], false));
+          const cursor = new URL(request.url).searchParams.get("cursor");
+          if (cursor) {
+            return HttpResponse.json(createMockInstitutionsPage([], false));
           }
-          return HttpResponse.json(createMockInstitutionsConnection(nodes, true));
+          return HttpResponse.json(createMockInstitutionsPage(items, true));
         })
       );
 
@@ -352,7 +323,6 @@ describe("Institution Page", () => {
 
       await expect.element(screen.getByText("施設ビル0 練習室0")).toBeInTheDocument();
 
-      // Wait for the IntersectionObserver to fire and fetchMore to be called
       await vi.waitFor(
         () => {
           expect(requestCount).toBeGreaterThanOrEqual(2);
@@ -362,12 +332,12 @@ describe("Institution Page", () => {
     });
 
     it("施設行はクリック可能で、クリック時にonRowClickが実行される", async () => {
-      const node = createMockInstitutionNode({
+      const item = createMockInstitutionSummary({
         building: "テスト文化センター",
         institution: "音楽練習室A",
       });
 
-      useMswMock([node]);
+      useMswMock([item]);
 
       const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
@@ -380,26 +350,6 @@ describe("Institution Page", () => {
       await expect.element(row).toHaveStyle({ cursor: "pointer" });
 
       await user.click(cell);
-    });
-
-    it("無効なRelay IDの施設行をクリックしてもナビゲーションが発生しない", async () => {
-      const invalidNode = createMockInstitutionNode({
-        id: btoa(JSON.stringify([1, "public", "institutions"])),
-        building: "無効ID施設",
-        institution: "テスト室",
-      });
-
-      useMswMock([invalidNode]);
-
-      const { user } = await renderWithProviders(<InstitutionPage />, {
-        initialEntries: ["/institution?m=koutou"],
-      });
-
-      await expect.element(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
-
-      await user.click(screen.getByText("無効ID施設 テスト室"));
-
-      await expect.element(screen.getByText("無効ID施設 テスト室")).toBeInTheDocument();
     });
   });
 });

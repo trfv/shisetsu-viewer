@@ -1,15 +1,9 @@
+import type { InstitutionDetail, ReservationDto } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
-import {
-  INSTITUTION_DETAIL_QUERY,
-  INSTITUTION_RESERVATIONS_QUERY,
-  type InstitutionDetailNode,
-  type InstitutionDetailQueryData,
-  type InstitutionReservationsQueryData,
-  type ReservationNode,
-} from "../api/queries";
+import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
@@ -28,7 +22,7 @@ import {
 import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
 import { useAuth0 } from "../contexts/Auth0";
-import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
+import { useApiQuery } from "../hooks/useApiQuery";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
@@ -50,7 +44,7 @@ const InstitutionTab = ({
   institution,
   loading,
 }: {
-  institution: InstitutionDetailNode | undefined;
+  institution: InstitutionDetail | undefined;
   loading: boolean;
 }) => {
   return (
@@ -78,10 +72,7 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(
-              institution?.municipality,
-              institution?.weekday_usage_fee as { division: string; fee: string }[] | undefined
-            )}
+            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -90,10 +81,7 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(
-              institution?.municipality,
-              institution?.holiday_usage_fee as { division: string; fee: string }[] | undefined
-            )}
+            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -196,10 +184,15 @@ const ReservationTab = ({
     error,
     hasNextPage,
     fetchMore,
-  } = usePaginatedQuery<InstitutionReservationsQueryData, ReservationNode>(
-    INSTITUTION_RESERVATIONS_QUERY,
-    { id, first: 100, startDate: formatISO(today, { representation: "date" }) },
-    (d) => d.reservations_connection
+  } = usePaginatedQuery<ReservationDto>(
+    (token, cursor) =>
+      fetchInstitutionReservations(
+        id,
+        { startDate: formatISO(today, { representation: "date" }) },
+        cursor,
+        token
+      ),
+    id
   );
 
   const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations?.length ?? 0);
@@ -277,7 +270,7 @@ const ReservationTab = ({
                   size="small"
                   variant="head"
                 >
-                  取得日時
+                  更新日時
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -343,16 +336,11 @@ const DetailContent = ({ id }: { id: string }) => {
     []
   );
 
-  const { loading, data, error } = useGraphQLQuery<InstitutionDetailQueryData>(
-    INSTITUTION_DETAIL_QUERY,
-    { id }
-  );
+  const { loading, data: institution, error } = useApiQuery(() => fetchInstitutionDetail(id), id);
 
   if (error) {
     throw new Error(error.message);
   }
-
-  const institution = data?.institutions_connection.edges[0]?.node;
 
   return (
     <main className={styles["pageBox"]}>
