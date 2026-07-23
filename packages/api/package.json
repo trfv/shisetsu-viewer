@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/worker.ts",
   "scripts": {
-    "typecheck": "wrangler types && node ../../node_modules/typescript7/bin/tsc",
+    "typecheck": "wrangler types && tsc",
     "test": "vitest run",
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
