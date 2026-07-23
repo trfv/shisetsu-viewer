@@ -1,28 +1,16 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-import {
-  AUTH0_AUDIENCE,
-  AUTH0_CLIENT_ID,
-  AUTH0_CLIENT_SECRET,
-  AUTH0_DOMAIN,
-  GRAPHQL_ENDPOINT,
-} from "./env.ts";
-import { createGraphQLClient } from "./graphqlClient.ts";
-import { configureM2M } from "./m2mToken.ts";
+import { ADMIN_API_KEY, API_ENDPOINT } from "./env.ts";
+import { createHttpDataSource } from "./httpDataSource.ts";
 import { createServer } from "./server.ts";
 
-configureM2M({
-  domain: AUTH0_DOMAIN,
-  clientId: AUTH0_CLIENT_ID,
-  clientSecret: AUTH0_CLIENT_SECRET,
-  audience: AUTH0_AUDIENCE,
-});
-
-// stdio は 1 プロセス 1 ユーザーなので、プロセス起動時に 1 つ作れば足りる
-// （トークンは未指定 = M2M フォールバック）
+// stdio は 1 プロセス 1 ユーザー（admin）なので、プロセス起動時に 1 つ作れば足りる。
+// D1 API へは X-Admin-Key で書き込み、read/write 全ツールを露出する。
+const dataSource = createHttpDataSource(API_ENDPOINT, { adminKey: ADMIN_API_KEY });
 const server = createServer({
-  authMode: "admin",
-  client: createGraphQLClient(GRAPHQL_ENDPOINT),
+  dataSource,
+  allowReservations: true,
+  write: dataSource,
 });
 const transport = new StdioServerTransport();
 await server.connect(transport);

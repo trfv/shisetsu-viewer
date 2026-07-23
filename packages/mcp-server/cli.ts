@@ -6,7 +6,8 @@ import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
 import { login } from "./auth/login.ts";
 import { logout } from "./auth/logout.ts";
 import { getValidToken } from "./auth/tokenStore.ts";
-import { createGraphQLClient, type GraphQLClient } from "./graphqlClient.ts";
+import type { DataSource } from "./dataSource.ts";
+import { createHttpDataSource } from "./httpDataSource.ts";
 import { MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "./paramHelpers.ts";
 import { executeGetInstitutionDetail } from "./tools/getInstitutionDetail.ts";
 import { executeGetInstitutionReservations } from "./tools/getInstitutionReservations.ts";
@@ -50,7 +51,7 @@ function splitCSV(value: string | undefined): string[] | undefined {
   return value.split(",").map((s) => s.trim());
 }
 
-async function commandList(argv: string[], client: GraphQLClient): Promise<unknown> {
+async function commandList(argv: string[], dataSource: DataSource): Promise<unknown> {
   const { values } = parseArgs({
     args: argv,
     options: {
@@ -100,11 +101,11 @@ Options:
       first: values.first ? Number(values.first) : undefined,
       after: values.after,
     },
-    client
+    dataSource
   );
 }
 
-async function commandDetail(argv: string[], client: GraphQLClient): Promise<unknown> {
+async function commandDetail(argv: string[], dataSource: DataSource): Promise<unknown> {
   const { values, positionals } = parseArgs({
     args: argv,
     options: {
@@ -136,14 +137,14 @@ Options:
       id,
       fields: splitCSV(values.fields),
     },
-    client
+    dataSource
   );
 
   if (!result) fail("施設が見つかりません");
   return result;
 }
 
-async function commandReservations(argv: string[], client: GraphQLClient): Promise<unknown> {
+async function commandReservations(argv: string[], dataSource: DataSource): Promise<unknown> {
   const { values, positionals } = parseArgs({
     args: argv,
     options: {
@@ -183,11 +184,11 @@ Options:
       endDate: values["end-date"],
       fields: splitCSV(values.fields),
     },
-    client
+    dataSource
   );
 }
 
-async function commandSearch(argv: string[], client: GraphQLClient): Promise<unknown> {
+async function commandSearch(argv: string[], dataSource: DataSource): Promise<unknown> {
   const { values } = parseArgs({
     args: argv,
     options: {
@@ -255,7 +256,7 @@ Options:
       first: values.first ? Number(values.first) : undefined,
       after: values.after,
     },
-    client
+    dataSource
   );
 }
 
@@ -295,17 +296,17 @@ if (command === "--help" || command === "-h" || command === undefined) {
   process.exit(command === undefined ? 1 : 0);
 }
 
-// Commands that don't need GraphQL auth
+// Commands that don't need API auth
 const noAuthCommands: Record<string, (argv: string[]) => unknown | Promise<unknown>> = {
   login: () => login(),
   logout: () => logout(),
   municipalities: commandMunicipalities,
 };
 
-// Commands that need GraphQL auth
+// Commands that need API auth (Bearer user token)
 const authCommands: Record<
   string,
-  (argv: string[], client: GraphQLClient) => unknown | Promise<unknown>
+  (argv: string[], dataSource: DataSource) => unknown | Promise<unknown>
 > = {
   list: commandList,
   detail: commandDetail,
@@ -327,8 +328,8 @@ try {
   }
 
   // Authenticate
-  const graphqlEndpoint = process.env["GRAPHQL_ENDPOINT"];
-  if (!graphqlEndpoint) fail("GRAPHQL_ENDPOINT 環境変数が必要です");
+  const apiEndpoint = process.env["API_ENDPOINT"];
+  if (!apiEndpoint) fail("API_ENDPOINT 環境変数が必要です");
 
   const tokenResult = await getValidToken();
   if (tokenResult.status === "no_tokens") {
@@ -338,8 +339,8 @@ try {
     fail("セッション期限切れ。'shisetsu login' を再実行してください");
   }
 
-  const client = createGraphQLClient(graphqlEndpoint, tokenResult.token);
-  const result = await authHandler(commandArgv, client);
+  const dataSource = createHttpDataSource(apiEndpoint, { bearer: tokenResult.token });
+  const result = await authHandler(commandArgv, dataSource);
   printResult(result, isPretty);
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);

@@ -1,33 +1,10 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-import { buildFieldSelection } from "../buildFieldSelection.ts";
+import type { DataSource } from "../dataSource.ts";
 import { RESERVATION_FIELDS } from "../fieldDefinitions.ts";
-import type { GraphQLClient } from "../graphqlClient.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
-
-function buildQuery(fieldSelection: string): string {
-  return `
-query institutionReservations($id: uuid!, $startDate: date, $endDate: date) {
-  reservations_connection(
-    where: { institution_id: { _eq: $id }, date: { _gte: $startDate, _lte: $endDate } }
-    order_by: { date: asc }
-    first: 1000
-  ) {
-    edges {
-      node {
-        ${fieldSelection}
-      }
-    }
-  }
-}`;
-}
-
-interface QueryData {
-  reservations_connection: {
-    edges: Array<{ node: Record<string, unknown> }>;
-  };
-}
+import { pick } from "../pick.ts";
 
 export async function executeGetInstitutionReservations(
   args: {
@@ -36,20 +13,20 @@ export async function executeGetInstitutionReservations(
     endDate: string;
     fields?: readonly string[] | undefined;
   },
-  client: GraphQLClient
-) {
-  const query = buildQuery(buildFieldSelection(RESERVATION_FIELDS, args.fields));
-  const data = await client.request<QueryData>(query, {
-    id: args.institutionId,
+  dataSource: DataSource
+): Promise<{ reservations: Record<string, unknown>[]; count: number }> {
+  const rows = await dataSource.getInstitutionReservations(args.institutionId, {
     startDate: args.startDate,
     endDate: args.endDate,
   });
-
-  const reservations = data.reservations_connection.edges.map((e) => e.node);
+  const reservations = rows.map((row) => pick(row, RESERVATION_FIELDS, args.fields));
   return { reservations, count: reservations.length };
 }
 
-export function registerGetInstitutionReservations(server: McpServer, client: GraphQLClient): void {
+export function registerGetInstitutionReservations(
+  server: McpServer,
+  dataSource: DataSource
+): void {
   server.registerTool(
     "get_institution_reservations",
     {
@@ -84,7 +61,7 @@ export function registerGetInstitutionReservations(server: McpServer, client: Gr
       },
     },
     async (args) => {
-      const result = await executeGetInstitutionReservations(args, client);
+      const result = await executeGetInstitutionReservations(args, dataSource);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };

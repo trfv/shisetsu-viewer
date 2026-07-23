@@ -1,43 +1,24 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-import { buildFieldSelection } from "../buildFieldSelection.ts";
+import type { DataSource } from "../dataSource.ts";
 import { INSTITUTION_DETAIL_FIELDS } from "../fieldDefinitions.ts";
-import type { GraphQLClient } from "../graphqlClient.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
-
-function buildQuery(fieldSelection: string): string {
-  return `
-query institutionDetail($id: uuid!) {
-  institutions_connection(where: { id: { _eq: $id } }, first: 1) {
-    edges {
-      node {
-        ${fieldSelection}
-      }
-    }
-  }
-}`;
-}
-
-interface QueryData {
-  institutions_connection: {
-    edges: Array<{ node: Record<string, unknown> }>;
-  };
-}
+import { pick } from "../pick.ts";
 
 export async function executeGetInstitutionDetail(
   args: {
     id: string;
     fields?: readonly string[] | undefined;
   },
-  client: GraphQLClient
+  dataSource: DataSource
 ): Promise<Record<string, unknown> | null> {
-  const query = buildQuery(buildFieldSelection(INSTITUTION_DETAIL_FIELDS, args.fields));
-  const data = await client.request<QueryData>(query, { id: args.id });
-  return data.institutions_connection.edges[0]?.node ?? null;
+  const detail = await dataSource.getInstitutionDetail(args.id);
+  if (!detail) return null;
+  return pick(detail, INSTITUTION_DETAIL_FIELDS, args.fields);
 }
 
-export function registerGetInstitutionDetail(server: McpServer, client: GraphQLClient): void {
+export function registerGetInstitutionDetail(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
     "get_institution_detail",
     {
@@ -64,7 +45,7 @@ export function registerGetInstitutionDetail(server: McpServer, client: GraphQLC
       },
     },
     async (args) => {
-      const node = await executeGetInstitutionDetail(args, client);
+      const node = await executeGetInstitutionDetail(args, dataSource);
 
       if (!node) {
         return {
