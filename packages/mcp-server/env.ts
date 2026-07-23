@@ -1,17 +1,9 @@
-const graphqlEndpoint = process.env["GRAPHQL_ENDPOINT"];
-const auth0Domain = process.env["AUTH0_DOMAIN"];
-const auth0ClientId = process.env["AUTH0_CLIENT_ID"];
-const auth0ClientSecret = process.env["AUTH0_CLIENT_SECRET"];
-const auth0Audience = process.env["AUTH0_AUDIENCE"];
+// stdio エントリ（index.ts）用の環境変数。D1 API へ X-Admin-Key で書き込むための最小構成。
+const apiEndpoint = process.env["API_ENDPOINT"];
+const adminApiKey = process.env["ADMIN_API_KEY"];
 
-if (!graphqlEndpoint) throw new Error("GRAPHQL_ENDPOINT is required");
-if (!auth0Domain) throw new Error("AUTH0_DOMAIN is required");
-if (!auth0ClientId) throw new Error("AUTH0_CLIENT_ID is required");
-if (!auth0ClientSecret) throw new Error("AUTH0_CLIENT_SECRET is required");
-if (!auth0Audience) throw new Error("AUTH0_AUDIENCE is required");
+if (!apiEndpoint) throw new Error("API_ENDPOINT is required");
+if (!adminApiKey) throw new Error("ADMIN_API_KEY is required");
 
-export const GRAPHQL_ENDPOINT: string = graphqlEndpoint;
-export const AUTH0_DOMAIN: string = auth0Domain;
-export const AUTH0_CLIENT_ID: string = auth0ClientId;
-export const AUTH0_CLIENT_SECRET: string = auth0ClientSecret;
-export const AUTH0_AUDIENCE: string = auth0Audience;
+export const API_ENDPOINT: string = apiEndpoint;
+export const ADMIN_API_KEY: string = adminApiKey;

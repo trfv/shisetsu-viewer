@@ -4,15 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc",
+    "typecheck": "wrangler types && tsc",
+    "test": "vitest run",
     "start": "node --env-file=.env index.ts",
     "cli": "node --env-file=.env cli.ts",
-    "deploy": "npx wrangler deploy",
-    "preview:wrangler": "npx wrangler dev"
+    "deploy": "wrangler deploy",
+    "preview:wrangler": "wrangler dev"
   },
   "dependencies": {
     "@cloudflare/workers-oauth-provider": "0.8.1",
     "@modelcontextprotocol/sdk": "1.29.0",
+    "@shisetsu-viewer/api": "0.1.0",
+    "@shisetsu-viewer/shared": "0.0.1",
     "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.5",
+    "vitest": "4.1.10",
+    "wrangler": "4.111.0"
   }
 }

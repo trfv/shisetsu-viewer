@@ -1,56 +1,11 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { PageInfo } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
-import { buildFieldSelection } from "../buildFieldSelection.ts";
+import type { DataSource } from "../dataSource.ts";
 import { INSTITUTION_LIST_FIELDS } from "../fieldDefinitions.ts";
-import type { GraphQLClient } from "../graphqlClient.ts";
-import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
-
-function buildQuery(fieldSelection: string): string {
-  return `
-query institutions(
-  $first: Int
-  $after: String
-  $municipality: [String!]
-  $isAvailableStrings: availavility_division = null
-  $isAvailableWoodwind: availavility_division = null
-  $isAvailableBrass: availavility_division = null
-  $isAvailablePercussion: availavility_division = null
-  $institutionSizes: [String!] = null
-) {
-  institutions_connection(
-    first: $first
-    after: $after
-    where: {
-      municipality: { _in: $municipality }
-      is_available_strings: { _eq: $isAvailableStrings }
-      is_available_woodwind: { _eq: $isAvailableWoodwind }
-      is_available_brass: { _eq: $isAvailableBrass }
-      is_available_percussion: { _eq: $isAvailablePercussion }
-      institution_size: { _in: $institutionSizes }
-    }
-    order_by: { municipality: asc, building_kana: asc, institution_kana: asc }
-  ) {
-    edges {
-      node {
-        ${fieldSelection}
-      }
-      cursor
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
-}`;
-}
-
-interface QueryData {
-  institutions_connection: {
-    edges: Array<{ node: Record<string, unknown>; cursor: string }>;
-    pageInfo: { hasNextPage: boolean; endCursor: string };
-  };
-}
+import { INSTITUTION_SIZE_HELP, MUNICIPALITY_HELP, toAvailabilityFilter } from "../paramHelpers.ts";
+import { pick } from "../pick.ts";
 
 export async function executeListInstitutions(
   args: {
@@ -64,29 +19,23 @@ export async function executeListInstitutions(
     first?: number | undefined;
     after?: string | undefined;
   },
-  client: GraphQLClient
-) {
-  const query = buildQuery(buildFieldSelection(INSTITUTION_LIST_FIELDS, args.fields));
-  const data = await client.request<QueryData>(query, {
-    first: args.first ?? 20,
-    after: args.after,
+  dataSource: DataSource
+): Promise<{ institutions: Record<string, unknown>[]; pageInfo: PageInfo; count: number }> {
+  const page = await dataSource.listInstitutions({
     municipality: args.municipality,
-    isAvailableStrings: resolveAvailability(args.isAvailableStrings),
-    isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
-    isAvailableBrass: resolveAvailability(args.isAvailableBrass),
-    isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
     institutionSizes: args.institutionSizes,
+    isAvailableStrings: toAvailabilityFilter(args.isAvailableStrings),
+    isAvailableWoodwind: toAvailabilityFilter(args.isAvailableWoodwind),
+    isAvailableBrass: toAvailabilityFilter(args.isAvailableBrass),
+    isAvailablePercussion: toAvailabilityFilter(args.isAvailablePercussion),
+    limit: args.first,
+    cursor: args.after,
   });
-
-  const conn = data.institutions_connection;
-  return {
-    institutions: conn.edges.map((e) => e.node),
-    pageInfo: conn.pageInfo,
-    count: conn.edges.length,
-  };
+  const institutions = page.items.map((item) => pick(item, INSTITUTION_LIST_FIELDS, args.fields));
+  return { institutions, pageInfo: page.pageInfo, count: institutions.length };
 }
 
-export function registerListInstitutions(server: McpServer, client: GraphQLClient): void {
+export function registerListInstitutions(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
     "list_institutions",
     {
@@ -147,7 +96,7 @@ export function registerListInstitutions(server: McpServer, client: GraphQLClien
       },
     },
     async (args) => {
-      const result = await executeListInstitutions(args, client);
+      const result = await executeListInstitutions(args, dataSource);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
