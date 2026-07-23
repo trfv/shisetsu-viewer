@@ -6,6 +6,7 @@ import {
   findRoomRow,
   normalizeLabel,
   findDateColumn,
+  isDateDisplayed,
   extractCells,
   type RawTable,
 } from "./observeCore.ts";
@@ -304,6 +305,32 @@ test("findDateColumn は対象日が無ければ undefined を返す", () => {
 test("findDateColumn は月が違うセルには一致しない", () => {
   const header = ["", "6/19 日"];
   assert.equal(findDateColumn(header, "2026-07-19"), undefined);
+});
+
+// ── isDateDisplayed: 類型A/B の着地日ずれ検出（罠3: openreaf の次営業日ジャンプ） ──
+
+test("isDateDisplayed は西暦年号の月日表記を拾う（江東区の形）", () => {
+  assert.equal(isDateDisplayed("2026 年 7月22日(水) 午前 午後 夜間", "2026-07-22"), true);
+});
+
+test("isDateDisplayed はゼロ埋めの月日表記を拾う（荒川区の形 令和08年07月22日）", () => {
+  assert.equal(isDateDisplayed("利用日 令和08年07月22日", "2026-07-22"), true);
+});
+
+test("isDateDisplayed は対象日でない着地日を表示しているとき false（北区が 7/22 の締切超過で 7/23 に飛んだ形）", () => {
+  assert.equal(isDateDisplayed("利用日 令和 8年 7月23日 (木)", "2026-07-22"), false);
+});
+
+test("isDateDisplayed はスラッシュ表記も拾う", () => {
+  assert.equal(isDateDisplayed("対象日 7/22 の空き状況", "2026-07-22"), true);
+});
+
+test("isDateDisplayed は別の月の同じ日には一致しない", () => {
+  assert.equal(isDateDisplayed("6月22日", "2026-07-22"), false);
+});
+
+test("isDateDisplayed はスラッシュ表記が別の数字の一部のときは一致しない", () => {
+  assert.equal(isDateDisplayed("17/220", "2026-07-22"), false);
 });
 
 // ── findRoomRow: 江東区の混在ヘッダ（罠2） ──────────────────────

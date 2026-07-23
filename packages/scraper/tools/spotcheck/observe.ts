@@ -8,7 +8,13 @@ import { chromium, type Page } from "@playwright/test";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ObservedSample, PlanSample } from "./judgeReport.ts";
-import { cellToSymbol, extractCells, selectTarget, type RawTable } from "./observeCore.ts";
+import {
+  cellToSymbol,
+  extractCells,
+  isDateDisplayed,
+  selectTarget,
+  type RawTable,
+} from "./observeCore.ts";
 import { applyDivisionFilter, collectTables, strategyFor } from "./observeStrategy.ts";
 
 /** 既存の note を保ちつつ追記する（修正6: 無条件上書きで既存 note が消える問題の修正） */
@@ -138,6 +144,25 @@ for (const [index, sample] of samples.entries()) {
     }
     if (layouts.size > 0) {
       observed.note = appendNote(observed.note, `layout=${[...layouts].join(",")}`);
+    }
+
+    // 類型A/B は単一日を表示し、列に日付が無いため findDateColumn で対象日を検証
+    // できない。対象日がページに出ていなければサイトが別日に着地している（openreaf
+    // 系は締切超過日を次の予約可能日へ飛ばす。2026-07-22 の検証で北区・中央区が
+    // 7/23 に着地した）。着地日の区分を対象日の値として読むと judge が別日を突き
+    // 合わせて偽 MISMATCH を出すため、観測を無効化して dateDisplayed=false に落とす
+    // （judge は値の不一致ではなく SITE_NO_DATA(_D1_STALE) 経路へ回す）。類型C/D は
+    // findDateColumn が対象日の列を検証済みなので対象外。
+    const isSingleDateLayout =
+      !isDivisionFilter &&
+      (layouts.has("divisionColumn") || layouts.has("singleRoomDivisionColumn"));
+    if (isSingleDateLayout && observed.reached && !isDateDisplayed(bodyText, sample.date)) {
+      observed.dateDisplayed = false;
+      observed.cells = [];
+      observed.note = appendNote(
+        observed.note,
+        `対象日 ${sample.date} がページに表示されていない（サイトが別日に着地）。着地日を読むと誤判定になるため観測を無効化した`
+      );
     }
 
     if (!observed.reached) {

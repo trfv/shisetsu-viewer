@@ -121,6 +121,28 @@ export function findDateColumn(header: readonly string[], isoDate: string): numb
 }
 
 /**
+ * 対象日がページに表示されているかを bodyText から確かめる。
+ *
+ * 類型A（行=室・列=区分）と類型B（室名列なし・ヘッダ=区分）は単一日を表示し、
+ * 列に日付が無いため findDateColumn で対象日の列を検証できない。openreaf 系
+ * （北区・中央区）は対象日の申込締切が過ぎているとサイトが次の予約可能日へ
+ * 自動で飛ぶため、放置すると着地日の区分を対象日の値として読み、judge が
+ * 別日の値を突き合わせて偽 MISMATCH を出す（2026-07-22 の検証で北区が実際に
+ * 7/23 に着地して発覚）。月日の表記（「7月22日」「07月22日」「7/22」）の
+ * いずれかが本文にあれば表示されているとみなす。年号（西暦・令和）は形式が
+ * サイトによって違うので問わず、月日部分だけで判定する。
+ */
+export function isDateDisplayed(bodyText: string, isoDate: string): boolean {
+  const parts = isoDate.split("-");
+  const month = Number(parts[1]);
+  const day = Number(parts[2]);
+  if (!month || !day) return false;
+  const kanji = new RegExp(`0*${month}\\s*月\\s*0*${day}\\s*日`);
+  const slash = new RegExp(`(?:^|[^0-9])0*${month}\\s*/\\s*0*${day}(?![0-9])`);
+  return kanji.test(bodyText) || slash.test(bodyText);
+}
+
+/**
  * 室名を含む行と、その表のヘッダ行を返す。
  *
  * 行の先頭セルは自治体によって形式が違う（「第１会議室」だけの場合と
