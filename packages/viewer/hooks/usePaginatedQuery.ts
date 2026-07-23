@@ -1,14 +1,9 @@
-/* oxlint-disable react-hooks/exhaustive-deps -- variables は variablesKey (JSON.stringify) で内容比較し
-   実体は variablesRef 経由で参照する。getConnection は呼び出し側がインライン定義するため依存に入れない */
+import type { Page } from "@shisetsu-viewer/shared";
+/* oxlint-disable react-hooks/exhaustive-deps -- fetchPage は呼び出し側がインライン定義するため
+   key (安定した識別子) で内容比較し、実体は fetchPageRef 経由で参照する意図的なイディオム */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { graphqlQuery } from "../api/graphqlClient";
 import { useAuth0 } from "../contexts/Auth0";
-
-export type RelayConnection<T> = {
-  edges: Array<{ node: T; cursor: string }>;
-  pageInfo: { hasNextPage: boolean; endCursor: string };
-};
 
 type UsePaginatedQueryResult<T> = {
   data: T[] | undefined;
@@ -19,28 +14,25 @@ type UsePaginatedQueryResult<T> = {
   fetchingMore: boolean;
 };
 
-export function usePaginatedQuery<TData, TNode>(
-  query: string,
-  variables: Record<string, unknown>,
-  getConnection: (data: TData) => RelayConnection<TNode>
-): UsePaginatedQueryResult<TNode> {
+export function usePaginatedQuery<TItem>(
+  fetchPage: (token: string, cursor: string | null) => Promise<Page<TItem>>,
+  key: string
+): UsePaginatedQueryResult<TItem> {
   const { token, isLoading: authLoading } = useAuth0();
-  const [nodes, setNodes] = useState<TNode[] | undefined>(undefined);
+  const [items, setItems] = useState<TItem[] | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [fetchingMore, setFetchingMore] = useState(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [hasNextPage, setHasNextPage] = useState(false);
   const endCursorRef = useRef<string | null>(null);
   const fetchingMoreRef = useRef(false);
-  const variablesRef = useRef(variables);
-
-  const variablesKey = JSON.stringify(variables);
+  const fetchPageRef = useRef(fetchPage);
 
   useEffect(() => {
-    variablesRef.current = variables;
-  }, [variablesKey]);
+    fetchPageRef.current = fetchPage;
+  }, [key]);
 
-  // Initial fetch (resets on variable change)
+  // Initial fetch (resets on key/token change)
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;
@@ -48,16 +40,15 @@ export function usePaginatedQuery<TData, TNode>(
     const fetchInitial = async () => {
       setLoading(true);
       setError(undefined);
-      setNodes(undefined);
+      setItems(undefined);
       endCursorRef.current = null;
 
       try {
-        const result = await graphqlQuery<TData>(query, variablesRef.current, token || undefined);
+        const page = await fetchPageRef.current(token || "", null);
         if (cancelled) return;
-        const connection = getConnection(result);
-        setNodes(connection.edges.map((e) => e.node));
-        setHasNextPage(connection.pageInfo.hasNextPage);
-        endCursorRef.current = connection.pageInfo.endCursor;
+        setItems(page.items);
+        setHasNextPage(page.pageInfo.hasNextPage);
+        endCursorRef.current = page.pageInfo.endCursor;
       } catch (e) {
         if (cancelled) return;
         setError(e instanceof Error ? e : new Error(String(e)));
@@ -70,7 +61,7 @@ export function usePaginatedQuery<TData, TNode>(
     return () => {
       cancelled = true;
     };
-  }, [query, variablesKey, token, authLoading]);
+  }, [key, token, authLoading]);
 
   const fetchMore = useCallback(async () => {
     if (!hasNextPage || !endCursorRef.current || fetchingMoreRef.current) return;
@@ -78,22 +69,17 @@ export function usePaginatedQuery<TData, TNode>(
     fetchingMoreRef.current = true;
     setFetchingMore(true);
     try {
-      const result = await graphqlQuery<TData>(
-        query,
-        { ...variablesRef.current, after: endCursorRef.current },
-        token || undefined
-      );
-      const connection = getConnection(result);
-      setNodes((prev) => [...(prev ?? []), ...connection.edges.map((e) => e.node)]);
-      setHasNextPage(connection.pageInfo.hasNextPage);
-      endCursorRef.current = connection.pageInfo.endCursor;
+      const page = await fetchPageRef.current(token || "", endCursorRef.current);
+      setItems((prev) => [...(prev ?? []), ...page.items]);
+      setHasNextPage(page.pageInfo.hasNextPage);
+      endCursorRef.current = page.pageInfo.endCursor;
     } catch (e) {
       setError(e instanceof Error ? e : new Error(String(e)));
     } finally {
       fetchingMoreRef.current = false;
       setFetchingMore(false);
     }
-  }, [query, hasNextPage, token]);
+  }, [hasNextPage, token]);
 
-  return { data: nodes, loading, error, hasNextPage, fetchMore, fetchingMore };
+  return { data: items, loading, error, hasNextPage, fetchMore, fetchingMore };
 }
