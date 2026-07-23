@@ -1,4 +1,5 @@
 import type { Institution } from "@shisetsu-viewer/shared";
+
 import { graphqlRequest } from "../request.ts";
 import type { InstitutionKeyMap, ReservationRow } from "./types.ts";
 

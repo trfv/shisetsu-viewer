@@ -1,6 +1,7 @@
 import { SELF, env } from "cloudflare:test";
 import { SignJWT, exportJWK, generateKeyPair } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
+
 import { INSTITUTIONS, seed } from "./fixtures.ts";
 
 const BASE = "https://api.example.com";

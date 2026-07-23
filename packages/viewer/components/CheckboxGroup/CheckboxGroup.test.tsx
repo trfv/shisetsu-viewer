@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { vi } from "vitest";
+
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { Checkbox } from "../Checkbox";
 import { CheckboxGroup } from "./CheckboxGroup";

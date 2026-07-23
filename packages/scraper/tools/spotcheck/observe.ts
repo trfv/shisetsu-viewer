@@ -1,3 +1,6 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
 // spot check の段 2。実サイトを観測して observed/*.json を書く。
 // 使い方（packages/scraper で実行）: node tools/spotcheck/observe.ts [--id <plan の id>]
 //
@@ -5,8 +8,7 @@
 // extract / transform / STATUS_MAP は借りない。借りると観測が scraper の解釈を
 // なぞることになり、同じ誤りを再現して MATCH を出すためである。
 import { chromium, type Page } from "@playwright/test";
-import fs from "node:fs/promises";
-import path from "node:path";
+
 import type { ObservedSample, PlanSample } from "./judgeReport.ts";
 import {
   cellToSymbol,

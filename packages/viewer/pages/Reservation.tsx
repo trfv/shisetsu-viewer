@@ -1,20 +1,20 @@
 import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
+
 import {
   RESERVATIONS_QUERY,
   type SearchableReservationNode,
   type ReservationsQueryData,
 } from "../api/queries";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
-import { extractSinglePkFromRelayId } from "../utils/relay";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { Select, type SelectChangeEvent } from "../components/Select";
 import { SearchPageLayout } from "../components/SearchPageLayout";
+import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatDatetime } from "../utils/format";
@@ -25,6 +25,7 @@ import {
   type SupportedMunicipality,
   RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "../utils/municipality";
+import { extractSinglePkFromRelayId } from "../utils/relay";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
   formatReservationMap,

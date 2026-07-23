@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
-import { defineScraper } from "../common/defineScraper.ts";
+
 import { toISODateString } from "../common/dateUtils.ts";
+import { defineScraper } from "../common/defineScraper.ts";
 import { MaintenanceWindowError, TargetNotFoundError } from "../common/errors.ts";
 import { collectPaginated } from "../common/paginate.ts";
 import { getCellValue } from "../common/playwrightUtils.ts";

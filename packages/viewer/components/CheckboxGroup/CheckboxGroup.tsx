@@ -1,4 +1,5 @@
 import { Children, cloneElement, type ChangeEvent, type FC, type ReactNode } from "react";
+
 import { BaseBox, type BoxSize } from "../Box";
 import { Checkbox } from "../Checkbox";
 import { SmallLabel } from "../Label";
@@ -20,12 +21,14 @@ const mapChildren = (
   return Children.map(children, (child: any) => {
     if (child) {
       if (child?.props?.children) {
+        // oxlint-disable-next-line react/no-clone-element
         return cloneElement(child, {
           children: mapChildren(child.props.children, values, onChange),
         });
       }
       /* istanbul ignore next -- child.type is always defined for React elements */
       if (child?.type?.displayName === Checkbox.displayName) {
+        // oxlint-disable-next-line react/no-clone-element
         return cloneElement(child, {
           checked: child.props?.value ? values.includes(child.props.value) : false,
           onChange,

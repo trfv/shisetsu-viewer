@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, FC } from "react";
+
 import styles from "./Tab.module.css";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {

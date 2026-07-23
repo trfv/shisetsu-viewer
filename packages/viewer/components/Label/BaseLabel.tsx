@@ -1,4 +1,5 @@
 import type { ElementType, FC } from "react";
+
 import styles from "./Label.module.css";
 
 type Props = {

@@ -1,10 +1,12 @@
 import { useCallback, useState, type ReactNode } from "react";
+
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { FullBox } from "../Box";
 import { Chip } from "../Chip";
 import { Drawer } from "../Drawer";
 import { IconButton } from "../IconButton";
 import { CloseIcon, ManageSearchIcon } from "../icons";
+
 import styles from "./SearchForm.module.css";
 
 type ChipItem = {

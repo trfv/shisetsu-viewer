@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { useColorMode } from "../../contexts/ColorMode";
@@ -10,6 +11,7 @@ import {
   LogoutIcon,
   SettingsIcon,
 } from "../icons";
+
 import styles from "./SettingsMenu.module.css";
 
 const COLOR_MODE_ITEMS = [

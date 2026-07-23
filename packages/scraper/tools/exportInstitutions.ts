@@ -1,6 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
+
 import { listInstitutions } from "./backend/hasura.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data/institutions");

@@ -26,9 +26,9 @@
   },
   "scripts": {
     "start": "vite --port 3000",
-    "build": "node ../../node_modules/typescript7/bin/tsc && vite build",
+    "build": "tsc && vite build",
     "serve": "vite preview --port 3000",
-    "typecheck": "node ../../node_modules/typescript7/bin/tsc",
+    "typecheck": "tsc",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",

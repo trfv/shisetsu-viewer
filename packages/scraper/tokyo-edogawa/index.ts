@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+
 import { defineScraper } from "../common/defineScraper.ts";
 import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";

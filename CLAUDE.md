@@ -15,18 +15,19 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 ## Monorepo Setup
 
 - npm workspaces. Use `-w @shisetsu-viewer/<package>`. Node >= 24, ES Modules throughout.
-- Type checking: TypeScript 7 (`typescript7` = npm alias for `typescript@7`). Each package's `typecheck` script invokes `node ../../node_modules/typescript7/bin/tsc` directly. **Do not call bare `tsc`** — the legacy `typescript` package (kept for typescript-eslint / knip / prettier-plugin-organize-imports) also provides a `tsc` bin. Collapse the alias to plain `typescript@7` once typescript-eslint supports TS7 (≈2026 autumn).
+- Type checking: TypeScript 7 (`typescript@7`)。各パッケージの `typecheck` script は素の `tsc` を呼ぶ。
 
 ## Root Commands
 
-`npm start` (viewer dev server, port 3000) / `npm run build` / `npm run format:check:all`・`format:fix:all` (Prettier) / `npm run lint:all`・`lint:fix:all` (ESLint) / `npm run typecheck:all` / `npm run knip`
+`npm start` (viewer dev server, port 3000) / `npm run build` / `npm run format:check:all`・`format:fix:all` (oxfmt) / `npm run lint:all`・`lint:fix:all` (oxlint) / `npm run typecheck:all` / `npm run knip`
 
 ## Conventions
 
-- Prettier: printWidth 100, double quotes, trailing commas es5. ESLint: flat config `eslint.config.ts`.
+- Formatter: oxfmt (`.oxfmtrc.json` — printWidth 100, double quotes, trailing commas es5, sortImports)。Linter: oxlint (`.oxlintrc.json`)。disable コメントは `oxlint-disable-next-line <plugin>/<rule>` 形式（eslint-disable 構文も解釈される）。
 - File naming: components PascalCase, utils/hooks camelCase, tests co-located `*.test.ts(x)`, CSS Modules `*.module.css`.
+- default export は名前付き const で行う（匿名アロー関数の default export は禁止。hooks lint がコンポーネントを認識できなくなるため）。
 - Primary language Japanese, timezone Asia/Tokyo.
-- Pre-commit: lefthook (`lefthook.yml`)。gitleaks + typecheck + staged な ts/tsx への ESLint/Prettier。lefthook と gitleaks は brew 管理で npm 依存ではない（`brew install lefthook gitleaks`）。clone 直後に `lefthook install` を一度実行してフックを登録する。`CI` が設定された環境では pre-commit 全体を skip する。
+- Pre-commit: lefthook (`lefthook.yml`)。gitleaks + typecheck + staged な ts/tsx への oxlint/oxfmt。lefthook と gitleaks は brew 管理で npm 依存ではない（`brew install lefthook gitleaks`）。clone 直後に `lefthook install` を一度実行してフックを登録する。`CI` が設定された環境では pre-commit 全体を skip する。
 
 ## Cross-Package Architecture
 

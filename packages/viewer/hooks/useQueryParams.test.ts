@@ -1,6 +1,7 @@
 import { act } from "react";
-import { renderHook } from "vitest-browser-react";
 import { describe, expect, test, vi } from "vitest";
+import { renderHook } from "vitest-browser-react";
+
 import { ArrayParam, DateParam, NumberParam, StringParam, useQueryParams } from "./useQueryParams";
 
 describe("NumberParam", () => {

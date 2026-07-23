@@ -1,6 +1,7 @@
 import { formatISO } from "date-fns";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
+
 import {
   INSTITUTION_DETAIL_QUERY,
   INSTITUTION_RESERVATIONS_QUERY,
@@ -9,10 +10,8 @@ import {
   type InstitutionReservationsQueryData,
   type ReservationNode,
 } from "../api/queries";
-import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { IconButton } from "../components/IconButton";
+import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
 import { Spinner } from "../components/Spinner";
@@ -26,11 +25,13 @@ import {
   TableHead,
   TableRow,
 } from "../components/Table";
-import { OpenInNewIcon } from "../components/icons";
 import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
 import { useAuth0 } from "../contexts/Auth0";
+import { useGraphQLQuery } from "../hooks/useGraphQLQuery";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatDatetime, formatMonthDate } from "../utils/format";
 import { isValidUuid } from "../utils/id";
@@ -42,6 +43,7 @@ import {
   SupportedMunicipality,
 } from "../utils/municipality";
 import { sortByReservationDivision } from "../utils/reservation";
+
 import styles from "./Detail.module.css";
 
 const InstitutionTab = ({
@@ -219,13 +221,18 @@ const ReservationTab = ({
           {reservations.map((row, index) => (
             <div
               className={styles["reservationCard"]}
+              // oxlint-disable-next-line react/no-array-index-key
               key={index}
               ref={index === sentinelIndex ? sentinelRef : undefined}
             >
               <div className={styles["reservationCardDate"]}>{formatMonthDate(row.date)}</div>
               <div className={styles["reservationCardDivisions"]}>
                 {sortByReservationDivision(row.reservation).map(([division, status], i) => (
-                  <div className={styles["reservationCardDivisionItem"]} key={i}>
+                  <div
+                    className={styles["reservationCardDivisionItem"]}
+                    // oxlint-disable-next-line react/no-array-index-key
+                    key={i}
+                  >
                     <span>{ReservationDivisionMap[municipality]?.[division]}</span>
                     <span>{ReservationStatusMap[municipality]?.[status]}</span>
                   </div>
@@ -278,6 +285,7 @@ const ReservationTab = ({
               {reservations.map((row, index) => (
                 <TableRow
                   hover={true}
+                  // oxlint-disable-next-line react/no-array-index-key
                   key={index}
                   ref={index === sentinelIndex ? sentinelRef : undefined}
                 >
@@ -285,7 +293,12 @@ const ReservationTab = ({
                     {formatMonthDate(row.date)}
                   </TableCell>
                   {sortByReservationDivision(row.reservation).map(([, status], i) => (
-                    <TableCell className={styles["reservationTableBodyCell"]} key={i} size="small">
+                    <TableCell
+                      className={styles["reservationTableBodyCell"]}
+                      // oxlint-disable-next-line react/no-array-index-key
+                      key={i}
+                      size="small"
+                    >
                       {ReservationStatusMap[municipality]?.[status]}
                     </TableCell>
                   ))}

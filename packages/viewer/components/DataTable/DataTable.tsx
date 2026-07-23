@@ -1,8 +1,9 @@
-import { useIsMobile } from "../../hooks/useIsMobile";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
 import { Skeleton } from "../Skeleton";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../Table";
+
 import styles from "./DataTable.module.css";
 
 export type Row = { id: string } & { [key: string]: unknown };
@@ -166,7 +167,11 @@ export const DataTable = <T extends Row>({
           {hasNextPage && (
             <TableRow>
               {visibleCols.map((_, index) => (
-                <TableCell key={index} size="small">
+                <TableCell
+                  // oxlint-disable-next-line react/no-array-index-key
+                  key={index}
+                  size="small"
+                >
                   <Skeleton />
                 </TableCell>
               ))}

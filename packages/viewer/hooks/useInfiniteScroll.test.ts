@@ -1,5 +1,6 @@
-import { renderHook } from "vitest-browser-react";
 import { describe, expect, test, vi } from "vitest";
+import { renderHook } from "vitest-browser-react";
+
 import { useInfiniteScroll } from "./useInfiniteScroll";
 
 describe("useInfiniteScroll", () => {

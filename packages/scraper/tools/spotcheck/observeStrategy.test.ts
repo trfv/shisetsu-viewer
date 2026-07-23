@@ -1,7 +1,9 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { test } from "node:test";
+
 import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
+
 import { STRATEGY_BY_MUNICIPALITY, strategyFor } from "./observeStrategy.ts";
 
 test("strategyFor は既定で direct を返す", () => {

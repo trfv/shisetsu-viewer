@@ -1,4 +1,5 @@
 import { Redirect } from "wouter";
+
 import { ROUTES } from "../../constants/routes";
 import { useAuth0 } from "../../contexts/Auth0";
 import { Loading } from "../../pages/Loading";

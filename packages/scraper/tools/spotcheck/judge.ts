@@ -4,6 +4,7 @@
 // 出力: stdout 末尾に `SPOTCHECK_RESULT <json>` 1 行。exit 0=要調査なし, 1=要調査あり, 2=入力不備。
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import {
   judgeSample,
   needsInvestigation,

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { isWithinMaintenanceWindow } from "./maintenanceWindow.ts";
 
 // UTC 時刻から JST 時を作るヘルパ（JST = UTC + 9）

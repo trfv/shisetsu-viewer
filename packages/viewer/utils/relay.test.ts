@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import { extractSinglePkFromRelayId } from "./relay";
 
 describe("extractSinglePkFromRelayId", () => {

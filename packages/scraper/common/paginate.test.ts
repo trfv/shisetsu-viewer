@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { collectPaginated, drainPaginationEvents, resetPaginationEvents } from "./paginate.ts";
 
 test("maxPages 回抽出し、最後のページでは goNext を呼ばない", async () => {

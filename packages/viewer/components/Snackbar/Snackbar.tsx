@@ -1,4 +1,5 @@
 import { useEffect, type FC } from "react";
+
 import styles from "./Snackbar.module.css";
 
 type Props = {

@@ -1,5 +1,6 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import { parseTrackerSamples, selectSamples } from "./sampling.ts";
 
 const BODY = `<!-- parity-tracker -->

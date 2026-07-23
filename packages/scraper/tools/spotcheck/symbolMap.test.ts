@@ -1,6 +1,8 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
+
 import { categorizeLabel, categorizeSymbol } from "./symbolMap.ts";
 
 test("categorizeLabel は registry の表示ラベルを 3 カテゴリに割り当てる", () => {

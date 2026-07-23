@@ -13,6 +13,7 @@
  * （dispatch のタイポや testIgnore の全除外を、無言のスキップにせず気付けるようにする）。
  */
 import { execFileSync } from "node:child_process";
+
 import { shardMatrixFromListOutput } from "../common/shardMatrix.ts";
 
 function parseArgs(argv: string[]): { municipality: string; density: number } {

@@ -1,7 +1,9 @@
 import type { ChangeEvent, FC } from "react";
+
 import { BaseBox, type BoxSize } from "../Box";
 import { SmallLabel } from "../Label";
 import { Spacer } from "../Spacer";
+
 import styles from "./Select.module.css";
 
 export type SelectChangeEvent<T = string> = ChangeEvent<HTMLSelectElement> & {

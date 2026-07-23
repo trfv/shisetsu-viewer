@@ -1,7 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
+
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
 import type { Institution } from "@shisetsu-viewer/shared";
+
 import { graphqlRequest } from "../request.ts";
 import { upsertHolidays, upsertInstitutions, upsertReservations } from "./d1Api.ts";
 

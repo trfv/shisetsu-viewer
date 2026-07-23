@@ -1,6 +1,7 @@
 import { canonicalizeReservation } from "@shisetsu-viewer/shared";
 import { env } from "cloudflare:test";
 import { beforeAll, describe, expect, it } from "vitest";
+
 import {
   getInstitutionDetail,
   listInstitutionReservations,
@@ -182,6 +183,7 @@ describe("is_holiday のクエリ時導出", () => {
 
 describe("生成列のセマンティクス（IMMV 同値）", () => {
   // ヘルパ: 1 行だけ入れて空きフラグを読み出す
+  // oxlint-disable-next-line unicorn/consistent-function-scoping
   async function flagsFor(reservation: Record<string, string>) {
     const id = INSTITUTIONS[0].id;
     const date = "2027-01-01";

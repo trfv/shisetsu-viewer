@@ -2,6 +2,7 @@
 // 観測側（記号 + 凡例）と期待側（D1 enum + registry ラベル）を独立にカテゴリ化して比べる。
 // scraper の STATUS_MAP は import しない（同じ誤りを再現して MATCH を出さないため）。
 import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
+
 import { categorizeSymbol } from "./symbolMap.ts";
 
 export interface PlanSample {

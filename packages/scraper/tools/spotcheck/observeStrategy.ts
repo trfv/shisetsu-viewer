@@ -4,6 +4,7 @@
 // 限るためである。スクレイパーに spot check 専用のフックを足すと、フックが
 // 増えるたびに境界が曖昧になる。
 import type { Page } from "@playwright/test";
+
 import type { RawTable } from "./observeCore.ts";
 
 /**

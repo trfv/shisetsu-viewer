@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "./enums";
+
 import { AvailabilityDivision, EquipmentDivision, InstitutionSize } from "../constants/enums";
+import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "./enums";
 
 describe("AvailabilityDivisionMap", () => {
   it("各区分に対応する日本語表示を返す", () => {

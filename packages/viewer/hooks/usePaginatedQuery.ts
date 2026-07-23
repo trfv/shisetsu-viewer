@@ -1,4 +1,7 @@
+/* oxlint-disable react-hooks/exhaustive-deps -- variables は variablesKey (JSON.stringify) で内容比較し
+   実体は variablesRef 経由で参照する。getConnection は呼び出し側がインライン定義するため依存に入れない */
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import { graphqlQuery } from "../api/graphqlClient";
 import { useAuth0 } from "../contexts/Auth0";
 

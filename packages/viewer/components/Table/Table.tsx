@@ -5,6 +5,7 @@ import {
   type TableHTMLAttributes,
   type TdHTMLAttributes,
 } from "react";
+
 import styles from "./Table.module.css";
 
 type TableContainerProps = HTMLAttributes<HTMLDivElement> & { children: ReactNode };

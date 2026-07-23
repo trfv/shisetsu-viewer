@@ -1,12 +1,13 @@
 import { describe, expect, test } from "vitest";
+
 import { AvailabilityDivision } from "../constants/enums";
 import { FeeDivision } from "../constants/enums";
-import { SupportedMunicipalities } from "./municipality";
 import {
   formatUsageFee,
   toInstitutionQueryVariables,
   toInstitutionSearchParams,
 } from "./institution";
+import { SupportedMunicipalities } from "./municipality";
 
 describe("formatUsageFee", () => {
   test("returns empty string for undefined municipality", () => {

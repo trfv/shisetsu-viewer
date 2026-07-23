@@ -1,5 +1,7 @@
 import fs from "fs/promises";
+
 import { getReservationTargets } from "@shisetsu-viewer/shared";
+
 import { upsertReservations as d1UpsertReservations } from "./backend/d1Api.ts";
 import { fetchInstitutionKeyMap, upsertReservations } from "./backend/hasura.ts";
 import { buildReservationRows } from "./backend/transform.ts";

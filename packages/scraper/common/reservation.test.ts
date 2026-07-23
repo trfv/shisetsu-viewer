@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type { Division, Status } from "./types.ts";
+
 import { rawSlotsToOutput } from "./reservation.ts";
+import type { Division, Status } from "./types.ts";
 
 const DIVISION_MAP: Record<string, Division> = {
   午前: "RESERVATION_DIVISION_MORNING",

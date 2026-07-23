@@ -11,7 +11,9 @@
 //     例: npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url https://example.openreaf02.jp/ --name tokyo-example
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import { chromium, type Page } from "@playwright/test";
+
 import type { ScraperDefinition } from "../common/defineScraper.ts";
 import {
   type DiscoveredTarget,

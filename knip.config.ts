@@ -5,9 +5,7 @@ const config: KnipConfig = {
   exclude: ["enumMembers"],
   workspaces: {
     ".": {
-      ignoreDependencies: [
-        "prettier-plugin-organize-imports", // loaded by prettier via config
-      ],
+      ignoreDependencies: [],
     },
     "packages/viewer": {
       ignoreDependencies: [],

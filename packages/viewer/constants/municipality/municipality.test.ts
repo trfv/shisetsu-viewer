@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { MUNICIPALITIES, ReservationStatus } from "@shisetsu-viewer/shared";
+import { describe, it, expect } from "vitest";
 
 const municipalities = Object.values(MUNICIPALITIES).map((m) => ({
   name: m.label,

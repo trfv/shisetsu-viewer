@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
 import { http, HttpResponse } from "msw";
+import { describe, it, expect, vi } from "vitest";
+
 import { worker } from "../test/mocks/browser";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { useGraphQLQuery } from "./useGraphQLQuery";

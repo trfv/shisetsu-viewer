@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+
 import { getMunicipalityBySlug, getReservationTargets } from "@shisetsu-viewer/shared";
 
 // 各スクレイパーが export する生テキスト → enum 値のマップ。

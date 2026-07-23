@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+
 import type { TransformOutput } from "@shisetsu-viewer/shared";
 
 export async function writeTestResult(

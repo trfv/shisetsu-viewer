@@ -1,6 +1,7 @@
-import { createServer } from "node:http";
-import { randomBytes, createHash } from "node:crypto";
 import { execFile } from "node:child_process";
+import { randomBytes, createHash } from "node:crypto";
+import { createServer } from "node:http";
+
 import { writeTokens } from "./tokenStore.ts";
 
 const CALLBACK_PORT = 19876;

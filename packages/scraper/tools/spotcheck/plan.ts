@@ -8,11 +8,13 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { parseArgs } from "node:util";
+
 import {
   MUNICIPALITIES,
   getMunicipalityBySlug,
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
+
 import type { ExpectedSample, PlanSample } from "./judgeReport.ts";
 import { parseTrackerSamples, SAMPLE_CAP, selectSamples, type SampleKey } from "./sampling.ts";
 

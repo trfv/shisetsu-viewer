@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { isViaJpProxy } from "./jpProxy.ts";
 
 test("tokyo-sumida は JP proxy 経由", () => {

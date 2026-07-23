@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+
 import type { DiscoveredTarget } from "./discover.ts";
 import type { HorizonSpec } from "./horizon.ts";
 import type { TransformOutput } from "./types.ts";

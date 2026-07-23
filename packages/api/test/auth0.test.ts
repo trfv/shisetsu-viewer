@@ -1,5 +1,6 @@
 import { SignJWT, exportJWK, generateKeyPair, importJWK, type JWTVerifyGetKey } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
+
 import { resolveRole } from "../src/auth/auth0.ts";
 
 const ENV = { AUTH0_DOMAIN: "trfv.jp.auth0.com", AUTH0_AUDIENCE: "https://api.example/" };

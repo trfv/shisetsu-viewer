@@ -1,5 +1,5 @@
-import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
 
 export function registerMunicipalitiesResource(server: McpServer): void {
   server.registerResource(

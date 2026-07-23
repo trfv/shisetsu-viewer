@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { ColorModeProvider } from "../../contexts/ColorMode";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { SettingsMenu } from "./SettingsMenu";

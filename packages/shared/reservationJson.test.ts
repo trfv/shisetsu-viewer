@@ -1,5 +1,6 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import { canonicalizeReservation } from "./reservationJson.ts";
 
 test("キーを辞書順に並べ替えて空白なしで直列化する", () => {

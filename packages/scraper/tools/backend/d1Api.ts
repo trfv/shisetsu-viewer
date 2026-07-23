@@ -1,4 +1,5 @@
 import type { Institution } from "@shisetsu-viewer/shared";
+
 import type { ReservationRow } from "./types.ts";
 
 const CHUNK = 500;

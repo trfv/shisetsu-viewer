@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { renderWithProviders, screen } from "../utils/test-utils";
+
 import { AuthGuard } from "../../components/utils/AuthGuard";
+import { renderWithProviders, screen } from "../utils/test-utils";
 
 describe("Authentication Flow", () => {
   describe("AuthGuard", () => {

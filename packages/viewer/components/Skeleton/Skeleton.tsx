@@ -1,4 +1,5 @@
 import type { CSSProperties, FC } from "react";
+
 import styles from "./Skeleton.module.css";
 
 type Props = {

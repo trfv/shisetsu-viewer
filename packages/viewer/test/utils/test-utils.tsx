@@ -1,9 +1,10 @@
-import { render } from "vitest-browser-react";
 import { ReactElement, ReactNode } from "react";
+import { vi } from "vitest";
+import { render } from "vitest-browser-react";
+import { page, userEvent as browserUserEvent } from "vitest/browser";
 import { Route, Router } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
-import { page, userEvent as browserUserEvent } from "vitest/browser";
-import { vi } from "vitest";
+
 import { Auth0Context } from "../../contexts/Auth0";
 
 type Auth0MockConfig = {

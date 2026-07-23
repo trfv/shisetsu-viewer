@@ -1,8 +1,9 @@
+import { Auth0Client } from "@auth0/auth0-spa-js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
+
 import { screen } from "../test/utils/test-utils";
-import { Auth0Client } from "@auth0/auth0-spa-js";
 import { Auth0Provider, useAuth0 } from "./Auth0";
 
 // Auth0Client is globally mocked in browser-setup.ts.
