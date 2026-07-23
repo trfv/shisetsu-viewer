@@ -2,12 +2,34 @@
   "languages": {
     "JavaScript": {
       "code_actions_on_format": {
-        "source.fixAll.eslint": true
+        "source.fixAll.oxc": true
       },
       "formatter": {
         "external": {
-          "command": "prettier",
-          "arguments": ["--stdin-filepath", "{buffer_path}"]
+          "command": "oxfmt",
+          "arguments": ["--stdin-filepath={buffer_path}"]
+        }
+      }
+    },
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+      "formatter": {
+        "external": {
+          "command": "oxfmt",
+          "arguments": ["--stdin-filepath={buffer_path}"]
+        }
+      }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+      "formatter": {
+        "external": {
+          "command": "oxfmt",
+          "arguments": ["--stdin-filepath={buffer_path}"]
         }
       }
     }

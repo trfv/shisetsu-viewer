@@ -63,7 +63,7 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
       setAuth0Client(new Client(clientOptions));
     });
     // clientOptions are stable environment constants from index.tsx
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getIdTokenClaims = useCallback(async () => {
@@ -82,9 +82,9 @@ export const Auth0Provider = ({ children, ...clientOptions }: Props) => {
   const updateToken = useCallback(async () => {
     if (!auth0Client) return false;
     try {
-      const token = await auth0Client.getTokenSilently(options);
-      if (token) {
-        setToken(token);
+      const fetchedToken = await auth0Client.getTokenSilently(options);
+      if (fetchedToken) {
+        setToken(fetchedToken);
         const idTokenClaims = await getIdTokenClaims();
         setUserInfo({
           anonymous: idTokenClaims?.role === "anonymous",

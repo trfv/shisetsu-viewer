@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "ignorePatterns": [
+    "**/*.json",
+    "build/**",
+    "coverage/**",
+    "public/**",
+    "**/worker-configuration.d.ts"
+  ],
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/no-children-prop": "error",
+    "react/no-array-index-key": "error",
+    "react/no-clone-element": "error",
+    // 自動 JSX runtime (jsx: react-jsx) では React の import は不要
+    "react/react-in-jsx-scope": "off",
+    // toSorted/toReversed (ES2023) は viewer の browserslist (>0.2%) で polyfill されない
+    "unicorn/no-array-sort": "off",
+    "unicorn/no-array-reverse": "off",
+    // モジュールプライベート変数の _ プレフィックスは意図的な規約 (mcp-server/m2mToken.ts)
+    "no-underscore-dangle": "off"
+  }
+}

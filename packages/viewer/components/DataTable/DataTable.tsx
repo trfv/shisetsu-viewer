@@ -167,7 +167,11 @@ export const DataTable = <T extends Row>({
           {hasNextPage && (
             <TableRow>
               {visibleCols.map((_, index) => (
-                <TableCell key={index} size="small">
+                <TableCell
+                  // oxlint-disable-next-line react/no-array-index-key
+                  key={index}
+                  size="small"
+                >
                   <Skeleton />
                 </TableCell>
               ))}

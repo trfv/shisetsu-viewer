@@ -17,7 +17,7 @@ pre-commit:
 
     - name: lint
       glob: "*.{ts,tsx}"
-      run: npx eslint {staged_files}
+      run: npx oxlint --deny-warnings {staged_files}
 
     - name: format
       glob: "*.{ts,tsx}"

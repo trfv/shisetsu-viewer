@@ -83,7 +83,7 @@ export const formatReservationMap = (
     return "";
   }
   const sorted = sortByReservationDivision(obj);
-  const parts = new Array(Math.ceil(sorted.length / 3)).fill([]).map(() => sorted.splice(0, 3));
+  const parts = Array.from({ length: Math.ceil(sorted.length / 3) }, () => sorted.splice(0, 3));
 
   return parts
     .map((part) =>

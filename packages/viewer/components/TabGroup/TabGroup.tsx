@@ -17,6 +17,7 @@ export const TabGroup: FC<Props> = ({ value, onChange, children, className }) =>
     {Children.map(children, (child) => {
       if (!child || typeof child !== "object" || !("props" in child)) return child;
       const tabProps = child.props as ComponentProps<typeof Tab>;
+      // oxlint-disable-next-line react/no-clone-element
       return cloneElement(child as React.ReactElement<ComponentProps<typeof Tab>>, {
         selected: tabProps.value === value,
         onClick: (e: React.MouseEvent<HTMLButtonElement>) => {

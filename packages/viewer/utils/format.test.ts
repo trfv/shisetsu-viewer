@@ -8,10 +8,10 @@ import {
   formatPrice,
 } from "./format";
 
-const withErrorMock = (test: () => void) => {
+const withErrorMock = (fn: () => void) => {
   const spy = vi.spyOn(console, "error");
   spy.mockImplementation(() => null);
-  test();
+  fn();
   expect(spy).toHaveBeenCalledOnce();
   spy.mockReset();
 };
