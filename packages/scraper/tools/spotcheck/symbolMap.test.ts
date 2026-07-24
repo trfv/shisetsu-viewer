@@ -33,6 +33,15 @@ test("categorizeSymbol は全角/半角の X も UNAVAILABLE として扱う（�
   assert.equal(categorizeSymbol("x"), "UNAVAILABLE"); // 半角小文字 x (U+0078)
 });
 
+test("categorizeSymbol は大田区の img alt 文言（「空いています」「予約済みです」）を判定できる", () => {
+  // 大田区は空き状況を画像で表し、observeCore の cellToSymbol が alt を記号として採る。
+  // 「空いています」は「空き」に一致しないため、以前は UNKNOWN で UNMAPPED になっていた。
+  assert.equal(categorizeSymbol("空いています"), "AVAILABLE");
+  assert.equal(categorizeSymbol("予約済みです"), "UNAVAILABLE");
+  // 否定形を空き扱いしないこと（UNAVAILABLE 側で先に潰す）
+  assert.equal(categorizeSymbol("空いていません"), "UNAVAILABLE");
+});
+
 test("categorizeSymbol は凡例を記号表より優先する", () => {
   // このサイトでは △ が「抽選申込あり」= 埋まり系だと凡例が言っている
   assert.equal(categorizeSymbol("△", { "△": "抽選申込あり" }), "UNAVAILABLE");
