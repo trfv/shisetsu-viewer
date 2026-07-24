@@ -94,4 +94,14 @@ describe("apiGet", () => {
 
     expect(result).toEqual(body);
   });
+
+  it("2xx でも JSON でない応答（HTML）は content-type を含む明確なエラーで throw する", async () => {
+    worker.use(
+      http.get(`${ENDPOINT}/v1/institutions`, () =>
+        HttpResponse.html("<!doctype html><title>app</title>")
+      )
+    );
+
+    await expect(apiGet(`${ENDPOINT}/v1/institutions`, {})).rejects.toThrow(/text\/html/);
+  });
 });

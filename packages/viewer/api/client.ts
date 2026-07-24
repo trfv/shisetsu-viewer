@@ -27,5 +27,15 @@ export async function apiGet<T>(url: string, params: QueryParams, token?: string
     const body = await res.text().catch(() => "");
     throw new Error(`API error ${res.status}: ${body.slice(0, 200)}`);
   }
+  // 2xx でも JSON でない応答（例: VITE_API_ENDPOINT 未設定で自オリジンの index.html を掴む）は、
+  // res.json() の "Unexpected token '<'" ではなく原因が分かるメッセージで弾く。
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    const body = await res.text().catch(() => "");
+    throw new Error(
+      `API が JSON を返しませんでした (content-type: ${contentType || "なし"}, status: ${res.status}). ` +
+        `VITE_API_ENDPOINT が正しい API を指しているか確認してください。url=${url} body=${body.slice(0, 120)}`
+    );
+  }
   return (await res.json()) as T;
 }
