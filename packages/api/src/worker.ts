@@ -52,6 +52,10 @@ const RE_INSTITUTION_RESERVATIONS = new RegExp(
 );
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
+// 施設マスタは scraper の update:institutions を回したときしか変わらない（週〜月単位）。
+// エッジキャッシュに載る前提なので、scrape-runs より長く持たせる。
+// 代償は upsert 直後の最大 10 分の陳腐化。手動更新の頻度から見て許容する。
+const INSTITUTIONS_CACHE = "public, max-age=600";
 // 認証必須レスポンスに必ず付ける。Cache-Control 無しの 200 は、エッジキャッシュ側の
 // heuristic freshness で既定 2 時間キャッシュされうる。Authorization ヘッダ付きの
 // リクエストは自動バイパスされる仕様だが、そこに依存せず明示的に落とす。
@@ -134,13 +138,13 @@ async function handleListInstitutions(url: URL, env: Env): Promise<Response> {
     limit: parseLimit(url),
     cursor: url.searchParams.get("cursor") ?? undefined,
   });
-  return json(page, { headers: { "Cache-Control": PUBLIC_CACHE } });
+  return json(page, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
 }
 
 async function handleInstitutionDetail(id: string, env: Env): Promise<Response> {
   const detail = await getInstitutionDetail(env.DB, id);
   if (!detail) return error(404, "institution not found");
-  return json(detail, { headers: { "Cache-Control": PUBLIC_CACHE } });
+  return json(detail, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
 }
 
 async function handleInstitutionReservations(
@@ -256,7 +260,41 @@ async function handleAdminExport(request: Request, url: URL, env: Env): Promise<
   return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
-async function handle(request: Request, env: Env): Promise<Response> {
+/**
+ * Cache API によるエッジキャッシュ。
+ *
+ * Worker が生成したレスポンスは自動ではエッジに載らない。`Cache-Control: public` を
+ * 返すだけではブラウザキャッシュにしか効かないので、明示的に put/match する。
+ * ヒット時は D1 を一切引かない（Cache API は read-through ではないので Worker 自体は動く）。
+ *
+ * キーは **メソッドと URL だけの Request** にする。元のリクエストをそのままキーにすると
+ * Origin ヘッダが混ざり、かつ Cloudflare の Cache は任意の `Vary` をほぼ解釈しないため、
+ * ある origin 向けの `Access-Control-Allow-Origin` を別 origin に返す事故が起きる。
+ * CORS ヘッダは fetch 側でリクエストごとに付け直すので、キャッシュ本体には含まれない
+ * （handle() は CORS を付けずに返す。この順序が前提）。
+ *
+ * 何を載せるかはハンドラが返す `Cache-Control: public` が決める。認証必須の応答は
+ * `private, no-store` を返すので、ここに来ても構造的に載らない。
+ */
+async function withEdgeCache(
+  url: URL,
+  ctx: ExecutionContext,
+  produce: () => Promise<Response>
+): Promise<Response> {
+  const cache = caches.default;
+  const key = new Request(url.toString(), { method: "GET" });
+  const hit = await cache.match(key);
+  // キャッシュ由来の Response はヘッダが immutable なので、CORS を後付けできるよう複製する。
+  if (hit) return new Response(hit.body, hit);
+
+  const res = await produce();
+  if (res.status === 200 && res.headers.get("Cache-Control")?.includes("public")) {
+    ctx.waitUntil(cache.put(key, res.clone()));
+  }
+  return res;
+}
+
+async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url);
   const { pathname } = url;
   try {
@@ -275,15 +313,20 @@ async function handle(request: Request, env: Env): Promise<Response> {
 
     if (request.method === "GET") {
       if (pathname === "/v1/health") return json({ ok: true });
-      if (pathname === "/v1/institutions") return await handleListInstitutions(url, env);
-      if (pathname === "/v1/scrape-runs") return await handleScrapeRuns(env);
+      if (pathname === "/v1/institutions")
+        return await withEdgeCache(url, ctx, () => handleListInstitutions(url, env));
+      if (pathname === "/v1/scrape-runs")
+        return await withEdgeCache(url, ctx, () => handleScrapeRuns(env));
       if (pathname === "/v1/reservations/search") return await handleSearch(request, url, env);
       if (pathname === "/v1/admin/reservations/export")
         return await handleAdminExport(request, url, env);
       const resv = pathname.match(RE_INSTITUTION_RESERVATIONS);
       if (resv) return await handleInstitutionReservations(request, resv[1] as string, url, env);
       const detail = pathname.match(RE_INSTITUTION);
-      if (detail) return await handleInstitutionDetail(detail[1] as string, env);
+      if (detail) {
+        const id = detail[1] as string;
+        return await withEdgeCache(url, ctx, () => handleInstitutionDetail(id, env));
+      }
     }
     if (request.method === "PUT") {
       if (pathname === "/v1/admin/reservations") return await handleAdminReservations(request, env);
@@ -298,7 +341,7 @@ async function handle(request: Request, env: Env): Promise<Response> {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const origin = allowedOrigin(request.headers.get("Origin"));
 
     // プリフライトはルーティング・レート制限より前に応答する
@@ -315,7 +358,7 @@ export default {
       });
     }
 
-    const res = await handle(request, env);
+    const res = await handle(request, env, ctx);
     if (origin) {
       res.headers.set("Access-Control-Allow-Origin", origin);
       res.headers.append("Vary", "Origin");
