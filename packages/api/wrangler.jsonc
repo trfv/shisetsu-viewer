@@ -5,7 +5,9 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
-  "routes": [{ "pattern": "api.shisetsudb.com", "custom_domain": true }],
+  // カットオーバー前は d1-api で稼働（api.shisetsudb.com は現行 Hasura が占有中）。
+  // PR3-5 で Hasura の A レコード削除後に api.shisetsudb.com へ張り替える。
+  "routes": [{ "pattern": "d1-api.shisetsudb.com", "custom_domain": true }],
   "observability": { "enabled": true },
   "d1_databases": [
     {
