@@ -4,6 +4,7 @@ import { createLocalJWKSet, type JWTVerifyGetKey } from "jose";
 import { authorizeAdmin } from "./auth/adminAuth.ts";
 import { resolveRole } from "./auth/auth0.ts";
 import {
+  exportReservations,
   getInstitutionDetail,
   listInstitutionReservations,
   listInstitutions,
@@ -51,6 +52,10 @@ const RE_INSTITUTION_RESERVATIONS = new RegExp(
 );
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
+// 認証必須レスポンスに必ず付ける。Cache-Control 無しの 200 は、エッジキャッシュ側の
+// heuristic freshness で既定 2 時間キャッシュされうる。Authorization ヘッダ付きの
+// リクエストは自動バイパスされる仕様だが、そこに依存せず明示的に落とす。
+const PRIVATE_CACHE = "private, no-store";
 
 // CORS: viewer（別 origin のブラウザ SPA）からの fetch を許可する。
 // 本番/将来の任意サブドメイン(*.shisetsudb.com) と Workers プレビュー(*.trfv-dev.workers.dev)、
@@ -162,7 +167,7 @@ async function handleInstitutionReservations(
     },
     holidays
   );
-  return json(page);
+  return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
 async function handleSearch(request: Request, url: URL, env: Env): Promise<Response> {
@@ -193,7 +198,7 @@ async function handleSearch(request: Request, url: URL, env: Env): Promise<Respo
     },
     holidays
   );
-  return json(page);
+  return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
 async function handleScrapeRuns(env: Env): Promise<Response> {
@@ -244,20 +249,11 @@ async function handleAdminHolidays(request: Request, env: Env): Promise<Response
 /** パリティ突合用: 予約を全列 dump（keyset、admin 認可） */
 async function handleAdminExport(request: Request, url: URL, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
-  const municipality = parseListParam(url, "municipality");
-  const holidays = await loadHolidays(env.DB);
-  const page = await searchReservations(
-    env.DB,
-    {
-      startDate: "0000-01-01",
-      endDate: "9999-12-31",
-      municipality,
-      limit: parseLimit(url) ?? 1000,
-      cursor: url.searchParams.get("cursor") ?? undefined,
-    },
-    holidays
-  );
-  return json(page);
+  const page = await exportReservations(env.DB, {
+    limit: parseLimit(url),
+    cursor: url.searchParams.get("cursor") ?? undefined,
+  });
+  return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
 async function handle(request: Request, env: Env): Promise<Response> {

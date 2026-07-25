@@ -53,6 +53,17 @@ export interface ReservationSearchHit {
   >;
 }
 
+/**
+ * GET /v1/admin/reservations/export の 1 行。
+ * parity 突合は institution_id / date / reservation しか見ないので、
+ * 導出値（is_holiday・空き 3 フラグ）も institutions の JOIN 結果も持たない。
+ */
+export interface ReservationExportRow {
+  institution_id: string;
+  date: string; // YYYY-MM-DD
+  reservation: Record<string, string>;
+}
+
 /** GET /v1/scrape-runs の 1 行（自治体別最新） */
 export interface ScrapeRun {
   municipality: string; // MUNICIPALITY_*

@@ -4,6 +4,7 @@ import type {
   InstitutionsQueryParams,
   Page,
   ReservationDto,
+  ReservationExportRow,
   ReservationSearchHit,
   ReservationSearchQueryParams,
   ScrapeRun,
@@ -14,6 +15,9 @@ import { decodeCursor, encodeCursor } from "./cursor.ts";
 
 const DEFAULT_LIMIT = 50;
 const MAX_LIMIT = 100;
+// export だけ上限が別なのは、PK 順の走査でページサイズ分しか行を読まないため
+// （search 系は ORDER BY が全件ソートを誘発しうるので 100 に据え置く）。
+const MAX_EXPORT_LIMIT = 1000;
 const AVAILABLE = "AVAILABILITY_DIVISION_AVAILABLE";
 
 function clampLimit(limit: number | undefined): number {
@@ -396,6 +400,65 @@ export async function searchReservations(
       endCursor:
         hasNextPage && last
           ? encodeCursor({ date: last.date, institution_id: last.institution_id })
+          : null,
+    },
+  };
+}
+
+/**
+ * parity 突合用の全行 dump。
+ *
+ * ORDER BY を PK (institution_id, date) に揃えるのが要点。searchReservations と同じ
+ * (date, institution_id) 順にすると `WITHOUT ROWID` の物理順と食い違い、SQLite は
+ * ページごとに候補全件を一時 B-tree でソートする。keyset カーソルは WHERE でしか
+ * 効かないので走査量が減らず、コストが O(N^2 / page) に膨らむ
+ * （実測: 豊島区 8,928 行の 101 行ページで 7,073 行読み。全自治体 1 巡で約 500 万行）。
+ *
+ * municipality での絞り込みも行わない。institutions と JOIN した時点で institutions
+ * 駆動の計画になり、同じ全件ソートが復活するため。呼び出し側が institution_id →
+ * municipality のマップで分類する。
+ */
+export async function exportReservations(
+  db: D1Database,
+  params: { limit?: number | undefined; cursor?: string | undefined }
+): Promise<Page<ReservationExportRow>> {
+  const requested = params.limit && params.limit > 0 ? params.limit : MAX_EXPORT_LIMIT;
+  const limit = Math.min(requested, MAX_EXPORT_LIMIT);
+  const args: unknown[] = [];
+  let where = "";
+  if (params.cursor) {
+    const c = decodeCursor(params.cursor);
+    if (c) {
+      where = `WHERE (institution_id, date) > (?, ?)`;
+      args.push(c["institution_id"], c["date"]);
+    }
+  }
+  const sql = `
+    SELECT institution_id, date, reservation
+    FROM reservations
+    ${where}
+    ORDER BY institution_id, date
+    LIMIT ?`;
+  args.push(limit + 1);
+
+  const { results } = await db
+    .prepare(sql)
+    .bind(...args)
+    .all<{ institution_id: string; date: string; reservation: string }>();
+  const hasNextPage = results.length > limit;
+  const rows = hasNextPage ? results.slice(0, limit) : results;
+  const last = rows.at(-1);
+  return {
+    items: rows.map((row) => ({
+      institution_id: row.institution_id,
+      date: row.date,
+      reservation: parseReservation(row.reservation),
+    })),
+    pageInfo: {
+      hasNextPage,
+      endCursor:
+        hasNextPage && last
+          ? encodeCursor({ institution_id: last.institution_id, date: last.date })
           : null,
     },
   };

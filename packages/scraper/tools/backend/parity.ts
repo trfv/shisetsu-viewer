@@ -6,7 +6,7 @@ import {
 } from "@shisetsu-viewer/shared";
 
 import { graphqlRequest } from "../request.ts";
-import { exportReservations } from "./d1Api.ts";
+import { exportInstitutions, exportReservations } from "./d1Api.ts";
 import {
   compareMunicipality,
   DUAL_WRITE_LIVE_SINCE,
@@ -117,6 +117,24 @@ const liveSince = process.env["PARITY_LIVE_SINCE"] ?? DUAL_WRITE_LIVE_SINCE;
 const window = reservationWindow(new Date());
 const hasuraByMunicipality = await fetchAllHasura(window);
 
+// D1 側も 1 巡だけ取り、自治体別に振り分ける（自治体ごとに取り直すと
+// サーバ側の JOIN + 全件ソートで読み取り行数が桁違いに膨らむ）。
+const d1IdToMunicipality = await exportInstitutions();
+const d1ByMunicipality = new Map<string, Map<string, string>>();
+for (const row of await exportReservations()) {
+  // Hasura と同じ窓に絞る（ISO 日付は辞書順 = 時系列順）。
+  if (row.date < window.from || row.date > window.to) continue;
+  const municipality = d1IdToMunicipality.get(row.institution_id);
+  // 施設マスタに無い予約行は突合対象外（従来のサーバ側 INNER JOIN と同じ扱い）。
+  if (!municipality) continue;
+  let map = d1ByMunicipality.get(municipality);
+  if (!map) {
+    map = new Map<string, string>();
+    d1ByMunicipality.set(municipality, map);
+  }
+  map.set(key(row), canonicalizeReservation(row.reservation));
+}
+
 const reports: MunicipalityReport[] = [];
 
 for (const target of targets) {
@@ -124,13 +142,7 @@ for (const target of targets) {
   const municipality = `MUNICIPALITY_${(m as string).toUpperCase()}`;
 
   const hasura = hasuraByMunicipality.get(municipality) ?? new Map<string, HasuraRow>();
-  const d1Rows = await exportReservations(municipality);
-  // D1 は全期間を返すので Hasura と同じ窓に絞る（ISO 日付は辞書順 = 時系列順）。
-  const d1 = new Map(
-    d1Rows
-      .filter((r) => r.date >= window.from && r.date <= window.to)
-      .map((r) => [key(r), canonicalizeReservation(r.reservation)])
-  );
+  const d1 = d1ByMunicipality.get(municipality) ?? new Map<string, string>();
 
   const report = compareMunicipality(target, hasura, d1, liveSince);
   reports.push(report);

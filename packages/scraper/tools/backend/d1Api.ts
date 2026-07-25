@@ -1,4 +1,9 @@
-import type { Institution } from "@shisetsu-viewer/shared";
+import type {
+  Institution,
+  InstitutionSummary,
+  Page,
+  ReservationExportRow,
+} from "@shisetsu-viewer/shared";
 
 import type { ReservationRow } from "./types.ts";
 
@@ -99,35 +104,48 @@ export async function upsertHolidays(rows: { date: string; name: string }[]): Pr
   return res.rowsWritten;
 }
 
-/** パリティ突合用: D1 の予約を全列 dump（keyset 追跡） */
-export async function exportReservations(
-  municipality: string
-): Promise<{ institution_id: string; date: string; reservation: Record<string, string> }[]> {
+/**
+ * パリティ突合用: D1 の予約を全自治体まとめて 1 巡で dump（PK 順 keyset）。
+ * 自治体で分けて取らないのは、サーバ側が institutions と JOIN すると
+ * ページごとに全件ソートが走り、読み取り行数が O(N^2 / page) になるため。
+ * 分類は exportInstitutions() の id → municipality マップで呼び出し側が行う。
+ */
+export async function exportReservations(): Promise<ReservationExportRow[]> {
   const endpoint = requireEnv("D1_API_ENDPOINT");
   const headers = await getAuthHeaders();
-  const all: { institution_id: string; date: string; reservation: Record<string, string> }[] = [];
+  const all: ReservationExportRow[] = [];
   let cursor: string | null = null;
   do {
-    const qs = new URLSearchParams({ municipality, limit: "1000" });
+    const qs = new URLSearchParams({ limit: "1000" });
     if (cursor) qs.set("cursor", cursor);
     const res = await fetch(`${endpoint}/v1/admin/reservations/export?${qs.toString()}`, {
       headers,
     });
     if (!res.ok) throw new Error(`D1 export error ${res.status}: ${await res.text()}`);
-    const page = (await res.json()) as {
-      items: {
-        reservation: { institution_id: string; date: string; reservation: Record<string, string> };
-      }[];
-      pageInfo: { hasNextPage: boolean; endCursor: string | null };
-    };
-    for (const hit of page.items) {
-      all.push({
-        institution_id: hit.reservation.institution_id,
-        date: hit.reservation.date,
-        reservation: hit.reservation.reservation,
-      });
-    }
+    const page = (await res.json()) as Page<ReservationExportRow>;
+    all.push(...page.items);
     cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
   } while (cursor);
   return all;
+}
+
+/**
+ * パリティ突合用: D1 の institution_id → municipality マップ。
+ * Hasura 側のマップを流用しないのは、D1 にしか無い施設の行を取りこぼすと
+ * 「extra」判定が効かなくなり、突合が甘くなるため。
+ */
+export async function exportInstitutions(): Promise<Map<string, string>> {
+  const endpoint = requireEnv("D1_API_ENDPOINT");
+  const map = new Map<string, string>();
+  let cursor: string | null = null;
+  do {
+    const qs = new URLSearchParams({ limit: "100" });
+    if (cursor) qs.set("cursor", cursor);
+    const res = await fetch(`${endpoint}/v1/institutions?${qs.toString()}`);
+    if (!res.ok) throw new Error(`D1 institutions error ${res.status}: ${await res.text()}`);
+    const page = (await res.json()) as Page<InstitutionSummary>;
+    for (const item of page.items) map.set(item.id, item.municipality);
+    cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
+  } while (cursor);
+  return map;
 }
