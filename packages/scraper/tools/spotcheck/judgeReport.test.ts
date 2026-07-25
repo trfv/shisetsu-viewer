@@ -177,6 +177,214 @@ test("区分ラベルの表記ゆれ（全角/半角、範囲記号）を正規�
   assert.equal(result.verdict, "MATCH");
 });
 
+// --- band モード（サイトが時間帯レンジ、registry が午前/午後/夜間の自治体） ---
+
+const ARAKAWA_PLAN: PlanSample = {
+  id: "tokyo-arakawa:9f0e1d2c-aaaa-bbbb-cccc-000000000001:2026-07-19",
+  target: "tokyo-arakawa",
+  institutionId: "9f0e1d2c-aaaa-bbbb-cccc-000000000001",
+  date: "2026-07-19",
+  buildingSystemName: "石浜ふれあい館",
+  institutionSystemName: "３階和室１",
+  divisionLabels: ["午前", "午後", "午後1", "午後2", "夜間"],
+};
+
+// 石浜ふれあい館の実観測（sample-dumps 由来）。4 区分が morning:1 / afternoon:2 / evening:1 に畳まれる。
+const ARAKAWA_CELLS = [
+  { divisionLabel: "09:00\n～\n12:00", symbol: "Ｘ" },
+  { divisionLabel: "12:15\n～\n15:15", symbol: "Ｘ" },
+  { divisionLabel: "15:30\n～\n18:30", symbol: "Ｘ" },
+  { divisionLabel: "18:45\n～\n21:45", symbol: "○" },
+];
+
+test("registry が午前/午後・サイトが時間帯レンジの自治体は band モードで MATCH になる", () => {
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_TWO: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_EVENING: "RESERVATION_STATUS_VACANT",
+      },
+    },
+    observed({ id: ARAKAWA_PLAN.id, cells: ARAKAWA_CELLS })
+  );
+  assert.equal(result.verdict, "MATCH");
+});
+
+test("band が跨るカテゴリの取り違えは band モードでも MISMATCH になる", () => {
+  // D1 の夜間だけ「予約あり」に取り違えたケース。サイトは夜間が空き。
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_TWO: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_EVENING: "RESERVATION_STATUS_STATUS_1",
+      },
+    },
+    observed({ id: ARAKAWA_PLAN.id, cells: ARAKAWA_CELLS })
+  );
+  assert.equal(result.verdict, "MISMATCH");
+  assert.match(result.detail, /evening/);
+});
+
+test("band 単位のコマ数の欠落（片側にしか無い band）は MISMATCH になる", () => {
+  // D1 に夜間の行が無い＝サイトにある区分が D1 から落ちている silent failure。
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_TWO: "RESERVATION_STATUS_STATUS_1",
+      },
+    },
+    observed({ id: ARAKAWA_PLAN.id, cells: ARAKAWA_CELLS })
+  );
+  assert.equal(result.verdict, "MISMATCH");
+  assert.match(result.detail, /evening/);
+});
+
+test("同一 band 内のコマ数の違いも MISMATCH になる（マルチセット比較）", () => {
+  // サイトは afternoon 2 コマだが D1 は 1 コマしかない。
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_EVENING: "RESERVATION_STATUS_VACANT",
+      },
+    },
+    observed({ id: ARAKAWA_PLAN.id, cells: ARAKAWA_CELLS })
+  );
+  assert.equal(result.verdict, "MISMATCH");
+  assert.match(result.detail, /afternoon/);
+});
+
+test("大田区の表記（半角ハイフン・前後空白）も band モードで MATCH になる", () => {
+  const plan: PlanSample = {
+    id: "tokyo-ota:9f0e1d2c-aaaa-bbbb-cccc-000000000002:2026-07-19",
+    target: "tokyo-ota",
+    institutionId: "9f0e1d2c-aaaa-bbbb-cccc-000000000002",
+    date: "2026-07-19",
+    buildingSystemName: "雪谷文化センター",
+    institutionSystemName: "音楽室",
+    divisionLabels: ["午前", "午後", "午後1", "午後2", "夜間", "夜間1", "夜間2"],
+  };
+  const result = judgeSample(
+    plan,
+    {
+      id: plan.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT",
+        RESERVATION_DIVISION_AFTERNOON: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_EVENING: "RESERVATION_STATUS_STATUS_1",
+      },
+    },
+    observed({
+      id: plan.id,
+      cells: [
+        { divisionLabel: "09:00 - 12:00", symbol: "空いています" },
+        { divisionLabel: "13:00 - 17:00", symbol: "予約済みです" },
+        { divisionLabel: "18:00 - 22:00", symbol: "予約済みです" },
+      ],
+    })
+  );
+  assert.equal(result.verdict, "MATCH");
+});
+
+test("band モードで D1 の区分 enum を band に畳めなければ UNMAPPED", () => {
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: {
+        RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_STATUS_1",
+        RESERVATION_DIVISION_AFTERNOON_TWO: "RESERVATION_STATUS_STATUS_1",
+        // scraper が区分の変換に失敗して INVALID が保存された状態。握り潰さない。
+        RESERVATION_DIVISION_INVALID: "RESERVATION_STATUS_VACANT",
+      },
+    },
+    observed({ id: ARAKAWA_PLAN.id, cells: ARAKAWA_CELLS })
+  );
+  assert.equal(result.verdict, "UNMAPPED");
+  assert.match(result.detail, /RESERVATION_DIVISION_INVALID/);
+});
+
+test("時刻レンジでも registry ラベルでもないセルが混じれば従来どおり UNMAPPED", () => {
+  const result = judgeSample(
+    ARAKAWA_PLAN,
+    {
+      id: ARAKAWA_PLAN.id,
+      reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1" },
+    },
+    observed({
+      id: ARAKAWA_PLAN.id,
+      cells: [
+        { divisionLabel: "09:00\n～\n12:00", symbol: "Ｘ" },
+        { divisionLabel: "深夜帯", symbol: "Ｘ" },
+      ],
+    })
+  );
+  assert.equal(result.verdict, "UNMAPPED");
+});
+
+test("registry ラベルが時刻レンジの自治体は band に落ちず exact モードのまま（粒度維持）", () => {
+  // tokyo-kita は registry も時刻レンジ。band に落ちると DIVISION_1..5 が畳めず UNMAPPED になる。
+  const plan: PlanSample = {
+    id: "tokyo-kita:4c79dcb5-e7f1-18fd-8f9a-000000000009:2026-07-19",
+    target: "tokyo-kita",
+    institutionId: "4c79dcb5-e7f1-18fd-8f9a-000000000009",
+    date: "2026-07-19",
+    buildingSystemName: "滝野川会館",
+    institutionSystemName: "B201音楽スタジオ",
+    divisionLabels: [
+      "9:00-12:00",
+      "13:00-17:00",
+      "18:00-22:00",
+      "9:30-11:30",
+      "12:00-14:00",
+      "14:30-16:30",
+      "17:00-19:00",
+      "19:30-21:30",
+    ],
+  };
+  const result = judgeSample(
+    plan,
+    {
+      id: plan.id,
+      reservation: {
+        RESERVATION_DIVISION_DIVISION_1: "RESERVATION_STATUS_STATUS_3",
+        RESERVATION_DIVISION_DIVISION_2: "RESERVATION_STATUS_STATUS_2",
+        RESERVATION_DIVISION_DIVISION_3: "RESERVATION_STATUS_STATUS_2",
+        RESERVATION_DIVISION_DIVISION_4: "RESERVATION_STATUS_VACANT",
+        RESERVATION_DIVISION_DIVISION_5: "RESERVATION_STATUS_VACANT",
+      },
+    },
+    observed({
+      id: plan.id,
+      cells: [
+        { divisionLabel: "9:30-11:30", symbol: "-" },
+        { divisionLabel: "12:00-14:00", symbol: "×" },
+        { divisionLabel: "14:30-16:30", symbol: "×" },
+        { divisionLabel: "17:00-19:00", symbol: "○" },
+        { divisionLabel: "19:30-21:30", symbol: "○" },
+      ],
+    })
+  );
+  assert.equal(result.verdict, "MATCH");
+  assert.match(result.detail, /区分一致/); // exact モードの detail であること
+});
+
 test("needsInvestigation は要調査の判定だけ true", () => {
   assert.equal(needsInvestigation("MATCH"), false);
   assert.equal(needsInvestigation("SITE_NO_DATA"), false);
