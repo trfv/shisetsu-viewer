@@ -1,11 +1,8 @@
+import type { InstitutionSummary } from "@shisetsu-viewer/shared";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
-import {
-  INSTITUTIONS_QUERY,
-  type InstitutionNode,
-  type InstitutionsQueryData,
-} from "../api/queries";
+import { fetchInstitutions } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
@@ -15,13 +12,12 @@ import { ROUTES } from "../constants/routes";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
-import { toInstitutionQueryVariables, toInstitutionSearchParams } from "../utils/institution";
+import { toInstitutionQueryParams, toInstitutionSearchParams } from "../utils/institution";
 import {
   MunicipalityOptions,
   SupportedMunicipalityMap,
   convertMunicipalityToUrlParam,
 } from "../utils/municipality";
-import { extractSinglePkFromRelayId } from "../utils/relay";
 import {
   AVAILABLE_INSTRUMENT_MAP,
   INSTITUTION_SIZE_MAP,
@@ -29,7 +25,7 @@ import {
   toggleArrayParam,
 } from "../utils/search";
 
-export const COLUMNS: Columns<InstitutionNode> = [
+export const COLUMNS: Columns<InstitutionSummary> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
@@ -115,6 +111,11 @@ const InstitutionPage = () => {
     [values]
   );
 
+  const queryParams = useMemo(
+    () => toInstitutionQueryParams(institutionSearchParams),
+    [institutionSearchParams]
+  );
+
   const {
     data: institutions,
     loading,
@@ -122,10 +123,9 @@ const InstitutionPage = () => {
     hasNextPage: hasMore,
     fetchMore,
     fetchingMore,
-  } = usePaginatedQuery<InstitutionsQueryData, InstitutionNode>(
-    INSTITUTIONS_QUERY,
-    toInstitutionQueryVariables(institutionSearchParams),
-    (d) => d.institutions_connection
+  } = usePaginatedQuery<InstitutionSummary>(
+    (_token, cursor) => fetchInstitutions(queryParams, cursor),
+    JSON.stringify(queryParams)
   );
 
   const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
@@ -210,9 +210,8 @@ const InstitutionPage = () => {
       hasNextPage={hasMore}
       loading={loading}
       onRowClick={(params) => {
-        const institutionId = extractSinglePkFromRelayId(params.row.id);
-        if (institutionId) {
-          setLocation(ROUTES.detail.replace(":id", institutionId as string));
+        if (params.row.id) {
+          setLocation(ROUTES.detail.replace(":id", params.row.id));
         }
       }}
       rows={institutions ?? []}

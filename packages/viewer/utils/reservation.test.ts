@@ -1,14 +1,14 @@
 import { addMonths } from "date-fns";
 import { describe, expect, test } from "vitest";
 
-import { AvailabilityDivision, ReservationDivision } from "../constants/enums";
+import { ReservationDivision } from "../constants/enums";
 import { RESERVATION_EXCLUDED_MUNICIPALITIES, SupportedMunicipalities } from "./municipality";
 import {
   formatReservationMap,
   getResevationSearchFilterFromUrlParam,
   sortByReservationDivision,
-  toReservationQueryVariables,
   toReservationSearchParams,
+  toReservationSearchQueryParams,
 } from "./reservation";
 
 describe("sortByReservationDivision", () => {
@@ -317,12 +317,12 @@ describe("toReservationSearchParams", () => {
   });
 });
 
-describe("toReservationQueryVariables", () => {
+describe("toReservationSearchQueryParams", () => {
   const startDate = new Date(2026, 0, 15);
   const endDate = new Date(2026, 1, 15);
 
   test("returns all non-excluded municipalities when municipality is 'all'", () => {
-    const result = toReservationQueryVariables({
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -338,7 +338,7 @@ describe("toReservationQueryVariables", () => {
   });
 
   test("returns specific municipality when not 'all'", () => {
-    const result = toReservationQueryVariables({
+    const result = toReservationSearchQueryParams({
       municipality: "MUNICIPALITY_KOUTOU",
       startDate,
       endDate,
@@ -349,8 +349,8 @@ describe("toReservationQueryVariables", () => {
     expect(result.municipality).toEqual(["MUNICIPALITY_KOUTOU"]);
   });
 
-  test("sets first to 100 and after to null", () => {
-    const result = toReservationQueryVariables({
+  test("sets limit to 100", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -358,12 +358,11 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.first).toBe(100);
-    expect(result.after).toBeNull();
+    expect(result.limit).toBe(100);
   });
 
-  test("sets start and end dates as date strings", () => {
-    const result = toReservationQueryVariables({
+  test("formats start and end dates as yyyy-MM-dd", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -371,12 +370,12 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.startDate).toBe(startDate.toDateString());
-    expect(result.endDate).toBe(endDate.toDateString());
+    expect(result.startDate).toBe("2026-01-15");
+    expect(result.endDate).toBe("2026-02-15");
   });
 
-  test("sets instrument availability to null when none selected", () => {
-    const result = toReservationQueryVariables({
+  test("leaves instrument flags undefined when none selected", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -384,14 +383,14 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.isAvailableStrings).toBeNull();
-    expect(result.isAvailableWoodwind).toBeNull();
-    expect(result.isAvailableBrass).toBeNull();
-    expect(result.isAvailablePercussion).toBeNull();
+    expect(result.isAvailableStrings).toBeUndefined();
+    expect(result.isAvailableWoodwind).toBeUndefined();
+    expect(result.isAvailableBrass).toBeUndefined();
+    expect(result.isAvailablePercussion).toBeUndefined();
   });
 
-  test("sets AVAILABLE for selected instruments", () => {
-    const result = toReservationQueryVariables({
+  test("sets true for selected instruments", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -399,14 +398,14 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: ["s", "w", "b", "p"],
       institutionSizes: [],
     });
-    expect(result.isAvailableStrings).toBe(AvailabilityDivision.AVAILABLE);
-    expect(result.isAvailableWoodwind).toBe(AvailabilityDivision.AVAILABLE);
-    expect(result.isAvailableBrass).toBe(AvailabilityDivision.AVAILABLE);
-    expect(result.isAvailablePercussion).toBe(AvailabilityDivision.AVAILABLE);
+    expect(result.isAvailableStrings).toBe(true);
+    expect(result.isAvailableWoodwind).toBe(true);
+    expect(result.isAvailableBrass).toBe(true);
+    expect(result.isAvailablePercussion).toBe(true);
   });
 
-  test("sets institutionSizes to null when none selected", () => {
-    const result = toReservationQueryVariables({
+  test("leaves institutionSizes undefined when none selected", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -414,11 +413,11 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.institutionSizes).toBeNull();
+    expect(result.institutionSizes).toBeUndefined();
   });
 
   test("sets institutionSizes when sizes are selected", () => {
-    const result = toReservationQueryVariables({
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -429,8 +428,8 @@ describe("toReservationQueryVariables", () => {
     expect(result.institutionSizes).toEqual(["INSTITUTION_SIZE_LARGE", "INSTITUTION_SIZE_MEDIUM"]);
   });
 
-  test("sets filter flags to null when no filters selected", () => {
-    const result = toReservationQueryVariables({
+  test("leaves filter flags undefined when no filters selected", () => {
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -438,14 +437,14 @@ describe("toReservationQueryVariables", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.isHoliday).toBeNull();
-    expect(result.isMorningVacant).toBeNull();
-    expect(result.isAfternoonVacant).toBeNull();
-    expect(result.isEveningVacant).toBeNull();
+    expect(result.isHoliday).toBeUndefined();
+    expect(result.isMorningVacant).toBeUndefined();
+    expect(result.isAfternoonVacant).toBeUndefined();
+    expect(result.isEveningVacant).toBeUndefined();
   });
 
   test("sets isMorningVacant to true when morning filter selected", () => {
-    const result = toReservationQueryVariables({
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,
@@ -454,49 +453,13 @@ describe("toReservationQueryVariables", () => {
       institutionSizes: [],
     });
     expect(result.isMorningVacant).toBe(true);
-    expect(result.isAfternoonVacant).toBeNull();
-    expect(result.isEveningVacant).toBeNull();
-    expect(result.isHoliday).toBeNull();
-  });
-
-  test("sets isAfternoonVacant to true when afternoon filter selected", () => {
-    const result = toReservationQueryVariables({
-      municipality: "all",
-      startDate,
-      endDate,
-      filter: ["a"],
-      availableInstruments: [],
-      institutionSizes: [],
-    });
-    expect(result.isAfternoonVacant).toBe(true);
-  });
-
-  test("sets isEveningVacant to true when evening filter selected", () => {
-    const result = toReservationQueryVariables({
-      municipality: "all",
-      startDate,
-      endDate,
-      filter: ["e"],
-      availableInstruments: [],
-      institutionSizes: [],
-    });
-    expect(result.isEveningVacant).toBe(true);
-  });
-
-  test("sets isHoliday to true when holiday filter selected", () => {
-    const result = toReservationQueryVariables({
-      municipality: "all",
-      startDate,
-      endDate,
-      filter: ["h"],
-      availableInstruments: [],
-      institutionSizes: [],
-    });
-    expect(result.isHoliday).toBe(true);
+    expect(result.isAfternoonVacant).toBeUndefined();
+    expect(result.isEveningVacant).toBeUndefined();
+    expect(result.isHoliday).toBeUndefined();
   });
 
   test("sets all filter flags when all filters selected", () => {
-    const result = toReservationQueryVariables({
+    const result = toReservationSearchQueryParams({
       municipality: "all",
       startDate,
       endDate,

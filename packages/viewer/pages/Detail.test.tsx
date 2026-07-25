@@ -1,18 +1,18 @@
+import type { InstitutionDetail, ReservationDto } from "@shisetsu-viewer/shared";
 import { http, HttpResponse } from "msw";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ErrorBoundary } from "../components/utils/ErrorBoundary";
 import { worker } from "../test/mocks/browser";
 import {
-  createMockInstitutionDetailNode,
-  createMockInstitutionDetailConnection,
-  createMockReservationNode,
-  createMockInstitutionReservationsConnection,
+  createMockInstitutionDetail,
+  createMockReservationDto,
+  createMockReservationsPage,
 } from "../test/mocks/data";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import DetailPage from "./Detail";
 
-const TEST_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT;
+const BASE = import.meta.env.VITE_API_ENDPOINT;
 
 const mockIsMobile = vi.hoisted(() => ({ value: false }));
 vi.mock("../hooks/useIsMobile", () => ({
@@ -32,39 +32,28 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-const defaultDetailNode = createMockInstitutionDetailNode();
-const defaultDetailResponse = createMockInstitutionDetailConnection(defaultDetailNode);
-
-type GraphQLBody = { query: string; variables: Record<string, unknown> };
+const defaultDetail = createMockInstitutionDetail();
 
 const useMswDetailMock = (
-  detailResponse = defaultDetailResponse,
-  reservationResponse = createMockInstitutionReservationsConnection([]),
+  detail: InstitutionDetail = defaultDetail,
+  reservationItems: ReservationDto[] = [],
   options?: { reservationDelay?: number; detailError?: boolean; reservationError?: boolean }
 ) => {
   worker.use(
-    http.post(TEST_ENDPOINT, async ({ request }) => {
-      const body = (await request.json()) as GraphQLBody;
-      const queryName = body.query.trim().split(/[\s(]/)[1];
-
-      if (queryName === "institutionDetail") {
-        if (options?.detailError) {
-          return HttpResponse.json({ errors: [{ message: "Network error" }] });
-        }
-        return HttpResponse.json(detailResponse);
+    http.get(`${BASE}/v1/institutions/:id/reservations`, async () => {
+      if (options?.reservationError) {
+        return new HttpResponse("GraphQL error", { status: 500 });
       }
-
-      if (queryName === "institutionReservations") {
-        if (options?.reservationError) {
-          return HttpResponse.json({ errors: [{ message: "GraphQL error" }] });
-        }
-        if (options?.reservationDelay) {
-          await new Promise((resolve) => setTimeout(resolve, options.reservationDelay));
-        }
-        return HttpResponse.json(reservationResponse);
+      if (options?.reservationDelay) {
+        await new Promise((resolve) => setTimeout(resolve, options.reservationDelay));
       }
-
-      return HttpResponse.json({ data: null });
+      return HttpResponse.json(createMockReservationsPage(reservationItems));
+    }),
+    http.get(`${BASE}/v1/institutions/:id`, () => {
+      if (options?.detailError) {
+        return new HttpResponse("Network error", { status: 500 });
+      }
+      return HttpResponse.json(detail);
     })
   );
 };
@@ -97,11 +86,7 @@ describe("Detail Page", () => {
     });
 
     it("website_urlがある場合にリンクアイコンが表示される", async () => {
-      const nodeWithUrl = createMockInstitutionDetailNode({
-        website_url: "https://example.com",
-      });
-      const responseWithUrl = createMockInstitutionDetailConnection(nodeWithUrl);
-      useMswDetailMock(responseWithUrl);
+      useMswDetailMock(createMockInstitutionDetail({ website_url: "https://example.com" }));
 
       await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -114,13 +99,8 @@ describe("Detail Page", () => {
       });
     });
 
-    it("building/institutionがnullの場合でも表示される", async () => {
-      const nodeWithNull = createMockInstitutionDetailNode({
-        building: null,
-        institution: null,
-      });
-      const responseWithNull = createMockInstitutionDetailConnection(nodeWithNull);
-      useMswDetailMock(responseWithNull);
+    it("building/institutionが空の場合でも表示される", async () => {
+      useMswDetailMock(createMockInstitutionDetail({ building: "", institution: "" }));
 
       await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -210,9 +190,8 @@ describe("Detail Page", () => {
 
   describe("予約状況タブ", () => {
     it("予約状況タブをクリックすると予約テーブルが表示される", async () => {
-      const reservationNode1 = createMockReservationNode();
-      const reservationNode2 = createMockReservationNode({
-        id: "reservation-2",
+      const dto1 = createMockReservationDto();
+      const dto2 = createMockReservationDto({
         date: "2025-06-20",
         reservation: {
           RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
@@ -222,10 +201,7 @@ describe("Detail Page", () => {
         updated_at: "2025-06-19T12:00:00",
       });
 
-      useMswDetailMock(
-        defaultDetailResponse,
-        createMockInstitutionReservationsConnection([reservationNode1, reservationNode2])
-      );
+      useMswDetailMock(defaultDetail, [dto1, dto2]);
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -240,23 +216,16 @@ describe("Detail Page", () => {
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
       await expect.element(screen.getByText("日付")).toBeInTheDocument();
-      await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
+      await expect.element(screen.getByText("更新日時")).toBeInTheDocument();
     });
 
     it("予約クエリの startDate にレンダ時点の本日を渡す", async () => {
-      let capturedStartDate: unknown = null;
+      let capturedStartDate: string | null = null;
       worker.use(
-        http.post(TEST_ENDPOINT, async ({ request }) => {
-          const body = (await request.json()) as GraphQLBody;
-          const queryName = body.query.trim().split(/[\s(]/)[1];
-          if (queryName === "institutionDetail") {
-            return HttpResponse.json(defaultDetailResponse);
-          }
-          if (queryName === "institutionReservations") {
-            capturedStartDate = body.variables["startDate"];
-            return HttpResponse.json(createMockInstitutionReservationsConnection([]));
-          }
-          return HttpResponse.json({ data: null });
+        http.get(`${BASE}/v1/institutions/:id`, () => HttpResponse.json(defaultDetail)),
+        http.get(`${BASE}/v1/institutions/:id/reservations`, ({ request }) => {
+          capturedStartDate = new URL(request.url).searchParams.get("startDate");
+          return HttpResponse.json(createMockReservationsPage([]));
         })
       );
 
@@ -272,15 +241,13 @@ describe("Detail Page", () => {
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      // module-level `new Date()` だと import 時刻（実時刻）を固定してしまう。
-      // レンダ時評価なら setSystemTime(FAKE_NOW) を読むため 2025-06-15 になる。
       await vi.waitFor(() => {
         expect(capturedStartDate).toBe("2025-06-15");
       });
     });
 
     it("予約データが空の場合、データなしメッセージを表示する", async () => {
-      useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]));
+      useMswDetailMock(defaultDetail, []);
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -298,15 +265,9 @@ describe("Detail Page", () => {
     });
 
     it("予約状況除外対象の自治体の場合、データなしメッセージを表示する", async () => {
-      const excludedNode = createMockInstitutionDetailNode({
-        municipality: "MUNICIPALITY_SUGINAMI",
-      });
-      const excludedResponse = createMockInstitutionDetailConnection(excludedNode);
-
-      useMswDetailMock(
-        excludedResponse,
-        createMockInstitutionReservationsConnection([createMockReservationNode()])
-      );
+      useMswDetailMock(createMockInstitutionDetail({ municipality: "MUNICIPALITY_SUGINAMI" }), [
+        createMockReservationDto(),
+      ]);
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -324,10 +285,7 @@ describe("Detail Page", () => {
     });
 
     it("予約データ取得中にスピナーを表示する", async () => {
-      // Use very long delay to keep loading state
-      useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]), {
-        reservationDelay: 60000,
-      });
+      useMswDetailMock(defaultDetail, [], { reservationDelay: 60000 });
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -350,9 +308,7 @@ describe("Detail Page", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-      useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]), {
-        reservationError: true,
-      });
+      useMswDetailMock(defaultDetail, [], { reservationError: true });
 
       const { user } = await renderWithProviders(
         <ErrorBoundary>
@@ -387,9 +343,7 @@ describe("Detail Page", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-      useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]), {
-        detailError: true,
-      });
+      useMswDetailMock(defaultDetail, [], { detailError: true });
 
       await renderWithProviders(
         <ErrorBoundary>
@@ -425,9 +379,8 @@ describe("Detail Page", () => {
     });
 
     it("モバイルで予約データがカード形式で表示される", async () => {
-      const reservationNode1 = createMockReservationNode();
-      const reservationNode2 = createMockReservationNode({
-        id: "reservation-2",
+      const dto1 = createMockReservationDto();
+      const dto2 = createMockReservationDto({
         date: "2025-06-20",
         reservation: {
           RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
@@ -436,10 +389,7 @@ describe("Detail Page", () => {
         updated_at: "2025-06-19T12:00:00",
       });
 
-      useMswDetailMock(
-        defaultDetailResponse,
-        createMockInstitutionReservationsConnection([reservationNode1, reservationNode2])
-      );
+      useMswDetailMock(defaultDetail, [dto1, dto2]);
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
@@ -463,7 +413,7 @@ describe("Detail Page", () => {
 
   describe("タブ切り替え", () => {
     it("タブをクリックするとタブが切り替わる", async () => {
-      useMswDetailMock(defaultDetailResponse, createMockInstitutionReservationsConnection([]));
+      useMswDetailMock(defaultDetail, []);
 
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],

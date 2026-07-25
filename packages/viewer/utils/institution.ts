@@ -1,5 +1,5 @@
-import type { InstitutionsQueryVariables } from "../api/queries";
-import { AvailabilityDivision } from "../constants/enums";
+import type { InstitutionsQueryParams, UsageFeeEntry } from "@shisetsu-viewer/shared";
+
 import { formatPrice } from "./format";
 import {
   FeeDivisionMap,
@@ -19,7 +19,7 @@ import {
 
 export const formatUsageFee = (
   municipality: string | undefined,
-  usageFee: { division: string; fee: string }[] | undefined
+  usageFee: UsageFeeEntry[] | undefined
 ): string => {
   if (!municipality || !usageFee?.length) {
     return "";
@@ -50,28 +50,21 @@ export const toInstitutionSearchParams = (
   };
 };
 
-export const toInstitutionQueryVariables = ({
+export const toInstitutionQueryParams = ({
   municipality,
   availableInstruments,
   institutionSizes,
-}: InstitutionSearchParams): InstitutionsQueryVariables => {
+}: InstitutionSearchParams): InstitutionsQueryParams => {
   return {
-    first: 100,
-    after: null,
+    limit: 100,
     municipality:
       municipality !== SELECT_OPTION_ALL
         ? [municipality]
         : SupportedMunicipalities.map((m) => m.toString()),
-    isAvailableStrings: availableInstruments.includes(STRINGS)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    isAvailableWoodwind: availableInstruments.includes(WOODWIND)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    isAvailableBrass: availableInstruments.includes(BRASS) ? AvailabilityDivision.AVAILABLE : null,
-    isAvailablePercussion: availableInstruments.includes(PERCUSSION)
-      ? AvailabilityDivision.AVAILABLE
-      : null,
-    institutionSizes: toInstitutionSizeParam(institutionSizes) || null,
+    isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
+    isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
+    isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,
+    isAvailablePercussion: availableInstruments.includes(PERCUSSION) ? true : undefined,
+    institutionSizes: toInstitutionSizeParam(institutionSizes),
   };
 };

@@ -1,60 +1,52 @@
-import { graphql, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw";
 
 import {
-  createMockInstitutionNode,
-  createMockInstitutionsConnection,
-  createMockInstitutionDetailNode,
-  createMockInstitutionDetailConnection,
-  createMockInstitutionReservationsConnection,
-  createMockReservationNode,
-  createMockSearchableReservationNode,
-  createMockSearchableReservationsConnection,
+  createMockInstitutionDetail,
+  createMockInstitutionsPage,
+  createMockInstitutionSummary,
+  createMockReservationDto,
+  createMockReservationsPage,
+  createMockReservationSearchHit,
+  createMockReservationSearchPage,
 } from "./data";
 
+const BASE = import.meta.env.VITE_API_ENDPOINT;
+
 export const handlers = [
-  // institutions list query (Institution page)
-  graphql.query("institutions", () => {
-    return HttpResponse.json(
-      createMockInstitutionsConnection([
-        createMockInstitutionNode(),
-        createMockInstitutionNode({
-          id: btoa(
-            JSON.stringify([1, "public", "institutions", "a1b2c3d4-e5f6-7890-abcd-ef1234567890"])
-          ),
+  // institutions list (Institution page)
+  http.get(`${BASE}/v1/institutions`, () =>
+    HttpResponse.json(
+      createMockInstitutionsPage([
+        createMockInstitutionSummary(),
+        createMockInstitutionSummary({
+          id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
           building: "テスト市民ホール",
           institution: "大ホール",
           municipality: "MUNICIPALITY_ARAKAWA",
           institution_size: "INSTITUTION_SIZE_LARGE",
         }),
       ])
-    );
-  }),
+    )
+  ),
 
-  // institution detail query (Detail page)
-  graphql.query("institutionDetail", () => {
-    return HttpResponse.json(
-      createMockInstitutionDetailConnection(createMockInstitutionDetailNode())
-    );
-  }),
-
-  // institution reservations query (Detail page - reservation tab)
-  graphql.query("institutionReservations", () => {
-    return HttpResponse.json(
-      createMockInstitutionReservationsConnection([
-        createMockReservationNode(),
-        createMockReservationNode({
-          id: "reservation-2",
+  // institution reservations (Detail page - reservation tab)
+  http.get(`${BASE}/v1/institutions/:id/reservations`, () =>
+    HttpResponse.json(
+      createMockReservationsPage([
+        createMockReservationDto(),
+        createMockReservationDto({
           date: "2024-10-02",
           updated_at: "2024-10-01T12:00:00",
         }),
       ])
-    );
-  }),
+    )
+  ),
 
-  // searchable reservations query (Reservation page)
-  graphql.query("reservations", () => {
-    return HttpResponse.json(
-      createMockSearchableReservationsConnection([createMockSearchableReservationNode()])
-    );
-  }),
+  // institution detail (Detail page) — 具体パスの後に置く
+  http.get(`${BASE}/v1/institutions/:id`, () => HttpResponse.json(createMockInstitutionDetail())),
+
+  // searchable reservations (Reservation page)
+  http.get(`${BASE}/v1/reservations/search`, () =>
+    HttpResponse.json(createMockReservationSearchPage([createMockReservationSearchHit()]))
+  ),
 ];

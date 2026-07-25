@@ -4,7 +4,7 @@ React 19 SPA for browsing facility reservation data. Deployed to Cloudflare Work
 
 ## Non-obvious Constraints
 
-- **GraphQL は codegen なし・全部手書き**。自作 fetch client `api/graphqlClient.ts` + 手書きの query 文字列と型 `api/queries.ts`。データ取得は `useGraphQLQuery<T>()` と `usePaginatedQuery<TData, TNode>()`（Relay 形式カーソルページネーション、`fetchMore()`）。どちらも Auth0 token を自動注入する。
+- **データ層は `packages/api` の型付き REST**（Hasura GraphQL から移行済み・PR3-3）。自作 fetch client `api/client.ts`（`apiGet<T>(url, params, token?)`）+ 型付きエンドポイント `api/endpoints.ts`。DTO 型は `@shisetsu-viewer/shared` の `apiTypes.ts`（`InstitutionSummary` / `InstitutionDetail` / `ReservationDto` / `ReservationSearchHit` / `Page<T>` 等）。データ取得は `useApiQuery<T>(fetcher, key)` と `usePaginatedQuery<TItem>(fetchPage, key)`（keyset カーソル `cursor`・`fetchMore()`）。`fetcher`/`fetchPage` は token を受け取り、認証必要エンドポイントに Bearer で渡す。エンドポイントは `VITE_API_ENDPOINT`。
 - Router は wouter。React Router との対応: `Navigate` → `Redirect`、`useNavigate()` → `useLocation()[1]`、location 読取は `useLocation()[0]` + `useSearch()`。ページは App.tsx 内で `React.lazy()` インライン定義（router ファイルなし）。
 - Styling は CSS Modules + `theme.css` の CSS custom properties。dark mode は `<html data-theme="...">`（`contexts/ColorMode.tsx`、localStorage 永続化）。MUI は不使用。
 - Auth: `contexts/Auth0.tsx` が Auth0Client をラップ。認証必須ルート（Reservation）は `components/utils/AuthGuard` で保護。
@@ -21,4 +21,4 @@ React 19 SPA for browsing facility reservation data. Deployed to Cloudflare Work
 
 ## Environment
 
-`.env.sample` → `.env`（`VITE_GRAPHQL_ENDPOINT`, `VITE_AUTH0_DOMAIN`, `VITE_AUTH0_CLIENT_ID`, `VITE_AUTH0_AUDIENCE`）。
+`.env.sample` → `.env`（`VITE_API_ENDPOINT`, `VITE_AUTH0_DOMAIN`, `VITE_AUTH0_CLIENT_ID`, `VITE_AUTH0_AUDIENCE`）。

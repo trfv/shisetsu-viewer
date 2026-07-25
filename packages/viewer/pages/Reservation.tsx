@@ -1,12 +1,9 @@
+import type { ReservationSearchHit } from "@shisetsu-viewer/shared";
 import { addMonths, endOfMonth, max, min } from "date-fns";
 import { useCallback, useMemo, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
-import {
-  RESERVATIONS_QUERY,
-  type SearchableReservationNode,
-  type ReservationsQueryData,
-} from "../api/queries";
+import { searchReservations } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
@@ -25,12 +22,11 @@ import {
   type SupportedMunicipality,
   RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "../utils/municipality";
-import { extractSinglePkFromRelayId } from "../utils/relay";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
   formatReservationMap,
-  toReservationQueryVariables,
   toReservationSearchParams,
+  toReservationSearchQueryParams,
 } from "../utils/reservation";
 import {
   AVAILABLE_INSTRUMENT_MAP,
@@ -39,35 +35,35 @@ import {
   toggleArrayParam,
 } from "../utils/search";
 
-export const COLUMNS: Columns<SearchableReservationNode> = [
+type ReservationSearchRow = ReservationSearchHit & { id: string; [key: string]: unknown };
+
+export const COLUMNS: Columns<ReservationSearchRow> = [
   {
     field: "building_and_institution",
     headerName: "施設名",
     type: "getter",
     maxWidth: 400,
     valueGetter: (params) =>
-      `${params.row.institution?.building ?? ""} ${params.row.institution?.institution ?? ""}`,
+      `${params.row.institution.building} ${params.row.institution.institution}`,
   },
   {
     field: "municipality",
     headerName: "地区",
     type: "getter",
     hide: true,
-    valueGetter: (params) =>
-      SupportedMunicipalityMap[params.row.institution?.municipality as string] || "",
+    valueGetter: (params) => SupportedMunicipalityMap[params.row.institution.municipality] || "",
   },
   {
     field: "institution_size",
     headerName: "施設サイズ",
     type: "getter",
-    valueGetter: (params) =>
-      InstitutionSizeMap[params.row.institution?.institution_size ?? ""] || "",
+    valueGetter: (params) => InstitutionSizeMap[params.row.institution.institution_size] || "",
   },
   {
     field: "date",
     headerName: "日付",
     type: "getter",
-    valueGetter: (params) => formatDate(params.row.reservation?.date),
+    valueGetter: (params) => formatDate(params.row.reservation.date),
   },
   {
     field: "reservation",
@@ -75,16 +71,16 @@ export const COLUMNS: Columns<SearchableReservationNode> = [
     maxWidth: 400,
     type: "getter",
     valueGetter: (params) => {
-      const municipality = params.row.institution?.municipality as SupportedMunicipality;
-      const obj = params.row.reservation?.reservation as Record<string, string>;
+      const municipality = params.row.institution.municipality as SupportedMunicipality;
+      const obj = params.row.reservation.reservation;
       return formatReservationMap(municipality, obj);
     },
   },
   {
     field: "updated_at",
-    headerName: "取得日時",
+    headerName: "更新日時",
     type: "getter",
-    valueGetter: (params) => formatDatetime(params.row.reservation?.updated_at),
+    valueGetter: (params) => formatDatetime(params.row.reservation.updated_at),
   },
 ];
 
@@ -125,17 +121,30 @@ const ReservationPage = () => {
     [values, minDate, maxDate]
   );
 
+  const queryParams = useMemo(
+    () => toReservationSearchQueryParams(reservationSearchParams),
+    [reservationSearchParams]
+  );
+
   const {
-    data: reservations,
+    data: hits,
     loading,
     error,
     hasNextPage: hasMore,
     fetchMore,
     fetchingMore,
-  } = usePaginatedQuery<ReservationsQueryData, SearchableReservationNode>(
-    RESERVATIONS_QUERY,
-    toReservationQueryVariables(reservationSearchParams),
-    (d) => d.searchable_reservations_connection
+  } = usePaginatedQuery<ReservationSearchHit>(
+    (token, cursor) => searchReservations(queryParams, cursor, token),
+    JSON.stringify(queryParams)
+  );
+
+  const reservations = useMemo<ReservationSearchRow[]>(
+    () =>
+      (hits ?? []).map((hit) => ({
+        id: `${hit.institution.id}_${hit.reservation.date}`,
+        ...hit,
+      })),
+    [hits]
   );
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
@@ -254,20 +263,18 @@ const ReservationPage = () => {
           </CheckboxGroup>
         </>
       }
-      empty={!municipality || !reservations?.length}
+      empty={!municipality || !reservations.length}
       error={error}
       fetchMore={fetchMore}
       fetchingMore={fetchingMore}
       hasNextPage={hasMore}
       loading={loading}
       onRowClick={(params) => {
-        const institutionId =
-          params.row.institution?.id && extractSinglePkFromRelayId(params.row.institution.id);
-        if (institutionId) {
-          setLocation(ROUTES.detail.replace(":id", institutionId as string));
+        if (params.row.institution.id) {
+          setLocation(ROUTES.detail.replace(":id", params.row.institution.id));
         }
       }}
-      rows={reservations ?? []}
+      rows={reservations}
     />
   );
 };
