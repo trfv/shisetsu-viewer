@@ -32,5 +32,5 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 ## Cross-Package Architecture
 
 - `@shisetsu-viewer/shared` の `registry.ts` / `types.ts` が自治体データと enum の source of truth。viewer / scraper 双方が import する。
-- Data flow: scrapers が自治体サイトを巡回 → 変換 → Hasura GraphQL へ upload（Auth0 M2M token）。viewer は自作 fetch ベース GraphQL client で取得（Auth0 Bearer token）。
-- MCP server は同データを AI 向けに公開（Workers デプロイは read-only、local stdio は write 可）。
+- Data flow: scrapers が自治体サイトを巡回 → 変換 → **Hasura（Auth0 M2M）と `packages/api`（GitHub OIDC）へ dual-write**。読み取りはすでに D1 側へ切替済みで、viewer は `packages/api` の REST を叩く（Auth0 Bearer token）。Hasura は PR 3-5 で撤去する。
+- MCP server は同データを AI 向けに公開（Workers デプロイは D1 直バインドで read-only、local stdio は api 経由で write 可）。
