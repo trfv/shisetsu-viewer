@@ -26,6 +26,9 @@ describe("formatMonthDate", () => {
   test("Date date", () => {
     expect(formatMonthDate(new Date(2022, 1, 26))).toBe("2月26日(土)");
   });
+  test("無効な文字列は空文字を返す（throw しない）", () => {
+    withErrorMock(() => expect(formatMonthDate("not-a-date")).toBe(""));
+  });
 });
 
 describe("formatDate", () => {
@@ -38,17 +41,29 @@ describe("formatDate", () => {
   test("Date date", () => {
     expect(formatDate(new Date(2022, 1, 26))).toBe("2022/02/26(土)");
   });
+  test("無効な文字列は空文字を返す（throw しない）", () => {
+    withErrorMock(() => expect(formatDate("not-a-date")).toBe(""));
+  });
 });
 
 describe("formatDatetime", () => {
   test("empty string", () => {
     withErrorMock(() => expect(formatDatetime("")).toBe(""));
   });
-  test("string datetime", () => {
+  test("string datetime（Z 無し・UTC とみなす）", () => {
     expect(formatDatetime("2022-02-26T00:00:00")).toBe("2022/02/26 09:00:00");
+  });
+  test("Z 付き ISO 文字列（新 packages/api の形式）", () => {
+    expect(formatDatetime("2022-02-26T00:00:00.000Z")).toBe("2022/02/26 09:00:00");
+  });
+  test("タイムゾーンオフセット付き文字列", () => {
+    expect(formatDatetime("2022-02-26T09:00:00+09:00")).toBe("2022/02/26 09:00:00");
   });
   test("Date datetime", () => {
     expect(formatDatetime(new Date("2022-02-26T09:00:00+0900"))).toBe("2022/02/26 09:00:00");
+  });
+  test("無効な文字列は空文字を返す（throw しない）", () => {
+    withErrorMock(() => expect(formatDatetime("not-a-date")).toBe(""));
   });
 });
 
