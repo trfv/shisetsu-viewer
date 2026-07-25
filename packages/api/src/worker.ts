@@ -52,6 +52,23 @@ const RE_INSTITUTION_RESERVATIONS = new RegExp(
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
 
+// CORS: viewer（別 origin のブラウザ SPA）からの fetch を許可する。
+// 本番 app.shisetsudb.com / ローカル開発 / Workers プレビュー(*.trfv-dev.workers.dev)。
+const ALLOWED_ORIGIN_EXACT = new Set(["https://app.shisetsudb.com", "http://localhost:3000"]);
+const PREVIEW_ORIGIN_SUFFIX = ".trfv-dev.workers.dev";
+
+/** 許可 origin ならその origin を、そうでなければ null を返す（reflect 方式）。 */
+function allowedOrigin(origin: string | null): string | null {
+  if (!origin) return null;
+  if (ALLOWED_ORIGIN_EXACT.has(origin)) return origin;
+  try {
+    if (new URL(origin).host.endsWith(PREVIEW_ORIGIN_SUFFIX)) return origin;
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 function json(body: unknown, init?: ResponseInit): Response {
   return Response.json(body, init);
 }
@@ -239,47 +256,70 @@ async function handleAdminExport(request: Request, url: URL, env: Env): Promise<
   return json(page);
 }
 
+async function handle(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const { pathname } = url;
+  try {
+    // admin 系は除外する。scraper が 500 行ずつのチャンクを短時間に大量 PUT するため、
+    // 一律に適用すると本番のデータ投入が壊れる（admin は OIDC / API キーで保護済み）。
+    if (env.RATE_LIMITER && !pathname.startsWith("/v1/admin/")) {
+      const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
+      const { success } = await env.RATE_LIMITER.limit({ key });
+      if (!success) {
+        return json(
+          { error: "rate limit exceeded" },
+          { status: 429, headers: { "Retry-After": "60" } }
+        );
+      }
+    }
+
+    if (request.method === "GET") {
+      if (pathname === "/v1/health") return json({ ok: true });
+      if (pathname === "/v1/institutions") return await handleListInstitutions(url, env);
+      if (pathname === "/v1/scrape-runs") return await handleScrapeRuns(env);
+      if (pathname === "/v1/reservations/search") return await handleSearch(request, url, env);
+      if (pathname === "/v1/admin/reservations/export")
+        return await handleAdminExport(request, url, env);
+      const resv = pathname.match(RE_INSTITUTION_RESERVATIONS);
+      if (resv) return await handleInstitutionReservations(request, resv[1] as string, url, env);
+      const detail = pathname.match(RE_INSTITUTION);
+      if (detail) return await handleInstitutionDetail(detail[1] as string, env);
+    }
+    if (request.method === "PUT") {
+      if (pathname === "/v1/admin/reservations") return await handleAdminReservations(request, env);
+      if (pathname === "/v1/admin/institutions") return await handleAdminInstitutions(request, env);
+      if (pathname === "/v1/admin/holidays") return await handleAdminHolidays(request, env);
+    }
+    return error(404, "not found");
+  } catch (e) {
+    console.error(e);
+    return error(500, "internal error");
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const { pathname } = url;
-    try {
-      // admin 系は除外する。scraper が 500 行ずつのチャンクを短時間に大量 PUT するため、
-      // 一律に適用すると本番のデータ投入が壊れる（admin は OIDC / API キーで保護済み）。
-      if (env.RATE_LIMITER && !pathname.startsWith("/v1/admin/")) {
-        const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
-        const { success } = await env.RATE_LIMITER.limit({ key });
-        if (!success) {
-          return json(
-            { error: "rate limit exceeded" },
-            { status: 429, headers: { "Retry-After": "60" } }
-          );
-        }
-      }
+    const origin = allowedOrigin(request.headers.get("Origin"));
 
-      if (request.method === "GET") {
-        if (pathname === "/v1/health") return json({ ok: true });
-        if (pathname === "/v1/institutions") return await handleListInstitutions(url, env);
-        if (pathname === "/v1/scrape-runs") return await handleScrapeRuns(env);
-        if (pathname === "/v1/reservations/search") return await handleSearch(request, url, env);
-        if (pathname === "/v1/admin/reservations/export")
-          return await handleAdminExport(request, url, env);
-        const resv = pathname.match(RE_INSTITUTION_RESERVATIONS);
-        if (resv) return await handleInstitutionReservations(request, resv[1] as string, url, env);
-        const detail = pathname.match(RE_INSTITUTION);
-        if (detail) return await handleInstitutionDetail(detail[1] as string, env);
-      }
-      if (request.method === "PUT") {
-        if (pathname === "/v1/admin/reservations")
-          return await handleAdminReservations(request, env);
-        if (pathname === "/v1/admin/institutions")
-          return await handleAdminInstitutions(request, env);
-        if (pathname === "/v1/admin/holidays") return await handleAdminHolidays(request, env);
-      }
-      return error(404, "not found");
-    } catch (e) {
-      console.error(e);
-      return error(500, "internal error");
+    // プリフライトはルーティング・レート制限より前に応答する
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...(origin ? { "Access-Control-Allow-Origin": origin } : {}),
+          "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
+          "Access-Control-Allow-Headers": "Authorization, Content-Type",
+          "Access-Control-Max-Age": "86400",
+          Vary: "Origin",
+        },
+      });
     }
+
+    const res = await handle(request, env);
+    if (origin) {
+      res.headers.set("Access-Control-Allow-Origin", origin);
+      res.headers.append("Vary", "Origin");
+    }
+    return res;
   },
 } satisfies ExportedHandler<Env>;
