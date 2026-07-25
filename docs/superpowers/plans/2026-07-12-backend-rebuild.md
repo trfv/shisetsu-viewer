@@ -262,7 +262,7 @@ export function buildReservationRows(
         unmatched.add(key);
         continue;
       }
-      const dedupeKey = `${institutionId} ${date}`;
+      const dedupeKey = `${institutionId}\0${date}`;
       if (seen.has(dedupeKey)) continue;
       seen.add(dedupeKey);
       rows.push({ institution_id: institutionId, date, reservation });
@@ -2053,7 +2053,7 @@ PATH="$PWD/node_modules/.bin:$PATH" git commit -m "feat(viewer): PR3-3 型付き
 
 「取得日時」の整理（spec 決定事項の具体化）:
 - Reservation / Detail の行カラム `updated_at` のヘッダを **「更新日時」** に変更（差分書き込み後は「最終変化時刻」の意味になるため）
-- Reservation ページと Detail の予約タブに、`fetchScrapeRuns()` 由来の **「データ取得: <自治体の最新 fetched_at>」** 表示を追加（`hooks/useScrapeRuns.ts` を新設、`useApiQuery` で取得、municipality キーで引く）
+- ~~Reservation ページと Detail の予約タブに、`fetchScrapeRuns()` 由来の **「データ取得: <自治体の最新 fetched_at>」** 表示を追加~~ → **不採用（2026-07-25 ユーザー判断: 表示しなくてよい）**。`api/endpoints.ts` の `fetchScrapeRuns` と `/v1/scrape-runs` は残置（テスト済み・api 側の公開エンドポイントとして維持）。`hooks/useScrapeRuns.ts` は作らない
 
 - [ ] **Step 1: MSW ハンドラを REST 化**（テストを先に新契約へ）
 - [ ] **Step 2: ページ・utils を書き換え、旧ファイルを削除**（`git rm` を使う。`rm -rf` は権限で拒否される）
@@ -2076,10 +2076,12 @@ PATH="$PWD/node_modules/.bin:$PATH" git commit -m "feat(viewer): PR3-3 データ
 
 ### Task 3-3-4: E2E 確認と PR・デプロイ検証
 
-- [ ] **Step 1: ローカル実 API での確認** — `.env` の `VITE_API_ENDPOINT` を本番 `https://api.shisetsudb.com` に向けて `npm start`。施設一覧 / 詳細 / 予約検索（ログイン込み）/ 無限スクロールを手で確認。
-- [ ] **Step 2: E2E** — `npm run test:e2e -w @shisetsu-viewer/viewer`。CI 用の `.env.test` に `VITE_API_ENDPOINT` を追加（ダミー値専用ヘッダの慣例に従う）。
-- [ ] **Step 3: PR 作成 → ci-success 緑 → マージ**。CF Workers Builds が自動デプロイ。本番 app.shisetsudb.com で Step 1 と同じ動作確認。
-- [ ] **Step 4: ロールバック手順の確認（記録のみ）** — CF ダッシュボード → Workers → shisetsu-viewer → Deployments → instant rollback。Hasura は PR 3-5 まで残っているため、旧デプロイに戻せば全機能が旧経路で動く。
+- [x] **Step 1: ローカル実 API での確認** — 実施形態を変更。ローカル `.env` ではなく **本番 app.shisetsudb.com（`d1-api.shisetsudb.com` 向け本番バンドル）で実ブラウザ確認**（2026-07-25）。予約検索・施設検索の描画と日時整形が正常。エンドポイントは `d1-api.`（`api.` は Hasura が占有中のため PR 3-5 で張替）。
+- [x] **Step 2: E2E** — `npm run test:e2e -w @shisetsu-viewer/viewer` で **chromium / firefox / webkit 39 件すべて PASS**（2026-07-25）。`.env.test` の `VITE_API_ENDPOINT` は既に追加済み。
+  - **ローカルの落とし穴**: `@playwright/test` の版が上がるとブラウザキャッシュのビルド番号（`firefox-1532` 等）が変わり、未取得のブラウザは「テスト全滅」という形で失敗する。`npx playwright install firefox webkit` で解消。CI は cache key が package-lock ハッシュなので自動更新されこの罠を踏まない。
+  - **既知のカバレッジ限界**: CI の E2E は `.env` なしでビルドするため `VITE_API_ENDPOINT` が `undefined`。`app.spec.ts` の施設検索テストは `絞り込みボタン.or(エラーメッセージ)` を待つ設計なので、**API 契約が壊れていても緑になる**。REST 切替の回帰検知は vitest（MSW）側の責務。
+- [x] **Step 3: PR 作成 → ci-success 緑 → マージ** — #1652（viewer）/ #1656（api CORS）としてマージ済み。CF Workers Builds が自動デプロイ。本番で動作確認済み（Step 1）。
+- [x] **Step 4: ロールバック手順の確認（記録のみ）** — CF ダッシュボード → Workers → shisetsu-viewer → Deployments → instant rollback。Hasura は PR 3-5 まで残っているため、旧デプロイに戻せば全機能が旧経路で動く。
 
 ---
 
