@@ -30,6 +30,33 @@ describe("CORS", () => {
     expect(res.headers.get("Vary")).toContain("Origin");
   });
 
+  it("shisetsudb.com の任意サブドメインを許可する", async () => {
+    const origin = "https://staging.shisetsudb.com";
+    const res = await SELF.fetch("https://api.example.com/v1/health", {
+      headers: { Origin: origin },
+    });
+    expect(res.headers.get("Access-Control-Allow-Origin")).toBe(origin);
+  });
+
+  it("類似ドメイン（*.shisetsudb.com.attacker.com / evil-shisetsudb.com）を拒否する", async () => {
+    for (const origin of [
+      "https://app.shisetsudb.com.attacker.com",
+      "https://evil-shisetsudb.com",
+    ]) {
+      const res = await SELF.fetch("https://api.example.com/v1/health", {
+        headers: { Origin: origin },
+      });
+      expect(res.headers.get("Access-Control-Allow-Origin")).toBeNull();
+    }
+  });
+
+  it("http の shisetsudb.com サブドメインは拒否する（https 限定）", async () => {
+    const res = await SELF.fetch("https://api.example.com/v1/health", {
+      headers: { Origin: "http://app.shisetsudb.com" },
+    });
+    expect(res.headers.get("Access-Control-Allow-Origin")).toBeNull();
+  });
+
   it("プレビュー *.trfv-dev.workers.dev を許可する", async () => {
     const origin = "https://worktree-rebuild-viewer-api-shisetsu-viewer.trfv-dev.workers.dev";
     const res = await SELF.fetch("https://api.example.com/v1/health", {

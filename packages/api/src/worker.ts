@@ -53,16 +53,20 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
 
 // CORS: viewer（別 origin のブラウザ SPA）からの fetch を許可する。
-// 本番 app.shisetsudb.com / ローカル開発 / Workers プレビュー(*.trfv-dev.workers.dev)。
-const ALLOWED_ORIGIN_EXACT = new Set(["https://app.shisetsudb.com", "http://localhost:3000"]);
-const PREVIEW_ORIGIN_SUFFIX = ".trfv-dev.workers.dev";
+// 本番/将来の任意サブドメイン(*.shisetsudb.com) と Workers プレビュー(*.trfv-dev.workers.dev)、
+// ローカル開発(localhost:3000)。https 限定（localhost の http は例外）。
+// suffix は先頭ドット必須で、evil-shisetsudb.com / *.shisetsudb.com.attacker.com を弾く。
+const ALLOWED_ORIGIN_EXACT = new Set(["http://localhost:3000"]);
+const ALLOWED_HOST_SUFFIXES = [".shisetsudb.com", ".trfv-dev.workers.dev"];
 
 /** 許可 origin ならその origin を、そうでなければ null を返す（reflect 方式）。 */
 function allowedOrigin(origin: string | null): string | null {
   if (!origin) return null;
   if (ALLOWED_ORIGIN_EXACT.has(origin)) return origin;
   try {
-    if (new URL(origin).host.endsWith(PREVIEW_ORIGIN_SUFFIX)) return origin;
+    const { protocol, hostname } = new URL(origin);
+    if (protocol !== "https:") return null;
+    if (ALLOWED_HOST_SUFFIXES.some((suffix) => hostname.endsWith(suffix))) return origin;
   } catch {
     return null;
   }
