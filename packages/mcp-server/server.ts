@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import type { GraphQLClient } from "./graphqlClient.ts";
+import type { DataSource, WritableDataSource } from "./dataSource.ts";
 import { registerGuidePrompt } from "./prompts/guide.ts";
 import { registerSearchAvailableRoomsPrompt } from "./prompts/searchAvailableRooms.ts";
 import { registerMunicipalitiesResource } from "./resources/municipalities.ts";
@@ -12,13 +12,18 @@ import { registerUpsertInstitutions } from "./tools/upsertInstitutions.ts";
 import { registerUpsertReservations } from "./tools/upsertReservations.ts";
 
 /**
- * `client` は呼び出し元がリクエストごとに生成して渡す。
- * サーバーインスタンスとクライアントを 1:1 で対応させることで、
- * Workers の並行リクエスト間でトークンが共有されないことを型で保証する。
+ * DataSource はリクエストごとに生成して渡す。サーバーインスタンスと DataSource を 1:1 で
+ * 対応させることで、Workers の並行リクエスト間で認証状態（ロール・トークン）が共有されない
+ * ことを型構造で保証する。
+ *
+ * - `allowReservations` が false のとき reservations 系 2 ツールを登録しない
+ *   （anonymous / trial ユーザーへの予約データ非公開を server 構成に昇格）。
+ * - `write` が渡された場合のみ write 2 ツールを登録する（admin モード = stdio）。
  */
 export function createServer(options: {
-  authMode: "admin" | "auth0";
-  client: GraphQLClient;
+  dataSource: DataSource;
+  allowReservations: boolean;
+  write?: WritableDataSource | undefined;
 }): McpServer {
   const server = new McpServer({
     name: "shisetsu-viewer",
@@ -30,14 +35,17 @@ export function createServer(options: {
   registerGuidePrompt(server);
   registerSearchAvailableRoomsPrompt(server);
 
-  registerListInstitutions(server, options.client);
-  registerGetInstitutionDetail(server, options.client);
-  registerGetInstitutionReservations(server, options.client);
-  registerSearchReservations(server, options.client);
+  registerListInstitutions(server, options.dataSource);
+  registerGetInstitutionDetail(server, options.dataSource);
 
-  if (options.authMode === "admin") {
-    registerUpsertReservations(server, options.client);
-    registerUpsertInstitutions(server, options.client);
+  if (options.allowReservations) {
+    registerGetInstitutionReservations(server, options.dataSource);
+    registerSearchReservations(server, options.dataSource);
+  }
+
+  if (options.write) {
+    registerUpsertReservations(server, options.write);
+    registerUpsertInstitutions(server, options.write);
   }
 
   return server;

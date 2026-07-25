@@ -1,34 +1,18 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-import type { GraphQLClient } from "../graphqlClient.ts";
+import type { WritableDataSource } from "../dataSource.ts";
 import { institutionIdSchema } from "../paramHelpers.ts";
 
-const MUTATION = `
-mutation update_reservations($data: [reservations_insert_input!]!) {
-  insert_reservations(
-    objects: $data
-    on_conflict: {
-      constraint: reservations_institution_id_date_key
-      update_columns: [reservation]
-    }
-  ) {
-    affected_rows
-  }
-}`;
+// D1 API は 1 リクエスト 500 行まで（MAX_RESERVATION_ROWS）。超過分はチャンク分割で送る。
+const CHUNK_SIZE = 500;
 
-interface MutationData {
-  insert_reservations: { affected_rows: number };
-}
-
-const CHUNK_SIZE = 2000;
-
-export function registerUpsertReservations(server: McpServer, client: GraphQLClient): void {
+export function registerUpsertReservations(server: McpServer, write: WritableDataSource): void {
   server.registerTool(
     "upsert_reservations",
     {
       description:
-        "予約データを一括 upsert します（admin のみ）。2000件ずつチャンク処理で送信します。",
+        "予約データを一括 upsert します（admin のみ）。500件ずつチャンク処理で送信します。",
       annotations: {
         title: "予約データ一括更新",
         readOnlyHint: false,
@@ -37,6 +21,11 @@ export function registerUpsertReservations(server: McpServer, client: GraphQLCli
         openWorldHint: false,
       },
       inputSchema: {
+        municipality: z.string().describe("自治体キー (MUNICIPALITY_*)。scrape_runs 記録に使用"),
+        runId: z
+          .string()
+          .optional()
+          .describe("実行 ID (省略時はタイムスタンプ)。scrape_runs の冪等キー"),
         data: z
           .array(
             z.object({
@@ -54,12 +43,21 @@ export function registerUpsertReservations(server: McpServer, client: GraphQLCli
       },
     },
     async (args) => {
-      let totalAffected = 0;
+      const runId = args.runId ?? `mcp-${Date.now()}`;
+      let received = 0;
+      let rowsWritten = 0;
+      let deferred = false;
 
       for (let i = 0; i < args.data.length; i += CHUNK_SIZE) {
         const chunk = args.data.slice(i, i + CHUNK_SIZE);
-        const result = await client.request<MutationData>(MUTATION, { data: chunk });
-        totalAffected += result.insert_reservations.affected_rows;
+        const res = await write.upsertReservations({
+          municipality: args.municipality,
+          runId,
+          rows: chunk,
+        });
+        received += res.received;
+        rowsWritten += res.rowsWritten;
+        deferred = deferred || res.deferred;
       }
 
       return {
@@ -67,10 +65,7 @@ export function registerUpsertReservations(server: McpServer, client: GraphQLCli
           {
             type: "text" as const,
             text: JSON.stringify(
-              {
-                totalRows: args.data.length,
-                affectedRows: totalAffected,
-              },
+              { totalRows: args.data.length, received, rowsWritten, deferred },
               null,
               2
             ),

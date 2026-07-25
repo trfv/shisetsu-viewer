@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "main": "src/worker.ts",
+  "exports": {
+    ".": "./src/worker.ts",
+    "./db/queries": "./src/db/queries.ts",
+    "./auth/auth0": "./src/auth/auth0.ts"
+  },
   "scripts": {
     "typecheck": "wrangler types && tsc",
     "test": "vitest run",

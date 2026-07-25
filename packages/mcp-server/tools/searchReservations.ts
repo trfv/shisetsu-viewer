@@ -1,79 +1,11 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { PageInfo } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
-import { buildFieldSelection } from "../buildFieldSelection.ts";
-import { SEARCH_RESERVATION_FIELDS, SEARCH_INSTITUTION_FIELDS } from "../fieldDefinitions.ts";
-import type { GraphQLClient } from "../graphqlClient.ts";
-import { resolveAvailability, MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../paramHelpers.ts";
-
-function buildQuery(reservationFields: string, institutionFields: string): string {
-  return `
-query reservations(
-  $first: Int
-  $after: String
-  $prefecture: prefecture = null
-  $municipality: [String!]
-  $isAvailableStrings: availavility_division = null
-  $isAvailableWoodwind: availavility_division = null
-  $isAvailableBrass: availavility_division = null
-  $isAvailablePercussion: availavility_division = null
-  $institutionSizes: [String!] = null
-  $startDate: date
-  $endDate: date
-  $isHoliday: Boolean
-  $isMorningVacant: Boolean
-  $isAfternoonVacant: Boolean
-  $isEveningVacant: Boolean
-) {
-  searchable_reservations_connection(
-    first: $first
-    after: $after
-    where: {
-      _and: {
-        institution: {
-          prefecture: { _eq: $prefecture }
-          municipality: { _in: $municipality }
-          is_available_strings: { _eq: $isAvailableStrings }
-          is_available_woodwind: { _eq: $isAvailableWoodwind }
-          is_available_brass: { _eq: $isAvailableBrass }
-          is_available_percussion: { _eq: $isAvailablePercussion }
-          institution_size: { _in: $institutionSizes }
-        }
-        date: { _gte: $startDate, _lte: $endDate }
-        is_morning_vacant: { _eq: $isMorningVacant }
-        is_afternoon_vacant: { _eq: $isAfternoonVacant }
-        is_evening_vacant: { _eq: $isEveningVacant }
-        is_holiday: { _eq: $isHoliday }
-      }
-    }
-    order_by: { date: asc }
-  ) {
-    edges {
-      node {
-        id
-        reservation {
-          ${reservationFields}
-        }
-        institution {
-          ${institutionFields}
-        }
-      }
-      cursor
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
-}`;
-}
-
-interface QueryData {
-  searchable_reservations_connection: {
-    edges: Array<{ node: Record<string, unknown>; cursor: string }>;
-    pageInfo: { hasNextPage: boolean; endCursor: string };
-  };
-}
+import type { DataSource } from "../dataSource.ts";
+import { SEARCH_INSTITUTION_FIELDS, SEARCH_RESERVATION_FIELDS } from "../fieldDefinitions.ts";
+import { INSTITUTION_SIZE_HELP, MUNICIPALITY_HELP, toAvailabilityFilter } from "../paramHelpers.ts";
+import { pick } from "../pick.ts";
 
 export async function executeSearchReservations(
   args: {
@@ -98,43 +30,32 @@ export async function executeSearchReservations(
     first?: number | undefined;
     after?: string | undefined;
   },
-  client: GraphQLClient
-) {
-  const reservationFields = buildFieldSelection(
-    SEARCH_RESERVATION_FIELDS,
-    args.fields?.reservation
-  );
-  const institutionFields = buildFieldSelection(
-    SEARCH_INSTITUTION_FIELDS,
-    args.fields?.institution
-  );
-  const query = buildQuery(reservationFields, institutionFields);
-  const data = await client.request<QueryData>(query, {
-    first: args.first ?? 20,
-    after: args.after,
-    municipality: args.municipality,
+  dataSource: DataSource
+): Promise<{ reservations: Record<string, unknown>[]; pageInfo: PageInfo; count: number }> {
+  const page = await dataSource.searchReservations({
     startDate: args.startDate,
     endDate: args.endDate,
-    isHoliday: args.isHoliday,
-    isMorningVacant: args.isMorningVacant,
-    isAfternoonVacant: args.isAfternoonVacant,
-    isEveningVacant: args.isEveningVacant,
-    isAvailableStrings: resolveAvailability(args.isAvailableStrings),
-    isAvailableWoodwind: resolveAvailability(args.isAvailableWoodwind),
-    isAvailableBrass: resolveAvailability(args.isAvailableBrass),
-    isAvailablePercussion: resolveAvailability(args.isAvailablePercussion),
+    municipality: args.municipality,
     institutionSizes: args.institutionSizes,
+    isHoliday: args.isHoliday === true ? true : undefined,
+    isMorningVacant: args.isMorningVacant === true ? true : undefined,
+    isAfternoonVacant: args.isAfternoonVacant === true ? true : undefined,
+    isEveningVacant: args.isEveningVacant === true ? true : undefined,
+    isAvailableStrings: toAvailabilityFilter(args.isAvailableStrings),
+    isAvailableWoodwind: toAvailabilityFilter(args.isAvailableWoodwind),
+    isAvailableBrass: toAvailabilityFilter(args.isAvailableBrass),
+    isAvailablePercussion: toAvailabilityFilter(args.isAvailablePercussion),
+    limit: args.first,
+    cursor: args.after,
   });
-
-  const conn = data.searchable_reservations_connection;
-  return {
-    reservations: conn.edges.map((e) => e.node),
-    pageInfo: conn.pageInfo,
-    count: conn.edges.length,
-  };
+  const reservations = page.items.map((hit) => ({
+    reservation: pick(hit.reservation, SEARCH_RESERVATION_FIELDS, args.fields?.reservation),
+    institution: pick(hit.institution, SEARCH_INSTITUTION_FIELDS, args.fields?.institution),
+  }));
+  return { reservations, pageInfo: page.pageInfo, count: reservations.length };
 }
 
-export function registerSearchReservations(server: McpServer, client: GraphQLClient): void {
+export function registerSearchReservations(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
     "search_reservations",
     {
@@ -208,7 +129,7 @@ export function registerSearchReservations(server: McpServer, client: GraphQLCli
       },
     },
     async (args) => {
-      const result = await executeSearchReservations(args, client);
+      const result = await executeSearchReservations(args, dataSource);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };

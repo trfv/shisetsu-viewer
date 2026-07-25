@@ -5,18 +5,13 @@ import {
   type AuthRequest,
 } from "@cloudflare/workers-oauth-provider";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { resolveRole } from "@shisetsu-viewer/api/auth/auth0";
 
-import { createGraphQLClient } from "./graphqlClient.ts";
+import { createD1DataSource } from "./d1DataSource.ts";
 import { createServer } from "./server.ts";
 
-// Minimal Cloudflare Workers type declarations (avoids pulling in full @cloudflare/workers-types)
-interface CloudflareExecutionContext {
-  waitUntil(promise: Promise<unknown>): void;
-  passThroughOnException(): void;
-}
-
 interface Env {
-  GRAPHQL_ENDPOINT: string;
+  DB: D1Database;
   AUTH0_DOMAIN: string;
   AUTH0_CLIENT_ID: string;
   AUTH0_CLIENT_SECRET: string;
@@ -160,16 +155,18 @@ const authHandler = {
 // ---------------------------------------------------------------------------
 
 const mcpHandler = {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: CloudflareExecutionContext & { props: { upstreamAccessToken: string } }
-  ): Promise<Response> {
-    // クライアントはこのリクエストのスコープに閉じ込める。モジュールスコープに置くと
-    // isolate 内で並行する他リクエストのトークンに差し替わり、per-user 権限が破れる。
-    const client = createGraphQLClient(env.GRAPHQL_ENDPOINT, ctx.props.upstreamAccessToken);
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    // ロールと DataSource はこのリクエストのスコープに閉じ込める。モジュールスコープに置くと
+    // isolate 内で並行する他リクエストの認証状態に差し替わり、per-user 権限が破れる。
+    // reservations 系ツールは user かつ非 trial のときだけ露出する（allowReservations）。
+    // props は OAuthProvider が accessToken から復元する（型は unknown なのでここで narrow する）。
+    const { upstreamAccessToken } = ctx.props as { upstreamAccessToken: string };
+    const role = await resolveRole(upstreamAccessToken, env);
 
-    const server = createServer({ authMode: "auth0", client });
+    const server = createServer({
+      dataSource: createD1DataSource(env.DB),
+      allowReservations: role === "user",
+    });
     const transport = new WebStandardStreamableHTTPServerTransport({});
     await server.connect(transport);
     return transport.handleRequest(request);
@@ -247,7 +244,7 @@ function hasValidInternalTokenFormat(authHeader: string): boolean {
 // ---------------------------------------------------------------------------
 
 export default {
-  async fetch(request: Request, env: Env, ctx: CloudflareExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // 1a. Reject unknown paths before OAuthProvider

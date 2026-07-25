@@ -22,4 +22,12 @@
   },
   // Required by @cloudflare/workers-oauth-provider for OAuth state (clients, grants, tokens)
   "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "64528661f5e74163a2d6a80f60d40749" }],
+  // PR 3-1 で作成した D1（api と同一 DB）を直バインドし、GraphQL を介さず読む
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shisetsu-db",
+      "database_id": "353bd30e-d421-460f-821a-018fd05a455c",
+    },
+  ],
 }

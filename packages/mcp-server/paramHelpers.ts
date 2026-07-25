@@ -1,4 +1,4 @@
-import { AvailabilityDivision, MUNICIPALITIES } from "@shisetsu-viewer/shared";
+import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
 export const MUNICIPALITY_HELP = Object.values(MUNICIPALITIES)
@@ -15,9 +15,11 @@ export const institutionIdSchema = z
   .string()
   .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/);
 
-export function resolveAvailability(value: boolean | string | undefined): string | undefined {
-  if (value === undefined) return undefined;
-  if (value === true) return AvailabilityDivision.AVAILABLE;
-  if (value === false) return AvailabilityDivision.UNAVAILABLE;
-  return value;
+/**
+ * 楽器利用可否フィルタを D1 API のブール引数に正規化する。
+ * API は「利用可のみ」の true フィルタだけを解釈する（false は無視）ため、
+ * true / "true" を true に、それ以外を undefined（フィルタ無し）に畳む。
+ */
+export function toAvailabilityFilter(value: boolean | string | undefined): boolean | undefined {
+  return value === true || value === "true" ? true : undefined;
 }
