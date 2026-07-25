@@ -107,6 +107,22 @@ describe("reservations 認可", () => {
     const res = await SELF.fetch(`${BASE}/v1/institutions/${INSTITUTIONS[0].id}/reservations`);
     expect(res.status).toBe(401);
   });
+
+  it("認証必須の 200 は private, no-store を返す", async () => {
+    // Cache-Control 無しの 200 はエッジ側の heuristic freshness で既定 2 時間
+    // キャッシュされうる。ユーザー単位の応答なので明示的に落とす。
+    const auth = { Authorization: `Bearer ${await userToken()}` };
+    const search = await SELF.fetch(
+      `${BASE}/v1/reservations/search?startDate=2026-08-01&endDate=2026-08-04`,
+      { headers: auth }
+    );
+    const byInstitution = await SELF.fetch(
+      `${BASE}/v1/institutions/${INSTITUTIONS[0].id}/reservations`,
+      { headers: auth }
+    );
+    expect(search.headers.get("Cache-Control")).toBe("private, no-store");
+    expect(byInstitution.headers.get("Cache-Control")).toBe("private, no-store");
+  });
 });
 
 describe("ページングの一連フロー", () => {

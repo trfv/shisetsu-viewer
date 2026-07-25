@@ -167,21 +167,60 @@ describe("PUT /v1/admin/holidays / export", () => {
   });
 
   it("export はページングして全行を dump する", async () => {
-    // search は institutions と JOIN するため、対象施設を入れておく
-    await env.DB.prepare(
-      `INSERT INTO institutions (id, prefecture, municipality) VALUES (?, ?, ?)
-       ON CONFLICT (id) DO NOTHING`
-    )
-      .bind("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", "PREFECTURE_TOKYO", "MUNICIPALITY_KOUTOU")
-      .run();
     await putReservations(adminHeaders(), sampleRows(5));
     const res = await SELF.fetch(`${BASE}/v1/admin/reservations/export?limit=2`, {
       headers: adminHeaders(),
     });
     expect(res.status).toBe(200);
-    const body = (await res.json()) as { items: unknown[]; pageInfo: { hasNextPage: boolean } };
+    const body = (await res.json()) as {
+      items: { institution_id: string; date: string; reservation: Record<string, string> }[];
+      pageInfo: { hasNextPage: boolean; endCursor: string | null };
+    };
     expect(body.items).toHaveLength(2);
     expect(body.pageInfo.hasNextPage).toBe(true);
+    expect(body.items[0]).toEqual({
+      institution_id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      date: "2026-08-01",
+      reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT" },
+    });
+  });
+
+  it("export は institutions に無い予約行も返す（JOIN しない）", async () => {
+    // 施設マスタを一切入れずに dump できることを確認する。JOIN が復活すると
+    // ページごとの全件ソートが戻ってくるため、その回帰を型ではなく挙動で押さえる。
+    await putReservations(adminHeaders(), sampleRows(1));
+    const res = await SELF.fetch(`${BASE}/v1/admin/reservations/export`, {
+      headers: adminHeaders(),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { items: unknown[] };
+    expect(body.items).toHaveLength(1);
+  });
+
+  it("export の cursor は PK 順で続きから返す", async () => {
+    await putReservations(adminHeaders(), sampleRows(5));
+    const first = (await (
+      await SELF.fetch(`${BASE}/v1/admin/reservations/export?limit=2`, {
+        headers: adminHeaders(),
+      })
+    ).json()) as { items: { date: string }[]; pageInfo: { endCursor: string | null } };
+    const cursor = first.pageInfo.endCursor as string;
+    const second = (await (
+      await SELF.fetch(`${BASE}/v1/admin/reservations/export?limit=2&cursor=${cursor}`, {
+        headers: adminHeaders(),
+      })
+    ).json()) as { items: { date: string }[]; pageInfo: { hasNextPage: boolean } };
+    expect(first.items.map((r) => r.date)).toEqual(["2026-08-01", "2026-08-02"]);
+    expect(second.items.map((r) => r.date)).toEqual(["2026-08-03", "2026-08-04"]);
+    expect(second.pageInfo.hasNextPage).toBe(true);
+  });
+
+  it("export は認証必須レスポンスとしてキャッシュを禁止する", async () => {
+    await putReservations(adminHeaders(), sampleRows(1));
+    const res = await SELF.fetch(`${BASE}/v1/admin/reservations/export`, {
+      headers: adminHeaders(),
+    });
+    expect(res.headers.get("Cache-Control")).toBe("private, no-store");
   });
 
   it("export は認可必須（401）", async () => {

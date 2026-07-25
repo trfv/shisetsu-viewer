@@ -35,6 +35,7 @@ export type {
   InstitutionSummary,
   InstitutionDetail,
   ReservationDto,
+  ReservationExportRow,
   ReservationSearchHit,
   ScrapeRun,
   UpsertReservationsRequest,
