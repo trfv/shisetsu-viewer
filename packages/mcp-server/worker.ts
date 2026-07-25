@@ -8,6 +8,7 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { resolveRole } from "@shisetsu-viewer/api/auth/auth0";
 
 import { createD1DataSource } from "./d1DataSource.ts";
+import { preflight } from "./preflight.ts";
 import { createServer } from "./server.ts";
 
 interface Env {
@@ -216,55 +217,14 @@ function createOAuthProvider(env: Env) {
 }
 
 // ---------------------------------------------------------------------------
-// Request pre-filtering (prevents unnecessary KV reads from OAuthProvider)
-// ---------------------------------------------------------------------------
-
-const ALLOWED_PATHS = new Set([
-  "/mcp",
-  "/authorize",
-  "/callback",
-  "/oauth/token",
-  "/oauth/register",
-  "/.well-known/oauth-authorization-server",
-  "/.well-known/oauth-protected-resource",
-]);
-
-/**
- * OAuthProvider issues tokens in `userId:grantId:hash` format (3 colon-separated parts).
- * Reject tokens that don't match this format before OAuthProvider attempts a KV read.
- */
-function hasValidInternalTokenFormat(authHeader: string): boolean {
-  if (!authHeader.startsWith("Bearer ")) return true; // no Bearer → let OAuthProvider return 401
-  const token = authHeader.substring(7);
-  return token.split(":").length === 3;
-}
-
-// ---------------------------------------------------------------------------
 // Worker entry point
 // ---------------------------------------------------------------------------
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const url = new URL(request.url);
-
-    // 1a. Reject unknown paths before OAuthProvider
-    if (!ALLOWED_PATHS.has(url.pathname)) {
-      return new Response("Not Found", { status: 404 });
-    }
-
-    // 1b. Reject malformed Bearer tokens on /mcp to avoid KV reads
-    if (url.pathname === "/mcp") {
-      const authHeader = request.headers.get("authorization");
-      if (authHeader && !hasValidInternalTokenFormat(authHeader)) {
-        return Response.json(
-          { error: "invalid_token", error_description: "Invalid token format" },
-          {
-            status: 401,
-            headers: { "WWW-Authenticate": 'Bearer error="invalid_token"' },
-          }
-        );
-      }
-    }
+    // OAuthProvider はハンドラを呼ぶ前にトークンを KV から引くため、弾けるものは先に弾く
+    const shortCircuit = preflight(request);
+    if (shortCircuit) return shortCircuit;
 
     return createOAuthProvider(env).fetch(request, env, ctx);
   },
