@@ -1,0 +1,71 @@
+permissions:
+  contents: read
+name: Deploy Workers
+
+# api / mcp-server は Workers Builds に未接続で、`wrangler deploy` を手で叩かないと
+# 本番に届かない。一方 scraper は master を毎回チェックアウトして走るため、
+# クライアントとサーバの契約を同時に変える PR をマージすると「scraper だけ新しい」
+# 状態になる。2026-07-26 に実際にこれで parity が壊れ、D1 の読み取りが
+# 1 日 2,960 万行（無料枠の 5.9 倍）まで膨らんだ。マージ = デプロイに揃えて塞ぐ。
+#
+# viewer は Workers Builds 接続済みなのでここでは扱わない。
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "packages/api/**"
+      - "packages/mcp-server/**"
+      # shared は両 Worker が import する source of truth
+      - "packages/shared/**"
+      - "package-lock.json"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  # 連続マージでデプロイが交差して古い版が後勝ちするのを防ぐ。
+  # cancel-in-progress は付けない（途中で殺すと中途半端な版が残りうる）。
+  group: deploy-workers
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.package }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    strategy:
+      # 片方が落ちても、もう片方は最後まで走らせる。
+      # 「両方古い」より「どちらが新しいか分かる」方が復旧しやすい。
+      fail-fast: false
+      matrix:
+        package:
+          - api
+          - mcp-server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          node-version-file: .node-version
+      - name: Cache node_modules
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-24-${{ hashFiles('**/package-lock.json') }}
+      - name: Run npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      # PR の Node CI とは別に、デプロイ直前の tree でもう一度通す。
+      # master への push は必ずしも PR 経由とは限らないため。
+      - name: Test
+        run: npm test -w @shisetsu-viewer/${{ matrix.package }}
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy -w @shisetsu-viewer/${{ matrix.package }}
