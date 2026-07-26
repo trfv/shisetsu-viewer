@@ -42,7 +42,7 @@ describe("public endpoints", () => {
   it("GET /v1/institutions → 200 + Cache-Control", async () => {
     const res = await SELF.fetch(`${BASE}/v1/institutions?limit=5`);
     expect(res.status).toBe(200);
-    expect(res.headers.get("Cache-Control")).toBe("public, max-age=300");
+    expect(res.headers.get("Cache-Control")).toBe("public, max-age=600");
     const body = (await res.json()) as { items: unknown[] };
     expect(body.items.length).toBeGreaterThan(0);
   });
@@ -57,6 +57,47 @@ describe("public endpoints", () => {
   it("不正な ID 形式は 404", async () => {
     const res = await SELF.fetch(`${BASE}/v1/institutions/not-a-uuid`);
     expect(res.status).toBe(404);
+  });
+
+  it("公開 GET はエッジキャッシュから返る（D1 の変更が max-age 内は見えない）", async () => {
+    const url = `${BASE}/v1/institutions/${INSTITUTIONS[1].id}`;
+    const before = (await (await SELF.fetch(url)).json()) as { building: string };
+    expect(before.building).toBe("会館A");
+
+    await env.DB.prepare(`UPDATE institutions SET building = ? WHERE id = ?`)
+      .bind("差し替え後", INSTITUTIONS[1].id)
+      .run();
+
+    const after = (await (await SELF.fetch(url)).json()) as { building: string };
+    expect(after.building).toBe("会館A");
+  });
+
+  it("キャッシュヒットでも CORS は リクエストごとの origin で返る", async () => {
+    // キーから Origin を外している（Cloudflare の Cache は Vary をほぼ解釈しないため）。
+    // CORS は handle() の外で付け直すので、origin が混ざらないことを押さえる。
+    const url = `${BASE}/v1/institutions?limit=1&cors-probe=1`;
+    const first = await SELF.fetch(url, { headers: { Origin: "http://localhost:3000" } });
+    const second = await SELF.fetch(url, { headers: { Origin: "https://app.shisetsudb.com" } });
+    expect(first.headers.get("Access-Control-Allow-Origin")).toBe("http://localhost:3000");
+    expect(second.headers.get("Access-Control-Allow-Origin")).toBe("https://app.shisetsudb.com");
+  });
+
+  it("認証必須の GET はキャッシュされない（D1 の変更が即座に見える）", async () => {
+    const url = `${BASE}/v1/institutions/${INSTITUTIONS[0].id}/reservations?limit=1`;
+    const auth = { Authorization: `Bearer ${await userToken()}` };
+    const before = (await (await SELF.fetch(url, { headers: auth })).json()) as {
+      items: { date: string }[];
+    };
+    expect(before.items.length).toBeGreaterThan(0);
+
+    await env.DB.prepare(`DELETE FROM reservations WHERE institution_id = ?`)
+      .bind(INSTITUTIONS[0].id)
+      .run();
+
+    const after = (await (await SELF.fetch(url, { headers: auth })).json()) as {
+      items: unknown[];
+    };
+    expect(after.items).toHaveLength(0);
   });
 
   it("GET /v1/scrape-runs → 200", async () => {
