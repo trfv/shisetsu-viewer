@@ -15,7 +15,7 @@ import type { Division, Status, TransformOutput } from "../common/types.ts";
  */
 
 /** サイト側の span（ヶ月）の上限 */
-export const MAX_SPAN = 6;
+const MAX_SPAN = 6;
 
 /** extract が DOM から読み取った生の内容 */
 export interface GenkiplazaRawPage {
