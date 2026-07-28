@@ -81,10 +81,12 @@ runs:
         SCRAPER_FORCE_INCLUDE: ${{ inputs.municipality }}
         SCRAPER_PROXY: ${{ steps.jp-proxy.outputs.viaJpProxy == 'true' && inputs.jpProxyUrl || '' }}
       run: |
+        # 位置引数はファイルパスへの正規表現。末尾 `/` でディレクトリ境界に固定する
+        # （付けないと tokyo-kita が tokyo-kita-genkiplaza にも一致する）
         if [ "${{ inputs.debug }}" == "true" ]; then
-          DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+          DEBUG=pw:api npx playwright test "${{ inputs.municipality }}/" --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         else
-          npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+          npx playwright test "${{ inputs.municipality }}/" --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         fi
     - name: Check test results
       id: check-results
