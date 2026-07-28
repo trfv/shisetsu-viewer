@@ -33,6 +33,20 @@ test("calendarWeek: 今日から13ヶ月先の月末まで（kawasaki 相当）"
   );
 });
 
+test("month: 明日から3ヶ月先の月末まで（kita-genkiplaza 相当）", () => {
+  // 明日 = 7/6、終了 = 10/31 → 7月・8月・9月・10月 の 4 ヶ月
+  assert.equal(pagesForHorizon({ startOffsetDays: 1, monthsAhead: 3, unit: "month" }, NOW), 4);
+});
+
+test("month: 開始オフセットが翌月へまたぐ場合も月数を正しく数える", () => {
+  // 基準 = 7/31、明日 = 8/1、終了 = 11/30 → 8月・9月・10月・11月 の 4 ヶ月
+  const endOfJuly = new Date(2026, 6, 31);
+  assert.equal(
+    pagesForHorizon({ startOffsetDays: 1, monthsAhead: 3, unit: "month" }, endOfJuly),
+    4
+  );
+});
+
 test("daysForHorizon: unit に依らず暦日数を返す（day 版 pagesForHorizon と一致）", () => {
   // day unit は 1 ページ = 1 日なので pagesForHorizon と暦日数が一致する
   const spec = { startOffsetDays: 1, monthsAhead: 5, unit: "day" } as const;
