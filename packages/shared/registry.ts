@@ -113,6 +113,8 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "北区",
     reservationExcluded: false,
+    // 元気ぷらざは区の共通システム（OpenReaf）とは別の独自 CGI で予約状況を出している
+    additionalScrapers: ["genkiplaza"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "○",
       [ReservationStatus.STATUS_1]: "△",
