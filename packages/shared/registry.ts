@@ -20,6 +20,13 @@ export interface MunicipalityConfig {
   readonly scraperViaJpProxy?: boolean;
   /** サイトのメンテナンス時間帯 [開始時, 終了時)（JST の時、半開区間） */
   readonly maintenanceWindowJst?: readonly [number, number];
+  /**
+   * 同一自治体に複数の予約システムがある場合の、追加スクレイパー名。
+   * スクレイパーのディレクトリと test-results は `<prefecture>-<slug>-<name>` になり、
+   * DB 上の municipality は親自治体と同じになる。
+   * 例: 北区の元気ぷらざ（`additionalScrapers: ["genkiplaza"]`）
+   */
+  readonly additionalScrapers?: readonly string[];
   readonly reservationStatus: Readonly<Record<string, string>>;
   readonly reservationDivision: Readonly<Record<string, string>>;
   readonly feeDivision: Readonly<Record<string, string>>;
@@ -456,4 +463,36 @@ export function getReservationTargets(): string[] {
 
 export function getAllMunicipalityTargets(): string[] {
   return Object.values(MUNICIPALITIES).map((m) => `${m.prefecture}-${m.slug}`);
+}
+
+/** 自治体設定が指定のスクレイパー target に対応するかを判定する。 */
+function matchesScraperTarget(config: MunicipalityConfig, target: string): boolean {
+  const base = `${config.prefecture}-${config.slug}`;
+  if (base === target) return true;
+  return (config.additionalScrapers ?? []).some((name) => `${base}-${name}` === target);
+}
+
+/**
+ * スクレイパーのディレクトリ名の一覧。
+ * 自治体単位の `getReservationTargets()` に、追加スクレイパーを展開したものを加える。
+ */
+export function getScraperTargets(): string[] {
+  return Object.values<MunicipalityConfig>(MUNICIPALITIES)
+    .filter((m) => !m.reservationExcluded)
+    .flatMap((m) => {
+      const base = `${m.prefecture}-${m.slug}`;
+      return [base, ...(m.additionalScrapers ?? []).map((name) => `${base}-${name}`)];
+    });
+}
+
+/** スクレイパー target（例 "tokyo-kita-genkiplaza"）から自治体設定を引く。 */
+export function getMunicipalityByScraperTarget(target: string): MunicipalityConfig | undefined {
+  return Object.values<MunicipalityConfig>(MUNICIPALITIES).find((m) =>
+    matchesScraperTarget(m, target)
+  );
+}
+
+/** スクレイパー target から自治体キー（DB の municipality 値）を引く。 */
+export function getMunicipalityKeyByScraperTarget(target: string): MunicipalityKey | undefined {
+  return MUNICIPALITY_KEYS.find((key) => matchesScraperTarget(MUNICIPALITIES[key], target));
 }
