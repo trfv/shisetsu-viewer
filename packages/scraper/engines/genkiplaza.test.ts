@@ -158,7 +158,11 @@ describe("genkiplaza", () => {
     it("見出しが読めなければ投げる", () => {
       assert.throws(
         () =>
-          buildSlots([{ heading: "", rows: [row("第一ホール＜午前＞", "◎")] }], rooms, "2026-07-01"),
+          buildSlots(
+            [{ heading: "", rows: [row("第一ホール＜午前＞", "◎")] }],
+            rooms,
+            "2026-07-01"
+          ),
         /月見出し/
       );
     });

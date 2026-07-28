@@ -39,8 +39,9 @@ export async function runScrapeTarget<T, E extends { length: number }>(
     typeof def.horizon === "function" ? def.horizon(target) : pagesForHorizon(def.horizon);
   const expectedDateCount = def.expectedDateCount?.(target, pageCount);
   // registry の maintenanceWindowJst（追加スクレイパーは親自治体の設定を継承する）
-  const maintenanceWindowJst =
-    getMunicipalityByScraperTarget(def.municipality)?.maintenanceWindowJst;
+  const maintenanceWindowJst = getMunicipalityByScraperTarget(
+    def.municipality
+  )?.maintenanceWindowJst;
 
   await runScrapeTest({
     municipality: def.municipality,

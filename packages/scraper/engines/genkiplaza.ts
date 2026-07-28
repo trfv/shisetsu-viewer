@@ -1,6 +1,8 @@
-import { getDaysInMonth } from "date-fns";
+import type { Page } from "@playwright/test";
+import { addDays, format, getDaysInMonth } from "date-fns";
 
-import type { RawSlot } from "../common/reservation.ts";
+import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
+import type { Division, Status, TransformOutput } from "../common/types.ts";
 
 /**
  * 元気ぷらざ独自 CGI（genkiplaza.tokyo.jp/yoyaku/user.cgi）用エンジン。
@@ -33,6 +35,17 @@ export interface GenkiplazaTarget {
   facilityName: string;
   /** 取り込む部屋名（サイト表記）。ここに無い行は捨てる */
   roomNames: readonly string[];
+}
+
+export interface GenkiplazaConfig {
+  baseUrl: string;
+  divisionMap: Readonly<Record<string, Division>>;
+  statusMap: Readonly<Record<string, Status>>;
+  /**
+   * 取得開始日のオフセット（日）。scraper 側 `horizon.startOffsetDays` と揃える。
+   * サイトが常に月初から表示するため、これより前の日付を捨てるのに使う。
+   */
+  startOffsetDays: number;
 }
 
 /** 連続する重複を 1 つにまとめる（同じ見出しが入れ子要素で複数回現れるため） */
@@ -129,4 +142,68 @@ export function buildSlots(
     }
   }
   return slots;
+}
+
+/**
+ * ページ内の全テーブルと、全ての「YYYY年M月」テキストを文書順で読み取る。
+ * セルの空白（半角・全角・改行）は全て除去する。全角空白のみのセルは "" になり、
+ * 未公開の月として buildSlots が捨てる。
+ */
+async function readRawPage(page: Page): Promise<GenkiplazaRawPage> {
+  return page.evaluate(() => {
+    const headings: string[] = [];
+    for (const element of document.querySelectorAll("*")) {
+      // 同じ見出しが入れ子要素で重複して現れるため、葉ノードだけを見る
+      if (element.children.length > 0) continue;
+      const text = (element.textContent ?? "").trim();
+      if (/^\d{4}年\d{1,2}月$/.test(text)) headings.push(text);
+    }
+    const tables = [...document.querySelectorAll("table")].map((table) =>
+      [...table.querySelectorAll("tr")].map((tr) =>
+        [...tr.querySelectorAll("th,td")].map((cell) =>
+          (cell.textContent ?? "").replace(/[\s　]/g, "")
+        )
+      )
+    );
+    return { headings, tables };
+  });
+}
+
+export function genkiplazaHooks(config: GenkiplazaConfig): {
+  prepare: (page: Page, target: GenkiplazaTarget) => Promise<Page>;
+  extract: (
+    page: Page,
+    target: GenkiplazaTarget,
+    pageCount: number
+  ) => Promise<GenkiplazaMonthTable[]>;
+  transform: (extracted: GenkiplazaMonthTable[], target: GenkiplazaTarget) => TransformOutput;
+} {
+  return {
+    async prepare(page) {
+      // user.cgi 自体が空き状況テーブルのページ（既定は当月・1 ヶ月）
+      await page.goto(config.baseUrl);
+      await page.locator('select[name="span"]').waitFor();
+      return page;
+    },
+
+    async extract(page, _target, pageCount) {
+      const span = Math.min(Math.max(pageCount, 1), MAX_SPAN);
+      const start = addDays(new Date(), config.startOffsetDays);
+      // yyyy の選択肢は当年のみ。年跨ぎはサーバが mm + span から解決する
+      await page.selectOption('select[name="mm"]', String(start.getMonth() + 1));
+      await page.selectOption('select[name="span"]', String(span));
+      await Promise.all([
+        page.waitForLoadState("domcontentloaded"),
+        page.locator('input[name="view"]').click(),
+      ]);
+      await page.locator("table").first().waitFor();
+      return zipMonthTables(await readRawPage(page));
+    },
+
+    transform(extracted, target) {
+      const minDate = format(addDays(new Date(), config.startOffsetDays), "yyyy-MM-dd");
+      const slots = buildSlots(extracted, target.roomNames, minDate);
+      return rawSlotsToOutput(slots, config.divisionMap, config.statusMap);
+    },
+  };
 }
