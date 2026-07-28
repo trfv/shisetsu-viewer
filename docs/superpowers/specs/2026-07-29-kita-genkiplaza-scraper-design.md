@@ -169,7 +169,8 @@ system_name はサイト表記、`institution` は表示用という既存の役
 ## テスト
 
 - ユニット（`node --test`）
-  - `engines/genkiplaza.ts` の純粋関数（行ラベル分解、月テーブルから日付への割当、空欄と実在しない日付の除去）を、保存した実 HTML フィクスチャに対して検証する
+  - `engines/genkiplaza.ts` の純粋関数（見出しの解釈、行ラベル分解、月テーブルから日付への割当、空欄・実在しない日付・対象外の部屋の除去）を検証する
+  - DOM から文字列配列を読み取る層は `page.evaluate` に閉じ込め、純粋関数と分ける。HTML フィクスチャは持たない（`packages/scraper` の依存は `@playwright/test` と `date-fns` のみで、DOM パーサを追加しない）。この層の検証は実サイト実行で行う
   - `registry.test.ts` に `getScraperTargets()` と `getMunicipalityByScraperTarget()` のケースを追加する
   - `registryDrift` / `registryContract` は既存テストが新ディレクトリを自動で拾う
 - 実サイト
