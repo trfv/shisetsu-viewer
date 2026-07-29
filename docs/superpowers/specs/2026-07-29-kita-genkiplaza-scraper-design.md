@@ -62,6 +62,54 @@ viewer の自治体セレクタは「北区」1 件のままとし、登録済�
 ディレクトリも registry も増えないが、`openreafHooks` のスプレッドと自前 hooks が 1 ファイルに混在する。
 `engines/` が担保している「1 スクレイパー = 1 予約システム」の分離が崩れ、OpenReaf 側のエンジン修正時に影響範囲が読めなくなる。
 
+## ラベルが衝突する場合（本設計の適用限界）
+
+元気ぷらざは registry の北区エントリと区分・状態のラベルが一致したため、`additionalScrapers` を足すだけで済んだ。
+しかし同一自治体の 2 つの予約システムが異なるラベルを要求するケースは起こり得る。
+そのときに何が通り、何が通らないかを先に確定しておく。
+
+### 通るケース: 語彙が増えるだけ
+
+新しい予約システムが `臨時休館` のような未登録の状態を返す場合は、親自治体のマップに `STATUS_n` を足せば済む。
+enum スロットは `STATUS_20` / `DIVISION_30` まであり、最も語彙の多い北区でも `STATUS_12` までしか使っていない。
+一方のシステムでしか使われないラベルが親自治体のマップに載ることになるが、viewer は enum 値からラベルを引くだけなので実害はない。
+
+### 通らないケース: 同じ enum 値に別のラベルが必要
+
+システム X の午前が 9:00-12:00、システム Y の午前が 9:30-12:30 のような場合である。
+viewer のラベル解決は `ReservationDivisionMap[municipality]?.[division]`（`packages/viewer/utils/municipality.ts`）で、自治体 × enum 値の 2 次元しか引けない。
+片方のラベルしか持てず、もう一方は誤った時刻で表示される。
+
+**enum 値は表示ラベル以上の意味を負っている点に注意する。**
+「午前空き」検索は D1 の STORED 生成列 `is_morning_vacant`（`packages/api/migrations/0001_init.sql`）で、`RESERVATION_DIVISION_MORNING`（無ければ `MORNING_ONE` と `MORNING_TWO` の AND）を名指しして計算している。
+このため「衝突したら空いている `DIVISION_n` スロットへ逃がす」という回避策は、表示は直るが**その施設が「午前空き」検索から静かに漏れる**。
+生成列を書き換えれば緩和できるが、STORED なので全行の再計算を伴う migration になる。この回避策は採らない。
+
+### 衝突が起きたときの移行先
+
+ラベルは施設に持たせる。
+
+「午前が 9:00 開始か 9:30 開始か」は区の性質ではなく施設の性質であり、本来 registry が持つべき情報ではない。
+`Institution` は既に `fee_divisions` を施設単位で持っているので前例があり、突合は予約システム経由ではなく `institution_id` 経由なので、予約行に「どの予約システム由来か」の列を足さずに解決できる。
+viewer 側は次のフォールバックで済む。
+
+```ts
+institution.division_labels?.[division] ?? ReservationDivisionMap[municipality]?.[division]
+```
+
+`additionalScrapers` を（オブジェクトではなく）単純な `readonly string[]` に留めているのは、この移行余地を残すためである。
+衝突が実際に現れるまで施設単位ラベルは作らない。
+
+### 検出手段
+
+**静的な衝突検出はできない。**
+`registryContract.test.ts` は「`DIVISION_MAP` の値が registry の値域に存在するか」しか検証しない。
+そして「同じ enum 値に異なる生テキスト」は正常な状態である — 北区は openreaf が `"9:00-12:00" → MORNING`、genkiplaza が `"午前" → MORNING` と、別の生テキストを同じ enum に落としている。
+
+検出したいのは「2 つのシステムの MORNING が異なる時間帯を指している」ことだが、これはマップからは導けず実測が要る。
+この役割は `/spot-check` が担う（区分ラベルを時刻として独立解釈し、時間帯バンドに畳んで照合する）。
+新しい予約システムを追加したら spot-check を回すことを運用上の防御線とする。
+
 ## 設計
 
 ### registry（`packages/shared/registry.ts`）

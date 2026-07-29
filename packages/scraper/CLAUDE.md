@@ -8,6 +8,9 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 既定は `<prefecture>-<slug>/` で自治体と 1:1。同一自治体に 2 つ目の予約システムがある場合は `<prefecture>-<slug>-<name>/` を作り、shared `registry.ts` の `additionalScrapers` に `<name>` を書く（例: `tokyo-kita-genkiplaza`）。DB 上の municipality は親自治体のままなので、viewer には同じ区の施設として並ぶ。共通コードは `getScraperTargets()` / `getMunicipalityByScraperTarget()` で両者を解決する。
 
+- **前提**: 同一自治体の複数システムは registry のラベル定義（`reservationDivision` / `reservationStatus`）を共有する。語彙の追加（`STATUS_n` を足す）は可能だが、**同じ enum 値に別ラベルが必要になったら破綻する**。
+- **罠**: そのとき「空いている `DIVISION_n` に逃がす」のは誤り。`is_morning_vacant` 等の D1 STORED 生成列が `RESERVATION_DIVISION_MORNING` を名指ししているため、表示は直っても「午前空き」検索から静かに漏れる。移行先は施設単位ラベル。詳細は `docs/superpowers/specs/2026-07-29-kita-genkiplaza-scraper-design.md` の「ラベルが衝突する場合」。
+
 - `municipality` はディレクトリ名と一致させる。`targets` の 1 要素 = 1 Playwright テスト。
 - 取得期間は `horizon: { startOffsetDays, monthsAhead, unit }`（`common/horizon.ts`）で宣言する。日付計算を自前で書かない。
 - hooks: `prepare`（空き状況テーブルまで遷移）→ `extract`（`collectPaginated()` でページ送り収集）→ `transform`（`RawSlot[]` に平坦化し `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` で仕上げる。`as` キャスト禁止、未マッピング値は `*_INVALID` フォールバック + 警告）。
