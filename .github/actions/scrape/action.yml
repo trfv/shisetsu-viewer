@@ -26,8 +26,8 @@ inputs:
     description: "Phase label for failure artifact namespacing (scrape or retry)"
     required: false
     default: "scrape"
-  jpProxyUrl:
-    description: "JP proxy URL (repository variable JP_PROXY_URL)。scraperViaJpProxy の自治体で必須"
+  jpProxyHostname:
+    description: "国内 proxy の Access ホスト名 (repository variable JP_PROXY_HOSTNAME)。scraperViaJpProxy の自治体で必須"
     required: false
     default: ""
 
@@ -59,18 +59,59 @@ runs:
       working-directory: packages/scraper
       run: |
         VIA=$(node scripts/viaJpProxy.ts "${{ inputs.municipality }}")
-        if [ "${VIA}" = "true" ] && [ -z "${{ inputs.jpProxyUrl }}" ]; then
-          echo "::error::${{ inputs.municipality }} は国内 proxy が必要ですが jpProxyUrl が空です（repository variable JP_PROXY_URL を確認）"
+        if [ "${VIA}" = "true" ] && [ -z "${{ inputs.jpProxyHostname }}" ]; then
+          echo "::error::${{ inputs.municipality }} は国内 proxy が必要ですが jpProxyHostname が空です（repository variable JP_PROXY_HOSTNAME を確認）"
           exit 1
         fi
         echo "viaJpProxy=${VIA}" >> "$GITHUB_OUTPUT"
-    - name: Connect to Tailscale
+    - name: Open JP proxy tunnel
       if: steps.jp-proxy.outputs.viaJpProxy == 'true'
-      uses: tailscale/github-action@780049a30b6ff5c378a9e7b389d15ece7a204888 # v4.1.3
-      with:
-        oauth-client-id: ${{ env.TS_OAUTH_CLIENT_ID }}
-        oauth-secret: ${{ env.TS_OAUTH_SECRET }}
-        tags: tag:ci
+      shell: bash
+      env:
+        # cloudflared のリリースは checksum マニフェストを持たないため、タグ固定までしかできない
+        CLOUDFLARED_VERSION: "2026.7.3"
+        JP_PROXY_HOSTNAME: ${{ inputs.jpProxyHostname }}
+        TUNNEL_SERVICE_TOKEN_ID: ${{ env.CF_ACCESS_CLIENT_ID }}
+        TUNNEL_SERVICE_TOKEN_SECRET: ${{ env.CF_ACCESS_CLIENT_SECRET }}
+      run: |
+        set -euo pipefail
+        if [ -z "${TUNNEL_SERVICE_TOKEN_ID}" ] || [ -z "${TUNNEL_SERVICE_TOKEN_SECRET}" ]; then
+          echo "::error::国内 proxy に必要な secrets CF_ACCESS_CLIENT_ID / CF_ACCESS_CLIENT_SECRET が未設定です"
+          exit 1
+        fi
+
+        curl -fsSL --retry 3 -o "${RUNNER_TEMP}/cloudflared" \
+          "https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLARED_VERSION}/cloudflared-linux-amd64"
+        chmod +x "${RUNNER_TEMP}/cloudflared"
+
+        # preflight。正常時は 200。失敗はここで落として Playwright まで持ち越さない
+        # （持ち越すと ERR_CONNECTION_RESET になり、原因が経路か認証かサイトか判別できない）
+        CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
+          -H "CF-Access-Client-Id: ${TUNNEL_SERVICE_TOKEN_ID}" \
+          -H "CF-Access-Client-Secret: ${TUNNEL_SERVICE_TOKEN_SECRET}" \
+          "https://${JP_PROXY_HOSTNAME}/" || true)
+        echo "preflight: HTTP ${CODE}"
+        if [ "${CODE}" != "200" ]; then
+          echo "::error::国内 proxy の経路が異常です（HTTP ${CODE}）。530 = Mac 側コネクタ不在（Mac 停止・cloudflared 停止）、403 = service token かポリシーの不一致"
+          exit 1
+        fi
+
+        "${RUNNER_TEMP}/cloudflared" access tcp \
+          --hostname "${JP_PROXY_HOSTNAME}" \
+          --url 127.0.0.1:8888 \
+          --log-level info \
+          > "${RUNNER_TEMP}/cloudflared-access.log" 2>&1 &
+
+        for _ in $(seq 1 30); do
+          if timeout 1 bash -c '</dev/tcp/127.0.0.1/8888' 2>/dev/null; then
+            echo "cloudflared access が 127.0.0.1:8888 で待ち受けています"
+            exit 0
+          fi
+          sleep 1
+        done
+        echo "::error::cloudflared access の listener が 30 秒以内に起動しませんでした"
+        cat "${RUNNER_TEMP}/cloudflared-access.log"
+        exit 1
     - name: Run Playwright tests
       shell: bash
       working-directory: packages/scraper
@@ -79,13 +120,17 @@ runs:
         TZ: Asia/Tokyo
         # dispatch で自治体を指定した場合は registry の CI 除外（scraperCiExcluded）を解除する
         SCRAPER_FORCE_INCLUDE: ${{ inputs.municipality }}
-        SCRAPER_PROXY: ${{ steps.jp-proxy.outputs.viaJpProxy == 'true' && inputs.jpProxyUrl || '' }}
+        SCRAPER_PROXY: ${{ steps.jp-proxy.outputs.viaJpProxy == 'true' && 'http://127.0.0.1:8888' || '' }}
       run: |
         if [ "${{ inputs.debug }}" == "true" ]; then
           DEBUG=pw:api npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         else
           npx playwright test ${{ inputs.municipality }} --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         fi
+    - name: Dump JP proxy tunnel log
+      if: ${{ failure() && steps.jp-proxy.outputs.viaJpProxy == 'true' }}
+      shell: bash
+      run: cat "${RUNNER_TEMP}/cloudflared-access.log" || true
     - name: Check test results
       id: check-results
       shell: bash

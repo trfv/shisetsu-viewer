@@ -14,8 +14,8 @@ export interface MunicipalityConfig {
   readonly scraperCiExcluded?: boolean;
   /**
    * true = サイトが GitHub Actions からの接続を遮断しているため、CI では
-   * 国内 proxy 経由でスクレイプする。scrape アクションが Tailscale join と
-   * SCRAPER_PROXY 設定を行う（判定は scripts/viaJpProxy.ts）。
+   * 国内 proxy 経由でスクレイプする。scrape アクションが Cloudflare Tunnel の
+   * 中継起動と SCRAPER_PROXY 設定を行う（判定は scripts/viaJpProxy.ts）。
    */
   readonly scraperViaJpProxy?: boolean;
   /** サイトのメンテナンス時間帯 [開始時, 終了時)（JST の時、半開区間） */
