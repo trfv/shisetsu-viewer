@@ -4,7 +4,12 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 ## ScraperDefinition Pattern
 
-1 自治体 = 1 ディレクトリ `<prefecture>-<slug>/`。`defineScraper()`（`common/defineScraper.ts`）で単一の `scraper` オブジェクトを export する。
+1 予約システム = 1 ディレクトリ。`defineScraper()`（`common/defineScraper.ts`）で単一の `scraper` オブジェクトを export する。
+
+既定は `<prefecture>-<slug>/` で自治体と 1:1。同一自治体に 2 つ目の予約システムがある場合は `<prefecture>-<slug>-<name>/` を作り、shared `registry.ts` の `additionalScrapers` に `<name>` を書く（例: `tokyo-kita-genkiplaza`）。DB 上の municipality は親自治体のままなので、viewer には同じ区の施設として並ぶ。共通コードは `getScraperTargets()` / `getMunicipalityByScraperTarget()` で両者を解決する。
+
+- **前提**: 同一自治体の複数システムは registry のラベル定義（`reservationDivision` / `reservationStatus`）を共有する。語彙の追加（`STATUS_n` を足す）は可能だが、**同じ enum 値に別ラベルが必要になったら破綻する**。
+- **罠**: そのとき「空いている `DIVISION_n` に逃がす」のは誤り。`is_morning_vacant` 等の D1 STORED 生成列が `RESERVATION_DIVISION_MORNING` を名指ししているため、表示は直っても「午前空き」検索から静かに漏れる。移行先は施設単位ラベル。詳細は `docs/superpowers/specs/2026-07-29-kita-genkiplaza-scraper-design.md` の「ラベルが衝突する場合」。
 
 - `municipality` はディレクトリ名と一致させる。`targets` の 1 要素 = 1 Playwright テスト。
 - 取得期間は `horizon: { startOffsetDays, monthsAhead, unit }`（`common/horizon.ts`）で宣言する。日付計算を自前で書かない。
@@ -19,6 +24,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 - `engines/openreaf.ts` — OpenReaf（`*.openreaf02.jp`）: tokyo-kita, tokyo-chuo
 - `engines/webrGrand.ts` — WebR Grand: tokyo-meguro, tokyo-toshima
+- `engines/genkiplaza.ts` — 元気ぷらざ独自 CGI: tokyo-kita-genkiplaza（`user.cgi` に `mm`/`span` を POST すると span ヶ月ぶんの月別テーブルが 1 ページで返る。ページ送り無し。純粋関数は `engines/*.test.ts` でユニットテスト）
 
 エンジン修正は同エンジンの全自治体に波及するため、修正後は各自治体 1 施設ずつ検証すること。tokyo-bunkyo / sumida / edogawa は同系 `/user/Home` SPA だが抽出戦略が異なるため standalone。
 
@@ -37,6 +43,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 ## Playwright Config (`playwright.config.ts`)
 
 - testMatch は `**/index.test.ts`。非 index の `*.test.ts` は `node --test` 用ユニットテスト（`npm run test:unit`）で、Playwright には拾われない。
+- **罠**: 位置引数（`npx playwright test <target>`）はファイルパスへの正規表現。`tokyo-kita` は `tokyo-kita-genkiplaza/` にも一致するため、CI（`.github/actions/scrape`）とシャード計算（`scripts/shardMatrix.ts`）は末尾 `/` を付けて渡す。
 - Workers: 4 local / 1 CI。`WORKERS` / `SLOW_MO` env で上書き。
 - CI 除外は registry 駆動: shared `registry.ts` の `scraperCiExcluded` から `testIgnore` を構築（`SCRAPER_FORCE_INCLUDE` で個別上書き）。
 - 国内 proxy: registry の `scraperViaJpProxy` の自治体は、CI で Cloudflare Tunnel + Mac の tinyproxy 経由（`SCRAPER_PROXY=http://127.0.0.1:8888` 固定）。セットアップと故障の切り分けは `tools/jp-proxy/README.md`。

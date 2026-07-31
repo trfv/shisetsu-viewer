@@ -2,9 +2,12 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
+  getMunicipalityByScraperTarget,
   getMunicipalityBySlug,
+  getMunicipalityKeyByScraperTarget,
   getMunicipalityKeyBySlug,
   getReservationTargets,
+  getScraperTargets,
 } from "./registry.ts";
 
 describe("registry", () => {
@@ -61,6 +64,53 @@ describe("registry", () => {
 
     it("returns undefined for unknown slug", () => {
       assert.equal(getMunicipalityKeyBySlug("unknown"), undefined);
+    });
+  });
+
+  describe("getScraperTargets", () => {
+    it("自治体単位の target をすべて含む", () => {
+      const scraperTargets = getScraperTargets();
+      for (const target of getReservationTargets()) {
+        assert.ok(scraperTargets.includes(target), `${target} が含まれていません`);
+      }
+    });
+
+    it("重複を含まない", () => {
+      const targets = getScraperTargets();
+      assert.equal(new Set(targets).size, targets.length);
+    });
+
+    it("reservationExcluded の自治体を含まない", () => {
+      assert.equal(
+        getScraperTargets().some((t) => t.includes("suginami")),
+        false
+      );
+    });
+  });
+
+  describe("getMunicipalityByScraperTarget", () => {
+    it("自治体そのものの target を解決する", () => {
+      const result = getMunicipalityByScraperTarget("tokyo-kita");
+      assert.ok(result);
+      assert.equal(result.label, "北区");
+    });
+
+    it("未知の target には undefined を返す", () => {
+      assert.equal(getMunicipalityByScraperTarget("tokyo-unknown"), undefined);
+    });
+
+    it("自治体名の前方一致では解決しない", () => {
+      assert.equal(getMunicipalityByScraperTarget("tokyo-kit"), undefined);
+    });
+  });
+
+  describe("getMunicipalityKeyByScraperTarget", () => {
+    it("自治体そのものの target からキーを返す", () => {
+      assert.equal(getMunicipalityKeyByScraperTarget("tokyo-kita"), "MUNICIPALITY_KITA");
+    });
+
+    it("未知の target には undefined を返す", () => {
+      assert.equal(getMunicipalityKeyByScraperTarget("tokyo-unknown"), undefined);
     });
   });
 });

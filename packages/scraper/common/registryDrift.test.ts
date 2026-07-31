@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import {
   MUNICIPALITIES,
   getAllMunicipalityTargets,
-  getReservationTargets,
+  getScraperTargets,
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
 
@@ -46,9 +46,9 @@ function sorted(values: readonly string[]): string[] {
 }
 
 describe("registry drift", () => {
-  it("scraper.yml の choice が getReservationTargets() + all と一致している", () => {
+  it("scraper.yml の choice が getScraperTargets() + all と一致している", () => {
     const options = extractMunicipalityOptions(join(repoRoot, ".github/workflows/scraper.yml"));
-    assert.deepEqual(sorted(options), sorted([...getReservationTargets(), "all"]));
+    assert.deepEqual(sorted(options), sorted([...getScraperTargets(), "all"]));
   });
 
   it("database.yml の choice が getAllMunicipalityTargets() + all と一致している", () => {
@@ -67,13 +67,13 @@ describe("registry drift", () => {
     assert.deepEqual(sorted(listed), sorted(labels));
   });
 
-  it("スクレイパーディレクトリが getReservationTargets() と一致している", () => {
+  it("スクレイパーディレクトリが getScraperTargets() と一致している", () => {
     const dirs = readdirSync(scraperRoot, { withFileTypes: true })
       .filter(
         (entry) => entry.isDirectory() && existsSync(join(scraperRoot, entry.name, "index.test.ts"))
       )
       .map((entry) => entry.name);
-    assert.deepEqual(sorted(dirs), sorted(getReservationTargets()));
+    assert.deepEqual(sorted(dirs), sorted(getScraperTargets()));
   });
 
   it("全自治体の施設 JSON (data/institutions/<target>.json) が存在している", () => {

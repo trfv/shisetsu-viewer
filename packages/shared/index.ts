@@ -21,7 +21,10 @@ export {
   MUNICIPALITY_KEYS,
   getMunicipalityBySlug,
   getMunicipalityKeyBySlug,
+  getMunicipalityByScraperTarget,
+  getMunicipalityKeyByScraperTarget,
   getReservationTargets,
+  getScraperTargets,
   getAllMunicipalityTargets,
 } from "./registry.ts";
 
