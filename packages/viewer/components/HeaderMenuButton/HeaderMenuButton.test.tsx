@@ -29,7 +29,7 @@ describe("HeaderMenuButton", () => {
 
   it("anonymousユーザーの場合、予約検索がリンクでなくspanで表示される", async () => {
     const { user } = await renderWithProviders(<HeaderMenuButton />, {
-      auth0Config: { userInfo: { anonymous: true, trial: false } },
+      authConfig: { userInfo: { anonymous: true, trial: false } },
     });
 
     await user.click(screen.getByRole("button", { name: "メニュー" }));
@@ -41,7 +41,7 @@ describe("HeaderMenuButton", () => {
 
   it("認証済みユーザーの場合、予約検索がリンクで表示される", async () => {
     const { user } = await renderWithProviders(<HeaderMenuButton />, {
-      auth0Config: { userInfo: { anonymous: false, trial: false } },
+      authConfig: { userInfo: { anonymous: false, trial: false } },
     });
 
     await user.click(screen.getByRole("button", { name: "メニュー" }));
@@ -53,7 +53,7 @@ describe("HeaderMenuButton", () => {
 
   it("トライアルユーザーの場合、予約検索にトライアル表示が付く", async () => {
     const { user } = await renderWithProviders(<HeaderMenuButton />, {
-      auth0Config: { userInfo: { anonymous: false, trial: true } },
+      authConfig: { userInfo: { anonymous: false, trial: true } },
     });
 
     await user.click(screen.getByRole("button", { name: "メニュー" }));

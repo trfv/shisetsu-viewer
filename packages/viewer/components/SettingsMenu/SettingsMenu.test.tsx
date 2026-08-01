@@ -4,12 +4,12 @@ import { ColorModeProvider } from "../../contexts/ColorMode";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { SettingsMenu } from "./SettingsMenu";
 
-const renderSettingsMenu = (auth0Config = {}) =>
+const renderSettingsMenu = (authConfig = {}) =>
   renderWithProviders(
     <ColorModeProvider>
       <SettingsMenu />
     </ColorModeProvider>,
-    { auth0Config }
+    { authConfig }
   );
 
 describe("SettingsMenu", () => {
@@ -92,8 +92,8 @@ describe("SettingsMenu", () => {
       await expect.element(authItem).toHaveTextContent("読み込み中...");
     });
 
-    it("tokenありの場合はログアウトを表示する", async () => {
-      const { user } = await renderSettingsMenu({ token: "some-token" });
+    it("ログイン済みならログアウトを表示する", async () => {
+      const { user } = await renderSettingsMenu({ authenticated: true });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
@@ -104,19 +104,18 @@ describe("SettingsMenu", () => {
 
     it("ログアウトをクリックするとlogoutが呼ばれる", async () => {
       const logout = vi.fn();
-      const { user } = await renderSettingsMenu({ token: "some-token", logout });
+      const { user } = await renderSettingsMenu({ authenticated: true, logout });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem", { name: "ログアウト" }));
 
+      // BFF 化により戻り先の指定は不要になった。logout は引数を取らない。
       expect(logout).toHaveBeenCalledOnce();
-      expect(logout).toHaveBeenCalledWith({
-        logoutParams: { returnTo: `${location.origin}/` },
-      });
+      expect(logout).toHaveBeenCalledWith();
     });
 
-    it("tokenなしの場合はログインを表示する", async () => {
-      const { user } = await renderSettingsMenu({ token: "" });
+    it("未ログインならログインを表示する", async () => {
+      const { user } = await renderSettingsMenu({ authenticated: false });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
@@ -125,13 +124,13 @@ describe("SettingsMenu", () => {
 
     it("ログインをクリックするとloginが呼ばれる", async () => {
       const login = vi.fn();
-      const { user } = await renderSettingsMenu({ token: "", login });
+      const { user } = await renderSettingsMenu({ authenticated: false, login });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem"));
 
       expect(login).toHaveBeenCalledOnce();
-      expect(login).toHaveBeenCalledWith({});
+      expect(login).toHaveBeenCalledWith();
     });
   });
 });

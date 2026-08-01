@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { ROUTES } from "../../constants/routes";
-import { useAuth0 } from "../../contexts/Auth0";
+import { useAuth } from "../../contexts/Auth";
 import { useColorMode } from "../../contexts/ColorMode";
 import {
   BrightnessAutoIcon,
@@ -22,7 +21,7 @@ const COLOR_MODE_ITEMS = [
 
 export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, token, login, logout } = useAuth0();
+  const { isLoading, authenticated, login, logout } = useAuth();
   const { mode, setMode } = useColorMode();
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -55,12 +54,12 @@ export const SettingsMenu = () => {
 
   const handleAuthAction = useCallback(() => {
     close();
-    if (token) {
-      logout({ logoutParams: { returnTo: `${location.origin}${ROUTES.top}` } });
+    if (authenticated) {
+      logout();
     } else {
-      login({});
+      login();
     }
-  }, [token, login, logout, close]);
+  }, [authenticated, login, logout, close]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
@@ -109,12 +108,12 @@ export const SettingsMenu = () => {
             >
               {isLoading ? (
                 <span aria-hidden="true" className={styles["loadingDot"]} />
-              ) : token ? (
+              ) : authenticated ? (
                 <LogoutIcon size={16} />
               ) : (
                 <LoginIcon size={16} />
               )}
-              <span>{isLoading ? "読み込み中..." : token ? "ログアウト" : "ログイン"}</span>
+              <span>{isLoading ? "読み込み中..." : authenticated ? "ログアウト" : "ログイン"}</span>
             </button>
           </div>
         </div>

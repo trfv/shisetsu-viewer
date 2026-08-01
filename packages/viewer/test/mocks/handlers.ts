@@ -10,9 +10,20 @@ import {
   createMockReservationSearchPage,
 } from "./data";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 export const handlers = [
+  // BFF のセッション問い合わせ。既定はログイン済みの user とする。
+  // 個別のケースは renderWithProviders の authConfig で Context を直接差し替える。
+  http.get("/auth/me", () =>
+    HttpResponse.json({
+      authenticated: true,
+      anonymous: false,
+      trial: false,
+      email: "test@example.com",
+    })
+  ),
+
   // institutions list (Institution page)
   http.get(`${BASE}/v1/institutions`, () =>
     HttpResponse.json(

@@ -39,7 +39,7 @@ describe("Header Component", () => {
   it("デスクトップで予約検索リンクを表示する", async () => {
     mockUseIsMobile.mockReturnValue(false);
     await renderWithProviders(<Header />, {
-      auth0Config: { userInfo: { anonymous: false, trial: false } },
+      authConfig: { userInfo: { anonymous: false, trial: false } },
     });
 
     const reservationLink = screen.getByText("予約検索");
@@ -52,7 +52,7 @@ describe("Header Component", () => {
   it("anonymousユーザーの場合、予約検索はリンクではなくspanとして表示される", async () => {
     mockUseIsMobile.mockReturnValue(false);
     await renderWithProviders(<Header />, {
-      auth0Config: { userInfo: { anonymous: true, trial: false } },
+      authConfig: { userInfo: { anonymous: true, trial: false } },
     });
 
     const reservationText = screen.getByText("予約検索");
@@ -64,7 +64,7 @@ describe("Header Component", () => {
   it("trialユーザーの場合、予約検索に（トライアル）が付与される", async () => {
     mockUseIsMobile.mockReturnValue(false);
     await renderWithProviders(<Header />, {
-      auth0Config: { userInfo: { anonymous: false, trial: true } },
+      authConfig: { userInfo: { anonymous: false, trial: true } },
     });
 
     await expect.element(screen.getByText("予約検索（トライアル）")).toBeInTheDocument();

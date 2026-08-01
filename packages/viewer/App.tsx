@@ -16,7 +16,6 @@ const Detail = lazy(() => import("./pages/Detail"));
 /* istanbul ignore next */
 const Reservation = lazy(() => import("./pages/Reservation"));
 /* istanbul ignore next */
-const Waiting = lazy(() => import("./pages/Waiting"));
 /* istanbul ignore next */
 const Top = lazy(() => import("./pages/Top"));
 const App = () => {
@@ -29,9 +28,6 @@ const App = () => {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route path={ROUTES.waiting}>
-                  <Waiting />
-                </Route>
                 <Route path={ROUTES.reservation}>
                   <AuthGuard Component={<Reservation />} />
                 </Route>

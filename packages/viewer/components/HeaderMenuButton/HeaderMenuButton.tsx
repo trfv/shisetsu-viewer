@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 
 import { ROUTES } from "../../constants/routes";
-import { useAuth0 } from "../../contexts/Auth0";
+import { useAuth } from "../../contexts/Auth";
 import { MenuIcon } from "../icons";
 
 import styles from "./HeaderMenuButton.module.css";
@@ -11,7 +11,7 @@ export const HeaderMenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     userInfo: { anonymous, trial },
-  } = useAuth0();
+  } = useAuth();
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 

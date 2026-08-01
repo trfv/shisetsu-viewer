@@ -21,7 +21,7 @@ import {
 } from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
-import { useAuth0 } from "../contexts/Auth0";
+import { useAuth } from "../contexts/Auth";
 import { useApiQuery } from "../hooks/useApiQuery";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
@@ -185,12 +185,11 @@ const ReservationTab = ({
     hasNextPage,
     fetchMore,
   } = usePaginatedQuery<ReservationDto>(
-    (token, cursor) =>
+    (cursor) =>
       fetchInstitutionReservations(
         id,
         { startDate: formatISO(today, { representation: "date" }) },
-        cursor,
-        token
+        cursor
       ),
     id
   );
@@ -328,8 +327,8 @@ const DetailPage = () => {
 const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
-    userInfo: { anonymous, trial },
-  } = useAuth0();
+    userInfo: { anonymous },
+  } = useAuth();
 
   const handleTabChange = useCallback(
     (_: ChangeEvent<unknown>, newValue: string) => setTab(newValue as TabType),
@@ -360,13 +359,13 @@ const DetailContent = ({ id }: { id: string }) => {
       </div>
       <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
         <Tab label="施設情報" value="institution" />
-        <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
+        <Tab disabled={anonymous} label="予約状況" value="reservation" />
       </TabGroup>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
         <InstitutionTab institution={institution} loading={loading} />
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
-        {!(anonymous || trial) && (
+        {!anonymous && (
           <ReservationTab
             id={id}
             municipality={institution?.municipality as SupportedMunicipality | undefined}
