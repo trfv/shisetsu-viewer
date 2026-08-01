@@ -1,6 +1,6 @@
 # Scraper Package
 
-Playwright-based scrapers for municipal reservation systems; results are uploaded to the Hasura GraphQL backend. Deps: `@playwright/test`, `date-fns` only. Node が TS を直接実行する（`erasableSyntaxOnly` + `allowImportingTsExtensions`、ビルドなし）。Commands: see `package.json` scripts (`typecheck`, `test`, `test:unit`, `discover`, `update:reservations`, `update:institutions`, `export:institutions`).
+Playwright-based scrapers for municipal reservation systems; results are uploaded to the `packages/api` D1 backend (REST). Deps: `@playwright/test`, `date-fns` only. Node が TS を直接実行する（`erasableSyntaxOnly` + `allowImportingTsExtensions`、ビルドなし）。Commands: see `package.json` scripts (`typecheck`, `test`, `test:unit`, `discover`, `update:reservations`, `update:institutions`, `export:institutions`).
 
 ## ScraperDefinition Pattern
 
@@ -32,7 +32,10 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 - **突合キー**: `facility_name` ↔ `institutions.building_system_name`、`room_name` ↔ `institutions.institution_system_name`。institution 解決キーは `` `${facility_name}-${room_name}` ``。
 - 出力は `validateTransformOutput()` で検証。失敗は `test-results/<municipality>/_failures/` に transient/structural 分類付きで記録される（/repair-scraper ワークフロー用）。
 - Institution metadata の source of truth はローカル JSON `data/institutions/<prefecture>-<slug>.json`（DB-ready enum 値の `Institution` フラット配列）。upsert は `tools/updateInstitutions.ts`、逆輸出は `tools/exportInstitutions.ts`。
-- GraphQL 書き込みは `tools/backend/hasura.ts` にのみ存在。`tools/updateReservations.ts` は薄いオーケストレーション（`buildReservationRows()` 純関数 → `upsertReservations()`）。
+- バックエンドとの通信は `tools/backend/d1Api.ts` にのみ存在（`packages/api` の REST）。`tools/updateReservations.ts` は薄いオーケストレーション（`buildReservationRows()` 純関数 → `upsertReservations()`）。
+- 施設キーマップは `GET /v1/institutions?municipality=X&detail=true` から引く。この口だけエッジキャッシュに載らない（施設 upsert 直後に古い id 対応表を掴まないため）。
+- **`export:institutions` の並び順は D1 の BINARY 照合**（`ORDER BY municipality, building_kana, institution_kana, id`）。Hasura 時代の Postgres 日本語照合とは前後が入れ替わる箇所がある（例: ツキジ／ツキシマ）。中身は同じなので、差分が並び替えだけなら取り込まなくてよい。
+- **解決キーが空の施設がある**（例: tokyo-kita は 27 件中 13 件が `system_name` 空）。これらは予約を 1 行も持たない施設マスタで、キーマップ上は `"-"` に潰れるが実害はない。
 
 ## Playwright Config (`playwright.config.ts`)
 
@@ -47,4 +50,4 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 ## Environment
 
-`.env.sample` → `.env`（`GRAPHQL_ENDPOINT`, `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, `AUTH0_AUDIENCE`）。CI は `M2M_TOKEN` を直指定して Auth0 Client Credentials Flow をスキップする。
+`.env.sample` → `.env`（`D1_API_ENDPOINT`, `ADMIN_API_KEY`）。CI では `D1_API_ENDPOINT` を repository variable で渡し、認証は GitHub OIDC（job に `permissions: id-token: write` があれば `ACTIONS_ID_TOKEN_REQUEST_*` が自動注入され、`ADMIN_API_KEY` は不要）。
