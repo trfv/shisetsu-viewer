@@ -35,3 +35,5 @@ React 19 SPA + BFF。Cloudflare Workers にデプロイ（`wrangler.jsonc`）。
 - ローカル: `http://localhost:3000/auth/callback`
 
 **ローカルでログインフローを通すには `.dev.vars` が要る**（`.dev.vars.example` をコピー）。Secret は Cloudflare 側に入れてもローカルには来ない。
+
+**`.dev.vars` が供給するのは Secret だけで、binding は別**。`DB` は既定でローカルの疑似 D1、`API` はローカル起動の api を指す。本番リソースへ繋ぐには binding に `"remote": true`（remote bindings）が要るが、`API` を remote にすると本番の署名鍵をローカルに置く必要が生じる。**認証フローの検証はブランチ preview で行うほうが安全**。使い分けと注意点は `.dev.vars.example` の末尾に整理してある（ローカル開発の手順自体は未整備。宿題）。
