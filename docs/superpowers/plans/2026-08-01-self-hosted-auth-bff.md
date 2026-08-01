@@ -21,7 +21,11 @@
 - master へ直接 push しない。ブランチと PR を経由する
 - 非対話シェルで pre-commit がコマンド解決に失敗する場合は `PATH="$PWD/node_modules/.bin:$PATH" git commit ...` で回避する。`--no-verify` は使わない
 - `.npmrc` の `min-release-age=3` により、公開から 3 日未満のバージョンは取得できない
-- wrangler は 4.115.0、`@cloudflare/vite-plugin` は 1.48.0 に固定する。`min-release-age=3` により 2026-08-01 時点で取得できる最新の互換ペアがこれである（4.118.0 と plugin 1.50.0 は公開から 3 日未満で ETARGET になる）
+- Cloudflare のツールチェインは**同じ日に公開された組で揃える**。`@cloudflare/vitest-pool-workers` が wrangler と miniflare を厳密固定するため、wrangler だけ上げると root と `packages/*` に二重の workerd が生まれる。2026-08-01 時点で取得できる組は 2026-07-28 公開の次の 3 点である（`min-release-age=3` により、これより新しい組は ETARGET になる）
+  - `wrangler` 4.115.0
+  - `@cloudflare/vitest-pool-workers` 0.19.0
+  - `@cloudflare/vite-plugin` 1.48.0
+- ワークスペースをまたぐ依存を更新したら、`rm -f package-lock.json && npm install --package-lock-only && npm dedupe` で単一 hoist に畳み、`node_modules/workerd` が 1 つだけであることを確認する
 - 自前 issuer は `https://app.shisetsudb.com/`、audience は `shisetsu-api`、クレーム名前空間は `https://app.shisetsudb.com/token/claims`
 
 ---
