@@ -289,19 +289,22 @@ describe("/api/*", () => {
 });
 
 describe("レート制限", () => {
-  it("同一 IP から /auth/* を叩き続けると 429 になる", async () => {
+  /** ヘルパを通さず固定 IP で叩く。バケットを共有させて上限に到達させるため。 */
+  function hammer(path: string, ip: string) {
+    return worker.fetch(
+      new Request(`https://app.test${path}`, { headers: { "CF-Connecting-IP": ip } }),
+      env,
+      ctx()
+    );
+  }
+
+  it("同一 IP から /auth/login を叩き続けると 429 になる", async () => {
     const ip = "198.51.100.7";
-    const call = () =>
-      worker.fetch(
-        new Request("https://app.test/auth/me", { headers: { "CF-Connecting-IP": ip } }),
-        env,
-        ctx()
-      );
 
     // 上限は 20 req/60s。超えるまで叩いて 429 に到達することを確かめる。
     let limited = false;
     for (let i = 0; i < 30; i++) {
-      const response = await call();
+      const response = await hammer("/auth/login", ip);
       if (response.status === 429) {
         expect(response.headers.get("Retry-After")).toBe("60");
         limited = true;
@@ -311,25 +314,39 @@ describe("レート制限", () => {
     expect(limited).toBe(true);
   });
 
-  it("/api/* はこの制限の対象外（api 側の RATE_LIMITER が受け持つ）", async () => {
-    const ip = "198.51.100.8";
-    for (let i = 0; i < 25; i++) {
-      await worker.fetch(
-        new Request("https://app.test/api/v1/institutions", {
+  // /auth/me は全訪問者がページ読み込みごとに叩く。ここを制限すると共有 IP で
+  // 枠を食い潰し、429 を受けた Auth コンテキストがログイン済みユーザーを
+  // anonymous に倒してしまう。総当たり対策の対象はログイン経路だけである。
+  it("/auth/me は制限の対象外", async () => {
+    const ip = "198.51.100.9";
+    for (let i = 0; i < 30; i++) {
+      const response = await hammer("/auth/me", ip);
+      expect(response.status).toBe(200);
+    }
+  });
+
+  it("/auth/logout も制限の対象外", async () => {
+    const ip = "198.51.100.10";
+    for (let i = 0; i < 30; i++) {
+      const response = await worker.fetch(
+        new Request("https://app.test/auth/logout", {
+          method: "POST",
           headers: { "CF-Connecting-IP": ip },
         }),
         env,
         ctx()
       );
+      expect(response.status).toBe(204);
     }
-    const response = await worker.fetch(
-      new Request("https://app.test/api/v1/institutions", {
-        headers: { "CF-Connecting-IP": ip },
-      }),
-      env,
-      ctx()
-    );
-    expect(response.status).not.toBe(429);
+  });
+
+  it("/api/* はこの制限の対象外（api 側の RATE_LIMITER が受け持つ）", async () => {
+    const ip = "198.51.100.8";
+    for (let i = 0; i < 25; i++) {
+      await hammer("/api/v1/institutions", ip);
+    }
+    const response = await hammer("/api/v1/institutions", ip);
+    expect(response.status).toBe(200);
   });
 });
 

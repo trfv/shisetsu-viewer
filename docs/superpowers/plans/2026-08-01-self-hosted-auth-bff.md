@@ -1971,6 +1971,9 @@ const OAUTH_COOKIE = "__Host-oauth";
 const SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 const OAUTH_TTL_SECONDS = 600;
 
+/** レート制限の対象。総当たりの的になるログイン経路だけに絞る。 */
+const RATE_LIMITED_PATHS = new Set(["/auth/login", "/auth/callback"]);
+
 interface OauthState {
   state: string;
   verifier: string;
@@ -2143,8 +2146,11 @@ export const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const { pathname } = new URL(request.url);
     try {
-      // ログイン経路だけレート制限する。/api/* は api 側の RATE_LIMITER が受け持つ。
-      if (pathname.startsWith("/auth/") && env.AUTH_RATE_LIMITER) {
+      // 総当たり対策なので、対象はログイン開始と受け口の 2 経路だけである。
+      // /auth/me を含めてはならない（全訪問者がページ読み込みごとに叩くため、
+      // 共有 IP で枠を食い潰してログイン済みユーザーが anonymous に倒れる）。
+      // /api/* は api 側の RATE_LIMITER が受け持つ。
+      if (RATE_LIMITED_PATHS.has(pathname) && env.AUTH_RATE_LIMITER) {
         const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
         const { success } = await env.AUTH_RATE_LIMITER.limit({ key });
         if (!success) {
