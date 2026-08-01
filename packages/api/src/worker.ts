@@ -60,6 +60,10 @@ const INSTITUTIONS_CACHE = "public, max-age=600";
 // heuristic freshness で既定 2 時間キャッシュされうる。Authorization ヘッダ付きの
 // リクエストは自動バイパスされる仕様だが、そこに依存せず明示的に落とす。
 const PRIVATE_CACHE = "private, no-store";
+// detail=true は scraper 専用の口。施設マスタを upsert した直後に施設キーマップを引くため、
+// 10 分古い id 対応表を掴むと予約行の解決に失敗する（unmatched facility keys）。
+// 公開情報ではあるがキャッシュには載せない。
+const NO_STORE_CACHE = "no-store";
 
 // CORS: viewer（別 origin のブラウザ SPA）からの fetch を許可する。
 // 本番/将来の任意サブドメイン(*.shisetsudb.com) と Workers プレビュー(*.trfv-dev.workers.dev)、
@@ -128,6 +132,7 @@ async function authorizeUser(request: Request, env: Env): Promise<Response | nul
 }
 
 async function handleListInstitutions(url: URL, env: Env): Promise<Response> {
+  const detail = parseBoolParam(url, "detail");
   const page = await listInstitutions(env.DB, {
     municipality: parseListParam(url, "municipality"),
     isAvailableStrings: parseBoolParam(url, "isAvailableStrings"),
@@ -137,8 +142,11 @@ async function handleListInstitutions(url: URL, env: Env): Promise<Response> {
     institutionSizes: parseListParam(url, "institutionSizes"),
     limit: parseLimit(url),
     cursor: url.searchParams.get("cursor") ?? undefined,
+    detail,
   });
-  return json(page, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
+  return json(page, {
+    headers: { "Cache-Control": detail ? NO_STORE_CACHE : INSTITUTIONS_CACHE },
+  });
 }
 
 async function handleInstitutionDetail(id: string, env: Env): Promise<Response> {

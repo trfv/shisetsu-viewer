@@ -10,7 +10,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - **scraper** (`packages/scraper/`) — Playwright-based data scrapers.
 - **shared** (`packages/shared/`) — shared types and municipality registry (source of truth).
 - **mcp-server** (`packages/mcp-server/`) — MCP server for AI tool integration. Cloudflare Workers.
-- **api** (`packages/api/`) — D1-backed API worker (Hasura 置き換えの移行中。dual-write 稼働中)。CLAUDE.md 未整備。
+- **api** (`packages/api/`) — D1-backed API worker。読み書きの単一の口。Cloudflare Workers（手動デプロイ）。CLAUDE.md 未整備。
 
 ## Monorepo Setup
 
@@ -32,5 +32,5 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 ## Cross-Package Architecture
 
 - `@shisetsu-viewer/shared` の `registry.ts` / `types.ts` が自治体データと enum の source of truth。viewer / scraper 双方が import する。
-- Data flow: scrapers が自治体サイトを巡回 → 変換 → **Hasura（Auth0 M2M）と `packages/api`（GitHub OIDC）へ dual-write**。読み取りはすでに D1 側へ切替済みで、viewer は `packages/api` の REST を叩く（Auth0 Bearer token）。Hasura は PR 3-5 で撤去する。
+- Data flow: scrapers が自治体サイトを巡回 → 変換 → **`packages/api` の admin REST へ書き込む**（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）。viewer は同じ api の公開 REST を叩く（要認証エンドポイントは Auth0 Bearer token）。D1 に直接書くのは api worker だけ。
 - MCP server は同データを AI 向けに公開（Workers デプロイは D1 直バインドで read-only、local stdio は api 経由で write 可）。
