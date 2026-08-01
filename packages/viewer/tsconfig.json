@@ -13,5 +13,7 @@
     "outDir": "./dist",
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["node_modules"]
+  // worker/ は Workers ランタイムの型で別途検査する（worker/tsconfig.json）。
+  // ここに含めると Request / Response / caches の DOM 型と衝突する。
+  "exclude": ["node_modules", "worker", "worker-configuration.d.ts"]
 }

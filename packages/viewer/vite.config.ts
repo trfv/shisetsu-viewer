@@ -1,3 +1,4 @@
+import { cloudflare } from "@cloudflare/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type UserConfig } from "vite";
 
@@ -25,6 +26,9 @@ export default defineConfig(
         },
       },
     },
-    plugins: [react()],
+    // cloudflare() は dev server 内で workerd を走らせ、本番と同じランタイムで
+    // BFF（worker/index.ts）を検証できるようにする。ビルド出力は dist/client と
+    // dist/shisetsu-viewer に分かれる。
+    plugins: [react(), cloudflare()],
   })
 );
