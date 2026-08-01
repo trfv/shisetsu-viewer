@@ -7,7 +7,9 @@
   "exports": {
     ".": "./src/worker.ts",
     "./db/queries": "./src/db/queries.ts",
-    "./auth/auth0": "./src/auth/auth0.ts"
+    "./db/authQueries": "./src/db/authQueries.ts",
+    "./auth/auth0": "./src/auth/auth0.ts",
+    "./auth/roles": "./src/auth/roles.ts"
   },
   "scripts": {
     "typecheck": "wrangler types && tsc",
@@ -22,8 +24,8 @@
     "jose": "6.2.3"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "0.18.8",
+    "@cloudflare/vitest-pool-workers": "0.19.0",
     "vitest": "4.1.10",
-    "wrangler": "4.113.0"
+    "wrangler": "4.115.0"
   }
 }

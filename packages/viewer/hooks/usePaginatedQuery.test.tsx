@@ -7,7 +7,7 @@ import { worker } from "../test/mocks/browser";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { usePaginatedQuery } from "./usePaginatedQuery";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 type Item = { id: string; name: string };
 
@@ -18,7 +18,7 @@ const makePage = (items: Item[], hasNextPage: boolean, endCursor: string | null)
 
 const TestComponent = ({ queryKey, filter }: { queryKey: string; filter?: string }) => {
   const { data, loading, hasNextPage, fetchMore, fetchingMore } = usePaginatedQuery<Item>(
-    (token, cursor) => apiGet(`${BASE}/v1/items`, { cursor, filter }, token),
+    (cursor) => apiGet(`${BASE}/v1/items`, { cursor, filter }),
     queryKey
   );
 
@@ -49,7 +49,7 @@ describe("usePaginatedQuery", () => {
     await expect.element(screen.getByText("Item A")).toBeInTheDocument();
   });
 
-  it("Auth0 ロード中はフェッチしない", async () => {
+  it("認証状態のロード中はフェッチしない", async () => {
     let requestCount = 0;
     worker.use(
       http.get(`${BASE}/v1/items`, () => {
@@ -59,7 +59,7 @@ describe("usePaginatedQuery", () => {
     );
 
     await renderWithProviders(<TestComponent queryKey="k" />, {
-      auth0Config: { isLoading: true, token: "" },
+      authConfig: { isLoading: true },
     });
 
     await expect.element(screen.getByText("loading")).toBeInTheDocument();

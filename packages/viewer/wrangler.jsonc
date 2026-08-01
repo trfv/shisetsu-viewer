@@ -2,16 +2,40 @@
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "shisetsu-viewer",
   "compatibility_date": "2026-02-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./worker/index.ts",
   "workers_dev": true,
   "preview_urls": true,
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "./dist",
+    "directory": "./dist/client",
+    "binding": "ASSETS",
     "html_handling": "drop-trailing-slash",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    // 静的アセットは Worker を経由しない（課金対象外・無制限）。BFF が要る 2 経路だけ先に走らせる。
+    "run_worker_first": ["/auth/*", "/api/*"]
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shisetsu-db",
+      // 本番 D1（APAC）。packages/api/wrangler.jsonc と同じ ID。
+      // migrations_dir は api 側にだけ置く（viewer からは適用しない）。
+      "database_id": "353bd30e-d421-460f-821a-018fd05a455c"
+    }
+  ],
+  "services": [{ "binding": "API", "service": "shisetsu-api" }],
+  // ログイン経路の総当たり対策。api 側の RATE_LIMITER は別 Worker のため共有できない。
+  "ratelimits": [
+    {
+      "name": "AUTH_RATE_LIMITER",
+      "namespace_id": "1002",
+      // period は 10 または 60 のみ指定可能
+      "simple": { "limit": 20, "period": 60 }
+    }
+  ],
   "dev": {
     "port": 3000
   }

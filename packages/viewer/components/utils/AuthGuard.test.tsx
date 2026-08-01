@@ -6,7 +6,7 @@ import { AuthGuard } from "./AuthGuard";
 describe("AuthGuard Component", () => {
   it("anonymous=trueかつisLoading=trueの場合にローディングを表示する", async () => {
     await renderWithProviders(<AuthGuard Component={<div>保護されたページ</div>} />, {
-      auth0Config: {
+      authConfig: {
         isLoading: true,
         userInfo: { anonymous: true, trial: false },
       },
@@ -20,7 +20,7 @@ describe("AuthGuard Component", () => {
     await renderWithProviders(<AuthGuard Component={<div>保護されたページ</div>} />, {
       initialEntries: ["/protected"],
       route: "/protected",
-      auth0Config: {
+      authConfig: {
         isLoading: false,
         userInfo: { anonymous: true, trial: false },
       },
@@ -31,7 +31,7 @@ describe("AuthGuard Component", () => {
 
   it("anonymous=falseの場合にラップされたComponentをレンダリングする", async () => {
     await renderWithProviders(<AuthGuard Component={<div>保護されたページ</div>} />, {
-      auth0Config: {
+      authConfig: {
         isLoading: false,
         userInfo: { anonymous: false, trial: false },
       },

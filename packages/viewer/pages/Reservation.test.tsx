@@ -15,7 +15,7 @@ vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,
 }));
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 const FAKE_NOW = new Date("2025-06-15T12:00:00+09:00");
 

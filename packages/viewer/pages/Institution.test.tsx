@@ -7,7 +7,7 @@ import { createMockInstitutionsPage, createMockInstitutionSummary } from "../tes
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 vi.mock("../hooks/useIsMobile", () => ({
   useIsMobile: () => false,

@@ -4,14 +4,16 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@auth0/auth0-spa-js": "2.23.0",
     "@fontsource-variable/noto-sans-jp": "5.3.0",
     "date-fns": "4.4.0",
+    "jose": "6.2.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "wouter": "3.10.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "1.48.0",
+    "@cloudflare/vitest-pool-workers": "0.19.0",
     "@playwright/test": "1.61.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
@@ -22,16 +24,17 @@
     "vite": "8.1.5",
     "vitest": "4.1.10",
     "vitest-browser-react": "2.2.0",
-    "wrangler": "4.113.0"
+    "wrangler": "4.115.0"
   },
   "scripts": {
     "start": "vite --port 3000",
-    "build": "tsc && vite build",
+    "build": "npm run typecheck && vite build",
     "serve": "vite preview --port 3000",
-    "typecheck": "tsc",
+    "typecheck": "tsc && wrangler types && tsc -p worker",
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",
+    "test:worker": "vitest run --config vitest.worker.config.ts",
     "test:integration": "TZ=Asia/Tokyo vitest --run test/integration",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -41,7 +44,7 @@
     "coverage": "TZ=Asia/Tokyo vitest run --coverage",
     "coverage:open": "TZ=Asia/Tokyo vitest run --coverage && open coverage/index.html",
     "deploy": "wrangler deploy",
-    "deploy:versions": "wrangler versions upload --assets=./dist",
+    "deploy:versions": "wrangler versions upload",
     "preview": "wrangler dev"
   },
   "msw": {

@@ -1,0 +1,52 @@
+# ローカル開発用の Secret。`.dev.vars` にコピーして値を入れる。
+# wrangler と @cloudflare/vite-plugin が dev 実行時に読み込む。`.dev.vars` は gitignore 済み。
+#
+# redirect_uri はリクエストのオリジンから導出されるため、オリジンの設定は不要である。
+# ローカルなら http://localhost:3000/auth/callback が使われる。
+# この URI を Google Cloud Console の承認済みリダイレクト URI に登録しておくこと
+# （Google はワイルドカードを受け付けないため、本番・preview・localhost を個別に登録する）。
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# api 向け JWT の署名鍵。秘密 JWK の配列を JSON 1 行で。先頭が署名鍵で kid が必須。
+# ローカル検証用は本番と別の鍵にする。生成:
+#   node -e 'const j=await import("jose");const p=await j.generateKeyPair("ES256",{extractable:true});const k=await j.exportJWK(p.privateKey);k.kid="local";k.alg="ES256";k.use="sig";console.log(JSON.stringify([k]))'
+AUTH_SIGNING_KEYS=[]
+
+# ---------------------------------------------------------------------------
+# このファイルが供給するのは Secret だけである。binding は別の仕組みで決まる。
+#
+#   GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET / AUTH_SIGNING_KEYS ... このファイル
+#   DB（D1）                                ... 既定はローカルの疑似 D1（.wrangler/state）
+#   API（service binding）                  ... 既定はローカルで起動した api
+#
+# したがって「本番と同じ D1 を見たい」「デプロイ済みの api を叩きたい」は、このファイル
+# では実現できない。wrangler.jsonc の binding に `"remote": true` を付ける（remote
+# bindings。2025-09 に GA）。`wrangler dev --local` で一時的に全て無効化できる。
+#
+#   "d1_databases": [{ ..., "remote": true }]
+#   "services":     [{ ..., "remote": true }]
+#
+# ただしこの構成では 3 点に注意が要る。
+#
+# 1. API を remote にすると、ローカルが発行した JWT を「デプロイ済みの api」が検証する。
+#    api の SELF_JWKS_JSON は本番の公開鍵なので、ローカルも本番の秘密鍵で署名する
+#    必要が出る。つまり本番の署名鍵をこのファイルに置くことになる。
+#    認証フローの検証はブランチ preview で行うほうが、鍵を Cloudflare 側に留めたまま
+#    済むぶん安全である。
+# 2. DB を remote にすると、ローカルからのログインが本番の users / sessions に実際の
+#    行を作る。破壊的ではないが掃除が要る。
+# 3. D1 無料枠の制約は rows read である。ローカルの試行錯誤がそのまま本番の枠を使う。
+#
+# 使い分けの目安:
+#   認証フローの検証            -> ブランチ preview
+#   本番データで UI を確認       -> ローカル + DB だけ remote（読み取り中心なら実害小）
+#   BFF のロジック変更           -> ローカル完結 + npm run test:worker
+#
+# ローカル完結でやる場合は、ローカル D1 の用意と api の起動が要る。
+#   npm run migrate:local -w @shisetsu-viewer/api
+#   npx wrangler d1 execute shisetsu-db --local --config packages/api/wrangler.jsonc \
+#     --command "INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at) \
+#                VALUES ('local-1', NULL, '<your-email>', 'user', NULL, '2026-08-01T00:00:00.000Z')"
+#   npm start -w @shisetsu-viewer/api   # 別ターミナル。service binding の相手

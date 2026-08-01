@@ -10,7 +10,7 @@ import {
   searchReservations,
 } from "./endpoints";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 describe("endpoints", () => {
   it("fetchInstitutions は params と cursor を /v1/institutions に載せる", async () => {
@@ -44,11 +44,11 @@ describe("endpoints", () => {
     expect(captured).toBe("abc-123");
   });
 
-  it("fetchInstitutionReservations は token を Authorization に載せる", async () => {
-    let auth: string | null = null;
+  it("fetchInstitutionReservations は BFF の /api 配下を叩く", async () => {
+    let capturedUrl = "";
     worker.use(
       http.get(`${BASE}/v1/institutions/:id/reservations`, ({ request }) => {
-        auth = request.headers.get("Authorization");
+        capturedUrl = request.url;
         return HttpResponse.json({ items: [], pageInfo: { hasNextPage: false, endCursor: null } });
       })
     );
@@ -56,29 +56,31 @@ describe("endpoints", () => {
     await fetchInstitutionReservations(
       "abc-123",
       { startDate: "2026-08-01", endDate: "2026-08-31" },
-      null,
-      "tok-xyz"
+      null
     );
 
-    expect(auth).toBe("Bearer tok-xyz");
+    const url = new URL(capturedUrl);
+    expect(url.pathname).toBe("/api/v1/institutions/abc-123/reservations");
+    expect(url.searchParams.get("startDate")).toBe("2026-08-01");
   });
 
-  it("searchReservations は token を載せて /v1/reservations/search を叩く", async () => {
-    let auth: string | null = null;
+  it("searchReservations は BFF の /api/v1/reservations/search を叩く", async () => {
+    let capturedUrl = "";
     worker.use(
       http.get(`${BASE}/v1/reservations/search`, ({ request }) => {
-        auth = request.headers.get("Authorization");
+        capturedUrl = request.url;
         return HttpResponse.json({ items: [], pageInfo: { hasNextPage: false, endCursor: null } });
       })
     );
 
     await searchReservations(
       { startDate: "2026-08-01", endDate: "2026-08-07", isHoliday: true },
-      null,
-      "tok-abc"
+      null
     );
 
-    expect(auth).toBe("Bearer tok-abc");
+    const url = new URL(capturedUrl);
+    expect(url.pathname).toBe("/api/v1/reservations/search");
+    expect(url.searchParams.get("isHoliday")).toBe("true");
   });
 
   it("fetchScrapeRuns は /v1/scrape-runs から items を返す", async () => {

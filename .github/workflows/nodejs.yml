@@ -69,6 +69,10 @@ jobs:
         run: npm run test -w @shisetsu-viewer/shared
       - name: API unit tests
         run: npm run test -w @shisetsu-viewer/api
+      # BFF（viewer の Worker）は browser mode の対象外なので、別 config で明示的に走らせる。
+      # ここを忘れると認証層がまるごと CI 無検証になる。
+      - name: BFF worker tests
+        run: npm run test:worker -w @shisetsu-viewer/viewer
       - name: Cache Playwright browsers
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache

@@ -8,7 +8,9 @@ const config: KnipConfig = {
       ignoreDependencies: [],
     },
     "packages/viewer": {
-      ignoreDependencies: [],
+      // `cloudflare:test` は Workers ランタイムの仮想モジュール（npm パッケージではない）。
+      // knip が `cloudflare` パッケージとして誤検出するため無視する（api と同じ扱い）。
+      ignoreDependencies: ["cloudflare"],
     },
     "packages/scraper": {
       entry: ["**/index.test.ts", "*/index.ts", "tools/**/*.ts"],
