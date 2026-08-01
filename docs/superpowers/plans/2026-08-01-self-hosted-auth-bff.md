@@ -2687,34 +2687,63 @@ git commit -m "feat(viewer): フロントを BFF 経由の認証へ差し替え 
 - Consumes: Task 1 から 11 の全て
 - Produces: 本番で動作する自前認証
 
+**所要時間の目安**：Google Console の操作を含めて 30〜45 分。Step 6 のデプロイ以降は戻しにくいので、Step 1〜5 を全て終えてから進む。
+
 - [ ] **Step 1: 署名鍵を生成する**
 
-スクラッチパッドにスクリプトを書いて実行する。
-
-```js
-// scratchpad/genkey.mjs
-import { exportJWK, generateKeyPair } from "jose";
-
-const pair = await generateKeyPair("ES256", { extractable: true });
-const priv = await exportJWK(pair.privateKey);
-const pub = await exportJWK(pair.publicKey);
-const kid = "auth-2026-08";
-priv.kid = kid;
-priv.alg = "ES256";
-pub.kid = kid;
-pub.alg = "ES256";
-
-console.log("AUTH_SIGNING_KEYS:", JSON.stringify([priv]));
-console.log("SELF_JWKS_JSON:", JSON.stringify({ keys: [pub] }));
-```
+`jose` はインストール済みなので、リポジトリのルートで直接実行できる。
+**秘密鍵は端末に出さずファイルへ書く**（履歴やスクロールバックに残さないため）。
 
 ```bash
-node scratchpad/genkey.mjs
+node -e '
+(async () => {
+  const { exportJWK, generateKeyPair } = await import("jose");
+  const fs = await import("node:fs");
+  const pair = await generateKeyPair("ES256", { extractable: true });
+  const priv = await exportJWK(pair.privateKey);
+  const pub = await exportJWK(pair.publicKey);
+  const kid = "auth-" + new Date().toISOString().slice(0, 7);
+  for (const k of [priv, pub]) { k.kid = kid; k.alg = "ES256"; k.use = "sig"; }
+  fs.writeFileSync("/tmp/AUTH_SIGNING_KEYS.txt", JSON.stringify([priv]), { mode: 0o600 });
+  console.log("秘密鍵: /tmp/AUTH_SIGNING_KEYS.txt");
+  console.log("公開 JWKS:", JSON.stringify({ keys: [pub] }));
+})();
+'
 ```
 
-- [ ] **Step 2: api に公開鍵を入れてデプロイする**
+`kid` を年月にしておくと、ローテーションしたときにどちらの鍵か判別できる。
+秘密鍵ファイルは Step 4 で投入したあと削除する。
 
-`packages/api/wrangler.jsonc` の `vars.SELF_JWKS_JSON` に上で出た公開 JWKS を貼る。
+- [ ] **Step 2: Google の OAuth クライアントを作る**
+
+Google Cloud Console → APIs & Services → Credentials → Create Credentials → **OAuth client ID**。
+
+- Application type: **Web application**
+- 承認済みリダイレクト URI に **2 件**を登録する。Google はワイルドカードを受け付けないため個別に要る
+  - `https://app.shisetsudb.com/auth/callback`
+  - `http://localhost:3000/auth/callback`
+
+OAuth 同意画面が未設定なら先に作る。scope は `openid` と `email` だけで、いずれも非センシティブなので Google の審査は不要である。
+User type を External にすれば任意の Google アカウントでログインできる（テストユーザー登録も不要）。
+
+クライアント ID とシークレットを控える。**この 2 つは Step 4 で使う**。
+
+- [ ] **Step 3: api に公開鍵を入れてデプロイする**
+
+`packages/api/wrangler.jsonc` の `vars.SELF_JWKS_JSON` に Step 1 で出た公開 JWKS を 1 行で貼る（公開鍵なのでコミットしてよい）。
+
+```jsonc
+"SELF_JWKS_JSON": "{\"keys\":[{\"kty\":\"EC\",\"x\":\"...\",\"y\":\"...\",\"crv\":\"P-256\",\"kid\":\"auth-2026-08\",\"alg\":\"ES256\",\"use\":\"sig\"}]}",
+```
+
+JSON の中の JSON なので、`"` のエスケープを忘れない。貼ったら構文を確認する。
+
+```bash
+node -e 'const c=require("./packages/api/wrangler.jsonc".replace(/jsonc$/,"jsonc"));' 2>/dev/null || \
+  npx wrangler types --config packages/api/wrangler.jsonc >/dev/null && echo "wrangler.jsonc の構文 OK"
+```
+
+**api を viewer より先にデプロイする。** 逆順だと api が自前 JWT を検証できず、全ユーザーが anonymous に落ちる。
 
 ```bash
 npm run deploy -w @shisetsu-viewer/api
@@ -2723,53 +2752,102 @@ curl -s https://d1-api.shisetsudb.com/v1/health
 
 Expected: `{"ok":true}`
 
-この時点では誰も自前 JWT を送らないため、既存の動作は変わらない。
+この時点では誰も自前 JWT を送らないため、既存の動作は変わらない。既存の Auth0 トークンもそのまま通る。
 
-- [ ] **Step 3: Google の OAuth クライアントを作り Secrets を投入する**
+- [ ] **Step 4: viewer に Secrets を投入する**
 
-bindings（DB、API、AUTH_RATE_LIMITER、APP_ORIGIN）は Task 5 で設定済みである。
-ここで入れるのは Secrets だけである。
+bindings（DB、API、AUTH_RATE_LIMITER、APP_ORIGIN）は Task 5 で設定済みである。ここで入れるのは Secrets だけである。
 
-Google Cloud Console でウェブアプリケーションの OAuth クライアントを作り、承認済みリダイレクト URI に 2 件を登録する。
-
-- `https://app.shisetsudb.com/auth/callback`
-- `http://localhost:3000/auth/callback`
+`wrangler secret put` は値を対話で聞いてくる。`AUTH_SIGNING_KEYS` はファイルから流し込むと貼り付けミスが起きない。
 
 ```bash
 npx wrangler secret put GOOGLE_CLIENT_ID --config packages/viewer/wrangler.jsonc
 npx wrangler secret put GOOGLE_CLIENT_SECRET --config packages/viewer/wrangler.jsonc
-npx wrangler secret put AUTH_SIGNING_KEYS --config packages/viewer/wrangler.jsonc
+npx wrangler secret put AUTH_SIGNING_KEYS --config packages/viewer/wrangler.jsonc < /tmp/AUTH_SIGNING_KEYS.txt
 ```
 
-ローカルで検証するときは `packages/viewer/.dev.vars.example` を `.dev.vars` にコピーして値を入れる。
+3 件入ったことを確認し、秘密鍵ファイルを消す。
+
+```bash
+npx wrangler secret list --config packages/viewer/wrangler.jsonc
+rm -f /tmp/AUTH_SIGNING_KEYS.txt
+```
+
+Expected: `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `AUTH_SIGNING_KEYS` の 3 件。
+
+ローカルでも検証するなら `packages/viewer/.dev.vars.example` を `.dev.vars` にコピーして値を入れる。
 **`APP_ORIGIN` を `http://localhost:3000` に上書きすること**。`wrangler.jsonc` の値は本番固定で、`redirect_uri` は `${APP_ORIGIN}/auth/callback` として組み立てられるため、上書きしないと Google の同意画面から本番へ戻ってしまいローカルでフローが完走しない。
 
-- [ ] **Step 4: 本番 D1 にマイグレーションを適用する**
+- [ ] **Step 5: 本番 D1 にマイグレーションを適用する**
+
+適用前に、既に当たっていないかを見る。
+
+```bash
+npx wrangler d1 migrations list shisetsu-db --remote --config packages/api/wrangler.jsonc
+```
+
+`0003_auth.sql` が未適用（🕒）であることを確認してから適用する。
 
 ```bash
 npm run migrate:remote -w @shisetsu-viewer/api
 ```
 
-- [ ] **Step 5: 既存ユーザーを投入する**
-
-Auth0 のダッシュボードから `role=user` のユーザーの email を控え、1 件ずつ入れる。
+テーブルができたことを確認する。
 
 ```bash
-npx wrangler d1 execute shisetsu-db --remote --command \
-  "INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at) VALUES ('<uuid>', NULL, '<email>', 'user', NULL, '<ISO8601>')"
+npx wrangler d1 execute shisetsu-db --remote --config packages/api/wrangler.jsonc \
+  --command "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('users','sessions')"
+```
+
+Expected: `users` と `sessions` の 2 行。
+
+- [ ] **Step 6: 既存ユーザーを投入する**
+
+Auth0 のダッシュボード → User Management → Users で、`role=user` のユーザーの email を控える（`app_metadata` か Actions で付けている値を見る）。
+
+email が分かったら 1 回の SQL でまとめて入れる。`id` は任意の UUID でよく、初回 Google ログイン時に `google_sub` が埋まる。
+
+```bash
+npx wrangler d1 execute shisetsu-db --remote --config packages/api/wrangler.jsonc --command "
+INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at) VALUES
+  ('$(uuidgen)', NULL, 'you@example.com',    'user', NULL, '$(date -u +%Y-%m-%dT%H:%M:%S.000Z)'),
+  ('$(uuidgen)', NULL, 'friend@example.com', 'user', NULL, '$(date -u +%Y-%m-%dT%H:%M:%S.000Z)');
+"
 ```
 
 既存ユーザーは `role='user'` かつ `trial_expires_at` は NULL とする。
 トライアルを経ずに恒久の権限を持たせるためである。
 
-- [ ] **Step 6: viewer をデプロイする**
+投入結果を確認する。
 
 ```bash
+npx wrangler d1 execute shisetsu-db --remote --config packages/api/wrangler.jsonc \
+  --command "SELECT email, role, google_sub FROM users"
+```
+
+Expected: 控えた email が `role=user` / `google_sub=NULL` で並ぶ。
+
+**email の綴りを間違えると、本人がログインしても紐づかず `trial` の新規ユーザーとして作られる。** その場合は `google_sub` を頼りに `role` を UPDATE すれば直る。
+
+- [ ] **Step 7: viewer をデプロイする**
+
+ここから戻しにくい。Step 3 で api が既にデプロイ済みであることを再確認してから進む。
+
+```bash
+curl -s https://d1-api.shisetsudb.com/v1/health
 npm run build -w @shisetsu-viewer/viewer
 npm run deploy -w @shisetsu-viewer/viewer
 ```
 
-- [ ] **Step 7: 本番で動作を確認する**
+`app.shisetsudb.com` のカスタムドメインは Cloudflare のダッシュボード側で Worker に紐づいており、`wrangler.jsonc` の `routes` には無い。過去のデプロイでも維持されているが、デプロイ直後に到達性を確認する。
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" https://app.shisetsudb.com/
+```
+
+Expected: 200
+
+- [ ] **Step 8: 本番で動作を確認する**
 
 ブラウザで `https://app.shisetsudb.com` を開き、次を順に確認する。
 
@@ -2799,50 +2877,48 @@ curl -s -o /dev/null -w "%{http_code}\n" https://app.shisetsudb.com/api/v1/admin
 
 Expected: 200、401、404
 
-- [ ] **Step 8: 未検証事項を実測する**
+- [ ] **Step 9: 未検証事項を実測する**
 
 Cloudflare のダッシュボードで、viewer Worker と api Worker のリクエスト数を GraphQL Analytics の `datetimeHour` 単位で確認する。
 Service Binding 経由の呼び出しが api 側のリクエスト数に計上されているかを見る。
 結果を設計文書の「未検証事項」に追記する。
 
-- [ ] **Step 9: コミットして PR を出す**
+- [ ] **Step 10: PR の draft を外す**
+
+PR #1674 は作成済みで、本番設定が未実施であることを理由に draft にしてある。
+Step 7 の確認が全て通ったら ready にする。
 
 ```bash
 git add packages/api/wrangler.jsonc
 git commit -m "feat(api): 自前 issuer の公開 JWKS を設定する"
-gh pr create --base master \
-  --title "feat: 自前 IdP と BFF 化で viewer から Auth0 を外す" \
-  --body "$(cat <<'EOF'
-## 概要
-
-viewer Worker を BFF にして、Google を唯一の upstream とする自前認証へ移行する。
-設計は docs/superpowers/specs/2026-08-01-self-hosted-auth-bff-design.md を参照。
-
-## 変更点
-
-- viewer Worker に /auth/* と /api/* を追加し、セッションを HttpOnly Cookie に閉じた
-- ブラウザにトークンを渡さなくなり、VITE_AUTH0_* と VITE_API_ENDPOINT の 4 変数が不要になった
-- api は issuer マップで Auth0 と自前 issuer の両方を受け付ける（mcp-server のため Auth0 を残す）
-- users と sessions を D1 に追加。ロール付与が Auth0 Actions から D1 のカラムに移った
-- trial ロールと /waiting ルートを廃止した
-
-## 確認したこと
-
-- 本番でログイン、予約検索、ログアウトが動作すること
-- /api/v1/admin/reservations が 404 になること（BFF のホワイトリスト）
-- 未ログインで /api/v1/reservations/search が 401 になること
-
-## 残作業
-
-mcp-server の認可サーバ自前化（サブプロジェクト 3）が終わるまで Auth0 テナントは残す。
-EOF
-)"
+git push
+gh pr ready 1674
 ```
 
-`AUTH_SIGNING_KEYS` の秘密鍵はコミットしない。
-`wrangler.jsonc` に入るのは公開 JWKS だけである。
+`AUTH_SIGNING_KEYS` の秘密鍵はコミットしない。`wrangler.jsonc` に入るのは公開 JWKS だけである。
 
-- [ ] **Step 10: ロールバック手順を確認しておく**
+- [ ] **Step 11: 1 週間の安定運用を確認してから Auth0 を止める**
+
+viewer 用の Auth0 アプリケーションを無効化する。
+api の issuer マップは Auth0 を受け付けたままなので、mcp-server は動き続ける。
+
+テナント自体の削除はサブプロジェクト 3（mcp-server の認可サーバ自前化）の完了後である。
+
+## つまずいたときの切り分け
+
+| 症状 | 最初に見るところ |
+|---|---|
+| ログイン後も `anonymous` のまま | api に `SELF_JWKS_JSON` が入っているか。Step 3 を viewer より先にやったか |
+| `/?auth_error=exchange_failed` | Google の redirect URI 登録と、`GOOGLE_CLIENT_SECRET` の値。Worker のログに元の例外が出る |
+| `/?auth_error=state_mismatch` | Cookie が届いていない。`APP_ORIGIN` と実際のオリジンが一致しているか |
+| `/?auth_error=email_conflict` | 同じ email を別の `google_sub` が既に持っている。`SELECT * FROM users WHERE email = '...'` |
+| 既存ユーザーが `trial` になった | Step 6 の email の綴り違い。`UPDATE users SET role='user', trial_expires_at=NULL WHERE google_sub='...'` |
+| 予約検索だけ 403 | JWT は通っているがロールが `anonymous`。`users.role` と `trial_expires_at` を見る |
+
+Worker のログは `npx wrangler tail --config packages/viewer/wrangler.jsonc` で追える。
+`console.error` に元の例外が出るので、`auth_error` に丸められた原因はここで判る。
+
+## ロールバック
 
 viewer で問題が出た場合は、直前のバージョンへ戻す。
 
@@ -2852,8 +2928,6 @@ npx wrangler rollback --config packages/viewer/wrangler.jsonc
 
 api の issuer マップは Auth0 を受け付けたままなので、旧 viewer はそのまま動く。
 D1 の `users` と `sessions` は旧 viewer から参照されないため、消さずに残してよい。
-
----
 
 ## 移行後の残作業
 
