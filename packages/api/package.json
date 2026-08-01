@@ -7,7 +7,9 @@
   "exports": {
     ".": "./src/worker.ts",
     "./db/queries": "./src/db/queries.ts",
-    "./auth/auth0": "./src/auth/auth0.ts"
+    "./db/authQueries": "./src/db/authQueries.ts",
+    "./auth/auth0": "./src/auth/auth0.ts",
+    "./auth/roles": "./src/auth/roles.ts"
   },
   "scripts": {
     "typecheck": "wrangler types && tsc",
