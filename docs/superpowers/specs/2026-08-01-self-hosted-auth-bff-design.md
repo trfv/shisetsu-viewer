@@ -52,7 +52,7 @@ viewer Worker を BFF とし、ブラウザからの認証と API 呼び出し�
    ├─ /auth/login     → Google へ 302
    ├─ /auth/callback  → code 交換 → users upsert → session 発行 → SPA へ 302
    ├─ /auth/logout    → session 削除 → Cookie 失効
-   ├─ /auth/me        → { authenticated, role, email }
+   ├─ /auth/me        → { authenticated, anonymous, trial, email }
    └─ /api/*          → session 解決 → Service Binding で api へ
                         Authorization: Bearer <60 秒 JWT を都度発行>
    その他             → 静的アセット（Worker を経由しない）
@@ -158,13 +158,14 @@ api に JWKS を fetch させないのは、リクエスト時のネットワー
 
 ```sql
 CREATE TABLE users (
-  id            TEXT PRIMARY KEY,
-  google_sub    TEXT UNIQUE,
-  email         TEXT NOT NULL UNIQUE,
-  role          TEXT NOT NULL DEFAULT 'anonymous'
-                CHECK (role IN ('anonymous', 'user')),
-  created_at    TEXT NOT NULL,
-  last_login_at TEXT
+  id               TEXT PRIMARY KEY,
+  google_sub       TEXT UNIQUE,
+  email            TEXT NOT NULL UNIQUE,
+  role             TEXT NOT NULL DEFAULT 'trial'
+                   CHECK (role IN ('anonymous', 'trial', 'user')),
+  trial_expires_at TEXT,
+  created_at       TEXT NOT NULL,
+  last_login_at    TEXT
 );
 
 CREATE TABLE sessions (
@@ -188,7 +189,7 @@ mcp-server が `@shisetsu-viewer/api/auth/auth0` を import している前例�
 
 1. `google_sub` が一致する行があればそれを使う
 2. なければ `email` が一致し `google_sub IS NULL` の行を探し、見つかれば `google_sub` を書き込んで確定する
-3. どちらもなければ `role = 'anonymous'` で新規作成する
+3. どちらもなければ `role = 'trial'` と `trial_expires_at = 現在時刻 + 7 日` で新規作成する
 
 2 があることで、Auth0 から取り出した既存ユーザーの email を `role='user', google_sub=NULL` で先に投入しておけば、本人が Google でログインした時点で自動的に紐づく。
 移行のための手作業が発生しない。
@@ -196,13 +197,52 @@ mcp-server が `@shisetsu-viewer/api/auth/auth0` を import している前例�
 ただしこの email 突合は、Google の ID トークンが `email_verified: true` の場合に限る。
 未検証の email を認めると、他人の email を名乗るアカウントで昇格済みの行を奪える。
 
+### 実効ロールとトライアル
+
+`users.role` は保存されるロールであり、認可に使う実効ロールとは別物である。
+実効ロールは `packages/api/src/auth/roles.ts` の純関数で算出する。
+
+```ts
+export type StoredRole = "anonymous" | "trial" | "user";
+export type Role = "anonymous" | "user";
+
+export const TRIAL_DURATION_DAYS = 7;
+
+export function effectiveRole(
+  stored: StoredRole,
+  trialExpiresAt: string | null,
+  now: string
+): Role {
+  if (stored === "user") return "user";
+  if (stored === "trial" && trialExpiresAt && now < trialExpiresAt) return "user";
+  return "anonymous";
+}
+```
+
+**トライアル**：新規登録から 7 日間だけ `user` として振る舞い、期限を過ぎると `anonymous` に戻る状態である。
+新規登録時に `role='trial'` と `trial_expires_at = 登録時刻 + 7 日` を書き込む。
+
+期限を `created_at` からの計算で導出せず列に持つのは、トライアル期間の設定を後で変えたときに既存ユーザーの期限が遡って動かないようにするためである。
+導出にすると、7 日を 14 日に変えた瞬間に期限切れのユーザーが全員復活する。
+
+実効ロールを算出するのは BFF だけであり、api には `anonymous` か `user` の 2 値しか渡らない。
+api にトライアルの概念を持ち込むと、JWT に期限を載せて api 側でも時刻比較する二重実装になる。
+すでにユーザー行を読んでいる BFF が唯一の判定者である。
+
+ただしサブプロジェクト 3 で mcp-server を自前化するとき、mcp-server は BFF を経由せず api を直接叩く。
+そこで `effectiveRole` を通し忘れると、期限切れのトライアルユーザーが MCP からは予約データを読めてしまう。
+だから算出を api パッケージの共有モジュールに置き、両方から import する。
+
 ### ロール付与の運用
 
-新規登録は `anonymous` とする。
-これは予約データが見えない状態であり、現行の `trial` と同じ扱いである。
+新規登録は `trial` とする。
+`anonymous` は、トライアルを使い切ったユーザーと、手動で権限を落としたユーザーの状態である。
 
-`user` への昇格は `wrangler d1 execute` による手動 UPDATE で行う。
+`user` への恒久昇格は `wrangler d1 execute` による手動 UPDATE で行う。
 対象が数名である現時点では、管理 UI は使われないコードになるため作らない。
+
+Auth0 から移行する既存ユーザーは `role='user'`、`trial_expires_at` は NULL で投入する。
+トライアルを経ずに恒久の権限を持つ。
 
 ### セッション参照のコスト
 
@@ -229,6 +269,12 @@ const ISSUERS = {
 
 Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みがサブプロジェクト 3 まで Auth0 トークンを使い続けるためである。
 
+`Role` 型の定義は `roles.ts` へ移し、`auth0.ts` からは再輸出する。
+`packages/mcp-server/worker.ts` が `@shisetsu-viewer/api/auth/auth0` から import しているため、輸出面は保つ。
+
+Auth0 トークンに対する `trial === true` を `anonymous` に畳む分岐（`packages/api/src/auth/auth0.ts:42`）はそのまま残す。
+これは Auth0 のクレームを解釈する処理であり、新しいトライアルとは無関係である。
+
 デプロイ順序は、api を先に出して自前 issuer を受け付ける状態にしてから viewer を出す。
 依存が一方向なので、途中で止めても壊れない。
 
@@ -237,7 +283,7 @@ Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みが
 | 対象 | 変更 |
 |---|---|
 | `worker/index.ts`（新規） | BFF 本体。`/auth/*` と `/api/*` を処理する |
-| `contexts/Auth0.tsx` → `contexts/Auth.tsx` | `/auth/me` を叩くだけの実装に置き換える。Context を `{ isLoading, authenticated, userInfo: { anonymous }, login, logout }` とする |
+| `contexts/Auth0.tsx` → `contexts/Auth.tsx` | `/auth/me` を叩くだけの実装に置き換える。Context を `{ isLoading, authenticated, userInfo: { anonymous, trial }, login, logout }` とする |
 | `constants/routes.ts`、`pages/Waiting.tsx` | `waiting` ルートと Waiting ページを削除する |
 | `api/client.ts` | ベース URL を `/api` の相対パスにする。token 引数を削除する |
 | `hooks/useApiQuery.ts`、`hooks/usePaginatedQuery.ts` | fetcher へ token を渡す経路を削除する |
@@ -256,9 +302,14 @@ Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みが
 `SettingsMenu` はログイン済みかどうかの判定に `token` の有無を使っている（`components/SettingsMenu/SettingsMenu.tsx:58`）。
 これを Context の `authenticated` に置き換える。
 
-`trial` は Context から削除する。
-`Header` と `HeaderMenuButton` と `Detail` が予約検索リンクに付けている「（トライアル）」のラベルは消える。
-ロールが `anonymous` と `user` の 2 値になる以上、`trial` を表示する根拠が無くなるためである。
+`trial` は Context に残すが、意味が変わる。
+旧 `trial` は Auth0 のクレームで固定されたフラグだったのに対し、新しい `trial` は「トライアル期間中である」ことを示す。
+BFF が `role === 'trial'` かつ期限内のときだけ `true` を返す。
+
+`Header` と `HeaderMenuButton` が予約検索リンクに付ける「（トライアル）」のラベルは維持する。
+一方 `Detail` の `anonymous || trial` は `anonymous` 単独に変える。
+旧モデルでは trial が予約データを見られなかったのに対し、新モデルでは期限内の trial は `user` として振る舞うため、タブを塞ぐ理由が無い。
+期限切れなら `anonymous` が `true` になるので、同じ条件で塞がれる。
 
 `waiting` ルートは Auth0 のリダイレクト着地点として存在していた。
 BFF では `/auth/callback` が Worker 側で完結し、SPA へは元のパスへ戻すため、このルートは不要になる。

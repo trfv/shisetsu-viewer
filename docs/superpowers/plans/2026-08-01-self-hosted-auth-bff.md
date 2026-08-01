@@ -83,7 +83,7 @@ git commit -m "chore(deps): wrangler を 4.118 以上へ更新する"
 
 **Interfaces:**
 - Consumes: なし
-- Produces: `users`（id, google_sub, email, role, created_at, last_login_at）と `sessions`（token_hash, user_id, expires_at, created_at）
+- Produces: `users`（id, google_sub, email, role, trial_expires_at, created_at, last_login_at）と `sessions`（token_hash, user_id, expires_at, created_at）
 
 - [ ] **Step 1: マイグレーションを書く**
 
@@ -91,15 +91,18 @@ git commit -m "chore(deps): wrangler を 4.118 以上へ更新する"
 -- 0003: 自前認証のための users と sessions を追加する。
 -- google_sub を NULL 許容にしているのは、Auth0 から移行する既存ユーザーを
 -- email だけ先に投入し、初回 Google ログイン時に紐づけるためである。
+-- trial_expires_at を列に持つのは、トライアル期間の設定を後で変えたときに
+-- 既存ユーザーの期限が遡って動かないようにするためである。
 
 CREATE TABLE users (
-  id            TEXT PRIMARY KEY,
-  google_sub    TEXT UNIQUE,
-  email         TEXT NOT NULL UNIQUE,
-  role          TEXT NOT NULL DEFAULT 'anonymous'
-                CHECK (role IN ('anonymous', 'user')),
-  created_at    TEXT NOT NULL,
-  last_login_at TEXT
+  id               TEXT PRIMARY KEY,
+  google_sub       TEXT UNIQUE,
+  email            TEXT NOT NULL UNIQUE,
+  role             TEXT NOT NULL DEFAULT 'trial'
+                   CHECK (role IN ('anonymous', 'trial', 'user')),
+  trial_expires_at TEXT,
+  created_at       TEXT NOT NULL,
+  last_login_at    TEXT
 );
 
 CREATE TABLE sessions (
@@ -129,21 +132,27 @@ git commit -m "feat(api): users と sessions のマイグレーションを追�
 
 ---
 
-### Task 3: 認証用の D1 クエリを実装する
+### Task 3: 実効ロールの算出と認証用の D1 クエリを実装する
 
-BFF が使うユーザー解決とセッション操作を api パッケージに置く。
-viewer Worker からは `@shisetsu-viewer/api/db/authQueries` として import する。
+BFF が使うユーザー解決とセッション操作、そしてトライアル期限を織り込んだ実効ロールの算出を api パッケージに置く。
+viewer Worker からは `@shisetsu-viewer/api/db/authQueries` と `@shisetsu-viewer/api/auth/roles` として import する。
 
 **Files:**
+- Create: `packages/api/src/auth/roles.ts`
+- Create: `packages/api/test/roles.test.ts`
 - Create: `packages/api/src/db/authQueries.ts`
 - Create: `packages/api/test/authQueries.test.ts`
-- Modify: `packages/api/package.json`（exports に `./db/authQueries` を追加）
+- Modify: `packages/api/package.json`（exports に `./db/authQueries` と `./auth/roles` を追加）
 
 **Interfaces:**
 - Consumes: Task 2 の `users` と `sessions`
 - Produces:
-  - `interface UserRow { id: string; email: string; role: Role }`
-  - `resolveUser(db: D1Database, params: { googleSub: string; email: string; now: string; newId: string }): Promise<UserRow>`
+  - `type StoredRole = "anonymous" | "trial" | "user"`
+  - `type Role = "anonymous" | "user"`
+  - `const TRIAL_DURATION_DAYS = 7`
+  - `effectiveRole(stored: StoredRole, trialExpiresAt: string | null, now: string): Role`
+  - `interface UserRow { id: string; email: string; role: StoredRole; trialExpiresAt: string | null }`
+  - `resolveUser(db: D1Database, params: { googleSub: string; email: string; now: string; newId: string; trialExpiresAt: string }): Promise<UserRow>`
   - `createSession(db: D1Database, params: { tokenHash: string; userId: string; expiresAt: string; now: string }): Promise<void>`
   - `deleteExpiredSessions(db: D1Database, userId: string, now: string): Promise<void>`
   - `findSessionUser(db: D1Database, tokenHash: string, now: string): Promise<UserRow | null>`
@@ -151,6 +160,91 @@ viewer Worker からは `@shisetsu-viewer/api/db/authQueries` として import �
 
 `resolveUser` に `emailVerified` を渡さないのは、呼び出し側（コールバック）が `email_verified: false` のログインを先に弾くためである。
 検証済みの email だけがここへ到達する。
+
+`trialExpiresAt` を引数で受け取るのは、期限の決め方（登録時刻 + 7 日）という方針をクエリ層に持ち込まないためである。
+
+- [ ] **Step 0: 実効ロールの算出を TDD で作る**
+
+`packages/api/test/roles.test.ts`:
+
+```ts
+import { describe, expect, it } from "vitest";
+
+import { effectiveRole, TRIAL_DURATION_DAYS } from "../src/auth/roles.ts";
+
+const NOW = "2026-08-01T00:00:00.000Z";
+
+describe("effectiveRole", () => {
+  it("user は期限に関係なく user", () => {
+    expect(effectiveRole("user", null, NOW)).toBe("user");
+  });
+
+  it("anonymous は期限が残っていても anonymous", () => {
+    expect(effectiveRole("anonymous", "2026-09-01T00:00:00.000Z", NOW)).toBe("anonymous");
+  });
+
+  it("期限内の trial は user", () => {
+    expect(effectiveRole("trial", "2026-08-08T00:00:00.000Z", NOW)).toBe("user");
+  });
+
+  it("期限切れの trial は anonymous", () => {
+    expect(effectiveRole("trial", "2026-07-25T00:00:00.000Z", NOW)).toBe("anonymous");
+  });
+
+  it("期限ちょうどは anonymous（境界は期限切れ側）", () => {
+    expect(effectiveRole("trial", NOW, NOW)).toBe("anonymous");
+  });
+
+  it("期限が NULL の trial は anonymous", () => {
+    expect(effectiveRole("trial", null, NOW)).toBe("anonymous");
+  });
+
+  it("トライアル期間は 7 日", () => {
+    expect(TRIAL_DURATION_DAYS).toBe(7);
+  });
+});
+```
+
+```bash
+npm test -w @shisetsu-viewer/api -- roles
+```
+
+Expected: FAIL（`../src/auth/roles.ts` が無い）
+
+`packages/api/src/auth/roles.ts`:
+
+```ts
+/** users.role に保存される値。認可に使う実効ロールとは別物である。 */
+export type StoredRole = "anonymous" | "trial" | "user";
+
+/** 認可に使う実効ロール。api の契約はこの 2 値である。 */
+export type Role = "anonymous" | "user";
+
+export const TRIAL_DURATION_DAYS = 7;
+
+/**
+ * 保存ロールとトライアル期限から実効ロールを決める。
+ * 期限は ISO8601 の文字列比較で判定する（両方 UTC の Z 表記であることが前提）。
+ *
+ * サブプロジェクト 3 で mcp-server を自前化するときも、この関数を通す。
+ * 通し忘れると期限切れのトライアルユーザーが MCP から予約データを読めてしまう。
+ */
+export function effectiveRole(
+  stored: StoredRole,
+  trialExpiresAt: string | null,
+  now: string
+): Role {
+  if (stored === "user") return "user";
+  if (stored === "trial" && trialExpiresAt && now < trialExpiresAt) return "user";
+  return "anonymous";
+}
+```
+
+```bash
+npm test -w @shisetsu-viewer/api -- roles
+```
+
+Expected: PASS（7 テスト）
 
 - [ ] **Step 1: 失敗するテストを書く**
 
@@ -169,6 +263,7 @@ import {
 } from "../src/db/authQueries.ts";
 
 const NOW = "2026-08-01T00:00:00.000Z";
+const TRIAL_END = "2026-08-08T00:00:00.000Z";
 
 beforeEach(async () => {
   await env.DB.prepare("DELETE FROM sessions").run();
@@ -188,9 +283,15 @@ describe("resolveUser", () => {
       email: "a@example.com",
       now: NOW,
       newId: "u-new",
+      trialExpiresAt: TRIAL_END,
     });
 
-    expect(user).toEqual({ id: "u1", email: "a@example.com", role: "user" });
+    expect(user).toEqual({
+      id: "u1",
+      email: "a@example.com",
+      role: "user",
+      trialExpiresAt: null,
+    });
   });
 
   it("google_sub が無ければ email 一致行に google_sub を書き込む", async () => {
@@ -205,6 +306,7 @@ describe("resolveUser", () => {
       email: "b@example.com",
       now: NOW,
       newId: "u-new",
+      trialExpiresAt: TRIAL_END,
     });
 
     expect(user.id).toBe("u2");
@@ -216,15 +318,41 @@ describe("resolveUser", () => {
     expect(row?.google_sub).toBe("sub-2");
   });
 
-  it("該当が無ければ anonymous で新規作成する", async () => {
+  it("該当が無ければ trial で新規作成し期限を入れる", async () => {
     const user = await resolveUser(env.DB, {
       googleSub: "sub-3",
       email: "c@example.com",
       now: NOW,
       newId: "u-new",
+      trialExpiresAt: TRIAL_END,
     });
 
-    expect(user).toEqual({ id: "u-new", email: "c@example.com", role: "anonymous" });
+    expect(user).toEqual({
+      id: "u-new",
+      email: "c@example.com",
+      role: "trial",
+      trialExpiresAt: TRIAL_END,
+    });
+  });
+
+  it("既存ユーザーの再ログインで trial 期限が延長されない", async () => {
+    await resolveUser(env.DB, {
+      googleSub: "sub-4",
+      email: "d@example.com",
+      now: NOW,
+      newId: "u-4",
+      trialExpiresAt: TRIAL_END,
+    });
+
+    const again = await resolveUser(env.DB, {
+      googleSub: "sub-4",
+      email: "d@example.com",
+      now: "2026-08-05T00:00:00.000Z",
+      newId: "u-ignored",
+      trialExpiresAt: "2026-08-12T00:00:00.000Z",
+    });
+
+    expect(again.trialExpiresAt).toBe(TRIAL_END);
   });
 });
 
@@ -246,7 +374,12 @@ describe("session", () => {
     });
 
     const user = await findSessionUser(env.DB, "hash-1", NOW);
-    expect(user).toEqual({ id: "u1", email: "a@example.com", role: "user" });
+    expect(user).toEqual({
+      id: "u1",
+      email: "a@example.com",
+      role: "user",
+      trialExpiresAt: null,
+    });
   });
 
   it("期限切れのセッションは引けない", async () => {
@@ -308,30 +441,41 @@ Expected: FAIL（`Cannot find module '../src/db/authQueries.ts'`）
 `packages/api/src/db/authQueries.ts`:
 
 ```ts
-import type { Role } from "../auth/auth0.ts";
+import type { StoredRole } from "../auth/roles.ts";
 
 export interface UserRow {
   id: string;
   email: string;
-  role: Role;
+  role: StoredRole;
+  trialExpiresAt: string | null;
 }
+
+const SELECT_COLUMNS = "id, email, role, trial_expires_at AS trialExpiresAt";
 
 /**
  * Google の sub から users 行を解決する。
  * 1) google_sub 一致 → その行
  * 2) email 一致かつ google_sub 未設定 → google_sub を書き込んで確定（Auth0 からの移行経路）
- * 3) どちらも無ければ role='anonymous' で新規作成
+ * 3) どちらも無ければ role='trial' で新規作成し、trial_expires_at を入れる
  *
  * email が検証済みであることは呼び出し側が保証する。
+ * 既存行の trial_expires_at は書き換えない。再ログインで期限が延びると
+ * トライアルが無期限になるためである。
  */
 export async function resolveUser(
   db: D1Database,
-  params: { googleSub: string; email: string; now: string; newId: string }
+  params: {
+    googleSub: string;
+    email: string;
+    now: string;
+    newId: string;
+    trialExpiresAt: string;
+  }
 ): Promise<UserRow> {
-  const { googleSub, email, now, newId } = params;
+  const { googleSub, email, now, newId, trialExpiresAt } = params;
 
   const bySub = await db
-    .prepare("SELECT id, email, role FROM users WHERE google_sub = ?")
+    .prepare(`SELECT ${SELECT_COLUMNS} FROM users WHERE google_sub = ?`)
     .bind(googleSub)
     .first<UserRow>();
   if (bySub) {
@@ -343,7 +487,7 @@ export async function resolveUser(
   }
 
   const byEmail = await db
-    .prepare("SELECT id, email, role FROM users WHERE email = ? AND google_sub IS NULL")
+    .prepare(`SELECT ${SELECT_COLUMNS} FROM users WHERE email = ? AND google_sub IS NULL`)
     .bind(email)
     .first<UserRow>();
   if (byEmail) {
@@ -356,12 +500,12 @@ export async function resolveUser(
 
   await db
     .prepare(
-      "INSERT INTO users (id, google_sub, email, role, created_at, last_login_at) " +
-        "VALUES (?, ?, ?, 'anonymous', ?, ?)"
+      "INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at, last_login_at) " +
+        "VALUES (?, ?, ?, 'trial', ?, ?, ?)"
     )
-    .bind(newId, googleSub, email, now, now)
+    .bind(newId, googleSub, email, trialExpiresAt, now, now)
     .run();
-  return { id: newId, email, role: "anonymous" };
+  return { id: newId, email, role: "trial", trialExpiresAt };
 }
 
 export async function createSession(
@@ -394,7 +538,7 @@ export async function findSessionUser(
 ): Promise<UserRow | null> {
   return await db
     .prepare(
-      "SELECT u.id, u.email, u.role FROM sessions s " +
+      "SELECT u.id, u.email, u.role, u.trial_expires_at AS trialExpiresAt FROM sessions s " +
         "JOIN users u ON u.id = s.user_id " +
         "WHERE s.token_hash = ? AND s.expires_at > ?"
     )
@@ -412,7 +556,8 @@ export async function deleteSession(db: D1Database, tokenHash: string): Promise<
 `packages/api/package.json` の `exports` に 1 行足す。
 
 ```json
-"./db/authQueries": "./src/db/authQueries.ts"
+"./db/authQueries": "./src/db/authQueries.ts",
+"./auth/roles": "./src/auth/roles.ts"
 ```
 
 - [ ] **Step 5: テストが通ることを確認する**
@@ -421,13 +566,14 @@ export async function deleteSession(db: D1Database, tokenHash: string): Promise<
 npm test -w @shisetsu-viewer/api -- authQueries
 ```
 
-Expected: PASS（9 テスト）
+Expected: PASS（10 テスト）
 
 - [ ] **Step 6: コミット**
 
 ```bash
-git add packages/api/src/db/authQueries.ts packages/api/test/authQueries.test.ts packages/api/package.json
-git commit -m "feat(api): 認証用の D1 クエリを追加する"
+git add packages/api/src/auth/roles.ts packages/api/test/roles.test.ts \
+  packages/api/src/db/authQueries.ts packages/api/test/authQueries.test.ts packages/api/package.json
+git commit -m "feat(api): 実効ロールの算出と認証用の D1 クエリを追加する"
 ```
 
 ---
@@ -532,7 +678,9 @@ import {
   type JWTVerifyGetKey,
 } from "jose";
 
-export type Role = "anonymous" | "user";
+// Role の定義は roles.ts に移した。mcp-server が auth0 経由で import しているため再輸出する。
+export type { Role } from "./roles.ts";
+import type { Role } from "./roles.ts";
 
 const HASURA_CLAIMS = "https://hasura.io/jwt/claims";
 const APP_CLAIMS = "https://app.shisetsudb.com/token/claims";
@@ -1607,11 +1755,16 @@ function ctx(): ExecutionContext {
   return { waitUntil: () => undefined, passThroughOnException: () => undefined };
 }
 
-async function seedSession(token: string, role: "anonymous" | "user") {
+async function seedSession(
+  token: string,
+  role: "anonymous" | "trial" | "user",
+  trialExpiresAt: string | null = null
+) {
   await env.DB.prepare(
-    "INSERT OR REPLACE INTO users (id, google_sub, email, role, created_at) VALUES ('u1', 'sub-1', 'a@example.com', ?, ?)"
+    "INSERT OR REPLACE INTO users (id, google_sub, email, role, trial_expires_at, created_at) " +
+      "VALUES ('u1', 'sub-1', 'a@example.com', ?, ?, ?)"
   )
-    .bind(role, NOW)
+    .bind(role, trialExpiresAt, NOW)
     .run();
   await env.DB.prepare(
     "INSERT OR REPLACE INTO sessions (token_hash, user_id, expires_at, created_at) VALUES (?, 'u1', ?, ?)"
@@ -1656,24 +1809,54 @@ describe("/auth/login", () => {
 });
 
 describe("/auth/me", () => {
-  it("セッション無しなら未認証を返す", async () => {
-    const response = await worker.fetch(new Request("https://app.test/auth/me"), env, ctx());
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ authenticated: false, anonymous: true, email: null });
-  });
-
-  it("セッションがあればロールを返す", async () => {
-    await seedSession("tok-1", "user");
+  async function fetchMe(token: string) {
     const response = await worker.fetch(
       new Request("https://app.test/auth/me", {
-        headers: { Cookie: serializeCookie("__Host-session", "tok-1", 60).split(";")[0] ?? "" },
+        headers: { Cookie: serializeCookie("__Host-session", token, 60).split(";")[0] ?? "" },
       }),
       env,
       ctx()
     );
+    return await response.json();
+  }
+
+  it("セッション無しなら未認証を返す", async () => {
+    const response = await worker.fetch(new Request("https://app.test/auth/me"), env, ctx());
+    expect(response.status).toBe(200);
     expect(await response.json()).toEqual({
+      authenticated: false,
+      anonymous: true,
+      trial: false,
+      email: null,
+    });
+  });
+
+  it("user はトライアル扱いにならない", async () => {
+    await seedSession("tok-1", "user");
+    expect(await fetchMe("tok-1")).toEqual({
       authenticated: true,
       anonymous: false,
+      trial: false,
+      email: "a@example.com",
+    });
+  });
+
+  it("期限内の trial は user として扱い trial: true を返す", async () => {
+    await seedSession("tok-4", "trial", FUTURE);
+    expect(await fetchMe("tok-4")).toEqual({
+      authenticated: true,
+      anonymous: false,
+      trial: true,
+      email: "a@example.com",
+    });
+  });
+
+  it("期限切れの trial は anonymous と同じ見え方になる", async () => {
+    await seedSession("tok-5", "trial", "2026-01-01T00:00:00.000Z");
+    expect(await fetchMe("tok-5")).toEqual({
+      authenticated: true,
+      anonymous: true,
+      trial: false,
       email: "a@example.com",
     });
   });
@@ -1749,6 +1932,7 @@ Expected: FAIL（501 が返る）
 `packages/viewer/worker/index.ts` を書き換える。
 
 ```ts
+import { effectiveRole, TRIAL_DURATION_DAYS } from "@shisetsu-viewer/api/auth/roles";
 import {
   createSession,
   deleteExpiredSessions,
@@ -1861,6 +2045,9 @@ async function handleCallback(request: Request, env: Env): Promise<Response> {
     email: identity.email,
     now: now.toISOString(),
     newId: crypto.randomUUID(),
+    trialExpiresAt: new Date(
+      now.getTime() + TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000
+    ).toISOString(),
   });
 
   const token = randomToken();
@@ -1887,9 +2074,17 @@ async function currentUser(request: Request, env: Env) {
 
 async function handleMe(request: Request, env: Env): Promise<Response> {
   const user = await currentUser(request, env);
+  const now = new Date().toISOString();
+  // trial は「トライアル期間中」を意味する。期限切れは anonymous と区別しない。
+  const role = user ? effectiveRole(user.role, user.trialExpiresAt, now) : "anonymous";
   const body = user
-    ? { authenticated: true, anonymous: user.role === "anonymous", email: user.email }
-    : { authenticated: false, anonymous: true, email: null };
+    ? {
+        authenticated: true,
+        anonymous: role === "anonymous",
+        trial: user.role === "trial" && role === "user",
+        email: user.email,
+      }
+    : { authenticated: false, anonymous: true, trial: false, email: null };
   return new Response(JSON.stringify(body), {
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
@@ -1913,7 +2108,13 @@ async function handleApi(
   if (!isAllowedApiPath(apiPath)) return new Response("not found", { status: 404 });
 
   const user = await currentUser(request, env);
-  const token = user ? await signApiToken(env.AUTH_SIGNING_KEYS, user.id, user.role) : null;
+  const token = user
+    ? await signApiToken(
+        env.AUTH_SIGNING_KEYS,
+        user.id,
+        effectiveRole(user.role, user.trialExpiresAt, new Date().toISOString())
+      )
+    : null;
 
   const cache = caches.default;
   const cacheKey = new Request(request.url, { method: "GET" });
@@ -2012,7 +2213,7 @@ git commit -m "feat(viewer): BFF のログイン・セッション・API 転送�
 **Interfaces:**
 - Consumes: BFF の `/auth/me`、`/auth/login`、`/auth/logout`（Task 10）
 - Produces:
-  - `AuthContext`、`useAuth(): { isLoading: boolean; authenticated: boolean; userInfo: { anonymous: boolean }; login: () => void; logout: () => void }`
+  - `AuthContext`、`useAuth(): { isLoading: boolean; authenticated: boolean; userInfo: { anonymous: boolean; trial: boolean }; login: () => void; logout: () => void }`
   - `AuthProvider`（props は children のみ）
   - `apiGet<T>(url: string, params: QueryParams): Promise<T>`（token 引数を削除）
   - `useApiQuery<T>(fetcher: () => Promise<T>, key: string)`
@@ -2038,6 +2239,7 @@ const Probe = () => {
       <span data-testid="loading">{String(isLoading)}</span>
       <span data-testid="auth">{String(authenticated)}</span>
       <span data-testid="anon">{String(userInfo.anonymous)}</span>
+      <span data-testid="trial">{String(userInfo.trial)}</span>
     </div>
   );
 };
@@ -2046,7 +2248,12 @@ describe("AuthProvider", () => {
   it("/auth/me の結果を Context に反映する", async () => {
     const worker = setupWorker(
       http.get("/auth/me", () =>
-        HttpResponse.json({ authenticated: true, anonymous: false, email: "a@example.com" })
+        HttpResponse.json({
+          authenticated: true,
+          anonymous: false,
+          trial: true,
+          email: "a@example.com",
+        })
       )
     );
     await worker.start({ onUnhandledRequest: "bypass", quiet: true });
@@ -2059,6 +2266,7 @@ describe("AuthProvider", () => {
 
     await expect.element(page.getByTestId("auth")).toHaveTextContent("true");
     await expect.element(page.getByTestId("anon")).toHaveTextContent("false");
+    await expect.element(page.getByTestId("trial")).toHaveTextContent("true");
     await expect.element(page.getByTestId("loading")).toHaveTextContent("false");
     worker.stop();
   });
@@ -2098,7 +2306,9 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 type AuthContextValue = {
   isLoading: boolean;
   authenticated: boolean;
-  userInfo: { anonymous: boolean };
+  // anonymous は実効ロールが anonymous であること、trial はトライアル期間中であることを表す。
+  // 期限切れのトライアルは anonymous: true, trial: false になる。
+  userInfo: { anonymous: boolean; trial: boolean };
   login: () => void;
   logout: () => void;
 };
@@ -2106,7 +2316,7 @@ type AuthContextValue = {
 const initialContext: AuthContextValue = {
   isLoading: true,
   authenticated: false,
-  userInfo: { anonymous: true },
+  userInfo: { anonymous: true, trial: false },
   login: () => null,
   logout: () => null,
 };
@@ -2114,12 +2324,18 @@ const initialContext: AuthContextValue = {
 export const AuthContext = createContext<AuthContextValue>(initialContext);
 export const useAuth = () => useContext(AuthContext);
 
-type MeResponse = { authenticated: boolean; anonymous: boolean; email: string | null };
+type MeResponse = {
+  authenticated: boolean;
+  anonymous: boolean;
+  trial: boolean;
+  email: string | null;
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
   const [anonymous, setAnonymous] = useState(true);
+  const [trial, setTrial] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -2132,10 +2348,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (cancelled) return;
         setAuthenticated(me.authenticated);
         setAnonymous(me.anonymous);
+        setTrial(me.trial);
       } catch {
         if (cancelled) return;
         setAuthenticated(false);
         setAnonymous(true);
+        setTrial(false);
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -2157,7 +2375,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoading, authenticated, userInfo: { anonymous }, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoading, authenticated, userInfo: { anonymous, trial }, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -2262,7 +2482,7 @@ import { AuthContext } from "../../contexts/Auth";
 type AuthMockConfig = {
   isLoading?: boolean;
   authenticated?: boolean;
-  userInfo?: { anonymous: boolean };
+  userInfo?: { anonymous: boolean; trial: boolean };
   login?: () => void;
   logout?: () => void;
 };
@@ -2277,7 +2497,7 @@ const MockAuthProvider = ({
   const value = {
     isLoading: config.isLoading ?? false,
     authenticated: config.authenticated ?? true,
-    userInfo: config.userInfo ?? { anonymous: false },
+    userInfo: config.userInfo ?? { anonymous: false, trial: false },
     login: config.login ?? vi.fn(),
     logout: config.logout ?? vi.fn(),
   };
@@ -2339,7 +2559,7 @@ git commit -m "feat(viewer): 認証コンテキストと API クライアント�
 
 ---
 
-### Task 12: コンポーネントと不要になった資産を片付ける
+### Task 12: コンポーネントを差し替え不要になった資産を片付ける
 
 **Files:**
 - Modify: `packages/viewer/components/Header/Header.tsx`、`components/HeaderMenuButton/HeaderMenuButton.tsx`、`components/SettingsMenu/SettingsMenu.tsx`、`components/utils/AuthGuard.tsx`
@@ -2351,7 +2571,7 @@ git commit -m "feat(viewer): 認証コンテキストと API クライアント�
 
 **Interfaces:**
 - Consumes: `useAuth`（Task 11）
-- Produces: `trial` と `waiting` ルートが消えた UI
+- Produces: `waiting` ルートが消え、`trial` の意味が変わった UI
 
 - [ ] **Step 1: useAuth0 の参照を全て置き換える**
 
@@ -2359,19 +2579,16 @@ git commit -m "feat(viewer): 認証コンテキストと API クライアント�
 grep -rn "useAuth0\|contexts/Auth0" packages/viewer
 ```
 
-`Header.tsx` と `HeaderMenuButton.tsx` は `trial` の分岐を落とす。
+`Header.tsx:13-15` と `HeaderMenuButton.tsx:12-14` は import 元を変えるだけで、分割代入の形は変えない。
 
 ```tsx
 const {
-  userInfo: { anonymous },
+  userInfo: { anonymous, trial },
 } = useAuth();
 ```
 
-```tsx
-{anonymous ? <span>予約検索</span> : <Link to={ROUTES.reservation}>予約検索</Link>}
-```
-
-`HeaderMenuButton.tsx:73` のラベルは `予約検索` の固定文字列にする。
+「（トライアル）」のラベル（`Header.tsx:42` と `HeaderMenuButton.tsx:73`）はそのまま残す。
+表示条件は変わらないが、`trial` の意味が「Auth0 の固定フラグ」から「トライアル期間中」に変わっている。
 
 `Detail.tsx` は 3 箇所を直す。
 
@@ -2379,7 +2596,8 @@ const {
 - `:363` を `<Tab disabled={anonymous} label="予約状況" value="reservation" />` にする
 - `:369` を `{!anonymous && (` にする
 
-`anonymous || trial` が `anonymous` になるのは、`trial` ユーザーが新モデルでは `anonymous` ロールに含まれるためであり、ゲートの効き方は変わらない。
+`anonymous || trial` を `anonymous` に縮めるのは、新モデルでは期限内の `trial` が `user` として振る舞い、予約状況タブを塞ぐ理由が無いためである。
+期限切れなら BFF が `anonymous: true` を返すので、同じ条件で塞がれる。
 
 `SettingsMenu.tsx` は `token` を `authenticated` に置き換える。
 
@@ -2430,11 +2648,15 @@ grep の結果が 0 件になることを確認する。
 
 - [ ] **Step 4: テストを直す**
 
-`Header.test.tsx`、`HeaderMenuButton.test.tsx`、`SettingsMenu.test.tsx`、`Detail.test.tsx`、`AuthGuard.test.tsx`、`test/integration/authFlow.test.tsx`、`test/integration/navigation.test.tsx` で、`trial` を渡している箇所と `token` を期待している箇所を修正する。
-「（トライアル）」を期待するアサーションは削除する。
+`Header.test.tsx`、`HeaderMenuButton.test.tsx`、`SettingsMenu.test.tsx`、`Detail.test.tsx`、`AuthGuard.test.tsx`、`test/integration/authFlow.test.tsx`、`test/integration/navigation.test.tsx` を直す。
+
+- `auth0Config` を `authConfig` に改名する
+- `token: "..."` を渡していた箇所は `authenticated: true` に置き換える
+- `userInfo` は `{ anonymous, trial }` の形のまま。Header と HeaderMenuButton の「（トライアル）」を期待するアサーションは**残す**
+- `Detail.test.tsx` で `{ anonymous: false, trial: true }` を渡して予約状況タブが無効になることを期待しているケースがあれば、**有効になる**期待に反転させる。新モデルでは期限内の trial は user として振る舞う
 
 ```bash
-grep -rn "trial\|mock-token" packages/viewer/components packages/viewer/pages packages/viewer/test
+grep -rn "trial\|mock-token\|auth0Config" packages/viewer/components packages/viewer/pages packages/viewer/test
 ```
 
 - [ ] **Step 5: 全テストと lint を通す**
@@ -2453,7 +2675,7 @@ Expected: 全て成功。`knip` が未使用として報告するファイルが
 
 ```bash
 git add -A packages/viewer
-git commit -m "refactor(viewer): trial と waiting ルートと Auth0 依存を撤去する"
+git commit -m "refactor(viewer): waiting ルートと Auth0 依存を撤去し trial を実効ロールへ寄せる"
 ```
 
 ---
@@ -2534,8 +2756,11 @@ Auth0 のダッシュボードから `role=user` のユーザーの email を控
 
 ```bash
 npx wrangler d1 execute shisetsu-db --remote --command \
-  "INSERT INTO users (id, google_sub, email, role, created_at) VALUES ('<uuid>', NULL, '<email>', 'user', '<ISO8601>')"
+  "INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at) VALUES ('<uuid>', NULL, '<email>', 'user', NULL, '<ISO8601>')"
 ```
+
+既存ユーザーは `role='user'` かつ `trial_expires_at` は NULL とする。
+トライアルを経ずに恒久の権限を持たせるためである。
 
 - [ ] **Step 6: viewer をデプロイする**
 
@@ -2552,6 +2777,19 @@ npm run deploy -w @shisetsu-viewer/viewer
 2. 設定メニューからログインでき、Google の同意画面を経てトップへ戻る
 3. 予約検索が表示され、データが出る
 4. ログアウトで予約検索が非表示に戻る
+
+トライアルは、Step 5 で投入していない別の Google アカウントでログインして確認する。
+メニューに「予約検索（トライアル）」と出て、予約データが読めれば正しい。
+
+期限切れの挙動は、そのユーザーの期限を過去にして確認する。
+
+```bash
+npx wrangler d1 execute shisetsu-db --remote --command \
+  "UPDATE users SET trial_expires_at = '2026-01-01T00:00:00.000Z' WHERE email = '<trial 用の email>'"
+```
+
+再読み込みすると予約検索が押せなくなる。
+確認後は行を削除するか、期限を戻す。
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}\n" https://app.shisetsudb.com/api/v1/institutions?limit=1
@@ -2624,3 +2862,6 @@ D1 の `users` と `sessions` は旧 viewer から参照されないため、消
 
 1 週間の安定運用を確認したら、Auth0 の viewer 用アプリケーションを無効化する。
 無効化しても api の issuer マップは Auth0 を受け付けたままなので、mcp-server は動き続ける。
+
+サブプロジェクト 3 では、mcp-server が BFF を経由せず api を直接叩くため、`effectiveRole` を必ず通す。
+通し忘れると、期限切れのトライアルユーザーが MCP からは予約データを読めてしまう。
