@@ -34,9 +34,11 @@
     "AUTH0_DOMAIN": "auth.shisetsudb.com",
     // access token の aud 配列に含まれる値（末尾スラッシュ付き）。
     "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
-    // BFF（viewer Worker）が発行する JWT の検証用公開 JWKS。秘密鍵は viewer 側の Secret。
-    // 空のあいだは自前 issuer のトークンが全て anonymous になる（Task 12 で実鍵を入れる）。
-    "SELF_JWKS_JSON": "",
+    // BFF（viewer Worker）が発行する JWT の検証用公開 JWKS。秘密鍵は viewer 側の
+    // AUTH_SIGNING_KEYS（Secret）にあり、ここには公開鍵しか置かない。
+    // ローテーションは、この配列へ新しい公開鍵を足してデプロイしてから、
+    // viewer の AUTH_SIGNING_KEYS の先頭に新しい秘密鍵を入れる順で行う。
+    "SELF_JWKS_JSON": "{\"keys\":[{\"kty\":\"EC\",\"x\":\"g-wwLNQmhZpA1Q9RFjkkGK30MUyTJ0Jc_lD1LcehDAY\",\"y\":\"rACL5_Q63vgTfHGI8aJNyqeaIJhRqFhYOStbHzJvxfI\",\"crv\":\"P-256\",\"kid\":\"auth-2026-08\",\"alg\":\"ES256\",\"use\":\"sig\"}]}",
     "GITHUB_REPOSITORY": "trfv/shisetsu-viewer",
     "OIDC_AUDIENCE": "https://api.shisetsudb.com",
   },
