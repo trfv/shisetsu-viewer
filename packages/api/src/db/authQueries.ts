@@ -55,14 +55,27 @@ export async function resolveUser(
     return byEmail;
   }
 
+  // SELECT と INSERT の間に同じユーザーの別リクエストが割り込みうる（ダブルクリック、
+  // タブ復元）。素の INSERT だと後発が UNIQUE 違反で落ち、呼び出し側には
+  // 「メールアドレスの競合」として見えて原因の推測がほぼ不可能になる。
+  // DO NOTHING で吸収し、勝った行を読み直す。
   await db
     .prepare(
       "INSERT INTO users (id, google_sub, email, role, trial_expires_at, created_at, last_login_at) " +
-        "VALUES (?, ?, ?, 'trial', ?, ?, ?)"
+        "VALUES (?, ?, ?, 'trial', ?, ?, ?) ON CONFLICT DO NOTHING"
     )
     .bind(newId, googleSub, email, trialExpiresAt, now, now)
     .run();
-  return { id: newId, email, role: "trial", trialExpiresAt };
+
+  const created = await db
+    .prepare(`SELECT ${SELECT_COLUMNS} FROM users WHERE google_sub = ?`)
+    .bind(googleSub)
+    .first<UserRow>();
+  if (created) return created;
+
+  // google_sub で引けないのに INSERT も通らなかった場合は、同じ email を持つ
+  // 別の google_sub が既にいる。これは正当な衝突なので呼び出し側へ伝える。
+  throw new Error(`email already bound to another Google account: ${email}`);
 }
 
 export async function createSession(

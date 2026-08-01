@@ -82,6 +82,45 @@ describe("resolveUser", () => {
     });
   });
 
+  it("同じ google_sub で同時に呼ばれても片方が落ちない", async () => {
+    const params = {
+      googleSub: "sub-race",
+      email: "race@example.com",
+      now: NOW,
+      trialExpiresAt: TRIAL_END,
+    };
+
+    const [a, b] = await Promise.all([
+      resolveUser(env.DB, { ...params, newId: "u-a" }),
+      resolveUser(env.DB, { ...params, newId: "u-b" }),
+    ]);
+
+    // どちらの id が勝つかは競合次第だが、両方が同じ行を指し、行は 1 つだけ。
+    expect(a.id).toBe(b.id);
+    const count = await env.DB.prepare(
+      "SELECT COUNT(*) AS c FROM users WHERE google_sub = 'sub-race'"
+    ).first<{ c: number }>();
+    expect(count?.c).toBe(1);
+  });
+
+  it("同じ email を別の google_sub が既に持っていれば例外", async () => {
+    await env.DB.prepare(
+      "INSERT INTO users (id, google_sub, email, role, created_at) VALUES ('u9', 'sub-owner', 'taken@example.com', 'user', ?)"
+    )
+      .bind(NOW)
+      .run();
+
+    await expect(
+      resolveUser(env.DB, {
+        googleSub: "sub-intruder",
+        email: "taken@example.com",
+        now: NOW,
+        newId: "u-new",
+        trialExpiresAt: TRIAL_END,
+      })
+    ).rejects.toThrow(/another Google account/);
+  });
+
   it("既存ユーザーの再ログインで trial 期限が延長されない", async () => {
     await resolveUser(env.DB, {
       googleSub: "sub-4",

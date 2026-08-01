@@ -2741,6 +2741,9 @@ npx wrangler secret put GOOGLE_CLIENT_SECRET --config packages/viewer/wrangler.j
 npx wrangler secret put AUTH_SIGNING_KEYS --config packages/viewer/wrangler.jsonc
 ```
 
+ローカルで検証するときは `packages/viewer/.dev.vars.example` を `.dev.vars` にコピーして値を入れる。
+**`APP_ORIGIN` を `http://localhost:3000` に上書きすること**。`wrangler.jsonc` の値は本番固定で、`redirect_uri` は `${APP_ORIGIN}/auth/callback` として組み立てられるため、上書きしないと Google の同意画面から本番へ戻ってしまいローカルでフローが完走しない。
+
 - [ ] **Step 4: 本番 D1 にマイグレーションを適用する**
 
 ```bash

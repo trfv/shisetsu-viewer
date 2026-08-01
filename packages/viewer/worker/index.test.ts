@@ -274,6 +274,16 @@ describe("/api/*", () => {
     expect(response.status).toBe(404);
   });
 
+  it("GET 以外は 405", async () => {
+    for (const method of ["POST", "PUT", "DELETE"]) {
+      const response = await fetchWorker(
+        new Request("https://app.test/api/v1/institutions", { method })
+      );
+      expect(response.status).toBe(405);
+      expect(response.headers.get("Allow")).toBe("GET");
+    }
+  });
+
   it("セッションがあれば api へ転送される", async () => {
     await seedSession("tok-3", "user");
     const response = await fetchWorker(

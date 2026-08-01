@@ -3,7 +3,10 @@ import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from "jose";
 const AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const CERTS_URL = "https://www.googleapis.com/oauth2/v3/certs";
-const ISSUER = "https://accounts.google.com";
+// Google は id_token の iss として https 付きと無しの両方を発行しうると自ら文書化している。
+// 現行はほぼ https 付きだが、無しを返された場合の症状は「全ユーザーがログイン不能」で、
+// しかも exchange_failed に丸められて原因が見えない。両方受け付けておく。
+const ISSUERS = ["https://accounts.google.com", "accounts.google.com"];
 
 export interface GoogleIdentity {
   sub: string;
@@ -84,7 +87,7 @@ export async function verifyIdToken(
   getKey?: JWTVerifyGetKey
 ): Promise<GoogleIdentity> {
   const { payload } = await jwtVerify(idToken, getKey ?? getJwks(), {
-    issuer: ISSUER,
+    issuer: ISSUERS,
     audience: clientId,
     algorithms: ["RS256"],
   });

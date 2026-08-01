@@ -31,6 +31,18 @@ interface OauthState {
   redirect: string;
 }
 
+/**
+ * Google に触る関数の注入口。テストから差し替えて /auth/callback の成功パスを通す。
+ * この pool では vi.mock によるモジュール差し替えが効かず、seam が無いと
+ * テストが実際に Google へ通信してしまう。google.ts の fetchImpl / getKey と同じ方針。
+ */
+export interface GoogleDeps {
+  exchangeCode: typeof exchangeCode;
+  verifyIdToken: typeof verifyIdToken;
+}
+
+const defaultGoogle: GoogleDeps = { exchangeCode, verifyIdToken };
+
 // 到達不能な TLD を基準オリジンに使う。実在ドメインだと、攻撃者がその絶対 URL を
 // 渡したときに origin が一致して素通りする。
 const REDIRECT_BASE = "https://placeholder.invalid";
@@ -79,7 +91,7 @@ async function handleLogin(request: Request, env: Env): Promise<Response> {
   return redirectTo(authorizeUrl, cookie);
 }
 
-async function handleCallback(request: Request, env: Env): Promise<Response> {
+async function handleCallback(request: Request, env: Env, google: GoogleDeps): Promise<Response> {
   const url = new URL(request.url);
   const raw = readCookie(request, OAUTH_COOKIE);
   if (!raw) return redirectTo("/?auth_error=state_missing");
@@ -101,14 +113,14 @@ async function handleCallback(request: Request, env: Env): Promise<Response> {
 
   let identity;
   try {
-    const idToken = await exchangeCode({
+    const idToken = await google.exchangeCode({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       redirectUri: `${env.APP_ORIGIN}/auth/callback`,
       code,
       verifier: saved.verifier,
     });
-    identity = await verifyIdToken(idToken, env.GOOGLE_CLIENT_ID);
+    identity = await google.verifyIdToken(idToken, env.GOOGLE_CLIENT_ID);
   } catch (e) {
     console.error(e);
     return redirectTo("/?auth_error=exchange_failed");
@@ -147,7 +159,9 @@ async function handleCallback(request: Request, env: Env): Promise<Response> {
   // 掃除をここに置くのは、/api/* の経路に D1 書き込みを持ち込まないためである。
   await deleteExpiredSessions(env.DB, user.id, now.toISOString());
 
-  const headers = new Headers({ Location: saved.redirect });
+  // Cookie は __Host- prefix かつ HttpOnly なので通常は書き換えられないが、
+  // Location に入れる直前にもう一度通す。safeRedirect は冪等なのでコストは無い。
+  const headers = new Headers({ Location: safeRedirect(saved.redirect) });
   headers.append("Set-Cookie", serializeCookie(SESSION_COOKIE, token, SESSION_TTL_SECONDS));
   headers.append("Set-Cookie", serializeCookie(OAUTH_COOKIE, "", 0));
   return new Response(null, { status: 302, headers });
@@ -193,6 +207,11 @@ async function handleApi(
   apiPath: string
 ): Promise<Response> {
   if (!isAllowedApiPath(apiPath)) return new Response("not found", { status: 404 });
+  // 転送先は読み取り専用の 5 経路だけなので、GET 以外は受ける意味がない。
+  // 素通しにすると POST が GET に変換されて 200 を返し、キャッシュにも載る。
+  if (request.method !== "GET") {
+    return new Response("method not allowed", { status: 405, headers: { Allow: "GET" } });
+  }
 
   const user = await currentUser(request, env);
   const token = user
@@ -203,13 +222,14 @@ async function handleApi(
       )
     : null;
 
+  // 格納するのは api が public と宣言した応答だけで、それはロール非依存の経路
+  // （institutions / scrape-runs）に限られる。認証必須の応答には private, no-store が
+  // 付くので入らない。したがってログイン中でも読んでよく、むしろ読まないと
+  // ログインユーザーだけが毎回 D1 を引くことになる（無料枠の制約は rows read）。
   const cache = caches.default;
   const cacheKey = new Request(request.url, { method: "GET" });
-  // 未ログインのときだけキャッシュを読む。ログイン中の応答は private を含みうる。
-  if (!user) {
-    const hit = await cache.match(cacheKey);
-    if (hit) return new Response(hit.body, hit);
-  }
+  const hit = await cache.match(cacheKey);
+  if (hit) return new Response(hit.body, hit);
 
   const response = await proxyToApi({ api: env.API, request, apiPath, token });
 
@@ -219,48 +239,54 @@ async function handleApi(
   return response;
 }
 
-export const worker = {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const { pathname } = new URL(request.url);
-    try {
-      // 総当たり対策なので、対象はログイン開始と受け口の 2 経路だけである。
-      // /auth/me を含めてはならない。全訪問者がページ読み込みごとに叩くため、
-      // 共有 IP（CGNAT・社内 NAT）で枠を食い潰し、429 を受けた Auth コンテキストが
-      // ログイン済みユーザーを anonymous に倒してしまう。
-      // /api/* は api 側の RATE_LIMITER が受け持つ。
-      if (RATE_LIMITED_PATHS.has(pathname) && env.AUTH_RATE_LIMITER) {
-        const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
-        const { success } = await env.AUTH_RATE_LIMITER.limit({ key });
-        if (!success) {
-          return new Response("rate limit exceeded", {
-            status: 429,
-            headers: { "Retry-After": "60" },
-          });
+export function createWorker(google: GoogleDeps = defaultGoogle) {
+  return {
+    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+      const { pathname } = new URL(request.url);
+      try {
+        // 総当たり対策なので、対象はログイン開始と受け口の 2 経路だけである。
+        // /auth/me を含めてはならない。全訪問者がページ読み込みごとに叩くため、
+        // 共有 IP（CGNAT・社内 NAT）で枠を食い潰し、429 を受けた Auth コンテキストが
+        // ログイン済みユーザーを anonymous に倒してしまう。
+        // /api/* は api 側の RATE_LIMITER が受け持つ。
+        if (RATE_LIMITED_PATHS.has(pathname) && env.AUTH_RATE_LIMITER) {
+          const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
+          const { success } = await env.AUTH_RATE_LIMITER.limit({ key });
+          if (!success) {
+            return new Response("rate limit exceeded", {
+              status: 429,
+              headers: { "Retry-After": "60" },
+            });
+          }
         }
-      }
 
-      if (pathname === "/auth/login" && request.method === "GET") {
-        return await handleLogin(request, env);
+        if (pathname === "/auth/login" && request.method === "GET") {
+          return await handleLogin(request, env);
+        }
+        if (pathname === "/auth/callback" && request.method === "GET") {
+          return await handleCallback(request, env, google);
+        }
+        if (pathname === "/auth/me" && request.method === "GET") {
+          return await handleMe(request, env);
+        }
+        if (pathname === "/auth/logout" && request.method === "POST") {
+          return await handleLogout(request, env);
+        }
+        if (pathname.startsWith("/api/")) {
+          return await handleApi(request, env, ctx, pathname.slice("/api".length));
+        }
+        if (pathname.startsWith("/auth/")) return new Response("not found", { status: 404 });
+        // run_worker_first が /auth/* と /api/* だけなので通常ここには来ない。
+        // 設定を変えたときや、アセットに無いパスが回ってきたときの受け皿として残す。
+        return await env.ASSETS.fetch(request);
+      } catch (e) {
+        console.error(e);
+        return new Response("internal error", { status: 500 });
       }
-      if (pathname === "/auth/callback" && request.method === "GET") {
-        return await handleCallback(request, env);
-      }
-      if (pathname === "/auth/me" && request.method === "GET") {
-        return await handleMe(request, env);
-      }
-      if (pathname === "/auth/logout" && request.method === "POST") {
-        return await handleLogout(request, env);
-      }
-      if (pathname.startsWith("/api/")) {
-        return await handleApi(request, env, ctx, pathname.slice("/api".length));
-      }
-      if (pathname.startsWith("/auth/")) return new Response("not found", { status: 404 });
-      return await env.ASSETS.fetch(request);
-    } catch (e) {
-      console.error(e);
-      return new Response("internal error", { status: 500 });
-    }
-  },
-} satisfies ExportedHandler<Env>;
+    },
+  } satisfies ExportedHandler<Env>;
+}
+
+export const worker = createWorker();
 
 export default worker;
