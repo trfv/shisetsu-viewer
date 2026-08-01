@@ -2199,16 +2199,24 @@ git commit -m "feat(viewer): BFF のログイン・セッション・API 転送�
 
 ---
 
-### Task 11: フロントの認証コンテキストと API クライアントを差し替える
+### Task 11: フロント全体を BFF 経由の認証へ差し替える
+
+フロントの差し替えは Context とクライアントとコンポーネントが一体で、途中で切ると型検査が通らない。
+Step 1 から Step 14 までを 1 タスクとして扱い、最後に全テストが緑になった状態でコミットする。
 
 **Files:**
 - Create: `packages/viewer/contexts/Auth.tsx`
 - Create: `packages/viewer/contexts/Auth.test.tsx`
 - Delete: `packages/viewer/contexts/Auth0.tsx`、`packages/viewer/contexts/Auth0.test.tsx`
+- Delete: `packages/viewer/pages/Waiting.tsx`、`packages/viewer/pages/Waiting.test.tsx`、`packages/viewer/constants/env.ts`
 - Modify: `packages/viewer/api/client.ts`、`packages/viewer/api/endpoints.ts`
 - Modify: `packages/viewer/hooks/useApiQuery.ts`、`packages/viewer/hooks/usePaginatedQuery.ts`
 - Modify: `packages/viewer/test/utils/test-utils.tsx`、`packages/viewer/test/browser-setup.ts`
-- Modify: `packages/viewer/index.tsx`
+- Modify: `packages/viewer/index.tsx`、`packages/viewer/App.tsx`、`packages/viewer/constants/routes.ts`
+- Modify: `packages/viewer/components/Header/Header.tsx`、`components/HeaderMenuButton/HeaderMenuButton.tsx`、`components/SettingsMenu/SettingsMenu.tsx`、`components/utils/AuthGuard.tsx`
+- Modify: `packages/viewer/pages/Detail.tsx`
+- Modify: `packages/viewer/package.json`、`packages/viewer/env.d.ts`、`packages/viewer/.env.sample`
+- Modify: 各コンポーネントの `*.test.tsx`
 
 **Interfaces:**
 - Consumes: BFF の `/auth/me`、`/auth/login`、`/auth/logout`（Task 10）
@@ -2542,38 +2550,10 @@ if (container) {
 git rm packages/viewer/contexts/Auth0.tsx packages/viewer/contexts/Auth0.test.tsx
 ```
 
-- [ ] **Step 9: テストが通ることを確認する**
+この時点ではコンポーネントがまだ `useAuth0` を参照しているため、型検査もテストも通らない。
+Step 9 まで進めてから確認する。
 
-```bash
-npm run test:ci -w @shisetsu-viewer/viewer
-```
-
-Expected: 全 PASS。落ちるのは Task 12 で直すコンポーネント系のみで、その場合は Task 12 まで進めてから再実行する
-
-- [ ] **Step 10: コミット**
-
-```bash
-git add packages/viewer
-git commit -m "feat(viewer): 認証コンテキストと API クライアントを BFF 経由に切り替える"
-```
-
----
-
-### Task 12: コンポーネントを差し替え不要になった資産を片付ける
-
-**Files:**
-- Modify: `packages/viewer/components/Header/Header.tsx`、`components/HeaderMenuButton/HeaderMenuButton.tsx`、`components/SettingsMenu/SettingsMenu.tsx`、`components/utils/AuthGuard.tsx`
-- Modify: `packages/viewer/pages/Detail.tsx`
-- Modify: `packages/viewer/App.tsx`、`packages/viewer/constants/routes.ts`
-- Delete: `packages/viewer/pages/Waiting.tsx`、`packages/viewer/pages/Waiting.test.tsx`、`packages/viewer/constants/env.ts`
-- Modify: `packages/viewer/package.json`、`packages/viewer/env.d.ts`、`packages/viewer/.env.sample`
-- Modify: 各コンポーネントの `*.test.tsx`
-
-**Interfaces:**
-- Consumes: `useAuth`（Task 11）
-- Produces: `waiting` ルートが消え、`trial` の意味が変わった UI
-
-- [ ] **Step 1: useAuth0 の参照を全て置き換える**
+- [ ] **Step 9: useAuth0 の参照を全て置き換える**
 
 ```bash
 grep -rn "useAuth0\|contexts/Auth0" packages/viewer
@@ -2618,7 +2598,7 @@ const handleAuthAction = useCallback(() => {
 
 `AuthGuard.tsx` は `useAuth0` を `useAuth` に変えるだけで、ロジックは変えない。
 
-- [ ] **Step 2: waiting ルートを削除する**
+- [ ] **Step 10: waiting ルートを削除する**
 
 `constants/routes.ts` から `waiting` を消す。
 `App.tsx` の `ROUTES.waiting` に対する `<Route>` と `React.lazy` の定義を消す。
@@ -2630,7 +2610,7 @@ grep -rn "waiting" packages/viewer
 
 grep の結果が 0 件になるまで消す。
 
-- [ ] **Step 3: 環境変数と Auth0 依存を削除する**
+- [ ] **Step 11: 環境変数と Auth0 依存を削除する**
 
 ```bash
 git rm packages/viewer/constants/env.ts
@@ -2646,7 +2626,7 @@ grep -rn "VITE_AUTH0\|VITE_API_ENDPOINT\|API_ENDPOINT" packages/viewer
 
 grep の結果が 0 件になることを確認する。
 
-- [ ] **Step 4: テストを直す**
+- [ ] **Step 12: テストを直す**
 
 `Header.test.tsx`、`HeaderMenuButton.test.tsx`、`SettingsMenu.test.tsx`、`Detail.test.tsx`、`AuthGuard.test.tsx`、`test/integration/authFlow.test.tsx`、`test/integration/navigation.test.tsx` を直す。
 
@@ -2659,7 +2639,7 @@ grep の結果が 0 件になることを確認する。
 grep -rn "trial\|mock-token\|auth0Config" packages/viewer/components packages/viewer/pages packages/viewer/test
 ```
 
-- [ ] **Step 5: 全テストと lint を通す**
+- [ ] **Step 13: 全テストと lint を通す**
 
 ```bash
 npm run test:ci -w @shisetsu-viewer/viewer
@@ -2671,23 +2651,26 @@ npm run knip
 
 Expected: 全て成功。`knip` が未使用として報告するファイルが残っていれば消す
 
-- [ ] **Step 6: コミット**
+- [ ] **Step 14: コミット**
 
 ```bash
 git add -A packages/viewer
-git commit -m "refactor(viewer): waiting ルートと Auth0 依存を撤去し trial を実効ロールへ寄せる"
+git commit -m "feat(viewer): フロントを BFF 経由の認証へ差し替え Auth0 依存を撤去する"
 ```
 
 ---
 
-### Task 13: bindings と Secrets を設定して本番へ出す
+### Task 12: bindings と Secrets を設定して本番へ出す（人が実行する runbook）
+
+このタスクは Google Cloud Console の操作、本番 Secrets の投入、本番 D1 へのマイグレーション、実デプロイを含む。
+サブエージェントには実行できないため、実装フェーズの対象外とし、手順書として人が実行する。
 
 **Files:**
 - Modify: `packages/viewer/wrangler.jsonc`
 - Modify: `packages/api/wrangler.jsonc`
 
 **Interfaces:**
-- Consumes: Task 1 から 12 の全て
+- Consumes: Task 1 から 11 の全て
 - Produces: 本番で動作する自前認証
 
 - [ ] **Step 1: 署名鍵を生成する**
