@@ -11,6 +11,9 @@ import type { Role } from "./roles.ts";
 // Role の定義は roles.ts に移した。mcp-server が auth0 経由で import しているため再輸出する。
 export type { Role } from "./roles.ts";
 
+// Hasura サービス自体は PR #1673 で撤去したが、この名前空間は Auth0 Actions が
+// 今も access token に載せているクレームであり、mcp-server のロール解決が依存している。
+// Auth0 issuer を受け付けるあいだ（サブプロジェクト 3 まで）は消せない。
 const HASURA_CLAIMS = "https://hasura.io/jwt/claims";
 const APP_CLAIMS = "https://app.shisetsudb.com/token/claims";
 

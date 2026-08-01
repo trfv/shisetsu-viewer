@@ -2,8 +2,7 @@ import fs from "fs/promises";
 
 import { getReservationTargets } from "@shisetsu-viewer/shared";
 
-import { upsertReservations as d1UpsertReservations } from "./backend/d1Api.ts";
-import { fetchInstitutionKeyMap, upsertReservations } from "./backend/hasura.ts";
+import { fetchInstitutionKeyMap, upsertReservations } from "./backend/d1Api.ts";
 import { buildReservationRows } from "./backend/transform.ts";
 import type { FileData } from "./backend/types.ts";
 
@@ -31,30 +30,19 @@ for (const target of targets) {
     })
   );
 
-  const [p, m] = target.split("-");
-  const prefecture = `PREFECTURE_${(p as string).toUpperCase()}`;
+  const [, m] = target.split("-");
   const municipality = `MUNICIPALITY_${(m as string).toUpperCase()}`;
 
-  const keyMap = await fetchInstitutionKeyMap(prefecture, municipality);
+  const keyMap = await fetchInstitutionKeyMap(municipality);
   const { rows, unmatchedKeys } = buildReservationRows(fileData, keyMap);
   if (unmatchedKeys.length > 0) {
     console.warn(`${target}: unmatched facility keys: ${unmatchedKeys.join(", ")}`);
   }
   console.log(`${target}: total: ${rows.length}`);
-  const affected = await upsertReservations(rows);
-  console.log(`${target}: affected_rows: ${affected}`);
 
-  // dual-write: D1_API_ENDPOINT が設定されているときだけ D1 にも書く。
-  // dual-write 期間中は D1 側の失敗で本流（Hasura）を落とさない。
-  if (process.env["D1_API_ENDPOINT"]) {
-    const runId = process.env["GITHUB_RUN_ID"] ?? new Date().toISOString();
-    try {
-      const written = await d1UpsertReservations(rows, municipality, runId);
-      console.log(`${target}: d1 rows_written: ${written}`);
-    } catch (error) {
-      console.error(`${target}: d1 dual-write failed:`, error);
-    }
-  }
+  const runId = process.env["GITHUB_RUN_ID"] ?? new Date().toISOString();
+  const written = await upsertReservations(rows, municipality, runId);
+  console.log(`${target}: rows_written: ${written}`);
 }
 
 console.timeEnd(title);

@@ -128,7 +128,7 @@ function placeholders(n: number): string {
 export async function listInstitutions(
   db: D1Database,
   params: InstitutionsQueryParams
-): Promise<Page<InstitutionSummary>> {
+): Promise<Page<InstitutionSummary | InstitutionDetail>> {
   const limit = clampLimit(params.limit);
   const conditions: string[] = [];
   const args: unknown[] = [];
@@ -177,7 +177,9 @@ export async function listInstitutions(
   const page = hasNextPage ? results.slice(0, limit) : results;
   const last = page.at(-1);
   return {
-    items: page.map(toInstitutionSummary),
+    items: page.map((row) =>
+      params.detail ? toInstitutionDetail(row) : toInstitutionSummary(row)
+    ),
     pageInfo: {
       hasNextPage,
       endCursor:

@@ -4,8 +4,7 @@ import path from "path";
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
 import type { Institution } from "@shisetsu-viewer/shared";
 
-import { upsertInstitutions as d1UpsertInstitutions } from "./backend/d1Api.ts";
-import { upsertInstitutions } from "./backend/hasura.ts";
+import { upsertInstitutions } from "./backend/d1Api.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data/institutions");
 
@@ -25,17 +24,8 @@ for (const target of targets) {
     continue;
   }
 
-  const affected = await upsertInstitutions(data);
-  console.log(`${target}: data: ${data.length}, affected_rows: ${affected}`);
-
-  if (process.env["D1_API_ENDPOINT"]) {
-    try {
-      const written = await d1UpsertInstitutions(data);
-      console.log(`${target}: d1 rows_written: ${written}`);
-    } catch (error) {
-      console.error(`${target}: d1 dual-write failed:`, error);
-    }
-  }
+  const written = await upsertInstitutions(data);
+  console.log(`${target}: data: ${data.length}, rows_written: ${written}`);
 }
 
 console.timeEnd("update institutions");
