@@ -20,7 +20,11 @@ export const SELF_AUDIENCE = "shisetsu-api";
 
 // JWKS はユーザー非依存のためモジュールレベルのキャッシュで良い（可変シングルトン禁止の対象外）。
 let auth0Jwks: JWTVerifyGetKey | null = null;
-let selfJwks: JWTVerifyGetKey | null = null;
+
+// 自前 JWKS は env の文字列から組み立てるため、その文字列をキーにする。
+// キーを持たないキャッシュにすると、SELF_JWKS_JSON を差し替えても暖まった isolate が
+// 古い鍵で検証し続ける（鍵ローテーション時に旧鍵しか見なくなる）。
+let selfJwks: { source: string; getKey: JWTVerifyGetKey } | null = null;
 
 function getAuth0Jwks(domain: string): JWTVerifyGetKey {
   auth0Jwks ??= createRemoteJWKSet(new URL(`https://${domain}/.well-known/jwks.json`));
@@ -28,8 +32,10 @@ function getAuth0Jwks(domain: string): JWTVerifyGetKey {
 }
 
 function getSelfJwks(jwksJson: string): JWTVerifyGetKey {
-  selfJwks ??= createLocalJWKSet(JSON.parse(jwksJson));
-  return selfJwks;
+  if (selfJwks?.source !== jwksJson) {
+    selfJwks = { source: jwksJson, getKey: createLocalJWKSet(JSON.parse(jwksJson)) };
+  }
+  return selfJwks.getKey;
 }
 
 interface AuthEnv {

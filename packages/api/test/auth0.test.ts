@@ -1,4 +1,11 @@
-import { SignJWT, exportJWK, generateKeyPair, importJWK, type JWTVerifyGetKey } from "jose";
+import {
+  SignJWT,
+  exportJWK,
+  generateKeyPair,
+  importJWK,
+  type JWK,
+  type JWTVerifyGetKey,
+} from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { resolveRole, SELF_AUDIENCE, SELF_ISSUER } from "../src/auth/auth0.ts";
@@ -88,6 +95,7 @@ describe("resolveRole", () => {
 describe("自前 issuer", () => {
   let selfPrivate: CryptoKey;
   let selfGetKey: JWTVerifyGetKey;
+  let selfPublicJwk: JWK;
 
   beforeAll(async () => {
     const pair = await generateKeyPair("ES256", { extractable: true });
@@ -95,6 +103,7 @@ describe("自前 issuer", () => {
     const pubJwk = await exportJWK(pair.publicKey);
     pubJwk.kid = "self-key";
     pubJwk.alg = "ES256";
+    selfPublicJwk = pubJwk;
     const publicKey = await importJWK(pubJwk, "ES256");
     selfGetKey = (() => publicKey) as unknown as JWTVerifyGetKey;
   });
@@ -135,6 +144,24 @@ describe("自前 issuer", () => {
 
   it("JWT として解釈できない文字列は anonymous", async () => {
     expect(await resolveRole("not-a-jwt", ENV, { self: selfGetKey })).toBe("anonymous");
+  });
+
+  it("SELF_JWKS_JSON を差し替えると新しい鍵で検証する（キャッシュが env を無視しない）", async () => {
+    const otherPair = await generateKeyPair("ES256", { extractable: true });
+    const otherPub = await exportJWK(otherPair.publicKey);
+    otherPub.kid = "self-key";
+    otherPub.alg = "ES256";
+
+    const token = await signSelf("user");
+    const correct = { ...ENV, SELF_JWKS_JSON: JSON.stringify({ keys: [selfPublicJwk] }) };
+    const wrong = { ...ENV, SELF_JWKS_JSON: JSON.stringify({ keys: [otherPub] }) };
+
+    // 先に正しい鍵で通してキャッシュを暖める
+    expect(await resolveRole(token, correct)).toBe("user");
+    // 別の鍵に差し替えたら通らなくなる
+    expect(await resolveRole(token, wrong)).toBe("anonymous");
+    // 戻せばまた通る
+    expect(await resolveRole(token, correct)).toBe("user");
   });
 
   it("自前 issuer なのに Auth0 の鍵で署名されていれば anonymous", async () => {
