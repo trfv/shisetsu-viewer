@@ -21,14 +21,14 @@
 - master へ直接 push しない。ブランチと PR を経由する
 - 非対話シェルで pre-commit がコマンド解決に失敗する場合は `PATH="$PWD/node_modules/.bin:$PATH" git commit ...` で回避する。`--no-verify` は使わない
 - `.npmrc` の `min-release-age=3` により、公開から 3 日未満のバージョンは取得できない
-- wrangler は 4.118.0 以上（Task 1 で満たす）
+- wrangler は 4.115.0、`@cloudflare/vite-plugin` は 1.48.0 に固定する。`min-release-age=3` により 2026-08-01 時点で取得できる最新の互換ペアがこれである（4.118.0 と plugin 1.50.0 は公開から 3 日未満で ETARGET になる）
 - 自前 issuer は `https://app.shisetsudb.com/`、audience は `shisetsu-api`、クレーム名前空間は `https://app.shisetsudb.com/token/claims`
 
 ---
 
-### Task 1: wrangler を 4.118 以上へ更新する
+### Task 1: wrangler を 4.115.0 へ更新する
 
-`@cloudflare/vite-plugin` の peerDependencies が `wrangler: ^4.118.0` を要求する。
+`@cloudflare/vite-plugin@1.48.0` の peerDependencies が `wrangler: ^4.115.0` を要求する。
 現在は viewer、api、mcp-server の 3 パッケージとも 4.112.0 である。
 この更新は認証移行と独立しているため、単独のコミットにする。
 
@@ -40,7 +40,7 @@
 
 **Interfaces:**
 - Consumes: なし
-- Produces: wrangler 4.118 以上が全パッケージで利用可能になる
+- Produces: wrangler 4.115.0 が全パッケージで利用可能になる
 
 - [ ] **Step 1: 取得可能な最新バージョンを確認する**
 
@@ -50,7 +50,8 @@ npm view wrangler time --json | python3 -c "import json,sys;d=json.load(sys.stdi
 ```
 
 `min-release-age=3` により、公開から 3 日未満のバージョンは `ETARGET` になる。
-4.118.0 以上で 3 日以上経過しているものを選ぶ。
+2026-08-01 時点では 4.115.0（2026-07-28 公開）が上限である。
+4.116.0 以降は公開から 3 日未満のため取得できない。
 
 - [ ] **Step 2: 3 パッケージをまとめて更新する**
 
@@ -71,7 +72,7 @@ Expected: いずれも成功
 
 ```bash
 git add packages/*/package.json package-lock.json
-git commit -m "chore(deps): wrangler を 4.118 以上へ更新する"
+git commit -m "chore(deps): wrangler を 4.115 へ更新する"
 ```
 
 ---
@@ -832,8 +833,11 @@ BFF の中身を書く前に、Worker が動く土台を作る。
 - [ ] **Step 1: プラグインを追加する**
 
 ```bash
-npm install -D @cloudflare/vite-plugin -w @shisetsu-viewer/viewer
+npm install -D @cloudflare/vite-plugin@1.48.0 -w @shisetsu-viewer/viewer
 ```
+
+1.48.0 に固定するのは、peer が `wrangler: ^4.115.0` で Task 1 の版と一致するためである。
+1.49.0 以降は `wrangler ^4.116.0` 以上を要求し、`min-release-age=3` の下では今日入れられない。
 
 - [ ] **Step 2: 最小の Worker を書く**
 

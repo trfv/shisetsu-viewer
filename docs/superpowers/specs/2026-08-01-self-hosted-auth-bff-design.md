@@ -321,8 +321,8 @@ BFF では `/auth/callback` が Worker 側で完結し、SPA へは元のパス�
 
 導入にあたって確認済みの事実と、必要な変更は以下のとおりである。
 
-- `@cloudflare/vite-plugin@1.50.0` の peerDependencies は `vite: ^6.1.0 || ^7.0.0 || ^8.0.0` であり、現行の Vite 8.1.5 と両立する
-- 同じく peerDependencies が `wrangler: ^4.118.0` を要求する。現在 viewer、api、mcp-server の 3 パッケージとも 4.112.0 なので、一括更新が要る
+- `@cloudflare/vite-plugin` の peerDependencies は `vite: ^6.1.0 || ^7.0.0 || ^8.0.0` であり、現行の Vite 8.1.5 と両立する
+- 同じく peerDependencies が wrangler の下限を要求する。現在 viewer、api、mcp-server の 3 パッケージとも 4.112.0 なので、一括更新が要る。`.npmrc` の `min-release-age=3` が上限を決めるため、**plugin と wrangler は同じ日に公開された組から選ぶ**。2026-08-01 時点では plugin 1.48.0 と wrangler 4.115.0（ともに 2026-07-28 公開）が最新の取得可能な組で、plugin 1.50.0 が要求する wrangler 4.118.0 は公開 14 時間で ETARGET になる
 - `packages/viewer/vitest.config.ts` は `vite.config.ts` を継承していない独立した定義である。プラグインを `vite.config.ts` に足しても、既存の browser mode テストには影響しない
 - プラグインがビルド出力を client と worker に分けるため、`wrangler.jsonc` の `assets.directory` と `package.json` の `deploy:versions --assets=./dist` を新しい出力先へ合わせる
 
@@ -368,7 +368,7 @@ api 側の RATE_LIMITER は viewer Worker からは使えないため、viewer �
 
 ## 移行手順
 
-1. wrangler を全パッケージで 4.118 以上に更新する（先行 PR）
+1. wrangler を全パッケージで 4.115.0 に更新する（先行 PR）
 2. `0003_auth.sql` を本番 D1 に適用する
 3. Auth0 から既存ユーザーの email を取り出し、`role='user', google_sub=NULL` で `users` に投入する
 4. api に `SELF_JWKS_JSON` を設定し、issuer マップを入れてデプロイする。この時点では誰も自前 JWT を送らないため無風である
