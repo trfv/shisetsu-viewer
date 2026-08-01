@@ -275,8 +275,10 @@ Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みが
 Auth0 トークンに対する `trial === true` を `anonymous` に畳む分岐（`packages/api/src/auth/auth0.ts:42`）はそのまま残す。
 これは Auth0 のクレームを解釈する処理であり、新しいトライアルとは無関係である。
 
-デプロイ順序は、api を先に出して自前 issuer を受け付ける状態にしてから viewer を出す。
-依存が一方向なので、途中で止めても壊れない。
+依存は一方向で、api が自前 issuer を受け付ける状態になっていれば viewer はいつ出してもよい。
+ただし viewer / api / mcp-server は Workers Builds に接続済みで、**master へのビルドはそのままデプロイされる**（2026-08-01 実測）。
+両者は同じコミットから並行にデプロイされるため、順序を人が制御することはできない。
+実際の要件は「マージ前に Secrets と D1 を整えておくこと」であり、並行デプロイの数秒のずれは初回切り替え時には無害である（その時点でまだ誰も新方式でログインしていない）。
 
 ## viewer の変更
 
@@ -369,16 +371,18 @@ api 側の RATE_LIMITER は viewer Worker からは使えないため、viewer �
 ## 移行手順
 
 1. wrangler を全パッケージで 4.115.0 に更新する（先行 PR）
-2. `0003_auth.sql` を本番 D1 に適用する
-3. Auth0 から既存ユーザーの email を取り出し、`role='user', google_sub=NULL` で `users` に投入する
-4. api に `SELF_JWKS_JSON` を設定し、issuer マップを入れてデプロイする。この時点では誰も自前 JWT を送らないため無風である
-5. viewer を BFF 込みでデプロイする
-6. 本人の Google アカウントでログインし、予約検索が通ることを確認する
-7. 1 週間の安定運用を確認したのち、Auth0 の viewer 用アプリケーションを無効化する
+2. Google の OAuth クライアントを作る
+3. viewer に Secrets を投入する（`wrangler versions secret put`。未デプロイの版があると `secret put` は拒否される）
+4. `0003_auth.sql` を本番 D1 に適用する。新規テーブルの追加だけなので現行の本番は影響を受けない
+5. Auth0 から既存ユーザーの email を取り出し、`role='user', google_sub=NULL` で `users` に投入する
+6. api の `SELF_JWKS_JSON` に公開 JWKS を入れて push する
+7. PR をマージする。Workers Builds が api と viewer をデプロイする
+8. 本人の Google アカウントでログインし、予約検索が通ることを確認する
+9. 1 週間の安定運用を確認したのち、Auth0 の viewer 用アプリケーションを無効化する
 
 ### ロールバック
 
-手順 5 で問題が出た場合、viewer を直前のバージョンへ戻す。
+手順 7 で問題が出た場合、viewer を直前のバージョンへ戻す。
 api の issuer マップは Auth0 を残したままなので、旧 viewer はそのまま動く。
 D1 の `users` と `sessions` は旧 viewer から参照されないため、残しておいてよい。
 
