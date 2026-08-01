@@ -28,11 +28,27 @@ interface OauthState {
   redirect: string;
 }
 
-/** オープンリダイレクトを防ぐ。自オリジン内のパスだけを許す。 */
+// 到達不能な TLD を基準オリジンに使う。実在ドメインだと、攻撃者がその絶対 URL を
+// 渡したときに origin が一致して素通りする。
+const REDIRECT_BASE = "https://placeholder.invalid";
+
+/**
+ * オープンリダイレクトを防ぐ。ブラウザと同じ URL パーサで解決し、自オリジンに落ちるものだけ許す。
+ *
+ * 文字列の前方一致で弾く実装では足りない。WHATWG の URL パーサは special scheme で
+ * バックスラッシュを `/` と同一視し、タブや改行を除去してから解釈するため、
+ * `/\evil.example/` や `/<TAB>/evil.example/` が `//evil.example/` として解決してしまう。
+ * 判定をパーサに委ねれば、この手の表記ゆれをまとめて塞げる。
+ */
 function safeRedirect(raw: string | null): string {
   if (!raw) return "/";
-  if (!raw.startsWith("/") || raw.startsWith("//")) return "/";
-  return raw;
+  try {
+    const url = new URL(raw, REDIRECT_BASE);
+    if (url.origin !== REDIRECT_BASE) return "/";
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return "/";
+  }
 }
 
 function redirectTo(location: string, cookie?: string): Response {
@@ -99,15 +115,24 @@ async function handleCallback(request: Request, env: Env): Promise<Response> {
   if (!identity.emailVerified) return redirectTo("/?auth_error=email_unverified");
 
   const now = new Date();
-  const user = await resolveUser(env.DB, {
-    googleSub: identity.sub,
-    email: identity.email,
-    now: now.toISOString(),
-    newId: crypto.randomUUID(),
-    trialExpiresAt: new Date(
-      now.getTime() + TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000
-    ).toISOString(),
-  });
+  let user;
+  try {
+    user = await resolveUser(env.DB, {
+      googleSub: identity.sub,
+      email: identity.email,
+      now: now.toISOString(),
+      newId: crypto.randomUUID(),
+      trialExpiresAt: new Date(
+        now.getTime() + TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000
+      ).toISOString(),
+    });
+  } catch (e) {
+    // users.email は UNIQUE。Google 側で他ユーザーが使っている email に変更されると
+    // 制約違反になる。UNIQUE 自体は乗っ取り防止として正しいので、500 ではなく
+    // 案内可能なエラーに倒す。
+    console.error(e);
+    return redirectTo("/?auth_error=email_conflict");
+  }
 
   const token = randomToken();
   await createSession(env.DB, {
