@@ -1,18 +1,15 @@
-# ローカル開発用の binding 上書き。`.dev.vars` にコピーして値を入れる。
-# wrangler と @cloudflare/vite-plugin が dev 実行時に読み込み、wrangler.jsonc の
-# vars と Secret を上書きする。`.dev.vars` は gitignore 済み。
+# ローカル開発用の Secret。`.dev.vars` にコピーして値を入れる。
+# wrangler と @cloudflare/vite-plugin が dev 実行時に読み込む。`.dev.vars` は gitignore 済み。
+#
+# redirect_uri はリクエストのオリジンから導出されるため、オリジンの設定は不要である。
+# ローカルなら http://localhost:3000/auth/callback が使われる。
+# この URI を Google Cloud Console の承認済みリダイレクト URI に登録しておくこと
+# （Google はワイルドカードを受け付けないため、本番・preview・localhost を個別に登録する）。
 
-# wrangler.jsonc の vars は本番固定なので、ローカルでは必ず上書きする。
-# ここを直さないと /auth/login が本番 origin の redirect_uri を組み立て、
-# Google の同意画面から本番へ戻ってしまいローカルでフローが完走しない。
-APP_ORIGIN=http://localhost:3000
-
-# Google Cloud Console のウェブアプリケーション クライアント。
-# 承認済みリダイレクト URI に http://localhost:3000/auth/callback を登録しておくこと
-# （Google はワイルドカードを受け付けないため、本番とローカルの 2 件を個別に登録する）。
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
 # api 向け JWT の署名鍵。秘密 JWK の配列を JSON 1 行で。先頭が署名鍵で kid が必須。
-# 生成は計画の Task 12 Step 1 を参照。ローカル検証用は本番と別の鍵にする。
+# ローカル検証用は本番と別の鍵にする。生成:
+#   node -e 'const j=await import("jose");const p=await j.generateKeyPair("ES256",{extractable:true});const k=await j.exportJWK(p.privateKey);k.kid="local";k.alg="ES256";k.use="sig";console.log(JSON.stringify([k]))'
 AUTH_SIGNING_KEYS=[]

@@ -17,7 +17,6 @@ export default defineConfig({
             TEST_MIGRATIONS: migrations,
             GOOGLE_CLIENT_ID: "test-client-id",
             GOOGLE_CLIENT_SECRET: "test-secret",
-            APP_ORIGIN: "https://app.test",
           },
           // wrangler.jsonc の service binding "API" はローカルに実体が無いため、
           // スタブを与えないと workerd の起動自体が失敗する。

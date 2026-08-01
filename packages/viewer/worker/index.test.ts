@@ -92,6 +92,21 @@ describe("/auth/login", () => {
     expect(oauthPayload(response).redirect).toBe("/reservation");
   });
 
+  // redirect_uri は固定値ではなくリクエストのオリジンから導出する。
+  // 固定値だと本番・ブランチ preview・localhost のどれかで必ずずれる。
+  it("redirect_uri をリクエストのオリジンから組み立てる", async () => {
+    const origins = [
+      "https://app.test",
+      "https://feat-x-shisetsu-viewer.example.workers.dev",
+      "http://localhost:3000",
+    ];
+    for (const origin of origins) {
+      const response = await fetchWorker(new Request(`${origin}/auth/login`));
+      const location = new URL(response.headers.get("Location") ?? "");
+      expect(location.searchParams.get("redirect_uri")).toBe(`${origin}/auth/callback`);
+    }
+  });
+
   it("state と code_challenge が Cookie の verifier と対応する", async () => {
     const response = await fetchWorker(new Request("https://app.test/auth/login"));
     const location = new URL(response.headers.get("Location") ?? "");

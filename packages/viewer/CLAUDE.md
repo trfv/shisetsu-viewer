@@ -26,6 +26,12 @@ React 19 SPA + BFF。Cloudflare Workers にデプロイ（`wrangler.jsonc`）。
 
 ## Environment
 
-`VITE_*` のビルド変数は無い。API は同一オリジンの `/api`、認証は Worker の Secret（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `AUTH_SIGNING_KEYS`）で完結する。binding は `wrangler.jsonc`（`DB` / `API` / `ASSETS` / `AUTH_RATE_LIMITER` / `APP_ORIGIN`）。
+`VITE_*` のビルド変数は無い。API は同一オリジンの `/api`、認証は Worker の Secret（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `AUTH_SIGNING_KEYS`）で完結する。binding は `wrangler.jsonc`（`DB` / `API` / `ASSETS` / `AUTH_RATE_LIMITER`）で、オリジンの設定値は持たない。
 
-**ローカルでログインフローを通すには `.dev.vars` が要る**（`.dev.vars.example` をコピー）。`wrangler.jsonc` の `APP_ORIGIN` は本番固定で、`redirect_uri` は `${APP_ORIGIN}/auth/callback` として組み立てられる。上書きしないと Google の同意画面から本番へ戻ってしまい、ローカルでフローが完走しない。Google 側にも `http://localhost:3000/auth/callback` の登録が必要（ワイルドカード不可のため本番と個別に登録する）。
+**`redirect_uri` はリクエストのオリジンから導出する**（`worker/index.ts` の `callbackUri`）。本番・ブランチ preview・localhost のどこで動いても自動で正しくなる。代わりに **Google 側には使うオリジンごとに callback を登録する**必要がある（ワイルドカード不可）。
+
+- 本番: `https://app.shisetsudb.com/auth/callback`
+- ブランチ preview: `https://<branch>-shisetsu-viewer.<subdomain>.workers.dev/auth/callback`（ブランチ別名は安定）
+- ローカル: `http://localhost:3000/auth/callback`
+
+**ローカルでログインフローを通すには `.dev.vars` が要る**（`.dev.vars.example` をコピー）。Secret は Cloudflare 側に入れてもローカルには来ない。

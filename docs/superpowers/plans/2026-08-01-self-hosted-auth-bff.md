@@ -905,7 +905,6 @@ Secrets（`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`、`AUTH_SIGNING_KEYS`）�
       "simple": { "limit": 20, "period": 60 }
     }
   ],
-  "vars": { "APP_ORIGIN": "https://app.shisetsudb.com" },
   "dev": { "port": 3000 }
 }
 ```
@@ -1009,7 +1008,6 @@ export default defineConfig({
             TEST_MIGRATIONS: migrations,
             GOOGLE_CLIENT_ID: "test-client-id",
             GOOGLE_CLIENT_SECRET: "test-secret",
-            APP_ORIGIN: "https://app.test",
           },
         },
       };
@@ -1742,7 +1740,7 @@ git commit -m "feat(viewer): api への転送とパスのホワイトリスト�
 
 **Interfaces:**
 - Consumes: Task 3、6、7、8、9 の全 export
-- Produces: `Env`（ASSETS、API、DB、GOOGLE_CLIENT_ID、GOOGLE_CLIENT_SECRET、AUTH_SIGNING_KEYS、APP_ORIGIN）と 5 経路のハンドラ
+- Produces: `Env`（ASSETS、API、DB、GOOGLE_CLIENT_ID、GOOGLE_CLIENT_SECRET、AUTH_SIGNING_KEYS）と 5 経路のハンドラ
 
 - [ ] **Step 1: 失敗するテストを書く**
 
@@ -1963,7 +1961,6 @@ export interface Env {
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
   AUTH_SIGNING_KEYS: string;
-  APP_ORIGIN: string;
 }
 
 const SESSION_COOKIE = "__Host-session";
@@ -2003,7 +2000,7 @@ async function handleLogin(request: Request, env: Env): Promise<Response> {
 
   const authorizeUrl = buildAuthorizeUrl({
     clientId: env.GOOGLE_CLIENT_ID,
-    redirectUri: `${env.APP_ORIGIN}/auth/callback`,
+    redirectUri: callbackUri(request),
     state: payload.state,
     challenge: await codeChallenge(payload.verifier),
   });
@@ -2037,7 +2034,7 @@ async function handleCallback(request: Request, env: Env): Promise<Response> {
     const idToken = await exchangeCode({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      redirectUri: `${env.APP_ORIGIN}/auth/callback`,
+      redirectUri: callbackUri(request),
       code,
       verifier: saved.verifier,
     });
@@ -2733,9 +2730,10 @@ node -e '
 Google Cloud Console → APIs & Services → Credentials → Create Credentials → **OAuth client ID**。
 
 - Application type: **Web application**
-- 承認済みリダイレクト URI に **2 件**を登録する。Google はワイルドカードを受け付けないため個別に要る
-  - `https://app.shisetsudb.com/auth/callback`
-  - `http://localhost:3000/auth/callback`
+- 承認済みリダイレクト URI を登録する。`redirect_uri` はリクエストのオリジンから導出されるため、**使うオリジンごとに 1 件ずつ**要る（Google はワイルドカードを受け付けない）
+  - `https://app.shisetsudb.com/auth/callback`（本番）
+  - `https://feat-self-hosted-auth-bff-shisetsu-viewer.trfv-dev.workers.dev/auth/callback`（ブランチ preview。別名はブランチ名ベースで安定）
+  - `http://localhost:3000/auth/callback`（ローカル）
 
 OAuth 同意画面が未設定なら先に作る。scope は `openid` と `email` だけで、いずれも非センシティブなので Google の審査は不要である。
 User type を External にすれば任意の Google アカウントでログインできる（テストユーザー登録も不要）。
@@ -2744,7 +2742,7 @@ User type を External にすれば任意の Google アカウントでログイ�
 
 - [ ] **Step 3: viewer に Secrets を投入する**
 
-bindings（DB、API、AUTH_RATE_LIMITER、APP_ORIGIN）は Task 5 で設定済みである。ここで入れるのは Secrets だけである。
+bindings（DB、API、AUTH_RATE_LIMITER）は Task 5 で設定済みである。ここで入れるのは Secrets だけである。
 
 **`secret put` ではなく `versions secret put` を使う。** 未デプロイの版があると前者は拒否される（冒頭の「デプロイ経路」を参照）。
 
@@ -2774,7 +2772,7 @@ npx wrangler versions secret list --config packages/viewer/wrangler.jsonc
 Expected: `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `AUTH_SIGNING_KEYS` の 3 件。
 
 ローカルでも検証するなら `packages/viewer/.dev.vars.example` を `.dev.vars` にコピーして値を入れる。
-**`APP_ORIGIN` を `http://localhost:3000` に上書きすること**。`wrangler.jsonc` の値は本番固定で、`redirect_uri` は `${APP_ORIGIN}/auth/callback` として組み立てられるため、上書きしないと Google の同意画面から本番へ戻ってしまいローカルでフローが完走しない。ローカル用の署名鍵は本番と別に生成する。
+`redirect_uri` はリクエストのオリジンから導出されるので、オリジンの設定は要らない。ローカル用の署名鍵は本番と別に生成する。
 
 - [ ] **Step 4: 本番 D1 にマイグレーションを適用する**
 
@@ -2923,7 +2921,7 @@ api の issuer マップは Auth0 を受け付けたままなので、mcp-server
 | `Secret edit failed ... isn't currently deployed` | `versions secret put` を使う。冒頭の「デプロイ経路」を参照 |
 | ログイン後も `anonymous` のまま | api に `SELF_JWKS_JSON` が入っているか。`npx wrangler deployments list` でマージ後の版が出ているか |
 | `/?auth_error=exchange_failed` | Google の redirect URI 登録と `GOOGLE_CLIENT_SECRET` の値。Worker のログに元の例外が出る |
-| `/?auth_error=state_mismatch` | Cookie が届いていない。`APP_ORIGIN` と実際のオリジンが一致しているか |
+| `/?auth_error=state_mismatch` | Cookie が届いていない。ログイン開始とコールバックが同じオリジンで起きているか |
 | `/?auth_error=email_conflict` | 同じ email を別の `google_sub` が既に持っている。`SELECT * FROM users WHERE email = '...'` |
 | 既存ユーザーが `trial` になった | Step 5 の email の綴り違い。`UPDATE users SET role='user', trial_expires_at=NULL WHERE google_sub='...'` |
 | 予約検索だけ 403 | JWT は通っているがロールが `anonymous`。`users.role` と `trial_expires_at` を見る |

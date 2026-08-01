@@ -36,9 +36,6 @@
       "simple": { "limit": 20, "period": 60 }
     }
   ],
-  "vars": {
-    "APP_ORIGIN": "https://app.shisetsudb.com"
-  },
   "dev": {
     "port": 3000
   }

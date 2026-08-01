@@ -66,6 +66,21 @@ function safeRedirect(raw: string | null): string {
   }
 }
 
+/**
+ * OAuth の redirect_uri。リクエストが来たオリジンから組み立てる。
+ *
+ * 固定値にすると、同じ Worker が複数のオリジンで動く状況（本番・ブランチ preview・
+ * localhost）で必ずずれる。redirect_uri は「ブラウザが戻ってくる先」なので、
+ * リクエストのオリジンと一致するのが本来の姿である。
+ *
+ * 導出しても安全性は落ちない。Google は事前登録された URI としか一致させないため、
+ * 未登録のオリジンを名乗っても認可自体が通らない。Worker のルートはアカウントに
+ * 紐づくホスト名でしか呼ばれないので、Host の偽装で別オリジンを名乗らせることもできない。
+ */
+function callbackUri(request: Request): string {
+  return `${new URL(request.url).origin}/auth/callback`;
+}
+
 function redirectTo(location: string, cookie?: string): Response {
   const headers = new Headers({ Location: location });
   if (cookie) headers.set("Set-Cookie", cookie);
@@ -82,7 +97,7 @@ async function handleLogin(request: Request, env: Env): Promise<Response> {
 
   const authorizeUrl = buildAuthorizeUrl({
     clientId: env.GOOGLE_CLIENT_ID,
-    redirectUri: `${env.APP_ORIGIN}/auth/callback`,
+    redirectUri: callbackUri(request),
     state: payload.state,
     challenge: await codeChallenge(payload.verifier),
   });
@@ -116,7 +131,7 @@ async function handleCallback(request: Request, env: Env, google: GoogleDeps): P
     const idToken = await google.exchangeCode({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      redirectUri: `${env.APP_ORIGIN}/auth/callback`,
+      redirectUri: callbackUri(request),
       code,
       verifier: saved.verifier,
     });
