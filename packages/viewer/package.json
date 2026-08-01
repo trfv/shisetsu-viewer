@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.48.0",
+    "@cloudflare/vitest-pool-workers": "0.19.0",
     "@playwright/test": "1.61.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
@@ -33,6 +34,7 @@
     "test": "TZ=Asia/Tokyo vitest",
     "test:ci": "TZ=Asia/Tokyo vitest --run",
     "test:unit": "TZ=Asia/Tokyo vitest --run --reporter=verbose",
+    "test:worker": "vitest run --config vitest.worker.config.ts",
     "test:integration": "TZ=Asia/Tokyo vitest --run test/integration",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
