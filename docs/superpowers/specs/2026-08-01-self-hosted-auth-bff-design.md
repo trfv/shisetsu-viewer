@@ -223,6 +223,10 @@ const ISSUERS = {
 
 署名検証の前に読むのは `iss` だけとし、それ以外のクレームは検証後にしか参照しない。
 
+第 3 引数はテスト用の鍵注入である。
+現在は `JWTVerifyGetKey` を 1 つ受け取るが、issuer が 2 つになるため `{ auth0?, self? }` のオブジェクトに変える。
+`packages/mcp-server/worker.ts:165` は 2 引数で呼んでいるので影響を受けず、変更が要るのは `packages/api/src/worker.ts:125` と api のテストだけである。
+
 Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みがサブプロジェクト 3 まで Auth0 トークンを使い続けるためである。
 
 デプロイ順序は、api を先に出して自前 issuer を受け付ける状態にしてから viewer を出す。
@@ -233,7 +237,8 @@ Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みが
 | 対象 | 変更 |
 |---|---|
 | `worker/index.ts`（新規） | BFF 本体。`/auth/*` と `/api/*` を処理する |
-| `contexts/Auth0.tsx` → `contexts/Auth.tsx` | `/auth/me` を叩くだけの実装に置き換える。Context を `{ isLoading, userInfo: { anonymous: boolean }, login, logout }` とし、`token` と `userInfo.trial` を削除する |
+| `contexts/Auth0.tsx` → `contexts/Auth.tsx` | `/auth/me` を叩くだけの実装に置き換える。Context を `{ isLoading, authenticated, userInfo: { anonymous }, login, logout }` とする |
+| `constants/routes.ts`、`pages/Waiting.tsx` | `waiting` ルートと Waiting ページを削除する |
 | `api/client.ts` | ベース URL を `/api` の相対パスにする。token 引数を削除する |
 | `hooks/useApiQuery.ts`、`hooks/usePaginatedQuery.ts` | fetcher へ token を渡す経路を削除する |
 | `constants/env.ts` | 全定数が不要になるため削除する |
@@ -247,6 +252,16 @@ Auth0 の issuer を残すのは、mcp-server の stdio 経由の書き込みが
 
 `token` が Context から消えるため、`useApiQuery` と `usePaginatedQuery` の fetcher シグネチャは変わる。
 呼び出し側のページは fetcher を渡すだけなので、影響はフックの内部に閉じる。
+
+`SettingsMenu` はログイン済みかどうかの判定に `token` の有無を使っている（`components/SettingsMenu/SettingsMenu.tsx:58`）。
+これを Context の `authenticated` に置き換える。
+
+`trial` は Context から削除する。
+`Header` と `HeaderMenuButton` と `Detail` が予約検索リンクに付けている「（トライアル）」のラベルは消える。
+ロールが `anonymous` と `user` の 2 値になる以上、`trial` を表示する根拠が無くなるためである。
+
+`waiting` ルートは Auth0 のリダイレクト着地点として存在していた。
+BFF では `/auth/callback` が Worker 側で完結し、SPA へは元のパスへ戻すため、このルートは不要になる。
 
 ## ビルドと開発環境
 
