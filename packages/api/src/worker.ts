@@ -24,6 +24,8 @@ export interface Env {
   DB: D1Database;
   AUTH0_DOMAIN: string;
   AUTH0_AUDIENCE: string;
+  // BFF が発行する JWT を検証するための公開 JWKS（秘密鍵は viewer Worker の Secret にある）
+  SELF_JWKS_JSON: string;
   GITHUB_REPOSITORY: string;
   OIDC_AUDIENCE: string;
   ADMIN_API_KEY?: string;
@@ -122,7 +124,7 @@ function testGithubJwks(env: Env): JWTVerifyGetKey | undefined {
 async function authorizeUser(request: Request, env: Env): Promise<Response | null> {
   const token = request.headers.get("Authorization")?.replace(/^Bearer /, "");
   if (!token) return error(401, "authentication required");
-  const role = await resolveRole(token, env, testJwks(env));
+  const role = await resolveRole(token, env, { auth0: testJwks(env) });
   if (role !== "user") return error(403, "insufficient role");
   return null;
 }

@@ -1,43 +1,97 @@
-import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from "jose";
+import {
+  createLocalJWKSet,
+  createRemoteJWKSet,
+  decodeJwt,
+  jwtVerify,
+  type JWTVerifyGetKey,
+} from "jose";
 
-export type Role = "anonymous" | "user";
+import type { Role } from "./roles.ts";
+
+// Role の定義は roles.ts に移した。mcp-server が auth0 経由で import しているため再輸出する。
+export type { Role } from "./roles.ts";
 
 const HASURA_CLAIMS = "https://hasura.io/jwt/claims";
 const APP_CLAIMS = "https://app.shisetsudb.com/token/claims";
 
-// JWKS はユーザー非依存のためモジュールレベルのキャッシュで良い（可変シングルトン禁止の対象外）。
-let jwks: JWTVerifyGetKey | null = null;
+/** BFF が発行する JWT の issuer と audience */
+export const SELF_ISSUER = "https://app.shisetsudb.com/";
+export const SELF_AUDIENCE = "shisetsu-api";
 
-function getJwks(domain: string): JWTVerifyGetKey {
-  jwks ??= createRemoteJWKSet(new URL(`https://${domain}/.well-known/jwks.json`));
-  return jwks;
+// JWKS はユーザー非依存のためモジュールレベルのキャッシュで良い（可変シングルトン禁止の対象外）。
+let auth0Jwks: JWTVerifyGetKey | null = null;
+let selfJwks: JWTVerifyGetKey | null = null;
+
+function getAuth0Jwks(domain: string): JWTVerifyGetKey {
+  auth0Jwks ??= createRemoteJWKSet(new URL(`https://${domain}/.well-known/jwks.json`));
+  return auth0Jwks;
 }
 
-interface Auth0Env {
+function getSelfJwks(jwksJson: string): JWTVerifyGetKey {
+  selfJwks ??= createLocalJWKSet(JSON.parse(jwksJson));
+  return selfJwks;
+}
+
+interface AuthEnv {
   AUTH0_DOMAIN: string;
   AUTH0_AUDIENCE: string;
+  SELF_JWKS_JSON?: string;
+}
+
+// exactOptionalPropertyTypes の下では、テストから明示的に undefined を渡せるよう
+// 省略可能に加えて undefined も型に含める必要がある。
+interface KeyOverrides {
+  auth0?: JWTVerifyGetKey | undefined;
+  self?: JWTVerifyGetKey | undefined;
 }
 
 /**
- * Auth0 access token からロールを解決する。検証失敗・トークン無しは anonymous。
- * クレームの優先順: カスタム namespace（role/trial）→ Hasura namespace（x-hasura-default-role）。
- * trial ユーザーは予約データ非公開のため anonymous 扱い（現行 viewer の UI ゲートと同義）。
+ * access token からロールを解決する。検証失敗・トークン無し・未知の issuer は anonymous。
+ * 署名検証の前に読むのは iss だけで、他のクレームは検証後にしか参照しない。
  *
- * getKey はテスト用に注入可能（ローカル JWKS）。省略時はテナントの JWKS を使う。
+ * overrides はテスト用の鍵注入である。省略時は Auth0 のリモート JWKS と
+ * env.SELF_JWKS_JSON のローカル JWKS を使う。
  */
 export async function resolveRole(
   token: string | undefined,
-  env: Auth0Env,
-  getKey?: JWTVerifyGetKey
+  env: AuthEnv,
+  overrides?: KeyOverrides
 ): Promise<Role> {
   if (!token) return "anonymous";
+
+  let issuer: string | undefined;
   try {
-    const { payload } = await jwtVerify(token, getKey ?? getJwks(env.AUTH0_DOMAIN), {
-      // issuer は末尾スラッシュ必須。alg は実 JWKS（trfv.jp.auth0.com）が RS256。
-      issuer: `https://${env.AUTH0_DOMAIN}/`,
-      audience: env.AUTH0_AUDIENCE,
-      algorithms: ["RS256"],
-    });
+    issuer = decodeJwt(token).iss;
+  } catch {
+    return "anonymous";
+  }
+
+  const auth0Issuer = `https://${env.AUTH0_DOMAIN}/`;
+
+  if (issuer === auth0Issuer) {
+    const getKey = overrides?.auth0 ?? getAuth0Jwks(env.AUTH0_DOMAIN);
+    return await verifyAndResolve(token, getKey, auth0Issuer, env.AUTH0_AUDIENCE, ["RS256"]);
+  }
+
+  if (issuer === SELF_ISSUER) {
+    const getKey =
+      overrides?.self ?? (env.SELF_JWKS_JSON ? getSelfJwks(env.SELF_JWKS_JSON) : undefined);
+    if (!getKey) return "anonymous";
+    return await verifyAndResolve(token, getKey, SELF_ISSUER, SELF_AUDIENCE, ["ES256"]);
+  }
+
+  return "anonymous";
+}
+
+async function verifyAndResolve(
+  token: string,
+  getKey: JWTVerifyGetKey,
+  issuer: string,
+  audience: string,
+  algorithms: string[]
+): Promise<Role> {
+  try {
+    const { payload } = await jwtVerify(token, getKey, { issuer, audience, algorithms });
     const app = payload[APP_CLAIMS] as { role?: string; trial?: boolean } | undefined;
     if (app?.trial === true) return "anonymous";
     if (app?.role && app.role !== "anonymous") return "user";
