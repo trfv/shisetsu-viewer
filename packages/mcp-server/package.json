@@ -12,7 +12,7 @@
     "preview:wrangler": "wrangler dev"
   },
   "dependencies": {
-    "@cloudflare/workers-oauth-provider": "0.10.1",
+    "@cloudflare/workers-oauth-provider": "0.10.3",
     "@modelcontextprotocol/sdk": "1.30.0",
     "@shisetsu-viewer/api": "0.1.0",
     "@shisetsu-viewer/shared": "0.0.1",
