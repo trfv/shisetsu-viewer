@@ -16,9 +16,9 @@
   "devDependencies": {
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
-    "knip": "6.29.0",
-    "oxfmt": "0.61.0",
-    "oxlint": "1.76.0",
+    "knip": "6.34.0",
+    "oxfmt": "0.66.0",
+    "oxlint": "1.81.0",
     "typescript": "7.0.2"
   },
   "engines": {
