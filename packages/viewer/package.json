@@ -9,10 +9,10 @@
     "date-fns": "4.4.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "wouter": "3.10.0"
+    "wouter": "3.11.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
     "@vitejs/plugin-react": "6.0.5",
