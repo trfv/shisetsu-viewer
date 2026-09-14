@@ -15,10 +15,10 @@
   ],
   "devDependencies": {
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.13.3",
-    "knip": "6.29.0",
-    "oxfmt": "0.61.0",
-    "oxlint": "1.76.0",
+    "@types/node": "24.13.4",
+    "knip": "6.35.1",
+    "oxfmt": "0.67.0",
+    "oxlint": "1.82.0",
     "typescript": "7.0.2"
   },
   "engines": {
