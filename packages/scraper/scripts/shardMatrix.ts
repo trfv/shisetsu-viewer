@@ -38,7 +38,9 @@ function main(): void {
 
   const args = ["playwright", "test", "--list", "--reporter=list"];
   if (municipality && municipality !== "all") {
-    args.push(municipality);
+    // 位置引数はファイルパスへの正規表現。末尾 `/` でディレクトリ境界に固定しないと、
+    // "tokyo-kita" が "tokyo-kita-genkiplaza/index.test.ts" にも一致する
+    args.push(`${municipality}/`);
   }
 
   // --list は tests があると exit 0、0 件だと非ゼロで終わるため、出力は常に受け取る

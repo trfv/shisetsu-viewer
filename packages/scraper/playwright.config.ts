@@ -17,7 +17,11 @@ const forceInclude = (process.env["SCRAPER_FORCE_INCLUDE"] ?? "")
 
 const ciExcludedTargets = Object.values<MunicipalityConfig>(MUNICIPALITIES)
   .filter((m) => m.scraperCiExcluded)
-  .map((m) => `${m.prefecture}-${m.slug}`)
+  // 追加スクレイパー（例 tokyo-kita-genkiplaza）も親自治体の除外設定を継承する
+  .flatMap((m) => {
+    const base = `${m.prefecture}-${m.slug}`;
+    return [base, ...(m.additionalScrapers ?? []).map((name) => `${base}-${name}`)];
+  })
   .filter((target) => !forceInclude.includes(target));
 
 /**

@@ -1,12 +1,12 @@
 import fs from "fs/promises";
 
-import { getReservationTargets } from "@shisetsu-viewer/shared";
+import { getMunicipalityKeyByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
 
 import { fetchInstitutionKeyMap, upsertReservations } from "./backend/d1Api.ts";
 import { buildReservationRows } from "./backend/transform.ts";
 import type { FileData } from "./backend/types.ts";
 
-const allTargets = getReservationTargets();
+const allTargets = getScraperTargets();
 const filterArg = process.argv[2];
 const targets = filterArg ? allTargets.filter((t) => t === filterArg) : allTargets;
 const title = `update reservations`;
@@ -30,8 +30,12 @@ for (const target of targets) {
     })
   );
 
-  const [, m] = target.split("-");
-  const municipality = `MUNICIPALITY_${(m as string).toUpperCase()}`;
+  // 追加スクレイパー（例 tokyo-kita-genkiplaza）は親自治体の municipality に書く。
+  // target を "-" で分割する旧実装は、たまたま動くだけで解釈が曖昧だった。
+  const municipality = getMunicipalityKeyByScraperTarget(target);
+  if (municipality === undefined) {
+    throw new Error(`registry に scraper target=${target} の自治体がありません`);
+  }
 
   const keyMap = await fetchInstitutionKeyMap(municipality);
   const { rows, unmatchedKeys } = buildReservationRows(fileData, keyMap);

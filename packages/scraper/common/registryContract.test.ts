@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { getMunicipalityBySlug, getReservationTargets } from "@shisetsu-viewer/shared";
+import { getMunicipalityByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
 
 // 各スクレイパーが export する生テキスト → enum 値のマップ。
 // 値域が registry の表示ラベル定義と一致していることが viewer 表示の前提になる。
@@ -14,12 +14,11 @@ interface ScraperModule {
 const INVALID_VALUES = new Set(["RESERVATION_DIVISION_INVALID", "RESERVATION_STATUS_INVALID"]);
 
 describe("registry contract", () => {
-  for (const target of getReservationTargets()) {
+  for (const target of getScraperTargets()) {
     it(`${target}: municipality とマップ値域が registry と整合している`, async () => {
       const mod = (await import(`../${target}/index.ts`)) as ScraperModule;
-      const slug = target.slice(target.indexOf("-") + 1);
-      const config = getMunicipalityBySlug(slug);
-      assert.ok(config, `registry に slug=${slug} の自治体がありません`);
+      const config = getMunicipalityByScraperTarget(target);
+      assert.ok(config, `registry に scraper target=${target} の自治体がありません`);
 
       assert.equal(
         mod.scraper?.municipality,

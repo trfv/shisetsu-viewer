@@ -1,6 +1,7 @@
 import {
   addDays,
   addMonths,
+  differenceInCalendarMonths,
   differenceInCalendarWeeks,
   differenceInDays,
   differenceInWeeks,
@@ -13,8 +14,9 @@ import {
  * - "week": 1ページ = 1週間
  * - "twoWeeks": 1ページ = 2週間（WebR Grand 系のカレンダー表示）
  * - "calendarWeek": 1ページ = 暦週（日曜起点。週の途中開始でも1ページと数える）
+ * - "month": 1ページ = 暦月（月別テーブルを月数ぶん返すサイト）
  */
-type HorizonUnit = "day" | "week" | "twoWeeks" | "calendarWeek";
+type HorizonUnit = "day" | "week" | "twoWeeks" | "calendarWeek" | "month";
 
 /**
  * スクレイプ対象期間の宣言的な指定。
@@ -44,6 +46,8 @@ export function pagesForHorizon(spec: HorizonSpec, now: Date = new Date()): numb
       return Math.ceil(differenceInWeeks(end, start) / 2) + 1;
     case "calendarWeek":
       return differenceInCalendarWeeks(end, start) + 1;
+    case "month":
+      return differenceInCalendarMonths(end, start) + 1;
   }
 }
 
