@@ -1,6 +1,6 @@
 # Scraper Package
 
-Playwright-based scrapers for municipal reservation systems; results are uploaded to the `packages/api` D1 backend (REST). Deps: `@playwright/test`, `date-fns` only. Node が TS を直接実行する（`erasableSyntaxOnly` + `allowImportingTsExtensions`、ビルドなし）。Commands: see `package.json` scripts (`typecheck`, `test`, `test:unit`, `discover`, `update:reservations`, `update:institutions`, `export:institutions`).
+Playwright-based scrapers for municipal reservation systems; results are uploaded to the `packages/api` D1 backend (REST). Node が TS を直接実行する（`erasableSyntaxOnly` + `allowImportingTsExtensions`、ビルドなし）。
 
 ## ScraperDefinition Pattern
 

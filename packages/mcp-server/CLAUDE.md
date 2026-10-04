@@ -1,6 +1,6 @@
 # MCP Server Package
 
-施設・予約データを AI 向けツールとして公開する MCP サーバー。Deps: `@modelcontextprotocol/sdk`, `zod`, `@cloudflare/workers-oauth-provider`。Commands: see `package.json` scripts (`typecheck`, `test`, `deploy`, `preview:wrangler`, `start` = local stdio, `cli`).
+施設・予約データを AI 向けツールとして公開する MCP サーバー。`npm start` は local stdio モードで起動する。
 
 ## Entry Points と認証モード
 
