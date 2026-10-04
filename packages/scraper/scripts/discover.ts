@@ -18,6 +18,7 @@ import type { ScraperDefinition } from "../common/defineScraper.ts";
 import {
   type DiscoveredTarget,
   formatDiscoveryReport,
+  roomLinkOf,
   type TargetKey,
 } from "../common/discover.ts";
 import { discoverOpenreafTargets } from "../engines/openreaf.ts";
@@ -91,7 +92,7 @@ if (args.municipality) {
   existingKeys = scraper.targets.map((t) => {
     const context = scraper.context?.(t) ?? {};
     const roomName = typeof context["roomName"] === "string" ? context["roomName"] : undefined;
-    return { facilityName: scraper.facility(t), roomName };
+    return { facilityName: scraper.facility(t), roomName, roomLink: roomLinkOf(t) };
   });
 } else if (args.engine && args.url) {
   const engineDiscover = ENGINE_DISCOVERERS[args.engine];
