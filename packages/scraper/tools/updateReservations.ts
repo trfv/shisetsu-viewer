@@ -1,13 +1,8 @@
 import fs from "fs/promises";
 
-import {
-  getMunicipalityByScraperTarget,
-  getMunicipalityKeyByScraperTarget,
-  getScraperTargets,
-} from "@shisetsu-viewer/shared";
+import { getMunicipalityKeyByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
 
-import { upsertReservations as d1UpsertReservations } from "./backend/d1Api.ts";
-import { fetchInstitutionKeyMap, upsertReservations } from "./backend/hasura.ts";
+import { fetchInstitutionKeyMap, upsertReservations } from "./backend/d1Api.ts";
 import { buildReservationRows } from "./backend/transform.ts";
 import type { FileData } from "./backend/types.ts";
 
@@ -37,33 +32,21 @@ for (const target of targets) {
 
   // 追加スクレイパー（例 tokyo-kita-genkiplaza）は親自治体の municipality に書く。
   // target を "-" で分割する旧実装は、たまたま動くだけで解釈が曖昧だった。
-  const config = getMunicipalityByScraperTarget(target);
   const municipality = getMunicipalityKeyByScraperTarget(target);
-  if (config === undefined || municipality === undefined) {
+  if (municipality === undefined) {
     throw new Error(`registry に scraper target=${target} の自治体がありません`);
   }
-  const prefecture = `PREFECTURE_${config.prefecture.toUpperCase()}`;
 
-  const keyMap = await fetchInstitutionKeyMap(prefecture, municipality);
+  const keyMap = await fetchInstitutionKeyMap(municipality);
   const { rows, unmatchedKeys } = buildReservationRows(fileData, keyMap);
   if (unmatchedKeys.length > 0) {
     console.warn(`${target}: unmatched facility keys: ${unmatchedKeys.join(", ")}`);
   }
   console.log(`${target}: total: ${rows.length}`);
-  const affected = await upsertReservations(rows);
-  console.log(`${target}: affected_rows: ${affected}`);
 
-  // dual-write: D1_API_ENDPOINT が設定されているときだけ D1 にも書く。
-  // dual-write 期間中は D1 側の失敗で本流（Hasura）を落とさない。
-  if (process.env["D1_API_ENDPOINT"]) {
-    const runId = process.env["GITHUB_RUN_ID"] ?? new Date().toISOString();
-    try {
-      const written = await d1UpsertReservations(rows, municipality, runId);
-      console.log(`${target}: d1 rows_written: ${written}`);
-    } catch (error) {
-      console.error(`${target}: d1 dual-write failed:`, error);
-    }
-  }
+  const runId = process.env["GITHUB_RUN_ID"] ?? new Date().toISOString();
+  const written = await upsertReservations(rows, municipality, runId);
+  console.log(`${target}: rows_written: ${written}`);
 }
 
 console.timeEnd(title);

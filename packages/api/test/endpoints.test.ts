@@ -47,6 +47,43 @@ describe("public endpoints", () => {
     expect(body.items.length).toBeGreaterThan(0);
   });
 
+  it("GET /v1/institutions は既定で要約のみ（system_name を含まない）", async () => {
+    const res = await SELF.fetch(`${BASE}/v1/institutions?limit=5&summary-probe=1`);
+    const body = (await res.json()) as { items: Record<string, unknown>[] };
+    expect(body.items[0]).not.toHaveProperty("building_system_name");
+  });
+
+  it("GET /v1/institutions?detail=true は全列を返す（scraper のエクスポート用）", async () => {
+    const res = await SELF.fetch(
+      `${BASE}/v1/institutions?municipality=MUNICIPALITY_TOSHIMA&detail=true`
+    );
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { items: Record<string, string>[] };
+    expect(body.items).toHaveLength(1);
+    // scraper の施設キーマップ（<building_system_name>-<institution_system_name> → id）が組めること
+    expect(body.items[0]?.["building_system_name"]).toBe("hi-rfc");
+    expect(body.items[0]?.["institution_system_name"]).toBe("renshuushitsu");
+    expect(body.items[0]?.["address"]).toBeDefined();
+  });
+
+  it("detail=true はエッジキャッシュに載らない（upsert 直後のキーマップが陳腐化しない）", async () => {
+    const url = `${BASE}/v1/institutions?municipality=MUNICIPALITY_TOSHIMA&detail=true&cache-probe=1`;
+    const first = await SELF.fetch(url);
+    expect(first.headers.get("Cache-Control")).toBe("no-store");
+
+    await env.DB.prepare(`UPDATE institutions SET building_system_name = ? WHERE id = ?`)
+      .bind("renamed", INSTITUTIONS[2].id)
+      .run();
+
+    const second = (await (await SELF.fetch(url)).json()) as { items: Record<string, string>[] };
+    expect(second.items[0]?.["building_system_name"]).toBe("renamed");
+
+    // 他のテストの実行順に依存させないため元に戻す
+    await env.DB.prepare(`UPDATE institutions SET building_system_name = ? WHERE id = ?`)
+      .bind(INSTITUTIONS[2].building_system_name, INSTITUTIONS[2].id)
+      .run();
+  });
+
   it("GET /v1/institutions/:id 非 RFC UUID も 200", async () => {
     const res = await SELF.fetch(`${BASE}/v1/institutions/${INSTITUTIONS[2].id}`);
     expect(res.status).toBe(200);

@@ -113,3 +113,41 @@ proxy 経由になることで 1 リクエストあたりの遅延は増える�
 - transient 分類の失敗が tracker Issue に載らない問題の一般的な改善（sumida 以外にも関わるため別課題とする）
 - Oracle Cloud（ap-tokyo-1）からの到達性実測と、Mac 常時稼働をやめる場合の VM 移行
 - 杉並区（Cloudflare Turnstile）のような、IP 以外の要因で CI 除外されている自治体への適用
+
+## 追記（2026-07-31）: トランスポートを Cloudflare Tunnel へ移行
+
+本文の設計のうち、**CI ランナーから Mac の 8888 番へ到達する経路**だけを Tailscale から
+Cloudflare Tunnel に差し替えた。tinyproxy が住宅 IP から出す部分、registry の
+`scraperViaJpProxy` を単一ソースとする判定、`SCRAPER_PROXY` を playwright.config が
+`use.proxy` に適用する部分は、いずれも変更していない。
+
+```
+GH Actions runner
+  └─ cloudflared access tcp（127.0.0.1:8888 で待受）
+       └─ Cloudflare edge（Access の Service Auth ポリシー + service token で認可）
+            └─ Mac の cloudflared（LaunchAgent 常駐）
+                 └─ tinyproxy 127.0.0.1:8888 → 自宅 ISP → 対象サイト
+```
+
+移行の理由は、依存先を Cloudflare（D1・Workers・ゾーン）に集約し、Tailscale の
+アカウント・OAuth client・ACL の管理を畳むことである。副次的に 2 点が改善した。
+
+- CI ランナーが tailnet に ephemeral join しなくなった。Access の service token で
+  「1 つの TCP アプリケーションへの認可」に境界が狭まる
+- `JP_PROXY_URL` に Tailscale IP をハードコードする必要がなくなった。CI 側の
+  proxy 宛先は常に `http://127.0.0.1:8888` になる
+
+一方で **Mac 常時稼働への依存は解消していない**。これはトランスポートの問題ではなく、
+住宅 IP を出口にする構成そのものの性質である。解消したい場合は、スコープ外に挙げた
+Oracle Cloud（ap-tokyo-1）の到達性実測から着手することになる。
+
+代わりに、切り分けの悪化を防ぐ preflight を scrape アクションに入れた。
+Tailscale 版では Mac 停止も CI 側 proxy の不調も等しく Playwright の
+`ERR_PROXY_CONNECTION_FAILED`（transient 分類）に潰れていたが、
+`cloudflared access tcp` を起動する前に service token 付きで Access ホスト名を叩き、
+`HTTP 530`（Cloudflare error 1033 = Mac 側コネクタ不在）と `HTTP 403`（token 失効・
+ポリシー不整合）を、それぞれ固有のエラーメッセージで即座に落とすようにしてある。
+
+CI 側の cloudflared は GitHub リリースからバージョンタグ固定で取得する。
+cloudflared のリリースには checksum マニフェストが無いため、actions の SHA pin に
+相当する固定はタグまでしかできない。

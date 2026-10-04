@@ -10,6 +10,8 @@ export const INSTITUTIONS = [
     institution: "音楽室",
     building_kana: "かいかんA",
     institution_kana: "おんがくしつ",
+    building_system_name: "kaikan-a",
+    institution_system_name: "ongakushitsu",
     institution_size: "INSTITUTION_SIZE_LARGE",
     is_available_brass: "AVAILABILITY_DIVISION_AVAILABLE",
   },
@@ -21,6 +23,8 @@ export const INSTITUTIONS = [
     institution: "ホール",
     building_kana: "かいかんA",
     institution_kana: "ほーる",
+    building_system_name: "kaikan-a",
+    institution_system_name: "hall",
     institution_size: "INSTITUTION_SIZE_MEDIUM",
     is_available_brass: "AVAILABILITY_DIVISION_UNAVAILABLE",
   },
@@ -33,6 +37,8 @@ export const INSTITUTIONS = [
     institution: "練習室",
     building_kana: "ひあーるえふかん",
     institution_kana: "れんしゅうしつ",
+    building_system_name: "hi-rfc",
+    institution_system_name: "renshuushitsu",
     institution_size: "INSTITUTION_SIZE_SMALL",
     is_available_brass: "AVAILABILITY_DIVISION_AVAILABLE",
   },
@@ -52,8 +58,8 @@ export async function seed(db: D1Database): Promise<void> {
         .prepare(
           `INSERT INTO institutions
              (id, prefecture, municipality, building, institution, building_kana, institution_kana,
-              institution_size, is_available_brass)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+              building_system_name, institution_system_name, institution_size, is_available_brass)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         )
         .bind(
           i.id,
@@ -63,6 +69,8 @@ export async function seed(db: D1Database): Promise<void> {
           i.institution,
           i.building_kana,
           i.institution_kana,
+          i.building_system_name,
+          i.institution_system_name,
           i.institution_size,
           i.is_available_brass
         )

@@ -2208,9 +2208,11 @@ const server = createServer({
 ブランチ: `feat/rebuild-hasura-removal`（master ベース）
 
 **前提ゲート（すべて満たしてから着手）:**
-1. PR 3-3 / 3-4 が本番で 1 週間問題なし
-2. cron スクレイプの dual-write が安定（パリティ突合の乖離ゼロが 1 週間継続）
-3. **pg_dump アーカイブ取得済み**（ユーザー作業: shisetsu-database リポジトリ側で `pg_dump` を実行しローカル or R2 に保存。破壊的操作の直前確認ルール適用）
+1. ~~PR 3-3 / 3-4 が本番で 1 週間問題なし~~ **充足（カットオーバー 2026-07-25 → 08-01）**
+2. ~~cron スクレイプの dual-write が安定（パリティ突合の乖離ゼロが 1 週間継続）~~ **充足（Issue #1622 は 07-18 に自動クローズ済み）**
+3. **pg_dump アーカイブ取得済み** — **未取得**。ユーザー判断（2026-08-01）で Task 3-5-1（コード撤去）を先行し、Hasura / Postgres は読まれないまま生かす。**アーカイブ取得は Task 3-5-2 の前提として残る**
+
+**スコープ判断（2026-08-01）:** `api.shisetsudb.com` への張り替えは **行わない**。Auth0 撤去 + BFF 化（`docs/superpowers/plans/2026-08-01-self-hosted-auth-bff.md`）で viewer↔api の境界が変わるため、ドメイン確定はその後に一度で済ませる。当面 `d1-api.shisetsudb.com` のまま。
 
 ### Task 3-5-1: dual-write 削除と Hasura コード撤去
 
@@ -2222,12 +2224,24 @@ const server = createServer({
 - Modify: `.github/workflows/scraper.yml` / `database.yml` — env から `GRAPHQL_ENDPOINT` / `M2M_TOKEN` を削除
 - Modify: `packages/scraper/.env.sample` / `packages/scraper/CLAUDE.md` / ルート `CLAUDE.md` / `packages/mcp-server/CLAUDE.md` — Hasura / M2M / GraphQL 記述を一掃し新アーキテクチャに更新
 
-- [ ] 実装 → typecheck / lint / knip / test:unit 全緑 → PR → マージ
+**実装時に判明した計画外の追加（2026-08-01）:**
+- **`packages/api` に `GET /v1/institutions?detail=true` を新設**（計画の Files に api の変更が無かった）。`updateReservations.ts` は施設キーマップ（`<building_system_name>-<institution_system_name>` → id）を Hasura から引いており、既存の `/v1/institutions` は `InstitutionSummary` しか返さず system_name を含まないため、置換先が存在しなかった。**この口だけ `Cache-Control: no-store`** にする（`INSTITUTIONS_CACHE` の 600 秒に載せると施設 upsert 直後のキーマップが陳腐化し、予約行が unmatched になる）
+- **`tools/backend/parityReport.ts`（+test）も削除**（parity.ts の従属モジュール。計画の Delete 一覧に漏れていた）
+- **`tools/m2mAuth.ts` も削除**（Auth0 Client Credentials の取得側。`m2mToken.ts` は読み出し側で、対で消える）
+- **`upsertHolidays` を削除**: 唯一の呼び出し元が `seed.ts` だった。D1 の holidays は **1970-01-01〜2050-11-23 の 1,329 行**が投入済みで年次更新は不要（api の `PUT /v1/admin/holidays` は残置）
+- **spot check の parity tracker 依存を除去**: parity CI を消すと tracker Issue が二度と作られず、`plan.ts` の tracker 経路と `sampling.ts` の `parseTrackerSamples` が到達不能になるため削除。既定のサンプル選定は元から実装されていた D1 乱択フォールバックに一本化される
+
+- [x] 実装 → typecheck / lint / knip / test:unit 全緑 → PR → マージ
+- [ ] **マージ前に `packages/api` を手動デプロイ**（`npm run deploy -w @shisetsu-viewer/api`）。api は Workers Builds 未接続で「マージ ≠ デプロイ」。`detail=true` は後方互換の純増なので先行デプロイして安全
+- [ ] **`packages/scraper/.env.sample` の更新はユーザー作業**（`.env*` は権限ガードで Claude が書けない）。`GRAPHQL_ENDPOINT` と `AUTH0_*` の 5 行を削除し、`D1_API_ENDPOINT` / `ADMIN_API_KEY` だけ残す
 - [ ] マージ後: 定期 cron 1 サイクル（朝・夜）が D1 のみで緑、viewer / mcp の動作確認
 
 ### Task 3-5-2: 運用の後片付け（ユーザー確認を挟む破壊的操作）
 
-- [ ] **GitHub secrets 削除**（一覧を提示して確認後に実行）: `M2M_TOKEN` / `GRAPHQL_ENDPOINT` / `AUTH0_*`（rotate workflow が使っていた M2M 系）/ `GH_PAT_SECRETS_RW`。残すもの: `ADMIN_API_KEY`（追加済み）、CF 系は Workers Builds 利用なら不要のはず — 実在 secrets を `gh secret list` で確認してから提案
+- [ ] **GitHub secrets 削除**（一覧を提示して確認後に実行）。`gh secret list` の実測（2026-08-01）= `AUTH0_AUDIENCE` / `AUTH0_CLIENT_ID` / `AUTH0_CLIENT_SECRET` / `AUTH0_DOMAIN` / `GRAPHQL_ENDPOINT` / `HASURA_ADMIN_SECRET` / `M2M_TOKEN` / `GH_PAT_SECRETS_RW` / `SCRIPT_ENDPOINT` / `CF_ACCESS_CLIENT_ID` / `CF_ACCESS_CLIENT_SECRET`。
+  - **削除候補**: `AUTH0_*` 4 種・`GRAPHQL_ENDPOINT`・`M2M_TOKEN`・`GH_PAT_SECRETS_RW`（rotate workflow 専用だった）。`HASURA_ADMIN_SECRET` は **pg_dump アーカイブ取得後**に削除する
+  - **残すもの**: `CF_ACCESS_CLIENT_*`（国内 proxy）。`SCRIPT_ENDPOINT` は用途不明のため要調査
+  - **`ADMIN_API_KEY` は GitHub secrets に無い**（CI は OIDC、ローカル `.env` 専用）。計画の「追加済み」は誤り
 - [ ] **shisetsu-database の停止・アーカイブ**（別リポ・ユーザー作業）: compose 停止、リポジトリ archive 化。※ compose.yml / config.yaml に平文シークレットがコミット済みのため、公開状態にする場合は履歴ごと精査
 - [ ] （任意）90 日より古い行の月次 prune: `packages/api` に Cron Trigger（`triggers.crons: ["23 19 1 * *"]`）+ `scheduled()` ハンドラで `DELETE FROM reservations WHERE date < date('now', '-90 days')`。削除も書き込みカウントされるため月 ~2 万行 = 枠内。実装する場合は vitest-pool-workers でテスト付き
 

@@ -101,6 +101,8 @@ export interface InstitutionsQueryParams {
   institutionSizes?: string[] | undefined;
   limit?: number | undefined;
   cursor?: string | undefined;
+  /** true なら要約ではなく全列（InstitutionDetail）を返す。scraper のエクスポート用。 */
+  detail?: boolean | undefined;
 }
 
 export interface ReservationSearchQueryParams {

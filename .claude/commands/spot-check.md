@@ -32,7 +32,7 @@ cd packages/scraper && node tools/spotcheck/plan.ts <引数をパススルー>; 
 
 - `SPOTCHECK_PLAN` の JSON からサンプル数を確認し、`packages/scraper/test-results/_spotcheck/plan.json` を Read する（あなたの Read/Write はリポジトリルート基準。`cd packages/scraper` した Bash とは基準が違うので、必ずこのフルパスで読み書きすること）
 - エラーで止まったら（wrangler 未ログイン等）、メッセージをそのままユーザーに伝えて停止する
-- 既定（`--key` 未指定時）はサンプル数上限の半分を parity tracker の MISSING キー、残り半分を乱択で選ぶ（乖離ゼロ・tracker 不在なら全部乱択にフォールバックする）。`--key` を指定したときは明示キーのみが対象になる
+- 既定（`--key` 未指定時）は D1 から自治体ごとに先頭 1 施設 × 直近日を決定論的に選ぶ。`--key` を指定したときは明示キーのみが対象になる
 
 ## フェーズ 2: サイト観測（observe.ts）
 
@@ -92,12 +92,12 @@ cd packages/scraper && node tools/spotcheck/judge.ts; echo "exit=$?"; cd ../..
 1. 判定の表（verdict / サンプル / detail / スクショパス）を提示する
 2. 原因層の推論を添える:
    - `MISMATCH` → スクレイパー解釈バグの疑い。該当自治体の STATUS_MAP と観測記号を並べて指摘する
-   - `SITE_HAS_DATA_D1_MISSING` → 書き込み経路バグの疑い。`gh issue view` で parity tracker Issue の現況（Hasura 側の有無）と突き合わせる
-   - `SITE_NO_DATA` → parity の STALE 境界（updated_at）では拾えない遺物の存在を示す。ゲート基準の再検討材料
+   - `SITE_HAS_DATA_D1_MISSING` → 書き込み経路バグの疑い。当該施設が `packages/scraper/<municipality>/index.ts` の `targets` にあるか、`GET /v1/scrape-runs` で直近の取得が成功しているかを確認する
+   - `SITE_NO_DATA` → サイトに無い日付の行が D1 に残っている（取り下げられた日付の遺物）。書き込みは upsert のみで削除しないため起こりうる
    - `SITE_NO_DATA_D1_STALE` → サイトにその日付の表示が無いのに D1 に行がある。D1 側の陳腐化（サイトが取り下げた日付の行が残っている、または施設・区分の対応付けの誤り）を疑う。当該施設が現在もスクレイプ対象かを `packages/scraper/<municipality>/index.ts` の `targets` で確認する
    - `UNREACHABLE` が過半 → サイト構造変化の疑い。`/repair-scraper <municipality>` を提案する
    - `UNMAPPED` → 判定不能。spot check 側の記号表（`packages/scraper/tools/spotcheck/symbolMap.ts`）かサイトの区分ラベルの対応が追いついていない。`detail` に出る未知の記号・ラベルを読み、記号表の更新が要るか、サイト構造が変わったのかを切り分ける
-3. AskUserQuestion で parity tracker Issue へ結果コメントを追記するか確認し、希望があれば `gh issue comment` で判定表を追記する
+3. 要調査（`investigate`）が 1 件でもあれば、AskUserQuestion で Issue を起票するか確認し、希望があれば `gh issue create` で判定表を本文にして起票する
 
 ## 完了報告
 

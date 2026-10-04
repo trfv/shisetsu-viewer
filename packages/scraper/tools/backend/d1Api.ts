@@ -1,11 +1,6 @@
-import type {
-  Institution,
-  InstitutionSummary,
-  Page,
-  ReservationExportRow,
-} from "@shisetsu-viewer/shared";
+import type { Institution, InstitutionDetail, Page } from "@shisetsu-viewer/shared";
 
-import type { ReservationRow } from "./types.ts";
+import type { InstitutionKeyMap, ReservationRow } from "./types.ts";
 
 const CHUNK = 500;
 const MAX_RETRIES = 3;
@@ -99,53 +94,37 @@ export async function upsertInstitutions(rows: Institution[]): Promise<number> {
   return res.rowsWritten;
 }
 
-export async function upsertHolidays(rows: { date: string; name: string }[]): Promise<number> {
-  const res = await putJson<UpsertResponse>("/v1/admin/holidays", { rows });
-  return res.rowsWritten;
-}
-
 /**
- * パリティ突合用: D1 の予約を全自治体まとめて 1 巡で dump（PK 順 keyset）。
- * 自治体で分けて取らないのは、サーバ側が institutions と JOIN すると
- * ページごとに全件ソートが走り、読み取り行数が O(N^2 / page) になるため。
- * 分類は exportInstitutions() の id → municipality マップで呼び出し側が行う。
+ * 自治体の施設を全列で全件取得する。`detail=true` は無認証の公開 GET だが
+ * エッジキャッシュには載らない（施設 upsert 直後にキーマップを引くため）。
  */
-export async function exportReservations(): Promise<ReservationExportRow[]> {
+async function listInstitutions(municipality: string): Promise<InstitutionDetail[]> {
   const endpoint = requireEnv("D1_API_ENDPOINT");
-  const headers = await getAuthHeaders();
-  const all: ReservationExportRow[] = [];
+  const all: InstitutionDetail[] = [];
   let cursor: string | null = null;
   do {
-    const qs = new URLSearchParams({ limit: "1000" });
+    const qs = new URLSearchParams({ municipality, detail: "true", limit: "100" });
     if (cursor) qs.set("cursor", cursor);
-    const res = await fetch(`${endpoint}/v1/admin/reservations/export?${qs.toString()}`, {
-      headers,
-    });
-    if (!res.ok) throw new Error(`D1 export error ${res.status}: ${await res.text()}`);
-    const page = (await res.json()) as Page<ReservationExportRow>;
+    const res = await fetch(`${endpoint}/v1/institutions?${qs.toString()}`);
+    if (!res.ok) throw new Error(`D1 institutions error ${res.status}: ${await res.text()}`);
+    const page = (await res.json()) as Page<InstitutionDetail>;
     all.push(...page.items);
     cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
   } while (cursor);
   return all;
 }
 
-/**
- * パリティ突合用: D1 の institution_id → municipality マップ。
- * Hasura 側のマップを流用しないのは、D1 にしか無い施設の行を取りこぼすと
- * 「extra」判定が効かなくなり、突合が甘くなるため。
- */
-export async function exportInstitutions(): Promise<Map<string, string>> {
-  const endpoint = requireEnv("D1_API_ENDPOINT");
-  const map = new Map<string, string>();
-  let cursor: string | null = null;
-  do {
-    const qs = new URLSearchParams({ limit: "100" });
-    if (cursor) qs.set("cursor", cursor);
-    const res = await fetch(`${endpoint}/v1/institutions?${qs.toString()}`);
-    if (!res.ok) throw new Error(`D1 institutions error ${res.status}: ${await res.text()}`);
-    const page = (await res.json()) as Page<InstitutionSummary>;
-    for (const item of page.items) map.set(item.id, item.municipality);
-    cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
-  } while (cursor);
+/** 予約行の解決キー `<facility_name>-<room_name>` → institution_id。 */
+export async function fetchInstitutionKeyMap(municipality: string): Promise<InstitutionKeyMap> {
+  const map: InstitutionKeyMap = {};
+  for (const i of await listInstitutions(municipality)) {
+    map[`${i.building_system_name}-${i.institution_system_name}`] = i.id;
+  }
   return map;
+}
+
+/** data/institutions/<target>.json への逆輸出用。DB 側のメタ列 updated_at は落とす。 */
+export async function exportInstitutions(municipality: string): Promise<Institution[]> {
+  const items = await listInstitutions(municipality);
+  return items.map(({ updated_at: _updatedAt, ...institution }) => institution);
 }
