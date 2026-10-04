@@ -17,10 +17,6 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - npm workspaces. Use `-w @shisetsu-viewer/<package>`. Node >= 24, ES Modules throughout.
 - Type checking: TypeScript 7 (`typescript@7`)。各パッケージの `typecheck` script は素の `tsc` を呼ぶ。
 
-## Root Commands
-
-`npm start` (viewer dev server, port 3000) / `npm run build` / `npm run format:check:all`・`format:fix:all` (oxfmt) / `npm run lint:all`・`lint:fix:all` (oxlint) / `npm run typecheck:all` / `npm run knip`
-
 ## Conventions
 
 - Formatter: oxfmt (`.oxfmtrc.json` — printWidth 100, double quotes, trailing commas es5, sortImports)。Linter: oxlint (`.oxlintrc.json`)。disable コメントは `oxlint-disable-next-line <plugin>/<rule>` 形式（eslint-disable 構文も解釈される）。
