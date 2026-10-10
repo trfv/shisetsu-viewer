@@ -16,8 +16,6 @@ React 19 SPA for browsing facility reservation data. Deployed to Cloudflare Work
 - `renderWithProviders()`（`test/utils/test-utils.tsx`）は **async**。MockAuth0Provider + wouter memoryLocation でラップし、`user`（vitest/browser userEvent）+ RenderResult（locator セレクタ）を返す。`screen` は `page`（locator。遅延評価・自動リトライ）の再輸出。
 - assertion は `await expect.element(locator).toBeInTheDocument()` 形式。queryBy*/findBy*/getAllBy* は存在しない（不在確認は getBy + not、複数要素は `.all()`）。**Playwright locator の `getByText` は部分一致がデフォルト**なので、衝突し得る短い文字列には `{ exact: true }` を付ける。DOM 直接アクセスは `.element()` を挟む。
 - MSW worker の生成が必要: `npx msw init public -w @shisetsu-viewer/viewer`
-- E2E: Playwright（`e2e/`、chromium/firefox/webkit）。dev server は `webServer` 設定で自動起動。
-- Coverage thresholds: branches/functions 60%, lines/statements 70%。
 
 ## Environment
 
