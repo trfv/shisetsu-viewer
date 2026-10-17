@@ -2,6 +2,7 @@ import type { Institution } from "@shisetsu-viewer/shared";
 import { env } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { getInstitutionDetail } from "../src/db/queries.ts";
 import {
   recordScrapeRun,
   todayRowsWritten,
@@ -166,6 +167,16 @@ describe("upsertInstitutions", () => {
     expect(JSON.parse(row!.weekday_usage_fee)).toEqual([
       { division: "FEE_DIVISION_MORNING", fee: 1000 },
     ]);
+  });
+
+  it("division_labels は未指定なら {}、指定すれば詳細 API まで round-trip する", async () => {
+    await upsertInstitutions(env.DB, [base]);
+    expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual({});
+
+    const labels = { RESERVATION_DIVISION_MORNING: "9:00-11:45" };
+    const res = await upsertInstitutions(env.DB, [{ ...base, division_labels: labels }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+    expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual(labels);
   });
 });
 

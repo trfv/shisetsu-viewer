@@ -37,6 +37,17 @@ export const ReservationDivisionMap: Readonly<Record<string, Record<string, stri
     SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
   );
 
+/**
+ * 区分の表示名。施設単位ラベル（institutions.division_labels）を優先し、無ければ自治体の
+ * registry ラベルに落ちる（同じ自治体の別予約システムが同じ区分に別の時刻を持つ場合がある）
+ */
+export const getReservationDivisionLabel = (
+  municipality: string,
+  division: string,
+  divisionLabels?: Partial<Record<string, string>>
+): string | undefined =>
+  divisionLabels?.[division] ?? ReservationDivisionMap[municipality]?.[division];
+
 export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
   SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].feeDivision])
 );

@@ -45,7 +45,7 @@ export async function upsertReservations(
   return { rowsWritten: rowsWritten(result) };
 }
 
-// ---- institutions（差分 upsert。25 列を programmatic に列挙）----
+// ---- institutions（差分 upsert。26 列を programmatic に列挙）----
 
 const INSTITUTION_COLUMNS = [
   "prefecture",
@@ -73,10 +73,16 @@ const INSTITUTION_COLUMNS = [
   "layout_image_url",
   "lottery_period",
   "note",
+  "division_labels",
 ] as const;
 
-// JSON 配列を持つ列。payload では文字列化して格納する（列は TEXT）
-const JSON_COLUMNS = new Set(["fee_divisions", "weekday_usage_fee", "holiday_usage_fee"]);
+// JSON を持つ列と、値が無いときの既定値。payload では文字列化して格納する（列は TEXT）
+const JSON_COLUMN_DEFAULTS: Readonly<Record<string, unknown>> = {
+  fee_divisions: [],
+  weekday_usage_fee: [],
+  holiday_usage_fee: [],
+  division_labels: {},
+};
 
 const INSTITUTION_UPSERT_SQL = (() => {
   const insertCols = ["id", ...INSTITUTION_COLUMNS];
@@ -105,7 +111,10 @@ export async function upsertInstitutions(
       const record: Record<string, unknown> = { id: row.id };
       for (const c of INSTITUTION_COLUMNS) {
         const value = (row as Record<string, unknown>)[c];
-        record[c] = JSON_COLUMNS.has(c) ? JSON.stringify(value ?? []) : (value ?? null);
+        record[c] =
+          c in JSON_COLUMN_DEFAULTS
+            ? JSON.stringify(value ?? JSON_COLUMN_DEFAULTS[c])
+            : (value ?? null);
       }
       return record;
     })

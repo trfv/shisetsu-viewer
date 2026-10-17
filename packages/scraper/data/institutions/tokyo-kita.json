@@ -321,7 +321,13 @@
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
     "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-11:45",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:45",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:45",
+      "RESERVATION_DIVISION_EVENING": "18:00-20:45"
+    }
   },
   {
     "id": "6763747e-e22b-459d-a81b-6c1886c1b000",
@@ -377,7 +383,13 @@
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_3/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-11:45",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:45",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:45",
+      "RESERVATION_DIVISION_EVENING": "18:00-20:45"
+    }
   },
   {
     "id": "356b56f0-5da2-4767-9e76-68a1b713905a",
@@ -417,7 +429,13 @@
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
     "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-11:45",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:45",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:45",
+      "RESERVATION_DIVISION_EVENING": "18:00-20:45"
+    }
   },
   {
     "id": "d8510c4c-e606-4b0e-b886-71df35554b83",

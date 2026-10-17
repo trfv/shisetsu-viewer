@@ -26,7 +26,7 @@ export type InstitutionSummary = Pick<
   | "is_equipped_piano"
 > & { updated_at: string };
 
-/** GET /v1/institutions/:id（全 25 列 + updated_at） */
+/** GET /v1/institutions/:id（全 26 列 + updated_at） */
 export type InstitutionDetail = Institution & { updated_at: string };
 
 /** 予約 1 行。
@@ -49,7 +49,7 @@ export interface ReservationSearchHit {
   reservation: ReservationDto;
   institution: Pick<
     Institution,
-    "id" | "municipality" | "building" | "institution" | "institution_size"
+    "id" | "municipality" | "building" | "institution" | "institution_size" | "division_labels"
   >;
 }
 

@@ -5,7 +5,8 @@ import { pKashikanHooks, type PKashikanTarget } from "../engines/pKashikan.ts";
 // 北区の registry ラベルを OpenReaf・元気ぷらざと共有する。
 // - 4 コマ部屋は午前・午後・夜間に寄せる（「午前空き」等の検索に載せるため）。
 //   午後は 2 コマあるので AFTERNOON_ONE / _TWO（D1 の is_afternoon_vacant は両方空きで真）。
-//   午前・夜間の表示ラベルは OpenReaf の 9:00-12:00 / 18:00-22:00 のまま。
+//   午前・夜間は registry ラベル（OpenReaf の 9:00-12:00 / 18:00-22:00）と時刻が違うため、
+//   施設 JSON の division_labels で実際の時刻を出す。
 // - 6 コマ・9 コマ部屋は DIVISION_6 以降。viewer は enum 順に並べるため、
 //   両者で共有する 19:00-20:45 を最後の DIVISION_19 に置く
 export const DIVISION_MAP: Record<string, Division> = {
