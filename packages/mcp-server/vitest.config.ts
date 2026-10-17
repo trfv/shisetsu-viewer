@@ -7,5 +7,8 @@ export default defineConfig({
     },
   },
   // node_modules は外部化されて alias が効かないため、cloudflare:workers を import する依存だけ取り込む
-  test: { server: { deps: { inline: ["@cloudflare/workers-oauth-provider"] } } },
+  test: {
+    setupFiles: ["./test/setup.ts"],
+    server: { deps: { inline: ["@cloudflare/workers-oauth-provider"] } },
+  },
 });
