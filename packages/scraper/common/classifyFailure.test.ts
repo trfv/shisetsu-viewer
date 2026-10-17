@@ -113,3 +113,18 @@ test("Playwright TimeoutError は name で分類（navigation は transient、�
   });
   assert.equal(classifyFailure("extract", locatorTimeout), "structural");
 });
+
+test("国内 proxy の接続失敗は infra", () => {
+  assert.equal(
+    classifyFailure(
+      "prepare",
+      new Error("page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://x/")
+    ),
+    "infra"
+  );
+  assert.equal(classifyFailure("extract", new Error("net::ERR_TUNNEL_CONNECTION_FAILED")), "infra");
+});
+
+test("proxy 以外の net::ERR_ は従来どおり transient", () => {
+  assert.equal(classifyFailure("prepare", new Error("net::ERR_CONNECTION_RESET")), "transient");
+});

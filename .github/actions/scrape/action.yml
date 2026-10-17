@@ -71,6 +71,7 @@ runs:
         # cloudflared のリリースは checksum マニフェストを持たないため、タグ固定までしかできない
         CLOUDFLARED_VERSION: "2026.7.3"
         JP_PROXY_HOSTNAME: ${{ inputs.jpProxyHostname }}
+        MUNICIPALITY: ${{ inputs.municipality }}
         TUNNEL_SERVICE_TOKEN_ID: ${{ env.CF_ACCESS_CLIENT_ID }}
         TUNNEL_SERVICE_TOKEN_SECRET: ${{ env.CF_ACCESS_CLIENT_SECRET }}
       run: |
@@ -93,6 +94,8 @@ runs:
         echo "preflight: HTTP ${CODE}"
         if [ "${CODE}" != "200" ]; then
           echo "::error::国内 proxy の経路が異常です（HTTP ${CODE}）。530 = Mac 側コネクタ不在（Mac 停止・cloudflared 停止）、403 = service token かポリシーの不一致"
+          # サイトの構造変化と区別できるよう、infra の失敗レコードとして残す
+          (cd packages/scraper && node scripts/recordInfraFailure.ts "${MUNICIPALITY}" "preflight HTTP ${CODE}")
           exit 1
         fi
 
@@ -111,6 +114,7 @@ runs:
         done
         echo "::error::cloudflared access の listener が 30 秒以内に起動しませんでした"
         cat "${RUNNER_TEMP}/cloudflared-access.log"
+        (cd packages/scraper && node scripts/recordInfraFailure.ts "${MUNICIPALITY}" "cloudflared access listener did not start")
         exit 1
     - name: Run Playwright tests
       shell: bash

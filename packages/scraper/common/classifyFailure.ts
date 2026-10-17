@@ -6,6 +6,13 @@ import {
 } from "./errors.ts";
 import type { FailedStep, FailureClassification } from "./failureTypes.ts";
 
+// 国内 proxy の経路断。サイト構造ではなく経路（Mac、tinyproxy、Tunnel）の問題なので修復対象外。
+// net::ERR_ 全般を transient とみなす TRANSIENT_PATTERNS より先に判定する。
+const INFRA_PATTERNS: RegExp[] = [
+  /net::ERR_PROXY_CONNECTION_FAILED/,
+  /net::ERR_TUNNEL_CONNECTION_FAILED/,
+];
+
 // 一過性失敗のシグネチャ。これらは retry_scrape で救済されるため修復対象外。
 const TRANSIENT_PATTERNS: RegExp[] = [
   /Turnstile/i,
@@ -44,8 +51,9 @@ function findErrorCode(error: unknown, depth = 0): string | undefined {
 }
 
 /**
- * 失敗を transient / structural / unknown に分類する。
+ * 失敗を transient / structural / unknown / infra に分類する。
  * 判定順: (1) validate/transform や validationErrors は常に structural →
+ * (1.5) 国内 proxy の経路断は infra →
  * (2) 型付きエラーの instanceof → (3) Node システムエラーコード →
  * (4) Playwright の TimeoutError（name ベース。navigation は transient、要素待ちは structural）→
  * (5) 既存の正規表現 → (6) unknown。
@@ -62,6 +70,13 @@ export function classifyFailure(
   }
   if (validationErrors.length > 0) {
     return "structural";
+  }
+
+  const message = error instanceof Error ? error.message : String(error);
+
+  // (1.5) 国内 proxy の経路断。型付きエラーやエラーコードより先に見る。
+  if (INFRA_PATTERNS.some((re) => re.test(message))) {
+    return "infra";
   }
 
   // (2) 型付きエラー: 文言に依存せず分類が安定する。
@@ -81,8 +96,6 @@ export function classifyFailure(
   if (code !== undefined && TRANSIENT_ERROR_CODES.has(code)) {
     return "transient";
   }
-
-  const message = error instanceof Error ? error.message : String(error);
 
   // (4) Playwright TimeoutError: メッセージ文言が変わっても name は安定。
   //     ナビゲーション中のタイムアウトは transient、要素待ちのタイムアウトは structural。

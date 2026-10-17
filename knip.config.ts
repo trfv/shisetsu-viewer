@@ -11,7 +11,7 @@ const config: KnipConfig = {
       ignoreDependencies: [],
     },
     "packages/scraper": {
-      entry: ["**/index.test.ts", "*/index.ts", "tools/**/*.ts"],
+      entry: ["**/index.test.ts", "*/index.ts", "scripts/*.ts", "tools/**/*.ts"],
       ignoreDependencies: [],
     },
     "packages/shared": {},
