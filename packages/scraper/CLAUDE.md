@@ -47,7 +47,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 - testMatch は `**/index.test.ts`。非 index の `*.test.ts` は `node --test` 用ユニットテスト（`npm run test:unit`）で、Playwright には拾われない。
 - **罠**: 位置引数（`npx playwright test <target>`）はファイルパスへの正規表現。`tokyo-kita` は `tokyo-kita-genkiplaza/` にも一致するため、CI（`.github/actions/scrape`）とシャード計算（`scripts/shardMatrix.ts`）は末尾 `/` を付けて渡す。
-- Workers: 4 local / 1 CI。`WORKERS` / `SLOW_MO` env で上書き。
+- `WORKERS` / `SLOW_MO` env で並列数・速度を上書きできる。
 - CI 除外は registry 駆動: shared `registry.ts` の `scraperCiExcluded` から `testIgnore` を構築（`SCRAPER_FORCE_INCLUDE` で個別上書き）。
 - 国内 proxy: registry の `scraperViaJpProxy` の自治体は、CI で Cloudflare Tunnel + Mac の tinyproxy 経由（`SCRAPER_PROXY=http://127.0.0.1:8888` 固定）。セットアップと故障の切り分けは `tools/jp-proxy/README.md`。
 

@@ -19,7 +19,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 
 ## Conventions
 
-- Formatter: oxfmt (`.oxfmtrc.json` — printWidth 100, double quotes, trailing commas es5, sortImports)。Linter: oxlint (`.oxlintrc.json`)。disable コメントは `oxlint-disable-next-line <plugin>/<rule>` 形式（eslint-disable 構文も解釈される）。
+- Formatter: oxfmt (`.oxfmtrc.json`)。Linter: oxlint (`.oxlintrc.json`)。disable コメントは `oxlint-disable-next-line <plugin>/<rule>` 形式（eslint-disable 構文も解釈される）。
 - File naming: components PascalCase, utils/hooks camelCase, tests co-located `*.test.ts(x)`, CSS Modules `*.module.css`.
 - default export は名前付き const で行う（匿名アロー関数の default export は禁止。hooks lint がコンポーネントを認識できなくなるため）。
 - Primary language Japanese, timezone Asia/Tokyo.
