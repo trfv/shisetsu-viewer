@@ -25,6 +25,11 @@ on:
           - tokyo-chuo
           - tokyo-meguro
           - kanagawa-kawasaki
+  # 施設 JSON の変更がマージされたら全自治体を流す（upsert は差分だけ書くので、変わっていない施設は 0 行）
+  push:
+    branches: [master]
+    paths:
+      - "packages/scraper/data/institutions/**"
 
 jobs:
   prepare:
@@ -66,7 +71,8 @@ jobs:
 
   update:
     needs: prepare
-    timeout-minutes: 10
+    # api 待ち（最大 20 分）を含む
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -82,6 +88,34 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ needs.prepare.outputs.nodeModulesCacheKey }}
+      - name: Wait for the api of this commit
+        # 同じ push で api 側（Workers Builds の監視パス）も変わっていれば、新しい api が出てから書く。
+        # 先に書くと、古い api が知らない列（例: division_labels）を黙って捨てる
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          git fetch --quiet --depth=1 origin "$BEFORE"
+          if ! git diff --name-only "$BEFORE" "$GITHUB_SHA" \
+            | grep -qE '^(package-lock\.json|packages/(api|shared)/)'; then
+            echo "api 側の変更なし。待たずに反映する"
+            exit 0
+          fi
+          want="${GITHUB_SHA:0:12}"
+          # Workers Builds は テスト → マイグレーション → デプロイで 2〜3 分かかる
+          for _ in $(seq 1 40); do
+            got=$(curl -fsS "$D1_API_ENDPOINT/v1/health" | jq -r '.version // ""' || true)
+            if [ "$got" = "$want" ]; then
+              echo "api $want が稼働中"
+              exit 0
+            fi
+            echo "待機中（稼働中: ${got:-不明}, 期待: $want）"
+            sleep 30
+          done
+          echo "::error::20 分待っても api $want がデプロイされない。Workers Builds（shisetsu-api）のビルド履歴を確認する"
+          exit 1
       - name: Update database data
         shell: bash
         working-directory: packages/scraper

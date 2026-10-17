@@ -10,7 +10,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - **scraper** (`packages/scraper/`) — Playwright-based data scrapers.
 - **shared** (`packages/shared/`) — shared types and municipality registry (source of truth).
 - **mcp-server** (`packages/mcp-server/`) — MCP server for AI tool integration. Cloudflare Workers.
-- **api** (`packages/api/`) — D1-backed API worker。読み書きの単一の口。Cloudflare Workers（手動デプロイ）。CLAUDE.md 未整備。
+- **api** (`packages/api/`) — D1-backed API worker。読み書きの単一の口。Cloudflare Workers。CLAUDE.md 未整備。
 
 ## Monorepo Setup
 
@@ -30,3 +30,9 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - `@shisetsu-viewer/shared` の `registry.ts` / `types.ts` が自治体データと enum の source of truth。viewer / scraper 双方が import する。
 - Data flow: scrapers が自治体サイトを巡回 → 変換 → **`packages/api` の admin REST へ書き込む**（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）。viewer は同じ api の公開 REST を叩く（要認証エンドポイントは Auth0 Bearer token）。D1 に直接書くのは api worker だけ。
 - MCP server は同データを AI 向けに公開（Workers デプロイは D1 直バインドで read-only、local stdio は api 経由で write 可）。
+
+## Deploy
+
+- 3 Worker とも Cloudflare Workers Builds（設定は Cloudflare 側）。viewer は全ブランチ（master 以外は版のアップロードのみ）、api / mcp-server は master のみで、監視パス（`package-lock.json`・`packages/shared/**`・自パッケージ）が変わったときだけ走る。マージから本番まで約 2〜3 分。
+- api は `npm run deploy:ci`（`packages/api/scripts/deployCi.sh`）: D1 マイグレーション → 版タグにコミット SHA を付けてデプロイ。`/v1/health` の `version` が稼働中のコミット。
+- 施設マスタ（`packages/scraper/data/institutions/**`）が master に入ると Database ワークフローが自動で全自治体を反映する（差分 upsert）。同じ push で api も変わっていれば、新しい api が出るまで待つ。
