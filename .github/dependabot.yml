@@ -25,6 +25,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    # 既定は 5 本。version-updates のグループが 7 つあり、すべてが同時に PR を出すと上限に当たって
+    # 新しい PR が作られなくなる（2026-10-05〜17 に zod などが止まっていた）。
+    # security-updates はこの上限に数えられない
+    open-pull-requests-limit: 10
     cooldown:
       default-days: 5
       semver-major-days: 14
