@@ -9,20 +9,50 @@
     "institution_kana": "ダイイチスタジオ",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "第１スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 120,
+    "area": 200,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -37,20 +67,50 @@
     "institution_kana": "ダイニスタジオ",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "第２スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 90,
+    "area": 157,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -65,20 +125,50 @@
     "institution_kana": "ダイサンスタジオ",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "第３スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 35,
+    "area": 60,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -93,23 +183,53 @@
     "institution_kana": "ダイヨンスタジオ",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "第４スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 20,
+    "area": 37,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "和太鼓は利用できない"
   },
   {
     "id": "29656744-62e2-4b97-9141-de846cd6ed42",
@@ -121,20 +241,50 @@
     "institution_kana": "ダイゴスタジオ",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "第５スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 30,
+    "area": 56,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -152,20 +302,50 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8250,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "音楽ホールの舞台のみの利用（料金は音楽ホールの半額）"
   },
   {
     "id": "ed9dcd41-1a14-472f-b50a-9897246430a8",
@@ -177,20 +357,50 @@
     "institution_kana": "オンガクホール",
     "building_system_name": "五反田文化センター",
     "institution_system_name": "音楽ホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 250,
+    "area": 245,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 10000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 22000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西五反田6-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -205,23 +415,53 @@
     "institution_kana": "ダイホール",
     "building_system_name": "荏原文化センター",
     "institution_system_name": "大ホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 500,
+    "area": 398,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 12600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 19000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 25200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 13900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 27700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区中延1-9-15",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/hpg000000314.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "大音響の楽器（太鼓、エレキギター等）は使用できない（大ホール利用規約）"
   },
   {
     "id": "8bd4b1c7-527a-4166-9af7-e33af281a350",
@@ -233,23 +473,53 @@
     "institution_kana": "ヒラツカホール",
     "building_system_name": "スクエア荏原",
     "institution_system_name": "ひらつかホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 362,
+    "area": 486,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 15200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 22800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 30400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 18200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 27400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 36500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区荏原4-5-28",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.shinagawa-culture.or.jp/square/index.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "大きな音の出る打楽器等は事前に相談が必要"
   },
   {
     "id": "e4f7e1f7-59f8-4b21-9bbc-5a17917615cf",
@@ -261,20 +531,50 @@
     "institution_kana": "ダイイチスタジオ",
     "building_system_name": "スクエア荏原",
     "institution_system_name": "第１スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 50,
+    "area": 82,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区荏原4-5-28",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.shinagawa-culture.or.jp/square/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -289,20 +589,50 @@
     "institution_kana": "ダイニスタジオ",
     "building_system_name": "スクエア荏原",
     "institution_system_name": "第２スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 30,
+    "area": 39,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区荏原4-5-28",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.shinagawa-culture.or.jp/square/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -317,23 +647,53 @@
     "institution_kana": "ダイサンスタジオ",
     "building_system_name": "スクエア荏原",
     "institution_system_name": "第３スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 10,
+    "area": 25,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区荏原4-5-28",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.shinagawa-culture.or.jp/square/index.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "付帯設備（有料）にアンプ・ドラムセット・キーボードがある"
   },
   {
     "id": "9f46dbb1-ea87-4ffd-a44e-5e24343c6503",
@@ -345,20 +705,50 @@
     "institution_kana": "ダイホールゼンメン",
     "building_system_name": "きゅりあん",
     "institution_system_name": "大ホール全面",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 1074,
+    "area": 1694,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 53800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 80700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 107600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 64600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 96800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 129100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区東大井5-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.shinagawa-culture.or.jp/curian/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -373,20 +763,50 @@
     "institution_kana": "ショウホールゼンメン",
     "building_system_name": "きゅりあん",
     "institution_system_name": "小ホール全面",
-    "capacity": null,
+    "capacity": 285,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 18600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 27900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 37200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 22300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 33500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 44600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区東大井5-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.shinagawa-culture.or.jp/curian/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -401,20 +821,50 @@
     "institution_kana": "オンガクスタジオ",
     "building_system_name": "きゅりあん",
     "institution_system_name": "音楽スタジオ",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 10,
+    "area": 30,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区東大井5-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.shinagawa-culture.or.jp/curian/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -429,20 +879,50 @@
     "institution_kana": "リハーサルシツ",
     "building_system_name": "きゅりあん",
     "institution_system_name": "リハーサル室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 35,
+    "area": 85,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区東大井5-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.shinagawa-culture.or.jp/curian/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -457,20 +937,50 @@
     "institution_kana": "ホールゼンメン",
     "building_system_name": "品川健康Ｃホール",
     "institution_system_name": "ホール＜全面＞",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 150,
+    "area": 368,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 12000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 16000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区北品川3-11-22",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-dukuri/hpg000008413.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -485,20 +995,50 @@
     "institution_kana": "ホールハンメン",
     "building_system_name": "品川健康Ｃホール",
     "institution_system_name": "ホール＜半面＞",
-    "capacity": null,
+    "capacity": 70,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区北品川3-11-22",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-dukuri/hpg000008413.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -513,20 +1053,50 @@
     "institution_kana": "オンガクシツ",
     "building_system_name": "中小企業センター",
     "institution_system_name": "音楽室",
-    "capacity": null,
+    "capacity": 50,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区西品川1-28-3",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-seikatsu/hpg000000079.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -541,20 +1111,50 @@
     "institution_kana": "オンガクシツ",
     "building_system_name": "八潮区民集会所",
     "institution_system_name": "音楽室",
-    "capacity": null,
+    "capacity": 40,
     "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区八潮5-10-27",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-kuyakusyo/shisetsu-kuyakusyo-chiiki/shisetsu-kuyakusyo-chiiki-yashio/index.html",
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
@@ -569,23 +1169,53 @@
     "institution_kana": "ダイイチオンガクシツ",
     "building_system_name": "こみゅにてぃぷらざ八潮",
     "institution_system_name": "第１音楽室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 42,
+    "area": 96,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区八潮5-9-11",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/shisetsu-bunka-bunka-komyupura/index.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "軽防音のため、大音量を発し他の利用者に影響のあるものは使用できない"
   },
   {
     "id": "3e70e152-173d-4969-af1c-620745761aca",
@@ -597,23 +1227,53 @@
     "institution_kana": "ダイニオンガクシツ",
     "building_system_name": "こみゅにてぃぷらざ八潮",
     "institution_system_name": "第２音楽室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "capacity": 36,
+    "area": 96,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区八潮5-9-11",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.shinagawa.tokyo.jp/PC/shisetsu/shisetsu-bunka/shisetsu-bunka-bunka/shisetsu-bunka-bunka-komyupura/index.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "軽防音のため、大音量を発し他の利用者に影響のあるものは使用できない。遮音性が低く音や振動が周辺の部屋に漏れる場合がある"
   },
   {
     "id": "9708e74d-f007-4296-bcd9-cf293c3d6f1d",
@@ -628,20 +1288,50 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区戸越1-15-23",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://togoshi-jh.shinagawa.andteacher.jp/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "学校開放の施設（利用には団体登録が必要）"
   },
   {
     "id": "77150944-fff0-4c47-8075-2c21f72e2880",
@@ -656,20 +1346,50 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区平塚3-16-26",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://ebahira.shinagawa.andteacher.jp/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "学校開放の施設（利用には団体登録が必要）"
   },
   {
     "id": "74b4d1cf-e28c-495c-8877-1f9856a81ad9",
@@ -684,20 +1404,50 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区大井3-7-19",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://yamanaka-es.shinagawa.andteacher.jp/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "学校開放の施設（利用には団体登録が必要）"
   },
   {
     "id": "48b385a8-cf18-407e-8627-eea8d4c7e57b",
@@ -712,20 +1462,50 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区大井3-7-19",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://yamanaka-es.shinagawa.andteacher.jp/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "学校開放の施設（利用には団体登録が必要）"
   },
   {
     "id": "70a64eec-ff0a-475b-a5cc-c6ca48e271be",
@@ -740,19 +1520,49 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都品川区旗の台4-7-11",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "website_url": "https://hatanodai-es.shinagawa.andteacher.jp/",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "学校開放の施設（利用には団体登録が必要）"
   }
 ]
