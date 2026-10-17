@@ -48,13 +48,21 @@ updates:
           - "@testing-library/*"
           - "@playwright/test"
           - "msw"
+      # Cloudflare のツールチェインは 1 つの PR で揃えて上げる。@cloudflare/vitest-plugin は
+      # wrangler / miniflare を厳密に固定するため、wrangler だけ上げると workerd が多重化する。
+      # factory の CF_TOOLCHAIN（needs-human）と同じ範囲にする
+      cloudflare:
+        applies-to: version-updates
+        patterns:
+          - "wrangler"
+          - "miniflare"
+          - "@cloudflare/vitest-plugin"
       build:
         applies-to: version-updates
         patterns:
           - "vite"
           - "@vitejs/*"
           - "@swc/*"
-          - "wrangler"
       linting:
         applies-to: version-updates
         patterns:
@@ -83,6 +91,8 @@ updates:
           - "@vitejs/*"
           - "@swc/*"
           - "wrangler"
+          - "miniflare"
+          - "@cloudflare/vitest-plugin"
           - "eslint"
           - "eslint-*"
           - "@eslint/*"
