@@ -162,9 +162,12 @@ const mcpHandler = {
     // createMcpHandler は 2026-07-28 のリクエストをステートレスに捌き、2025 系（initialize）の
     // リクエストもリクエストごとの使い捨てインスタンスで受ける（legacy: "stateless"）。
     const dataSource = createD1DataSource(env.DB);
-    const handler = createMcpHandler(() =>
-      createServer({ dataSource, allowReservations: role === "user" })
-    );
+    const handler = createMcpHandler(({ era }) => {
+      // 2025 系を捨てて legacy: "reject" に切り替えてよいかを、Workers のログで判断するための記録。
+      // legacy が来なくなったのを確かめてから切り替える
+      console.log(JSON.stringify({ mcpEra: era, userAgent: request.headers.get("user-agent") }));
+      return createServer({ dataSource, allowReservations: role === "user" });
+    });
     return handler.fetch(request);
   },
 };
