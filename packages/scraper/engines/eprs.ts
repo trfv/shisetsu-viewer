@@ -56,7 +56,7 @@ export interface EprsConfig {
 }
 
 /** 1 セル分（1 日 × 1 時間帯） */
-export interface EprsCell {
+interface EprsCell {
   /** yyyyMMdd の数値 */
   useDay: number;
   /** ステータス表記（画像の alt。例「空き」「予約あり」） */
