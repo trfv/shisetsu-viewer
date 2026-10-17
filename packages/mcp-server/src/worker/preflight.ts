@@ -1,3 +1,5 @@
+import { originValidationResponse } from "@modelcontextprotocol/server";
+
 /**
  * OAuthProvider に渡す前のリクエスト短絡判定。
  *
@@ -6,6 +8,9 @@
  *
  * 短絡すべきリクエストには Response を、通すべきリクエストには null を返す。
  */
+
+/** /mcp をブラウザから呼んでよいオリジン（自分自身に加えて）。Claude の Web アプリを想定する */
+const ALLOWED_ORIGIN_HOSTNAMES = ["claude.ai", "claude.com"];
 
 const ALLOWED_PATHS = new Set([
   "/mcp",
@@ -53,14 +58,15 @@ export function preflight(request: Request): Response | null {
     );
   }
 
-  // 3. GET（サーバー発通知用の SSE ストリーム開設）を弾く。
-  //    このサーバーはリクエストごとに transport を作り直すステートレス構成で、
-  //    sessionIdGenerator を持たない。よって GET が開いたストリームに書き込む主体が
-  //    存在せず、SDK が返す ReadableStream は永久に無音のままになる。Workers ランタイムは
-  //    これを「応答を生成しえないハング」と判定してリクエストを強制終了し、クライアントは
-  //    即座に再接続する。この再接続ループが 1 回ごとに KV read を焼く。
-  //    MCP 仕様は SSE ストリームを提供しないサーバーが 405 を返すことを認めており、
-  //    クライアントは 405 を受けると再接続せず静かに諦める。
+  // 3. ブラウザからの別オリジンの要求を弾く（MCP 仕様の MUST）。Origin の無い要求
+  //    （claude.ai のバックエンド、Claude Code など非ブラウザのクライアント）は通す
+  const rejected = originValidationResponse(request, [url.hostname, ...ALLOWED_ORIGIN_HOSTNAMES]);
+  if (rejected) return rejected;
+
+  // 4. GET（2025 系のサーバー発通知用 SSE ストリーム）を弾く。
+  //    2026-07-28 で GET のストリームは廃止され、SDK もステートレス構成では 405 を返す。
+  //    ただし OAuthProvider を通すとトークンの KV read が 1 回かかるので、ここで先に返す。
+  //    2025 系のクライアントは 405 を受けると再接続せずに諦める。
   if (request.method === "GET") {
     return jsonRpcError(405, "Method Not Allowed: this server does not offer an SSE stream", {
       Allow: "POST",

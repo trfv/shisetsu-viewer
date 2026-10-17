@@ -1,11 +1,12 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/server";
 
 import type { DataSource } from "../../data/dataSource.ts";
 import {
   executeGetInstitutionDetail,
   getInstitutionDetailInput,
+  getInstitutionDetailOutput,
 } from "../../queries/getInstitutionDetail.ts";
-import { jsonResult, READ_ONLY } from "./result.ts";
+import { READ_ONLY, structuredResult } from "./result.ts";
 
 export function registerGetInstitutionDetail(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
@@ -17,6 +18,7 @@ export function registerGetInstitutionDetail(server: McpServer, dataSource: Data
 【レスポンス】施設の全詳細フィールド（capacity, area, fee, address, website_url 等）`,
       annotations: { title: "施設詳細取得", ...READ_ONLY },
       inputSchema: getInstitutionDetailInput,
+      outputSchema: getInstitutionDetailOutput,
     },
     async (args) => {
       const node = await executeGetInstitutionDetail(args, dataSource);
@@ -28,7 +30,7 @@ export function registerGetInstitutionDetail(server: McpServer, dataSource: Data
           isError: true,
         };
       }
-      return jsonResult(node);
+      return structuredResult(node);
     }
   );
 }

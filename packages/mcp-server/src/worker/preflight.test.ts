@@ -1,4 +1,3 @@
-import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { describe, expect, it } from "vitest";
 
 import { preflight } from "./preflight.ts";
@@ -45,42 +44,17 @@ describe("preflight", () => {
     expect(res).toBeNull();
   });
 
+  it("別オリジンのブラウザからの /mcp は 403 で弾き、Origin の無い要求と許可したオリジンは通す", () => {
+    expect(preflight(req("POST", "/mcp", { origin: "https://evil.example" }))?.status).toBe(403);
+    expect(preflight(req("POST", "/mcp"))).toBeNull();
+    expect(preflight(req("POST", "/mcp", { origin: "https://claude.ai" }))).toBeNull();
+    expect(preflight(req("POST", "/mcp", { origin: "https://mcp.example.com" }))).toBeNull();
+  });
+
   it("GET /mcp の 405 は JSON-RPC エラー本文を返す", async () => {
     const res = preflight(req("GET", "/mcp", { accept: "text/event-stream" }));
     expect(res).not.toBeNull();
     const body = (await res!.json()) as { error: { code: number } };
     expect(body.error.code).toBe(-32000);
-  });
-});
-
-/**
- * preflight が GET を弾く根拠を固定する。worker.ts はリクエストごとに transport を作り直す
- * ステートレス構成なので、GET が開く SSE ストリームには誰も書き込まない。Workers ランタイムは
- * これをハングと判定してリクエストを落とし、クライアントが再接続ループに入る。
- * SDK 側の挙動が変わったらこのテストが落ちて気づける。
- */
-describe("WebStandardStreamableHTTPServerTransport の GET 挙動", () => {
-  it("ステートレス構成の GET は、決して書き込まれない SSE ストリームを返す", async () => {
-    const transport = new WebStandardStreamableHTTPServerTransport({});
-    const res = await transport.handleRequest(
-      new Request("https://mcp.example.com/mcp", {
-        method: "GET",
-        headers: { accept: "text/event-stream" },
-      })
-    );
-
-    expect(res.status).toBe(200);
-    expect(res.headers.get("content-type")).toBe("text/event-stream");
-
-    const reader = res.body!.getReader();
-    const silent = Symbol("silent");
-    const outcome = await Promise.race([
-      reader.read(),
-      new Promise((resolve) => setTimeout(() => resolve(silent), 200)),
-    ]);
-
-    // チャンクも終端も来ない = ランタイムから見て「応答を生成しえない」状態
-    expect(outcome).toBe(silent);
-    await reader.cancel();
   });
 });

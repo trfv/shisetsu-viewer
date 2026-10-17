@@ -1,11 +1,12 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/server";
 
 import type { DataSource } from "../../data/dataSource.ts";
 import {
   executeSearchReservations,
   searchReservationsInput,
+  searchReservationsOutput,
 } from "../../queries/searchReservations.ts";
-import { jsonResult, READ_ONLY } from "./result.ts";
+import { READ_ONLY, structuredResult } from "./result.ts";
 
 export function registerSearchReservations(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
@@ -17,7 +18,8 @@ export function registerSearchReservations(server: McpServer, dataSource: DataSo
 【レスポンス】reservations: 配列(各エントリに reservation + institution サブオブジェクト), pageInfo: { hasNextPage, endCursor }, count`,
       annotations: { title: "予約横断検索", ...READ_ONLY },
       inputSchema: searchReservationsInput,
+      outputSchema: searchReservationsOutput,
     },
-    async (args) => jsonResult(await executeSearchReservations(args, dataSource))
+    async (args) => structuredResult(await executeSearchReservations(args, dataSource))
   );
 }

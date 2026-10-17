@@ -1,4 +1,3 @@
-import type { PageInfo } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
 import type { DataSource } from "../data/dataSource.ts";
@@ -13,6 +12,8 @@ import {
   instrumentFilterSchemas,
   municipalitySchema,
   onlyTrue,
+  pageInfoSchema,
+  rowSchema,
 } from "./schemas.ts";
 
 export const searchReservationsInput = z.object({
@@ -36,10 +37,16 @@ export const searchReservationsInput = z.object({
   after: afterSchema,
 });
 
+export const searchReservationsOutput = z.object({
+  reservations: z.array(z.object({ reservation: rowSchema, institution: rowSchema })),
+  pageInfo: pageInfoSchema,
+  count: z.number().int(),
+});
+
 export async function executeSearchReservations(
   args: z.output<typeof searchReservationsInput>,
   dataSource: DataSource
-): Promise<{ reservations: Record<string, unknown>[]; pageInfo: PageInfo; count: number }> {
+): Promise<z.output<typeof searchReservationsOutput>> {
   const page = await dataSource.searchReservations({
     startDate: args.startDate,
     endDate: args.endDate,

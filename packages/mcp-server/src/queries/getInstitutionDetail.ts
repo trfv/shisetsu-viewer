@@ -3,12 +3,14 @@ import { z } from "zod";
 import type { DataSource } from "../data/dataSource.ts";
 import { INSTITUTION_DETAIL_FIELDS } from "./fields.ts";
 import { pick } from "./pick.ts";
-import { fieldsSchema, institutionIdSchema } from "./schemas.ts";
+import { fieldsSchema, institutionIdSchema, rowSchema } from "./schemas.ts";
 
 export const getInstitutionDetailInput = z.object({
   id: institutionIdSchema.describe("施設のUUID"),
   fields: fieldsSchema(INSTITUTION_DETAIL_FIELDS),
 });
+
+export const getInstitutionDetailOutput = rowSchema;
 
 export async function executeGetInstitutionDetail(
   args: z.output<typeof getInstitutionDetailInput>,

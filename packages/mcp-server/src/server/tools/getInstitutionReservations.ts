@@ -1,11 +1,12 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/server";
 
 import type { DataSource } from "../../data/dataSource.ts";
 import {
   executeGetInstitutionReservations,
   getInstitutionReservationsInput,
+  getInstitutionReservationsOutput,
 } from "../../queries/getInstitutionReservations.ts";
-import { jsonResult, READ_ONLY } from "./result.ts";
+import { READ_ONLY, structuredResult } from "./result.ts";
 
 export function registerGetInstitutionReservations(
   server: McpServer,
@@ -20,7 +21,8 @@ export function registerGetInstitutionReservations(
 【レスポンス】reservations: 日付ごとの予約データ配列(date, reservation), count`,
       annotations: { title: "施設予約状況取得", ...READ_ONLY },
       inputSchema: getInstitutionReservationsInput,
+      outputSchema: getInstitutionReservationsOutput,
     },
-    async (args) => jsonResult(await executeGetInstitutionReservations(args, dataSource))
+    async (args) => structuredResult(await executeGetInstitutionReservations(args, dataSource))
   );
 }

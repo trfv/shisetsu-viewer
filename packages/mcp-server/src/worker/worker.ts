@@ -6,7 +6,7 @@ import {
   authorizationErrorRedirect,
   type OAuthHelpers,
 } from "@cloudflare/workers-oauth-provider";
-import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { createMcpHandler } from "@modelcontextprotocol/server";
 import { resolveRole } from "@shisetsu-viewer/api/auth/auth0";
 
 import { createD1DataSource } from "../data/d1DataSource.ts";
@@ -159,13 +159,16 @@ const mcpHandler = {
     const { upstreamAccessToken } = ctx.props as { upstreamAccessToken: string };
     const role = await resolveRole(upstreamAccessToken, env);
 
-    const server = createServer({
-      dataSource: createD1DataSource(env.DB),
-      allowReservations: role === "user",
+    // createMcpHandler は 2026-07-28 のリクエストをステートレスに捌き、2025 系（initialize）の
+    // リクエストもリクエストごとの使い捨てインスタンスで受ける（legacy: "stateless"）。
+    const dataSource = createD1DataSource(env.DB);
+    const handler = createMcpHandler(({ era }) => {
+      // 2025 系を捨てて legacy: "reject" に切り替えてよいかを、Workers のログで判断するための記録。
+      // legacy が来なくなったのを確かめてから切り替える
+      console.log(JSON.stringify({ mcpEra: era, userAgent: request.headers.get("user-agent") }));
+      return createServer({ dataSource, allowReservations: role === "user" });
     });
-    const transport = new WebStandardStreamableHTTPServerTransport({});
-    await server.connect(transport);
-    return transport.handleRequest(request);
+    return handler.fetch(request);
   },
 };
 

@@ -1,4 +1,3 @@
-import type { PageInfo } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
 import type { DataSource } from "../data/dataSource.ts";
@@ -12,6 +11,8 @@ import {
   instrumentFilterSchemas,
   municipalitySchema,
   onlyTrue,
+  pageInfoSchema,
+  rowSchema,
 } from "./schemas.ts";
 
 export const listInstitutionsInput = z.object({
@@ -23,10 +24,16 @@ export const listInstitutionsInput = z.object({
   after: afterSchema,
 });
 
+export const listInstitutionsOutput = z.object({
+  institutions: z.array(rowSchema),
+  pageInfo: pageInfoSchema,
+  count: z.number().int(),
+});
+
 export async function executeListInstitutions(
   args: z.output<typeof listInstitutionsInput>,
   dataSource: DataSource
-): Promise<{ institutions: Record<string, unknown>[]; pageInfo: PageInfo; count: number }> {
+): Promise<z.output<typeof listInstitutionsOutput>> {
   const page = await dataSource.listInstitutions({
     municipality: args.municipality,
     institutionSizes: args.institutionSizes,
