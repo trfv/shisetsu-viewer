@@ -68,3 +68,36 @@ test("部屋名 → 日付で安定ソートされる", () => {
     ["A室 2026-07-06", "A室 2026-07-07", "B室 2026-07-06"]
   );
 });
+
+test("同じ日に別々の生テキストが同じ区分に落ちたら警告する", (t) => {
+  const warn = t.mock.method(console, "warn", () => {});
+  rawSlotsToOutput(
+    [
+      { roomName: "体育館", date: "2026-07-06", division: "12:00-15:00", status: "○" },
+      { roomName: "体育館", date: "2026-07-06", division: "15:00-18:00", status: "×" },
+    ],
+    {
+      "12:00-15:00": "RESERVATION_DIVISION_AFTERNOON_ONE",
+      "15:00-18:00": "RESERVATION_DIVISION_AFTERNOON_ONE",
+    },
+    STATUS_MAP
+  );
+  assert.equal(warn.mock.callCount(), 1);
+  assert.match(String(warn.mock.calls[0]?.arguments[0]), /AFTERNOON_ONE/);
+});
+
+test("同じ生テキストの重複（ページ送りの重なり等）は警告しない", (t) => {
+  const warn = t.mock.method(console, "warn", () => {});
+  const output = rawSlotsToOutput(
+    [
+      { roomName: "音楽室", date: "2026-07-06", division: "午前", status: "○" },
+      { roomName: "音楽室", date: "2026-07-06", division: "午前", status: "×" },
+    ],
+    DIVISION_MAP,
+    STATUS_MAP
+  );
+  assert.equal(warn.mock.callCount(), 0);
+  assert.deepEqual(output[0]?.reservation, {
+    RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
+  });
+});

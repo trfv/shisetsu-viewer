@@ -2312,7 +2312,13 @@
     "website_url": "https://www.arakawa-sgc.com/",
     "layout_image_url": "",
     "lottery_period": "利用日の前月の2日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-21:00"
+    }
   },
   {
     "id": "f48ce0cb-2f55-4fa0-be6a-7e0ef714821c",
