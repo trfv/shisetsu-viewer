@@ -12,9 +12,9 @@ const ALLOWED_PATHS = new Set([
   "/authorize",
   "/callback",
   "/oauth/token",
-  "/oauth/register",
   "/.well-known/oauth-authorization-server",
   "/.well-known/oauth-protected-resource",
+  "/.well-known/oauth-protected-resource/mcp",
 ]);
 
 /**
