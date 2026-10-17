@@ -1,0 +1,42 @@
+name: Factory
+
+on:
+  workflow_run:
+    workflows: ["Run Scraper"]
+    types: [completed]
+    branches: [master]
+  schedule:
+    # Run Scraper が止まっても巡回が回るようにする保険（JST 09:41）
+    - cron: "41 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: factory-reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    # PR ブランチでの dispatch 実行には反応しない（定期実行の結果だけを信号にする）
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.event == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      FACTORY_MODE: ${{ vars.FACTORY_MODE || 'observe' }}
+      FACTORY_OWNER: ${{ github.repository_owner }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+      - name: Reconcile
+        run: node packages/factory/src/cli/reconcile.ts
