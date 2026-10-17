@@ -1,5 +1,8 @@
 import styles from "./Top.module.css";
 
+// 年は表示ごとに変わらないので、モジュール読み込み時に確定させる。
+const COPYRIGHT_YEAR = new Date().getFullYear();
+
 const TopPage = () => {
   return (
     <main className={styles["pageBox"]}>
@@ -57,7 +60,7 @@ const TopPage = () => {
         </ul>
       </div>
       <div className={styles["copyright"]}>
-        Copyright © {new Date().getFullYear()} trfv All Rights Reserved.
+        Copyright © {COPYRIGHT_YEAR} trfv All Rights Reserved.
       </div>
     </main>
   );

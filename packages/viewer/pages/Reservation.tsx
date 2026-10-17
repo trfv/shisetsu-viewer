@@ -1,6 +1,6 @@
 import type { ReservationSearchHit } from "@shisetsu-viewer/shared";
 import { addMonths, endOfMonth, max, min } from "date-fns";
-import { useCallback, useMemo, type ChangeEvent } from "react";
+import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
 import { searchReservations } from "../api/endpoints";
@@ -89,8 +89,8 @@ const ReservationPage = () => {
   const search = useSearch();
 
   // 「今」はモジュール読み込み時ではなくページ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
-  const minDate = useMemo(() => new Date(), []);
-  const maxDate = useMemo(() => addMonths(endOfMonth(new Date()), 6), []);
+  const [minDate] = useState(() => new Date());
+  const [maxDate] = useState(() => addMonths(endOfMonth(new Date()), 6));
 
   const [values, setQueryParams] = useQueryParams(
     {
