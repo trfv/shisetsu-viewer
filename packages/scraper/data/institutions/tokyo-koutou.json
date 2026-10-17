@@ -314,7 +314,15 @@
     "website_url": "https://www.kcf.or.jp/koto/shisetsu/ichiran/detail/?id=12",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id12_516.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "37f928c6-a487-4866-a51b-f66a153f89cc",
@@ -457,7 +465,15 @@
     "website_url": "https://www.kcf.or.jp/koto/shisetsu/ichiran/detail/?id=13",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id13_515.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "d1a12a0c-8c0f-4771-a800-a1fce033e713",
@@ -716,7 +732,15 @@
     "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=156",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id156_331.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:15-17:15",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:30-19:30",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "204c98a5-54a3-422e-b914-589c6f53381a",
@@ -859,7 +883,15 @@
     "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=158",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id158_335.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:15-17:15",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:30-19:30",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "a4649611-636a-4756-9c1e-10182f281a4c",
@@ -1176,7 +1208,15 @@
     "website_url": "https://www.kcf.or.jp/sunamachi/shisetsu/ichiran/detail/?id=112",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id112_382.png",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "bc494b57-7d78-4e76-909c-e25b7fe3b9f8",
@@ -1319,7 +1359,15 @@
     "website_url": "https://www.kcf.or.jp/sunamachi/shisetsu/ichiran/detail/?id=113",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id113_383.png",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "12de35f1-c225-4334-bf0b-248616ba3a1e",
@@ -1578,7 +1626,15 @@
     "website_url": "https://www.kcf.or.jp/toyosu/shisetsu/ichiran/detail/?id=54",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id54_114.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "d28f2e82-0f72-4aca-943a-10c18293dc5d",
@@ -1953,7 +2009,15 @@
     "website_url": "https://www.kcf.or.jp/higashiojima/shisetsu/ichiran/detail/?id=97",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id97_6965.jpg",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "816cffd3-7262-41b6-9104-ad0a948d5504",
@@ -2212,7 +2276,15 @@
     "website_url": "https://www.kcf.or.jp/furuishiba/shisetsu/ichiran/detail/?id=83",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id83_625.png",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "c1bc0403-3a7f-496a-ac61-9d8e06259a54",
@@ -2529,7 +2601,15 @@
     "website_url": "https://www.kcf.or.jp/morishita/shisetsu/ichiran/detail/?id=34",
     "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id34_599.png",
     "lottery_period": "4ヵ月前20日-3ヵ月前1日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:00-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:00",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:00-21:00"
+    }
   },
   {
     "id": "25fc8dd4-b14f-4307-b816-762ab5b99600",

@@ -421,7 +421,14 @@
     "website_url": "http://www.b-academy.jp/rental/ac-bunkyo/music-a.html",
     "layout_image_url": "",
     "lottery_period": "3ヵ月前20日-月末",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_DIVISION_1": "9:00-11:00",
+      "RESERVATION_DIVISION_DIVISION_2": "11:30-13:30",
+      "RESERVATION_DIVISION_DIVISION_3": "14:00-16:00",
+      "RESERVATION_DIVISION_DIVISION_4": "16:30-18:30",
+      "RESERVATION_DIVISION_DIVISION_5": "19:00-21:00"
+    }
   },
   {
     "id": "45ab483a-d863-48c8-b63d-1b1fa7077813",
@@ -497,7 +504,14 @@
     "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/bunka/academy/bunkyo.html",
     "layout_image_url": "",
     "lottery_period": "3ヵ月前20日-月末",
-    "note": "吹奏楽・打楽器不可"
+    "note": "吹奏楽・打楽器不可",
+    "division_labels": {
+      "RESERVATION_DIVISION_DIVISION_1": "9:00-11:00",
+      "RESERVATION_DIVISION_DIVISION_2": "11:30-13:30",
+      "RESERVATION_DIVISION_DIVISION_3": "14:00-16:00",
+      "RESERVATION_DIVISION_DIVISION_4": "16:30-18:30",
+      "RESERVATION_DIVISION_DIVISION_5": "19:00-21:00"
+    }
   },
   {
     "id": "98571d5c-1721-43d5-8f69-89ea2f1f17bc",
