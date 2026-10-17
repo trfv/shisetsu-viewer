@@ -50,6 +50,7 @@ const TopPage = () => {
           <li>豊島区</li>
           <li>中央区</li>
           <li>文京区</li>
+          <li>目黒区（※現在、予約状況が表示できません）</li>
           <li>川崎市</li>
         </ul>
         <h2 id="notes">備考</h2>

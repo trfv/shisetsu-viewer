@@ -95,13 +95,13 @@ describe("toInstitutionSearchParams", () => {
 });
 
 describe("toInstitutionQueryParams", () => {
-  test("returns all 12 municipalities when municipality is 'all'", () => {
+  test("returns all 13 municipalities when municipality is 'all'", () => {
     const result = toInstitutionQueryParams({
       municipality: "all",
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.municipality).toHaveLength(12);
+    expect(result.municipality).toHaveLength(13);
     expect(result.municipality).toEqual(SupportedMunicipalities.map((m) => m.toString()));
   });
 
