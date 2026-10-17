@@ -69,7 +69,14 @@
     "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
     "layout_image_url": "",
     "lottery_period": "3ヶ月前の1日",
-    "note": "打楽器の使用は他部屋の状況による。"
+    "note": "打楽器の使用は他部屋の状況による。",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "b6e31b2e-4c2c-4a54-b302-f708339256c8",
@@ -109,7 +116,14 @@
     "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
     "layout_image_url": "",
     "lottery_period": "3ヶ月前の1日",
-    "note": "打楽器の使用は他部屋の状況による。"
+    "note": "打楽器の使用は他部屋の状況による。",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "cba92486-ebef-42ac-97ad-5672a523d5fe",
@@ -345,7 +359,14 @@
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
     "layout_image_url": "",
     "lottery_period": "3ヶ月前の1日",
-    "note": "利用料金は2022年4月1日以降のものを記載した。"
+    "note": "利用料金は2022年4月1日以降のものを記載した。",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "523375eb-5653-4720-a066-46c77814d089",
@@ -385,7 +406,14 @@
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
     "layout_image_url": "",
     "lottery_period": "3ヶ月前の1日",
-    "note": "和太鼓OK,付帯設備に和太鼓あり"
+    "note": "和太鼓OK,付帯設備に和太鼓あり",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "f475e0a2-593a-44dc-af85-08e64dec5cc7",
@@ -425,7 +453,14 @@
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
     "layout_image_url": "",
     "lottery_period": "3ヶ月前の1日",
-    "note": "和太鼓不可"
+    "note": "和太鼓不可",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   },
   {
     "id": "89befa40-1409-40b0-a311-cd8846ab49a5",

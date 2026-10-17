@@ -55,7 +55,12 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a001/shisetsuannai/koukyoushisetsu/bunka002.html",
     "layout_image_url": "",
     "lottery_period": "11ヶ月前の同じ日",
-    "note": "ピアノは電子ピアノ"
+    "note": "ピアノは電子ピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "499c7b92-a3a9-4663-a3db-a7bb6cabaace",
@@ -113,7 +118,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "b4963042-88b4-446f-910e-5b94f352b212",
@@ -171,7 +181,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "54961ddf-0b1b-4fca-892e-23ffd225e914",
@@ -229,7 +244,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "397753e5-dcef-443c-a430-d733c5ab097a",
@@ -287,7 +307,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "6bacd2d6-3a1b-406d-824c-6661820fdb76",
@@ -345,7 +370,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "92cac1a5-450a-436e-beb4-936cb7749119",
@@ -403,7 +433,12 @@
     "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": "新型コロナ対策中のある時期の定員しか記載なし。"
+    "note": "新型コロナ対策中のある時期の定員しか記載なし。",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "6af9d050-c748-4c02-8979-10b29a7ec9f8",
@@ -470,7 +505,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "f4866181-adf3-4bd5-9251-9288327a9b60",
@@ -537,7 +578,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "42c506d8-1d52-4625-b064-5d94568cea15",
@@ -604,7 +651,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "86a8e439-a723-4070-bc68-1ef1570b5221",
@@ -671,7 +724,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "3ff56ac9-50a4-4f03-b678-7794bee4b446",
@@ -738,7 +797,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba013.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "e2776239-3e31-4f53-9e7b-dc36d03a7934",
@@ -872,7 +937,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "f6117e57-7723-4917-a0b4-71db065ba456",
@@ -939,7 +1010,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "017d8f1c-dd07-4945-be2d-900aecf62f16",
@@ -1006,7 +1083,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "9d68d127-2bee-491c-96e2-7d8e7a3f4e14",
@@ -1140,7 +1223,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "ccb15cef-3e4d-4d67-a301-3801f5ae8300",
@@ -1207,7 +1296,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "2c7e810b-8b6b-4586-8b9b-ae4562dc15e1",
@@ -1274,7 +1369,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "68878654-ba90-4cd5-897d-bd2033b2bcc6",
@@ -1341,7 +1442,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "c108b932-4cfe-4b10-88d4-a8293238e723",
@@ -1408,7 +1515,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "b8fa880f-d1cb-4c00-bb7c-271398b306be",
@@ -1475,7 +1588,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "b52b0a98-31da-4133-9d4e-012d60c9b689",
@@ -1542,7 +1661,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "5d0fd0c7-95a4-41bf-b580-24ff6c2d3c4a",
@@ -1609,7 +1734,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "e7f3b552-0adb-4d0b-8bb3-a7ce037264f3",
@@ -1676,7 +1807,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "f0fb4173-526a-44fe-92b1-1b395c7fac51",
@@ -1743,7 +1880,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "348bd981-6fd4-48e0-8fd2-bcf252190d07",
@@ -1810,7 +1953,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "d6c5573b-ce54-41ed-b55e-89bfbc533e59",
@@ -1944,7 +2093,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "225965ed-577d-4865-93ca-189d5531b101",
@@ -2011,7 +2166,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "74b638bd-9b03-4a55-a14c-f0f3241b24ea",
@@ -2078,7 +2239,13 @@
     "website_url": "https://www.arakawa-sgc.com/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": "アンプや大きな楽器の使用、大人数でのコーラスは不可。"
+    "note": "アンプや大きな楽器の使用、大人数でのコーラスは不可。",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:20-15:20",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:40-18:40",
+      "RESERVATION_DIVISION_EVENING": "19:00-21:30"
+    }
   },
   {
     "id": "a6a84115-35bb-4712-8478-d7be2d808a0a",
@@ -2212,7 +2379,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba016.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "aceb35b3-825c-457c-810a-6866febbe7f7",
@@ -2346,7 +2519,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba026.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "698c5bf2-50be-40f0-bde2-b2fd3de7c3de",
@@ -2882,7 +3061,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/chiikikatsudou/fureaikan/higashioguriyou.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "65919da0-a6d6-4882-92dc-26f60c155310",
@@ -2949,7 +3134,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba024.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "08825768-be18-44d6-bea3-6a2ba4c3d9b9",
@@ -3016,7 +3207,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "a1e22be0-8dd6-4462-9756-e8befabc4a51",
@@ -3075,7 +3272,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "f6dcf807-11b5-49ce-b0ea-aeba5a5f686a",
@@ -3134,7 +3337,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "72800f77-3cc9-4569-b204-da2aac9adeb2",
@@ -3193,7 +3402,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
     "lottery_period": "",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "6ec56dc7-bf52-4301-82a8-aba0ea1a62ba",
@@ -3260,7 +3475,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba014.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "c3e72734-760a-48f0-927a-7e145fdf574b",
@@ -3327,7 +3548,13 @@
     "website_url": "https://machiya.acc-arakawa.jp/index.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "19:00-22:00"
+    }
   },
   {
     "id": "9f12f566-88f9-49a4-b9b7-63e70dcb9e66",
@@ -3394,7 +3621,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba010.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "263ef2e2-b768-4fb7-8183-a88dfee24e54",
@@ -3528,7 +3761,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba002.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "45d1cdd3-1b1c-4efa-9e13-c0875476bd6d",
@@ -3787,7 +4026,12 @@
     "website_url": "https://www.sunny-move.jp/move/",
     "layout_image_url": "",
     "lottery_period": "11ヶ月前",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:30-17:00",
+      "RESERVATION_DIVISION_EVENING": "18:00-22:00"
+    }
   },
   {
     "id": "28bbef1f-d90c-4996-b09b-03bbab2e2ce1",
@@ -3912,7 +4156,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "b363fd7e-cf10-4c13-a859-760d24cd18fd",
@@ -3979,7 +4229,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "4f3df883-ee38-4e4d-87ee-c39db37f2c69",
@@ -4046,7 +4302,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "5ae787f7-e931-47a0-9e50-2f3ecfe238a1",
@@ -4113,7 +4375,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "7b09bf34-6eb2-420f-a7d0-d8db20f6a752",
@@ -4180,7 +4448,13 @@
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
+      "RESERVATION_DIVISION_EVENING": "18:45-21:45"
+    }
   },
   {
     "id": "c7de114c-0727-4315-84cd-3bda668d2328",
