@@ -121,7 +121,6 @@ function postConsent(handle: string, decision: string, jar?: Map<string, string>
 
 describe("worker の認可フロー", () => {
   beforeEach(() => {
-    vi.stubGlobal("Cloudflare", { compatibilityFlags: { global_fetch_strictly_public: true } });
     stubFetch();
     auth0TokenRequests.length = 0;
   });
