@@ -79,8 +79,8 @@ describe("convertMunicipalityToUrlParam", () => {
 });
 
 describe("SupportedMunicipalities", () => {
-  test("has 11 entries", () => {
-    expect(SupportedMunicipalities).toHaveLength(11);
+  test("has 12 entries", () => {
+    expect(SupportedMunicipalities).toHaveLength(12);
   });
 
   test("contains all expected municipalities", () => {
@@ -94,6 +94,7 @@ describe("SupportedMunicipalities", () => {
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_OTA");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_SUGINAMI");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_CHUO");
+    expect(SupportedMunicipalities).toContain("MUNICIPALITY_SHINAGAWA");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_KAWASAKI");
   });
 });
@@ -104,8 +105,8 @@ describe("SupportedMunicipalityMap", () => {
     expect(SupportedMunicipalityMap["MUNICIPALITY_KAWASAKI"]).toBe("川崎市");
   });
 
-  test("has 11 entries matching SupportedMunicipalities", () => {
-    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(11);
+  test("has 12 entries matching SupportedMunicipalities", () => {
+    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(12);
   });
 });
 
@@ -114,8 +115,8 @@ describe("MunicipalityOptions", () => {
     expect(MunicipalityOptions[0]).toEqual({ value: "all", label: "すべて" });
   });
 
-  test("has 12 entries (1 for all + 11 municipalities)", () => {
-    expect(MunicipalityOptions).toHaveLength(12);
+  test("has 13 entries (1 for all + 12 municipalities)", () => {
+    expect(MunicipalityOptions).toHaveLength(13);
   });
 
   test("all entries have value and label properties", () => {
