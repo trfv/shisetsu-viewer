@@ -19,32 +19,20 @@ AI アシスタントに自然言語で話しかけるだけで、以下のこ�
 
 ### 方法 1: リモート接続（推奨）
 
-Cloudflare Workers にデプロイ済みのサーバーに接続します。初回接続時にブラウザが開き、ログイン認証が求められます。
+Cloudflare Workers にデプロイ済みのサーバーに接続します。
+初回接続時にブラウザが開き、接続してきたアプリ（発行元のドメインとアクセス権の送り先）を確かめる同意画面が出ます。
+許可するとログイン画面へ進みます。
 
-#### Claude.ai で使う
+クライアントの登録は Client ID Metadata Document（CIMD）だけを受け付けます。
+Dynamic Client Registration（DCR）にしか対応していないクライアントは接続できません。
 
-Claude.ai の Settings → Integrations → Add custom MCP server で以下の URL を入力します。
+#### Claude.ai / Claude Desktop で使う
+
+Claude.ai の Settings → Connectors → Add custom connector で以下の URL を入力します。
+Claude Desktop は同じアカウントのコネクタを使います。
 
 ```
 https://mcp.shisetsudb.com/mcp
-```
-
-#### Claude Desktop で使う
-
-`claude_desktop_config.json` に以下を追加します。
-
-```json
-{
-  "mcpServers": {
-    "shisetsu-viewer": {
-      "command": "/path/to/npx_binary",
-      "args": ["-y", "mcp-remote", "https://mcp.shisetsudb.com/mcp"],
-      "env": {
-        "PATH": "PATH_TO_INCLUDE_NODE_AND_NPX"
-      }
-    }
-  }
-}
 ```
 
 #### Claude Code で使う

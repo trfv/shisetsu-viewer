@@ -3,7 +3,8 @@
   "name": "shisetsu-mcp-server",
   "main": "worker.ts",
   "compatibility_date": "2026-02-28",
-  "compatibility_flags": ["nodejs_compat"],
+  // global_fetch_strictly_public: CIMD（URL 形式の client_id）のメタデータ取得に OAuthProvider が要求する
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
   "observability": {
     "enabled": true,
