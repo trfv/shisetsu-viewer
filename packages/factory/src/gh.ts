@@ -127,3 +127,21 @@ export function listDependabotPrs(): DependabotPr[] {
     labels: p.labels.map((l) => l.name),
   }));
 }
+
+/** master 上の最新 run の作成時刻。event を指定すればその種類に絞る。 */
+export function latestRunCreatedAt(workflow: string, event: string | null): string | null {
+  const runs = ghJson<{ createdAt: string }[]>([
+    "run",
+    "list",
+    "--workflow",
+    workflow,
+    "--branch",
+    "master",
+    ...(event === null ? [] : ["--event", event]),
+    "--limit",
+    "1",
+    "--json",
+    "createdAt",
+  ]);
+  return runs[0]?.createdAt ?? null;
+}
