@@ -381,4 +381,5 @@ INVALID や `{}` が見つかった場合:
 - スクレイプ対象の施設・部屋数
 - テスト結果サマリー
 - 注意事項（institution データ `data/institutions/<slug>.json` の作成・更新が必要か等）
+- institution データを作成・更新した場合は、マージ後に Database ワークフロー（`.github/workflows/database.yml`、手動実行のみ）を親自治体（例: `tokyo-kita-<name>` なら `tokyo-kita`）で実行する必要があることを明記する。D1 に施設が無いと予約行が突合できずに捨てられる。PR 本文の「マージ後の作業」にも書く
 - 本コマンドの改善案の提案
