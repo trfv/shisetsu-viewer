@@ -23,6 +23,7 @@ on:
           - tokyo-ota
           - tokyo-edogawa
           - tokyo-meguro
+          - tokyo-shinagawa
           - kanagawa-kawasaki
           - all
       density:
