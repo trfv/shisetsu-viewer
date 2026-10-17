@@ -1,8 +1,9 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-import type { WritableDataSource } from "../dataSource.ts";
-import { institutionIdSchema } from "../paramHelpers.ts";
+import type { WritableDataSource } from "../../data/dataSource.ts";
+import { dateSchema, institutionIdSchema } from "../../queries/schemas.ts";
+import { jsonResult } from "./result.ts";
 
 // D1 API は 1 リクエスト 500 行まで（MAX_RESERVATION_ROWS）。超過分はチャンク分割で送る。
 const CHUNK_SIZE = 500;
@@ -30,10 +31,7 @@ export function registerUpsertReservations(server: McpServer, write: WritableDat
           .array(
             z.object({
               institution_id: institutionIdSchema.describe("施設UUID"),
-              date: z
-                .string()
-                .regex(/^\d{4}-\d{2}-\d{2}$/)
-                .describe("日付 (YYYY-MM-DD)"),
+              date: dateSchema.describe("日付 (YYYY-MM-DD)"),
               reservation: z
                 .record(z.string(), z.string())
                 .describe("区分キー → ステータスキーのマッピング"),
@@ -60,18 +58,7 @@ export function registerUpsertReservations(server: McpServer, write: WritableDat
         deferred = deferred || res.deferred;
       }
 
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(
-              { totalRows: args.data.length, received, rowsWritten, deferred },
-              null,
-              2
-            ),
-          },
-        ],
-      };
+      return jsonResult({ totalRows: args.data.length, received, rowsWritten, deferred });
     }
   );
 }

@@ -60,7 +60,7 @@ claude mcp add shisetsu-viewer \
   "mcpServers": {
     "shisetsu-viewer": {
       "command": "node",
-      "args": ["--env-file=.env", "index.ts"],
+      "args": ["--env-file=.env", "src/stdio.ts"],
       "cwd": "/path/to/shisetsu-viewer/packages/mcp-server"
     }
   }
@@ -74,7 +74,7 @@ claude mcp add shisetsu-viewer \
 ```bash
 claude mcp add shisetsu-viewer \
   --transport stdio \
-  -- node --env-file=.env index.ts \
+  -- node --env-file=.env src/stdio.ts \
   --cwd /path/to/shisetsu-viewer/packages/mcp-server
 ```
 

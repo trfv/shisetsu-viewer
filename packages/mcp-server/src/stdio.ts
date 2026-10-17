@@ -1,8 +1,8 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
+import { createHttpDataSource } from "./data/httpDataSource.ts";
 import { ADMIN_API_KEY, API_ENDPOINT } from "./env.ts";
-import { createHttpDataSource } from "./httpDataSource.ts";
-import { createServer } from "./server.ts";
+import { createServer } from "./server/createServer.ts";
 
 // stdio は 1 プロセス 1 ユーザー（admin）なので、プロセス起動時に 1 つ作れば足りる。
 // D1 API へは X-Admin-Key で書き込み、read/write 全ツールを露出する。

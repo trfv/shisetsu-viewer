@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import type { DataSource, WritableDataSource } from "./dataSource.ts";
+import type { DataSource, WritableDataSource } from "../data/dataSource.ts";
 import { registerGuidePrompt } from "./prompts/guide.ts";
 import { registerSearchAvailableRoomsPrompt } from "./prompts/searchAvailableRooms.ts";
 import { registerMunicipalitiesResource } from "./resources/municipalities.ts";
