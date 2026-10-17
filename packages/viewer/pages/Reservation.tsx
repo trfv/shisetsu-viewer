@@ -1,5 +1,5 @@
 import type { ReservationSearchHit } from "@shisetsu-viewer/shared";
-import { addMonths, endOfMonth, max, min } from "date-fns";
+import { addMonths, endOfMonth, isSameDay } from "date-fns";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
@@ -7,7 +7,7 @@ import { searchReservations } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
-import { DateRangePicker } from "../components/DateRangePicker";
+import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
 import { SearchPageLayout } from "../components/SearchPageLayout";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
@@ -157,20 +157,11 @@ const ReservationPage = () => {
     [setQueryParams]
   );
 
-  const handleStartDateChange = useCallback(
-    (date: Date | null): void => {
-      /* istanbul ignore next -- date is always provided by DatePicker onChange */
-      setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
+  const handleDateRangeChange = useCallback(
+    ({ from, to }: DateRangeValue): void => {
+      setQueryParams({ df: from, dt: to });
     },
-    [setQueryParams, endDate, maxDate]
-  );
-
-  const handleEndDateChange = useCallback(
-    (date: Date | null): void => {
-      /* istanbul ignore next -- date is always provided by DatePicker onChange */
-      setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
-    },
-    [setQueryParams, startDate, minDate]
+    [setQueryParams]
   );
 
   const handleFilterChange = useCallback(
@@ -206,7 +197,11 @@ const ReservationPage = () => {
             onDelete: () => setQueryParams({ m: null }),
           },
         ]),
-    { label: `${formatDate(startDate)} 〜 ${formatDate(endDate)}` },
+    {
+      label: isSameDay(startDate, endDate)
+        ? formatDate(startDate)
+        : `${formatDate(startDate)} 〜 ${formatDate(endDate)}`,
+    },
     ...buildFilterChips(RESERVATION_SEARCH_FILTER_MAP, filter, (next) =>
       setQueryParams({ f: next })
     ),
@@ -234,9 +229,11 @@ const ReservationPage = () => {
             value={municipality}
           />
           <DateRangePicker
-            endDateProps={{ value: endDate, onChange: handleEndDateChange, minDate, maxDate }}
             label="期間指定"
-            startDateProps={{ value: startDate, onChange: handleStartDateChange, minDate, maxDate }}
+            maxDate={maxDate}
+            minDate={minDate}
+            onChange={handleDateRangeChange}
+            value={{ from: startDate, to: endDate }}
           />
           <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
             {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (

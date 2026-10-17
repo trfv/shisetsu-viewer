@@ -1,30 +1,59 @@
-import type { ComponentProps, FC } from "react";
+import { DayPicker, type DateRange } from "@daypicker/react";
 
-import { AutoBox, BaseBox } from "../Box";
-import { DatePicker } from "../DatePicker";
+import "@daypicker/react/style.css";
+import { ja } from "@daypicker/react/locale";
+import { useState, type FC } from "react";
+
 import { SmallLabel } from "../Label";
-import { Spacer } from "../Spacer";
 
-type DatePickerProps = ComponentProps<typeof DatePicker>;
+import styles from "./DateRangePicker.module.css";
+
+export type DateRangeValue = { from: Date; to: Date };
 
 type Props = {
   label: string;
-  startDateProps: DatePickerProps;
-  endDateProps: DatePickerProps;
+  value: DateRangeValue;
+  onChange: (value: DateRangeValue) => void;
+  minDate: Date;
+  maxDate: Date;
 };
 
-export const DateRangePicker: FC<Props> = ({ label, startDateProps, endDateProps }) => {
+// 1 タップ目で開始日、2 タップ目で終了日を選び、そこで初めて親に渡す（1 日だけなら同じ日を 2 回）。
+// 開始日だけ決まった途中の状態はここで持つ。Drawer は閉じるとアンマウントするので、
+// 途中で閉じれば途中の状態は捨てられ、選ぶ前の期間に戻る。
+export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, maxDate }) => {
+  const [draft, setDraft] = useState<DateRange | null>(null);
+
+  const handleSelect = (range: DateRange) => {
+    if (!range.from) {
+      return;
+    }
+    if (!range.to) {
+      setDraft(range);
+      return;
+    }
+    setDraft(null);
+    onChange({ from: range.from, to: range.to });
+  };
+
   return (
-    <AutoBox display="flex" flexDirection="column">
+    <div className={styles["root"]}>
       <SmallLabel label={label} />
-      <Spacer axis="vertical" size={4} />
-      <AutoBox alignItems="center" display="flex">
-        <DatePicker {...startDateProps} />
-        <BaseBox component="span" mx="0.5rem">
-          〜
-        </BaseBox>
-        <DatePicker {...endDateProps} />
-      </AutoBox>
-    </AutoBox>
+      <DayPicker
+        className={styles["calendar"]!}
+        defaultMonth={value.from}
+        disabled={[{ before: minDate }, { after: maxDate }]}
+        endMonth={maxDate}
+        locale={ja}
+        mode="range"
+        modifiers={{ saturday: { dayOfWeek: [6] }, sunday: { dayOfWeek: [0] } }}
+        modifiersClassNames={{ saturday: styles["saturday"]!, sunday: styles["sunday"]! }}
+        onSelect={handleSelect}
+        required
+        resetOnSelect
+        selected={draft ?? value}
+        startMonth={minDate}
+      />
+    </div>
   );
 };

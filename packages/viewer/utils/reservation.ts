@@ -109,7 +109,7 @@ export const RESERVATION_SEARCH_FILTER_MAP = {
   [IS_ONLY_MORNING_VACANT]: "午前空き",
   [IS_ONLY_AFTERNOON_VACANT]: "午後空き",
   [IS_ONLY_EVENING_VACANT]: "夜間空き",
-  [IS_ONLY_HOLIDAY]: "休日のみ",
+  [IS_ONLY_HOLIDAY]: "土日祝のみ",
 } as const;
 
 const ReservationSearchFilters = [
