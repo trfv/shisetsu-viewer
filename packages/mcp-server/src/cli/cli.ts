@@ -2,17 +2,27 @@
 import { parseArgs } from "node:util";
 
 import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
+import { z } from "zod";
 
+import type { DataSource } from "../data/dataSource.ts";
+import { createHttpDataSource } from "../data/httpDataSource.ts";
+import {
+  executeGetInstitutionDetail,
+  getInstitutionDetailInput,
+} from "../queries/getInstitutionDetail.ts";
+import {
+  executeGetInstitutionReservations,
+  getInstitutionReservationsInput,
+} from "../queries/getInstitutionReservations.ts";
+import { executeListInstitutions, listInstitutionsInput } from "../queries/listInstitutions.ts";
+import { MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "../queries/schemas.ts";
+import {
+  executeSearchReservations,
+  searchReservationsInput,
+} from "../queries/searchReservations.ts";
 import { login } from "./auth/login.ts";
 import { logout } from "./auth/logout.ts";
 import { getValidToken } from "./auth/tokenStore.ts";
-import type { DataSource } from "./dataSource.ts";
-import { createHttpDataSource } from "./httpDataSource.ts";
-import { MUNICIPALITY_HELP, INSTITUTION_SIZE_HELP } from "./paramHelpers.ts";
-import { executeGetInstitutionDetail } from "./tools/getInstitutionDetail.ts";
-import { executeGetInstitutionReservations } from "./tools/getInstitutionReservations.ts";
-import { executeListInstitutions } from "./tools/listInstitutions.ts";
-import { executeSearchReservations } from "./tools/searchReservations.ts";
 
 function printUsage(): void {
   process.stderr.write(`shisetsu - 施設予約データ CLI
@@ -90,7 +100,8 @@ Options:
   }
 
   return executeListInstitutions(
-    {
+    // MCP ツールと同じスキーマで検証する（不正な fields や日付はここで弾く）
+    listInstitutionsInput.parse({
       municipality: splitCSV(values.municipality),
       institutionSizes: splitCSV(values.size),
       isAvailableStrings: values.strings,
@@ -100,7 +111,7 @@ Options:
       fields: splitCSV(values.fields),
       first: values.first ? Number(values.first) : undefined,
       after: values.after,
-    },
+    }),
     dataSource
   );
 }
@@ -133,10 +144,10 @@ Options:
   if (!id) fail("施設 ID (UUID) を指定してください");
 
   const result = await executeGetInstitutionDetail(
-    {
+    getInstitutionDetailInput.parse({
       id,
       fields: splitCSV(values.fields),
-    },
+    }),
     dataSource
   );
 
@@ -178,12 +189,12 @@ Options:
   if (!values["end-date"]) fail("--end-date は必須です");
 
   return executeGetInstitutionReservations(
-    {
+    getInstitutionReservationsInput.parse({
       institutionId: id,
       startDate: values["start-date"],
       endDate: values["end-date"],
       fields: splitCSV(values.fields),
-    },
+    }),
     dataSource
   );
 }
@@ -240,7 +251,7 @@ Options:
   if (!values["end-date"]) fail("--end-date は必須です");
 
   return executeSearchReservations(
-    {
+    searchReservationsInput.parse({
       startDate: values["start-date"],
       endDate: values["end-date"],
       municipality: splitCSV(values.municipality),
@@ -255,7 +266,7 @@ Options:
       isHoliday: values.holiday,
       first: values.first ? Number(values.first) : undefined,
       after: values.after,
-    },
+    }),
     dataSource
   );
 }
@@ -343,6 +354,11 @@ try {
   const result = await authHandler(commandArgv, dataSource);
   printResult(result, isPretty);
 } catch (error) {
-  const message = error instanceof Error ? error.message : String(error);
+  const message =
+    error instanceof z.ZodError
+      ? z.prettifyError(error)
+      : error instanceof Error
+        ? error.message
+        : String(error);
   fail(message);
 }

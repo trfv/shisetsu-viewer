@@ -25,7 +25,8 @@ const config: KnipConfig = {
       ignoreDependencies: ["cloudflare"],
     },
     "packages/mcp-server": {
-      entry: ["worker.ts"],
+      // worker は wrangler.jsonc の main、stdio と cli は package.json の scripts から辿られる
+      entry: [],
       ignoreBinaries: [],
       ignoreDependencies: [],
     },

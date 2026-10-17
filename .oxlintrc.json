@@ -23,8 +23,6 @@
     "react/react-in-jsx-scope": "off",
     // toSorted/toReversed (ES2023) は viewer の browserslist (>0.2%) で polyfill されない
     "unicorn/no-array-sort": "off",
-    "unicorn/no-array-reverse": "off",
-    // モジュールプライベート変数の _ プレフィックスは意図的な規約 (mcp-server/m2mToken.ts)
-    "no-underscore-dangle": "off"
+    "unicorn/no-array-reverse": "off"
   }
 }

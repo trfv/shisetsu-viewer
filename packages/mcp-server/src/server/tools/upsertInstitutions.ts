@@ -2,7 +2,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Institution } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
-import type { WritableDataSource } from "../dataSource.ts";
+import type { WritableDataSource } from "../../data/dataSource.ts";
+import { jsonResult } from "./result.ts";
 
 export function registerUpsertInstitutions(server: McpServer, write: WritableDataSource): void {
   server.registerTool(
@@ -22,23 +23,12 @@ export function registerUpsertInstitutions(server: McpServer, write: WritableDat
     },
     async (args) => {
       const res = await write.upsertInstitutions(args.data as unknown as Institution[]);
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(
-              {
-                totalRows: args.data.length,
-                received: res.received,
-                rowsWritten: res.rowsWritten,
-                deferred: res.deferred,
-              },
-              null,
-              2
-            ),
-          },
-        ],
-      };
+      return jsonResult({
+        totalRows: args.data.length,
+        received: res.received,
+        rowsWritten: res.rowsWritten,
+        deferred: res.deferred,
+      });
     }
   );
 }

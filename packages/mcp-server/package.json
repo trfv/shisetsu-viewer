@@ -6,8 +6,8 @@
   "scripts": {
     "typecheck": "wrangler types && tsc",
     "test": "vitest run",
-    "start": "node --env-file=.env index.ts",
-    "cli": "node --env-file=.env cli.ts",
+    "start": "node --env-file=.env src/stdio.ts",
+    "cli": "node --env-file=.env src/cli/cli.ts",
     "deploy": "wrangler deploy",
     "preview:wrangler": "wrangler dev"
   },
