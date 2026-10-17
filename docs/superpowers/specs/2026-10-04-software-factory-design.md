@@ -276,3 +276,4 @@ D1 への書き込みは upsert なので、誤った修復で入ったデータ
 - **作業項目のキーはスクレイパー単位にする。** #1668 で予約システム単位への一般化が入り、1 つの区に複数のスクレイパー（`tokyo-kita`、`tokyo-kita-cocokita`、`tokyo-kita-genkiplaza`）がある。キーは `scraper-repair:<スクレイパーのディレクトリ名>` とし、ゲート 1 の差分範囲も `packages/scraper/<スクレイパー>/` と `packages/scraper/engines/*.ts` に読み替える。
 - **フェーズ 1 の 1 週間の待ちをなくす。** サマリが毎回出ることは、フェーズ 2 の observe 運用の 2 週間で同時に確かめられる。
 - **フェーズ 3 を 3a と 3b に分ける。** 3a は決定論だけの dependency ステーション（patch と minor の自動マージ）とし、エージェントも OAuth も使わない。3b は OAuth と GitHub App を入れた master-red とする。こうすると、未決事項の GitHub App の判断を待たずに 3a を始められる。3a では `GITHUB_TOKEN` でマージするので、その push は他の workflow を起動しない。Workers Builds は Cloudflare 側で動くのでデプロイには影響しない。
+  ただし、`.github/workflows/` を変える更新（github-actions グループ、例 #1717）は、`workflows` 権限の無い `GITHUB_TOKEN` では merge できない見込みである。3a ではこれを needs-human に回すか、3b で GitHub App のトークンを入れてから扱う。dependabot の分類（`classifyDependabotPr`）はリスクの判定に留め、この制約は実行側で扱う。
