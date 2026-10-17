@@ -24,7 +24,7 @@ import type { Division, Status, TransformOutput } from "../common/types.ts";
 const DAYS_PER_PAGE = 40;
 
 /** extract が DOM から読み取った 1 行（= 1 日） */
-export interface PKashikanRawRow {
+interface PKashikanRawRow {
   /** 先頭セル（「11/24 (火)」） */
   label: string;
   /** コマのセル。time は ○ セルにだけ入る「09001145」形式（他は ""） */

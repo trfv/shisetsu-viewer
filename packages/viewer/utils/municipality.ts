@@ -32,10 +32,9 @@ export const MunicipalityOptions: { value: string; label: string }[] = [
   { value: SELECT_OPTION_ALL, label: "すべて" },
 ].concat(Object.entries(SupportedMunicipalityMap).map(([k, v]) => ({ value: k, label: v })));
 
-export const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> =
-  Object.fromEntries(
-    SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
-  );
+const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
+  SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
+);
 
 /**
  * 区分の表示名。施設単位ラベル（institutions.division_labels）を優先し、無ければ自治体の
