@@ -16,7 +16,7 @@
 - TypeScript は `@tsconfig/strictest`（`noUncheckedIndexedAccess`、`exactOptionalPropertyTypes` が有効）。省略可能プロパティは `?:` ではなく `| null` で表す。
 - enum を使わない（Node の型ストリッピングは `erasableSyntaxOnly` 前提）。
 - 書式は oxfmt（printWidth 100、ダブルクォート、trailing comma es5）、lint は `oxlint --deny-warnings`。
-- 作業項目のラベルは `factory`、`factory:queued`、`factory:running`、`factory:pr-open`、`factory:needs-human`、`factory:hold` の 6 つ。
+- 作業項目のラベルは `factory`、`factory:queued`、`factory:running`、`factory:pr-open`、`factory:needs-human`、`factory:hold` の 6 つ。PR の変更クラスを表す `change:<クラス>` は作業項目の状態ではなく、Task 11 で別に扱う。
 - 作業項目 Issue の本文には `<!-- factory:key <key> -->` と `<!-- factory:state <json> -->` を埋め込む。
 - 連続観測の閾値は 2 回。相互監視の閾値は 26 時間。
 - repo variable `FACTORY_MODE` は `off`、`observe`、`on`。未設定は `observe` とみなす。フェーズ 2 では `on` も `observe` として扱う。
@@ -30,6 +30,7 @@
 - 人間が本文を編集して state の JSON が壊れても、同じ key の Issue を重複して作らない（Task 7 のテスト「state が壊れた既存項目は作り直さず edit する」）。
 - `factory:hold` が付いた項目は、解消条件を満たしてもクローズも編集もしない（Task 7 のテスト「hold は解消してもクローズしない」）。
 - grouped な dependabot PR に major 更新が 1 つでも混ざれば needs-human にする（Task 6 のテスト「group 内に major が 1 つでもあれば needs-human」）。
+- 複数の変更クラスに当たる PR は、承認がいちばん重いクラスにする。dependabot の PR でも `.github/` を含めば workflow にする（Task 11 のテスト「重いクラスが勝つ」「dependabot でも workflow を含めば workflow」）。
 
 ## spec からの調整
 
@@ -41,6 +42,8 @@
 - （2026-10-17）フェーズ 0 は、#1700 が #1721 に置き換わって閉じ、dependabot の滞留も 2026-10-17 に一括で処理した。残りは #1552、#1584 のクローズだけである。
 - （2026-10-17）フェーズ 1 の終了後に 1 週間待たず、続けてフェーズ 2 に進む。Task 3 のフィクスチャには、2026-10 の実際の run（kawasaki の単発の structural、sumida の 3 回連続失敗、kawasaki の全シャード失敗）を含める。
 - （2026-10-17）Task 2 では、`recordInfraFailure.ts` をサブシェルの `cd` 経由で呼ぶため knip が追えない。`knip.config.ts` の scraper の entry に `scripts/*.ts` を足す。
+- （2026-10-17）進捗：Task 1〜9 は #1721、#1728〜#1732 で master に入った。各 Step のチェックボックスは更新していない。
+- （2026-10-17）spec の「GitOps の見直し」を受けて、変更クラスの observe を Task 11 として足し、旧 Task 11 を Task 12 にする。spec の変更クラスのうち format は、base で整形を実行した結果との比較が要るので、このフェーズでは判定しない（フェーズ 3b の master-red で入れる）。デプロイ状態の収束判定（`deploy-drift`）はフェーズ 3a の前提なので、フェーズ 3 の計画の最初のタスクに置く。
 
 ---
 
@@ -2192,7 +2195,268 @@ gh pr create --title "feat(factory): 相互監視を入れ、単一 tracker を 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)"
 ```
 
-### Task 11: observe 運用の 2 週間と、フェーズ 3 に進む判断
+### Task 11: PR の変更クラスを observe でラベル付けする
+
+**Files:**
+- Create: `packages/factory/src/changeClass.ts`
+- Test: `packages/factory/src/changeClass.test.ts`
+- Modify: `packages/factory/src/types.ts`、`packages/factory/src/gh.ts`、`packages/factory/src/applyOps.ts`、`packages/factory/src/cli/reconcile.ts`
+
+spec の「変更クラスによる承認条件」を、承認には使わずラベルとして付けるだけの形で入れる。
+人間の PR も含む開いている全 PR に `change:<クラス>` を付け、Task 12 の 2 週間で人間の判断と比べる。
+ラベルは PR の承認にもマージにも影響しないので、このフェーズで入れても副作用は無い。
+
+**Interfaces:**
+- Produces（`types.ts` に追加）:
+
+```ts
+export type ChangeClass =
+  | "deps"
+  | "scraper"
+  | "engine"
+  | "institutions"
+  | "contract"
+  | "migration"
+  | "workflow"
+  | "other";
+export interface OpenPr {
+  readonly number: number;
+  readonly files: readonly string[];
+  readonly labels: readonly string[];
+}
+```
+
+- Produces: `CHANGE_CLASSES`（重い順の配列）、`classOfPath(path: string): ChangeClass`、`classifyChange(pr: OpenPr, dependabot: DependabotDecision | null): ChangeClass`、`changeLabelOps(prs: readonly OpenPr[], decisions: ReadonlyMap<number, DependabotDecision>): Op[]`
+- Consumes: Task 6 の `DependabotDecision`（`dependabot.ts`）、`classifyDependabotPr`
+
+- [ ] **Step 1: 失敗するテストを書く**
+
+`packages/factory/src/changeClass.test.ts`:
+
+```ts
+import assert from "node:assert/strict";
+import { test } from "node:test";
+
+import { changeLabelOps, classifyChange, classOfPath } from "./changeClass.ts";
+import type { OpenPr } from "./types.ts";
+
+function pr(files: string[], labels: string[] = []): OpenPr {
+  return { number: 1, files, labels };
+}
+
+test("パスごとのクラス", () => {
+  assert.equal(classOfPath("packages/scraper/tokyo-kita-cocokita/index.ts"), "scraper");
+  assert.equal(classOfPath("packages/scraper/engines/webrGrand.ts"), "engine");
+  assert.equal(classOfPath("packages/scraper/data/institutions/tokyo-kita.json"), "institutions");
+  assert.equal(classOfPath("packages/api/migrations/0003_auth.sql"), "migration");
+  assert.equal(classOfPath("packages/api/src/worker.ts"), "contract");
+  assert.equal(classOfPath("packages/shared/src/registry.ts"), "contract");
+  assert.equal(classOfPath(".github/workflows/scraper.yml"), "workflow");
+  assert.equal(classOfPath("packages/factory/src/reconcile.ts"), "workflow");
+  assert.equal(classOfPath("packages/scraper/tools/spotcheck/plan.ts"), "workflow");
+  assert.equal(classOfPath("packages/scraper/common/classifyFailure.ts"), "workflow");
+  assert.equal(classOfPath("packages/scraper/common/browser.ts"), "other");
+  assert.equal(classOfPath("docs/superpowers/specs/x.md"), "other");
+});
+
+test("重いクラスが勝つ", () => {
+  // 実際の #1674 の形（migration と workflow と viewer を同時に変える）
+  const p = pr([
+    ".github/workflows/nodejs.yml",
+    "packages/api/migrations/0003_auth.sql",
+    "packages/viewer/App.tsx",
+  ]);
+  assert.equal(classifyChange(p, null), "workflow");
+});
+
+test("同じスクレイパーだけなら scraper、エンジンを含めば engine", () => {
+  assert.equal(classifyChange(pr(["packages/scraper/tokyo-ota/index.ts"]), null), "scraper");
+  assert.equal(
+    classifyChange(
+      pr(["packages/scraper/tokyo-ota/index.ts", "packages/scraper/engines/webrGrand.ts"]),
+      null
+    ),
+    "engine"
+  );
+});
+
+test("dependabot の auto-merge で依存ファイルだけなら deps", () => {
+  const p = pr(["package.json", "package-lock.json", "packages/viewer/package.json"]);
+  assert.equal(classifyChange(p, "auto-merge"), "deps");
+  assert.equal(classifyChange(p, "needs-human"), "other");
+});
+
+test("dependabot でも workflow を含めば workflow", () => {
+  const p = pr([".github/workflows/nodejs.yml"]);
+  assert.equal(classifyChange(p, "auto-merge"), "workflow");
+});
+
+test("ファイルが無いか、一覧が上限で切れていれば other より軽くしない", () => {
+  assert.equal(classifyChange(pr([]), null), "other");
+  const truncated = Array.from({ length: 100 }, (_, i) => `packages/scraper/tokyo-ota/f${i}.ts`);
+  assert.equal(classifyChange(pr(truncated), null), "other");
+});
+
+test("ラベルが正しければ何もしない、違えば付け替える、hold は触らない", () => {
+  assert.deepEqual(changeLabelOps([pr(["docs/a.md"], ["change:other"])], new Map()), []);
+  assert.deepEqual(changeLabelOps([pr(["docs/a.md"], ["change:scraper"])], new Map()), [
+    {
+      type: "edit",
+      number: 1,
+      body: null,
+      addLabels: ["change:other"],
+      removeLabels: ["change:scraper"],
+      assignOwner: false,
+      comment: null,
+    },
+  ]);
+  assert.deepEqual(
+    changeLabelOps([pr(["docs/a.md"], ["factory:hold"])], new Map()),
+    []
+  );
+});
+```
+
+- [ ] **Step 2: テストが落ちることを確かめる**
+
+```bash
+npm run test -w @shisetsu-viewer/factory
+```
+
+Expected: `changeClass.ts` が無いため FAIL。
+
+- [ ] **Step 3: 実装する**
+
+`packages/factory/src/changeClass.ts`:
+
+```ts
+import type { DependabotDecision } from "./dependabot.ts";
+import { LABELS } from "./reconcile.ts";
+import type { ChangeClass, OpenPr, Op } from "./types.ts";
+
+/** 承認が重い順。PR は含むパスのうちいちばん重いクラスになる。 */
+export const CHANGE_CLASSES: readonly ChangeClass[] = [
+  "workflow",
+  "migration",
+  "contract",
+  "institutions",
+  "other",
+  "engine",
+  "scraper",
+  "deps",
+];
+
+const LABEL_PREFIX = "change:";
+
+/** ゲートが証拠を取るためのコード。エージェントに触らせない（spec「自動マージのゲート」の禁止パス）。 */
+const WORKFLOW_PATHS = [
+  /^\.github\//,
+  /^packages\/factory\//,
+  /^packages\/scraper\/tools\/(repair|spotcheck)\//,
+  /^packages\/scraper\/common\/classifyFailure\.ts$/,
+];
+const DEPENDENCY_FILE = /(^|\/)(package\.json|package-lock\.json)$/;
+// gh pr list --json files は 1 PR あたり 100 ファイルで切れる
+const FILES_LIMIT = 100;
+
+export function classOfPath(path: string): ChangeClass {
+  if (WORKFLOW_PATHS.some((re) => re.test(path))) return "workflow";
+  if (path.startsWith("packages/api/migrations/")) return "migration";
+  if (path.startsWith("packages/api/") || path.startsWith("packages/shared/")) return "contract";
+  if (path.startsWith("packages/scraper/data/institutions/")) return "institutions";
+  if (/^packages\/scraper\/engines\/[^/]+\.ts$/.test(path)) return "engine";
+  if (/^packages\/scraper\/(tokyo|kanagawa)-[a-z-]+\//.test(path)) return "scraper";
+  return "other";
+}
+
+export function classifyChange(pr: OpenPr, dependabot: DependabotDecision | null): ChangeClass {
+  if (pr.files.length === 0) return "other";
+  const classes = pr.files.map((f) =>
+    dependabot === "auto-merge" && DEPENDENCY_FILE.test(f) ? "deps" : classOfPath(f)
+  );
+  const heaviest = CHANGE_CLASSES.find((c) => classes.includes(c)) ?? "other";
+  if (pr.files.length >= FILES_LIMIT && CHANGE_CLASSES.indexOf(heaviest) > CHANGE_CLASSES.indexOf("other")) {
+    return "other";
+  }
+  return heaviest;
+}
+
+export function changeLabelOps(
+  prs: readonly OpenPr[],
+  decisions: ReadonlyMap<number, DependabotDecision>
+): Op[] {
+  return prs.flatMap((pr): Op[] => {
+    if (pr.labels.includes(LABELS.hold)) return [];
+    const want = LABEL_PREFIX + classifyChange(pr, decisions.get(pr.number) ?? null);
+    const stale = pr.labels.filter((l) => l.startsWith(LABEL_PREFIX) && l !== want);
+    if (pr.labels.includes(want) && stale.length === 0) return [];
+    return [
+      {
+        type: "edit",
+        number: pr.number,
+        body: null,
+        addLabels: pr.labels.includes(want) ? [] : [want],
+        removeLabels: stale,
+        assignOwner: false,
+        comment: null,
+      },
+    ];
+  });
+}
+```
+
+package.json と lockfile の扱いを dependabot の auto-merge 判定に依存させるのは、同じファイルの変更でも、人間が依存を足す PR は承認を要するためである。
+
+- [ ] **Step 4: gh と CLI につなぐ**
+
+`packages/factory/src/gh.ts` に追加する。
+
+```ts
+export function listOpenPrs(): OpenPr[] {
+  const prs = ghJson<
+    { number: number; files: { path: string }[]; labels: { name: string }[] }[]
+  >(["pr", "list", "--state", "open", "--limit", "100", "--json", "number,files,labels"]);
+  return prs.map((p) => ({
+    number: p.number,
+    files: p.files.map((f) => f.path),
+    labels: p.labels.map((l) => l.name),
+  }));
+}
+```
+
+`packages/factory/src/applyOps.ts` の `LABEL_SPECS` に、`CHANGE_CLASSES` の各クラスを `change:<クラス>`（色 `ededed`、説明「factory: 変更クラス（observe）」）として足す。
+
+`packages/factory/src/cli/reconcile.ts` で、dependabot PR の分類を作ってから `changeLabelOps` の結果を `ops` の後ろに足す。
+
+```ts
+const dependabotPrs = listDependabotPrs();
+const decisions = new Map(dependabotPrs.map((p) => [p.number, classifyDependabotPr(p)]));
+const ops = [
+  ...reconcile({ summaries, masterCi: latestMasterCi(), dependabotPrs, items: listFactoryItems() }),
+  ...changeLabelOps(listOpenPrs(), decisions),
+];
+```
+
+dry-run で、開いている PR のクラスが手で付けた判断と一致することを確かめる。
+
+```bash
+FACTORY_OWNER=trfv node packages/factory/src/cli/reconcile.ts --dry-run
+```
+
+- [ ] **Step 5: テスト、型、lint を通して PR を出す**
+
+```bash
+npm run test -w @shisetsu-viewer/factory
+npm run typecheck -w @shisetsu-viewer/factory
+git add packages/factory
+PATH="$PWD/node_modules/.bin:$PATH" git commit -m "feat(factory): PR の変更クラスを observe でラベル付けする"
+git push -u origin HEAD
+gh pr create --title "feat(factory): PR の変更クラスを observe でラベル付けする" --body "software factory 2-C（spec「GitOps の見直し」）。承認には使わず、change:<クラス> ラベルを付けるだけ。
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+```
+
+### Task 12: observe 運用の 2 週間と、フェーズ 3 に進む判断
 
 **Files:** なし（運用と記録のみ）
 
@@ -2205,15 +2469,21 @@ gh run list --workflow factory.yml --limit 6 --json conclusion,createdAt
 gh issue list --label factory --state all --limit 50 --json number,title,state,labels,createdAt,closedAt
 ```
 
-確かめる観点は次の 4 つ。
+```bash
+gh pr list --state all --limit 50 --json number,title,labels,mergedBy --jq '.[]|"\(.number) \([.labels[].name|select(startswith("change:"))]) \(.title)"'
+```
+
+確かめる観点は次の 5 つ。
 
 - 2 回連続の構造系失敗が、漏れなく `scraper-repair:*` になっている。
 - 単発の失敗や transient で項目が作られていない（誤報がない）。
 - 復旧した自治体の項目が、次の巡回でクローズされている。
 - dependabot PR の分類（queued か needs-human か）が、人間の判断と一致している。
+- `change:<クラス>` が、人間がその PR に求めた確認の重さと一致している（例：人間が差分を読まずにマージした PR が、人間承認のクラスになっていない）。
 
 - [ ] **Step 2: 判断を spec に記録する**
 
 2 週間の結果（作られた項目の数、誤報の有無、判断が人間と食い違った例）を、`docs/superpowers/specs/2026-10-04-software-factory-design.md` の末尾に「フェーズ 2 の observe 結果」として追記し、PR にする。
-食い違いがあれば、`reconcile.ts` を直す PR を先に出し、2 週間を数え直す。
-食い違いが無ければ、フェーズ 3（OAuth secret と GitHub App の設定、dependency と master-red の有効化）の計画に進む。
+食い違いがあれば、`reconcile.ts` か `changeClass.ts` を直す PR を先に出し、2 週間を数え直す。
+食い違いが無ければ、フェーズ 3 の計画に進む。
+その計画は、`deploy-drift` の判定（api の `/v1/health` の version、viewer と mcp-server のビルド、Database ワークフローの結論）を observe で入れるタスクから始め、1 週間誤報が無いことを確かめてから 3a（dependency の自動マージ、reconcile 1 回で 1 本）に進む。
