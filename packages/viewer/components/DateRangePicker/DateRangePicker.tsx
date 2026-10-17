@@ -2,7 +2,6 @@ import { DayPicker, type DateRange } from "@daypicker/react";
 
 import "@daypicker/react/style.css";
 import { ja } from "@daypicker/react/locale";
-import { isSameDay } from "date-fns";
 import { useState, type FC } from "react";
 
 import { SmallLabel } from "../Label";
@@ -19,22 +18,22 @@ type Props = {
   maxDate: Date;
 };
 
-// 1 タップ目でその日だけを選び、続けて 2 タップ目を押すとそこまでの期間になる。
-// 開始日だけ決まった途中の状態はここで持ち、親には常に完結した範囲（1 日なら from = to）を渡す。
+// 1 タップ目で開始日、2 タップ目で終了日を選び、そこで初めて親に渡す（1 日だけなら同じ日を 2 回）。
+// 開始日だけ決まった途中の状態はここで持つ。Drawer は閉じるとアンマウントするので、
+// 途中で閉じれば途中の状態は捨てられ、選ぶ前の期間に戻る。
 export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, maxDate }) => {
   const [draft, setDraft] = useState<DateRange | null>(null);
-  // 外から値が変わった（チップの削除など）ときは途中の状態を捨てる
-  const activeDraft =
-    draft?.from && isSameDay(draft.from, value.from) && isSameDay(value.from, value.to)
-      ? draft
-      : null;
 
   const handleSelect = (range: DateRange) => {
     if (!range.from) {
       return;
     }
-    setDraft(range.to ? null : range);
-    onChange({ from: range.from, to: range.to ?? range.from });
+    if (!range.to) {
+      setDraft(range);
+      return;
+    }
+    setDraft(null);
+    onChange({ from: range.from, to: range.to });
   };
 
   return (
@@ -52,7 +51,7 @@ export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, ma
         onSelect={handleSelect}
         required
         resetOnSelect
-        selected={activeDraft ?? value}
+        selected={draft ?? value}
         startMonth={minDate}
       />
     </div>

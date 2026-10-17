@@ -36,12 +36,13 @@ const useMswMock = (items: ReservationSearchHit[], hasNextPage = false) => {
   );
 };
 
-// 検索 API に送られたクエリを、最後の 1 件だけ残して返す
+// 検索 API に送られたクエリを、最後の 1 件と呼ばれた回数で返す
 const captureSearchParams = () => {
-  const captured: { params: URLSearchParams | null } = { params: null };
+  const captured: { params: URLSearchParams | null; count: number } = { params: null, count: 0 };
   worker.use(
     http.get(`${BASE}/v1/reservations/search`, ({ request }) => {
       captured.params = new URL(request.url).searchParams;
+      captured.count += 1;
       return HttpResponse.json(createMockReservationSearchPage([], false));
     })
   );
@@ -358,7 +359,7 @@ describe("Reservation Page", () => {
   });
 
   describe("日付の選択", () => {
-    it("日付を 1 回押すとその日だけを検索する", async () => {
+    it("1 回押しただけでは検索しない", async () => {
       const captured = captureSearchParams();
 
       const { user } = await renderWithProviders(<ReservationPage />, {
@@ -366,6 +367,22 @@ describe("Reservation Page", () => {
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await expect.poll(() => captured.count).toBe(1);
+      await user.click(dayButton(/2025年6月20日/));
+
+      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
+      expect(captured.count).toBe(1);
+    });
+
+    it("同じ日を 2 回押すとその日だけを検索する", async () => {
+      const captured = captureSearchParams();
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月20日/));
       await user.click(dayButton(/2025年6月20日/));
 
       await expect.element(screen.getByText("2025/06/20(金)")).toBeInTheDocument();
@@ -403,7 +420,7 @@ describe("Reservation Page", () => {
       await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/06\/28/)).toBeInTheDocument();
     });
 
-    it("期間が決まったあとに押すと、またその日だけの選択からやり直す", async () => {
+    it("期間が決まったあとに押すと、開始日の選び直しになる", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<ReservationPage />, {
@@ -412,8 +429,26 @@ describe("Reservation Page", () => {
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
       await user.click(dayButton(/2025年6月24日/));
+      await user.click(dayButton(/2025年6月25日/));
 
-      await expect.element(screen.getByText("2025/06/24(火)")).toBeInTheDocument();
+      await expect.element(screen.getByText(/2025\/06\/24.*〜.*2025\/06\/25/)).toBeInTheDocument();
+    });
+
+    it("1 回押したままドロワーを閉じると、選ぶ前の期間に戻る", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月20日/));
+      await user.click(screen.getByRole("button", { name: "閉じる" }));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      // 途中の状態が残っていれば 6/20〜6/25 になるが、捨てられているので 6/25 は新しい開始日になる
+      await user.click(dayButton(/2025年6月25日/));
+
+      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
     it("今日より前の日は選べない", async () => {
