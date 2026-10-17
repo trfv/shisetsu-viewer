@@ -6,8 +6,9 @@ import { userEvent } from "vitest/browser";
 import { screen } from "../test/utils/test-utils";
 import { Auth0Provider, useAuth0 } from "./Auth0";
 
-// Auth0Client is globally mocked in browser-setup.ts.
-// We access the mock instance methods through the constructor mock.
+// vitest 5 では browser-setup.ts の vi.mock がこのファイルの import に効かないため、ここでも mock する。
+// 各テストは constructor mock の実装を差し替えてメソッドの振る舞いを決める。
+vi.mock("@auth0/auth0-spa-js", () => ({ Auth0Client: vi.fn() }));
 
 const TOKEN_CLAIM_KEY = "https://app.shisetsudb.com/token/claims";
 
@@ -111,7 +112,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
     });
   });
 
@@ -176,7 +177,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("token")).toHaveTextContent(/^test-token-123$/);
+      await expect.element(screen.getByTestId("token")).toHaveTextContent("test-token-123");
     });
 
     it("トークン取得後にuserInfoが正しくセットされる", async () => {
@@ -193,8 +194,8 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent(/^false$/);
-      await expect.element(screen.getByTestId("trial")).toHaveTextContent(/^true$/);
+      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent("false");
+      await expect.element(screen.getByTestId("trial")).toHaveTextContent("true");
     });
 
     it("anonymousロールの場合、userInfo.anonymousがtrueになる", async () => {
@@ -211,8 +212,8 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent(/^true$/);
-      await expect.element(screen.getByTestId("trial")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("anonymous")).toHaveTextContent("true");
+      await expect.element(screen.getByTestId("trial")).toHaveTextContent("false");
     });
   });
 
@@ -226,7 +227,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
 
       await userEvent.click(screen.getByTestId("login-btn"));
 
@@ -248,7 +249,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
 
       await userEvent.click(screen.getByTestId("logout-btn"));
 
@@ -268,7 +269,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
     });
 
     it("checkSessionが失敗した場合、トークンは空のままである", async () => {
@@ -282,7 +283,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
 
       // Token should remain empty since checkSession failed before getTokenSilently
       expect(screen.getByTestId("token").element().textContent).toBe("");
@@ -299,7 +300,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
 
       expect(screen.getByTestId("token").element().textContent).toBe("");
     });
@@ -317,7 +318,7 @@ describe("Auth0Provider", () => {
         </Auth0Provider>
       );
 
-      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent(/^false$/);
+      await expect.element(screen.getByTestId("is-loading")).toHaveTextContent("false");
 
       // Token should remain empty because getTokenSilently returned falsy
       expect(screen.getByTestId("token").element().textContent).toBe("");

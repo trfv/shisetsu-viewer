@@ -268,7 +268,7 @@ describe("Institution Page", () => {
       });
 
       await expect.element(screen.getByRole("alert")).toBeInTheDocument();
-      await expect.element(screen.getByText("Network error")).toBeInTheDocument();
+      await expect.element(screen.getByText("API error 500: Network error")).toBeInTheDocument();
     });
   });
 

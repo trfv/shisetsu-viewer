@@ -64,15 +64,15 @@ describe("ColorModeProvider", () => {
 
       // system -> light
       await userEvent.click(toggleButton);
-      await expect.element(screen.getByTestId("mode")).toHaveTextContent(/^light$/);
+      await expect.element(screen.getByTestId("mode")).toHaveTextContent("light");
 
       // light -> dark
       await userEvent.click(toggleButton);
-      await expect.element(screen.getByTestId("mode")).toHaveTextContent(/^dark$/);
+      await expect.element(screen.getByTestId("mode")).toHaveTextContent("dark");
 
       // dark -> system
       await userEvent.click(toggleButton);
-      await expect.element(screen.getByTestId("mode")).toHaveTextContent(/^system$/);
+      await expect.element(screen.getByTestId("mode")).toHaveTextContent("system");
     });
   });
 
