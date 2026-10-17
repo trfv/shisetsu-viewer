@@ -1,6 +1,6 @@
 export type FailedStep = "prepare" | "extract" | "transform" | "validate" | "persist";
 
-export type FailureClassification = "transient" | "structural" | "unknown";
+export type FailureClassification = "transient" | "structural" | "unknown" | "infra";
 
 export interface FailureRecord {
   readonly municipality: string;

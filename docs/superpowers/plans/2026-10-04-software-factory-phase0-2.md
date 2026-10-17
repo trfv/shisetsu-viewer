@@ -37,6 +37,10 @@
 - 自治体の状態に `unknown` を加える。失敗レコードの無い失敗（タイムアウトやクラッシュ）を `ok` と区別するためで、scraper-repair の起動条件（structural または unknown）とは整合する。
 - repo variable `FACTORY_STATIONS` は、起動するステーションが存在するフェーズ 3 で入れる。フェーズ 2 の停止スイッチは `FACTORY_MODE` と `factory:hold` の 2 つ。
 - dependency の作業項目は Issue ではなく dependabot PR そのものとし、ラベルで状態を表す。PR ごとに Issue を立てると、同じものを 2 か所で追うことになるため。
+- （2026-10-17）scraper-repair の作業項目のキーと run-summary の単位は、自治体ではなくスクレイパーのディレクトリ名とする（例 `tokyo-kita-cocokita`）。シャードのジョブ名 `Scrape <ディレクトリ名> (i/n)` をそのまま使えばよい。
+- （2026-10-17）フェーズ 0 は、#1700 が #1721 に置き換わって閉じ、dependabot の滞留も 2026-10-17 に一括で処理した。残りは #1552、#1584 のクローズだけである。
+- （2026-10-17）フェーズ 1 の終了後に 1 週間待たず、続けてフェーズ 2 に進む。Task 3 のフィクスチャには、2026-10 の実際の run（kawasaki の単発の structural、sumida の 3 回連続失敗、kawasaki の全シャード失敗）を含める。
+- （2026-10-17）Task 2 では、`recordInfraFailure.ts` をサブシェルの `cd` 経由で呼ぶため knip が追えない。`knip.config.ts` の scraper の entry に `scripts/*.ts` を足す。
 
 ---
 
