@@ -32,7 +32,7 @@ import { isValidUuid } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
-  ReservationDivisionMap,
+  getReservationDivisionLabel,
   ReservationStatusMap,
   SupportedMunicipality,
 } from "../utils/municipality";
@@ -165,9 +165,11 @@ const InstitutionTab = ({
 const ReservationTab = ({
   id,
   municipality,
+  divisionLabels,
 }: {
   id: string;
   municipality: SupportedMunicipality | undefined;
+  divisionLabels: Partial<Record<string, string>> | undefined;
 }) => {
   /* istanbul ignore next -- municipality is always defined */
   if (!municipality) {
@@ -226,7 +228,9 @@ const ReservationTab = ({
                     // oxlint-disable-next-line react/no-array-index-key
                     key={i}
                   >
-                    <span>{ReservationDivisionMap[municipality]?.[division]}</span>
+                    <span>
+                      {getReservationDivisionLabel(municipality, division, divisionLabels)}
+                    </span>
                     <span>{ReservationStatusMap[municipality]?.[status]}</span>
                   </div>
                 ))}
@@ -262,7 +266,7 @@ const ReservationTab = ({
                     size="small"
                     variant="head"
                   >
-                    {ReservationDivisionMap[municipality]?.[division]}
+                    {getReservationDivisionLabel(municipality, division, divisionLabels)}
                   </TableCell>
                 ))}
                 <TableCell
@@ -370,6 +374,7 @@ const DetailContent = ({ id }: { id: string }) => {
           <ReservationTab
             id={id}
             municipality={institution?.municipality as SupportedMunicipality | undefined}
+            divisionLabels={institution?.division_labels}
           />
         )}
       </TabPanel>

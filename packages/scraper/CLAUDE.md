@@ -8,8 +8,8 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 
 既定は `<prefecture>-<slug>/` で自治体と 1:1。同一自治体に 2 つ目の予約システムがある場合は `<prefecture>-<slug>-<name>/` を作り、shared `registry.ts` の `additionalScrapers` に `<name>` を書く（例: `tokyo-kita-genkiplaza`）。DB 上の municipality は親自治体のままなので、viewer には同じ区の施設として並ぶ。共通コードは `getScraperTargets()` / `getMunicipalityByScraperTarget()` で両者を解決する。
 
-- **前提**: 同一自治体の複数システムは registry のラベル定義（`reservationDivision` / `reservationStatus`）を共有する。語彙の追加（`STATUS_n` を足す）は可能だが、**同じ enum 値に別ラベルが必要になったら破綻する**。
-- **罠**: そのとき「空いている `DIVISION_n` に逃がす」のは誤り。`is_morning_vacant` 等の D1 STORED 生成列が `RESERVATION_DIVISION_MORNING` を名指ししているため、表示は直っても「午前空き」検索から静かに漏れる。移行先は施設単位ラベル。詳細は `docs/superpowers/specs/2026-07-29-kita-genkiplaza-scraper-design.md` の「ラベルが衝突する場合」。
+- **前提**: 同一自治体の複数システムは registry のラベル定義（`reservationDivision` / `reservationStatus`）を共有する。語彙の追加（`STATUS_n` を足す）は可能だが、**同じ enum 値に別ラベルが必要な場合は registry だけでは表せない**（下記 `division_labels` を使う）。
+- **罠**: そのとき「空いている `DIVISION_n` に逃がす」のは誤り。`is_morning_vacant` 等の D1 STORED 生成列が `RESERVATION_DIVISION_MORNING` を名指ししているため、表示は直っても「午前空き」検索から静かに漏れる。代わりに施設 JSON の `division_labels`（`{ "RESERVATION_DIVISION_MORNING": "9:00-11:45" }` 形式。viewer は施設ラベル → registry の順で引く）でその施設だけ表示名を上書きする（例: tokyo-kita-cocokita のスタジオ1・3・4）。背景は `docs/superpowers/specs/2026-07-29-kita-genkiplaza-scraper-design.md` の「ラベルが衝突する場合」。
 
 - `municipality` はディレクトリ名と一致させる。`targets` の 1 要素 = 1 Playwright テスト。
 - 取得期間は `horizon: { startOffsetDays, monthsAhead, unit }`（`common/horizon.ts`）で宣言する。日付計算を自前で書かない。
@@ -25,6 +25,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 - `engines/openreaf.ts` — OpenReaf（`*.openreaf02.jp`）: tokyo-kita, tokyo-chuo
 - `engines/webrGrand.ts` — WebR Grand: tokyo-meguro, tokyo-toshima
 - `engines/genkiplaza.ts` — 元気ぷらざ独自 CGI: tokyo-kita-genkiplaza（`user.cgi` に `mm`/`span` を POST すると span ヶ月ぶんの月別テーブルが 1 ページで返る。ページ送り無し。純粋関数は `engines/*.test.ts` でユニットテスト）
+- `engines/pKashikan.ts` — 貸館予約システム（`k5.p-kashikan.jp`）: tokyo-kita-cocokita（室場ごとの 40 日表を `setNaviDate()` で送る。セルに時刻が無く ○ セルの onmousedown にだけ入るため、区分は target の `komas`（コマ表）の位置で決め、○ の時刻と食い違えば投げる）
 
 エンジン修正は同エンジンの全自治体に波及するため、修正後は各自治体 1 施設ずつ検証すること。tokyo-bunkyo / sumida / edogawa は同系 `/user/Home` SPA だが抽出戦略が異なるため standalone。
 

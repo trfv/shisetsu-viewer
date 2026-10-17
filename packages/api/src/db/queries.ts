@@ -30,6 +30,18 @@ function toBool(value: unknown): boolean {
   return value === 1 || value === "1" || value === true;
 }
 
+function parseJsonObject(value: unknown): Record<string, string> {
+  if (typeof value !== "string") return {};
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)
+      ? (parsed as Record<string, string>)
+      : {};
+  } catch {
+    return {};
+  }
+}
+
 function parseJsonArray<T>(value: unknown): T[] {
   if (typeof value !== "string") return [];
   try {
@@ -69,6 +81,7 @@ interface InstitutionRow {
   layout_image_url: string;
   lottery_period: string;
   note: string;
+  division_labels: string;
   updated_at: string;
 }
 
@@ -100,6 +113,7 @@ function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
     layout_image_url: row.layout_image_url,
     lottery_period: row.lottery_period,
     note: row.note,
+    division_labels: parseJsonObject(row.division_labels),
     updated_at: row.updated_at,
   };
 }
@@ -312,6 +326,7 @@ interface SearchRow extends ReservationRow {
   i_building: string;
   i_institution: string;
   i_institution_size: string;
+  i_division_labels: string;
 }
 
 export async function searchReservations(
@@ -371,7 +386,8 @@ export async function searchReservations(
            r.is_morning_vacant, r.is_afternoon_vacant, r.is_evening_vacant,
            ${IS_HOLIDAY_EXPR("r.date")} AS is_holiday,
            i.id AS i_id, i.municipality AS i_municipality, i.building AS i_building,
-           i.institution AS i_institution, i.institution_size AS i_institution_size
+           i.institution AS i_institution, i.institution_size AS i_institution_size,
+           i.division_labels AS i_division_labels
     FROM reservations r
     JOIN institutions i ON i.id = r.institution_id
     WHERE ${conditions.join(" AND ")}
@@ -395,6 +411,7 @@ export async function searchReservations(
         building: row.i_building,
         institution: row.i_institution,
         institution_size: row.i_institution_size,
+        division_labels: parseJsonObject(row.i_division_labels),
       },
     })),
     pageInfo: {

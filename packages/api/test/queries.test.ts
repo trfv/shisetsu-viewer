@@ -58,6 +58,7 @@ describe("getInstitutionDetail", () => {
     const detail = await getInstitutionDetail(env.DB, INSTITUTIONS[2].id);
     expect(detail?.building).toBe("非RFC館");
     expect(detail?.fee_divisions).toEqual([]);
+    expect(detail?.division_labels).toEqual({});
   });
 
   it("存在しない ID は null", async () => {
@@ -122,6 +123,7 @@ describe("searchReservations", () => {
     const hit = page.items[0]!;
     expect(hit.institution.municipality).toBe("MUNICIPALITY_KOUTOU");
     expect(hit.institution.id).toBeDefined();
+    expect(hit.institution.division_labels).toEqual({});
   });
 
   it("municipality フィルタ", async () => {

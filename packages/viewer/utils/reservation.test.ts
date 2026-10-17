@@ -100,6 +100,18 @@ describe("formatReservationMap", () => {
   test("returns empty string when both params are undefined", () => {
     expect(formatReservationMap(undefined, undefined)).toBe("");
   });
+
+  test("施設単位ラベルを優先し、キーに無い区分は自治体ラベルに落ちる", () => {
+    const obj = {
+      [ReservationDivision.MORNING]: "RESERVATION_STATUS_VACANT",
+      [ReservationDivision.AFTERNOON]: "RESERVATION_STATUS_VACANT",
+    };
+    const result = formatReservationMap("MUNICIPALITY_KITA", obj, {
+      [ReservationDivision.MORNING]: "9:00-11:45",
+    });
+    // 午後は北区 registry の "13:00-17:00"
+    expect(result).toBe("9:00-11:45: ○ 13:00-17:00: ○");
+  });
 });
 
 describe("getResevationSearchFilterFromUrlParam", () => {
