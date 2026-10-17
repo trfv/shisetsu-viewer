@@ -1,0 +1,10 @@
+{
+  "name": "@shisetsu-viewer/factory",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'src/*.test.ts'",
+    "typecheck": "tsc"
+  }
+}
