@@ -25,6 +25,7 @@ Playwright-based scrapers for municipal reservation systems; results are uploade
 - `engines/openreaf.ts` — OpenReaf（`*.openreaf02.jp`）: tokyo-kita, tokyo-chuo
 - `engines/webrGrand.ts` — WebR Grand: tokyo-meguro, tokyo-toshima
 - `engines/genkiplaza.ts` — 元気ぷらざ独自 CGI: tokyo-kita-genkiplaza（`user.cgi` に `mm`/`span` を POST すると span ヶ月ぶんの月別テーブルが 1 ページで返る。ページ送り無し。純粋関数は `engines/*.test.ts` でユニットテスト）
+- `engines/pKashikan.ts` — 貸館予約システム（`k5.p-kashikan.jp`）: tokyo-kita-cocokita（室場ごとの 40 日表を `setNaviDate()` で送る。セルに時刻が無く ○ セルの onmousedown にだけ入るため、区分は target の `komas`（コマ表）の位置で決め、○ の時刻と食い違えば投げる）
 
 エンジン修正は同エンジンの全自治体に波及するため、修正後は各自治体 1 施設ずつ検証すること。tokyo-bunkyo / sumida / edogawa は同系 `/user/Home` SPA だが抽出戦略が異なるため standalone。
 

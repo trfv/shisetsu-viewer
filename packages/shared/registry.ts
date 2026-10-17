@@ -113,8 +113,8 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "北区",
     reservationExcluded: false,
-    // 元気ぷらざは区の共通システム（OpenReaf）とは別の独自 CGI で予約状況を出している
-    additionalScrapers: ["genkiplaza"],
+    // 元気ぷらざ（独自 CGI）とココキタ（p-kashikan）は区の共通システム（OpenReaf）とは別に予約状況を出している
+    additionalScrapers: ["genkiplaza", "cocokita"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "○",
       [ReservationStatus.STATUS_1]: "△",
@@ -133,12 +133,29 @@ export const MUNICIPALITIES = {
     reservationDivision: {
       [ReservationDivision.MORNING]: "9:00-12:00",
       [ReservationDivision.AFTERNOON]: "13:00-17:00",
+      [ReservationDivision.AFTERNOON_ONE]: "12:00-14:45",
+      [ReservationDivision.AFTERNOON_TWO]: "15:00-17:45",
       [ReservationDivision.EVENING]: "18:00-22:00",
       [ReservationDivision.DIVISION_1]: "9:30-11:30",
       [ReservationDivision.DIVISION_2]: "12:00-14:00",
       [ReservationDivision.DIVISION_3]: "14:30-16:30",
       [ReservationDivision.DIVISION_4]: "17:00-19:00",
       [ReservationDivision.DIVISION_5]: "19:30-21:30",
+      // DIVISION_6 以降はココキタ
+      [ReservationDivision.DIVISION_6]: "9:00-10:45",
+      [ReservationDivision.DIVISION_7]: "11:00-12:45",
+      [ReservationDivision.DIVISION_8]: "13:00-14:45",
+      [ReservationDivision.DIVISION_9]: "15:00-16:45",
+      [ReservationDivision.DIVISION_10]: "17:00-18:45",
+      [ReservationDivision.DIVISION_11]: "9:00-10:00",
+      [ReservationDivision.DIVISION_12]: "10:15-11:15",
+      [ReservationDivision.DIVISION_13]: "11:30-12:30",
+      [ReservationDivision.DIVISION_14]: "12:45-13:45",
+      [ReservationDivision.DIVISION_15]: "14:00-15:00",
+      [ReservationDivision.DIVISION_16]: "15:15-16:15",
+      [ReservationDivision.DIVISION_17]: "16:30-17:30",
+      [ReservationDivision.DIVISION_18]: "17:45-18:45",
+      [ReservationDivision.DIVISION_19]: "19:00-20:45",
     },
     feeDivision: {
       [FeeDivision.MORNING]: "午前",
