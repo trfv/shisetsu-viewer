@@ -36,6 +36,20 @@ const useMswMock = (items: ReservationSearchHit[], hasNextPage = false) => {
   );
 };
 
+// 検索 API に送られたクエリを、最後の 1 件だけ残して返す
+const captureSearchParams = () => {
+  const captured: { params: URLSearchParams | null } = { params: null };
+  worker.use(
+    http.get(`${BASE}/v1/reservations/search`, ({ request }) => {
+      captured.params = new URL(request.url).searchParams;
+      return HttpResponse.json(createMockReservationSearchPage([], false));
+    })
+  );
+  return captured;
+};
+
+const dayButton = (label: RegExp) => screen.getByRole("button", { name: label });
+
 const paramsFor = (hit: ReservationSearchHit) => ({
   id: "row-1",
   value: undefined,
@@ -105,8 +119,8 @@ describe("Reservation Page", () => {
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await expect.element(screen.getByText("地区")).toBeInTheDocument();
-      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
-      await expect.element(screen.getByText("絞り込み", { exact: true })).toBeInTheDocument();
+      await expect.element(screen.getByText("日付", { exact: true })).toBeInTheDocument();
+      await expect.element(screen.getByText("空き時間帯")).toBeInTheDocument();
       await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
       await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
     });
@@ -343,8 +357,68 @@ describe("Reservation Page", () => {
     });
   });
 
-  describe("日付変更ハンドラー", () => {
-    it("handleStartDateChange: 新しい開始日が終了日より前の場合、終了日は変更されない", async () => {
+  describe("日付の選択", () => {
+    it("日付を 1 回押すとその日だけを検索する", async () => {
+      const captured = captureSearchParams();
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月20日/));
+
+      await expect.element(screen.getByText("2025/06/20(金)")).toBeInTheDocument();
+      await expect.element(screen.getByText("終了日を押すと期間を選べます")).toBeInTheDocument();
+      await expect.poll(() => captured.params?.get("startDate")).toBe("2025-06-20");
+      expect(captured.params?.get("endDate")).toBe("2025-06-20");
+    });
+
+    it("続けて別の日を押すとそこまでの期間になる", async () => {
+      const captured = captureSearchParams();
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月20日/));
+      await user.click(dayButton(/2025年6月28日/));
+
+      await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/06\/28/)).toBeInTheDocument();
+      await expect.element(screen.getByText(/（9日間）/)).toBeInTheDocument();
+      await expect.poll(() => captured.params?.get("endDate")).toBe("2025-06-28");
+      expect(captured.params?.get("startDate")).toBe("2025-06-20");
+    });
+
+    it("2 回目に前の日を押すと、その日から 1 回目の日までの期間になる", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月28日/));
+      await user.click(dayButton(/2025年6月20日/));
+
+      await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/06\/28/)).toBeInTheDocument();
+    });
+
+    it("期間が決まったあとに押すと、またその日だけの選択からやり直す", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou&df=2025-06-20&dt=2025-06-28"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(dayButton(/2025年6月24日/));
+
+      await expect.element(screen.getByText("2025/06/24(火)")).toBeInTheDocument();
+    });
+
+    it("今日より前の日は選べない", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<ReservationPage />, {
@@ -353,71 +427,21 @@ describe("Reservation Page", () => {
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
-
-      const dateInputs = document.querySelectorAll('input[type="date"]');
-      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
-
-      await user.fill(dateInputs[0]!, "2025-06-20");
-
-      await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/07\/15/)).toBeInTheDocument();
+      await expect.element(dayButton(/2025年6月14日/)).toBeDisabled();
     });
 
-    it("handleStartDateChange: 新しい開始日が終了日より後の場合、終了日も更新される", async () => {
-      useMswMock([]);
-
-      const { user } = await renderWithProviders(<ReservationPage />, {
-        initialEntries: ["/reservation?m=koutou&dt=2025-06-20"],
-      });
-
-      await user.click(screen.getByRole("button", { name: "絞り込み" }));
-
-      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
-
-      const dateInputs = document.querySelectorAll('input[type="date"]');
-      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
-
-      await user.fill(dateInputs[0]!, "2025-06-25");
-
-      await expect.element(screen.getByText(/2025\/06\/25.*〜.*2025\/06\/25/)).toBeInTheDocument();
-    });
-
-    it("handleEndDateChange: 新しい終了日が開始日より後の場合、開始日は変更されない", async () => {
-      useMswMock([]);
+    it("土日祝のみを選ぶと isHoliday 付きで検索する", async () => {
+      const captured = captureSearchParams();
 
       const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("checkbox", { name: "土日祝のみ" }));
 
-      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
-
-      const dateInputs = document.querySelectorAll('input[type="date"]');
-      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
-
-      await user.fill(dateInputs[1]!, "2025-07-10");
-
-      await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/10/)).toBeInTheDocument();
-    });
-
-    it("handleEndDateChange: 新しい終了日が開始日より前の場合、開始日も更新される", async () => {
-      useMswMock([]);
-
-      const { user } = await renderWithProviders(<ReservationPage />, {
-        initialEntries: ["/reservation?m=koutou&df=2025-06-20"],
-      });
-
-      await user.click(screen.getByRole("button", { name: "絞り込み" }));
-
-      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
-
-      const dateInputs = document.querySelectorAll('input[type="date"]');
-      expect(dateInputs.length).toBeGreaterThanOrEqual(2);
-
-      await user.fill(dateInputs[1]!, "2025-06-18");
-
-      await expect.element(screen.getByText(/2025\/06\/18.*〜.*2025\/06\/18/)).toBeInTheDocument();
+      await expect.poll(() => captured.params?.get("isHoliday")).toBe("true");
+      await expect.element(screen.getByRole("checkbox", { name: "土日祝のみ" })).toBeChecked();
     });
   });
 

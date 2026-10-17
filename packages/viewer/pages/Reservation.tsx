@@ -1,5 +1,5 @@
 import type { ReservationSearchHit } from "@shisetsu-viewer/shared";
-import { addMonths, endOfMonth, max, min } from "date-fns";
+import { addMonths, endOfMonth, isSameDay } from "date-fns";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
@@ -7,7 +7,7 @@ import { searchReservations } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
-import { DateRangePicker } from "../components/DateRangePicker";
+import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
 import { SearchPageLayout } from "../components/SearchPageLayout";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
@@ -23,7 +23,9 @@ import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "../utils/municipality";
 import {
+  IS_ONLY_HOLIDAY,
   RESERVATION_SEARCH_FILTER_MAP,
+  VACANCY_FILTERS,
   formatReservationMap,
   toReservationSearchParams,
   toReservationSearchQueryParams,
@@ -157,20 +159,18 @@ const ReservationPage = () => {
     [setQueryParams]
   );
 
-  const handleStartDateChange = useCallback(
-    (date: Date | null): void => {
-      /* istanbul ignore next -- date is always provided by DatePicker onChange */
-      setQueryParams({ df: date, dt: min([maxDate, max([date ?? endDate, endDate])]) });
+  const handleDateRangeChange = useCallback(
+    ({ from, to }: DateRangeValue): void => {
+      setQueryParams({ df: from, dt: to });
     },
-    [setQueryParams, endDate, maxDate]
+    [setQueryParams]
   );
 
-  const handleEndDateChange = useCallback(
-    (date: Date | null): void => {
-      /* istanbul ignore next -- date is always provided by DatePicker onChange */
-      setQueryParams({ df: max([minDate, min([date ?? startDate, startDate])]), dt: date });
+  const handleHolidayOnlyChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setQueryParams({ f: toggleArrayParam(filter, IS_ONLY_HOLIDAY, event.target.checked) });
     },
-    [setQueryParams, startDate, minDate]
+    [setQueryParams, filter]
   );
 
   const handleFilterChange = useCallback(
@@ -206,7 +206,11 @@ const ReservationPage = () => {
             onDelete: () => setQueryParams({ m: null }),
           },
         ]),
-    { label: `${formatDate(startDate)} 〜 ${formatDate(endDate)}` },
+    {
+      label: isSameDay(startDate, endDate)
+        ? formatDate(startDate)
+        : `${formatDate(startDate)} 〜 ${formatDate(endDate)}`,
+    },
     ...buildFilterChips(RESERVATION_SEARCH_FILTER_MAP, filter, (next) =>
       setQueryParams({ f: next })
     ),
@@ -233,14 +237,24 @@ const ReservationPage = () => {
             size="small"
             value={municipality}
           />
-          <DateRangePicker
-            endDateProps={{ value: endDate, onChange: handleEndDateChange, minDate, maxDate }}
-            label="期間指定"
-            startDateProps={{ value: startDate, onChange: handleStartDateChange, minDate, maxDate }}
-          />
-          <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
-            {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
-              <Checkbox key={value} label={label} value={value} />
+          <div>
+            <DateRangePicker
+              label="日付"
+              maxDate={maxDate}
+              minDate={minDate}
+              onChange={handleDateRangeChange}
+              value={{ from: startDate, to: endDate }}
+            />
+            <Checkbox
+              checked={filter.includes(IS_ONLY_HOLIDAY)}
+              label={RESERVATION_SEARCH_FILTER_MAP[IS_ONLY_HOLIDAY]}
+              onChange={handleHolidayOnlyChange}
+              value={IS_ONLY_HOLIDAY}
+            />
+          </div>
+          <CheckboxGroup label="空き時間帯" onChange={handleFilterChange} values={filter}>
+            {VACANCY_FILTERS.map((value) => (
+              <Checkbox key={value} label={RESERVATION_SEARCH_FILTER_MAP[value]} value={value} />
             ))}
           </CheckboxGroup>
           <CheckboxGroup

@@ -1,0 +1,68 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar {
+  --rdp-accent-color: var(--color-primary);
+  --rdp-accent-background-color: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-day_button-height: 38px;
+  --rdp-day_button-width: 38px;
+  --rdp-nav-height: 2.5rem;
+  --rdp-today-color: var(--color-text);
+  --color-saturday: #2f6fb5;
+  --color-sunday: #c2453a;
+
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+}
+
+:global([data-theme="dark"]) .calendar {
+  --color-saturday: #7fb2ea;
+  --color-sunday: #f08a80;
+}
+
+/* 今日は太字だけにして、選択中の日と見分けられるようにする */
+.calendar :global(.rdp-today:not(.rdp-selected)) {
+  font-weight: 700;
+}
+
+/* 既定の font-size: large だと期間の中の日付が大きくなり、行の高さが揃わない */
+.calendar :global(.rdp-selected) {
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.calendar :global(.rdp-chevron) {
+  fill: var(--color-primary);
+}
+
+.saturday:not(:global(.rdp-disabled)) {
+  color: var(--color-saturday);
+}
+
+.sunday:not(:global(.rdp-disabled)) {
+  color: var(--color-sunday);
+}
+
+.summary {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--font-size-medium);
+}
+
+.days {
+  white-space: nowrap;
+}
+
+.hint {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}
