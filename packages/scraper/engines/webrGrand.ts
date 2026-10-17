@@ -41,6 +41,41 @@ function buildISODateStrings(monthHeader: string, dateCells: string[]): string[]
   return dateCells.map((_, i) => format(addDays(startDate, i), "yyyy-MM-dd"));
 }
 
+/**
+ * 全区分のパスで取れた日付だけを残す。
+ * 区分ごとに別々にページ送りするため、1 区分だけ途中で切れる（collectPaginated が途中までを返す）と、
+ * 切れた先の日付が「その区分なし」で出力される。api の upsert は reservation を丸ごと置き換えるので、
+ * 前回の正しい値まで消える。切れた先の日付は出さずに D1 の前回値を残す。
+ * 日付はカレンダーの見出しから取る（部屋行が 0 件のパスでも日付は取れているので、slots からは引かない）。
+ */
+export function keepDatesCoveredByAllDivisions(
+  slots: readonly RawSlot[],
+  tables: readonly WebrGrandTable[],
+  divisions: readonly string[]
+): RawSlot[] {
+  const datesByDivision = new Map<string, Set<string>>(divisions.map((d) => [d, new Set()]));
+  for (const { division, header } of tables) {
+    for (const date of buildISODateStrings(header[0] ?? "", header.slice(2))) {
+      datesByDivision.get(division)?.add(date);
+    }
+  }
+  const sets = [...datesByDivision.values()];
+  const kept: RawSlot[] = [];
+  const dropped = new Set<string>();
+  for (const slot of slots) {
+    if (sets.every((dates) => dates.has(slot.date))) kept.push(slot);
+    else dropped.add(slot.date);
+  }
+  if (dropped.size > 0) {
+    const coverage = divisions.map((d) => `${d}=${datesByDivision.get(d)?.size ?? 0}`).join(", ");
+    console.warn(
+      `Dropped ${dropped.size} dates not covered by every division pass (${coverage}); ` +
+        "D1 keeps the previous values for them."
+    );
+  }
+  return kept;
+}
+
 async function extractTables(page: Page, division: string): Promise<WebrGrandTable[]> {
   const tables = await page.locator("table").all();
   const output: WebrGrandTable[] = [];
@@ -209,7 +244,11 @@ export function webrGrandHooks(config: WebrGrandConfig): {
           }))
         );
       });
-      return rawSlotsToOutput(slots, config.divisionMap, config.statusMap);
+      return rawSlotsToOutput(
+        keepDatesCoveredByAllDivisions(slots, extracted, divisions),
+        config.divisionMap,
+        config.statusMap
+      );
     },
 
     discover(page) {
