@@ -25,9 +25,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # 既定は 5 本。version-updates のグループが 7 つあり、すべてが同時に PR を出すと上限に当たって
-    # 新しい PR が作られなくなる（2026-10-05〜17 に zod などが止まっていた）。
-    # security-updates はこの上限に数えられない
     open-pull-requests-limit: 10
     cooldown:
       default-days: 5
@@ -52,9 +49,6 @@ updates:
           - "@testing-library/*"
           - "@playwright/test"
           - "msw"
-      # Cloudflare のツールチェインは 1 つの PR で揃えて上げる。@cloudflare/vitest-plugin は
-      # wrangler / miniflare を厳密に固定するため、wrangler だけ上げると workerd が多重化する。
-      # factory の CF_TOOLCHAIN（needs-human）と同じ範囲にする
       cloudflare:
         applies-to: version-updates
         patterns:
