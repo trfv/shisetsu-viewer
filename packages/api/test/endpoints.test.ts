@@ -36,7 +36,7 @@ describe("public endpoints", () => {
   it("GET /v1/health → 200 ok", async () => {
     const res = await SELF.fetch(`${BASE}/v1/health`);
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ ok: true });
+    expect(await res.json()).toEqual({ ok: true, version: null });
   });
 
   it("GET /v1/institutions → 200 + Cache-Control", async () => {

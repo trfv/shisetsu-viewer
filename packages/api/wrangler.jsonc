@@ -9,6 +9,8 @@
   // PR3-5 で Hasura の A レコード削除後に api.shisetsudb.com へ張り替える。
   "routes": [{ "pattern": "d1-api.shisetsudb.com", "custom_domain": true }],
   "observability": { "enabled": true },
+  // /v1/health が版タグ（deploy:ci が付けるコミット SHA）を返すのに使う
+  "version_metadata": { "binding": "CF_VERSION_METADATA" },
   "d1_databases": [
     {
       "binding": "DB",

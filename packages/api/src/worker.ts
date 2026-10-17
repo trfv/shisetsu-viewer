@@ -32,6 +32,8 @@ export interface Env {
   // テスト専用: 設定されていればローカル JWKS を使う（本番 wrangler.jsonc には無い）
   TEST_JWKS_JSON?: string;
   TEST_GITHUB_JWKS_JSON?: string;
+  // 稼働中の版のメタデータ。tag は Workers Builds の deploy:ci が付けるコミット SHA（先頭 12 桁）
+  CF_VERSION_METADATA?: WorkerVersionMetadata;
 }
 
 // 1 リクエストの最大予約行数（Workers Free CPU / D1 バインド上限に余裕）
@@ -320,7 +322,9 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
     }
 
     if (request.method === "GET") {
-      if (pathname === "/v1/health") return json({ ok: true });
+      // version は Database ワークフローが「新しい api が出たか」を待つのに使う（手元デプロイでは null）
+      if (pathname === "/v1/health")
+        return json({ ok: true, version: env.CF_VERSION_METADATA?.tag || null });
       if (pathname === "/v1/institutions")
         return await withEdgeCache(url, ctx, () => handleListInstitutions(url, env));
       if (pathname === "/v1/scrape-runs")
