@@ -25,6 +25,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 10
     cooldown:
       default-days: 5
       semver-major-days: 14
@@ -48,13 +49,18 @@ updates:
           - "@testing-library/*"
           - "@playwright/test"
           - "msw"
+      cloudflare:
+        applies-to: version-updates
+        patterns:
+          - "wrangler"
+          - "miniflare"
+          - "@cloudflare/vitest-plugin"
       build:
         applies-to: version-updates
         patterns:
           - "vite"
           - "@vitejs/*"
           - "@swc/*"
-          - "wrangler"
       linting:
         applies-to: version-updates
         patterns:
@@ -83,6 +89,8 @@ updates:
           - "@vitejs/*"
           - "@swc/*"
           - "wrangler"
+          - "miniflare"
+          - "@cloudflare/vitest-plugin"
           - "eslint"
           - "eslint-*"
           - "@eslint/*"
