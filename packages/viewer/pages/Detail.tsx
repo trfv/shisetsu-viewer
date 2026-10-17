@@ -1,6 +1,6 @@
 import type { InstitutionDetail, ReservationDto } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
-import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { useCallback, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
@@ -176,7 +176,7 @@ const ReservationTab = ({
 
   const isMobile = useIsMobile();
   // 「今日」はモジュール読み込み時ではなくタブ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
-  const today = useMemo(() => new Date(), []);
+  const [today] = useState(() => new Date());
 
   const {
     loading,
