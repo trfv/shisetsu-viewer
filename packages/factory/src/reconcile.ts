@@ -28,7 +28,7 @@ const STATE_LABELS: readonly string[] = [
 ];
 
 /** 単発の失敗は retry と次回の実行に任せ、この回数続いたものだけを作業にする。 */
-const THRESHOLD = 2;
+export const THRESHOLD = 2;
 
 const OBSERVE_NOTE = "_observe モード：factory が on なら、ここでステーションを起動していた。_";
 
