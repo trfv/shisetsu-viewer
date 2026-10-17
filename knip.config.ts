@@ -10,6 +10,9 @@ const config: KnipConfig = {
     "packages/viewer": {
       ignoreDependencies: [],
     },
+    "packages/factory": {
+      entry: ["src/cli/*.ts"],
+    },
     "packages/scraper": {
       entry: ["**/index.test.ts", "*/index.ts", "scripts/*.ts", "tools/**/*.ts"],
       ignoreDependencies: [],
