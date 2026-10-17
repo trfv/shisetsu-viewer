@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { DataSource } from "../data/dataSource.ts";
 import { RESERVATION_FIELDS } from "./fields.ts";
 import { pick } from "./pick.ts";
-import { dateSchema, fieldsSchema, institutionIdSchema } from "./schemas.ts";
+import { dateSchema, fieldsSchema, institutionIdSchema, rowSchema } from "./schemas.ts";
 
 export const getInstitutionReservationsInput = z.object({
   institutionId: institutionIdSchema.describe("施設のUUID"),
@@ -12,10 +12,15 @@ export const getInstitutionReservationsInput = z.object({
   fields: fieldsSchema(RESERVATION_FIELDS),
 });
 
+export const getInstitutionReservationsOutput = z.object({
+  reservations: z.array(rowSchema),
+  count: z.number().int(),
+});
+
 export async function executeGetInstitutionReservations(
   args: z.output<typeof getInstitutionReservationsInput>,
   dataSource: DataSource
-): Promise<{ reservations: Record<string, unknown>[]; count: number }> {
+): Promise<z.output<typeof getInstitutionReservationsOutput>> {
   const rows = await dataSource.getInstitutionReservations(args.institutionId, {
     startDate: args.startDate,
     endDate: args.endDate,

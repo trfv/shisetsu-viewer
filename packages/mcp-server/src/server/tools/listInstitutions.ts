@@ -1,8 +1,12 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/server";
 
 import type { DataSource } from "../../data/dataSource.ts";
-import { executeListInstitutions, listInstitutionsInput } from "../../queries/listInstitutions.ts";
-import { jsonResult, READ_ONLY } from "./result.ts";
+import {
+  executeListInstitutions,
+  listInstitutionsInput,
+  listInstitutionsOutput,
+} from "../../queries/listInstitutions.ts";
+import { READ_ONLY, structuredResult } from "./result.ts";
 
 export function registerListInstitutions(server: McpServer, dataSource: DataSource): void {
   server.registerTool(
@@ -14,7 +18,8 @@ export function registerListInstitutions(server: McpServer, dataSource: DataSour
 【レスポンス】institutions: 施設配列(id, municipality, building, institution 等), pageInfo: { hasNextPage, endCursor }, count`,
       annotations: { title: "施設一覧取得", ...READ_ONLY },
       inputSchema: listInstitutionsInput,
+      outputSchema: listInstitutionsOutput,
     },
-    async (args) => jsonResult(await executeListInstitutions(args, dataSource))
+    async (args) => structuredResult(await executeListInstitutions(args, dataSource))
   );
 }

@@ -61,6 +61,14 @@ export const afterSchema = z
   .optional()
   .describe("ページネーション用カーソル (前回レスポンスの endCursor)");
 
+/** fields で絞った 1 行。どのキーが残るかは fields 次第なので、値の型までは縛らない */
+export const rowSchema = z.record(z.string(), z.unknown());
+
+export const pageInfoSchema = z.object({
+  hasNextPage: z.boolean(),
+  endCursor: z.string().nullable(),
+});
+
 /** 返却フィールドの選択。省略時は全フィールド。 */
 export const fieldsSchema = <const T extends readonly [string, ...string[]]>(
   fields: T,

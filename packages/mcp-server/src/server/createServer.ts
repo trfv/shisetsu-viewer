@@ -1,4 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 
 import type { DataSource, WritableDataSource } from "../data/dataSource.ts";
 import { registerGuidePrompt } from "./prompts/guide.ts";
@@ -27,7 +27,7 @@ export function createServer(options: {
 }): McpServer {
   const server = new McpServer({
     name: "shisetsu-viewer",
-    version: "0.2.0",
+    version: "0.3.0",
   });
 
   registerMunicipalitiesResource(server);

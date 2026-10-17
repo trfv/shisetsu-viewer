@@ -1,4 +1,4 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 export function registerSearchAvailableRoomsPrompt(server: McpServer): void {
@@ -7,7 +7,7 @@ export function registerSearchAvailableRoomsPrompt(server: McpServer): void {
     {
       title: "空き施設検索",
       description: "条件を指定して空いている音楽練習施設を検索するプロンプト",
-      argsSchema: {
+      argsSchema: z.object({
         area: z.string().optional().describe("エリア名（例: 江東区、川崎市）"),
         date: z.string().optional().describe("日付や期間（例: 来週末、3月15日）"),
         timeSlot: z.string().optional().describe("時間帯（午前 / 午後 / 夜間）"),
@@ -15,7 +15,7 @@ export function registerSearchAvailableRoomsPrompt(server: McpServer): void {
           .string()
           .optional()
           .describe("楽器種類（弦楽器 / 木管楽器 / 金管楽器 / 打楽器）"),
-      },
+      }),
     },
     async (args) => {
       const conditions = [
