@@ -119,8 +119,8 @@ describe("Reservation Page", () => {
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
       await expect.element(screen.getByText("地区")).toBeInTheDocument();
-      await expect.element(screen.getByText("日付", { exact: true })).toBeInTheDocument();
-      await expect.element(screen.getByText("空き時間帯")).toBeInTheDocument();
+      await expect.element(screen.getByText("期間指定")).toBeInTheDocument();
+      await expect.element(screen.getByText("絞り込み", { exact: true })).toBeInTheDocument();
       await expect.element(screen.getByText("利用可能楽器")).toBeInTheDocument();
       await expect.element(screen.getByText("施設サイズ")).toBeInTheDocument();
     });
@@ -369,7 +369,6 @@ describe("Reservation Page", () => {
       await user.click(dayButton(/2025年6月20日/));
 
       await expect.element(screen.getByText("2025/06/20(金)")).toBeInTheDocument();
-      await expect.element(screen.getByText("終了日を押すと期間を選べます")).toBeInTheDocument();
       await expect.poll(() => captured.params?.get("startDate")).toBe("2025-06-20");
       expect(captured.params?.get("endDate")).toBe("2025-06-20");
     });
@@ -386,7 +385,6 @@ describe("Reservation Page", () => {
       await user.click(dayButton(/2025年6月28日/));
 
       await expect.element(screen.getByText(/2025\/06\/20.*〜.*2025\/06\/28/)).toBeInTheDocument();
-      await expect.element(screen.getByText(/（9日間）/)).toBeInTheDocument();
       await expect.poll(() => captured.params?.get("endDate")).toBe("2025-06-28");
       expect(captured.params?.get("startDate")).toBe("2025-06-20");
     });

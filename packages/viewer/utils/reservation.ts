@@ -103,7 +103,7 @@ export const formatReservationMap = (
 const IS_ONLY_MORNING_VACANT = "m";
 const IS_ONLY_AFTERNOON_VACANT = "a";
 const IS_ONLY_EVENING_VACANT = "e";
-export const IS_ONLY_HOLIDAY = "h";
+const IS_ONLY_HOLIDAY = "h";
 
 export const RESERVATION_SEARCH_FILTER_MAP = {
   [IS_ONLY_MORNING_VACANT]: "午前空き",
@@ -111,13 +111,6 @@ export const RESERVATION_SEARCH_FILTER_MAP = {
   [IS_ONLY_EVENING_VACANT]: "夜間空き",
   [IS_ONLY_HOLIDAY]: "土日祝のみ",
 } as const;
-
-// 期間と組み合わせる「土日祝のみ」と分けて、空き時間帯の絞り込みだけを並べる
-export const VACANCY_FILTERS = [
-  IS_ONLY_MORNING_VACANT,
-  IS_ONLY_AFTERNOON_VACANT,
-  IS_ONLY_EVENING_VACANT,
-] as const;
 
 const ReservationSearchFilters = [
   IS_ONLY_MORNING_VACANT,

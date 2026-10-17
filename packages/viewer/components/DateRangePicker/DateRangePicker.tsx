@@ -2,10 +2,9 @@ import { DayPicker, type DateRange } from "@daypicker/react";
 
 import "@daypicker/react/style.css";
 import { ja } from "@daypicker/react/locale";
-import { differenceInCalendarDays, isSameDay } from "date-fns";
+import { isSameDay } from "date-fns";
 import { useState, type FC } from "react";
 
-import { formatMonthDate } from "../../utils/format";
 import { SmallLabel } from "../Label";
 
 import styles from "./DateRangePicker.module.css";
@@ -19,18 +18,6 @@ type Props = {
   minDate: Date;
   maxDate: Date;
 };
-
-const summarize = (value: DateRangeValue) =>
-  isSameDay(value.from, value.to) ? (
-    formatMonthDate(value.from)
-  ) : (
-    <span>
-      {`${formatMonthDate(value.from)} 〜 ${formatMonthDate(value.to)}`}
-      <span className={styles["days"]}>
-        {`（${differenceInCalendarDays(value.to, value.from) + 1}日間）`}
-      </span>
-    </span>
-  );
 
 // 1 タップ目でその日だけを選び、続けて 2 タップ目を押すとそこまでの期間になる。
 // 開始日だけ決まった途中の状態はここで持ち、親には常に完結した範囲（1 日なら from = to）を渡す。
@@ -68,10 +55,6 @@ export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, ma
         selected={activeDraft ?? value}
         startMonth={minDate}
       />
-      <p aria-live="polite" className={styles["summary"]}>
-        {summarize(value)}
-        {activeDraft && <span className={styles["hint"]}>終了日を押すと期間を選べます</span>}
-      </p>
     </div>
   );
 };

@@ -12,20 +12,10 @@ describe("DateRangePicker Component", () => {
     maxDate: new Date(2021, 2, 31),
   };
 
-  it("ラベルと選択中の期間を表示する", async () => {
+  it("ラベルを表示する", async () => {
     await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
     await expect.element(screen.getByText("日付")).toBeInTheDocument();
-    await expect
-      .element(screen.getByText("1月10日(日) 〜 1月20日(水)（11日間）", { exact: false }))
-      .toBeInTheDocument();
-  });
-
-  it("1 日だけのときは日数を出さない", async () => {
-    const day = new Date(2021, 0, 10);
-    await renderWithProviders(<DateRangePicker {...defaultProps} value={{ from: day, to: day }} />);
-
-    await expect.element(screen.getByText("1月10日(日)")).toBeInTheDocument();
   });
 
   it("1 回目はその日だけ、2 回目でそこまでの期間を onChange に渡す", async () => {

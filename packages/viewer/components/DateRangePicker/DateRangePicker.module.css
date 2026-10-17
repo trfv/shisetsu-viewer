@@ -49,20 +49,3 @@
 .sunday:not(:global(.rdp-disabled)) {
   color: var(--color-sunday);
 }
-
-.summary {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: var(--font-size-medium);
-}
-
-.days {
-  white-space: nowrap;
-}
-
-.hint {
-  font-size: var(--font-size-small);
-  color: var(--color-text-secondary);
-}

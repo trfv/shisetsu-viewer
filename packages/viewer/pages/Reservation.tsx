@@ -23,9 +23,7 @@ import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
 } from "../utils/municipality";
 import {
-  IS_ONLY_HOLIDAY,
   RESERVATION_SEARCH_FILTER_MAP,
-  VACANCY_FILTERS,
   formatReservationMap,
   toReservationSearchParams,
   toReservationSearchQueryParams,
@@ -166,13 +164,6 @@ const ReservationPage = () => {
     [setQueryParams]
   );
 
-  const handleHolidayOnlyChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setQueryParams({ f: toggleArrayParam(filter, IS_ONLY_HOLIDAY, event.target.checked) });
-    },
-    [setQueryParams, filter]
-  );
-
   const handleFilterChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
@@ -237,24 +228,16 @@ const ReservationPage = () => {
             size="small"
             value={municipality}
           />
-          <div>
-            <DateRangePicker
-              label="日付"
-              maxDate={maxDate}
-              minDate={minDate}
-              onChange={handleDateRangeChange}
-              value={{ from: startDate, to: endDate }}
-            />
-            <Checkbox
-              checked={filter.includes(IS_ONLY_HOLIDAY)}
-              label={RESERVATION_SEARCH_FILTER_MAP[IS_ONLY_HOLIDAY]}
-              onChange={handleHolidayOnlyChange}
-              value={IS_ONLY_HOLIDAY}
-            />
-          </div>
-          <CheckboxGroup label="空き時間帯" onChange={handleFilterChange} values={filter}>
-            {VACANCY_FILTERS.map((value) => (
-              <Checkbox key={value} label={RESERVATION_SEARCH_FILTER_MAP[value]} value={value} />
+          <DateRangePicker
+            label="期間指定"
+            maxDate={maxDate}
+            minDate={minDate}
+            onChange={handleDateRangeChange}
+            value={{ from: startDate, to: endDate }}
+          />
+          <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
+            {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
+              <Checkbox key={value} label={label} value={value} />
             ))}
           </CheckboxGroup>
           <CheckboxGroup
