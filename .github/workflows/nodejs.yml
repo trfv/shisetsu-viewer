@@ -74,8 +74,6 @@ jobs:
         run: npm run test -w @shisetsu-viewer/factory
       - name: API unit tests
         run: npm run test -w @shisetsu-viewer/api
-      # BFF（viewer の Worker）は browser mode の対象外なので、別 config で明示的に走らせる。
-      # ここを忘れると認証層がまるごと CI 無検証になる。
       - name: BFF worker tests
         run: npm run test:worker -w @shisetsu-viewer/viewer
       - name: MCP server unit tests
