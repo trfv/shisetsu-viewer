@@ -16,12 +16,17 @@ import { RESERVATIONS_HARD_CAP, type WritableDataSource } from "./dataSource.ts"
 interface HttpAuth {
   bearer?: string | undefined;
   adminKey?: string | undefined;
+  // 利用者の送信元 IP。api の RATE_LIMITER は無認証の要求をこれで数える
+  clientIp?: string | undefined;
 }
+
+type FetchFn = (input: string, init?: RequestInit) => Promise<Response>;
 
 function authHeaders(auth: HttpAuth): Record<string, string> {
   const headers: Record<string, string> = {};
   if (auth.bearer) headers["Authorization"] = `Bearer ${auth.bearer}`;
   if (auth.adminKey) headers["X-Admin-Key"] = auth.adminKey;
+  if (auth.clientIp) headers["CF-Connecting-IP"] = auth.clientIp;
   return headers;
 }
 
@@ -42,15 +47,20 @@ function appendStr(sp: URLSearchParams, key: string, value: string | undefined):
 }
 
 /**
- * stdio / CLI 用 DataSource。api.shisetsudb.com（`endpoint`）への fetch で実装する。
- * 認証は Bearer（ユーザートークン、CLI）または X-Admin-Key（stdio 管理用）。
+ * api の REST で実装する DataSource。`endpoint` への fetch で実装する。
+ * 認証は Bearer（ユーザートークン、CLI / Workers）または X-Admin-Key（stdio 管理用）。
+ * Workers からは `fetchFn` に Service Binding の fetch を渡す（host は使われない）。
  */
-export function createHttpDataSource(endpoint: string, auth: HttpAuth): WritableDataSource {
+export function createHttpDataSource(
+  endpoint: string,
+  auth: HttpAuth,
+  fetchFn: FetchFn = (input, init) => fetch(input, init)
+): WritableDataSource {
   const base = endpoint.replace(/\/$/, "");
   const headers = authHeaders(auth);
 
   async function getJson<T>(pathAndQuery: string): Promise<T> {
-    const response = await fetch(`${base}${pathAndQuery}`, { headers });
+    const response = await fetchFn(`${base}${pathAndQuery}`, { headers });
     if (!response.ok) {
       throw new Error(`API request failed: ${response.status} ${await response.text()}`);
     }
@@ -58,7 +68,7 @@ export function createHttpDataSource(endpoint: string, auth: HttpAuth): Writable
   }
 
   async function putJson<T>(path: string, body: unknown): Promise<T> {
-    const response = await fetch(`${base}${path}`, {
+    const response = await fetchFn(`${base}${path}`, {
       method: "PUT",
       headers: { ...headers, "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -84,7 +94,7 @@ export function createHttpDataSource(endpoint: string, auth: HttpAuth): Writable
     },
 
     async getInstitutionDetail(id: string): Promise<InstitutionDetail | null> {
-      const response = await fetch(`${base}/v1/institutions/${id}`, { headers });
+      const response = await fetchFn(`${base}/v1/institutions/${id}`, { headers });
       if (response.status === 404) return null;
       if (!response.ok) {
         throw new Error(`API request failed: ${response.status} ${await response.text()}`);

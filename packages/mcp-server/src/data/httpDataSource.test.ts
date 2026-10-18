@@ -100,4 +100,24 @@ describe("createHttpDataSource", () => {
       ds.searchReservations({ startDate: "2026-08-01", endDate: "2026-08-07" })
     ).rejects.toThrow(/API request failed: 500/);
   });
+
+  it("注入した fetch を使い、送信元 IP を CF-Connecting-IP で渡す（Workers の Service Binding）", async () => {
+    const injected = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse({ items: [], pageInfo: { hasNextPage: false, endCursor: null } })
+      );
+    const ds = createHttpDataSource(
+      "https://api.internal",
+      { bearer: "tok", clientIp: "203.0.113.7" },
+      injected
+    );
+    await ds.listInstitutions({});
+    expect(fetchMock).not.toHaveBeenCalled();
+    const [reqUrl, init] = injected.mock.calls[0] as [string, RequestInit];
+    expect(new URL(reqUrl).origin).toBe("https://api.internal");
+    const headers = init.headers as Record<string, string>;
+    expect(headers["Authorization"]).toBe("Bearer tok");
+    expect(headers["CF-Connecting-IP"]).toBe("203.0.113.7");
+  });
 });

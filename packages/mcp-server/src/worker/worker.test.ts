@@ -64,7 +64,7 @@ function stubFetch() {
 }
 
 const env = () => ({
-  DB: {},
+  API: { fetch: () => Promise.reject(new Error("unexpected api fetch")) },
   AUTH0_DOMAIN: "auth0.example",
   AUTH0_CLIENT_ID: "auth0-client",
   AUTH0_CLIENT_SECRET: "auth0-secret",
