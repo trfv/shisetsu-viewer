@@ -7,7 +7,6 @@ import { ColorModeProvider, useColorMode } from "./ColorMode";
 
 const STORAGE_KEY = "shisetsu-viewer-color-mode";
 
-// Helper component that reads from the context and exposes values for testing
 const ColorModeConsumer = () => {
   const { mode, isDark, toggleMode } = useColorMode();
   return (
@@ -59,18 +58,14 @@ describe("ColorModeProvider", () => {
 
       const toggleButton = screen.getByTestId("toggle");
 
-      // Initial: system
       expect(screen.getByTestId("mode").element().textContent).toBe("system");
 
-      // system -> light
       await userEvent.click(toggleButton);
       await expect.element(screen.getByTestId("mode")).toHaveTextContent("light");
 
-      // light -> dark
       await userEvent.click(toggleButton);
       await expect.element(screen.getByTestId("mode")).toHaveTextContent("dark");
 
-      // dark -> system
       await userEvent.click(toggleButton);
       await expect.element(screen.getByTestId("mode")).toHaveTextContent("system");
     });
@@ -86,15 +81,12 @@ describe("ColorModeProvider", () => {
 
       const toggleButton = screen.getByTestId("toggle");
 
-      // Toggle to light
       await userEvent.click(toggleButton);
       await vi.waitFor(() => expect(localStorage.getItem(STORAGE_KEY)).toBe("light"));
 
-      // Toggle to dark
       await userEvent.click(toggleButton);
       await vi.waitFor(() => expect(localStorage.getItem(STORAGE_KEY)).toBe("dark"));
 
-      // Toggle back to system
       await userEvent.click(toggleButton);
       await vi.waitFor(() => expect(localStorage.getItem(STORAGE_KEY)).toBe("system"));
     });
@@ -138,7 +130,6 @@ describe("ColorModeProvider", () => {
 
   describe("テーマ解決", () => {
     it("systemモードでprefers-color-schemeがlightの場合、isDark=false", async () => {
-      // Default matchMedia returns matches=false (light)
       await render(
         <ColorModeProvider>
           <ColorModeConsumer />
@@ -177,7 +168,6 @@ describe("ColorModeProvider", () => {
 
   describe("useColorModeフック", () => {
     it("プロバイダーなしではデフォルト値を返す", async () => {
-      // Context default: mode "system", isDark false
       await render(<ColorModeConsumer />);
 
       expect(screen.getByTestId("mode").element().textContent).toBe("system");
@@ -189,7 +179,6 @@ describe("ColorModeProvider", () => {
       const toggleButton = screen.getByTestId("toggle");
       await userEvent.click(toggleButton);
 
-      // Default toggleMode is a no-op, mode should remain "system"
       expect(screen.getByTestId("mode").element().textContent).toBe("system");
     });
   });

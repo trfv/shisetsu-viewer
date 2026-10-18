@@ -1,8 +1,3 @@
-/**
- * 国内 proxy の経路断を失敗レコードとして test-results/<municipality>/_failures/ に書く。
- * scrape アクションの preflight 失敗時に呼ばれる。
- * 使い方: node scripts/recordInfraFailure.ts <municipality> <reason>
- */
 import fs from "node:fs";
 import path from "node:path";
 

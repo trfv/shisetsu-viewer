@@ -66,7 +66,6 @@ const RESERVATION_DIVISION_ORDER = {
 
 type ReservationDivisionKey = keyof typeof RESERVATION_DIVISION_ORDER;
 
-// key に ReservationDivision を利用している Object をソートした配列で返す
 export const sortByReservationDivision = (obj: Record<string, string>): [string, string][] => {
   return Object.entries(obj).sort(
     ([a], [b]) =>

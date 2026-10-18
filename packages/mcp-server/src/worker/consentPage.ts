@@ -1,17 +1,9 @@
 import type { ConsentDescription } from "@cloudflare/workers-oauth-provider";
 
-/**
- * 認可のたびに出す同意画面。
- *
- * 動的に登録・提示されたクライアントを確認なしで Auth0 へ流すと confused deputy になる
- * （攻撃者のクライアントにログイン済みユーザーのトークンが渡る）。MCP 仕様はプロキシ型の
- * サーバーにクライアントごとの同意を MUST として課している。表示項目は仕様の要求に従う：
- * クライアント名、CIMD ならその発行ドメイン、トークンの送り先ホスト、localhost 宛ての警告。
- */
-
 // クライアント名やホストは攻撃者が選べる値なので、すべてエスケープする
 const escape = (value: string) => value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
 
+// 同意画面を省くと confused deputy になる（MCP 仕様の MUST）。表示項目は仕様の要求に従う。
 export function renderConsentPage(details: ConsentDescription, handle: string): string {
   const name = escape(details.clientName);
   const publisher = details.clientDomain

@@ -1,4 +1,3 @@
-/** XS: 0px ~ 679px, and so on. */
 export const BREAKPOINTS = {
   xs: 0,
   sm: 680,

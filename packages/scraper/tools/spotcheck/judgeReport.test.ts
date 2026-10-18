@@ -33,7 +33,7 @@ const EXPECTED_VACANT: ExpectedSample = {
   id: PLAN.id,
   reservation: {
     RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT",
-    RESERVATION_DIVISION_AFTERNOON: "RESERVATION_STATUS_STATUS_1", // koutou では「予約あり」
+    RESERVATION_DIVISION_AFTERNOON: "RESERVATION_STATUS_STATUS_1",
   },
 };
 
@@ -57,7 +57,7 @@ test("カテゴリが食い違えば MISMATCH で区分と両値を detail に�
     EXPECTED_VACANT,
     observed({
       cells: [
-        { divisionLabel: "午前", symbol: "×" }, // D1 は VACANT
+        { divisionLabel: "午前", symbol: "×" },
         { divisionLabel: "午後", symbol: "×" },
       ],
     })
@@ -117,7 +117,6 @@ test("未知の記号・未知の区分ラベルは UNMAPPED", () => {
 });
 
 test("凡例があれば記号表より優先される", () => {
-  // 凡例が △=抽選申込あり（埋まり系）と言うサイトでは、D1 の STATUS_1（予約あり）と一致する
   const result = judgeSample(
     PLAN,
     { id: PLAN.id, reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1" } },
@@ -130,8 +129,6 @@ test("凡例があれば記号表より優先される", () => {
 });
 
 test("registry のラベルが記号そのものでも期待側を categorizeSymbol でカテゴリ化して MATCH になる（C1）", () => {
-  // tokyo-kita は reservationStatus に記号そのものを格納している（VACANT: "○"）。
-  // categorizeLabel だけでは UNKNOWN になっていたが、categorizeSymbol は記号表にフォールバックする。
   const plan: PlanSample = {
     id: "tokyo-kita:4c79dcb5-e7f1-18fd-8f9a-000000000003:2026-08-01",
     target: "tokyo-kita",
@@ -153,7 +150,6 @@ test("registry のラベルが記号そのものでも期待側を categorizeSym
 });
 
 test("区分ラベルの表記ゆれ（全角/半角、範囲記号）を正規化して同一視する（I2）", () => {
-  // kanagawa-kawasaki の registry は「午後１」（全角数字）。サイト観測が半角「午後1」でも一致させる。
   const plan: PlanSample = {
     id: "kanagawa-kawasaki:d1a12a0c-aaaa-bbbb-cccc-000000000099:2026-08-01",
     target: "kanagawa-kawasaki",
@@ -177,8 +173,6 @@ test("区分ラベルの表記ゆれ（全角/半角、範囲記号）を正規�
   assert.equal(result.verdict, "MATCH");
 });
 
-// --- band モード（サイトが時間帯レンジ、registry が午前/午後/夜間の自治体） ---
-
 const ARAKAWA_PLAN: PlanSample = {
   id: "tokyo-arakawa:9f0e1d2c-aaaa-bbbb-cccc-000000000001:2026-07-19",
   target: "tokyo-arakawa",
@@ -189,7 +183,6 @@ const ARAKAWA_PLAN: PlanSample = {
   divisionLabels: ["午前", "午後", "午後1", "午後2", "夜間"],
 };
 
-// 石浜ふれあい館の実観測（sample-dumps 由来）。4 区分が morning:1 / afternoon:2 / evening:1 に畳まれる。
 const ARAKAWA_CELLS = [
   { divisionLabel: "09:00\n～\n12:00", symbol: "Ｘ" },
   { divisionLabel: "12:15\n～\n15:15", symbol: "Ｘ" },
@@ -215,7 +208,6 @@ test("registry が午前/午後・サイトが時間帯レンジの自治体は 
 });
 
 test("band が跨るカテゴリの取り違えは band モードでも MISMATCH になる", () => {
-  // D1 の夜間だけ「予約あり」に取り違えたケース。サイトは夜間が空き。
   const result = judgeSample(
     ARAKAWA_PLAN,
     {
@@ -234,7 +226,6 @@ test("band が跨るカテゴリの取り違えは band モードでも MISMATCH
 });
 
 test("band 単位のコマ数の欠落（片側にしか無い band）は MISMATCH になる", () => {
-  // D1 に夜間の行が無い＝サイトにある区分が D1 から落ちている silent failure。
   const result = judgeSample(
     ARAKAWA_PLAN,
     {
@@ -252,7 +243,6 @@ test("band 単位のコマ数の欠落（片側にしか無い band）は MISMAT
 });
 
 test("同一 band 内のコマ数の違いも MISMATCH になる（マルチセット比較）", () => {
-  // サイトは afternoon 2 コマだが D1 は 1 コマしかない。
   const result = judgeSample(
     ARAKAWA_PLAN,
     {
@@ -310,7 +300,6 @@ test("band モードで D1 の区分 enum を band に畳めなければ UNMAPPE
         RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_STATUS_1",
         RESERVATION_DIVISION_AFTERNOON_ONE: "RESERVATION_STATUS_STATUS_1",
         RESERVATION_DIVISION_AFTERNOON_TWO: "RESERVATION_STATUS_STATUS_1",
-        // scraper が区分の変換に失敗して INVALID が保存された状態。握り潰さない。
         RESERVATION_DIVISION_INVALID: "RESERVATION_STATUS_VACANT",
       },
     },
@@ -339,7 +328,6 @@ test("時刻レンジでも registry ラベルでもないセルが混じれば�
 });
 
 test("registry ラベルが時刻レンジの自治体は band に落ちず exact モードのまま（粒度維持）", () => {
-  // tokyo-kita は registry も時刻レンジ。band に落ちると DIVISION_1..5 が畳めず UNMAPPED になる。
   const plan: PlanSample = {
     id: "tokyo-kita:4c79dcb5-e7f1-18fd-8f9a-000000000009:2026-07-19",
     target: "tokyo-kita",
@@ -382,7 +370,7 @@ test("registry ラベルが時刻レンジの自治体は band に落ちず exac
     })
   );
   assert.equal(result.verdict, "MATCH");
-  assert.match(result.detail, /区分一致/); // exact モードの detail であること
+  assert.match(result.detail, /区分一致/);
 });
 
 test("needsInvestigation は要調査の判定だけ true", () => {

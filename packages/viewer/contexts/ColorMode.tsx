@@ -76,7 +76,6 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
 
   const isDark = mode === "dark" || (mode === "system" && prefersDark);
 
-  // Set data-theme attribute on <html> for CSS Custom Properties
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, [isDark]);

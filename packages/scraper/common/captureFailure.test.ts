@@ -105,7 +105,6 @@ test("clearFailure は当該 slug の失敗レコードを削除する", async (
     baseDir,
   });
   const jsonPath = path.join(baseDir, "tokyo-kita", "_failures", "北とぴあ-ドームホール.json");
-  // 事前条件: レコードが存在する
   await fs.access(jsonPath);
 
   await clearFailure({
@@ -125,6 +124,5 @@ test("clearFailure はレコードが無くても throw しない", async () => 
     context: { roomName: "無い室" },
     baseDir,
   });
-  // 例外が出なければ成功（明示アサーション）
   assert.ok(true);
 });

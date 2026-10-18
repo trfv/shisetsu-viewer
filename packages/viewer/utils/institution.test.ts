@@ -37,7 +37,6 @@ describe("formatUsageFee", () => {
     const result = formatUsageFee("MUNICIPALITY_KOUTOU", [
       { division: "UNKNOWN_DIVISION", fee: 500 },
     ]);
-    // Unknown division maps to empty string via FeeDivisionMap
     expect(result).toBe(": ¥500");
   });
 
@@ -45,7 +44,6 @@ describe("formatUsageFee", () => {
     const result = formatUsageFee("UNKNOWN_MUNICIPALITY", [
       { division: FeeDivision.MORNING, fee: 1000 },
     ]);
-    // Unknown municipality means FeeDivisionMap[municipality] is undefined
     expect(result).toBe(": ¥1,000");
   });
 });

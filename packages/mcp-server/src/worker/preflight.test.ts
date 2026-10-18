@@ -38,7 +38,7 @@ describe("preflight", () => {
     expect(res?.headers.get("allow")).toBe("POST");
   });
 
-  // DELETE はステートレスでも 200 を返して正常終了する（ハングしない）ため短絡しない
+  // DELETE はステートレスでも 200 で終わる（ハングしない）ので短絡しない
   it("DELETE /mcp は通す", () => {
     const res = preflight(req("DELETE", "/mcp", { authorization: "Bearer user:grant:hash" }));
     expect(res).toBeNull();

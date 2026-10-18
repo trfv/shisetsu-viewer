@@ -20,8 +20,7 @@ export const STATUS_MAP: Record<string, Status> = {
 
 const START_OFFSET_DAYS = 1;
 
-// 館・施設コードは空き状況画面の select（#mansion-select / #facility-select）の value。
-// 一覧は `npm run discover -- tokyo-shinagawa` で取り直せる
+// コードは `npm run discover -- tokyo-shinagawa` で取り直せる
 const targets: EprsTarget[] = [
   {
     facilityName: "五反田文化センター",
@@ -95,7 +94,6 @@ const targets: EprsTarget[] = [
     bldCd: "2190",
     instCd: "21900100",
   },
-  // 学校開放
   { facilityName: "戸越台中学校", roomName: "音楽室", bldCd: "3400", instCd: "34000040" },
   { facilityName: "荏原平塚学園", roomName: "音楽室（５階）", bldCd: "3440", instCd: "34400050" },
   { facilityName: "山中小学校", roomName: "ランチルーム", bldCd: "3120", instCd: "31200030" },
@@ -106,8 +104,7 @@ const targets: EprsTarget[] = [
 export const scraper = defineScraper({
   municipality: "tokyo-shinagawa",
   targets,
-  // 受付期間は部屋ごとに違う（学校・スタジオ 1〜2 ヶ月、ホール約 13 ヶ月）。
-  // 最長のホールに合わせ、全セルが受付期間外の週に達したら engine 側が打ち切る
+  // 受付期間は部屋ごとに 1〜13 ヶ月と違うので最長のホールに合わせる（先は engine が打ち切る）
   horizon: { startOffsetDays: START_OFFSET_DAYS, monthsAhead: 13, unit: "week" },
   facility: (t) => t.facilityName,
   title: (t) => `${t.facilityName} ${t.roomName}`,

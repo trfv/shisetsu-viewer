@@ -46,11 +46,8 @@ describe("CheckboxGroup Component", () => {
     );
 
     const checkboxes = screen.getByRole("checkbox").all();
-    // gym should be checked
     await expect.element(checkboxes[0]!).toBeChecked();
-    // tennis should not be checked
     await expect.element(checkboxes[1]!).not.toBeChecked();
-    // pool should be checked
     await expect.element(checkboxes[2]!).toBeChecked();
   });
 
@@ -130,8 +127,6 @@ describe("CheckboxGroup Component", () => {
       </CheckboxGroup>
     );
 
-    // The <hr /> element is not a Checkbox and has no children,
-    // so mapChildren returns null for it
     const checkboxes = screen.getByRole("checkbox").all();
     expect(checkboxes).toHaveLength(1);
     await expect.element(checkboxes[0]!).toBeChecked();
@@ -147,7 +142,6 @@ describe("CheckboxGroup Component", () => {
 
     const checkboxes = screen.getByRole("checkbox").all();
     await expect.element(checkboxes[0]!).toBeChecked();
-    // Checkbox with empty string value should not be checked
     await expect.element(checkboxes[1]!).not.toBeChecked();
   });
 });

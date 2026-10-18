@@ -6,7 +6,6 @@ describe("Smoke Test", () => {
   });
 
   it("should have MSW server available", () => {
-    // This test just checks if the setup file is loaded
     expect(true).toBe(true);
   });
 });

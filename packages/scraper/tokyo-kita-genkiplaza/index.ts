@@ -29,8 +29,7 @@ const targets: GenkiplazaTarget[] = [
 export const scraper = defineScraper({
   municipality: "tokyo-kita-genkiplaza",
   targets,
-  // サイトの公開範囲は抽選開始（3ヵ月前月初）に合わせて約 3 ヶ月先まで。
-  // それ以遠のテーブルは返るが全セルが空欄で、engine 側が捨てる
+  // 公開範囲は抽選開始（3ヵ月前月初）に合わせた約 3 ヶ月先まで
   horizon: { startOffsetDays: START_OFFSET_DAYS, monthsAhead: 3, unit: "month" },
   facility: (t) => t.facilityName,
   context: (t) => ({ roomNames: t.roomNames }),

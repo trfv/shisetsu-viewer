@@ -8,28 +8,17 @@ import { getCellValue } from "../common/playwrightUtils.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
 
-/**
- * OpenReaf (openreaf02.jp) 系予約システム用エンジン。
- * 採用自治体: tokyo-kita, tokyo-chuo
- *
- * ナビゲーション: 空き状況の確認 → 施設で確認 → リンクチェーン → カレンダー → 日次テーブル
- * ページ送り: a.day-next
- */
 export interface OpenreafConfig {
   baseUrl: string;
   divisionMap: Readonly<Record<string, Division>>;
   statusMap: Readonly<Record<string, Status>>;
-  /**
-   * links 末尾（室場リンク）の照合方法。
-   * サイトが「（定員90名）」等のサフィックスを付ける自治体は "prefix" にする。
-   */
+  /** 室場リンクに「（定員90名）」等のサフィックスが付く自治体は "prefix" */
   roomLinkMatch?: "exact" | "prefix";
 }
 
 export interface OpenreafTarget {
   facilityName: string;
   roomName: string;
-  /** 施設分類 → 施設 → （次の一覧...） → 室場 のリンクテキスト列 */
   links: string[];
 }
 
@@ -65,20 +54,14 @@ async function extractDay(page: Page): Promise<OpenreafDay> {
   return { date, header, row };
 }
 
-/** リンク一覧ページのナビゲーションリンク（列挙対象から除外） */
 const NAV_LINK_RE =
   /^(次の一覧|前の一覧|もどる|戻る|メニュー|トップ|ヘルプ|ログイン|申込|色・文字サイズ|文字サイズ)/;
 
-/** 室場リンクの定員サフィックス（例「（定員90名）」）を除いた表示名 */
 function stripCapacitySuffix(roomLink: string): string {
   return roomLink.replace(/[（(]定員\s*\d+\s*名[）)]$/, "").trim();
 }
 
-/**
- * 施設分類 → 施設 → 室場 の3階層を全走査して targets 候補を列挙する。
- * ブラウザ履歴に依存せず、各リストへは毎回トップから記録済みのリンク列で辿り直す
- * （openreaf はフォーム遷移が混ざるため goBack が安全でない）。
- */
+/** 各リストへは毎回トップから辿り直す。フォーム遷移が混ざるため goBack が安全でない */
 export async function discoverOpenreafTargets(
   page: Page,
   opts: Pick<OpenreafConfig, "baseUrl">
@@ -100,7 +83,6 @@ export async function discoverOpenreafTargets(
     }
   }
 
-  /** path のリストを「次の一覧」も含めて全ページ列挙する */
   async function listAllPages(path: string[]): Promise<{ pagePath: string[]; items: string[] }[]> {
     const pages: { pagePath: string[]; items: string[] }[] = [];
     await goToList(path);
@@ -155,15 +137,12 @@ export function openreafHooks(config: OpenreafConfig): {
       await page.getByRole("link", { name: "空き状況の確認" }).click();
       await page.getByRole("link", { name: "施設で確認" }).click();
       for (const [index, link] of target.links.entries()) {
-        // 末尾要素は室場リンク。roomLinkMatch: "prefix" のサイトは定員サフィックス
-        // （例「（定員90名）」）が付与されるため前方一致で照合する。
         const isRoom = index === target.links.length - 1;
         const usePrefix = isRoom && config.roomLinkMatch === "prefix";
         const name = usePrefix ? new RegExp("^" + escapeRegExp(link)) : link;
         await page.getByRole("link", { name, exact: !usePrefix }).click();
       }
-      // 予約リンクのある日が現れるまで日送りする。無限ループ防止の上限は
-      // 予約公開期間（数ヶ月先）を十分に超える値にし、構造変化時は明確に失敗させる。
+      // 上限は予約公開期間（数ヶ月先）を十分に超える値。構造変化時に無限ループせず明確に失敗させる
       const MAX_DAY_NEXT_CLICKS = 366;
       for (let i = 0; (await page.locator("table.calendar a").count()) === 0; i++) {
         if (i >= MAX_DAY_NEXT_CLICKS) {

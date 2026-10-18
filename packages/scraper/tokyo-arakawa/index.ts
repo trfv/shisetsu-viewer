@@ -38,11 +38,8 @@ export const STATUS_MAP: Record<string, Status> = {
 
 const FACILITY_NAMES = [
   "三河島ひろば館",
-  // "熊野前ひろば館",
-  // "宮地ひろば館",
   "石浜ふれあい館",
   "南千住ふれあい館",
-  // "南千住駅前ふれあい館",
   "汐入ふれあい館",
   "峡田ふれあい館",
   "荒川山吹ふれあい館",

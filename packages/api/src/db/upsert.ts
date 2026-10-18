@@ -10,13 +10,7 @@ function rowsWritten(result: D1Response): number {
   return result.meta.rows_written ?? result.meta.changes ?? 0;
 }
 
-// ---- reservations（差分 upsert）----
-
-/**
- * 予約行を差分 upsert する。reservation は canonicalize してから格納するので、
- * キー順の揺れで無変更行が UPDATE されない（＝ D1 の書き込み枠を浪費しない）。
- * 空き 3 フラグは生成列が自動計算するため SET に現れず、差分ガードは reservation 1 列で済む。
- */
+// reservation を canonicalize するのは、キー順の揺れで無変更行を UPDATE して D1 の書き込み枠を浪費しないため
 export async function upsertReservations(
   db: D1Database,
   rows: { institution_id: string; date: string; reservation: Record<string, string> }[]
@@ -44,8 +38,6 @@ export async function upsertReservations(
     .run();
   return { rowsWritten: rowsWritten(result) };
 }
-
-// ---- institutions（差分 upsert。26 列を programmatic に列挙）----
 
 const INSTITUTION_COLUMNS = [
   "prefecture",
@@ -76,7 +68,6 @@ const INSTITUTION_COLUMNS = [
   "division_labels",
 ] as const;
 
-// JSON を持つ列と、値が無いときの既定値。payload では文字列化して格納する（列は TEXT）
 const JSON_COLUMN_DEFAULTS: Readonly<Record<string, unknown>> = {
   fee_divisions: [],
   weekday_usage_fee: [],
@@ -123,8 +114,6 @@ export async function upsertInstitutions(
   return { rowsWritten: rowsWritten(result) };
 }
 
-// ---- holidays ----
-
 export async function upsertHolidays(
   db: D1Database,
   rows: { date: string; name: string }[]
@@ -145,8 +134,6 @@ export async function upsertHolidays(
   return { rowsWritten: rowsWritten(result) };
 }
 
-// ---- scrape_runs（取得時刻の記録 + 日次書き込み予算の台帳）----
-
 export async function recordScrapeRun(
   db: D1Database,
   municipality: string,
@@ -163,13 +150,12 @@ export async function recordScrapeRun(
          fetched_at   = excluded.fetched_at`
       )
       .bind(municipality, runId, written),
-    // 台帳は放置すると無限成長し、todayRowsWritten と /v1/scrape-runs の全表スキャンが
-    // 線形に太る。予算集計は当日、最終取得時刻の表示は直近しか見ないため 35 日で剪定する。
+    // 剪定しないと todayRowsWritten と /v1/scrape-runs の全表スキャンが線形に太る
     db.prepare(`DELETE FROM scrape_runs WHERE run_date < date('now', '-35 days')`),
   ]);
 }
 
-/** 当日（UTC）の rows_written 概算。書き込み予算ガードに使う。 */
+/** 当日は UTC で区切る */
 export async function todayRowsWritten(db: D1Database): Promise<number> {
   const row = await db
     .prepare(

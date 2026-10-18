@@ -3,8 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 type AuthContextValue = {
   isLoading: boolean;
   authenticated: boolean;
-  // Auth0 のアクセストークンのクレーム由来。anonymous は api が予約データを返さないロール、
-  // trial はトライアル利用者であることを表す（UI だけが使い、api の認可には影響しない）。
+  // trial は UI だけが使い、api の認可には影響しない。
   userInfo: { anonymous: boolean; trial: boolean };
   login: () => void;
   logout: () => void;
@@ -66,7 +65,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.assign(`/auth/login?redirect=${encodeURIComponent(redirect)}`);
   }, []);
 
-  // BFF が Cookie を消し、Auth0 のセッションも消すための遷移先を返す。
   // 失敗しても Cookie は消えている可能性が高いので、トップへ戻して状態を取り直す。
   const logout = useCallback(() => {
     fetch("/auth/logout", { method: "POST" })

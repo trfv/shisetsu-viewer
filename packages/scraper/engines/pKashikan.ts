@@ -5,44 +5,27 @@ import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
 
-/**
- * 貸館予約システム（k5.p-kashikan.jp）用エンジン。
- * 採用自治体: tokyo-kita-cocokita
- *
- * ナビゲーション: トップ →「期間 の空きを見る」→ 室場名 で、1 室 × 40 日分の表が出る。
- * 日付送りは `setNaviDate('YYYYMMDD')`（forma の UseDate を書き換えて POST）で、
- * 指定日を先頭にした 40 日分が返る。
- * 表は 1 行 = 1 日の `table.koma-table`。先頭セルが「11/24 (火)」、以降がコマのセル
- * （コマの間に幅 15px の空白セルが挟まる）。休館日はコマを跨ぐ 1 セル「休館」になる。
- *
- * コマの時刻はセルに書かれていない。空き（○）セルの onmousedown 引数にだけ
- * 「09001145」形式で埋め込まれるため、区分は「何コマ目か」で決める。
- * 部屋ごとのコマ表は target で静的に宣言し、○ セルの時刻と食い違えば構造変化として投げる。
- */
+// コマの時刻はセルに書かれず、空き（○）セルの onmousedown 引数にだけ埋め込まれる。
+// そのため区分は「何コマ目か」で決め、部屋ごとのコマ表を target で静的に宣言する。
 
-/** 1 ページに表示される日数（サイト固定） */
+/** サイト固定 */
 const DAYS_PER_PAGE = 40;
 
-/** extract が DOM から読み取った 1 行（= 1 日） */
 interface PKashikanRawRow {
-  /** 先頭セル（「11/24 (火)」） */
   label: string;
-  /** コマのセル。time は ○ セルにだけ入る「09001145」形式（他は ""） */
+  /** time は ○ セルにだけ入る（他は ""） */
   cells: { text: string; time: string }[];
 }
 
-/** extract が DOM から読み取った 1 ページ（= 40 日） */
 export interface PKashikanRawPage {
-  /** 「2026(令和 8)年11月20日 (金)～  音楽スタジオ2 (8人)」 */
   heading: string;
   rows: PKashikanRawRow[];
 }
 
 export interface PKashikanTarget {
   facilityName: string;
-  /** 室場名（サイト表記。定員の括弧は含まない） */
   roomName: string;
-  /** コマの時刻（「9:00-11:45」形式、表示順）。DIVISION_MAP のキーになる */
+  /** 表示順。○ セルの時刻と食い違えば構造変化として投げる */
   komas: readonly string[];
 }
 
@@ -50,7 +33,7 @@ export interface PKashikanConfig {
   baseUrl: string;
   divisionMap: Readonly<Record<string, Division>>;
   statusMap: Readonly<Record<string, Status>>;
-  /** 取得開始日のオフセット（日）。scraper 側 `horizon.startOffsetDays` と揃える */
+  /** scraper 側 `horizon.startOffsetDays` と揃える */
   startOffsetDays: number;
 }
 
@@ -58,7 +41,7 @@ function pad2(value: number): string {
   return String(value).padStart(2, "0");
 }
 
-/** 「2026(令和 8)年11月20日 (金)～  音楽スタジオ2 (8人)」から先頭日（ISO）と室場名を取り出す */
+/** 「2026(令和 8)年11月20日 (金)～  音楽スタジオ2 (8人)」形式 */
 export function parseHeading(heading: string): { startDate: string; roomName: string } | undefined {
   const match = heading
     .replace(/\s+/g, " ")
@@ -70,7 +53,6 @@ export function parseHeading(heading: string): { startDate: string; roomName: st
   };
 }
 
-/** 「09001145」を「9:00-11:45」にする */
 export function formatKomaTime(raw: string): string | undefined {
   const match = raw.match(/^(\d{2})(\d{2})(\d{2})(\d{2})$/);
   if (!match) return undefined;
@@ -83,16 +65,7 @@ function addDaysIso(isoDate: string, days: number): string {
   return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`;
 }
 
-/**
- * 40 日表の各行から RawSlot を組み立てる。
- * [minDate, maxDate] の外の日付は捨てる。
- *
- * 次の場合はサイト構造が変わったとみなして投げる（区分や日付がずれたまま保存しないため）:
- * - 見出しが読めない、または室場名が target と違う
- * - 行の「M/D」が見出しの先頭日からの連番と一致しない
- * - コマ数が target.komas と違う（休館の 1 セル行を除く）
- * - ○ セルに埋め込まれた時刻が target.komas の同じ位置と違う
- */
+/** 食い違いは全て投げる。区分や日付がずれたまま保存しないため */
 export function buildSlots(
   pages: readonly PKashikanRawPage[],
   target: PKashikanTarget,
@@ -154,7 +127,7 @@ async function readRawPage(page: Page): Promise<PKashikanRawPage> {
         .find((text) => text.includes("～")) ?? "";
     const rows = [...document.querySelectorAll("table.koma-table")]
       .map((table) => [...table.querySelectorAll("td")])
-      // 時刻ヘッダー（th のみ）の表を除く
+      // 時刻ヘッダーだけの表（th のみ）を除く
       .filter((tds) => tds.length > 0)
       .map((tds) => ({
         label: (tds[0]?.textContent ?? "").replace(/\s+/g, " ").trim(),
@@ -171,19 +144,17 @@ async function readRawPage(page: Page): Promise<PKashikanRawPage> {
   });
 }
 
-/** extract の出力 1 ページ分。horizon の範囲を持たせる（最終ページの末尾は horizon を越えうる） */
+/** 最終ページの末尾は horizon を越えうるので範囲を持たせる */
 export interface PKashikanExtractedPage extends PKashikanRawPage {
   minDate: string;
   maxDate: string;
 }
 
-/** 先頭日を指定して 40 日表を再表示する */
 async function showFrom(page: Page, date: Date): Promise<void> {
   const value = format(date, "yyyyMMdd");
   await Promise.all([
     page.waitForNavigation(),
     page.evaluate((v) => {
-      // サイトのグローバル関数（forma.UseDate を書き換えて submit する）
       (window as unknown as { setNaviDate: (value: string) => void }).setNaviDate(v);
     }, value),
   ]);
@@ -210,7 +181,7 @@ export function pKashikanHooks(config: PKashikanConfig): {
       return page;
     },
 
-    // pageCount は horizon（unit: "day"）由来の日数。40 日ずつ表を送る
+    // pageCount は horizon（unit: "day"）由来の日数
     async extract(page, _target, pageCount) {
       const start = addDays(new Date(), config.startOffsetDays);
       const minDate = format(start, "yyyy-MM-dd");

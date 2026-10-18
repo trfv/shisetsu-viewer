@@ -74,13 +74,10 @@ describe("formatReservationMap", () => {
       [ReservationDivision.MORNING]: "RESERVATION_STATUS_VACANT",
     };
     const result = formatReservationMap("MUNICIPALITY_KOUTOU", obj);
-    // KOUTOU_RESERVATION_DIVISION[MORNING] = "午前"
-    // KOUTOU_RESERVATION_STATUS[VACANT] = "空き"
     expect(result).toBe("午前: 空き");
   });
 
   test("formats multiple entries with 3-per-line grouping", () => {
-    // Sorted order: MORNING(1), MORNING_ONE(2), AFTERNOON(4), EVENING(7)
     const obj = {
       [ReservationDivision.MORNING]: "RESERVATION_STATUS_VACANT",
       [ReservationDivision.AFTERNOON]: "RESERVATION_STATUS_STATUS_1",
@@ -89,7 +86,6 @@ describe("formatReservationMap", () => {
     };
     const result = formatReservationMap("MUNICIPALITY_KOUTOU", obj);
     const lines = result.split("\n");
-    // First 3 sorted entries on line 1, 4th on line 2
     expect(lines).toHaveLength(2);
     expect(lines[0]).toContain("午前: 空き");
     expect(lines[0]).toContain("①: 空き");
@@ -109,7 +105,6 @@ describe("formatReservationMap", () => {
     const result = formatReservationMap("MUNICIPALITY_KITA", obj, {
       [ReservationDivision.MORNING]: "9:00-11:45",
     });
-    // 午後は北区 registry の "13:00-17:00"
     expect(result).toBe("9:00-11:45: ○ 13:00-17:00: ○");
   });
 });
@@ -154,8 +149,8 @@ describe("getResevationSearchFilterFromUrlParam", () => {
 });
 
 describe("toReservationSearchParams", () => {
-  const minDate = new Date(2026, 0, 1); // 2026-01-01
-  const maxDate = new Date(2026, 5, 30); // 2026-06-30
+  const minDate = new Date(2026, 0, 1);
+  const maxDate = new Date(2026, 5, 30);
 
   test("returns defaults when all params are null", () => {
     const result = toReservationSearchParams(null, null, null, null, null, null, minDate, maxDate);

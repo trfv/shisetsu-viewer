@@ -4,28 +4,15 @@ import { addDays, format, getDaysInMonth } from "date-fns";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
 
-/**
- * 元気ぷらざ独自 CGI（genkiplaza.tokyo.jp/yoyaku/user.cgi）用エンジン。
- * 採用自治体: tokyo-kita-genkiplaza
- *
- * ナビゲーション: user.cgi 単一ページ。yyyy / mm / span を POST すると
- * span ヶ月ぶんの月別テーブルが 1 ページに並ぶ（ページ送りは無い）。
- * 各テーブルは 行 = `<部屋名>＜<区分>＞`、列 = 1〜31 日の固定 31 列。
- * サイトの公開範囲より先の月は、テーブル自体は返るが全セルが空欄になる。
- */
-
 /** サイト側の span（ヶ月）の上限 */
 const MAX_SPAN = 6;
 
-/** extract が DOM から読み取った生の内容 */
 export interface GenkiplazaRawPage {
-  /** ページ内に現れた「YYYY年M月」の全出現（入れ子要素による重複を含む、文書順） */
+  /** 同じ見出しが入れ子要素で重複して現れる */
   headings: string[];
-  /** テーブルごとの行。各行は [先頭セル, 1日, 2日, ...] */
   tables: string[][][];
 }
 
-/** 見出しと対応づけた 1 ヶ月分のテーブル */
 export interface GenkiplazaMonthTable {
   heading: string;
   rows: string[][];
@@ -33,7 +20,6 @@ export interface GenkiplazaMonthTable {
 
 export interface GenkiplazaTarget {
   facilityName: string;
-  /** 取り込む部屋名（サイト表記）。ここに無い行は捨てる */
   roomNames: readonly string[];
 }
 
@@ -41,36 +27,26 @@ export interface GenkiplazaConfig {
   baseUrl: string;
   divisionMap: Readonly<Record<string, Division>>;
   statusMap: Readonly<Record<string, Status>>;
-  /**
-   * 取得開始日のオフセット（日）。scraper 側 `horizon.startOffsetDays` と揃える。
-   * サイトが常に月初から表示するため、これより前の日付を捨てるのに使う。
-   */
+  /** scraper 側 `horizon.startOffsetDays` と揃える */
   startOffsetDays: number;
 }
 
-/** 連続する重複を 1 つにまとめる（同じ見出しが入れ子要素で複数回現れるため） */
 export function dedupeConsecutive(values: readonly string[]): string[] {
   return values.filter((value, index) => index === 0 || value !== values[index - 1]);
 }
 
-/** 「2026年7月」形式の見出しから年月を取り出す */
 export function parseHeading(heading: string): { year: number; month: number } | undefined {
   const match = heading.match(/^(\d{4})年(\d{1,2})月$/);
   if (!match) return undefined;
   return { year: Number(match[1]), month: Number(match[2]) };
 }
 
-/** 「第一ホール＜午前＞」形式の行ラベルを部屋名と区分に分解する */
 export function parseRowLabel(label: string): { roomName: string; division: string } | undefined {
   const match = label.match(/^(.+)＜(.+)＞$/);
   if (!match) return undefined;
   return { roomName: match[1] ?? "", division: match[2] ?? "" };
 }
 
-/**
- * 見出しの列とテーブルの列を文書順で対応づける。
- * 数が食い違う場合はサイト構造が変わったとみなして投げる。
- */
 export function zipMonthTables(raw: GenkiplazaRawPage): GenkiplazaMonthTable[] {
   const headings = dedupeConsecutive(raw.headings);
   if (headings.length !== raw.tables.length) {
@@ -92,15 +68,8 @@ function nextMonth(current: { year: number; month: number }): { year: number; mo
 }
 
 /**
- * 月別テーブルの列から RawSlot を組み立てる。
- * 以下は RawSlot にしない:
- * - 空欄のセル（サイトが公開していない先の月）
- * - 実在しない日付（30 日以下の月の 31 列目）
- * - roomNames に含まれない部屋の行、および区分括弧を持たない行（日付ヘッダー等）
- * - minDate より前の日付（サイトは常に月初から表示するため過去日が混ざる）
- *
- * 見出しが読めない、またはテーブルが連続した月になっていない場合は投げる
- * （テーブルと月の対応がずれると、全く別の日付のデータを保存してしまうため）。
+ * 空欄セルは公開範囲より先の月（テーブル自体は返る）、minDate より前はサイトが月初から表示する過去日。
+ * 連続した月でなければ投げる。テーブルと月の対応がずれると別の日付のデータを保存してしまう。
  */
 export function buildSlots(
   tables: readonly GenkiplazaMonthTable[],
@@ -144,16 +113,12 @@ export function buildSlots(
   return slots;
 }
 
-/**
- * ページ内の全テーブルと、全ての「YYYY年M月」テキストを文書順で読み取る。
- * セルの空白（半角・全角・改行）は全て除去する。全角空白のみのセルは "" になり、
- * 未公開の月として buildSlots が捨てる。
- */
+/** 未公開の月のセルは全角空白だけなので、全角空白も除いて "" にする */
 async function readRawPage(page: Page): Promise<GenkiplazaRawPage> {
   return page.evaluate(() => {
     const headings: string[] = [];
     for (const element of document.querySelectorAll("*")) {
-      // 同じ見出しが入れ子要素で重複して現れるため、葉ノードだけを見る
+      // 入れ子要素での重複を避けて葉ノードだけを見る
       if (element.children.length > 0) continue;
       const text = (element.textContent ?? "").trim();
       if (/^\d{4}年\d{1,2}月$/.test(text)) headings.push(text);
@@ -180,7 +145,6 @@ export function genkiplazaHooks(config: GenkiplazaConfig): {
 } {
   return {
     async prepare(page) {
-      // user.cgi 自体が空き状況テーブルのページ（既定は当月・1 ヶ月）
       await page.goto(config.baseUrl);
       await page.locator('select[name="span"]').waitFor();
       return page;

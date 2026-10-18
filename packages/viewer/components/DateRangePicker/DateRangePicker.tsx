@@ -18,9 +18,8 @@ type Props = {
   maxDate: Date;
 };
 
-// 1 タップ目で開始日、2 タップ目で終了日を選び、そこで初めて親に渡す（1 日だけなら同じ日を 2 回）。
-// 開始日だけ決まった途中の状態はここで持つ。Drawer は閉じるとアンマウントするので、
-// 途中で閉じれば途中の状態は捨てられ、選ぶ前の期間に戻る。
+// 開始日だけ決まった途中の状態は親に渡さずここで持つ。Drawer は閉じるとアンマウントするので、
+// 途中で閉じれば選ぶ前の期間に戻る。
 export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, maxDate }) => {
   const [draft, setDraft] = useState<DateRange | null>(null);
 

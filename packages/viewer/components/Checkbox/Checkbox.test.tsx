@@ -55,7 +55,6 @@ describe("Checkbox Component", () => {
     const { user } = await renderWithProviders(<Checkbox label="テスト" value="test" />);
 
     const checkbox = screen.getByRole("checkbox");
-    // Should not throw when clicking without onChange handler
     await user.click(checkbox);
 
     await expect.element(checkbox).toBeInTheDocument();

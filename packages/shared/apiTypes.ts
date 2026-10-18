@@ -10,7 +10,6 @@ export interface Page<T> {
   pageInfo: PageInfo;
 }
 
-/** GET /v1/institutions の 1 行（viewer 一覧 + mcp list_institutions が使用） */
 export type InstitutionSummary = Pick<
   Institution,
   | "id"
@@ -26,13 +25,9 @@ export type InstitutionSummary = Pick<
   | "is_equipped_piano"
 > & { updated_at: string };
 
-/** GET /v1/institutions/:id（全 26 列 + updated_at） */
 export type InstitutionDetail = Institution & { updated_at: string };
 
-/** 予約 1 行。
- * - updated_at は「最終変化時刻」（差分書き込みのため。取得時刻は ScrapeRun 参照）
- * - is_holiday / is_*_vacant は DB の列ではなく **クエリ時に導出**した値
- */
+/** updated_at は取得時刻ではなく最終変化時刻（取得時刻は ScrapeRun） */
 export interface ReservationDto {
   institution_id: string;
   date: string; // YYYY-MM-DD
@@ -44,7 +39,6 @@ export interface ReservationDto {
   updated_at: string;
 }
 
-/** GET /v1/reservations/search の 1 ヒット */
 export interface ReservationSearchHit {
   reservation: ReservationDto;
   institution: Pick<
@@ -53,29 +47,21 @@ export interface ReservationSearchHit {
   >;
 }
 
-/**
- * GET /v1/admin/reservations/export の 1 行。
- * parity 突合は institution_id / date / reservation しか見ないので、
- * 導出値（is_holiday・空き 3 フラグ）も institutions の JOIN 結果も持たない。
- */
+/** 導出値と JOIN 結果を持たない。parity 突合は institution_id / date / reservation しか見ない */
 export interface ReservationExportRow {
   institution_id: string;
   date: string; // YYYY-MM-DD
   reservation: Record<string, string>;
 }
 
-/** GET /v1/scrape-runs の 1 行（自治体別最新） */
 export interface ScrapeRun {
   municipality: string; // MUNICIPALITY_*
   fetched_at: string; // ISO 8601
 }
 
-/**
- * PUT /v1/admin/reservations のリクエスト。
- * is_holiday / 空き 3 フラグは送らない（前者はクエリ時導出、後者は D1 の生成列が自動計算）。
- */
+/** is_holiday / 空き 3 フラグは送らない（前者はクエリ時導出、後者は D1 の生成列） */
 export interface UpsertReservationsRequest {
-  municipality: string; // MUNICIPALITY_*（scrape_runs 記録用）
+  municipality: string; // MUNICIPALITY_*
   runId: string; // GitHub run id またはローカル実行のタイムスタンプ
   rows: {
     institution_id: string;
@@ -90,8 +76,7 @@ export interface UpsertResponse {
   deferred: boolean;
 }
 
-// 以下 2 つは URL クエリ由来の「不在または値」の入力。exactOptionalPropertyTypes 下で
-// パーサの `T | undefined` をそのまま渡せるよう、任意フィールドは明示的に `| undefined`。
+// exactOptionalPropertyTypes 下でパーサの `T | undefined` をそのまま渡せるよう、明示的に `| undefined`
 export interface InstitutionsQueryParams {
   municipality?: string[] | undefined;
   isAvailableStrings?: boolean | undefined;
@@ -101,7 +86,7 @@ export interface InstitutionsQueryParams {
   institutionSizes?: string[] | undefined;
   limit?: number | undefined;
   cursor?: string | undefined;
-  /** true なら要約ではなく全列（InstitutionDetail）を返す。scraper のエクスポート用。 */
+  /** true なら全列（InstitutionDetail）を返す */
   detail?: boolean | undefined;
 }
 

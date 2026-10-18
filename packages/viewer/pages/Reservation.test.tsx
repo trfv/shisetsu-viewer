@@ -36,7 +36,6 @@ const useMswMock = (items: ReservationSearchHit[], hasNextPage = false) => {
   );
 };
 
-// 検索 API に送られたクエリを、最後の 1 件と呼ばれた回数で返す
 const captureSearchParams = () => {
   const captured: { params: URLSearchParams | null; count: number } = { params: null, count: 0 };
   worker.use(
@@ -325,7 +324,7 @@ describe("Reservation Page", () => {
     it("データ取得中にスピナーを表示する", async () => {
       worker.use(
         http.get(`${BASE}/v1/reservations/search`, async () => {
-          await new Promise(() => {}); // never resolves
+          await new Promise(() => {});
           return HttpResponse.json(createMockReservationSearchPage([]));
         })
       );
@@ -445,7 +444,6 @@ describe("Reservation Page", () => {
       await user.click(dayButton(/2025年6月20日/));
       await user.click(screen.getByRole("button", { name: "閉じる" }));
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
-      // 途中の状態が残っていれば 6/20〜6/25 になるが、捨てられているので 6/25 は新しい開始日になる
       await user.click(dayButton(/2025年6月25日/));
 
       await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();

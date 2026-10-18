@@ -36,10 +36,7 @@ function statusFromRecords(records: readonly FailureRecordLite[]): MunicipalityS
   return "transient";
 }
 
-/**
- * 1 回の Run Scraper のジョブ結果と retry 後の失敗レコードから、自治体別の状態を組み立てる。
- * scrape で落ちても retry で成功したシャードは成功とみなす。
- */
+/** scrape で落ちても retry で成功したシャードは成功とみなす */
 export function buildRunSummary(
   meta: { runId: number; runUrl: string; createdAt: string },
   jobs: readonly JobInfo[],

@@ -126,12 +126,10 @@ describe("useQueryParams", () => {
       });
     });
 
-    // setQueryParams は内部 state を持たず、setLocation で URL 更新を要求する。
     expect(setLocationMock).toHaveBeenCalledTimes(1);
     const [to, options] = setLocationMock.mock.calls[0] ?? [];
     expect(options).toEqual({ replace: true });
 
-    // 要求された URL で再レンダされた（= wouter が URL を更新した）体で復号値を検証する。
     await rerender({ search: (to as string).split("?")[1] ?? "" });
     expect(result.current[0].a).toBe(54321);
     expect(result.current[0].b).toBe("EDCBA");
@@ -139,8 +137,6 @@ describe("useQueryParams", () => {
     expect(result.current[0].d?.toISOString()).toBe(new Date("2022-02-27").toISOString());
   });
   test("search prop の変更で復号値が再同期する", async () => {
-    // ブラウザの戻る/進むで wouter の useSearch() が新しい値を返す状況の再現。
-    // 内部 state に固定していると search 変更を無視してしまう（このテストが再同期を強制する）。
     const { result, rerender } = await renderHook(
       (props?: { search: string }) =>
         useQueryParams({ a: NumberParam, b: StringParam }, () => {}, props?.search ?? "", ""),
@@ -243,7 +239,6 @@ describe("useQueryParams", () => {
     expect(result.current[0].name).toBe("hello");
     expect(result.current[0].value).toBe("world");
 
-    // name を null にすると URL から削除され、value は残る。
     await act(() => {
       result.current[1]({
         name: null as unknown as string,

@@ -1,29 +1,11 @@
-/**
- * 対象一覧の自動列挙（discovery）。
- *
- * 新しい自治体のスクレイパーを作るとき・既存自治体の対象一覧を棚卸しするときに、
- * サイトの施設階層をクロールして targets の候補を JSON に書き出す。
- * 実行は `npm run discover -w @shisetsu-viewer/scraper -- <municipality>` または
- * `-- --engine <openreaf|webrGrand> --url <baseUrl>`（scripts/discover.ts）。
- */
-
-/** サイトから列挙した対象候補 1 件 */
 export interface DiscoveredTarget {
   facilityName: string;
   roomName?: string;
-  /** 施設が属するカテゴリ（CATEGORY_MAP の材料になるサイトのみ） */
   category?: string;
-  /** 名称からの機械判定: 音楽練習に使えそうか（キュレーションの目印） */
   musicLikely: boolean;
-  /** index.ts の targets にそのまま貼れる形のパラメータ */
   target: Record<string, unknown>;
 }
 
-/**
- * 音楽練習に使えそうな名称のヒューリスティック。
- * 利用目的フィルターを持たないサイト（OpenReaf 等）で候補を絞る目印に使う。
- * 最終判断は人間（または /new-scraper の対話フロー）が行う。
- */
 const MUSIC_KEYWORD_RE = /音楽|スタジオ|ホール|リハーサル|練習|防音|音出し|ピアノ|バンド|講堂/;
 
 export function isMusicLikely(...names: (string | undefined)[]): boolean {
@@ -33,19 +15,14 @@ export function isMusicLikely(...names: (string | undefined)[]): boolean {
 export interface TargetKey {
   facilityName: string;
   roomName?: string | undefined;
-  /** 室場へ遷移する末尾リンクの文言（links を持つエンジンのみ） */
   roomLink?: string | undefined;
 }
 
-/**
- * 空白の連続（NBSP を含む）を半角スペース 1 つに畳む。
- * Playwright の accessible name 照合と同じ扱いにし、サイト側の NBSP を差分として拾わない。
- */
+/** Playwright の accessible name 照合に揃え、サイト側の NBSP を差分として拾わない */
 function normalizeName(name: string | undefined): string {
   return (name ?? "").replace(/\s+/g, " ").trim();
 }
 
-/** target の links 末尾（室場リンク）を取り出す。links を持たないエンジンでは undefined */
 export function roomLinkOf(target: unknown): string | undefined {
   if (typeof target !== "object" || target === null || !("links" in target)) return undefined;
   const links = target.links;
@@ -54,7 +31,6 @@ export function roomLinkOf(target: unknown): string | undefined {
   return typeof last === "string" ? last : undefined;
 }
 
-/** 室場リンクに付く定員サフィックス（例「（定員90名）」「 (定員646名)」） */
 const CAPACITY_SUFFIX_RE = /^\s*[（(]定員/;
 
 function isSameTarget(existing: TargetKey, discovered: DiscoveredTarget): boolean {
@@ -62,8 +38,8 @@ function isSameTarget(existing: TargetKey, discovered: DiscoveredTarget): boolea
     return false;
   }
   if (normalizeName(existing.roomName) === normalizeName(discovered.roomName)) return true;
-  // 表示名だけ改称し roomName（D1 解決キー）を据え置いた対象は、遷移リンクで照合する。
-  // 既存リンクは定員サフィックスを省いた前方一致形のことがある（openreaf の roomLinkMatch: "prefix"）。
+  // 表示名だけ改称し roomName（D1 解決キー）を据え置いた対象は遷移リンクで照合する。
+  // 既存リンクは定員サフィックスを省いた前方一致形のことがある（openreaf の roomLinkMatch: "prefix"）
   const existingLink = normalizeName(existing.roomLink);
   const discoveredLink = normalizeName(roomLinkOf(discovered.target));
   if (!existingLink || !discoveredLink.startsWith(existingLink)) return false;
@@ -71,11 +47,6 @@ function isSameTarget(existing: TargetKey, discovered: DiscoveredTarget): boolea
   return rest === "" || CAPACITY_SUFFIX_RE.test(rest);
 }
 
-/**
- * 列挙結果と既存 targets の差分。
- * added = サイトにあるが targets に無い候補（新設施設など）
- * missing = targets にあるがサイトで見つからなかった対象（閉館・改名の疑い）
- */
 export function diffDiscovered(
   discovered: readonly DiscoveredTarget[],
   existing: readonly TargetKey[]
@@ -86,7 +57,6 @@ export function diffDiscovered(
   };
 }
 
-/** 差分レポートを人間可読な文字列にする */
 export function formatDiscoveryReport(
   discovered: readonly DiscoveredTarget[],
   existing?: readonly TargetKey[]

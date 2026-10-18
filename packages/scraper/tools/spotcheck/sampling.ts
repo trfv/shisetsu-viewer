@@ -1,13 +1,12 @@
-// spot check のサンプルキーを選ぶ純関数群。
-// 乱数は使わない。同じ入力からは常に同じサンプルが選ばれる（再実行で比較可能にするため）。
+// 乱数は使わない。再実行の結果を比較できるよう、同じ入力からは同じサンプルを選ぶ。
 
 export interface SampleKey {
-  target: string; // 例: "tokyo-koutou"
+  target: string;
   institutionId: string;
-  date: string; // "YYYY-MM-DD"
+  date: string; // YYYY-MM-DD
 }
 
-/** 1 実行あたりのサンプル数の上限。コスト規律によるハードキャップ（spec 参照）。 */
+// コスト規律によるハードキャップ。
 export const SAMPLE_CAP = 12;
 
 function compareKeys(a: SampleKey, b: SampleKey): number {
@@ -29,7 +28,6 @@ export function selectSamples(opts: {
       ? opts.explicitKeys.filter((k) => k.target === opts.municipalityFilter)
       : opts.explicitKeys;
 
-  // 自治体間で偏らないよう、ソートしてからラウンドロビンで詰める。
   const byTarget = new Map<string, SampleKey[]>();
   for (const key of [...filtered].sort(compareKeys)) {
     const group = byTarget.get(key.target);

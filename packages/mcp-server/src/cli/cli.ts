@@ -100,7 +100,6 @@ Options:
   }
 
   return executeListInstitutions(
-    // MCP ツールと同じスキーマで検証する（不正な fields や日付はここで弾く）
     listInstitutionsInput.parse({
       municipality: splitCSV(values.municipality),
       institutionSizes: splitCSV(values.size),
@@ -297,8 +296,6 @@ Options:
   }));
 }
 
-// --- Bootstrap ---
-
 const [command, ...commandArgv] = process.argv.slice(2);
 const isPretty = process.argv.includes("--pretty");
 
@@ -307,14 +304,12 @@ if (command === "--help" || command === "-h" || command === undefined) {
   process.exit(command === undefined ? 1 : 0);
 }
 
-// Commands that don't need API auth
 const noAuthCommands: Record<string, (argv: string[]) => unknown | Promise<unknown>> = {
   login: () => login(),
   logout: () => logout(),
   municipalities: commandMunicipalities,
 };
 
-// Commands that need API auth (Bearer user token)
 const authCommands: Record<
   string,
   (argv: string[], dataSource: DataSource) => unknown | Promise<unknown>
@@ -338,7 +333,6 @@ try {
     fail(`不明なコマンド: ${command}\n'shisetsu --help' でヘルプを表示`);
   }
 
-  // Authenticate
   const apiEndpoint = process.env["API_ENDPOINT"];
   if (!apiEndpoint) fail("API_ENDPOINT 環境変数が必要です");
 

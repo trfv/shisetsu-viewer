@@ -78,8 +78,6 @@ describe("useApiQuery", () => {
     await expect.element(screen.getByText(/error: /)).toBeInTheDocument();
   });
 
-  // BFF 化により Authorization はブラウザ側で付かない。Cookie が同一オリジンで載り、
-  // Worker がトークンに付け替える。
   it("Authorization ヘッダを送らない", async () => {
     let auth: string | null = "unset";
     worker.use(

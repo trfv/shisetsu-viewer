@@ -1,14 +1,3 @@
-// 対象一覧の自動列挙 CLI。サイトの施設階層をクロールして targets 候補を
-// data/targets/<name>.candidates.json に書き出す。
-//
-// 使い方:
-//   npm run discover -w @shisetsu-viewer/scraper -- <municipality>
-//     既存スクレイパーの discover フックを実行し、現行 targets との差分も表示する。
-//     例: npm run discover -w @shisetsu-viewer/scraper -- tokyo-kita
-//
-//   npm run discover -w @shisetsu-viewer/scraper -- --engine <openreaf|webrGrand> --url <baseUrl> [--name <出力名>]
-//     スクレイパー未作成の新地区でも、既知エンジンの製品なら列挙できる。
-//     例: npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url https://example.openreaf02.jp/ --name tokyo-example
 import fs from "node:fs/promises";
 import path from "node:path";
 

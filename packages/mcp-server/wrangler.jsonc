@@ -6,16 +6,13 @@
   // global_fetch_strictly_public: CIMD（URL 形式の client_id）のメタデータ取得に OAuthProvider が要求する
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
-  // カスタムドメイン。以前は管理画面で付けていた（api と同じく wrangler で管理する）
   "routes": [{ "pattern": "mcp.shisetsudb.com", "custom_domain": true }],
   "vars": {
-    // 秘密ではないので Secret ではなく vars に置く（値を確かめられるように）。
-    // AUTH0_DOMAIN はカスタムドメイン。api の resolveRole が issuer をこの値で検証するので、
-    // packages/api/wrangler.jsonc の AUTH0_DOMAIN と一致させる。
+    // api の resolveRole が issuer をこの値で検証するので、packages/api/wrangler.jsonc と一致させる
     "AUTH0_DOMAIN": "auth.shisetsudb.com",
     "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
   },
-  // Auth0 の Regular Web Application の値。ここに無い Secret があると deploy が止まる。
+  // ここに無い Secret があると deploy が止まる
   "secrets": { "required": ["AUTH0_CLIENT_ID", "AUTH0_CLIENT_SECRET"] },
   "observability": {
     "enabled": true,
@@ -32,8 +29,6 @@
       "head_sampling_rate": 1,
     },
   },
-  // Required by @cloudflare/workers-oauth-provider for OAuth state (clients, grants, tokens)
   "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "64528661f5e74163a2d6a80f60d40749" }],
-  // データはすべて api worker を通して読む（認可とレート制限を api に一本化する）
   "services": [{ "binding": "API", "service": "shisetsu-api" }],
 }

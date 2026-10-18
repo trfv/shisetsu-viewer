@@ -68,7 +68,7 @@ describe("upsertReservations（差分 upsert）", () => {
           }
         : r
     );
-    // わずかに時間を進めるため待つ（strftime の %f ミリ秒差を確実にする）
+    // updated_at に strftime の %f でミリ秒差を出す
     await new Promise((resolve) => setTimeout(resolve, 5));
     const res = await upsertReservations(env.DB, changed);
     expect(res.rowsWritten).toBe(1);
@@ -77,10 +77,10 @@ describe("upsertReservations（差分 upsert）", () => {
       `SELECT date, updated_at, is_morning_vacant AS m FROM reservations ORDER BY date`
     ).all<{ date: string; updated_at: string; m: number }>();
     const changedRow = after.results.find((r) => r.date === "2026-08-06")!;
-    expect(changedRow.m).toBe(1); // 生成列が追随
+    expect(changedRow.m).toBe(1);
     const unchangedBefore = before.results.find((r) => r.date === "2026-08-01")!;
     const unchangedAfter = after.results.find((r) => r.date === "2026-08-01")!;
-    expect(unchangedAfter.updated_at).toBe(unchangedBefore.updated_at); // 無変更行は据え置き
+    expect(unchangedAfter.updated_at).toBe(unchangedBefore.updated_at);
   });
 
   it("キー順だけ違う再 upsert は無変更（canonicalize の効果）", async () => {
@@ -94,7 +94,6 @@ describe("upsertReservations（差分 upsert）", () => {
         },
       },
     ]);
-    // キーの並びを逆にして再送
     const second = await upsertReservations(env.DB, [
       {
         institution_id: INST_ID,
@@ -214,7 +213,7 @@ describe("holidays / scrape_runs / 予算台帳", () => {
     expect(h?.name).toBe("山の日");
 
     await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 100);
-    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 20); // 同 run は加算
+    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 20);
     await recordScrapeRun(env.DB, "MUNICIPALITY_BUNKYO", "run-1", 50);
     expect(await todayRowsWritten(env.DB)).toBe(170);
   });
@@ -229,7 +228,6 @@ describe("holidays / scrape_runs / 予算台帳", () => {
       .bind(
         "MUNICIPALITY_KOUTOU",
         "recent-run",
-        // 10 日前（保持期間内）
         new Date(Date.now() - 10 * 86400_000).toISOString().slice(0, 10),
         "2026-07-05T05:00:00.000Z",
         10

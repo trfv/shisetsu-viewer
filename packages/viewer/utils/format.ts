@@ -1,11 +1,5 @@
-// 文字列が既にタイムゾーン情報（Z または ±HH:MM オフセット）を持つか。
-// 持たない naive な datetime は UTC とみなして Z を補う。
 const HAS_TZ = /(Z|[+-]\d{2}:?\d{2})$/;
 
-/**
- * 文字列/Date を Date に変換する。文字列に datetime 用の Z 補完を行うかを appendZ で制御。
- * パース不能なら null（呼び出し側で空文字にフォールバック）。
- */
 function toValidDate(value: string | Date, appendZ = false): Date | null {
   const date =
     typeof value === "string"
@@ -55,7 +49,7 @@ const datetimeFormat = new Intl.DateTimeFormat("ja-JP", {
 });
 
 export const formatDatetime = (datetime: string | Date | undefined): string => {
-  // 文字列は naive（Z 無し）なら UTC とみなして Z を補う。Z / オフセット付きはそのまま。
+  // タイムゾーン無しの文字列は UTC とみなして Z を補う。
   const parsed = datetime ? toValidDate(datetime, true) : null;
   if (!parsed) {
     console.error("invalid date", datetime);

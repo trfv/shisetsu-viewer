@@ -13,8 +13,6 @@ import {
 const BASE = "/api";
 
 export const handlers = [
-  // BFF のセッション問い合わせ。既定はログイン済みの user とする。
-  // 個別のケースは renderWithProviders の authConfig で Context を直接差し替える。
   http.get("/auth/me", () =>
     HttpResponse.json({
       authenticated: true,
@@ -23,7 +21,6 @@ export const handlers = [
     })
   ),
 
-  // institutions list (Institution page)
   http.get(`${BASE}/v1/institutions`, () =>
     HttpResponse.json(
       createMockInstitutionsPage([
@@ -39,7 +36,6 @@ export const handlers = [
     )
   ),
 
-  // institution reservations (Detail page - reservation tab)
   http.get(`${BASE}/v1/institutions/:id/reservations`, () =>
     HttpResponse.json(
       createMockReservationsPage([
@@ -52,10 +48,8 @@ export const handlers = [
     )
   ),
 
-  // institution detail (Detail page) — 具体パスの後に置く
   http.get(`${BASE}/v1/institutions/:id`, () => HttpResponse.json(createMockInstitutionDetail())),
 
-  // searchable reservations (Reservation page)
   http.get(`${BASE}/v1/reservations/search`, () =>
     HttpResponse.json(createMockReservationSearchPage([createMockReservationSearchHit()]))
   ),

@@ -1,7 +1,3 @@
-// spot check の段 3。expected と observed を突合する決定論スクリプト。AI を含まない。
-// 使い方（packages/scraper で実行）: node tools/spotcheck/judge.ts
-// 入力: test-results/_spotcheck/{plan.json, expected.json, observed/*.json}
-// 出力: stdout 末尾に `SPOTCHECK_RESULT <json>` 1 行。exit 0=要調査なし, 1=要調査あり, 2=入力不備。
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -44,8 +40,7 @@ for (const file of observedFiles) {
   observedById.set(sample.id, sample);
 }
 
-// plan に無い id の observed はここで捨てられる（該当サンプルは判定に使われない）。
-// エージェントの id タイプミスは黙って UNREACHABLE を誘発するため、ここで可視化する。
+// エージェントの id タイプミスは黙って UNREACHABLE を招くので、捨てる前に可視化する。
 const planIds = new Set(plan.samples.map((s) => s.id));
 const orphanIds = [...observedById.keys()].filter((id) => !planIds.has(id));
 if (orphanIds.length > 0) {

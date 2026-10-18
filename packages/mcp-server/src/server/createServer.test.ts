@@ -6,16 +6,11 @@ import { describe, expect, it } from "vitest";
 import type { DataSource, WritableDataSource } from "../data/dataSource.ts";
 import { createServer } from "./createServer.ts";
 
-/**
- * worker と同じく createMcpHandler 越しに HTTP で話す。2026-07-28（initialize なし）と
- * 2025 系（initialize あり）の両方のクライアントに、同じ factory で応えることを確かめる。
- */
 const ERAS: [string, VersionNegotiationMode][] = [
   ["2026-07-28", { pin: "2026-07-28" }],
   ["2025 系（initialize）", "legacy"],
 ];
 
-/** クライアントが送った JSON-RPC のメソッド名 */
 const sentMethods: string[] = [];
 
 async function connect(
@@ -39,7 +34,6 @@ async function connect(
   return client;
 }
 
-// ツール登録ゲートの検証のみ。ツールは呼ばないので実装は空でよい。
 const dataSource = {} as DataSource;
 const write = {} as WritableDataSource;
 

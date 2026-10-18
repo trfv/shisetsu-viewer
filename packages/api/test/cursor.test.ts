@@ -10,7 +10,6 @@ describe("cursor", () => {
   });
 
   it("base64url なので + / = を含まない", () => {
-    // 多くの区切りを含む値でも URL 安全な文字だけになる
     const encoded = encodeCursor({ a: "?>?>?>?>", b: "~~~~" });
     expect(encoded).not.toMatch(/[+/=]/);
     expect(decodeCursor(encoded)).toEqual({ a: "?>?>?>?>", b: "~~~~" });

@@ -1,9 +1,4 @@
-/**
- * `fields` 指定を結果オブジェクトの pick に置換する util（buildFieldSelection の後継）。
- * - allowlist 外のフィールドが渡されたら throw する（旧 buildFieldSelection と同じ契約）。
- * - allowlist 内でも結果オブジェクトに存在しないキーは黙って落とす（DTO に無い旧 GraphQL
- *   フィールド名を弾かないため）。
- */
+// allowlist 内でも結果に無いキーは throw せず落とす。DTO に無い旧 GraphQL のフィールド名を弾かないため。
 export function pick<T extends object>(
   obj: T,
   allowed: readonly string[],

@@ -1,8 +1,3 @@
-/**
- * Mock data factories for the packages/api REST responses.
- * Shapes match @shisetsu-viewer/shared の DTO 型（Page / InstitutionSummary /
- * InstitutionDetail / ReservationDto / ReservationSearchHit）。
- */
 import type {
   InstitutionDetail,
   InstitutionSummary,
@@ -10,8 +5,6 @@ import type {
   ReservationDto,
   ReservationSearchHit,
 } from "@shisetsu-viewer/shared";
-
-// --- Institution summary (list) ---
 
 export const createMockInstitutionSummary = (
   overrides?: Partial<InstitutionSummary>
@@ -41,8 +34,6 @@ export const createMockInstitutionsPage = (
     endCursor: items.length > 0 ? `cursor-${items.length - 1}` : null,
   },
 });
-
-// --- Institution detail ---
 
 export const createMockInstitutionDetail = (
   overrides?: Partial<InstitutionDetail>
@@ -83,8 +74,6 @@ export const createMockInstitutionDetail = (
   ...overrides,
 });
 
-// --- Reservation (institution detail's reservation tab) ---
-
 export const createMockReservationDto = (overrides?: Partial<ReservationDto>): ReservationDto => ({
   institution_id: "b3ed861c-c057-4b71-8678-93b7fea06202",
   date: "2024-10-01",
@@ -111,8 +100,6 @@ export const createMockReservationsPage = (
     endCursor: items.length > 0 ? `cursor-${items.length - 1}` : null,
   },
 });
-
-// --- Searchable reservations (reservation search page) ---
 
 export const createMockReservationSearchHit = (
   overrides?: Partial<ReservationSearchHit>

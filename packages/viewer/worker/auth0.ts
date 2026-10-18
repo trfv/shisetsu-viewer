@@ -18,14 +18,10 @@ export function auth0Config(env: Cloudflare.Env): Auth0Config {
   };
 }
 
-/** Auth0 のトークンエンドポイントを差し替えるための型。テストから偽の fetch を渡す。 */
 export type FetchLike = (input: Request | string, init?: RequestInit) => Promise<Response>;
 
-/**
- * connection を指定すると Auth0 は Universal Login を出さずに Google へ転送する。
- * 接続は Google だけなので、利用者から見るとログインボタンの直後に Google の画面が出る。
- * offline_access は refresh token を受け取るために要る。
- */
+// connection を指定すると Auth0 は Universal Login を出さずに Google へ転送する。
+// offline_access は refresh token を受け取るために要る。
 export function buildAuthorizeUrl(
   config: Auth0Config,
   params: { redirectUri: string; state: string; challenge: string }
@@ -56,11 +52,7 @@ interface TokenResponse {
   expires_in: number;
 }
 
-/**
- * refresh の失敗の分類。invalid_grant（revoke 済み・期限切れ）はセッションを捨てて
- * 再ログインさせ、それ以外（Auth0 の障害・通信断）は Cookie を残して再試行に委ねる。
- * 一時的な障害で利用者をログアウトさせないためである（mcp-server の refreshAuth0Token と同じ基準）。
- */
+// invalid_grant 以外（Auth0 の障害・通信断）は一時的な障害でログアウトさせないよう Cookie を残す。
 export class RefreshError extends Error {
   readonly kind: "invalid_grant" | "unavailable";
 
@@ -117,10 +109,7 @@ export async function exchangeCode(
   return toSession((await response.json()) as TokenResponse, undefined);
 }
 
-/**
- * rotation を無効にしているので、Auth0 は新しい refresh token を返さない。
- * そのときは手元の refresh token を使い続ける（rotation を有効に戻しても動くよう、返れば差し替える）。
- */
+// rotation 無効なので通常は新しい refresh token が返らず、手元のものを使い続ける。
 export async function refreshSession(
   config: Auth0Config,
   refreshToken: string,
@@ -143,7 +132,6 @@ export async function refreshSession(
   return toSession((await response.json()) as TokenResponse, refreshToken);
 }
 
-/** ログアウト時の後始末。失敗してもログアウト自体は進めるので、呼び出し側で握りつぶしてよい。 */
 export async function revokeRefreshToken(
   config: Auth0Config,
   refreshToken: string,
@@ -161,12 +149,7 @@ export async function revokeRefreshToken(
   if (!response.ok) throw new Error(`Auth0 revoke failed: ${response.status}`);
 }
 
-/**
- * アクセストークンのクレームから UI 向けのロールを読む。署名は検証しない。
- * BFF が読むのはトークンエンドポイントから TLS で直接受け取ったトークンだけであり、
- * 署名の検証は従来どおり api が行う（mcp-server の extractJwtSub と同じ判断）。
- * クレームの解釈は api と同じ shared の readClaims を使うので、UI と api の判定は食い違わない。
- */
+// 署名は検証しない。トークンエンドポイントから TLS で直接受け取ったものだけを読み、検証は api が行う。
 export function readRole(accessToken: string): { anonymous: boolean; trial: boolean } {
   try {
     const [, payload] = accessToken.split(".");

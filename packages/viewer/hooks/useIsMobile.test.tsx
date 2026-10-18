@@ -105,13 +105,11 @@ describe("useIsMobile Hook", () => {
     it("アンマウント時にイベントリスナーを解除する", async () => {
       const { unmount } = await renderHook(() => useIsMobile());
 
-      // Listeners are registered
       const changeListeners = [...listeners.entries()].filter(([k]) => k.endsWith(":change"));
       expect(changeListeners.length).toBeGreaterThan(0);
 
       await unmount();
 
-      // After unmount, the change handler for our query should be removed
       for (const [key, handlers] of listeners) {
         if (key.endsWith(":change")) {
           expect(handlers.length).toBe(0);

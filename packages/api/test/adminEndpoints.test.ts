@@ -87,9 +87,8 @@ describe("PUT /v1/admin/reservations 認可", () => {
     expect(res.status).toBe(200);
   });
 
-  it("501 行は 400", async () => {
+  it("0 行は 200、501 行は 400", async () => {
     const res = await putReservations(adminHeaders(), sampleRows(0));
-    // 空は OK（0 行）だが、上限超過を検証
     expect(res.status).toBe(200);
     const tooMany = Array.from({ length: 501 }, (_, i) => ({
       institution_id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
@@ -103,7 +102,6 @@ describe("PUT /v1/admin/reservations 認可", () => {
 
 describe("書き込み予算ガード", () => {
   it("当日 rows_written が予算超過なら 202 deferred で書かない", async () => {
-    // 予算(80000)を超える台帳を直接作る
     await env.DB.prepare(
       `INSERT INTO scrape_runs (municipality, run_id, run_date, rows_written) VALUES (?, ?, date('now'), ?)`
     )
@@ -117,7 +115,7 @@ describe("書き込み予算ガード", () => {
     const count = await env.DB.prepare(`SELECT COUNT(*) AS c FROM reservations`).first<{
       c: number;
     }>();
-    expect(count?.c).toBe(0); // 書かれていない
+    expect(count?.c).toBe(0);
   });
 });
 
@@ -186,8 +184,7 @@ describe("PUT /v1/admin/holidays / export", () => {
   });
 
   it("export は institutions に無い予約行も返す（JOIN しない）", async () => {
-    // 施設マスタを一切入れずに dump できることを確認する。JOIN が復活すると
-    // ページごとの全件ソートが戻ってくるため、その回帰を型ではなく挙動で押さえる。
+    // JOIN が復活するとページごとの全件ソートが戻るので、型ではなく挙動で押さえる
     await putReservations(adminHeaders(), sampleRows(1));
     const res = await SELF.fetch(`${BASE}/v1/admin/reservations/export`, {
       headers: adminHeaders(),

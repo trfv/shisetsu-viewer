@@ -3,7 +3,7 @@ import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from "jose";
 
 export type { Role };
 
-// JWKS はユーザー非依存のためモジュールレベルのキャッシュで良い（可変シングルトン禁止の対象外）。
+// ユーザー非依存なので、可変シングルトン禁止の例外としてモジュールスコープに置く
 let jwks: JWTVerifyGetKey | null = null;
 
 function getJwks(domain: string): JWTVerifyGetKey {
@@ -22,12 +22,6 @@ export interface Principal {
   role: Role;
 }
 
-/**
- * Auth0 access token を検証し、利用者（sub）とロールを返す。検証失敗・トークン無しは null。
- * クレームの解釈は shared の readClaims（viewer の BFF と共有）。
- *
- * getKey はテスト用に注入可能（ローカル JWKS）。省略時はテナントの JWKS を使う。
- */
 export async function verifyAccessToken(
   token: string | undefined,
   env: Auth0Env,
@@ -36,7 +30,7 @@ export async function verifyAccessToken(
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, getKey ?? getJwks(env.AUTH0_DOMAIN), {
-      // issuer は末尾スラッシュ必須。alg は実 JWKS（trfv.jp.auth0.com）が RS256。
+      // issuer は末尾スラッシュ必須
       issuer: `https://${env.AUTH0_DOMAIN}/`,
       audience: env.AUTH0_AUDIENCE,
       algorithms: ["RS256"],
@@ -47,7 +41,6 @@ export async function verifyAccessToken(
   }
 }
 
-/** Auth0 access token からロールを解決する。検証失敗・トークン無しは anonymous。 */
 export async function resolveRole(
   token: string | undefined,
   env: Auth0Env,

@@ -12,11 +12,9 @@ const BASE_URL = "https://www.yoyaku.city.ota.tokyo.jp/eshisetsu/menu/Welcome.cg
 
 export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",
-  // 集会室系 (午前/午後/夜間)
   "09:00 - 12:00": "RESERVATION_DIVISION_MORNING",
   "13:00 - 17:00": "RESERVATION_DIVISION_AFTERNOON",
   "18:00 - 22:00": "RESERVATION_DIVISION_EVENING",
-  // スタジオ系 (2時間コマ)
   "09:30 - 11:30": "RESERVATION_DIVISION_MORNING",
   "12:00 - 14:00": "RESERVATION_DIVISION_AFTERNOON_ONE",
   "14:30 - 16:30": "RESERVATION_DIVISION_AFTERNOON_TWO",
@@ -40,12 +38,10 @@ interface OtaTarget {
   roomName: string;
   category: string;
   buildingName: string;
-  /** サイト上の表記が roomName と異なる場合（全角英字等）に指定 */
   siteRoomName?: string;
 }
 
 const targets: OtaTarget[] = [
-  // 集会室・会議室
   {
     facilityName: "池上文化センター",
     roomName: "第一集会室",
@@ -88,7 +84,6 @@ const targets: OtaTarget[] = [
     category: "集会室・会議室",
     buildingName: "雪谷文化センター",
   },
-  // 音楽室
   {
     facilityName: "大田区民ホール・アプリコ",
     roomName: "Aスタジオ",
@@ -121,7 +116,6 @@ const targets: OtaTarget[] = [
     category: "音楽室",
     buildingName: "大田文化の森",
   },
-  // スタジオ
   {
     facilityName: "大田区民プラザ",
     roomName: "第一音楽スタジオ",
@@ -134,14 +128,12 @@ const targets: OtaTarget[] = [
     category: "スタジオ",
     buildingName: "大田区民プラザ",
   },
-  // リハーサル室
   {
     facilityName: "大田区民プラザ",
     roomName: "リハーサル室",
     category: "リハーサル室",
     buildingName: "大田区民プラザ",
   },
-  // ホール
   {
     facilityName: "大田区民ホール・アプリコ",
     roomName: "小ホール",
@@ -160,7 +152,6 @@ const targets: OtaTarget[] = [
     category: "ホール",
     buildingName: "新蒲田区民活動施設",
   },
-  // 多目的室
   {
     facilityName: "田園調布せせらぎ館",
     roomName: "第一多目的室A",
@@ -181,7 +172,6 @@ const targets: OtaTarget[] = [
     category: "多目的室",
     buildingName: "田園調布せせらぎ館",
   },
-  // 和室
   {
     facilityName: "雪谷文化センター",
     roomName: "和室",
@@ -198,7 +188,6 @@ async function extractWeek(page: Page): Promise<OtaDay[]> {
 
   const year = await page.locator("#optYear").inputValue();
 
-  // 日付ヘッダーは日付行の TH 内 <p class="day">（先頭の空 TH はスキップ）
   const dateThs = await table.locator("tr.date th").all();
   const dates: string[] = [];
   for (const dateTh of dateThs.slice(1)) {
@@ -206,7 +195,6 @@ async function extractWeek(page: Page): Promise<OtaDay[]> {
     dates.push(`${year}年${dayText}`);
   }
 
-  // データ行（日付ヘッダー行以外）: TH = 時間区分、TD = 日ごとのステータス
   const dataRows = await table.locator("tr:not(.date)").all();
   const headers: string[] = [];
   const statusesByDay: string[][] = dates.map(() => []);
@@ -241,9 +229,7 @@ export const scraper = defineScraper({
 
   async prepare(page, target) {
     await page.goto(BASE_URL);
-    // メンテナンス窓（JST 02:00-05:00）自体は registry の maintenanceWindowJst を使って
-    // runScrapeTest 側で fast-fail する。ここでは窓の縁で "システム休止" ページが
-    // 返ったケースを保険で検出し、transient 分類の型付きエラーで throw する。
+    // 窓自体は runScrapeTest が fast-fail する。これは窓の縁で休止ページが返ったときの保険
     if (await page.getByText("システム休止", { exact: false }).first().isVisible()) {
       throw new MaintenanceWindowError("システム休止: site under maintenance");
     }
@@ -253,7 +239,6 @@ export const scraper = defineScraper({
     await page.getByRole("button", { name: "選択した条件で次へ" }).click();
     await page.waitForLoadState("networkidle");
 
-    // 対象部屋のチェックボックスを探してチェックする
     const siteRoomName = target.siteRoomName ?? target.roomName;
     const rows = page.locator("tr");
     const count = await rows.count();
@@ -267,8 +252,7 @@ export const scraper = defineScraper({
       }
     }
     if (!found) {
-      // 窓内は runScrapeTest の guard が先に fast-fail するため、ここに到達する
-      // 「部屋が見つからない」は構造変化（施設一覧の変化）とみなしてよい。
+      // 窓内は runScrapeTest の guard が先に落とすので、ここは構造変化とみなせる
       throw new TargetNotFoundError(
         `Room not found: ${target.buildingName} ${siteRoomName} in category ${target.category}`
       );

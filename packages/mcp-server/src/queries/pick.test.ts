@@ -20,7 +20,6 @@ describe("pick", () => {
   });
 
   it("silently drops allowlisted fields that are absent on the object", () => {
-    // 旧 GraphQL の合成 id など、DTO に存在しないキーはエラーにせず落とす
     const obj = { name: "b" };
     expect(pick(obj, ALLOWED, undefined)).toEqual({ name: "b" });
   });

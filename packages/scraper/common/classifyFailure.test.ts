@@ -82,7 +82,6 @@ test("Error 以外の値が throw されても分類できる", () => {
 });
 
 test("型付きエラーは文言に依存せず instanceof で分類される", () => {
-  // メッセージが構造系パターンに一致しても、型が transient なら transient
   assert.equal(
     classifyFailure("prepare", new MaintenanceWindowError("locator.click failed somehow")),
     "transient"

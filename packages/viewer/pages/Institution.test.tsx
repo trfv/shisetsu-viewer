@@ -239,7 +239,7 @@ describe("Institution Page", () => {
     it("データ取得中にスピナーを表示する", async () => {
       worker.use(
         http.get(`${BASE}/v1/institutions`, async () => {
-          await new Promise(() => {}); // never resolves
+          await new Promise(() => {});
           return HttpResponse.json(createMockInstitutionsPage([]));
         })
       );

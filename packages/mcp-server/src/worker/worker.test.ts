@@ -6,7 +6,6 @@ const ORIGIN = "https://mcp.example.com";
 const CLIENT_ID = "https://client.example/metadata.json";
 const CLIENT_REDIRECT = "https://client.example/cb";
 
-/** OAuthProvider が使う範囲だけを満たす KV */
 function createKv() {
   const store = new Map<string, string>();
   return {
@@ -74,7 +73,6 @@ const env = () => ({
 
 const ctx = () => ({ waitUntil() {}, passThroughOnException() {}, props: {} });
 
-/** Set-Cookie を次のリクエストの Cookie ヘッダに積む */
 function cookiesFrom(response: Response, jar = new Map<string, string>()) {
   for (const line of response.headers.getSetCookie()) {
     const [pair] = line.split(";");
@@ -128,14 +126,13 @@ describe("worker の認可フロー", () => {
     vi.unstubAllGlobals();
   });
 
-  it("GET /authorize は Auth0 へ飛ばさず同意画面を返す", async () => {
+  it("GET /authorize は Auth0 へ飛ばさず、CIMD の発行ドメインを示しクライアント名をエスケープした同意画面を返す", async () => {
     const e = env();
     const { response, html, handle } = await openConsent(e);
     expect(response.status).toBe(200);
     expect(response.headers.get("X-Frame-Options")).toBe("DENY");
     expect(response.headers.getSetCookie().some((c) => c.startsWith("__Host-"))).toBe(true);
     expect(handle).toBeTruthy();
-    // CIMD の発行ドメインと送り先を見せ、クライアントが名乗る名前はエスケープする
     expect(html).toContain("client.example");
     expect(html).toContain("Evil &#60;script&#62;");
     expect(html).not.toContain("<script>");
@@ -159,7 +156,7 @@ describe("worker の認可フロー", () => {
     expect(location.searchParams.get("state")).toBe("client-state");
   });
 
-  it("承認すると PKCE 付きで Auth0 へ送り、callback でクライアントへ code を返す", async () => {
+  it("承認すると PKCE 付きで Auth0 へ送り、cookie を持つ同じブラウザの callback でだけクライアントへ code を返す", async () => {
     const e = env();
     const { handle, jar } = await openConsent(e);
 
@@ -170,13 +167,11 @@ describe("worker の認可フロー", () => {
     expect(auth0.searchParams.get("code_challenge_method")).toBe("S256");
     expect(auth0.searchParams.get("code_challenge")).toBeTruthy();
     const state = auth0.searchParams.get("state")!;
-    // Auth0 の state は認可リクエストそのものではない
     expect(() => JSON.parse(atob(state))).toThrow();
     cookiesFrom(approved, jar);
 
     const callbackUrl = `${ORIGIN}/callback?code=auth0-code&state=${encodeURIComponent(state)}`;
 
-    // 別のブラウザ（cookie なし）で callback を踏ませても通らない
     const stolen = await call(new Request(callbackUrl), e);
     expect(stolen.status).toBe(400);
 

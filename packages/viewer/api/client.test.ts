@@ -50,7 +50,6 @@ describe("apiGet", () => {
     expect(url.searchParams.get("isHoliday")).toBe("true");
   });
 
-  // BFF 化により Authorization はブラウザ側で付けない。トークンは Worker が持つ。
   it("Authorization ヘッダを付けない", async () => {
     let auth: string | null = "unset";
     worker.use(

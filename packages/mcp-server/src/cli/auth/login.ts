@@ -146,7 +146,6 @@ export async function login(): Promise<void> {
     });
   });
 
-  // Exchange authorization code for tokens
   const tokenResponse = await fetch(`https://${domain}/oauth/token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -13,7 +13,6 @@ import { readCookie, serializeCookie } from "./cookies.ts";
 import { isAllowedApiPath, proxyToApi } from "./proxy.ts";
 import { keyLoader, seal, toBase64Url, unseal, type KeyLoader, type Session } from "./session.ts";
 
-// binding の定義は wrangler.jsonc から生成した Cloudflare.Env が持つ（Secret は secrets.required から生成される）。
 export type Env = Cloudflare.Env;
 
 const SESSION_COOKIE = "__Host-session";
@@ -21,10 +20,11 @@ const OAUTH_COOKIE = "__Host-oauth";
 // refresh token の Maximum Lifetime（Auth0 側の設定）に揃える。
 const SESSION_TTL_SECONDS = 365 * 24 * 60 * 60;
 const OAUTH_TTL_SECONDS = 600;
-// 失効の直前に api へ渡すと、api に届く頃に切れていることがある。余裕を持って refresh する。
+// 失効直前のトークンは api に届く頃に切れていることがある。
 const REFRESH_LEEWAY_SECONDS = 60;
 
-/** レート制限の対象。総当たりの的になるログイン経路だけに絞る。 */
+// /auth/me は含めない。全訪問者がページ読み込みごとに叩くため、共有 IP（CGNAT）で枠を食い潰し、
+// 429 を受けた Auth コンテキストがログイン済みユーザーを anonymous に倒す。/api/* は api 側が数える。
 const RATE_LIMITED_PATHS = new Set(["/auth/login", "/auth/callback"]);
 
 interface OauthState {
@@ -33,28 +33,18 @@ interface OauthState {
   redirect: string;
 }
 
-/**
- * Auth0 への通信の注入口。この pool では vi.mock によるモジュール差し替えが効かないため、
- * テストからは偽の fetch を渡して Auth0 に触らずに各経路を通す。
- */
+// この pool では vi.mock が効かないため、テストは偽の fetch を注入する。
 export interface Deps {
   fetch: FetchLike;
 }
 
 const defaultDeps: Deps = { fetch: (input, init) => fetch(input, init) };
 
-// 到達不能な TLD を基準オリジンに使う。実在ドメインだと、攻撃者がその絶対 URL を
-// 渡したときに origin が一致して素通りする。
+// 実在ドメインを基準にすると、攻撃者がその絶対 URL を渡したときに origin が一致して素通りする。
 const REDIRECT_BASE = "https://placeholder.invalid";
 
-/**
- * オープンリダイレクトを防ぐ。ブラウザと同じ URL パーサで解決し、自オリジンに落ちるものだけ許す。
- *
- * 文字列の前方一致で弾く実装では足りない。WHATWG の URL パーサは special scheme で
- * バックスラッシュを `/` と同一視し、タブや改行を除去してから解釈するため、
- * `/\evil.example/` や `/<TAB>/evil.example/` が `//evil.example/` として解決してしまう。
- * 判定をパーサに委ねれば、この手の表記ゆれをまとめて塞げる。
- */
+// 文字列の前方一致では足りない。URL パーサは `\` を `/` と同一視しタブや改行を除去するため、
+// `/\evil.example/` や `/<TAB>/evil.example/` が `//evil.example/` として解決される。
 function safeRedirect(raw: string | null): string {
   if (!raw) return "/";
   try {
@@ -66,11 +56,7 @@ function safeRedirect(raw: string | null): string {
   }
 }
 
-/**
- * OAuth の redirect_uri。リクエストが来たオリジンから組み立てる。
- * 本番と localhost の両方で同じ Worker が動くため、固定値にすると片方で必ずずれる。
- * Auth0 は Allowed Callback URLs と一致しない URI を拒否するので、導出しても安全性は落ちない。
- */
+// 本番と localhost で同じ Worker が動くため固定値にしない。Auth0 が Allowed Callback URLs で検証する。
 function callbackUri(request: Request): string {
   return `${new URL(request.url).origin}/auth/callback`;
 }
@@ -106,13 +92,7 @@ async function sessionCookie(keys: KeyLoader, session: Session): Promise<string>
   );
 }
 
-/**
- * 現在のセッションを解決する。必要なら refresh し、そのとき返す Set-Cookie も組み立てる。
- *
- * - session: 有効なセッション。無ければ null（未ログイン）
- * - cookies: 応答に付ける Set-Cookie（refresh した、または壊れた Cookie を消す）
- * - unavailable: Auth0 の一時的な障害で refresh できなかった。Cookie は残す
- */
+// unavailable は Auth0 の一時障害。ログアウトさせないよう Cookie は消さない。
 type SessionState =
   | { session: Session | null; cookies: string[]; unavailable?: false }
   | { session: null; cookies: string[]; unavailable: true };
@@ -133,8 +113,7 @@ async function loadSession(
     return { session, cookies: [] };
   }
 
-  // 並行する /api/* がそれぞれここに来て同じ refresh token を使う。Auth0 側で
-  // rotation を無効にしているので全て成功し、どの応答の Cookie が残っても有効である。
+  // 並行する /api/* が同じ refresh token を使う。Auth0 の rotation を無効にしているので全て成功する。
   try {
     const refreshed = await refreshSession(auth0Config(env), session.refreshToken, deps.fetch);
     return { session: refreshed, cookies: [await sessionCookie(keys, refreshed)] };
@@ -202,8 +181,7 @@ async function handleCallback(
     return fail("exchange_failed");
   }
 
-  // Cookie は暗号化されているので通常は書き換えられないが、Location に入れる直前に
-  // もう一度通す。safeRedirect は冪等なのでコストは無い。
+  // Cookie は暗号化済みだが、Location に入れる直前にも通す。
   return redirectTo(safeRedirect(saved.redirect), [await sessionCookie(keys, session), clearOauth]);
 }
 
@@ -221,14 +199,9 @@ async function handleMe(
   return json(body, { cookies });
 }
 
-/**
- * Auth0 のセッションも消すため、最後に /v2/logout へ遷移させる。消さないと次のログインが
- * 同じ Google アカウントで即座に完了し、アカウントを切り替えられない。
- *
- * POST にしているのは、他サイトからのリンクで強制ログアウトさせられないためである
- * （SameSite=Lax の Cookie はトップレベルの GET には載る）。fetch では別オリジンへの
- * 302 を辿れないので、遷移先は JSON で返し、SPA が location を書き換える。
- */
+// /v2/logout で Auth0 のセッションも消す。消さないと次のログインが同じ Google アカウントで即完了する。
+// POST なのは他サイトのリンクで強制ログアウトさせないため（Lax の Cookie はトップレベル GET に載る）。
+// fetch は別オリジンへの 302 を辿れないので、遷移先は JSON で返す。
 async function handleLogout(
   request: Request,
   env: Env,
@@ -241,7 +214,7 @@ async function handleLogout(
     try {
       await revokeRefreshToken(auth0Config(env), session.refreshToken, deps.fetch);
     } catch (e) {
-      // revoke に失敗しても Cookie は消すので、このブラウザからは使えなくなる。
+      // 失敗しても Cookie は消すので、このブラウザからは使えなくなる。
       console.error(e);
     }
   }
@@ -263,16 +236,13 @@ async function handleApi(
   apiPath: string
 ): Promise<Response> {
   if (!isAllowedApiPath(apiPath)) return new Response("not found", { status: 404 });
-  // 転送先は読み取り専用の 5 経路だけなので、GET 以外は受ける意味がない。
   // 素通しにすると POST が GET に変換されて 200 を返し、キャッシュにも載る。
   if (request.method !== "GET") {
     return new Response("method not allowed", { status: 405, headers: { Allow: "GET" } });
   }
 
-  // 格納するのは api が public と宣言した応答だけで、それはロール非依存の経路
-  // （institutions / scrape-runs）に限られる。認証必須の応答には private, no-store が
-  // 付くので入らない。したがってログイン中でも読んでよく、むしろ読まないと
-  // ログインユーザーだけが毎回 D1 を引くことになる（無料枠の制約は rows read）。
+  // 入るのは api が public と宣言したロール非依存の応答だけなので、ログイン中も読む。
+  // 読まないとログインユーザーだけが毎回 D1 を引く（無料枠の制約は rows read）。
   const cache = caches.default;
   const cacheKey = new Request(request.url, { method: "GET" });
   const hit = await cache.match(cacheKey);
@@ -303,11 +273,6 @@ export function createWorker(deps: Deps = defaultDeps) {
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
       const { pathname } = new URL(request.url);
       try {
-        // 総当たり対策なので、対象はログイン開始と受け口の 2 経路だけである。
-        // /auth/me を含めるわけにはいかない。全訪問者がページ読み込みごとに叩くため、
-        // 共有 IP（CGNAT・社内 NAT）で枠を食い潰し、429 を受けた Auth コンテキストが
-        // ログイン済みユーザーを anonymous に倒してしまう。
-        // /api/* は api 側の RATE_LIMITER が受け持つ。
         if (RATE_LIMITED_PATHS.has(pathname) && env.AUTH_RATE_LIMITER) {
           const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
           const { success } = await env.AUTH_RATE_LIMITER.limit({ key });
@@ -338,8 +303,7 @@ export function createWorker(deps: Deps = defaultDeps) {
           }
           return new Response("not found", { status: 404 });
         }
-        // run_worker_first が /auth/* と /api/* だけなので通常ここには来ない。
-        // 設定を変えたときや、アセットに無いパスが回ってきたときの受け皿として残す。
+        // run_worker_first の対象外なので通常は来ないが、設定変更時の受け皿として残す。
         return await env.ASSETS.fetch(request);
       } catch (e) {
         console.error(e);

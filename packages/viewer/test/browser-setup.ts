@@ -11,13 +11,12 @@ beforeAll(async () => {
       worker = mswWorker;
       await worker.start({
         onUnhandledRequest: "bypass",
-        quiet: true, // Suppress MSW logs
+        quiet: true,
       });
     } catch {
       console.log("MSW not available in browser mode, skipping setup");
     }
   }
-  // Mock matchMedia (not needed in real browser but kept for consistency)
   if (!globalThis.matchMedia) {
     globalThis.matchMedia = vi.fn().mockImplementation((query) => ({
       matches: false,
@@ -31,7 +30,6 @@ beforeAll(async () => {
     }));
   }
 
-  // Mock IntersectionObserver if not available
   if (!globalThis.IntersectionObserver) {
     globalThis.IntersectionObserver = vi.fn().mockImplementation(() => ({
       observe: vi.fn(),
@@ -44,7 +42,6 @@ beforeAll(async () => {
     }));
   }
 
-  // Mock ResizeObserver if not available
   if (!globalThis.ResizeObserver) {
     globalThis.ResizeObserver = vi.fn().mockImplementation(() => ({
       observe: vi.fn(),
@@ -53,17 +50,14 @@ beforeAll(async () => {
     }));
   }
 
-  // Mock scrollTo if not available
   if (!window.scrollTo) {
     window.scrollTo = vi.fn();
   }
 
-  // Mock console methods for cleaner test output
   const originalError = console.error;
   const originalWarn = console.warn;
 
   console.error = (...args: any[]) => {
-    // Filter out expected React warnings
     if (
       typeof args[0] === "string" &&
       (args[0].includes("Warning:") || args[0].includes("ReactDOM.render"))
@@ -74,7 +68,6 @@ beforeAll(async () => {
   };
 
   console.warn = (...args: any[]) => {
-    // Filter out expected warnings
     if (typeof args[0] === "string" && args[0].includes("Warning:")) {
       return;
     }
@@ -82,7 +75,6 @@ beforeAll(async () => {
   };
 });
 
-// Clean up after each test (unmount 自体は vitest-browser-react が自動で行う)
 afterEach(() => {
   if (worker) {
     worker.resetHandlers();
@@ -91,7 +83,6 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-// Final cleanup
 afterAll(() => {
   if (worker) {
     worker.stop();

@@ -8,7 +8,7 @@ import { categorizeLabel, categorizeSymbol } from "./symbolMap.ts";
 test("categorizeLabel は registry の表示ラベルを 3 カテゴリに割り当てる", () => {
   assert.equal(categorizeLabel("空き"), "AVAILABLE");
   assert.equal(categorizeLabel("一部空き"), "AVAILABLE");
-  assert.equal(categorizeLabel("空きなし"), "UNAVAILABLE"); // 「空き」を含むが UNAVAILABLE が優先
+  assert.equal(categorizeLabel("空きなし"), "UNAVAILABLE");
   assert.equal(categorizeLabel("予約あり"), "UNAVAILABLE");
   assert.equal(categorizeLabel("予約済"), "UNAVAILABLE");
   assert.equal(categorizeLabel("音出し予約"), "UNAVAILABLE");
@@ -28,38 +28,27 @@ test("categorizeSymbol は記号表で判定する", () => {
 });
 
 test("categorizeSymbol は全角/半角の X も UNAVAILABLE として扱う（荒川区が実サイトで使用）", () => {
-  assert.equal(categorizeSymbol("Ｘ"), "UNAVAILABLE"); // 全角ラテン大文字 X (U+FF38)
-  assert.equal(categorizeSymbol("X"), "UNAVAILABLE"); // 半角大文字 X (U+0058)
-  assert.equal(categorizeSymbol("x"), "UNAVAILABLE"); // 半角小文字 x (U+0078)
+  assert.equal(categorizeSymbol("Ｘ"), "UNAVAILABLE");
+  assert.equal(categorizeSymbol("X"), "UNAVAILABLE");
+  assert.equal(categorizeSymbol("x"), "UNAVAILABLE");
 });
 
 test("categorizeSymbol は大田区の img alt 文言（「空いています」「予約済みです」）を判定できる", () => {
-  // 大田区は空き状況を画像で表し、observeCore の cellToSymbol が alt を記号として採る。
-  // 「空いています」は「空き」に一致しないため、以前は UNKNOWN で UNMAPPED になっていた。
   assert.equal(categorizeSymbol("空いています"), "AVAILABLE");
   assert.equal(categorizeSymbol("予約済みです"), "UNAVAILABLE");
-  // 否定形を空き扱いしないこと（UNAVAILABLE 側で先に潰す）
   assert.equal(categorizeSymbol("空いていません"), "UNAVAILABLE");
 });
 
 test("categorizeSymbol は凡例を記号表より優先する", () => {
-  // このサイトでは △ が「抽選申込あり」= 埋まり系だと凡例が言っている
   assert.equal(categorizeSymbol("△", { "△": "抽選申込あり" }), "UNAVAILABLE");
-  // 凡例の文言が未知カテゴリなら記号表へフォールバック
   assert.equal(categorizeSymbol("△", { "△": "意味不明な説明" }), "AVAILABLE");
 });
 
 test("categorizeSymbol は記号でなく文言が直接表示されるサイトも受ける", () => {
   assert.equal(categorizeSymbol("予約あり"), "UNAVAILABLE");
-  assert.equal(categorizeSymbol(" 空き "), "AVAILABLE"); // 前後空白は無視
+  assert.equal(categorizeSymbol(" 空き "), "AVAILABLE");
 });
 
-// registry drift: 判定器（categorizeSymbol）が実際に registry の全表示ラベルを消化できることを
-// 継続的に検証する。judgeReport.ts の期待側カテゴリ化は categorizeSymbol を通すため、
-// registry に UNKNOWN な表示ラベルが 1 件でもあると、そのラベルを持つ自治体は
-// silent に UNMAPPED（判定不能）になってしまう（C1 の再発防止）。
-// スコープは spot check がサンプル対象にしうる自治体（reservationExcluded な自治体は
-// スクレイパー自体が無くサンプル化されないため除く）。
 test("categorizeSymbol は全自治体（reservationExcluded を除く）の reservationStatus 表示ラベルを UNKNOWN にしない", () => {
   const unknown: string[] = [];
   for (const municipality of Object.values<MunicipalityConfig>(MUNICIPALITIES)) {

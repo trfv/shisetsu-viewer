@@ -5,27 +5,14 @@ export interface MunicipalityConfig {
   readonly slug: string;
   readonly prefecture: string;
   readonly label: string;
-  /** true = スクレイパー自体が存在しない（ビューア専用データのみ） */
+  /** true = スクレイパーが存在しない */
   readonly reservationExcluded: boolean;
-  /**
-   * true = スクレイパーは存在するが定期 CI から除外する（workflow_dispatch では
-   * SCRAPER_FORCE_INCLUDE により実行可能）。playwright.config.ts の testIgnore が参照する。
-   */
   readonly scraperCiExcluded?: boolean;
-  /**
-   * true = サイトが GitHub Actions からの接続を遮断しているため、CI では
-   * 国内 proxy 経由でスクレイプする。scrape アクションが Cloudflare Tunnel の
-   * 中継起動と SCRAPER_PROXY 設定を行う（判定は scripts/viaJpProxy.ts）。
-   */
+  /** サイトが GitHub Actions からの接続を遮断している */
   readonly scraperViaJpProxy?: boolean;
-  /** サイトのメンテナンス時間帯 [開始時, 終了時)（JST の時、半開区間） */
+  /** [開始時, 終了時)（JST、半開区間） */
   readonly maintenanceWindowJst?: readonly [number, number];
-  /**
-   * 同一自治体に複数の予約システムがある場合の、追加スクレイパー名。
-   * スクレイパーのディレクトリと test-results は `<prefecture>-<slug>-<name>` になり、
-   * DB 上の municipality は親自治体と同じになる。
-   * 例: 北区の元気ぷらざ（`additionalScrapers: ["genkiplaza"]`）
-   */
+  /** 同一自治体の別予約システム。target は `<prefecture>-<slug>-<name>`、DB 上の municipality は親と同じ */
   readonly additionalScrapers?: readonly string[];
   readonly reservationStatus: Readonly<Record<string, string>>;
   readonly reservationDivision: Readonly<Record<string, string>>;
@@ -292,7 +279,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "大田区",
     reservationExcluded: false,
-    // サイトのメンテナンス時間帯（JST 02:00-05:00）。窓内のスクレイプは transient 扱いにする
     maintenanceWindowJst: [2, 5],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
@@ -301,8 +287,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_3]: "休館日",
       [ReservationStatus.STATUS_4]: "保守点検",
       [ReservationStatus.STATUS_5]: "利用中止",
-      // STATUS_6 は歴史的経緯による欠番（DB 保存値と scraper 側 STATUS_MAP が STATUS_7 で
-      // 一貫しているため、renumber は保存データの書き換えを伴う。D1 移行時に吸収する）
+      // STATUS_6 は欠番。詰めると保存データと scraper の STATUS_MAP の書き換えを伴う
       [ReservationStatus.STATUS_7]: "利用不可",
     },
     reservationDivision: {
@@ -361,8 +346,7 @@ export const MUNICIPALITIES = {
       [ReservationDivision.DIVISION_11]: "19時-",
       [ReservationDivision.DIVISION_12]: "20時-",
     },
-    // data/institutions/tokyo-suginami.json は FEE_DIVISION_* キーを使うため、
-    // ReservationDivision キーの流用（旧実装）では料金ラベルが引けなかった
+    // ReservationDivision キーを流用しない。data/institutions/tokyo-suginami.json は FEE_DIVISION_* キーを使う
     feeDivision: {
       [FeeDivision.MORNING]: "午前",
       [FeeDivision.AFTERNOON]: "午後",
@@ -438,7 +422,7 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "目黒区",
     reservationExcluded: false,
-    // 定期実行での安定性が未検証（予約データ 0 行）。dispatch 観測後に解除予定（再構築 PR 1-6）
+    // 定期実行での安定性が未検証（予約データ 0 行）。dispatch で観測してから解除する
     scraperCiExcluded: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
@@ -508,17 +492,12 @@ export function getAllMunicipalityTargets(): string[] {
   return Object.values(MUNICIPALITIES).map((m) => `${m.prefecture}-${m.slug}`);
 }
 
-/** 自治体設定が指定のスクレイパー target に対応するかを判定する。 */
 function matchesScraperTarget(config: MunicipalityConfig, target: string): boolean {
   const base = `${config.prefecture}-${config.slug}`;
   if (base === target) return true;
   return (config.additionalScrapers ?? []).some((name) => `${base}-${name}` === target);
 }
 
-/**
- * スクレイパーのディレクトリ名の一覧。
- * 自治体単位の `getReservationTargets()` に、追加スクレイパーを展開したものを加える。
- */
 export function getScraperTargets(): string[] {
   return Object.values<MunicipalityConfig>(MUNICIPALITIES)
     .filter((m) => !m.reservationExcluded)
@@ -528,14 +507,12 @@ export function getScraperTargets(): string[] {
     });
 }
 
-/** スクレイパー target（例 "tokyo-kita-genkiplaza"）から自治体設定を引く。 */
 export function getMunicipalityByScraperTarget(target: string): MunicipalityConfig | undefined {
   return Object.values<MunicipalityConfig>(MUNICIPALITIES).find((m) =>
     matchesScraperTarget(m, target)
   );
 }
 
-/** スクレイパー target から自治体キー（DB の municipality 値）を引く。 */
 export function getMunicipalityKeyByScraperTarget(target: string): MunicipalityKey | undefined {
   return MUNICIPALITY_KEYS.find((key) => matchesScraperTarget(MUNICIPALITIES[key], target));
 }

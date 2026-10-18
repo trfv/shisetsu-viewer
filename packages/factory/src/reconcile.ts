@@ -208,10 +208,6 @@ function dependabotOp(pr: DependabotPr): Op | null {
   };
 }
 
-/**
- * 現在の状態（サマリ、CI、PR、既存の作業項目）から、作業項目 Issue への操作を計算する。
- * 副作用を持たず、同じ入力には同じ操作を返す。
- */
 export function reconcile(input: ReconcileInput): Op[] {
   const byKey = new Map(input.items.map((i) => [i.key, i]));
   const scraper = scraperDesired(input.summaries);

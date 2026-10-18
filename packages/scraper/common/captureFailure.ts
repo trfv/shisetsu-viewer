@@ -9,10 +9,7 @@ import type { FailedStep, FailureClassification, FailureRecord } from "./failure
 export interface CaptureFailureInput {
   municipality: string;
   facility: string;
-  /**
-   * 失敗時の任意コンテキスト（修復エージェントが読む）。`roomName` キーが
-   * 文字列で存在する場合はファイル名の slug 生成に使われる。
-   */
+  /** 文字列の `roomName` キーはファイル名の slug 生成に使われる */
   context: Record<string, unknown>;
   failedStep: FailedStep;
   error: unknown;
@@ -56,8 +53,7 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
   let screenshotPath: string | null = null;
   const page = input.page;
 
-  // 永続化はすべてベストエフォート。capture は元のスクレイパー失敗を決してマスク
-  // してはならないため、ここから先の IO 例外はすべて握りつぶす。
+  // 元のスクレイパー失敗をマスクしないよう、ここから先の IO 例外はすべて握りつぶす
   try {
     await fs.mkdir(dir, { recursive: true });
     if (page) {
@@ -78,7 +74,7 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
       }
     }
   } catch {
-    // ディレクトリ作成に失敗した場合はスナップショットなしで続行する。
+    // スナップショットなしで続行する
   }
 
   const error = input.error;
@@ -101,7 +97,7 @@ export async function captureFailure(input: CaptureFailureInput): Promise<Failur
   try {
     await fs.writeFile(path.join(dir, `${slug}.json`), JSON.stringify(record, null, 2));
   } catch {
-    // JSON 書き出し失敗も握りつぶす（テストは別途 red になるため検知は失われない）。
+    // テストは別途 red になるので検知は失われない
   }
   return record;
 }
@@ -120,6 +116,6 @@ export async function clearFailure(input: {
       ["json", "html", "png"].map((ext) => fs.rm(path.join(dir, `${slug}.${ext}`), { force: true }))
     );
   } catch {
-    // ベストエフォート。成功パスから呼ばれるため、削除失敗で合格テストを落とさない。
+    // 成功パスから呼ばれるので、削除失敗で合格テストを落とさない
   }
 }

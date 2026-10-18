@@ -11,8 +11,7 @@ import {
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
 
-// 自治体一覧の単一ソースは shared/registry.ts。
-// YAML / Markdown など TS から直接参照できない消費箇所は、このドリフト検査で一致を強制する。
+// YAML / Markdown など TS から registry を参照できない消費箇所は、ここで一致を強制する
 
 const scraperRoot = fileURLToPath(new URL("..", import.meta.url));
 const repoRoot = fileURLToPath(new URL("../../..", import.meta.url));

@@ -1,6 +1,5 @@
 import { MUNICIPALITIES, type MunicipalityKey } from "@shisetsu-viewer/shared";
 
-// Derive SupportedMunicipalities from the registry in the original order
 export const SupportedMunicipalities = [
   "MUNICIPALITY_KOUTOU",
   "MUNICIPALITY_BUNKYO",
@@ -38,10 +37,7 @@ const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> =
   SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
 );
 
-/**
- * 区分の表示名。施設単位ラベル（institutions.division_labels）を優先し、無ければ自治体の
- * registry ラベルに落ちる（同じ自治体の別予約システムが同じ区分に別の時刻を持つ場合がある）
- */
+// 施設単位ラベルを優先する。同じ自治体の別予約システムが同じ区分に別の時刻を持つことがある。
 export const getReservationDivisionLabel = (
   municipality: string,
   division: string,

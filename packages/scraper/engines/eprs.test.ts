@@ -9,7 +9,7 @@ import {
   parseWeekResponse,
 } from "./eprs.ts";
 
-/** 時間帯 1 行を作る。alts は startDay から 1 日ずつ並べる（月跨ぎはしない前提） */
+/** useDay を単純に加算するので月を跨がない範囲で使う */
 function zone(tzoneName: string, startDay: number, ...alts: string[]): EprsZone {
   return { tzoneName, timeResult: alts.map((alt, index) => ({ useDay: startDay + index, alt })) };
 }

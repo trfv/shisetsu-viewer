@@ -14,7 +14,6 @@ interface Call {
   body: Record<string, string>;
 }
 
-/** Auth0 の代わりに応答し、受け取った呼び出しを記録する。 */
 function fakeAuth0(handler: (call: Call) => Response) {
   const calls: Call[] = [];
   const fetch: FetchLike = async (input, init) => {
@@ -30,8 +29,7 @@ function fakeAuth0(handler: (call: Call) => Response) {
 
 const unreachable = () => fakeAuth0(() => new Response("unexpected", { status: 599 }));
 
-// AUTH_RATE_LIMITER は /auth/login と /auth/callback を IP 単位で絞る。miniflare の実装は
-// テスト間で状態を共有するため、呼び出しごとに別クライアントを名乗らせて分離する。
+// miniflare のレート制限はテスト間で状態を共有するため、呼び出しごとに別 IP を名乗らせる。
 let clientSeq = 0;
 function send(worker: ReturnType<typeof createWorker>, request: Request) {
   clientSeq++;

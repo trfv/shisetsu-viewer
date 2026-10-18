@@ -1,4 +1,3 @@
-// packages/mcp-server/auth/tokenStore.ts
 import { readFile, writeFile, mkdir, unlink } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -78,12 +77,6 @@ async function refreshAccessToken(tokens: Tokens): Promise<Tokens | null> {
   }
 }
 
-/**
- * Returns a valid access token, or a tagged result indicating why none is available.
- * - `{ status: "ok", token }` — valid token (possibly refreshed)
- * - `{ status: "no_tokens" }` — no stored tokens (user never logged in)
- * - `{ status: "refresh_failed" }` — tokens existed but refresh failed (removed)
- */
 type TokenResult =
   | { status: "ok"; token: string }
   | { status: "no_tokens" }
@@ -98,14 +91,12 @@ export async function getValidToken(): Promise<TokenResult> {
     return { status: "ok", token: tokens.access_token };
   }
 
-  // Token expired — try refresh
   const refreshed = await refreshAccessToken(tokens);
   if (refreshed) {
     await writeTokens(refreshed);
     return { status: "ok", token: refreshed.access_token };
   }
 
-  // Refresh failed — remove stale tokens
   await removeTokens();
   return { status: "refresh_failed" };
 }

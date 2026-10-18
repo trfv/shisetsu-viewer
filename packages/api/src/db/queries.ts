@@ -15,8 +15,8 @@ import { decodeCursor, encodeCursor } from "./cursor.ts";
 
 const DEFAULT_LIMIT = 50;
 const MAX_LIMIT = 100;
-// export だけ上限が別なのは、PK 順の走査でページサイズ分しか行を読まないため
-// （search 系は ORDER BY が全件ソートを誘発しうるので 100 に据え置く）。
+// export だけ上限が大きいのは PK 順の走査でページサイズ分しか読まないため。
+// search 系は ORDER BY が全件ソートを誘発しうるので 100 に据え置く
 const MAX_EXPORT_LIMIT = 1000;
 const AVAILABLE = "AVAILABILITY_DIVISION_AVAILABLE";
 
@@ -25,7 +25,6 @@ function clampLimit(limit: number | undefined): number {
   return Math.min(limit, MAX_LIMIT);
 }
 
-/** SQLite の 0/1 を boolean に */
 function toBool(value: unknown): boolean {
   return value === 1 || value === "1" || value === true;
 }
@@ -51,8 +50,6 @@ function parseJsonArray<T>(value: unknown): T[] {
     return [];
   }
 }
-
-// ---- institutions ----
 
 interface InstitutionRow {
   id: string;
@@ -220,8 +217,6 @@ export async function getInstitutionDetail(
   return row ? toInstitutionDetail(row) : null;
 }
 
-// ---- reservations ----
-
 interface ReservationRow {
   institution_id: string;
   date: string;
@@ -255,13 +250,11 @@ function parseReservation(value: string): Record<string, string> {
   }
 }
 
-/** is_holiday のクエリ時導出に使う祝日集合。~100 行。 */
 export async function loadHolidays(db: D1Database): Promise<string[]> {
   const { results } = await db.prepare(`SELECT date FROM holidays`).all<{ date: string }>();
   return results.map((r) => r.date);
 }
 
-/** 土日 OR 祝日リスト（json_each でバインド）を is_holiday として導出する SQL 断片 */
 const IS_HOLIDAY_EXPR = (dateCol: string) =>
   `(strftime('%w', ${dateCol}) IN ('0', '6') OR ${dateCol} IN (SELECT value FROM json_each(?)))`;
 
@@ -336,7 +329,7 @@ export async function searchReservations(
 ): Promise<Page<ReservationSearchHit>> {
   const limit = clampLimit(params.limit);
   const conditions: string[] = [`r.date >= ?`, `r.date <= ?`];
-  // ?1 = 祝日配列（is_holiday SELECT 式で使用）、その後に date 範囲
+  // 先頭は SELECT 式の IS_HOLIDAY_EXPR が使う祝日配列
   const args: unknown[] = [JSON.stringify(holidays), params.startDate, params.endDate];
 
   if (params.municipality && params.municipality.length > 0) {
@@ -425,17 +418,10 @@ export async function searchReservations(
 }
 
 /**
- * parity 突合用の全行 dump。
- *
- * ORDER BY を PK (institution_id, date) に揃えるのが要点。searchReservations と同じ
- * (date, institution_id) 順にすると `WITHOUT ROWID` の物理順と食い違い、SQLite は
- * ページごとに候補全件を一時 B-tree でソートする。keyset カーソルは WHERE でしか
- * 効かないので走査量が減らず、コストが O(N^2 / page) に膨らむ
- * （実測: 豊島区 8,928 行の 101 行ページで 7,073 行読み。全自治体 1 巡で約 500 万行）。
- *
- * municipality での絞り込みも行わない。institutions と JOIN した時点で institutions
- * 駆動の計画になり、同じ全件ソートが復活するため。呼び出し側が institution_id →
- * municipality のマップで分類する。
+ * ORDER BY は searchReservations と同じ (date, institution_id) にせず PK 順に揃える。
+ * `WITHOUT ROWID` の物理順と食い違うと SQLite がページごとに全件を一時 B-tree でソートし、
+ * コストが O(N^2 / page) に膨らむ（全自治体 1 巡で約 500 万行読み）。
+ * municipality で絞らないのも同じ理由（institutions と JOIN すると全件ソートが復活する）。
  */
 export async function exportReservations(
   db: D1Database,
