@@ -48,7 +48,7 @@ Auth0 と同じく、テナント全体を IaC にすることは目指さない
 |---|---|---|
 | 実行時の設定（カスタムドメインを含む） | 各パッケージの `wrangler.jsonc` | 今までどおり `wrangler deploy` |
 | Workers Builds のトリガー | リポジトリ内の宣言ファイル | GitHub Actions から API で適用する |
-| Secret | 名前だけを宣言する（値はリポジトリに置かない） | 適用はしない。本番に揃っているかを検査するだけ |
+| Secret | 名前だけを `wrangler.jsonc` の `secrets.required` に宣言する（値はリポジトリに置かない） | 適用はしない。`wrangler deploy` が本番に揃っているかを確かめる |
 
 ### カスタムドメインは wrangler.jsonc に移す
 
@@ -107,15 +107,18 @@ vars と Secret に同じ名前があると、Secret のほうが優先される
 
 Auth0 の `auth0Deploy.ts` と同じく、`fetch` を差し替えてテストする。
 
-### Secret は名前の有無だけを検査する
+### Secret は secrets.required で宣言する
 
-各パッケージで、必要な Secret の名前を一か所に宣言する。
-viewer はすでに `worker/secrets.d.ts` に型として持っているので、これを名前の一覧に置き換えて、型はそこから作る。
-api と mcp-server にも同じ一覧を作る。
+wrangler 4.150.0 の `wrangler.jsonc` には `secrets.required` がある。
+必要な Secret の名前を並べておくと、`wrangler deploy` と `wrangler versions upload` は、その名前の Secret がデプロイ先の Worker に無ければ止まる。
+`wrangler types` も、`.dev.vars` から推測するのをやめて、この一覧から型を作る。
 
-検査は、宣言した名前が本番の Worker の Secret に全部あるか、宣言に無い名前が本番に無いか、の二つである。
-Cloudflare の API は Secret の値を返さないので、この検査で値が漏れることは無い。
-#1751 で `SESSION_KEYS` を入れ忘れていたら、マージの前にこの検査で気付けた。
+そのため、Secret の検査のためのスクリプトは作らない。
+viewer の `worker/secrets.d.ts`（Secret の型を手で足していたもの）も要らなくなる。
+#1751 で `SESSION_KEYS` を入れ忘れていたら、preview 版のアップロードの時点でこの検査に止められていた。
+
+検査するのは「宣言した名前が本番にあるか」だけである。
+宣言に無い名前が本番に残っていても止まらないので、使わなくなった Secret は人が消す。
 
 ## GitHub Actions
 
@@ -123,7 +126,7 @@ Cloudflare の API は Secret の値を返さないので、この検査で値�
 
 | 契機 | 内容 | トークン |
 |---|---|---|
-| pull request（`infra/cloudflare/**` や Secret の宣言が変わったとき） | `--check` を実行し、差分を PR に表示する | 読み取り用 |
+| pull request（`infra/cloudflare/**` が変わったとき） | `--check` を実行し、差分を PR に表示する | 読み取り用 |
 | master への push（同じパス） | 適用する | 書き込み用 |
 
 定期実行はしない。
@@ -150,7 +153,7 @@ Action の原本（`auth0PostLogin.cjs`）は、`readClaims` との往復を検�
 
 ## 段階
 
-1. **掃除**：トリガーから `HUSKY` を消す。mcp-server の Auth0 の値を vars に移し、`GRAPHQL_ENDPOINT` を消す
+1. **掃除と Secret の宣言**：トリガーから `HUSKY` を消す。mcp-server の Auth0 の値を vars に移し、`GRAPHQL_ENDPOINT` を消す。3 つの Worker に `secrets.required` を足す
 2. **カスタムドメイン**：mcp-server、viewer の順に `routes` を足す
 3. **`packages/infra` と `--check`**：宣言ファイルと、pull request での検査。この時点では書き込まない
 4. **適用**：書き込み用トークンと master への push での適用

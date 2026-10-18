@@ -13,8 +13,7 @@ import { readCookie, serializeCookie } from "./cookies.ts";
 import { isAllowedApiPath, proxyToApi } from "./proxy.ts";
 import { keyLoader, seal, toBase64Url, unseal, type KeyLoader, type Session } from "./session.ts";
 
-// binding の定義は wrangler.jsonc から生成した Cloudflare.Env が持つ。
-// Secret は生成対象外なので worker/secrets.d.ts で補っている。
+// binding の定義は wrangler.jsonc から生成した Cloudflare.Env が持つ（Secret は secrets.required から生成される）。
 export type Env = Cloudflare.Env;
 
 const SESSION_COOKIE = "__Host-session";

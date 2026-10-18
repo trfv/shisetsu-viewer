@@ -22,6 +22,10 @@
     "AUTH0_DOMAIN": "auth.shisetsudb.com",
     "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
   },
+  // 値は `wrangler versions secret put <NAME>` で入れる。ここに無い Secret があると deploy が止まる。
+  // AUTH0_CLIENT_ID / AUTH0_CLIENT_SECRET：Auth0 の Regular Web Application（confidential client）。
+  // SESSION_KEYS：Cookie の暗号化鍵。32 バイトの鍵を base64url にした文字列の JSON 配列。先頭で暗号化する。
+  "secrets": { "required": ["AUTH0_CLIENT_ID", "AUTH0_CLIENT_SECRET", "SESSION_KEYS"] },
   "services": [{ "binding": "API", "service": "shisetsu-api" }],
   // ログイン経路の総当たり対策。api 側の RATE_LIMITER は別 Worker のため共有できない。
   "ratelimits": [

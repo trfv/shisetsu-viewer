@@ -23,6 +23,6 @@
 
 ## Environment
 
-- **Workers**: wrangler secrets `AUTH0_DOMAIN` / `AUTH0_CLIENT_ID` / `AUTH0_CLIENT_SECRET` / `AUTH0_AUDIENCE`（Auth0 Regular Web App の値）+ KV binding `OAUTH_KV` + D1 binding `DB`（`shisetsu-db`、api と同一 DB）。デプロイは Workers Builds（master のみ、監視パスは `package-lock.json`・`packages/shared/**`・`packages/api/**`・このパッケージ）。CIMD の取得に `compatibility_flags` の `global_fetch_strictly_public` が要る。
+- **Workers**: vars `AUTH0_DOMAIN` / `AUTH0_AUDIENCE`（`wrangler.jsonc`）+ wrangler secrets `AUTH0_CLIENT_ID` / `AUTH0_CLIENT_SECRET`（Auth0 Regular Web App の値）+ KV binding `OAUTH_KV` + D1 binding `DB`（`shisetsu-db`、api と同一 DB）。デプロイは Workers Builds（master のみ、監視パスは `package-lock.json`・`packages/shared/**`・`packages/api/**`・このパッケージ）。CIMD の取得に `compatibility_flags` の `global_fetch_strictly_public` が要る。
 - **local stdio**: `.env` の `API_ENDPOINT` と `ADMIN_API_KEY`（`src/env.ts` がどちらも必須として throw する）。
 - **cli**: `API_ENDPOINT` + Auth0 PKCE で取得したユーザートークン。
