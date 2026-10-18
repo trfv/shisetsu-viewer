@@ -1,5 +1,5 @@
 // Auth0 の Post Login Action（Actions → Library）の原本。
-// 管理画面のコードはこのファイルの写しである。変えるときはここを直してテストを通し、全文を貼り直して Deploy する。
+// 管理画面のコードはこのファイルの写しである。master に入ると .github/workflows/auth0.yml が反映するので、管理画面では直接編集しない。
 // クレームの解釈側は auth.ts の readClaims。auth0PostLogin.test.ts が両者の往復を検証している。
 
 const APP_CLAIMS = "https://app.shisetsudb.com/token/claims";

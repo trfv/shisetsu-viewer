@@ -1,0 +1,54 @@
+name: Auth0 Action
+
+permissions:
+  contents: read
+
+on:
+  # 原本が master に入ったら反映する
+  push:
+    branches: [master]
+    paths:
+      - "packages/shared/auth0PostLogin.cjs"
+      - "packages/shared/auth0Deploy.ts"
+      - ".github/workflows/auth0.yml"
+  # 管理画面での直接編集を週に一度検出する（書き込みはしない）
+  schedule:
+    - cron: "17 0 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: auth0-action
+  cancel-in-progress: false
+
+env:
+  # Management API はカスタムドメイン（auth.shisetsudb.com）ではなくテナント本来のドメインで呼ぶ
+  AUTH0_TENANT_DOMAIN: trfv.jp.auth0.com
+
+jobs:
+  deploy:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    # Secret は master からしか使えない Environment に置く（Environment 側の deployment branch の設定）
+    environment: auth0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+      # shared は依存が無いので npm ci は要らない
+      - name: Test
+        run: npm run test -w @shisetsu-viewer/shared
+      - name: Check drift
+        if: github.event_name == 'schedule'
+        run: node packages/shared/auth0Deploy.ts --check
+        env:
+          AUTH0_DEPLOY_CLIENT_ID: ${{ secrets.AUTH0_DEPLOY_CLIENT_ID }}
+          AUTH0_DEPLOY_CLIENT_SECRET: ${{ secrets.AUTH0_DEPLOY_CLIENT_SECRET }}
+      - name: Deploy
+        if: github.event_name != 'schedule'
+        run: node packages/shared/auth0Deploy.ts
+        env:
+          AUTH0_DEPLOY_CLIENT_ID: ${{ secrets.AUTH0_DEPLOY_CLIENT_ID }}
+          AUTH0_DEPLOY_CLIENT_SECRET: ${{ secrets.AUTH0_DEPLOY_CLIENT_SECRET }}
