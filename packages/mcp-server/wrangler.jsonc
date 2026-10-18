@@ -6,6 +6,8 @@
   // global_fetch_strictly_public: CIMD（URL 形式の client_id）のメタデータ取得に OAuthProvider が要求する
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
+  // カスタムドメイン。以前は管理画面で付けていた（api と同じく wrangler で管理する）
+  "routes": [{ "pattern": "mcp.shisetsudb.com", "custom_domain": true }],
   "vars": {
     // 秘密ではないので Secret ではなく vars に置く（値を確かめられるように）。
     // AUTH0_DOMAIN はカスタムドメイン。api の resolveRole が issuer をこの値で検証するので、
