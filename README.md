@@ -72,7 +72,7 @@ flowchart LR
 
   ai -->|"OAuth 2.1"| mcp
   mcp -->|"ログインを委譲"| auth0
-  mcp -->|"読み取りのみ"| d1
+  mcp -->|"Service Binding<br/>+ アクセストークン<br/>（読み取りのみ）"| api
   mcp --- kv
 
   cli -->|"ログイン"| auth0
@@ -88,7 +88,7 @@ flowchart LR
   database -->|"admin REST（GitHub OIDC）"| api
 ```
 
-- D1 に書き込むのは api Worker だけです。scraper と Database ワークフローは、GitHub OIDC で認証して api の admin REST に書き込みます。
+- D1 を読み書きするのは api Worker だけです。viewer と mcp-server は api を通して読みます。scraper と Database ワークフローは、GitHub OIDC で認証して api の admin REST に書き込みます。
 - 利用者のアカウント情報は Auth0 だけが持ち、D1 には保存しません。ロールとトライアルの別は、Auth0 のアクセストークンのクレームで渡します。
 - ブラウザはトークンを持ちません。viewer Worker（BFF）が Auth0 のトークンを暗号化した Cookie に入れ、api へ転送するときにアクセストークンを付けます。
-- mcp-server は AI クライアント向けに自分で OAuth のトークンを発行し、Auth0 のトークンは KV に置きます。Workers 版は D1 を直接読むだけで、書き込みはローカルの stdio 版が api 経由で行います。
+- mcp-server は AI クライアント向けに自分で OAuth のトークンを発行し、Auth0 のトークンは KV に置きます。Workers 版も viewer と同じく Service Binding で api を通して読むだけで、書き込みはローカルの stdio 版が api 経由で行います。
