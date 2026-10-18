@@ -24,7 +24,7 @@ test("minor 更新で CI 緑なら auto-merge", () => {
 });
 
 test("リリースノート中の from A to B は判定に使わない", () => {
-  // 本文の details 内に 1.0.0 → 9.0.0 があるが、Updates 行は patch なので auto-merge
+  // pr() は本文の details に 1.0.0 → 9.0.0 を含める
   const p = pr("chore(deps): bump the g group", ["Updates `a` from 2.3.4 to 2.3.5"], "success");
   assert.equal(classifyDependabotPr(p), "auto-merge");
 });
@@ -79,7 +79,7 @@ test("ciFromRollup は ci-success だけを見る", () => {
   assert.equal(ciFromRollup([]), "pending");
 });
 
-// 2026-10-04〜10-17 に滞留して人間が処理した実際の PR（タイトルと Updates 行を写したもの）。
+// 2026-10 に滞留して人間が処理した実際の PR
 const REAL_PRS: readonly [number, string, string[], string][] = [
   [
     1719,

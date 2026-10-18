@@ -59,7 +59,6 @@ describe("ErrorBoundary Component", () => {
     await expect.element(screen.getByText("正常")).toBeInTheDocument();
 
     const rejectedPromise = Promise.reject(new Error("test rejection"));
-    // Prevent actual unhandled rejection noise
     rejectedPromise.catch(() => {});
 
     window.dispatchEvent(

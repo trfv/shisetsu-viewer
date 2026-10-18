@@ -1,19 +1,9 @@
-/**
- * `playwright test --list --reporter=list` の出力から、自治体ごとのシャード matrix を組み立てる。
- *
- * 定期実行は自治体数（11）に対し 100 固定シャードで、大半が空シャードだった
- * （空でも checkout + cache restore で ~78 秒/シャード のオーバーヘッドを消費）。
- * テスト数を density で割ってシャード数を決めることで、空シャードを構造的に無くす。
- * テスト 0 件の自治体（CI 除外中など）は matrix に現れない。
- */
-
 export interface ShardMatrixEntry {
   readonly municipality: string;
   readonly shardIndex: number;
   readonly shardTotal: number;
 }
 
-/** `--list` 出力のテスト行から自治体別テスト数を数える。 */
 export function countTestsByMunicipality(listOutput: string): Map<string, number> {
   const counts = new Map<string, number>();
   for (const line of listOutput.split("\n")) {
@@ -26,10 +16,7 @@ export function countTestsByMunicipality(listOutput: string): Map<string, number
   return counts;
 }
 
-/**
- * 自治体別テスト数から matrix include 配列を作る。
- * @param density 1 シャードあたりの目標テスト数
- */
+/** density は 1 シャードあたりの目標テスト数 */
 export function buildShardMatrix(
   counts: ReadonlyMap<string, number>,
   density: number
@@ -38,7 +25,7 @@ export function buildShardMatrix(
     throw new Error(`density must be a positive integer, got: ${density}`);
   }
   const entries: ShardMatrixEntry[] = [];
-  // 自治体名でソートし、出力を決定論的にする（run 間で job 名が安定する）
+  // run 間で job 名を安定させる
   for (const municipality of [...counts.keys()].sort()) {
     const count = counts.get(municipality) ?? 0;
     if (count <= 0) continue;
@@ -50,7 +37,6 @@ export function buildShardMatrix(
   return entries;
 }
 
-/** `--list` 出力と density から matrix include 配列を得る。 */
 export function shardMatrixFromListOutput(listOutput: string, density: number): ShardMatrixEntry[] {
   return buildShardMatrix(countTestsByMunicipality(listOutput), density);
 }

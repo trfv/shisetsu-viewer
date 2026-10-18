@@ -1,10 +1,5 @@
 import type { FileData, InstitutionKeyMap, ReservationRow } from "./types.ts";
 
-/**
- * FileData 群を institution_id 解決済みの upsert 行に変換する。
- * キーマップに無い施設はスキップして unmatchedKeys に集約（従来は silent drop だったものを可観測化）。
- * (institution_id, date) の重複は先勝ち（Hasura の同一コマンド内重複制約対応。従来ロジック踏襲）。
- */
 export function buildReservationRows(
   files: FileData[],
   keyMap: InstitutionKeyMap

@@ -1,6 +1,5 @@
 import { canonicalizeReservation } from "@shisetsu-viewer/shared";
 
-/** テスト用の施設。1 件は非 RFC UUID（version nibble 不正）を含む。 */
 export const INSTITUTIONS = [
   {
     id: "11111111-1111-4111-8111-111111111111",
@@ -29,7 +28,7 @@ export const INSTITUTIONS = [
     is_available_brass: "AVAILABILITY_DIVISION_UNAVAILABLE",
   },
   {
-    // 非 RFC UUID（3 番目のグループが 4xxx でない = version nibble 不正）
+    // 非 RFC UUID（version nibble 不正）
     id: "f4d8d9d8-8594-b8b4-0000-000000000001",
     prefecture: "PREFECTURE_TOKYO",
     municipality: "MUNICIPALITY_TOSHIMA",
@@ -44,7 +43,6 @@ export const INSTITUTIONS = [
   },
 ] as const;
 
-/** 2026-08 の連続日を返す（day は 1-origin） */
 function augustDate(day: number): string {
   return `2026-08-${String(day).padStart(2, "0")}`;
 }
@@ -77,7 +75,6 @@ export async function seed(db: D1Database): Promise<void> {
     );
   }
 
-  // 2 施設 × 60 日 = 120 行。1 日おきに午前が空き、それ以外は STATUS_1。
   for (const instId of [INSTITUTIONS[0].id, INSTITUTIONS[1].id]) {
     for (let day = 1; day <= 60; day++) {
       const date = day <= 31 ? augustDate(day) : `2026-09-${String(day - 31).padStart(2, "0")}`;
@@ -95,12 +92,10 @@ export async function seed(db: D1Database): Promise<void> {
     }
   }
 
-  // 祝日: 2026-08-11（山の日、火曜）
   stmts.push(
     db.prepare(`INSERT INTO holidays (date, name) VALUES (?, ?)`).bind("2026-08-11", "山の日")
   );
 
-  // scrape_runs: koutou は 2 回 run（最新が返るべき）、toshima は 1 回
   stmts.push(
     db
       .prepare(

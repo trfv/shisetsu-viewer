@@ -42,12 +42,9 @@ export async function renderWithProviders(
   ui: ReactElement,
   { initialEntries = ["/"], route, authConfig = {} }: CustomRenderOptions = {}
 ) {
-  // Use browser's native userEvent
   const user = browserUserEvent;
 
-  // 非 static: setLocation → useSearch() の伝播を有効にし、URL 駆動のデータフローを忠実に再現する。
-  // wouter の Router は hook.searchHook を自動継承するため、useSearch() は memory-location の
-  // クエリ文字列を読む。
+  // static にすると setLocation が useSearch() に伝わらず、URL 駆動のデータフローを再現できない。
   const { hook } = memoryLocation({ path: initialEntries[0] ?? "/" });
 
   function Wrapper({ children }: { children: ReactNode }) {
@@ -66,8 +63,6 @@ export async function renderWithProviders(
   };
 }
 
-// ページ全体を対象とする locator セレクタ。Testing Library の `screen` の後継。
-// getBy* は Locator を返す（遅延評価・自動リトライ）。queryBy*/findBy*/getAllBy* は
-// 存在しないため、不在アサーションは expect.element(...).not.toBeInTheDocument()、
-// 複数要素は getBy*(...).all() を使う。
+// Testing Library の `screen` と違い queryBy*/findBy*/getAllBy* は無い。不在は
+// expect.element(...).not.toBeInTheDocument()、複数要素は getBy*(...).all() を使う。
 export const screen = page;

@@ -5,12 +5,8 @@ import type {
   ReservationSearchHit,
 } from "@shisetsu-viewer/shared";
 
-/**
- * `fields` で選べるフィールド。API の DTO のキーに縛り、DTO から消えたキーを型で検出する
- * （pick は DTO に無いキーを黙って落とすため、ここで縛らないとズレに気づけない）。
- */
+// DTO のキーに縛る。pick は DTO に無いキーを黙って落とすため、縛らないと DTO とのズレに気づけない。
 
-/** list_institutions で取得可能なフィールド */
 export const INSTITUTION_LIST_FIELDS = [
   "id",
   "municipality",
@@ -26,7 +22,6 @@ export const INSTITUTION_LIST_FIELDS = [
   "updated_at",
 ] as const satisfies readonly (keyof InstitutionSummary)[];
 
-/** get_institution_detail で取得可能なフィールド */
 export const INSTITUTION_DETAIL_FIELDS = [
   "id",
   "prefecture",
@@ -51,14 +46,12 @@ export const INSTITUTION_DETAIL_FIELDS = [
   "note",
 ] as const satisfies readonly (keyof InstitutionDetail)[];
 
-/** get_institution_reservations と search_reservations の予約で取得可能なフィールド */
 export const RESERVATION_FIELDS = [
   "date",
   "reservation",
   "updated_at",
 ] as const satisfies readonly (keyof ReservationDto)[];
 
-/** search_reservations の施設で取得可能なフィールド */
 export const SEARCH_INSTITUTION_FIELDS = [
   "id",
   "municipality",

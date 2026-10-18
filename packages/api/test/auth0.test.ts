@@ -15,7 +15,6 @@ beforeAll(async () => {
   const pubJwk = await exportJWK(pair.publicKey);
   pubJwk.kid = "test-key";
   pubJwk.alg = "RS256";
-  // ローカル JWKS を getKey として注入する（ネットワーク不要）
   const publicKey = await importJWK(pubJwk, "RS256");
   getKey = (() => publicKey) as unknown as JWTVerifyGetKey;
 });

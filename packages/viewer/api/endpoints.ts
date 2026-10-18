@@ -11,7 +11,6 @@ import type {
 
 import { apiGet } from "./client";
 
-// BFF が同一オリジンで /api/* を api へ転送する。エンドポイントの環境変数は不要。
 const BASE = "/api";
 
 export function fetchInstitutions(

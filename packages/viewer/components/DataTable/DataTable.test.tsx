@@ -114,7 +114,6 @@ describe("DataTable Component", () => {
   it("hasNextPage=trueの場合にスケルトンローディングを表示する", async () => {
     await renderWithProviders(<DataTable columns={columns} rows={rows} hasNextPage={true} />);
 
-    // The skeleton row should contain skeleton elements (one per visible column)
     const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(3);
   });
@@ -149,8 +148,6 @@ describe("DataTable Component", () => {
     it("date型のカラムはformatDateの結果を表示する", async () => {
       await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-      // formatDate uses Intl.DateTimeFormat "ja-JP" with year/month/day/weekday
-      // 2025-01-15 → "2025/01/15(水)"
       await expect.element(screen.getByText("作成日")).toBeInTheDocument();
       const cells = document.querySelectorAll("td");
       const cellTexts = Array.from(cells).map((c) => c.textContent);
@@ -163,7 +160,6 @@ describe("DataTable Component", () => {
       await expect.element(screen.getByText("更新日時")).toBeInTheDocument();
       const cells = document.querySelectorAll("td");
       const cellTexts = Array.from(cells).map((c) => c.textContent);
-      // datetime format includes time components
       expect(cellTexts.some((t) => t?.includes("2025") && t?.includes(":"))).toBe(true);
     });
 
@@ -190,11 +186,8 @@ describe("DataTable Component", () => {
       ];
       await renderWithProviders(<DataTable columns={columns} rows={nanRows} />);
 
-      // The score column should render empty string for NaN
       const tableCells = document.querySelectorAll("td");
       const scoreCells = Array.from(tableCells).filter((_, index) => {
-        // Score is the last visible column
-        // Visible columns: name, age, label, createdAt, updatedAt, score (6 columns)
         return (index + 1) % 6 === 0;
       });
       expect(scoreCells.some((c) => c.textContent === "")).toBe(true);
@@ -208,7 +201,6 @@ describe("DataTable Component", () => {
         <DataTable columns={columns} rows={rows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
-      // The component should render without error with fetchMore
       await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
     });
 
@@ -229,17 +221,12 @@ describe("DataTable Component", () => {
         <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
-      // The ref is set on row at index 1 (51 - 50 = 1), which is visible
-      // IntersectionObserver should fire and call fetchMore
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       expect(fetchMore).toHaveBeenCalled();
     });
 
     it("行数が50未満でもhasNextPage=trueならfetchMoreが発火する", async () => {
-      // sentinel を `index === rows.length - 50` に置くと、行数<50 で負値になり
-      // どの行にも付かず observer が何も監視しない → fetchMore が発火しないバグ。
-      // Math.max(0, rows.length - 50) にクランプすれば先頭行に付き、少数件でも発火する。
       const fewRows: TestRow[] = Array.from({ length: 5 }, (_, i) => ({
         id: String(i),
         name: `Name${i}`,
@@ -278,10 +265,8 @@ describe("DataTable Component", () => {
         <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
       );
 
-      // Wait for observer to be set up
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      // Unmounting should trigger cleanup (observer.unobserve)
       await unmount();
     });
   });
@@ -299,15 +284,11 @@ describe("Mobile Card View", () => {
   it("モバイルではカードビューを表示する", async () => {
     await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    // In card view, the first column becomes the title, remaining become label-value pairs
-    // Should NOT have a <table> element
     expect(document.querySelector("table")).toBeNull();
 
-    // Should display row data as cards
     await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
     await expect.element(screen.getByText("川崎", { exact: true })).toBeInTheDocument();
 
-    // Detail columns should show labels (headerName) for non-title columns
     expect(screen.getByText("年齢").all().length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("ラベル").all().length).toBeGreaterThanOrEqual(1);
   });
@@ -315,7 +296,6 @@ describe("Mobile Card View", () => {
   it("モバイルでhide=trueのカラムは表示しない", async () => {
     await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    // hide=true columns should not appear even in card view
     await expect.element(screen.getByText("秘密1")).not.toBeInTheDocument();
     await expect.element(screen.getByText("秘密2")).not.toBeInTheDocument();
   });
@@ -354,7 +334,6 @@ describe("Mobile Card View", () => {
   it("モバイルでgetterやdate型の値がカードに表示される", async () => {
     await renderWithProviders(<DataTable columns={columns} rows={rows} />);
 
-    // getter column values
     await expect.element(screen.getByText("東京-100")).toBeInTheDocument();
     await expect.element(screen.getByText("川崎-200")).toBeInTheDocument();
   });
@@ -365,7 +344,6 @@ describe("Mobile Card View", () => {
       <DataTable columns={columns} rows={rows} fetchMore={fetchMore} hasNextPage={true} />
     );
 
-    // Should render without error in mobile mode with fetchMore
     await expect.element(screen.getByText("東京", { exact: true })).toBeInTheDocument();
   });
 
@@ -386,7 +364,6 @@ describe("Mobile Card View", () => {
       <DataTable columns={columns} rows={manyRows} fetchMore={fetchMore} hasNextPage={true} />
     );
 
-    // In mobile mode, the cardTarget ref is set on the card at index 1 (51 - 50 = 1)
     await new Promise((resolve) => setTimeout(resolve, 200));
 
     expect(fetchMore).toHaveBeenCalled();

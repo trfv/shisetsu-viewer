@@ -325,8 +325,6 @@ test("renderBody と組み合わせても key がずれない", () => {
   );
 });
 
-// 以下は 2026-10 の実際の定期実行の並び（新しい順）。run ID は実物。
-
 test("実例 2026-10-09〜10：sumida の preflight 530 が 2 回続いた時点で needs-human を立てる", () => {
   const first = reconcile(
     input({ summaries: [summary(37864920682, { "tokyo-sumida": "infra" })] })
@@ -343,7 +341,7 @@ test("実例 2026-10-09〜10：sumida の preflight 530 が 2 回続いた時点
   );
   assert.ok(second[0]?.type === "create");
   assert.equal(second[0].key, "infra:tokyo-sumida");
-  // proxy 断はエージェントで直せないので、修復項目は作らない。
+  // proxy 断はエージェントで直せないので修復項目は作らない
   assert.equal(second.length, 1);
 });
 

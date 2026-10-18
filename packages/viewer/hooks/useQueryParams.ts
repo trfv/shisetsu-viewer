@@ -76,9 +76,7 @@ export const useQueryParams = <QPM extends QueryParamsMap>(
   search: string,
   pathname: string
 ): [DecodedValues<QPM>, (args: DecodedValues<QPM>) => void] => {
-  // search（URL のクエリ文字列）を単一ソースとして復号する。
-  // setQueryParams が setLocation で URL を更新すると search が変わり再レンダされるため、
-  // ブラウザの戻る/進む等の外部由来の URL 変更もそのまま反映される。
+  // 内部 state に持つと、ブラウザの戻る/進むによる URL 変更を取りこぼす。
   const qp = useMemo(() => new URLSearchParams(search), [search]);
 
   const setQueryParams = useCallback(

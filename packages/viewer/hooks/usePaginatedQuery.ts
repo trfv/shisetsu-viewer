@@ -32,7 +32,6 @@ export function usePaginatedQuery<TItem>(
     fetchPageRef.current = fetchPage;
   }, [key]);
 
-  // Initial fetch (resets on key change)
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;

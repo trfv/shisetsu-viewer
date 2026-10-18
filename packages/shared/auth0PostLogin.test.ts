@@ -15,7 +15,6 @@ type Options = {
   refresh?: boolean;
 };
 
-// Auth0 の event と api を最小限に模す。api が受けた呼び出しを記録して返す
 async function run({ loginsCount = 5, appMetadata = {}, refresh = false }: Options) {
   const appMetadataSet: Record<string, unknown> = {};
   const accessToken: Record<string, unknown> = {};

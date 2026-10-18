@@ -1,12 +1,11 @@
-// Cookie に載せる値の暗号化。セッションを D1 に置かない（個人情報を自前で持たない）ため、
-// refresh token を含む状態を Cookie そのものに入れる。署名だけでは中身が読めてしまうので、
-// 改ざん検知と秘匿を兼ねる AES-GCM を使う。
+// セッションを D1 に置かず（個人情報を自前で持たない）Cookie に入れる。署名だけでは
+// refresh token が読めてしまうので AES-GCM で暗号化する。
 
-/** Auth0 から受け取ったトークン一式。ID トークンは Cookie の 4KB 上限を圧迫するので持たない。 */
+/** ID トークンは Cookie の 4KB 上限を圧迫するので持たない。 */
 export interface Session {
   accessToken: string;
   refreshToken: string;
-  /** アクセストークンの失効時刻（UNIX 秒） */
+  /** UNIX 秒 */
   expiresAt: number;
 }
 
@@ -27,8 +26,7 @@ export function fromBase64Url(value: string): Uint8Array<ArrayBuffer> {
 }
 
 /**
- * SESSION_KEYS（32 バイト鍵を base64url にした文字列の JSON 配列）を読む。
- * 先頭で暗号化し、全鍵で復号を試みる。鍵の交換は新しい鍵を先頭に足してデプロイし、
+ * SESSION_KEYS は 32 バイト鍵の base64url の JSON 配列。鍵の交換は新しい鍵を先頭に足し、
  * Cookie の寿命（365 日）が過ぎてから旧鍵を落とす。
  */
 export async function importKeys(raw: string): Promise<CryptoKey[]> {
@@ -45,13 +43,10 @@ export async function importKeys(raw: string): Promise<CryptoKey[]> {
 
 export type KeyLoader = () => Promise<CryptoKey[]>;
 
-// 鍵は利用者に依存しないので isolate 内で使い回してよい。Secret が変わると raw も変わる。
+// 鍵は利用者に依存しないので isolate 内で使い回してよい。
 let cached: { raw: string; keys: Promise<CryptoKey[]> } | null = null;
 
-/**
- * 鍵の読み込みを、Cookie を実際に読み書きするまで遅らせる。SESSION_KEYS の設定漏れや
- * 破損があっても、Cookie を持たない匿名の閲覧（/api/* の大半）は巻き込まずに済む。
- */
+// 遅延読み込みにして、SESSION_KEYS の不備で Cookie を持たない匿名の閲覧まで巻き込まない。
 export function keyLoader(raw: string): KeyLoader {
   return () => {
     if (cached?.raw !== raw) cached = { raw, keys: importKeys(raw) };
@@ -59,10 +54,7 @@ export function keyLoader(raw: string): KeyLoader {
   };
 }
 
-/**
- * label は additional data として暗号文に束縛する。これにより、ある Cookie の値を
- * 別の名前の Cookie に貼り替えても復号に失敗する（__Host-oauth を __Host-session として使う等）。
- */
+// label を additional data に束縛し、別名の Cookie への貼り替え（oauth → session 等）を復号失敗にする。
 export async function seal(keys: CryptoKey[], label: string, value: unknown): Promise<string> {
   const [key] = keys;
   if (!key) throw new Error("暗号化の鍵がありません");
@@ -78,7 +70,6 @@ export async function seal(keys: CryptoKey[], label: string, value: unknown): Pr
   return toBase64Url(sealed);
 }
 
-/** どの鍵でも復号できなければ null。改ざん、鍵の廃止、壊れた値をまとめて未ログインに倒す。 */
 export async function unseal<T>(
   keys: CryptoKey[],
   label: string,
@@ -102,7 +93,7 @@ export async function unseal<T>(
       );
       return JSON.parse(decoder.decode(plaintext)) as T;
     } catch {
-      // 次の鍵を試す
+      continue;
     }
   }
   return null;

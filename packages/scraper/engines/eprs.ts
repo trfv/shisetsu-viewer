@@ -6,66 +6,41 @@ import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
 
-/**
- * e-PRS 施設予約システム（www.cm9.eprs.jp/<自治体>/web/）用エンジン。
- * 採用自治体: tokyo-shinagawa
- *
- * ナビゲーション: index.jsp の「空き状況検索」で どこで（館）＋ 何をする（利用目的）を
- * 指定して検索すると、空き状況画面（rsvWOpeInstSrchVacantAction.do）に移る。
- * 画面の週表示は rsvWOpeInstSrchVacantAjaxAction.do が返す JSON から描かれる。
- * transVacantMode=11 に館コード・部屋コード・開始日を渡すと、その日から 7 日分が返る。
- *
- * - 検索結果は「期間内に空きがある部屋」に絞られるが、週の JSON は部屋コードを直接
- *   指定すれば検索結果に無い部屋も返る。検索はサーバ側セッションの初期化にだけ使う
- *   （検索を経ないと JSON は ErrManager「システム異常が発生しました。」になる）
- * - 応答は Windows-31J。受付期間より先の日付も 1 年以上返り続け、全セルが「受付期間外」になる
- * - 受付期間は部屋ごとに 1〜13 ヶ月と大きく異なるため、horizon は最長に合わせ、
- *   全セルが受付期間外の週に達したら打ち切る
- */
+// 検索結果は空きのある部屋に絞られるが、週の JSON は部屋コードを直接渡せば全部屋を返す。
+// 検索はサーバ側セッションの初期化にだけ使う（経ないと JSON が ErrManager になる）。
+// 受付期間より先も全セル「受付期間外」で 1 年以上返り続けるため、その週で打ち切る。
 
 const SEARCH_PATH = "index.jsp";
 const WEEK_AJAX_PATH = "rsvWOpeInstSrchVacantAjaxAction.do";
-/** 開始日を指定して 1 週間分を読み込むモード（画面の部屋切り替えと同じ） */
 const MODE_LOAD_WEEK = "11";
 const DAYS_PER_PAGE = 7;
 
 export interface EprsTarget {
-  /** 館名（サイト表記。index.jsp の「どこで」の選択肢と一致させる） */
+  /** index.jsp の「どこで」の選択肢と一致させる */
   facilityName: string;
-  /** 施設名（サイト表記） */
   roomName: string;
-  /** 館コード（例 "2010"） */
   bldCd: string;
-  /** 施設コード（例 "20100100"） */
   instCd: string;
 }
 
 export interface EprsConfig {
-  /** 末尾スラッシュ付きのベース URL（例 "https://www.cm9.eprs.jp/shinagawa/web/"） */
+  /** 末尾スラッシュ必須（new URL で相対解決するため） */
   baseUrl: string;
   divisionMap: Readonly<Record<string, Division>>;
   statusMap: Readonly<Record<string, Status>>;
-  /** 取得開始日のオフセット（日）。scraper 側 `horizon.startOffsetDays` と揃える */
+  /** scraper 側 `horizon.startOffsetDays` と揃える */
   startOffsetDays: number;
-  /** セッション初期化の検索に使う利用目的（「何をする」の選択肢の表記） */
   searchPurpose: string;
-  /** 受付期間外を表すステータス表記。全セルがこれになった週で打ち切る */
   outOfPeriodStatus: string;
-  /** discover で検索する利用目的（音楽系の目的を並べる） */
   discoverPurposes: readonly string[];
 }
 
-/** 1 セル分（1 日 × 1 時間帯） */
 interface EprsCell {
-  /** yyyyMMdd の数値 */
   useDay: number;
-  /** ステータス表記（画像の alt。例「空き」「予約あり」） */
   alt: string;
 }
 
-/** 1 時間帯分の行 */
 export interface EprsZone {
-  /** 時間帯名（例「午前」） */
   tzoneName: string;
   timeResult: EprsCell[];
 }
@@ -98,10 +73,6 @@ function parseZone(value: unknown): EprsZone {
   return { tzoneName: value.tzoneName, timeResult: value.timeResult.map(parseCell) };
 }
 
-/**
- * 週の JSON 応答から時間帯の行を取り出す。
- * サーバがエラー（ErrManager）を返した場合や形式が変わった場合は投げる。
- */
 export function parseWeekResponse(json: unknown): EprsZone[] {
   if (typeof json !== "object" || json === null) {
     throw new Error("eprs: 応答が JSON オブジェクトではありません");
@@ -115,7 +86,6 @@ export function parseWeekResponse(json: unknown): EprsZone[] {
   return json.result.map(parseZone);
 }
 
-/** yyyyMMdd の数値を ISO 日付にする */
 export function dayNumberToIso(useDay: number): string {
   const text = String(useDay);
   if (!/^\d{8}$/.test(text)) {
@@ -124,17 +94,12 @@ export function dayNumberToIso(useDay: number): string {
   return `${text.slice(0, 4)}-${text.slice(4, 6)}-${text.slice(6, 8)}`;
 }
 
-/** 週の全セルが受付期間外か（受付期間より先に出たことの判定） */
 export function isOutOfPeriodWeek(zones: readonly EprsZone[], outOfPeriodStatus: string): boolean {
   const cells = zones.flatMap((zone) => zone.timeResult);
   return cells.length > 0 && cells.every((cell) => cell.alt === outOfPeriodStatus);
 }
 
-/**
- * 週の行を RawSlot に平坦化する。
- * 各週の先頭日が要求した開始日と食い違う場合は投げる
- * （セッションの表示位置がずれると、別の週のデータを保存してしまうため）。
- */
+/** 先頭日の食い違いで投げる。セッションの表示位置がずれると別の週のデータを保存してしまう */
 export function buildSlots(
   weeks: readonly { startDay: number; zones: readonly EprsZone[] }[],
   roomName: string
@@ -160,8 +125,8 @@ export function buildSlots(
 }
 
 /**
- * 検索を 1 回通してサーバ側セッションを初期化する（結果が「該当なし」でも初期化される）。
- * wholeMonth は「いつ」を 1 か月にする（既定は 1 週間で、空きのある部屋の絞り込みが狭い）。
+ * 結果が「該当なし」でもセッションは初期化される。
+ * discover は wholeMonth にする（既定の 1 週間では空きのある部屋の絞り込みが狭い）。
  */
 async function search(
   page: Page,
@@ -205,7 +170,6 @@ async function fetchWeek(
   return parseWeekResponse(JSON.parse(text));
 }
 
-/** select の選択肢を { value, name } で読む */
 async function readOptions(
   page: Page,
   selector: string
@@ -218,7 +182,6 @@ async function readOptions(
   );
 }
 
-/** 空き状況画面の 館 × 施設 の選択肢を全て読む（discover 用） */
 async function readRoomOptions(page: Page): Promise<EprsTarget[]> {
   const buildings = await readOptions(page, "#mansion-select");
   const found: EprsTarget[] = [];
@@ -245,10 +208,7 @@ async function readRoomOptions(page: Page): Promise<EprsTarget[]> {
   return found;
 }
 
-/**
- * 地区 × 利用目的で検索し、結果に現れた部屋を列挙する。
- * 検索結果は期間内（1 ヶ月）に空きがある部屋に絞られるため、満室の部屋は漏れうる。
- */
+/** 検索結果は 1 ヶ月内に空きのある部屋に絞られるため、満室の部屋は漏れうる */
 async function discoverEprsTargets(page: Page, config: EprsConfig): Promise<DiscoveredTarget[]> {
   await page.goto(new URL(SEARCH_PATH, config.baseUrl).href);
   // 「荏原地区(すべて)」のような地区の選択肢は値が "<地区>_0"
@@ -267,7 +227,6 @@ async function discoverEprsTargets(page: Page, config: EprsConfig): Promise<Disc
         byKey.set(key, {
           facilityName: target.facilityName,
           roomName: target.roomName,
-          // 検索に出た利用目的を並べる（音楽系の目的で出た会議室なども含むので、名称判定と併せて見る）
           category,
           musicLikely: isMusicLikely(target.facilityName, target.roomName),
           target: { ...target },

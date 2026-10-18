@@ -153,8 +153,6 @@ test("parseFailureRecord は必須フィールドを検査する", () => {
   assert.equal(parseFailureRecord(null), null);
 });
 
-// 以下は 2026-10 の実際の定期実行（ジョブ結果と retry 後の失敗レコード）を写したもの。
-
 test("実例 run 38335269203: kawasaki の 1 シャードだけ retry 後も structural", () => {
   const s = buildRunSummary(
     META,
@@ -203,9 +201,7 @@ test("実例 run 37864920682: sumida の preflight HTTP 530", () => {
     job("Scrape tokyo-sumida (1/1)", "failure"),
     job("Retry Scrape tokyo-sumida (1/1)", "failure"),
   ];
-  // infra の記録を入れる前（#1728 以前）は、レコードが無く unknown だった。
   assert.equal(buildRunSummary(META, jobs, []).municipalities[1]?.status, "unknown");
-  // 現在は preflight の失敗が infra のレコードとして残る。
   assert.equal(
     buildRunSummary(META, jobs, [rec("tokyo-sumida", "(国内 proxy)", "infra")]).municipalities[1]
       ?.status,

@@ -1,7 +1,5 @@
 import { OAuthError } from "@cloudflare/workers-oauth-provider";
 
-/** 上流 IdP（Auth0）とのやり取り。MCP クライアントには Auth0 のトークンを渡さず、props に暗号化して持つ。 */
-
 export interface Auth0Env {
   AUTH0_DOMAIN: string;
   AUTH0_CLIENT_ID: string;
@@ -49,11 +47,7 @@ export async function exchangeAuth0Code(
   return response.json() as Promise<{ access_token: string; refresh_token: string }>;
 }
 
-/**
- * Auth0 の refresh。失敗を OAuthError に分類して OAuthProvider に伝える：
- * Auth0 が invalid_grant（失効、ユーザーによる取り消し）なら grant ごと破棄させてクライアントに
- * 再認可を促し、それ以外（Auth0 の障害、通信断）は temporarily_unavailable で再試行を残す。
- */
+// invalid_grant だけを grant の破棄（再認可）に回す。Auth0 の障害や通信断で grant を消さないため。
 export async function refreshAuth0Token(
   refreshToken: string,
   env: Auth0Env
@@ -91,11 +85,10 @@ export async function refreshAuth0Token(
   return response.json() as Promise<{ access_token: string; refresh_token?: string }>;
 }
 
-/** Extract `sub` claim from a JWT without signature verification (safe when token comes directly from Auth0) */
+// 署名は検証しない。トークンは Auth0 から直接受け取ったものに限る。
 export function extractJwtSub(jwt: string): string {
   const payload = jwt.split(".")[1];
   if (!payload) throw new Error("Invalid JWT format");
-  // JWT uses base64url encoding
   const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
   const decoded = JSON.parse(atob(base64)) as { sub: string };
   if (!decoded.sub) throw new Error("JWT missing sub claim");

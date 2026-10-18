@@ -1,15 +1,7 @@
 import { originValidationResponse } from "@modelcontextprotocol/server";
 
-/**
- * OAuthProvider に渡す前のリクエスト短絡判定。
- *
- * OAuthProvider はハンドラを呼ぶ前に必ずトークンを KV から引く。つまり OAuthProvider に
- * 到達した時点で KV read が 1 回確定する。ここで先に弾けるものを弾くことで read を節約する。
- *
- * 短絡すべきリクエストには Response を、通すべきリクエストには null を返す。
- */
+// OAuthProvider はハンドラを呼ぶ前に必ず KV を read するので、弾けるものはその前に弾く。
 
-/** /mcp をブラウザから呼んでよいオリジン（自分自身に加えて）。Claude の Web アプリを想定する */
 const ALLOWED_ORIGIN_HOSTNAMES = ["claude.ai", "claude.com"];
 
 const ALLOWED_PATHS = new Set([
@@ -22,10 +14,7 @@ const ALLOWED_PATHS = new Set([
   "/.well-known/oauth-protected-resource/mcp",
 ]);
 
-/**
- * OAuthProvider issues tokens in `userId:grantId:hash` format (3 colon-separated parts).
- * Reject tokens that don't match this format before OAuthProvider attempts a KV read.
- */
+// OAuthProvider のトークンは `userId:grantId:hash` 形式
 function hasValidInternalTokenFormat(authHeader: string): boolean {
   if (!authHeader.startsWith("Bearer ")) return true; // no Bearer → let OAuthProvider return 401
   const token = authHeader.substring(7);
@@ -42,14 +31,12 @@ function jsonRpcError(status: number, message: string, headers: HeadersInit): Re
 export function preflight(request: Request): Response | null {
   const url = new URL(request.url);
 
-  // 1. 未知のパスを弾く（脆弱性スキャナの巡回など）
   if (!ALLOWED_PATHS.has(url.pathname)) {
     return new Response("Not Found", { status: 404 });
   }
 
   if (url.pathname !== "/mcp") return null;
 
-  // 2. OAuthProvider 形式に合わないトークンを弾く
   const authHeader = request.headers.get("authorization");
   if (authHeader && !hasValidInternalTokenFormat(authHeader)) {
     return Response.json(
@@ -58,15 +45,12 @@ export function preflight(request: Request): Response | null {
     );
   }
 
-  // 3. ブラウザからの別オリジンの要求を弾く（MCP 仕様の MUST）。Origin の無い要求
-  //    （claude.ai のバックエンド、Claude Code など非ブラウザのクライアント）は通す
+  // Origin の無い要求は通す（claude.ai のバックエンドや Claude Code など非ブラウザのクライアント）
   const rejected = originValidationResponse(request, [url.hostname, ...ALLOWED_ORIGIN_HOSTNAMES]);
   if (rejected) return rejected;
 
-  // 4. GET（2025 系のサーバー発通知用 SSE ストリーム）を弾く。
-  //    2026-07-28 で GET のストリームは廃止され、SDK もステートレス構成では 405 を返す。
-  //    ただし OAuthProvider を通すとトークンの KV read が 1 回かかるので、ここで先に返す。
-  //    2025 系のクライアントは 405 を受けると再接続せずに諦める。
+  // SDK も GET に 405 を返すが、OAuthProvider を通すと KV read がかかるのでここで返す。
+  // 2025 系のクライアントは 405 を受けると再接続せずに諦める。
   if (request.method === "GET") {
     return jsonRpcError(405, "Method Not Allowed: this server does not offer an SSE stream", {
       Allow: "POST",

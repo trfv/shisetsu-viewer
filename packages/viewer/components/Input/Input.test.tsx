@@ -20,7 +20,6 @@ describe("Input Component", () => {
   it("loading=trueのときSkeletonを表示する", async () => {
     const { container } = await renderWithProviders(<Input label="名前" loading={true} />);
 
-    // Skeleton is rendered, no textbox should be present
     await expect.element(screen.getByRole("textbox")).not.toBeInTheDocument();
     const skeleton = container.querySelector<HTMLElement>('[data-testid="skeleton"]');
     await expect.element(skeleton).toBeInTheDocument();

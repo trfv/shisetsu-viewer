@@ -5,26 +5,21 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
-  // カットオーバー前は d1-api で稼働（api.shisetsudb.com は現行 Hasura が占有中）。
-  // PR3-5 で Hasura の A レコード削除後に api.shisetsudb.com へ張り替える。
+  // api.shisetsudb.com は旧 Hasura の A レコードが占有している
   "routes": [{ "pattern": "d1-api.shisetsudb.com", "custom_domain": true }],
   "observability": { "enabled": true },
-  // 値は `wrangler secret put <NAME>` で入れる。ここに無い Secret があると deploy が止まる。
-  // ADMIN_API_KEY：ローカルの scraper が admin REST に書き込むときの鍵（CI は GitHub OIDC）。
+  // ここに無い Secret があると deploy が止まる
   "secrets": { "required": ["ADMIN_API_KEY"] },
-  // /v1/health が版タグ（deploy:ci が付けるコミット SHA）を返すのに使う
   "version_metadata": { "binding": "CF_VERSION_METADATA" },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "shisetsu-db",
-      // 本番 D1（APAC）。ローカル/テスト(miniflare)はこの値を使わず新規 D1 を作る。
       "database_id": "353bd30e-d421-460f-821a-018fd05a455c",
       "migrations_dir": "migrations",
     },
   ],
-  // 無認証で叩ける公開 GET（/v1/institutions, /v1/scrape-runs 等）の濫用対策。
-  // クエリを変えれば Cache-Control を迂回できるため、D1 読み取り無料枠の枯渇を防ぐ。
+  // クエリを変えればエッジキャッシュを迂回できるので、D1 読み取り無料枠の枯渇を防ぐ
   "ratelimits": [
     {
       "name": "RATE_LIMITER",
@@ -34,10 +29,9 @@
     },
   ],
   "vars": {
-    // Auth0 カスタムドメイン。実トークンの iss / jwks_uri が auth.shisetsudb.com のため、
-    // issuer 検証と JWKS 取得の両方でこの値を使う（trfv.jp.auth0.com だと全トークンが弾かれる）。
+    // trfv.jp.auth0.com にしない。実トークンの iss / jwks_uri はカスタムドメインで、全トークンが弾かれる
     "AUTH0_DOMAIN": "auth.shisetsudb.com",
-    // access token の aud 配列に含まれる値（末尾スラッシュ付き）。
+    // 末尾スラッシュ付き（OIDC_AUDIENCE とは違う）
     "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
     "GITHUB_REPOSITORY": "trfv/shisetsu-viewer",
     "OIDC_AUDIENCE": "https://api.shisetsudb.com",

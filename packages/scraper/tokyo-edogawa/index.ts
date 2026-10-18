@@ -29,7 +29,6 @@ interface EdogawaTarget {
 }
 
 const targets: EdogawaTarget[] = [
-  // 地域施設・図書館
   { facilityName: "松江コミュニティ会館", category: "地域施設・図書館" },
   { facilityName: "一之江コミュニティ会館", category: "地域施設・図書館" },
   { facilityName: "コミュニティプラザ一之江", category: "地域施設・図書館" },
@@ -68,7 +67,6 @@ const targets: EdogawaTarget[] = [
   { facilityName: "篠崎文化プラザ", category: "地域施設・図書館" },
   { facilityName: "西葛西図書館", category: "地域施設・図書館" },
   { facilityName: "小岩図書館", category: "地域施設・図書館" },
-  // 大型文化施設
   { facilityName: "総合文化センター", category: "大型文化施設" },
   { facilityName: "タワーホール船堀", category: "大型文化施設" },
 ];
@@ -83,7 +81,6 @@ type EdogawaPeriod = {
 };
 
 function toISODate(year: string, dateStr: string): string {
-  // dateStr: "3/10 火" or "3/10" → 月と日を抽出
   const match = dateStr.match(/(\d+)\/(\d+)/);
   if (!match?.[1] || !match[2]) return "";
   const month = match[1].padStart(2, "0");
@@ -95,14 +92,13 @@ async function extractPeriod(page: Page, division: string): Promise<EdogawaPerio
   const table = page.locator("table").first();
   const headerCells = await table.locator("thead tr th").all();
 
-  // 先頭ヘッダーセルは "2026/3/10(火)～" のような期間表示
   const firstCell = headerCells[0];
   if (!firstCell) throw new Error("No header cells found in table");
   const firstHeader = await firstCell.innerText();
   const yearMatch = firstHeader.match(/(\d{4})\//);
   const year = yearMatch?.[1] ?? new Date().getFullYear().toString();
 
-  // 日付列は index 2 から（部屋名ヘッダーと定員ヘッダーをスキップ）
+  // 先頭 2 列は部屋名と定員
   const dates: string[] = [];
   for (let i = 2; i < headerCells.length; i++) {
     const cell = headerCells[i];
@@ -121,7 +117,6 @@ async function extractPeriod(page: Page, division: string): Promise<EdogawaPerio
     const firstTd = cells[0];
     if (!firstTd) continue;
     const roomName = (await firstTd.innerText()).trim();
-    // 定員セル (index 1) をスキップし、ステータスセルは index 2 から
     const statuses: string[] = [];
     for (let i = 2; i < cells.length; i++) {
       const cell = cells[i];
@@ -142,7 +137,6 @@ export const scraper = defineScraper({
   facility: (t) => t.facilityName,
   context: (t) => ({ category: t.category }),
   outputs: (data, t) => {
-    // 1テストで施設内の全部屋を取得するため、部屋ごとにファイルを分割する
     const roomNames = [...new Set(data.map((d) => d.room_name))];
     return roomNames.map((roomName) => ({
       fileName: `${t.facilityName}-${roomName}`,
@@ -156,7 +150,6 @@ export const scraper = defineScraper({
     await page.getByRole("button", { name: target.category, exact: true }).click();
     await page.getByRole("heading", { name: "施設選択" }).waitFor();
 
-    // 対象施設が見えるまで「さらに読み込む」（ボタンが消えたら打ち切り）
     const facilityLabel = page.locator("label").filter({
       has: page.getByText(target.facilityName, { exact: true }),
     });
@@ -178,7 +171,6 @@ export const scraper = defineScraper({
     const output: EdogawaPeriod[] = [];
 
     for (const label of TIME_PERIOD_LABELS) {
-      // フィルターセクションが閉じていれば開く
       const filterSection = page.locator("#otherCondition");
       if (!(await filterSection.isVisible())) {
         await page.locator('button:has-text("その他の条件で絞り込む")').click();

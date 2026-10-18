@@ -3,10 +3,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { SearchForm } from "./SearchForm";
 
-// Create a mock function that can be controlled
 let mockIsMobileValue = false;
 
-// Mock the useIsMobile hook with a function that reads the value
 vi.mock("../../hooks/useIsMobile", () => ({
   useIsMobile: () => mockIsMobileValue,
 }));
@@ -22,7 +20,6 @@ describe("SearchForm Component", () => {
   };
 
   beforeEach(() => {
-    // Reset to default
     mockIsMobileValue = false;
   });
 
@@ -62,7 +59,6 @@ describe("SearchForm Component", () => {
       const deletableChips = document.querySelectorAll('[data-testid="chip-delete"]');
       expect(deletableChips).toHaveLength(2);
 
-      // "利用可能" には onDelete がないので削除ボタンがない
       expect(chips).toHaveLength(3);
     });
 
@@ -96,11 +92,9 @@ describe("SearchForm Component", () => {
     it("ドロワーの閉じるボタンでドロワーが閉じる", async () => {
       const { user } = await renderWithProviders(<SearchForm {...defaultProps} />);
 
-      // Open drawer
       const openButton = screen.getByRole("button", { name: /絞り込み/i });
       await user.click(openButton);
 
-      // Find and click close button
       const closeButton = screen.getByRole("button", { name: "閉じる" });
       await user.click(closeButton);
 
@@ -113,10 +107,8 @@ describe("SearchForm Component", () => {
       const button = screen.getByRole("button", { name: /絞り込み/i });
       await user.click(button);
 
-      // Wait for the overlay to appear before locating it via the DOM
       await expect.element(screen.getByTestId("drawer-overlay")).toBeInTheDocument();
 
-      // Click overlay
       const overlay = document.querySelector('[data-testid="drawer-overlay"]');
       if (overlay) {
         await user.click(overlay as Element);
@@ -140,7 +132,6 @@ describe("SearchForm Component", () => {
 
       const chips = document.querySelectorAll('[data-testid="chip"]');
       chips.forEach((chip) => {
-        // The chip element should have the "small" class in mobile view
         expect(chip.className).toContain("small");
       });
     });
@@ -171,12 +162,10 @@ describe("SearchForm Component", () => {
           </SearchForm>
         );
 
-        // Tab to button
         await user.tab();
         const button = screen.getByRole("button", { name: /絞り込み/i });
         await expect.element(button).toHaveFocus();
 
-        // Enter to open
         await user.keyboard("{Enter}");
 
         await expect.element(screen.getByText("Search Form Content")).toBeVisible();
@@ -200,7 +189,6 @@ describe("SearchForm Component", () => {
         </SearchForm>
       );
 
-      // チップが表示されることを確認
       for (const chip of longChips) {
         const chipText = chip.label.length > 20 ? chip.label.substring(0, 20) : chip.label;
         await expect.element(screen.getByText(chipText, { exact: false })).toBeInTheDocument();
@@ -218,7 +206,6 @@ describe("SearchForm Component", () => {
         </SearchForm>
       );
 
-      // 多数のチップが表示されることを確認
       const displayedChips = screen.getByText(/チップ\d+/).all();
       expect(displayedChips.length).toBeGreaterThan(0);
       expect(displayedChips.length).toBeLessThanOrEqual(20);

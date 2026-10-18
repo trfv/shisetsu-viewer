@@ -1,17 +1,3 @@
-/**
- * `playwright test [<municipality>] --list` を実行し、シャード matrix を JSON で出力する。
- * GitHub Actions の prepare ジョブから呼ばれ、出力を `strategy.matrix.include` に流し込む。
- *
- * 使い方:
- *   node scripts/shardMatrix.ts [<municipality>] [--density N]
- *   （municipality 省略時は全対象。--density の既定は 5）
- *
- * 出力（1 行の JSON）:
- *   { "include": [ { "municipality": "...", "shardIndex": 1, "shardTotal": 2 }, ... ] }
- *
- * テストが 1 件も無い場合は空 include を返さず exit 1 で落とす
- * （dispatch のタイポや testIgnore の全除外を、無言のスキップにせず気付けるようにする）。
- */
 import { execFileSync } from "node:child_process";
 
 import { shardMatrixFromListOutput } from "../common/shardMatrix.ts";
@@ -56,6 +42,7 @@ function main(): void {
   }
 
   const include = shardMatrixFromListOutput(listOutput, density);
+  // 空 include を返すと dispatch のタイポや testIgnore の全除外が無言のスキップになる
   if (include.length === 0) {
     console.error(
       `No tests found for municipality=${municipality || "all"}. ` +

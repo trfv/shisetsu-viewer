@@ -20,9 +20,9 @@ describe("listInstitutions", () => {
   it("municipality / building_kana / institution_kana / id 順で返す", async () => {
     const page = await listInstitutions(env.DB, {});
     expect(page.items.map((i) => i.id)).toEqual([
-      INSTITUTIONS[0].id, // KOUTOU 会館A 音楽室
-      INSTITUTIONS[1].id, // KOUTOU 会館A ホール
-      INSTITUTIONS[2].id, // TOSHIMA
+      INSTITUTIONS[0].id,
+      INSTITUTIONS[1].id,
+      INSTITUTIONS[2].id,
     ]);
   });
 
@@ -112,7 +112,6 @@ describe("searchReservations", () => {
       { startDate: "2026-08-01", endDate: "2026-08-04", isMorningVacant: true },
       holidays
     );
-    // 偶数日が空き: 08-02, 08-04（2 施設ずつ）
     expect(page.items.every((h) => h.reservation.is_morning_vacant)).toBe(true);
     expect(page.items.map((h) => h.reservation.date).sort()).toEqual([
       "2026-08-02",
@@ -126,7 +125,7 @@ describe("searchReservations", () => {
     expect(hit.institution.division_labels).toEqual({});
   });
 
-  it("municipality フィルタ", async () => {
+  it("municipality で絞る（予約データの無い toshima は 0 件）", async () => {
     const holidays = await loadHolidays(env.DB);
     const page = await searchReservations(
       env.DB,
@@ -137,7 +136,6 @@ describe("searchReservations", () => {
       },
       holidays
     );
-    // toshima の施設には予約データを入れていない
     expect(page.items).toHaveLength(0);
   });
 });
@@ -184,7 +182,6 @@ describe("is_holiday のクエリ時導出", () => {
 });
 
 describe("生成列のセマンティクス（IMMV 同値）", () => {
-  // ヘルパ: 1 行だけ入れて空きフラグを読み出す
   // oxlint-disable-next-line unicorn/consistent-function-scoping
   async function flagsFor(reservation: Record<string, string>) {
     const id = INSTITUTIONS[0].id;
@@ -246,7 +243,7 @@ describe("listScrapeRuns", () => {
   it("自治体ごとに最新の fetched_at を返す", async () => {
     const runs = await listScrapeRuns(env.DB);
     const byMuni = new Map(runs.map((r) => [r.municipality, r.fetched_at]));
-    expect(byMuni.get("MUNICIPALITY_KOUTOU")).toBe("2026-08-01T17:23:00.000Z"); // run-2 が最新
+    expect(byMuni.get("MUNICIPALITY_KOUTOU")).toBe("2026-08-01T17:23:00.000Z");
     expect(byMuni.get("MUNICIPALITY_TOSHIMA")).toBe("2026-08-01T05:25:00.000Z");
   });
 });

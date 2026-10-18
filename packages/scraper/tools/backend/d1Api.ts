@@ -12,10 +12,7 @@ function requireEnv(name: string): string {
   return value;
 }
 
-/**
- * GitHub Actions では OIDC トークン、ローカルでは ADMIN_API_KEY を使う。
- * OIDC の環境変数は job に `permissions: id-token: write` があるときだけ注入される。
- */
+// OIDC の環境変数は job に `permissions: id-token: write` があるときだけ注入される。
 async function getAuthHeaders(): Promise<Record<string, string>> {
   const requestUrl = process.env["ACTIONS_ID_TOKEN_REQUEST_URL"];
   const requestToken = process.env["ACTIONS_ID_TOKEN_REQUEST_TOKEN"];
@@ -94,10 +91,7 @@ export async function upsertInstitutions(rows: Institution[]): Promise<number> {
   return res.rowsWritten;
 }
 
-/**
- * 自治体の施設を全列で全件取得する。`detail=true` は無認証の公開 GET だが
- * エッジキャッシュには載らない（施設 upsert 直後にキーマップを引くため）。
- */
+// detail=true はエッジキャッシュに載らない。施設 upsert 直後にキーマップを引くのでキャッシュされる経路は使わない。
 async function listInstitutions(municipality: string): Promise<InstitutionDetail[]> {
   const endpoint = requireEnv("D1_API_ENDPOINT");
   const all: InstitutionDetail[] = [];
@@ -114,7 +108,6 @@ async function listInstitutions(municipality: string): Promise<InstitutionDetail
   return all;
 }
 
-/** 予約行の解決キー `<facility_name>-<room_name>` → institution_id。 */
 export async function fetchInstitutionKeyMap(municipality: string): Promise<InstitutionKeyMap> {
   const map: InstitutionKeyMap = {};
   for (const i of await listInstitutions(municipality)) {
@@ -123,7 +116,6 @@ export async function fetchInstitutionKeyMap(municipality: string): Promise<Inst
   return map;
 }
 
-/** data/institutions/<target>.json への逆輸出用。DB 側のメタ列 updated_at は落とす。 */
 export async function exportInstitutions(municipality: string): Promise<Institution[]> {
   const items = await listInstitutions(municipality);
   return items.map(({ updated_at: _updatedAt, ...institution }) => institution);

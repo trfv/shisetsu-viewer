@@ -1,9 +1,8 @@
-// api の内部 URL。Service Binding では host は使われないが、Request の構築に必要である。
+// Service Binding では host は使われないが、Request の構築に要る。
 const INTERNAL_ORIGIN = "https://api.internal";
 
-// BFF が転送してよい読み取り経路。Cookie 認証である以上、admin 系の PUT を
-// 素通しにできないため、パスは列挙で閉じる。SameSite=Lax は第二の防壁にすぎない。
-// [^/]+ にしているのは、id にスラッシュを含めて別経路へ抜ける偽装を防ぐため。
+// Cookie 認証なので admin 系を素通しにできず、パスは列挙で閉じる。
+// [^/]+ は id にスラッシュを含めて別経路へ抜ける偽装を防ぐ。
 const ALLOWED_PATHS: RegExp[] = [
   /^\/v1\/institutions$/,
   /^\/v1\/institutions\/[^/]+$/,
@@ -16,14 +15,9 @@ export function isAllowedApiPath(path: string): boolean {
   return ALLOWED_PATHS.some((pattern) => pattern.test(path));
 }
 
-/**
- * api へ転送する。ヘッダを引き継がず新規に組み立てているのは、Cookie と Origin を
- * api 側へ渡さないためである。api の認可は Authorization の JWT だけで決まる。
- *
- * CF-Connecting-IP だけは明示的に引き継ぐ。api の RATE_LIMITER はこれを鍵にしており、
- * 無いと全利用者が "unknown" の一つの枠を共有してしまう。エッジがクライアント送信の値を
- * 上書きするので、viewer Worker が受け取った値は信用してよい。
- */
+// ヘッダを引き継がないのは Cookie と Origin を api へ渡さないため。
+// CF-Connecting-IP だけは渡す。無いと api の RATE_LIMITER で全利用者が一つの枠を共有する。
+// エッジがクライアント送信の値を上書きするので信用してよい。
 export async function proxyToApi(params: {
   api: Fetcher;
   request: Request;

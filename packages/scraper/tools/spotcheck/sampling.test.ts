@@ -23,7 +23,6 @@ const KEYS: SampleKey[] = [
 
 test("selectSamples は自治体ラウンドロビンで cap まで詰める", () => {
   const picked = selectSamples({ explicitKeys: KEYS, cap: 2 });
-  // 1 巡目で koutou と kita から 1 件ずつ取り、cap=2 で打ち切る
   assert.equal(picked.length, 2);
   assert.deepEqual(new Set(picked.map((k) => k.target)), new Set(["tokyo-koutou", "tokyo-kita"]));
 });

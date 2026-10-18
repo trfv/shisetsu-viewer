@@ -7,9 +7,6 @@ declare module "*.module.css" {
   export default classes;
 }
 
-// BFF 化により VITE_* のビルド変数は不要になった。API は同一オリジンの /api、
-// 認証は Worker 側の Secret で完結する。
-
 declare module "process" {
   global {
     namespace NodeJS {

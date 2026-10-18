@@ -20,8 +20,6 @@ describe("App", () => {
         <App />
       </AuthContext.Provider>
     );
-    // App は自前の Router を持つため二重ラップしない。ヘッダー（banner）が
-    // 描画されれば ErrorBoundary/ColorModeProvider/Router/Header の合成が成立している。
     await expect.element(page.getByRole("banner")).toBeInTheDocument();
   });
 });

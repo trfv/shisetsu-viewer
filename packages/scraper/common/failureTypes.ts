@@ -13,7 +13,6 @@ export interface FailureRecord {
   readonly validationErrors: readonly string[];
   readonly domSnapshotPath: string | null;
   readonly screenshotPath: string | null;
-  /** スクレイパーのソースファイルパス（例: "tokyo-kita/index.ts"） */
   readonly sourceRef: string;
   readonly capturedAt: string;
 }

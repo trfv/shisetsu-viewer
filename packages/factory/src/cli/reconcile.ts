@@ -1,10 +1,3 @@
-/**
- * factory の制御層。状態を読み、作業項目 Issue への操作を計算して適用する。
- *
- * 使い方: node packages/factory/src/cli/reconcile.ts [--dry-run]
- * 環境変数: FACTORY_MODE（off | observe | on、既定 observe）、FACTORY_OWNER（needs-human の assign 先）、
- *           GH_TOKEN、GH_REPO
- */
 import { applyOps, ensureLabels } from "../applyOps.ts";
 import {
   downloadRunSummary,

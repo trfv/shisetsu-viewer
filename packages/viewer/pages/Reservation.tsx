@@ -88,7 +88,7 @@ const ReservationPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
 
-  // 「今」はモジュール読み込み時ではなくページ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
+  // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [minDate] = useState(() => new Date());
   const [maxDate] = useState(() => addMonths(endOfMonth(new Date()), 6));
 

@@ -1,9 +1,4 @@
-/**
- * Run Scraper の最終ジョブから呼ばれ、run-summary.json を書く。
- *
- * 使い方: node packages/factory/src/cli/summarize.ts --run-id <id> --failures-dir <dir> --out <file>
- * 前提: GH_TOKEN と GH_REPO が設定されていること（手元では gh の認証とカレントリポジトリで代わる）。
- */
+// GH_TOKEN と GH_REPO が要る（手元では gh の認証とカレントリポジトリで代わる）
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";

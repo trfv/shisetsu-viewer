@@ -24,9 +24,7 @@ import { preflight } from "./preflight.ts";
 
 // wrangler types の Env は手元の .env から secret を拾うため CI では型が欠ける。ここで手書きする
 interface Env extends Auth0Env {
-  // api worker への Service Binding。データの読み取りはすべて api を通す
   API: Fetcher;
-  // KVNamespace — typed as unknown here; OAuthProvider handles it internally
   OAUTH_KV: unknown;
   OAUTH_PROVIDER: OAuthHelpers;
 }
@@ -39,18 +37,9 @@ interface UpstreamTokens {
   refreshToken: string;
 }
 
-/** beginUpstream に預け、/callback で取り戻す値。Auth0 には送らない。 */
 interface UpstreamData {
   codeVerifier: string;
 }
-
-// ---------------------------------------------------------------------------
-// Default handler — /authorize and /callback (Auth0 integration)
-//
-// GET /authorize で同意画面を出し、POST /authorize で承認されて初めて Auth0 へ送る。
-// Auth0 に渡す state は beginUpstream が作り、ブラウザの __Host- cookie に紐付く。
-// 認可リクエストはサーバー側（KV）に置くので、フォームや state から改ざんできない。
-// ---------------------------------------------------------------------------
 
 function redirect(location: string, headers: Headers): Response {
   headers.set("Location", location);
@@ -150,23 +139,14 @@ const authHandler = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// API handler — /mcp (MCP protocol endpoint)
-// ---------------------------------------------------------------------------
-
 const mcpHandler = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // ロールと DataSource はこのリクエストのスコープに閉じ込める。モジュールスコープに置くと
-    // isolate 内で並行する他リクエストの認証状態に差し替わり、per-user 権限が破れる。
-    // reservations 系ツールは user かつ非 trial のときだけ露出する（allowReservations）。
-    // props は OAuthProvider が accessToken から復元する（型は unknown なのでここで narrow する）。
+    // ロールと DataSource はモジュールスコープに置かない。isolate 内で並行する他リクエストの
+    // 認証状態に差し替わり、per-user 権限が破れる。
     const { upstreamAccessToken } = ctx.props as { upstreamAccessToken: string };
     const role = await resolveRole(upstreamAccessToken, env);
 
-    // createMcpHandler は 2026-07-28 のリクエストをステートレスに捌き、2025 系（initialize）の
-    // リクエストもリクエストごとの使い捨てインスタンスで受ける（legacy: "stateless"）。
-    // api の RATE_LIMITER は検証済みの利用者を sub で、それ以外を IP で数える。
-    // Bearer に加えて利用者の IP も渡す（Service Binding では自動で付かない）。
+    // 利用者の IP は Service Binding では自動で付かない。api の RATE_LIMITER が無認証の要求を IP で数える
     const dataSource = createHttpDataSource(
       API_INTERNAL_ORIGIN,
       {
@@ -176,18 +156,13 @@ const mcpHandler = {
       (input, init) => env.API.fetch(input, init)
     );
     const handler = createMcpHandler(({ era }) => {
-      // 2025 系を捨てて legacy: "reject" に切り替えてよいかを、Workers のログで判断するための記録。
-      // legacy が来なくなったのを確かめてから切り替える
+      // legacy が来なくなったのをこのログで確かめてから legacy: "reject" に切り替える
       console.log(JSON.stringify({ mcpEra: era, userAgent: request.headers.get("user-agent") }));
       return createServer({ dataSource, allowReservations: role === "user" });
     });
     return handler.fetch(request);
   },
 };
-
-// ---------------------------------------------------------------------------
-// OAuthProvider factory — per-request so the resource follows the request's origin
-// ---------------------------------------------------------------------------
 
 function createOAuthProvider(origin: string) {
   return new OAuthProvider<Env>({
@@ -198,28 +173,25 @@ function createOAuthProvider(origin: string) {
     tokenEndpoint: "/oauth/token",
     // トークンの audience。カスタムドメインと workers.dev のどちらで受けても、その origin に縛る
     resourceMetadata: { resource: `${origin}/mcp` },
-    // クライアント登録は CIMD のみ。DCR（clientRegistrationEndpoint）は MCP 2026-07-28 で非推奨のため開けない。
-    // CIMD の取得には wrangler.jsonc の global_fetch_strictly_public が要る
+    // DCR（clientRegistrationEndpoint）は MCP 2026-07-28 で非推奨のため開けない。
     clientIdMetadataDocumentEnabled: true,
-    accessTokenTTL: 82800, // 23h (Auth0 access token TTL 24h より短く設定し、先にリフレッシュさせる)
-    refreshTokenTTL: 2592000, // 30 days
+    accessTokenTTL: 82800, // Auth0 のアクセストークン（24h）より先にリフレッシュさせる
+    refreshTokenTTL: 2592000,
 
     tokenExchangeCallback: async ({ grantType, props, env }) => {
       const typedProps = props as UpstreamTokens;
 
       if (grantType === GrantType.AUTHORIZATION_CODE) {
-        // Initial exchange: pass Auth0 access token to the MCP access token
         return {
           accessTokenProps: { upstreamAccessToken: typedProps.upstreamAccessToken },
         };
       }
 
-      // Refresh: obtain a fresh Auth0 access token via refresh token
       const fresh = await refreshAuth0Token(typedProps.refreshToken, env as Env);
       const rotated = fresh.refresh_token && fresh.refresh_token !== typedProps.refreshToken;
       return {
         accessTokenProps: { upstreamAccessToken: fresh.access_token },
-        // Only persist newProps when Auth0 rotated the refresh token (saves a KV write)
+        // ローテーションされたときだけ保存し、KV write を節約する
         ...(rotated && {
           newProps: {
             upstreamAccessToken: fresh.access_token,
@@ -231,13 +203,8 @@ function createOAuthProvider(origin: string) {
   });
 }
 
-// ---------------------------------------------------------------------------
-// Worker entry point
-// ---------------------------------------------------------------------------
-
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // OAuthProvider はハンドラを呼ぶ前にトークンを KV から引くため、弾けるものは先に弾く
     const shortCircuit = preflight(request);
     if (shortCircuit) return shortCircuit;
 

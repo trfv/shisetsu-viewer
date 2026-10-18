@@ -6,20 +6,12 @@ import { collectPaginated } from "../common/paginate.ts";
 import { type RawSlot, rawSlotsToOutput } from "../common/reservation.ts";
 import type { Division, Status, TransformOutput } from "../common/types.ts";
 
-/**
- * WebR Grand 系予約システム用エンジン。
- * 採用自治体: tokyo-meguro, tokyo-toshima
- *
- * ナビゲーション: カテゴリボタン → 施設一覧（さらに読み込む） → 次へ進む → 2週間カレンダー
- * 時間帯フィルター（午前/午後/夜間）を切り替えながら期間を prev/next でページ送りする。
- */
 export interface WebrGrandConfig {
   baseUrl: string;
-  /** 施設名 → トップページのカテゴリボタン名 */
   categoryMap: Readonly<Record<string, string>>;
   divisionMap: Readonly<Record<string, Division>>;
   statusMap: Readonly<Record<string, Status>>;
-  /** 施設一覧セルの照合を exact にするか（部分一致で複数ヒットするサイトは true） */
+  /** 部分一致で複数ヒットするサイトは true */
   facilityCellExact?: boolean;
 }
 
@@ -29,7 +21,6 @@ export interface WebrGrandTarget {
 
 type WebrGrandTable = { division: string; header: string[]; rows: string[][] };
 
-/** ヘッダー "2026年3月" と日セル列から ISO 日付列を組み立てる */
 function buildISODateStrings(monthHeader: string, dateCells: string[]): string[] {
   const match = monthHeader.match(/(\d{4})年(\d{1,2})月/);
   if (!match?.[1] || !match[2]) return [];
@@ -42,11 +33,9 @@ function buildISODateStrings(monthHeader: string, dateCells: string[]): string[]
 }
 
 /**
- * 全区分のパスで取れた日付だけを残す。
- * 区分ごとに別々にページ送りするため、1 区分だけ途中で切れる（collectPaginated が途中までを返す）と、
- * 切れた先の日付が「その区分なし」で出力される。api の upsert は reservation を丸ごと置き換えるので、
- * 前回の正しい値まで消える。切れた先の日付は出さずに D1 の前回値を残す。
- * 日付はカレンダーの見出しから取る（部屋行が 0 件のパスでも日付は取れているので、slots からは引かない）。
+ * 1 区分だけページ送りが途中で切れると、その先の日付が「その区分なし」で出て、
+ * api の upsert が reservation を丸ごと置き換えるため前回の正しい値まで消える。
+ * 日付は slots でなく見出しから取る（部屋行が 0 件のパスでも日付は取れている）。
  */
 export function keepDatesCoveredByAllDivisions(
   slots: readonly RawSlot[],
@@ -89,7 +78,6 @@ async function extractTables(page: Page, division: string): Promise<WebrGrandTab
     const header = await Promise.all(
       (await headerRow.locator("th").all()).map((th) => th.innerText())
     );
-    // 予約カレンダー以外のテーブルはスキップ
     if (!header.some((h) => /\d{4}年\d{1,2}月/.test(h))) continue;
 
     const rows = await Promise.all(
@@ -98,7 +86,7 @@ async function extractTables(page: Page, division: string): Promise<WebrGrandTab
         return Promise.all(cells.map((c) => c.innerText()));
       })
     );
-    // 月表示テキストが部屋名として現れる繰り返しヘッダー行を除外
+    // 繰り返しヘッダー行は月表示が部屋名の位置に来る
     const dataRows = rows.filter((row) => !/\d{4}年\d{1,2}月/.test(row[0] || ""));
 
     output.push({ division, header, rows: dataRows });
@@ -107,14 +95,9 @@ async function extractTables(page: Page, division: string): Promise<WebrGrandTab
   return output;
 }
 
-/** トップページのカテゴリボタン以外（列挙対象から除外） */
 const NAV_BUTTON_RE = /ログイン|検索|メニュー|閉じる|次へ|戻る|もどる|表示|絞り込む/;
 
-/**
- * トップページのカテゴリボタン → 施設一覧（「さらに読み込む」全展開）を走査して
- * targets 候補を列挙する。WebR Grand の targets は施設単位（部屋はテーブル行として
- * 抽出時に取れる）なので、部屋の列挙は行わない。
- */
+/** target は施設単位（部屋は抽出時にテーブル行として取れる）なので部屋は列挙しない */
 export async function discoverWebrGrandTargets(
   page: Page,
   opts: Pick<WebrGrandConfig, "baseUrl">
@@ -174,7 +157,6 @@ export function webrGrandHooks(config: WebrGrandConfig): {
       await page.getByRole("button", { name: category }).click();
       await page.locator("table").first().waitFor();
 
-      // 対象施設が現れるまで「さらに読み込む」
       const facilityCell = page.getByRole("cell", {
         name: target.facilityName,
         ...(config.facilityCellExact && { exact: true }),
@@ -199,12 +181,10 @@ export function webrGrandHooks(config: WebrGrandConfig): {
       const output: WebrGrandTable[] = [];
 
       for (const division of divisions) {
-        // 表示開始日を設定して datepicker を閉じる
         const dateInput = page.getByRole("textbox", { name: "表示開始日" });
         await dateInput.fill(startDateString);
         await page.keyboard.press("Escape");
 
-        // フィルターパネルを開いて時間帯を選択
         await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
         await page.getByText(division, { exact: true }).click();
         await page.getByRole("button", { name: "表示" }).click();

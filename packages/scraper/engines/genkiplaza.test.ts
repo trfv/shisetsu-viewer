@@ -9,7 +9,6 @@ import {
   zipMonthTables,
 } from "./genkiplaza.ts";
 
-/** 1 ヶ月分の行を作る。cells は 1 日から順に並べ、31 列に満たない分は空欄で埋める */
 function row(label: string, ...cells: string[]): string[] {
   return [label, ...cells, ...Array(31 - cells.length).fill("")];
 }

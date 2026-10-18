@@ -32,7 +32,6 @@ describe("isAllowedApiPath", () => {
   });
 });
 
-/** 受け取った Request を記録して固定応答を返す Service Binding のスタブ。 */
 function stubApi(capture: { request?: Request }): Fetcher {
   return {
     async fetch(request: Request) {

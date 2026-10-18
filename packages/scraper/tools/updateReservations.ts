@@ -30,8 +30,7 @@ for (const target of targets) {
     })
   );
 
-  // 追加スクレイパー（例 tokyo-kita-genkiplaza）は親自治体の municipality に書く。
-  // target を "-" で分割する旧実装は、たまたま動くだけで解釈が曖昧だった。
+  // tokyo-kita-genkiplaza のような追加 target があるので、"-" 分割で自治体を求めない。
   const municipality = getMunicipalityKeyByScraperTarget(target);
   if (municipality === undefined) {
     throw new Error(`registry に scraper target=${target} の自治体がありません`);

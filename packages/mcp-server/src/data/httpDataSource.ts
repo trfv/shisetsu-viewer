@@ -46,11 +46,6 @@ function appendStr(sp: URLSearchParams, key: string, value: string | undefined):
   if (value !== undefined && value !== "") sp.set(key, value);
 }
 
-/**
- * api の REST で実装する DataSource。`endpoint` への fetch で実装する。
- * 認証は Bearer（ユーザートークン、CLI / Workers）または X-Admin-Key（stdio 管理用）。
- * Workers からは `fetchFn` に Service Binding の fetch を渡す（host は使われない）。
- */
 export function createHttpDataSource(
   endpoint: string,
   auth: HttpAuth,

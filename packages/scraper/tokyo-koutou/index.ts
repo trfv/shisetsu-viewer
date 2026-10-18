@@ -46,16 +46,12 @@ const FACILITY_NAMES = [
 
 interface KoutouTarget {
   facilityName: string;
-  /** この対象がカバーする月範囲の開始日 */
   startDate: Date;
-  /** 今月から何ヶ月先か（カレンダーの「次月」クリック回数） */
   monthDiff: number;
-  /** 範囲内の日数（ページ送り回数） */
   days: number;
   rangeCount: number;
 }
 
-/** 今月から5ヶ月分を1ヶ月ずつの範囲に分割する（1範囲 = 1テスト） */
 function buildTargets(): KoutouTarget[] {
   const ranges: { startDate: Date; days: number }[] = [];
   let cursor = new Date();

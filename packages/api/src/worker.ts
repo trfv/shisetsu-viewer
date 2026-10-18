@@ -27,23 +27,21 @@ export interface Env {
   GITHUB_REPOSITORY: string;
   OIDC_AUDIENCE: string;
   ADMIN_API_KEY?: string;
-  // 無認証の公開エンドポイント向けレート制限。テスト環境では未定義になりうるため optional
+  // テスト環境では未定義になりうる
   RATE_LIMITER?: RateLimit;
-  // テスト専用: 設定されていればローカル JWKS を使う（本番 wrangler.jsonc には無い）
+  // テスト専用（本番 wrangler.jsonc には無い）
   TEST_JWKS_JSON?: string;
   TEST_GITHUB_JWKS_JSON?: string;
-  // 稼働中の版のメタデータ。tag は Workers Builds の deploy:ci が付けるコミット SHA（先頭 12 桁）
+  // tag は deploy:ci が付けるコミット SHA（先頭 12 桁）
   CF_VERSION_METADATA?: WorkerVersionMetadata;
 }
 
-// 1 リクエストの最大予約行数（Workers Free CPU / D1 バインド上限に余裕）
+// Workers Free の CPU / D1 バインド上限に余裕を持たせる
 const MAX_RESERVATION_ROWS = 500;
-// institutions は自治体単位で一括送信される（全自治体でも実測 591 行）。
-// holidays は数年分でも数百行。いずれも ADMIN_API_KEY 漏洩時に D1 無料枠を
-// 一撃で使い切られないための上限で、実運用の 3 倍以上の余裕を取っている。
+// ADMIN_API_KEY 漏洩時に D1 無料枠を一撃で使い切られないための上限。実運用の 3 倍以上
 const MAX_INSTITUTION_ROWS = 2_000;
 const MAX_HOLIDAY_ROWS = 1_000;
-// 当日書き込み予算。超過分は 202 で受け流し次回 run に委ねる（全行変化日への防御）
+// 全行変化日への防御。超過分は 202 で受け流し次回 run に委ねる
 const DAILY_WRITE_BUDGET = 80_000;
 
 const ID_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
@@ -54,17 +52,13 @@ const RE_INSTITUTION_RESERVATIONS = new RegExp(
 );
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
-// 施設マスタは scraper の update:institutions を回したときしか変わらない（週〜月単位）。
-// エッジキャッシュに載る前提なので、scrape-runs より長く持たせる。
-// 代償は upsert 直後の最大 10 分の陳腐化。手動更新の頻度から見て許容する。
+// 施設マスタは週〜月単位でしか変わらないので長めに持たせる（upsert 直後の最大 10 分の陳腐化は許容）
 const INSTITUTIONS_CACHE = "public, max-age=600";
-// 認証必須レスポンスに必ず付ける。Cache-Control 無しの 200 は、エッジキャッシュ側の
-// heuristic freshness で既定 2 時間キャッシュされうる。Authorization ヘッダ付きの
-// リクエストは自動バイパスされる仕様だが、そこに依存せず明示的に落とす。
+// Cache-Control 無しの 200 はエッジの heuristic freshness で既定 2 時間キャッシュされうる。
+// Authorization 付きは自動バイパスされる仕様だが、そこに依存しない
 const PRIVATE_CACHE = "private, no-store";
-// detail=true は scraper 専用の口。施設マスタを upsert した直後に施設キーマップを引くため、
-// 10 分古い id 対応表を掴むと予約行の解決に失敗する（unmatched facility keys）。
-// 公開情報ではあるがキャッシュには載せない。
+// detail=true は scraper が施設マスタ upsert 直後に引く。古い id 対応表を掴むと
+// 予約行の解決に失敗する（unmatched facility keys）ので、公開情報でもキャッシュしない
 const NO_STORE_CACHE = "no-store";
 
 function json(body: unknown, init?: ResponseInit): Response {
@@ -92,7 +86,6 @@ function parseLimit(url: URL): number | undefined {
   return Number.isFinite(n) ? n : undefined;
 }
 
-/** テスト用ローカル JWKS があればそれを、無ければ undefined（本番 JWKS フェッチにフォールバック） */
 function testJwks(env: Env): JWTVerifyGetKey | undefined {
   if (!env.TEST_JWKS_JSON) return undefined;
   return createLocalJWKSet(JSON.parse(env.TEST_JWKS_JSON));
@@ -107,7 +100,6 @@ function bearerToken(request: Request): string | undefined {
   return request.headers.get("Authorization")?.replace(/^Bearer /, "") || undefined;
 }
 
-/** reservations 系エンドポイントの認可。user 以外は 401（トークン無し）/ 403（不足） */
 function authorizeUser(request: Request, principal: Principal | null): Response | null {
   if (!bearerToken(request)) return error(401, "authentication required");
   if (principal?.role !== "user") return error(403, "insufficient role");
@@ -207,8 +199,6 @@ async function handleScrapeRuns(env: Env): Promise<Response> {
   return json({ items }, { headers: { "Cache-Control": PUBLIC_CACHE } });
 }
 
-// ---- admin (write) ----
-
 async function handleAdminReservations(request: Request, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const body = (await request.json().catch(() => null)) as UpsertReservationsRequest | null;
@@ -217,7 +207,6 @@ async function handleAdminReservations(request: Request, env: Env): Promise<Resp
   }
   if (body.rows.length > MAX_RESERVATION_ROWS) return error(400, "too many rows");
 
-  // 書き込み予算ガード: 当日の rows_written が枠を超えていたら書かずに 202 で受け流す
   if ((await todayRowsWritten(env.DB)) > DAILY_WRITE_BUDGET) {
     return json({ received: body.rows.length, rowsWritten: 0, deferred: true }, { status: 202 });
   }
@@ -247,7 +236,6 @@ async function handleAdminHolidays(request: Request, env: Env): Promise<Response
   return json({ received: body.rows.length, rowsWritten, deferred: false });
 }
 
-/** パリティ突合用: 予約を全列 dump（keyset、admin 認可） */
 async function handleAdminExport(request: Request, url: URL, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const page = await exportReservations(env.DB, {
@@ -257,18 +245,8 @@ async function handleAdminExport(request: Request, url: URL, env: Env): Promise<
   return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
-/**
- * Cache API によるエッジキャッシュ。
- *
- * Worker が生成したレスポンスは自動ではエッジに載らない。`Cache-Control: public` を
- * 返すだけではブラウザキャッシュにしか効かないので、明示的に put/match する。
- * ヒット時は D1 を一切引かない（Cache API は read-through ではないので Worker 自体は動く）。
- *
- * キーは **メソッドと URL だけの Request** にする。元のリクエストのヘッダをキーに持ち込まない。
- *
- * 何を載せるかはハンドラが返す `Cache-Control: public` が決める。認証必須の応答は
- * `private, no-store` を返すので、ここに来ても構造的に載らない。
- */
+// Worker が生成したレスポンスは `Cache-Control: public` だけではエッジに載らないので明示的に put/match する。
+// キーは元のリクエストのヘッダを持ち込まないよう、メソッドと URL だけの Request にする
 async function withEdgeCache(
   url: URL,
   ctx: ExecutionContext,
@@ -290,19 +268,15 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
   const url = new URL(request.url);
   const { pathname } = url;
   try {
-    // admin 系は除外する。scraper が 500 行ずつのチャンクを短時間に大量 PUT するため、
-    // 一律に適用すると本番のデータ投入が壊れる（admin は OIDC / API キーで保護済み）。
+    // admin はレート制限から外す。scraper がチャンクを短時間に大量 PUT するため、適用すると投入が壊れる
     const isAdmin = pathname.startsWith("/v1/admin/");
-    // トークンの検証はレート制限より先に一度だけ行い、reservations 系の認可にも使い回す。
-    // admin は Auth0 ではなく OIDC / API キーで認可するので検証しない。
     const principal = isAdmin
       ? null
       : await verifyAccessToken(bearerToken(request), env, testJwks(env));
 
     if (env.RATE_LIMITER && !isAdmin) {
-      // 検証済みの利用者は sub で数え、それ以外は IP で数える。MCP サーバーのように
-      // 多数の利用者を少数の送信元 IP から中継する呼び出し元が、一つの枠を共有しないため。
-      // 検証に失敗したトークンは IP に落ちるので、偽のトークンで枠を増やすことはできない。
+      // IP だけで数えないのは、MCP サーバーのように多数の利用者を少数の IP から中継する呼び出し元が
+      // 一つの枠を共有しないため。検証に失敗したトークンは IP に落ちるので偽トークンで枠は増えない
       const key = principal?.sub
         ? `sub:${principal.sub}`
         : `ip:${request.headers.get("CF-Connecting-IP") ?? "unknown"}`;
@@ -316,7 +290,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
     }
 
     if (request.method === "GET") {
-      // version は Database ワークフローが「新しい api が出たか」を待つのに使う（手元デプロイでは null）
+      // version は Database ワークフローが新しい api の稼働を待つのに使う
       if (pathname === "/v1/health")
         return json({ ok: true, version: env.CF_VERSION_METADATA?.tag || null });
       if (pathname === "/v1/institutions")

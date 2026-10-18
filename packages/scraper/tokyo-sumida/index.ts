@@ -39,7 +39,6 @@ interface SumidaTarget {
 
 type SumidaTable = { division: string; header: string[]; rows: string[][] };
 
-/** ヘッダーの期間表示（例 "2026/3/10(火)～"）から ISO 日付列を組み立てる */
 function buildISODateStrings(headerStartDate: string, dates: string[]): string[] {
   const base = new Date(
     headerStartDate

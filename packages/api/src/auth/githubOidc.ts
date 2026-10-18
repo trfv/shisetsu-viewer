@@ -14,14 +14,8 @@ interface OidcEnv {
 }
 
 /**
- * GitHub Actions OIDC トークンを検証する。
- * ピンするクレーム: iss / aud / repository / ref が refs/heads/* であること。
- *  - ref を特定ブランチに固定しない: retry run・workflow_dispatch・ブランチでの検証実行も通したい
- *  - ただし refs/heads/ 前置は要求する（PR の merge ref = refs/pull/N/merge を弾く）
- *  - fork からの PR はそもそも id-token: write を得られない
- *  - sub は environment 利用で形式が変わるためピンしない
- *
- * getKey はテスト用に注入可能（ローカル JWKS）。
+ * ref を特定ブランチに固定しない（retry run・workflow_dispatch・ブランチでの検証実行を通す）。
+ * refs/heads/ 前置は要求して PR の merge ref を弾く。sub は environment 利用で形式が変わるのでピンしない。
  */
 export async function verifyGithubOidc(
   token: string,

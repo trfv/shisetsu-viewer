@@ -157,7 +157,7 @@ const InstitutionTab = ({
           />
         </div>
       </div>
-      <div className={styles["institutionRightArea"]}>{/** TODO */}</div>
+      <div className={styles["institutionRightArea"]} />
     </div>
   );
 };
@@ -177,7 +177,7 @@ const ReservationTab = ({
   }
 
   const isMobile = useIsMobile();
-  // 「今日」はモジュール読み込み時ではなくタブ表示時点で確定させる（長寿命タブでの日付ずれ防止）。
+  // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [today] = useState(() => new Date());
 
   const {

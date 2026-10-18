@@ -3,8 +3,7 @@ import { describe, it } from "node:test";
 
 import { getMunicipalityByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
 
-// 各スクレイパーが export する生テキスト → enum 値のマップ。
-// 値域が registry の表示ラベル定義と一致していることが viewer 表示の前提になる。
+// マップの値域が registry の表示ラベル定義と一致していることが viewer 表示の前提
 interface ScraperModule {
   scraper?: { municipality?: string };
   DIVISION_MAP?: Record<string, string>;

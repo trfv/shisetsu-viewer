@@ -85,8 +85,7 @@ runs:
           "https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLARED_VERSION}/cloudflared-linux-amd64"
         chmod +x "${RUNNER_TEMP}/cloudflared"
 
-        # preflight。正常時は 200。失敗はここで落として Playwright まで持ち越さない
-        # （持ち越すと ERR_CONNECTION_RESET になり、原因が経路か認証かサイトか判別できない）
+        # 失敗はここで落とす。Playwright まで持ち越すと ERR_CONNECTION_RESET になり、原因を判別できない
         CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
           -H "CF-Access-Client-Id: ${TUNNEL_SERVICE_TOKEN_ID}" \
           -H "CF-Access-Client-Secret: ${TUNNEL_SERVICE_TOKEN_SECRET}" \

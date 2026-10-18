@@ -9,7 +9,7 @@ type Props = {
   value: string;
   noLeftMargin?: boolean;
   size?: BoxSize;
-  /** 以下は CheckboxGroup ではセットしなくて良い */
+  /** CheckboxGroup 内では不要 */
   checked?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };

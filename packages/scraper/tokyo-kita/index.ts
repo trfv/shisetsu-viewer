@@ -144,7 +144,6 @@ export const scraper = defineScraper({
     baseUrl: "https://kita-yoyaku.openreaf02.jp/",
     divisionMap: DIVISION_MAP,
     statusMap: STATUS_MAP,
-    // サイト側で室場リンクに定員サフィックス（例「（定員90名）」）が付くため前方一致
     roomLinkMatch: "prefix",
   }),
 });

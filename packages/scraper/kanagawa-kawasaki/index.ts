@@ -125,10 +125,9 @@ export const scraper = defineScraper({
     const { facilityName, roomNames } = target;
     const output: KawasakiWeek[] = [];
 
-    // 検索結果の読み込みを待ってから部屋を数える
     await page.locator("#rsvaki3").waitFor();
 
-    // フェーズ 1: 全部屋を走査し、スクレイプ対象の部屋のインデックスを記録する
+    // 部屋は「次の施設」で順にしか辿れないため、先に対象の位置を数えてから辿り直す
     const targetIndices: number[] = [];
     let roomCount = 1;
 
@@ -158,7 +157,6 @@ export const scraper = defineScraper({
     await page.getByRole("button", { name: "もどる" }).nth(0).click();
     await page.getByRole("button", { name: "検索開始" }).click();
 
-    // フェーズ 2: 対象の部屋のみスクレイプする
     for (const roomIndex of targetIndices) {
       for (let j = 0; j < roomIndex; j++) {
         await page.getByRole("button", { name: "次の施設" }).click();

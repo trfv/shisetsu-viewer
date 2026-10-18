@@ -1,4 +1,3 @@
-// stdio エントリ（index.ts）用の環境変数。D1 API へ X-Admin-Key で書き込むための最小構成。
 const apiEndpoint = process.env["API_ENDPOINT"];
 const adminApiKey = process.env["ADMIN_API_KEY"];
 

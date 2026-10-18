@@ -11,9 +11,8 @@ export default defineConfig({
         wrangler: { configPath: "./wrangler.jsonc" },
         miniflare: {
           bindings: {
-            // setup.ts が applyD1Migrations で適用するマイグレーション
             TEST_MIGRATIONS: migrations,
-            // wrangler.jsonc の "" を上書き（JWT audience 検証に非空の値が要る）
+            // JWT audience 検証に非空の値が要る
             AUTH0_AUDIENCE: "https://api.test/",
           },
         },

@@ -1,8 +1,3 @@
-// Shared type definitions using `as const` objects.
-// These replace TypeScript enums with zero-cost const objects that provide
-// the same runtime behavior (e.g. ReservationStatus.VACANT) while also
-// yielding string literal union types automatically.
-
 export const ReservationStatus = {
   INVALID: "RESERVATION_STATUS_INVALID",
   VACANT: "RESERVATION_STATUS_VACANT",
@@ -156,15 +151,10 @@ export type Institution = {
   layout_image_url: string;
   lottery_period: string;
   note: string;
-  /**
-   * 施設単位の区分ラベル（ReservationDivision → 表示名）。キーに無い区分は registry の
-   * reservationDivision に落ちる。同じ自治体の別予約システムが同じ enum 値に別の時刻を
-   * 要求するときに使う（例: 北区ココキタの午前 9:00-11:45）
-   */
+  /** キーに無い区分は registry の reservationDivision に落ちる。同じ自治体の別予約システムが同じ enum 値に別の時刻を持つとき用 */
   division_labels?: Partial<Record<string, string>>;
 };
 
-// Scraper-compatible type aliases
 export type Division = ReservationDivision;
 export type Status = ReservationStatus;
 

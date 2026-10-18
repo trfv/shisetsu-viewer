@@ -1,9 +1,3 @@
-/**
- * 相手の workflow が止まっていないかを見る。
- *
- * 使い方: node packages/factory/src/cli/watchdog.ts --workflow <file> [--event <event>] --key <key> [--max-age-hours 26]
- * 環境変数: FACTORY_MODE、FACTORY_OWNER、GH_TOKEN、GH_REPO
- */
 import { parseArgs } from "node:util";
 
 import { applyOps, ensureLabels } from "../applyOps.ts";

@@ -19,8 +19,7 @@ export default defineConfig({
     },
     setupFiles: ["./test/browser-setup.ts"],
     css: true,
-    // worker/** は BFF のテスト。vitest-pool-workers で別 config から走らせるため
-    // browser mode の対象から外す。
+    // worker/** は vitest-pool-workers で別 config から走らせる。
     exclude: ["node_modules", "e2e/**", "playwright-*/**", "worker/**"],
     silent: true,
     coverage: {

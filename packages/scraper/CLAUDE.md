@@ -1,62 +1,22 @@
 # Scraper Package
 
-Playwright-based scrapers for municipal reservation systems; results are uploaded to the `packages/api` D1 backend (REST). Node が TS を直接実行する（`erasableSyntaxOnly` + `allowImportingTsExtensions`、ビルドなし）。
+Node が TS を直接実行する（ビルドなし）。1 予約システム = 1 ディレクトリで、`defineScraper()` の `scraper` を export する。新規は `/new-scraper`、修理は `/repair-scraper`。
 
-## ScraperDefinition Pattern
+## 守ること
 
-1 予約システム = 1 ディレクトリ。`defineScraper()`（`common/defineScraper.ts`）で単一の `scraper` オブジェクトを export する。
+- 各自治体の `index.test.ts` は共通の固定ボイラープレート。自治体固有ロジックを書かない。
+- 取得期間は `horizon` で宣言し、日付計算を自前で書かない。`transform` で `as` キャストしない（未マッピング値は `*_INVALID` + 警告）。
+- `engines/` の修正は同エンジンの全自治体に波及する。修正後は各自治体 1 施設ずつ検証する。tokyo-bunkyo / sumida / edogawa は同系 SPA だが抽出戦略が違うので、エンジンにまとめない。
 
-既定は `<prefecture>-<slug>/` で自治体と 1:1。同一自治体に 2 つ目の予約システムがある場合は `<prefecture>-<slug>-<name>/` を作り、shared `registry.ts` の `additionalScrapers` に `<name>` を書く（例: `tokyo-kita-genkiplaza`）。DB 上の municipality は親自治体のままなので、viewer には同じ区の施設として並ぶ。共通コードは `getScraperTargets()` / `getMunicipalityByScraperTarget()` で両者を解決する。
+## 罠
 
-- **前提**: 同一自治体の複数システムは registry のラベル定義（`reservationDivision` / `reservationStatus`）を共有する。語彙の追加（`STATUS_n` を足す）は可能だが、**同じ enum 値に別ラベルが必要な場合は registry だけでは表せない**（下記 `division_labels` を使う）。
-- **罠**: そのとき「空いている `DIVISION_n` に逃がす」のは誤り。`is_morning_vacant` 等の D1 STORED 生成列が `RESERVATION_DIVISION_MORNING` を名指ししているため、表示は直っても「午前空き」検索から静かに漏れる。代わりに施設 JSON の `division_labels`（`{ "RESERVATION_DIVISION_MORNING": "9:00-11:45" }` 形式。viewer は施設ラベル → registry の順で引く）でその施設だけ表示名を上書きする（例: tokyo-kita-cocokita のスタジオ1・3・4）。背景は `docs/superpowers/specs/2026-07-29-kita-genkiplaza-scraper-design.md` の「ラベルが衝突する場合」。
-
-- `municipality` はディレクトリ名と一致させる。`targets` の 1 要素 = 1 Playwright テスト。
-- 取得期間は `horizon: { startOffsetDays, monthsAhead, unit }`（`common/horizon.ts`）で宣言する。日付計算を自前で書かない。
-- hooks: `prepare`（空き状況テーブルまで遷移）→ `extract`（`collectPaginated()` でページ送り収集）→ `transform`（`RawSlot[]` に平坦化し `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` で仕上げる。`as` キャスト禁止、未マッピング値は `*_INVALID` フォールバック + 警告）。
-- `DIVISION_MAP` / `STATUS_MAP` は `export` 必須（`common/registryContract.test.ts` が shared registry との整合を検証する）。
-- `index.test.ts` は全自治体共通の固定ボイラープレート（`runScrapeTarget` / `scrapeTestTitle` を回すだけ）。自治体固有ロジックを書いてはならない。
-- `runScrapeTarget()` が prepare → extract → transform → validate → persist を駆動し、失敗時は分類付き失敗レコード（DOM/screenshot）を記録、成功時に除去する。
-
-## Vendor Engines (`engines/`)
-
-同一予約システム製品はエンジンを共有し、自治体側 `index.ts` は設定（URL・マップ・targets）のみ:
-
-- `engines/openreaf.ts` — OpenReaf（`*.openreaf02.jp`）: tokyo-kita, tokyo-chuo
-- `engines/webrGrand.ts` — WebR Grand: tokyo-meguro, tokyo-toshima
-- `engines/genkiplaza.ts` — 元気ぷらざ独自 CGI: tokyo-kita-genkiplaza（`user.cgi` に `mm`/`span` を POST すると span ヶ月ぶんの月別テーブルが 1 ページで返る。ページ送り無し。純粋関数は `engines/*.test.ts` でユニットテスト）
-- `engines/pKashikan.ts` — 貸館予約システム（`k5.p-kashikan.jp`）: tokyo-kita-cocokita（室場ごとの 40 日表を `setNaviDate()` で送る。セルに時刻が無く ○ セルの onmousedown にだけ入るため、区分は target の `komas`（コマ表）の位置で決め、○ の時刻と食い違えば投げる）
-- `engines/eprs.ts` — e-PRS（`www.cm9.eprs.jp/<自治体>/web/`）: tokyo-shinagawa（検索 1 回でセッションを初期化し、週の JSON（`rsvWOpeInstSrchVacantAjaxAction.do`、Windows-31J）を館・施設コードと開始日で直接取る。検索結果は空きのある部屋に絞られるが JSON は絞られない。受付期間が部屋ごとに 1〜13 ヶ月と違うため、全セル「受付期間外」の週で打ち切る）
-
-エンジン修正は同エンジンの全自治体に波及するため、修正後は各自治体 1 施設ずつ検証すること。tokyo-bunkyo / sumida / edogawa は同系 `/user/Home` SPA だが抽出戦略が異なるため standalone。
-
-## Target Discovery
-
-`npm run discover -w @shisetsu-viewer/scraper -- <municipality>`（既存自治体は現行 targets との差分も表示。未作成地区は `--engine openreaf --url <baseUrl> --name <name>`）。出力は `data/targets/<name>.candidates.json`。各候補に `musicLikely` フラグと、そのまま targets に貼れる `target` フィールドが付く。
-
-## Data Contracts
-
-- テスト出力: `test-results/<municipality>/<fileName>.json`（FileData 形状 — 境界契約）: `{ facility_name, data: [{ room_name, date: "YYYY-MM-DD", reservation }] }`
-- **突合キー**: `facility_name` ↔ `institutions.building_system_name`、`room_name` ↔ `institutions.institution_system_name`。institution 解決キーは `` `${facility_name}-${room_name}` ``。
-- 出力は `validateTransformOutput()` で検証。失敗は `test-results/<municipality>/_failures/` に transient/structural 分類付きで記録される（/repair-scraper ワークフロー用）。
-- Institution metadata の source of truth はローカル JSON `data/institutions/<prefecture>-<slug>.json`（DB-ready enum 値の `Institution` フラット配列）。upsert は `tools/updateInstitutions.ts`、逆輸出は `tools/exportInstitutions.ts`。
-- バックエンドとの通信は `tools/backend/d1Api.ts` にのみ存在（`packages/api` の REST）。`tools/updateReservations.ts` は薄いオーケストレーション（`buildReservationRows()` 純関数 → `upsertReservations()`）。
-- 施設キーマップは `GET /v1/institutions?municipality=X&detail=true` から引く。この口だけエッジキャッシュに載らない（施設 upsert 直後に古い id 対応表を掴まないため）。
-- **`export:institutions` の並び順は D1 の BINARY 照合**（`ORDER BY municipality, building_kana, institution_kana, id`）。Hasura 時代の Postgres 日本語照合とは前後が入れ替わる箇所がある（例: ツキジ／ツキシマ）。中身は同じなので、差分が並び替えだけなら取り込まなくてよい。
-- **解決キーが空の施設がある**（例: tokyo-kita は 27 件中 13 件が `system_name` 空）。これらは予約を 1 行も持たない施設マスタで、キーマップ上は `"-"` に潰れるが実害はない。
-
-## Playwright Config (`playwright.config.ts`)
-
-- testMatch は `**/index.test.ts`。非 index の `*.test.ts` は `node --test` 用ユニットテスト（`npm run test:unit`）で、Playwright には拾われない。
-- **罠**: 位置引数（`npx playwright test <target>`）はファイルパスへの正規表現。`tokyo-kita` は `tokyo-kita-genkiplaza/` にも一致するため、CI（`.github/actions/scrape`）とシャード計算（`scripts/shardMatrix.ts`）は末尾 `/` を付けて渡す。
-- `WORKERS` / `SLOW_MO` env で並列数・速度を上書きできる。
-- CI 除外は registry 駆動: shared `registry.ts` の `scraperCiExcluded` から `testIgnore` を構築（`SCRAPER_FORCE_INCLUDE` で個別上書き）。
-- 国内 proxy: registry の `scraperViaJpProxy` の自治体は、CI で Cloudflare Tunnel + Mac の tinyproxy 経由（`SCRAPER_PROXY=http://127.0.0.1:8888` 固定）。セットアップと故障の切り分けは `tools/jp-proxy/README.md`。
-
-## Adding a New Municipality
-
-`/new-scraper` コマンドを使う。要点: 既知エンジン製品なら hooks を spread して設定のみ書く。それ以外は `prepare` / `extract` / `transform` を自作。shared `registry.ts` にエントリ追加後、`npm run test:unit -w @shisetsu-viewer/scraper` の registry drift 検査が他の追記漏れ（workflow choices・README・institutions JSON）を指摘する。
+- 同じ enum 値に自治体内で別ラベルが要るとき、空いている `DIVISION_n` に逃がさない。D1 の生成列（`is_morning_vacant` など）が `RESERVATION_DIVISION_MORNING` を名指ししているため、「午前空き」検索から静かに漏れる。施設 JSON の `division_labels` でその施設だけ表示名を上書きする（例: tokyo-kita-cocokita）。
+- `npx playwright test <target>` の位置引数はパスの正規表現。`tokyo-kita` は `tokyo-kita-genkiplaza/` にも一致するので末尾に `/` を付ける。
+- `export:institutions` の並びは D1 の BINARY 照合で、Postgres 時代と前後が入れ替わる箇所がある。差分が並び替えだけなら取り込まなくてよい。
+- 解決キー（`facility_name-room_name`）が空の施設がある（予約を持たない施設マスタ）。キーマップ上は `"-"` に潰れるが実害はない。
+- 施設キーマップを引く `GET /v1/institutions?...&detail=true` はエッジキャッシュに載せない（upsert 直後に古い id 対応表を掴まないため）。
+- 国内 proxy 経由の自治体（registry の `scraperViaJpProxy`）の故障の切り分けは `tools/jp-proxy/README.md`。
 
 ## Environment
 
-`.env.sample` → `.env`（`D1_API_ENDPOINT`, `ADMIN_API_KEY`）。CI では `D1_API_ENDPOINT` を repository variable で渡し、認証は GitHub OIDC（job に `permissions: id-token: write` があれば `ACTIONS_ID_TOKEN_REQUEST_*` が自動注入され、`ADMIN_API_KEY` は不要）。
+`.env`（`D1_API_ENDPOINT`, `ADMIN_API_KEY`）。CI は GitHub OIDC で認証し、job に `permissions: id-token: write` があれば `ADMIN_API_KEY` は要らない。

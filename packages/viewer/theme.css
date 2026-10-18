@@ -1,9 +1,4 @@
-/* ─── CSS Custom Properties Theme ──────────────────────────────────────────── */
-/* Design tokens for Shisetsu Viewer (Material-inspired)                      */
-/* Uses [data-theme] attribute on <html> for light/dark switching             */
-
 :root {
-  /* ─── Color Tokens ─────────────────────────────────────── */
   --color-header-bg: #2a3544;
 
   --color-teal-main: #17706a;
@@ -30,25 +25,21 @@
   --color-white: #ffffff;
   --color-black: #000000;
 
-  /* ─── Typography ───────────────────────────────────────── */
   --font-family: "Noto Sans JP Variable", "Hiragino Sans", Meiryo, sans-serif;
   --font-size-base: 13px;
   --font-size-small: 0.75rem;
   --font-size-medium: 0.9375rem;
   --font-size-large: 1.125rem;
 
-  /* ─── Shape ────────────────────────────────────────────── */
   --border-radius: 8px;
   --border-radius-sm: 4px;
   --border-radius-button: 6px;
   --border-radius-chip: 6px;
   --shape-border-radius: 8px;
 
-  /* ─── Transitions ────────────────────────────────────── */
   --transition-short: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-standard: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* ─── Spacing (8px grid) ───────────────────────────────── */
   --spacing-0_5: 4px;
   --spacing-1: 8px;
   --spacing-1_5: 12px;
@@ -56,22 +47,18 @@
   --spacing-3: 24px;
   --spacing-5: 40px;
 
-  /* ─── Layout ───────────────────────────────────────────── */
   --container-width: 1280px;
   --header-height: 72px;
   --width-small: 128px;
   --width-medium: 256px;
   --width-large: 512px;
 
-  /* ─── Breakpoints ──────────────────────────────────────── */
-  /* xs: 0, sm: 680px, md: 960px, lg: 1280px, xl: 1920px    */
   --bp-sm: 680px;
   --bp-md: 960px;
   --bp-lg: 1280px;
   --bp-xl: 1920px;
 }
 
-/* ─── Light Theme (default) ──────────────────────────────────────────────── */
 :root,
 [data-theme="light"] {
   --color-primary: var(--color-teal-main);
@@ -100,7 +87,6 @@
   --color-skeleton-base: var(--color-slate-200);
   --color-skeleton-shine: var(--color-slate-50);
 
-  /* ─── Semantic aliases (for component compatibility) ── */
   --color-text-primary: var(--color-text);
   --color-text-disabled: rgba(26, 35, 50, 0.38);
   --color-bg-default: var(--color-bg);
@@ -111,7 +97,6 @@
   color-scheme: light;
 }
 
-/* ─── Dark Theme ─────────────────────────────────────────────────────────── */
 [data-theme="dark"] {
   --color-primary: var(--color-teal-bright-main);
   --color-primary-light: var(--color-teal-bright-light);
@@ -137,7 +122,6 @@
   --color-skeleton-base: var(--color-slate-400);
   --color-skeleton-shine: var(--color-slate-500);
 
-  /* ─── Semantic aliases (dark) ─────────────────────────── */
   --color-text-primary: var(--color-text);
   --color-text-disabled: rgba(232, 236, 240, 0.38);
   --color-bg-default: var(--color-bg);
@@ -148,7 +132,6 @@
   color-scheme: dark;
 }
 
-/* ─── CSS Reset ───────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -185,7 +168,6 @@ h6 {
   margin: 0;
 }
 
-/* Adjacent headings: add breathing room between sections */
 * + h1,
 * + h2 {
   margin-top: 1em;
@@ -222,7 +204,6 @@ button {
   text-transform: none;
 }
 
-/* ─── Responsive font sizes ───────────── */
 h1 {
   font-size: clamp(1.375rem, 1.5vw + 0.75rem, 2rem);
 }

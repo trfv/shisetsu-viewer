@@ -7,7 +7,7 @@ import { ciFromRollup } from "./dependabot.ts";
 import type { DependabotPr, MasterCi, RunSummary, WorkItem } from "./types.ts";
 import { parseKey, parseState } from "./workItem.ts";
 
-/** gh CLI を呼ぶ。{owner}/{repo} のプレースホルダは GH_REPO かカレントリポジトリで解決される。 */
+// {owner}/{repo} は gh が GH_REPO かカレントリポジトリで解決する
 export function gh(args: readonly string[], input?: string): string {
   return execFileSync("gh", args, {
     encoding: "utf8",
@@ -20,7 +20,6 @@ export function ghJson<T>(args: readonly string[]): T {
   return JSON.parse(gh(args)) as T;
 }
 
-/** 定期実行の Run Scraper を新しい順に返す。 */
 export function listScheduledScraperRuns(
   limit: number
 ): { databaseId: number; url: string; createdAt: string }[] {
@@ -42,7 +41,6 @@ export function listScheduledScraperRuns(
   ]);
 }
 
-/** artifact run-summary を読む。run-summary 導入前の run や cancel された run では null。 */
 export function downloadRunSummary(runId: number): RunSummary | null {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "run-summary-"));
   try {
@@ -75,7 +73,6 @@ export function latestMasterCi(): MasterCi | null {
   return runs[0] ?? null;
 }
 
-/** ラベル factory の開いた Issue のうち、key マーカーを持つものを返す（PR は含まない）。 */
 export function listFactoryItems(): WorkItem[] {
   const issues = ghJson<{ number: number; body: string; labels: { name: string }[] }[]>([
     "issue",
@@ -128,7 +125,6 @@ export function listDependabotPrs(): DependabotPr[] {
   }));
 }
 
-/** master 上の最新 run の作成時刻。event を指定すればその種類に絞る。 */
 export function latestRunCreatedAt(workflow: string, event: string | null): string | null {
   const runs = ghJson<{ createdAt: string }[]>([
     "run",

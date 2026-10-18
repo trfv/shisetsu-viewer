@@ -1,8 +1,6 @@
 import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
-/** 複数のクエリで共通する入力スキーマの部品。MCP ツールと CLI の両方がこれで検証する。 */
-
 export const MUNICIPALITY_HELP = Object.values(MUNICIPALITIES)
   .map((config) => `${config.key} (${config.label})`)
   .join(", ");
@@ -10,9 +8,7 @@ export const MUNICIPALITY_HELP = Object.values(MUNICIPALITIES)
 export const INSTITUTION_SIZE_HELP =
   "INSTITUTION_SIZE_LARGE (100人以上), INSTITUTION_SIZE_MEDIUM (50〜99人), INSTITUTION_SIZE_SMALL (50人未満)";
 
-// 施設 ID には RFC 4122 非準拠の UUID が含まれる (version/variant ビットが不正な ID が
-// toshima/edogawa/bunkyo/kita に計 17 件)。z.string().uuid() は RFC 厳格検証でこれらを
-// 弾くため、viewer の isValidUuid と同じ 8-4-4-4-12 の hex 形式のみを検証する。
+// z.string().uuid() は使わない。施設 ID に RFC 4122 非準拠の UUID が含まれ、厳格検証で弾かれる。
 export const institutionIdSchema = z
   .string()
   .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/);
@@ -33,10 +29,7 @@ export const institutionSizesSchema = z
 const flag = (description: string) =>
   z.union([z.boolean(), z.stringbool()]).optional().describe(description);
 
-/**
- * 楽器の利用可否フィルタ。API は「利用可のみ」の true フィルタだけを解釈するので、
- * false は指定なしと同じになる。
- */
+// API は true のフィルタだけを解釈するので、false は指定なしと同じになる。
 export const instrumentFilterSchemas = {
   isAvailableStrings: flag("true で弦楽器が使える施設のみ"),
   isAvailableWoodwind: flag("true で木管楽器が使える施設のみ"),
@@ -44,7 +37,6 @@ export const instrumentFilterSchemas = {
   isAvailablePercussion: flag("true で打楽器が使える施設のみ"),
 };
 
-/** true のときだけフィルタとして送り、false と未指定はフィルタなしに畳む */
 export const onlyTrue = (value: boolean | undefined): true | undefined =>
   value === true ? true : undefined;
 
@@ -61,7 +53,7 @@ export const afterSchema = z
   .optional()
   .describe("ページネーション用カーソル (前回レスポンスの endCursor)");
 
-/** fields で絞った 1 行。どのキーが残るかは fields 次第なので、値の型までは縛らない */
+// どのキーが残るかは fields 次第なので、値の型までは縛らない
 export const rowSchema = z.record(z.string(), z.unknown());
 
 export const pageInfoSchema = z.object({
@@ -69,7 +61,6 @@ export const pageInfoSchema = z.object({
   endCursor: z.string().nullable(),
 });
 
-/** 返却フィールドの選択。省略時は全フィールド。 */
 export const fieldsSchema = <const T extends readonly [string, ...string[]]>(
   fields: T,
   label = "返却フィールドを指定しトークンを節約 (省略時は全フィールド)"

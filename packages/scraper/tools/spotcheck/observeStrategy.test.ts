@@ -42,7 +42,6 @@ const OBSERVER_SOURCES = [
 test("観測側のソースはスクレイパーの解釈（STATUS_MAP / extract / transform）を参照しない", async () => {
   for (const file of OBSERVER_SOURCES) {
     const source = await readFile(file, "utf8");
-    // コメントを除いた行だけを検査する（意図の説明で語を使うのは許す）
     const code = source
       .split("\n")
       .filter((line) => !line.trimStart().startsWith("//") && !line.trimStart().startsWith("*"))

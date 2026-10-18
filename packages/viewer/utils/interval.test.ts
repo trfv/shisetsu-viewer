@@ -38,10 +38,8 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     requestInterval(callback, 1000);
 
-    // Simulate time at 500ms (before delay)
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(500);
 
-    // Execute the first rAF callback
     const firstCb = rafCallbacks.get(1);
     expect(firstCb).toBeDefined();
     firstCb!(500);
@@ -53,10 +51,8 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     requestInterval(callback, 1000);
 
-    // Simulate time at 1000ms (equal to delay)
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(1000);
 
-    // Execute the first rAF callback
     const firstCb = rafCallbacks.get(1);
     expect(firstCb).toBeDefined();
     firstCb!(1000);
@@ -68,7 +64,6 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     requestInterval(callback, 1000);
 
-    // Simulate time at 1500ms (after delay)
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(1500);
 
     const firstCb = rafCallbacks.get(1);
@@ -82,15 +77,12 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     requestInterval(callback, 1000);
 
-    // Initial rAF call
     expect(rafSpy).toHaveBeenCalledTimes(1);
 
-    // Simulate time not reached yet
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(500);
     const firstCb = rafCallbacks.get(1);
     firstCb!(500);
 
-    // Should schedule another rAF
     expect(rafSpy).toHaveBeenCalledTimes(2);
   });
 
@@ -109,10 +101,8 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     const cancel = requestInterval(callback, 1000);
 
-    // Cancel before the callback fires
     cancel();
 
-    // The cancelAnimationFrame should have been called with the frame id
     expect(cafSpy).toHaveBeenCalledWith(1);
   });
 
@@ -120,12 +110,10 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     const cancel = requestInterval(callback, 1000);
 
-    // Simulate one loop iteration (time not reached)
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(500);
     const firstCb = rafCallbacks.get(1);
     firstCb!(500);
 
-    // Now cancel - should cancel the latest rAF id (2, not 1)
     cancel();
     expect(cafSpy).toHaveBeenCalledWith(2);
   });
@@ -134,14 +122,11 @@ describe("requestInterval", () => {
     const callback = vi.fn();
     requestInterval(callback, 100);
 
-    // First interval: time reaches 100
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(100);
     const firstCb = rafCallbacks.get(1);
     firstCb!(100);
     expect(callback).toHaveBeenCalledTimes(1);
 
-    // After callback fires, start is reset to 100
-    // Second interval: time reaches 200
     vi.spyOn(Date.prototype, "getTime").mockReturnValue(200);
     const secondCb = rafCallbacks.get(2);
     secondCb!(200);

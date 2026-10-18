@@ -1,5 +1,4 @@
-// "municipality" は scraper.yml の municipality 入力と同じく、スクレイパーのディレクトリ名を指す
-// （例 tokyo-kita-cocokita）。1 つの区に複数のスクレイパーがありうる。
+// "municipality" は自治体キーではなくスクレイパーのディレクトリ名（例 tokyo-kita-cocokita）
 export type MunicipalityStatus = "ok" | "transient" | "structural" | "unknown" | "infra";
 
 export interface MunicipalitySummary {

@@ -7,7 +7,6 @@ export function isStale(lastRunAt: string | null, now: Date, maxAgeHours: number
   return now.getTime() - Date.parse(lastRunAt) > maxAgeHours * 60 * 60 * 1000;
 }
 
-/** 相手の workflow の最終実行が古ければ needs-human の項目を立て、動いていれば閉じる。 */
 export function watchdogOps(input: {
   key: string;
   workflow: string;

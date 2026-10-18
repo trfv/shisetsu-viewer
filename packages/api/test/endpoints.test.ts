@@ -60,7 +60,6 @@ describe("public endpoints", () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { items: Record<string, string>[] };
     expect(body.items).toHaveLength(1);
-    // scraper の施設キーマップ（<building_system_name>-<institution_system_name> → id）が組めること
     expect(body.items[0]?.["building_system_name"]).toBe("hi-rfc");
     expect(body.items[0]?.["institution_system_name"]).toBe("renshuushitsu");
     expect(body.items[0]?.["address"]).toBeDefined();
@@ -177,8 +176,6 @@ describe("reservations 認可", () => {
   });
 
   it("認証必須の 200 は private, no-store を返す", async () => {
-    // Cache-Control 無しの 200 はエッジ側の heuristic freshness で既定 2 時間
-    // キャッシュされうる。ユーザー単位の応答なので明示的に落とす。
     const auth = { Authorization: `Bearer ${await userToken()}` };
     const search = await SELF.fetch(
       `${BASE}/v1/reservations/search?startDate=2026-08-01&endDate=2026-08-04`,

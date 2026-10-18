@@ -27,18 +27,19 @@ export const STATUS_MAP: Record<string, Status> = {
   minus: "RESERVATION_STATUS_STATUS_4",
   施設保守: "RESERVATION_STATUS_STATUS_5",
   休館日: "RESERVATION_STATUS_STATUS_6",
-  休館: "RESERVATION_STATUS_STATUS_6", // 本当は休館も取りたいが、disabledのセルになっているため取得が面倒です。
+  // 休館のセルは disabled で選択できないため、実際には取れない
+  休館: "RESERVATION_STATUS_STATUS_6",
   工事: "RESERVATION_STATUS_STATUS_7",
 };
 
 const FACILITY_NAMES = [
-  // "男女平等センター", // 改修工事休館中（〜令和8年6月）
+  // 男女平等センターは改修工事休館中（〜令和8年6月）のため除外
   "大原地域活動センター",
   "駒込地域活動センター",
   "不忍通りふれあい館",
   "福祉センター江戸川橋",
   "勤労福祉会館",
-  // "シビックホール大ホール", // 有効なデータが取得できないためテストから除外
+  // シビックホール大ホールは有効なデータが取れないため除外
   "シビックホール小ホール",
   "シビックホールその他施設",
   "アカデミー文京",
@@ -79,14 +80,13 @@ async function extractTimeSlots(page: Page): Promise<BunkyoSlot[]> {
 
       const slotLis = nextLi.querySelectorAll('li[class*="btn-group-toggle"]');
 
-      // First pass: detect division type from normal slots
+      // 区分名の span が無いスロットは、コマ数から区分を推定する
       const divisionCount = slotLis.length;
       const orderedDivisions =
         divisionCount === 5
           ? ["１コマ", "２コマ", "３コマ", "４コマ", "５コマ"]
           : ["午前", "午後", "夜間"];
 
-      // Second pass: extract data, inferring division from index if needed
       for (let i = 0; i < slotLis.length; i++) {
         const slotLi = slotLis[i]!;
         const spans = slotLi.querySelectorAll("span");
@@ -128,7 +128,6 @@ async function toggleCells(page: Page, startIndex: number, count: number): Promi
   return toggled;
 }
 
-/** 1期間（週表示）分: セルをバッチ選択 → 時間帯別ページで抽出 → 戻る、を繰り返す */
 async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]> {
   const output: BunkyoSlot[] = [];
 
@@ -139,7 +138,6 @@ async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]>
 
   const totalCells = await page.locator("tbody td label:not(.disabled)").count();
   if (totalCells === 0) {
-    // 選択可能なセルが無い期間はスキップして次へ
     return output;
   }
 
@@ -147,9 +145,7 @@ async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]>
     const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
     if (batchSize === 0) break;
 
-    // バッチ単位の navigation 失敗が週ループ全体を巻き込まないよう、try で囲んで
-    // バッチ間で復帰できるようにする。コンテンツ指標（heading）を待つ方が URL
-    // パターンマッチより堅牢なため、waitForURL は使わない。
+    // waitForURL より heading を待つ方が堅牢
     try {
       await page.locator("button").filter({ hasText: "次へ進む" }).click();
       await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 30000 });
@@ -167,7 +163,7 @@ async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]>
         `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
         batchErr
       );
-      // SelectTime に居る可能性があるので、SelectDays に戻ることを試みる。
+      // SelectTime に残っている可能性がある
       try {
         await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
         await page.locator("tbody tr td label").first().waitFor({
@@ -175,12 +171,11 @@ async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]>
           timeout: 15000,
         });
       } catch {
-        // 復帰失敗 → この週の残りはあきらめて次の期間へ進む。
         throw batchErr;
       }
     }
 
-    // 次のバッチに備えて現在のバッチのチェックを外す（最終バッチはスキップ）
+    // 同時に選べるのは MAX_SELECTIONS 件までなので、次のバッチの前に外す
     if (offset + MAX_SELECTIONS < totalCells) {
       await toggleCells(page, offset, batchSize);
     }
@@ -246,7 +241,6 @@ export const scraper = defineScraper({
       maxPages: pageCount,
       label: target.facilityName,
       extractPage: async (weekIndex) => {
-        // 週単位の失敗はこの週をあきらめて次の期間に進む（打ち切らない）
         try {
           return await extractWeek(page, weekIndex);
         } catch (e) {

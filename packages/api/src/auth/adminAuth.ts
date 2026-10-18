@@ -12,10 +12,7 @@ async function sha256(value: string): Promise<ArrayBuffer> {
   return crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
 }
 
-/**
- * admin エンドポイントの認可。X-Admin-Key（ローカル/シード用）か GitHub OIDC Bearer（CI）。
- * X-Admin-Key は SHA-256 を取って長さを揃えてから定数時間比較する（長さ差の漏洩も防ぐ）。
- */
+// X-Admin-Key は SHA-256 で長さを揃えてから定数時間比較する（長さ差も漏らさない）
 export async function authorizeAdmin(
   request: Request,
   env: AdminEnv,

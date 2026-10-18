@@ -1,6 +1,4 @@
-// spot check の判定半分。AI を含まない純関数（parityReport.ts と同じ役割分担）。
-// 観測側（記号 + 凡例）と期待側（D1 enum + registry ラベル）を独立にカテゴリ化して比べる。
-// scraper の STATUS_MAP は import しない（同じ誤りを再現して MATCH を出さないため）。
+// scraper の STATUS_MAP は import しない。同じ誤りを再現して MATCH を出してしまう。
 import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
 
 import { bandFromDivisionEnum, bandFromHour, parseStartHour, type Band } from "./divisionBand.ts";
@@ -13,7 +11,7 @@ export interface PlanSample {
   date: string;
   buildingSystemName: string;
   institutionSystemName: string;
-  /** その自治体の reservationDivision の表示ラベル一覧。エージェントが観測区分を正規化する手掛かり（期待値ではない）。 */
+  /** エージェントが観測区分を正規化する手掛かり。期待値ではない。 */
   divisionLabels: string[];
 }
 
@@ -50,17 +48,11 @@ export interface SampleJudgement {
   detail: string;
 }
 
-/** exit code と報告の強調に使う。「人間の調査が要る判定」だけ true。 */
 export function needsInvestigation(verdict: Verdict): boolean {
   return verdict !== "MATCH" && verdict !== "SITE_NO_DATA" && verdict !== "OUT_OF_WINDOW";
 }
 
-/**
- * 区分ラベル突合の表記ゆれを吸収する（全角数字→半角、範囲記号の統一、空白の除去）。
- * registry 側のラベルと観測側のラベルの両方に同じ関数を適用する。
- * 内部空白も落とすのは observeCore.ts の normalizeLabel と揃えるため
- * （「09:00 - 12:00」と「09:00-12:00」を同一視する）。
- */
+// 内部空白も落とす。observeCore.ts の normalizeLabel と揃えないと「09:00 - 12:00」と「09:00-12:00」が別物になる。
 function normalizeDivisionLabel(label: string): string {
   const halfWidthDigits = label.replace(/[０-９]/g, (d) =>
     String.fromCharCode(d.charCodeAt(0) - 0xfee0)
@@ -74,20 +66,7 @@ function pushCategory(bands: Map<Band, SlotCategory[]>, band: Band, category: Sl
   else bands.set(band, [category]);
 }
 
-/**
- * band モードの突合。サイトの区分と D1 の区分をそれぞれ時間帯バンドに畳み、
- * バンドごとのカテゴリのマルチセット（ソート済み配列）を比べる。
- *
- * 畳む根拠は「サイトが表示する開始時刻」と「registry 由来の enum 識別子」だけで、
- * scraper の DIVISION_MAP は見ない。見ると変換テーブルの誤りを判定器が再現し、
- * silent failure 検出器としての独立性が失われるため。
- *
- * 午後1 と午後2 のような同一バンド内の細分は集約されるため、バンド内のスワップは
- * 検出できない（承認済みの割り切り）。バンドを跨ぐ取り違えと欠落は検出できる。
- *
- * 想定外（バンドに畳めない・カテゴリ化できない）は握り潰さず `unmapped` として返し、
- * 呼び出し側で UNMAPPED にする。`mismatches` が空配列なら全バンド一致。
- */
+// 午後1 と午後2 のような同一バンド内の細分は集約されるので、バンド内のスワップは検出できない（承認済みの割り切り）。
 function compareByBand(
   cells: readonly { divisionLabel: string; symbol: string }[],
   legend: Readonly<Record<string, string>> | undefined,
@@ -107,8 +86,7 @@ function compareByBand(
   for (const [division, enumValue] of Object.entries(reservation)) {
     const band = bandFromDivisionEnum(division);
     if (band === null) return { unmapped: `区分 enum を時間帯に畳めない: ${division}` };
-    // 期待側も categorizeSymbol を使う（凡例は渡さない。凡例はサイト側の情報であって
-    // registry のラベル解釈に使うものではない）。
+    // 凡例はサイト側の情報なので期待側には渡さない。
     const category = categorizeSymbol(statusLabels[enumValue] ?? "");
     if (category === "UNKNOWN") {
       return { unmapped: `enum の表示ラベルをカテゴリ化できない: ${enumValue}` };
@@ -171,12 +149,7 @@ export function judgeSample(
     ])
   );
 
-  // モード判別: observed の全セルが registry ラベルに一致すれば従来の 1:1 照合（exact）。
-  // 一致しないが全セルが時刻レンジとして読めるなら band 照合。どちらでもなければ
-  // exact 経路に流して UNMAPPED を出させる（真に未知のラベル＝実際の異常）。
-  //
-  // exact を先に見るのは、北区のように registry ラベル自体が時刻レンジの自治体を
-  // band に落として区分粒度を失わないため。
+  // exact を先に見る。北区のように registry ラベル自体が時刻レンジの自治体を band に落とすと区分粒度を失う。
   const isExact = observed.cells.every((cell) =>
     labelToDivision.has(normalizeDivisionLabel(cell.divisionLabel))
   );
@@ -208,9 +181,7 @@ export function judgeSample(
     if (observedCategory === "UNKNOWN") {
       return judgement("UNMAPPED", `記号不明: ${cell.symbol}（凡例にも無い）`);
     }
-    // 期待側も categorizeSymbol を使う（凡例は渡さない。凡例はサイト側の情報であって
-    // registry のラベル解釈に使うものではない）。registry の一部自治体は表示ラベルに
-    // 記号そのものを格納しているため、記号表→ラベル正規表現の順で解釈する。
+    // 凡例はサイト側の情報なので期待側には渡さない。
     const expectedCategory = categorizeSymbol(municipality.reservationStatus[enumValue] ?? "");
     if (expectedCategory === "UNKNOWN") {
       return judgement("UNMAPPED", `enum の表示ラベルをカテゴリ化できない: ${enumValue}`);

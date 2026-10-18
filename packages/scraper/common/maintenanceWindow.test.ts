@@ -3,7 +3,6 @@ import { test } from "node:test";
 
 import { isWithinMaintenanceWindow } from "./maintenanceWindow.ts";
 
-// UTC 時刻から JST 時を作るヘルパ（JST = UTC + 9）
 function atJstHour(hour: number): Date {
   const utcHour = (hour - 9 + 24) % 24;
   return new Date(Date.UTC(2026, 6, 11, utcHour, 30, 0));
@@ -30,6 +29,5 @@ test("日跨ぎ窓 [22,5): 22時〜翌4時を含む", () => {
 
 test("UTC→JST 変換が正しい（UTC 17:30 = JST 02:30 は窓内）", () => {
   assert.equal(isWithinMaintenanceWindow([2, 5], new Date(Date.UTC(2026, 6, 11, 17, 30))), true);
-  // UTC 04:30 = JST 13:30 は窓外
   assert.equal(isWithinMaintenanceWindow([2, 5], new Date(Date.UTC(2026, 6, 11, 4, 30))), false);
 });

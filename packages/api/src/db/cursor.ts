@@ -1,10 +1,5 @@
-/**
- * keyset ページネーションのカーソル。フィールドの JSON を base64url にする。
- * 値は常に文字列（date / institution_id など SQL の行値比較に使うキー）。
- */
 export function encodeCursor(fields: Record<string, string>): string {
-  // building_kana など多バイト文字を含むため、UTF-8 バイト列を経由して base64 化する
-  // （btoa は Latin1 しか扱えない）。
+  // btoa は Latin1 しか扱えないので、多バイト文字は UTF-8 バイト列を経由する
   const bytes = new TextEncoder().encode(JSON.stringify(fields));
   const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join("");
   const base64 = btoa(binary);

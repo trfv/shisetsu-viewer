@@ -23,8 +23,7 @@ export function useApiQuery<T>(fetcher: () => Promise<T>, key: string): UseApiQu
     fetcherRef.current = fetcher;
   }, [key]);
 
-  // authLoading を待つのは、/auth/me の結果が出る前に叩くと未ログイン扱いの
-  // 応答をキャッシュしてしまうためである。
+  // /auth/me の結果より先に叩くと、未ログイン扱いの応答をキャッシュしてしまう。
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;

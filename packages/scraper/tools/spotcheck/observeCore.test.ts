@@ -69,9 +69,6 @@ test("selectTarget は建物名が一致しなければ undefined を返す", ()
 });
 
 test("selectTarget は室名が建物名の部分文字列でも、建物名フィールドへの一致だけで誤選択しない", () => {
-  // 「赤羽会館」という建物名は「赤羽」を含むが、roomName フィールドには
-  // 「赤羽」を含む室が無い。facilityName の値（建物名）は照合対象から除外されるため
-  // 室名としては一致せず、建物単位のフォールバック（先頭）が返る。
   const targets = [
     { facilityName: "赤羽会館", roomName: "講堂" },
     { facilityName: "赤羽会館", roomName: "第一和室" },
@@ -259,8 +256,6 @@ test("findRoomRow は 1 件だけ一致するとき console.warn を呼ばない
   assert.equal(warnCalls.length, 0);
 });
 
-// ── normalizeLabel ──────────────────────────────────────────────
-
 test("normalizeLabel は全角数字を半角にする", () => {
   assert.equal(normalizeLabel("１９日"), "19日");
 });
@@ -278,17 +273,12 @@ test("normalizeLabel は空白のゆれを吸収する（観測側は空白も�
   assert.equal(normalizeLabel(" 午前 "), "午前");
 });
 
-// ── findDateColumn ──────────────────────────────────────────────
-
 test("findDateColumn は豊島区の形（月表題＋定員列）で対象日の列を返す", () => {
   const header = ["2026年7月", "定員", "19 日", "20 月", "21 火", "22 水"];
   assert.equal(findDateColumn(header, "2026-07-19"), 2);
 });
 
 test("findDateColumn は江戸川区の形で index 0 の表題に誤って一致しない", () => {
-  // 表題「2026/7/19(日)～」は「日」を含み数字 2026・7・19 を含むため、
-  // index 0 を除外しないと対象日 2026-07-19 として先に一致してしまう。
-  // このテストは index 0 を除外しない実装では 0 を返して落ちる。
   const header = ["2026/7/19(日)～", "定員", "7/19 日", "7/20 月", "7/21 火"];
   assert.equal(findDateColumn(header, "2026-07-19"), 2);
 });
@@ -307,8 +297,6 @@ test("findDateColumn は月が違うセルには一致しない", () => {
   const header = ["", "6/19 日"];
   assert.equal(findDateColumn(header, "2026-07-19"), undefined);
 });
-
-// ── isDateDisplayed: 類型A/B の着地日ずれ検出（罠3: openreaf の次営業日ジャンプ） ──
 
 test("isDateDisplayed は西暦年号の月日表記を拾う（江東区の形）", () => {
   assert.equal(isDateDisplayed("2026 年 7月22日(水) 午前 午後 夜間", "2026-07-22"), true);
@@ -334,13 +322,7 @@ test("isDateDisplayed はスラッシュ表記が別の数字の一部のとき�
   assert.equal(isDateDisplayed("17/220", "2026-07-22"), false);
 });
 
-// ── findRoomRow: 江東区の混在ヘッダ（罠2） ──────────────────────
-
 test("findRoomRow は複数のヘッダ行が混在する表で、一致行と同じセル数の直近のヘッダを選ぶ（江東区の形）", () => {
-  // 実データ（tokyo-koutou の table）そのままの構造: 4 セルの日付+区分ヘッダと
-  // 5 行の室が並んだ後、7 セルのヘッダ（コマ区分）と 1 行の室が続く。
-  // 修正前の実装は table.rows[0]（4 セルヘッダ）を常に使うため、
-  // 「音楽スタジオ」（7 セル）に対して 4 セルのヘッダを返し、このテストは落ちる。
   const tables: RawTable[] = [
     {
       rows: [
@@ -384,14 +366,9 @@ test("findRoomRow は複数のヘッダ行が混在する表で、一致行と�
   ]);
 });
 
-// ── extractCells: 表の 4 類型 ────────────────────────────────────
-
 const KOUTOU_DIVISION_LABELS = ["午前", "午後", "夜間", "①", "②", "③", "④", "⑤", "⑥"];
 
 test("extractCells は類型A（行=室、列=区分）を判別する（江東区の形）", () => {
-  // 修正前の実装（findRoomRow をそのまま header/cells として使うだけ）でも
-  // この単純な形は読めてしまうため、layout が "divisionColumn" であることも検証する
-  // （修正4 が実際に判別ロジックを追加したことを確認するため）。
   const tables: RawTable[] = [
     {
       rows: [
@@ -422,12 +399,6 @@ const KITA_DIVISION_LABELS = [
 ];
 
 test("extractCells は類型B（室名列が無い。ヘッダ=区分、次の行=値）を判別する（北区の形）", () => {
-  // 北区の reservationDivision の表示ラベルは時刻表記そのもの（registry 由来）。
-  // 修正前の実装は室名の行が無いためこの表を一切読めず、cells が空になる。
-  //
-  // この表は 2 ブロック（19:30-21:30 の 1 区分ブロックが後続する）を持つ。
-  // 修正前の実装は table.rows[0]/[1] の 1 組しか読まないため 19:30-21:30 が
-  // 欠落する（cells.length === 4 で落ちる）。ブロック走査で 5 区分すべてを拾う。
   const tables: RawTable[] = [
     {
       rows: [
@@ -437,7 +408,6 @@ test("extractCells は類型B（室名列が無い。ヘッダ=区分、次の�
         [cell("○")],
       ],
     },
-    // 凡例の表（罠1）。区分ラベルに一致しないため選ばれてはいけない。
     {
       rows: [
         [cell("○"), cell("空き（先着順）"), cell("休館"), cell("休館時間")],
@@ -457,12 +427,6 @@ test("extractCells は類型B（室名列が無い。ヘッダ=区分、次の�
 });
 
 test("extractCells は類型Bで表内に複数の区分ブロックが積まれても全ブロックを読む（北区・滝野川会館の実データ、table0）", () => {
-  // 実データ（tokyo-kita_滝野川会館.json の table0）そのままの構造。ヘッダ行=区分、
-  // 値行=記号の組が 2 段積まれ、2 段目は空文字セルで 4 列に埋め草されている
-  // （実サイトの table を素直に読むと空文字セルが並ぶ）。
-  // 修正前の実装は 1 組目しか読まないため 19:30-21:30 (RESERVATION_DIVISION_DIVISION_5)
-  // が観測結果からサイレントに欠落する。このテストは修正前の実装なら
-  // cells.length === 4 になり、19:30-21:30 の対を含まないため落ちる。
   const tables: RawTable[] = [
     {
       rows: [
@@ -472,7 +436,6 @@ test("extractCells は類型Bで表内に複数の区分ブロックが積まれ
         [cell("○"), cell(""), cell(""), cell("")],
       ],
     },
-    // 凡例の表（罠1）。区分ラベルに一致しないため選ばれてはいけない。
     {
       rows: [
         [cell("○"), cell("空き（先着順）"), cell("休館"), cell("休館時間")],
@@ -500,9 +463,6 @@ test("extractCells は類型Bで表内に複数の区分ブロックが積まれ
 });
 
 test("extractCells は類型C（行=区分、列=日付）を判別する（大田区の形）", () => {
-  // 大田区の reservationDivision の表示ラベル（"午前"等）は登録上の名称であり、
-  // サイトの実表示は時刻表記（"09:00 - 12:00"等）で一致しない。時刻パターンで
-  // 区分らしさを判定できないと、この実データはどの類型にも判別されず cells が空になる。
   const OTA_DIVISION_LABELS = ["午前", "午後", "午後1", "午後2", "夜間", "夜間1", "夜間2"];
   const tables: RawTable[] = [
     {
@@ -567,10 +527,6 @@ test("extractCells は類型Dで日付列が見つからなければ空を返す
 });
 
 test("extractCells はどの類型にも該当しない表に layout=none を返す", () => {
-  // 区分ラベルにも室名にも一致しない、空き状況表ではない表（お知らせ等）。
-  // 修正前は判別失敗時も layout: "divisionRow" を返していたため、値が空の
-  // divisionRow 表と区別が付かなかった。修正後は "none" で「そもそも
-  // どの類型としても読めなかった」ことを明示する。
   const tables: RawTable[] = [
     {
       rows: [
@@ -585,9 +541,6 @@ test("extractCells はどの類型にも該当しない表に layout=none を返
 });
 
 test("extractCells は凡例の表を空き状況の表と誤認しない（北区の形。罠1）", () => {
-  // 凡例だけの表しか渡されない場合、区分ラベルに一致しないため cells は空になるべき。
-  // 修正前の実装（型判別が無い）ではこの検証自体が成立しないため、
-  // 判別ロジックが実在することを確認するテストでもある。
   const KITA_DIVISION_LABELS_SUBSET = ["9:00-12:00", "13:00-17:00", "18:00-22:00", "9:30-11:30"];
   const tables: RawTable[] = [
     {

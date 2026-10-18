@@ -24,7 +24,7 @@ type Column<T> = {
   description?: string;
   maxWidth?: number;
   hide?: boolean;
-  valueGetter?: (row: RowParams<T>) => string; // type = getter の時に設定する
+  valueGetter?: (row: RowParams<T>) => string;
 };
 
 export type Columns<T> = Column<T>[];

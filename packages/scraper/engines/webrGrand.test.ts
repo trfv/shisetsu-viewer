@@ -6,7 +6,6 @@ import { keepDatesCoveredByAllDivisions } from "./webrGrand.ts";
 
 const DIVISIONS = ["午前", "午後", "夜間"];
 
-/** 2026-10-17 から days 日ぶんのカレンダー見出しを持つ表 */
 function table(division: string, startDay: number, days: number) {
   const dateCells = Array.from({ length: days }, (_, i) => `${startDay + i}\n土`);
   return { division, header: ["2026年10月", "定員", ...dateCells], rows: [] };
