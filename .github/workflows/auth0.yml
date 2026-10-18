@@ -11,9 +11,6 @@ on:
       - "packages/shared/auth0PostLogin.cjs"
       - "packages/shared/auth0Deploy.ts"
       - ".github/workflows/auth0.yml"
-  # 管理画面での直接編集を週に一度検出する（書き込みはしない）
-  schedule:
-    - cron: "17 0 * * 1"
   workflow_dispatch:
 
 concurrency:
@@ -40,14 +37,7 @@ jobs:
       # shared は依存が無いので npm ci は要らない
       - name: Test
         run: npm run test -w @shisetsu-viewer/shared
-      - name: Check drift
-        if: github.event_name == 'schedule'
-        run: node packages/shared/auth0Deploy.ts --check
-        env:
-          AUTH0_DEPLOY_CLIENT_ID: ${{ secrets.AUTH0_DEPLOY_CLIENT_ID }}
-          AUTH0_DEPLOY_CLIENT_SECRET: ${{ secrets.AUTH0_DEPLOY_CLIENT_SECRET }}
       - name: Deploy
-        if: github.event_name != 'schedule'
         run: node packages/shared/auth0Deploy.ts
         env:
           AUTH0_DEPLOY_CLIENT_ID: ${{ secrets.AUTH0_DEPLOY_CLIENT_ID }}

@@ -1,8 +1,6 @@
 // auth0PostLogin.cjs を Auth0 の Post Login Action に反映する（Management API）。
 // GitHub Actions（.github/workflows/auth0.yml）から呼ぶ。M2M の権限は read:actions と update:actions だけ。
-//
-//   node auth0Deploy.ts          差分があれば更新して Deploy する
-//   node auth0Deploy.ts --check  本番と原本がずれていれば失敗する（管理画面での直接編集の検出）
+// 本番と同じなら何もしない。
 
 import { readFile } from "node:fs/promises";
 
@@ -19,7 +17,7 @@ export type DeployConfig = {
   pollIntervalMs?: number;
 };
 
-export type DeployResult = "unchanged" | "deployed" | "drifted";
+export type DeployResult = "unchanged" | "deployed";
 
 const RUNTIME = "node22";
 
@@ -95,15 +93,11 @@ function inSync(action: Action, code: string): boolean {
   return action.code === code && action.runtime === RUNTIME && action.all_changes_deployed;
 }
 
-export async function deployPostLoginAction(
-  config: DeployConfig,
-  { check = false }: { check?: boolean } = {}
-): Promise<DeployResult> {
+export async function deployPostLoginAction(config: DeployConfig): Promise<DeployResult> {
   const api = await connect(config);
   const action = await findPostLoginAction(api);
 
   if (inSync(action, config.code)) return "unchanged";
-  if (check) return "drifted";
 
   // dependencies を空にするのは、原本が外部パッケージを使わないため（旧版の axios を残さない）。
   // secrets は送らない。送ると管理画面で設定した Slack のトークンが消える。
@@ -133,21 +127,11 @@ function env(name: string): string {
 }
 
 if (import.meta.main) {
-  const check = process.argv.includes("--check");
-  const result = await deployPostLoginAction(
-    {
-      tenantDomain: env("AUTH0_TENANT_DOMAIN"),
-      clientId: env("AUTH0_DEPLOY_CLIENT_ID"),
-      clientSecret: env("AUTH0_DEPLOY_CLIENT_SECRET"),
-      code: await readFile(new URL("./auth0PostLogin.cjs", import.meta.url), "utf8"),
-    },
-    { check }
-  );
+  const result = await deployPostLoginAction({
+    tenantDomain: env("AUTH0_TENANT_DOMAIN"),
+    clientId: env("AUTH0_DEPLOY_CLIENT_ID"),
+    clientSecret: env("AUTH0_DEPLOY_CLIENT_SECRET"),
+    code: await readFile(new URL("./auth0PostLogin.cjs", import.meta.url), "utf8"),
+  });
   console.log(`post-login Action: ${result}`);
-  if (result === "drifted") {
-    console.error(
-      "本番の Action が auth0PostLogin.cjs と一致しない。管理画面で直接編集されていないか確かめる"
-    );
-    process.exitCode = 1;
-  }
 }

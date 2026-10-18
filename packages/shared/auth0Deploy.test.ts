@@ -120,13 +120,6 @@ describe("deployPostLoginAction", () => {
     }
   });
 
-  it("--check では書き込まずに drifted を返す", async () => {
-    const { calls, fetchImpl } = fakeAuth0({});
-
-    assert.equal(await deployPostLoginAction(config(fetchImpl), { check: true }), "drifted");
-    assert.deepEqual(writes(calls), []);
-  });
-
   it("post-login の Action が 1 つでなければ失敗する", async () => {
     const { calls, fetchImpl } = fakeAuth0({ bindings: 2 });
 
