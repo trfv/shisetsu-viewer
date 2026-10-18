@@ -4,7 +4,7 @@ type AuthContextValue = {
   isLoading: boolean;
   authenticated: boolean;
   // Auth0 のアクセストークンのクレーム由来。anonymous は api が予約データを返さないロール、
-  // trial はトライアル利用者であることを表す（api は trial も anonymous として扱う）。
+  // trial はトライアル利用者であることを表す（UI だけが使い、api の認可には影響しない）。
   userInfo: { anonymous: boolean; trial: boolean };
   login: () => void;
   logout: () => void;

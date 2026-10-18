@@ -21,7 +21,8 @@ interface Auth0Env {
 /**
  * Auth0 access token からロールを解決する。検証失敗・トークン無しは anonymous。
  * クレームの優先順: カスタム namespace（role/trial）→ Hasura namespace（x-hasura-default-role）。
- * trial ユーザーは予約データ非公開のため anonymous 扱い（現行 viewer の UI ゲートと同義）。
+ * trial はロールに影響しない。トライアル利用者は予約検索を使え、詳細ページの予約タブだけを
+ * viewer が閉じる（UI の制御であり、api の認可ではない）。
  *
  * getKey はテスト用に注入可能（ローカル JWKS）。省略時はテナントの JWKS を使う。
  */
@@ -39,7 +40,6 @@ export async function resolveRole(
       algorithms: ["RS256"],
     });
     const app = payload[APP_CLAIMS] as { role?: string; trial?: boolean } | undefined;
-    if (app?.trial === true) return "anonymous";
     if (app?.role && app.role !== "anonymous") return "user";
     const hasura = payload[HASURA_CLAIMS] as Record<string, unknown> | undefined;
     return hasura?.["x-hasura-default-role"] === "user" ? "user" : "anonymous";

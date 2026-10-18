@@ -169,7 +169,7 @@ const HASURA_CLAIMS = "https://hasura.io/jwt/claims";
  *
  * anonymous の判定は api の resolveRole（packages/api/src/auth/auth0.ts）に揃える。
  * 揃えないと、UI は予約タブを開くのに api が 401 を返す、という食い違いが起きる。
- * trial だけは api が anonymous に畳むのに対し、UI は「（トライアル）」の表示に使うので別に返す。
+ * trial は api の認可に影響しない。UI が「（トライアル）」の表示と予約タブの制御に使うので別に返す。
  */
 export function readRole(accessToken: string): { anonymous: boolean; trial: boolean } {
   try {
