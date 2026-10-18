@@ -83,6 +83,7 @@ describe("Top Page", () => {
         "豊島区",
         "中央区",
         "文京区",
+        "目黒区（※現在、予約状況が表示できません）",
         "川崎市",
       ];
 
@@ -200,11 +201,11 @@ describe("Top Page", () => {
       const areaHeading = screen.getByRole("heading", { name: "対応地区" }).element();
       const nextSibling = areaHeading.nextElementSibling;
       const listItems = nextSibling?.querySelectorAll("li");
-      expect(listItems).toHaveLength(12);
+      expect(listItems).toHaveLength(13);
 
       // 予約状況表示不可の注記があることを確認
       const unavailableAreas = screen.getByText(/※現在、予約状況が表示できません/).all();
-      expect(unavailableAreas).toHaveLength(1);
+      expect(unavailableAreas).toHaveLength(2);
     });
   });
 
