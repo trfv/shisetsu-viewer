@@ -6,6 +6,7 @@
 
 - D1 に直接書くのは `packages/api` だけ。scraper は api の admin REST に書き込み（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）、viewer（BFF 経由）と mcp-server（Service Binding）は api の REST を読む。
 - 自治体データと enum の source of truth は `packages/shared` の `registry.ts` / `types.ts`。
+- 定期スクレイプの故障、master の CI の赤、dependabot PR は、`packages/factory` が作業項目 Issue（ラベル `factory`）として維持する。止めるときは repo variable `FACTORY_MODE=off`。
 
 ## 守ること
 

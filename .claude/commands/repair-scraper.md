@@ -151,11 +151,12 @@ argument-hint: <municipality-slug>
 
 1. PR は作らない。
 2. 何を試し、なぜ pass しなかったか（最後の `errorMessage` / `validationErrors`、残った仮説）を要約する。サイトの**全面リニューアル**と判断した場合は、その旨と「セレクタ修復ではなくスクレイパー（`prepare`/`extract`/`transform`）の再設計・書き換えが必要」である根拠を明記する。
-3. tracker Issue（タイトル `[scraper-repair] 構造変化の疑い`）に `gh issue comment` でエスカレーション要約を追記し、人間に引き継ぐ:
+3. 作業項目 Issue（タイトル `[factory] スクレイパー修復: <municipality>`）に `gh issue comment` でエスカレーション要約を追記し、ラベル `factory:needs-human` を付けて人間に引き継ぐ。Issue が無ければ（2 回連続の失敗に至る前に手で起動した場合）、完了報告で要約を返すだけにする:
 
    ```bash
-   gh issue list --search '[scraper-repair] 構造変化の疑い in:title state:open'
+   gh issue list --label factory --state open --search '"スクレイパー修復: <municipality>" in:title'
    gh issue comment <issue-number> --body "<エスカレーション要約>"
+   gh issue edit <issue-number> --add-label factory:needs-human --remove-label factory:queued
    ```
 
 ## 完了報告
