@@ -10,6 +10,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 - **scraper** (`packages/scraper/`) — Playwright-based data scrapers.
 - **shared** (`packages/shared/`) — shared types and municipality registry (source of truth).
 - **mcp-server** (`packages/mcp-server/`) — MCP server for AI tool integration. Cloudflare Workers.
+- **infra** (`packages/infra/`) — Cloudflare の設定のうち `wrangler.jsonc` に書けないもの（Workers Builds のトリガー）の宣言と検査。
 - **api** (`packages/api/`) — D1-backed API worker。読み書きの単一の口。Cloudflare Workers。CLAUDE.md 未整備。
 
 ## Monorepo Setup

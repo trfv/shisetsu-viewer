@@ -1,0 +1,33 @@
+name: Cloudflare Builds
+
+permissions:
+  contents: read
+
+# 宣言を変えたときだけ、本番の Workers Builds と比べる（書き込みはしない）
+on:
+  pull_request:
+    paths:
+      - "packages/infra/**"
+      - ".github/workflows/cloudflare.yml"
+  workflow_dispatch:
+
+env:
+  CLOUDFLARE_ACCOUNT_ID: 07d5a70dae76bffab27859320549b810
+
+jobs:
+  check:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+      # infra は依存が無いので npm ci は要らない
+      - name: Compare builds.json with production
+        run: npm run check:builds -w @shisetsu-viewer/infra
+        env:
+          # 読み取り専用のトークン（Workers Builds Configuration: Read、Workers Scripts: Read）
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_READONLY }}

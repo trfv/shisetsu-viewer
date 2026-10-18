@@ -74,6 +74,8 @@ jobs:
         run: npm run test -w @shisetsu-viewer/factory
       - name: API unit tests
         run: npm run test -w @shisetsu-viewer/api
+      - name: Infra unit tests
+        run: npm run test -w @shisetsu-viewer/infra
       - name: BFF worker tests
         run: npm run test:worker -w @shisetsu-viewer/viewer
       - name: MCP server unit tests

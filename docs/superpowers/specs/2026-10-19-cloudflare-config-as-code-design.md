@@ -71,7 +71,7 @@ vars と Secret に同じ名前があると、Secret のほうが優先される
 
 ### Workers Builds のトリガーは宣言ファイルで管理する
 
-`infra/cloudflare/builds.json` に、3 つの Worker のトリガーを宣言する。
+`packages/infra/builds.json` に、3 つの Worker のトリガーを宣言する。
 
 ```jsonc
 {
@@ -100,7 +100,7 @@ vars と Secret に同じ名前があると、Secret のほうが優先される
 トリガーの UUID は作り直すと変わるので、宣言には書かない。
 適用するときに、Worker 名とトリガー名から UUID を引く。
 
-スクリプト（`infra/cloudflare/builds.ts`）には二つのモードを持たせる。
+スクリプト（`packages/infra/builds.ts`）には二つのモードを持たせる。
 
 - **`--check`**：宣言と本番を比べ、差分を表示する。書き込みはしない。差分があれば失敗する
 - **適用**：差分のあるトリガーを `PATCH` し、宣言に無いビルド変数を消す。宣言に無いトリガーは消さずに警告だけ出す（消すとデプロイが止まるので、人が判断する）
@@ -126,7 +126,7 @@ viewer の `worker/secrets.d.ts`（Secret の型を手で足していたもの�
 
 | 契機 | 内容 | トークン |
 |---|---|---|
-| pull request（`infra/cloudflare/**` が変わったとき） | `--check` を実行し、差分を PR に表示する | 読み取り用 |
+| pull request（`packages/infra/**` が変わったとき） | `--check` を実行し、差分を PR に表示する | 読み取り用 |
 | master への push（同じパス） | 適用する | 書き込み用 |
 
 定期実行はしない。
