@@ -48,7 +48,9 @@ async function exhaust(ip: string, token?: string): Promise<Response | undefined
   return undefined;
 }
 
-describe("レート制限", () => {
+// 上限（100 回）まで連打するテストが並ぶ。JWT 付きは 1 回ごとに RS256 を検証するので、
+// Workers Builds の遅い環境では既定の 5 秒を超える（手元や GitHub Actions では収まる）
+describe("レート制限", { timeout: 30_000 }, () => {
   it("無認証の公開エンドポイントは上限超過で 429 + Retry-After を返す", async () => {
     const blocked = await exhaust("203.0.113.1");
 
