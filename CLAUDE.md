@@ -1,38 +1,35 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this repository. Package-specific details are in each package's own CLAUDE.md.
+日本の自治体（東京の区・川崎市）の公共施設の予約状況を見る Web アプリ。npm workspaces の monorepo で、各パッケージの罠はそれぞれの CLAUDE.md にある。
 
-## Project Overview
+## 構成
 
-Shisetsu Viewer is a web application for viewing public facility reservation status across municipalities in Japan (Tokyo wards and Kawasaki). Monorepo packages:
+- D1 に直接書くのは `packages/api` だけ。scraper は api の admin REST に書き込み（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）、viewer（BFF 経由）と mcp-server（Service Binding）は api の REST を読む。
+- 自治体データと enum の source of truth は `packages/shared` の `registry.ts` / `types.ts`。
 
-- **viewer** (`packages/viewer/`) — React 19 frontend. Cloudflare Workers.
-- **scraper** (`packages/scraper/`) — Playwright-based data scrapers.
-- **shared** (`packages/shared/`) — shared types and municipality registry (source of truth).
-- **mcp-server** (`packages/mcp-server/`) — MCP server for AI tool integration. Cloudflare Workers.
-- **api** (`packages/api/`) — D1-backed API worker。読み書きの単一の口。Cloudflare Workers。CLAUDE.md 未整備。
+## 守ること
 
-## Monorepo Setup
+- 主言語は日本語、タイムゾーンは Asia/Tokyo。
+- default export は名前付き const で行う。匿名アロー関数だと hooks lint がコンポーネントと認識できない。
+- pre-commit は lefthook（`brew install lefthook gitleaks` のあと `lefthook install`。npm 依存ではない）。
 
-- npm workspaces. Use `-w @shisetsu-viewer/<package>`. Node >= 24, ES Modules throughout.
-- Type checking: TypeScript 7 (`typescript@7`)。各パッケージの `typecheck` script は素の `tsc` を呼ぶ。
+## コメント
 
-## Conventions
+t-wada の原則に従う。「コードには How、テストコードには What、コミットログには Why、コードコメントには Why not」。コメントは最低限にし、迷ったら書かない。
 
-- Formatter: oxfmt (`.oxfmtrc.json`)。Linter: oxlint (`.oxlintrc.json`)。disable コメントは `oxlint-disable-next-line <plugin>/<rule>` 形式（eslint-disable 構文も解釈される）。
-- File naming: components PascalCase, utils/hooks camelCase, tests co-located `*.test.ts(x)`, CSS Modules `*.module.css`.
-- default export は名前付き const で行う（匿名アロー関数の default export は禁止。hooks lint がコンポーネントを認識できなくなるため）。
-- Primary language Japanese, timezone Asia/Tokyo.
-- Pre-commit: lefthook (`lefthook.yml`)。gitleaks + typecheck + staged な ts/tsx への oxlint/oxfmt。lefthook と gitleaks は brew 管理で npm 依存ではない（`brew install lefthook gitleaks`）。clone 直後に `lefthook install` を一度実行してフックを登録する。`CI` が設定された環境では pre-commit 全体を skip する。
-
-## Cross-Package Architecture
-
-- `@shisetsu-viewer/shared` の `registry.ts` / `types.ts` が自治体データと enum の source of truth。viewer / scraper 双方が import する。
-- Data flow: scrapers が自治体サイトを巡回 → 変換 → **`packages/api` の admin REST へ書き込む**（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）。viewer は自分の Worker（BFF）経由で同じ api の公開 REST を叩く（要認証エンドポイントには BFF が Auth0 のアクセストークンを付ける）。D1 に直接書くのは api worker だけ。
-- MCP server は同データを AI 向けに公開。どの入口も api 経由で読む（Workers デプロイは Service Binding で read-only、local stdio は `ADMIN_API_KEY` で write 可）。
+- 書くのは Why not だけ。自然に思いつく別の書き方を選ばなかった理由と、知らないと素直に書き直して壊す外部の制約（相手サイトの癖、プラットフォームの仕様、セキュリティ上の理由）。1〜2 行に収める。
+  例: `// UNAVAILABLE を先に置く。「空きなし」が AVAILABLE 側の「空き」に誤マッチする。`
+- 書かないもの:
+  - 名前や処理を言い換えた JSDoc（フィールドごとの一行 doc を含む）。
+  - 手順の番号付き説明。
+  - ファイル冒頭の概要と使い方（CLI は `usage()` が担う）。
+  - `// ---- section ----` のような区切り。
+- 経緯（「以前は〜」「PR #n で〜」「〜から移行した」「目安 2026 秋」）はコミットログと PR に書く。コメントに残すと古びる。
+- テストのコメントは書かず、テスト名で What を表す。期待値の言い換えの行末コメントや、Arrange / Act / Assert の見出しは要らない。
+- 同じ罠の説明は、罠が起きる場所の 1 か所にだけ書く。ファイル冒頭・呼び出し側・CLAUDE.md の 3 か所に重ねない。CLAUDE.md には、コードを開く前に知っておくべきことだけを書く。
+- 値の書式（`// YYYY-MM-DD`）のように、型で表せない契約は残してよい。ツール用の指示（`oxlint-disable-next-line <plugin>/<rule>` など）は消さない。
 
 ## Deploy
 
-- 3 Worker とも Cloudflare Workers Builds（設定は Cloudflare 側）。viewer は全ブランチ（master 以外は版のアップロードのみ）、api / mcp-server は master のみで、監視パス（`package-lock.json`・`packages/shared/**`・自パッケージ）が変わったときだけ走る。マージから本番まで約 2〜3 分。
-- api は `npm run deploy:ci`（`packages/api/scripts/deployCi.sh`）: D1 マイグレーション → 版タグにコミット SHA を付けてデプロイ。`/v1/health` の `version` が稼働中のコミット。
-- 施設マスタ（`packages/scraper/data/institutions/**`）が master に入ると Database ワークフローが自動で全自治体を反映する（差分 upsert）。同じ push で api も変わっていれば、新しい api が出るまで待つ。
+- 3 Worker とも Cloudflare Workers Builds で、設定は Cloudflare 側にある。viewer は全ブランチ、api / mcp-server は master のみで、監視パスが変わったときだけ走る。マージから本番まで約 2〜3 分。api の `/v1/health` の `version` が稼働中のコミット。
+- 施設マスタ（`packages/scraper/data/institutions/**`）が master に入ると、Database ワークフローが全自治体に差分 upsert する。

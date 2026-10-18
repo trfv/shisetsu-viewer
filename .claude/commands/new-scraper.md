@@ -58,7 +58,7 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 ### 1.2 施設階層の探索
 
-**既知エンジン（`packages/scraper/CLAUDE.md` の Vendor Engines。OpenReaf / WebR Grand / e-PRS など）の製品なら、まず discovery で一覧を自動列挙する**:
+**既知エンジン（`packages/scraper/engines/`。OpenReaf / WebR Grand / e-PRS など）の製品なら、まず discovery で一覧を自動列挙する**:
 
 ```bash
 npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl> --name <prefecture>-<slug>
@@ -150,7 +150,7 @@ STATUS_MAP:
 - **OpenReaf 系**（URL が `*.openreaf02.jp`、リンクチェーン + カレンダー + day-next 方式） → `engines/openreaf.ts` の `openreafHooks()` を使用。参照実装: `tokyo-kita`, `tokyo-chuo`
 - **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`
 - **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/`、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
-- その他のエンジン（`genkiplaza` / `pKashikan`）は `packages/scraper/CLAUDE.md` の Vendor Engines を参照
+- その他のエンジン（`genkiplaza` / `pKashikan`）は `engines/` の各ファイルを参照
 
 同一製品の自治体が既に2つ以上あるのに対応エンジンが無い場合は、新しいエンジンを `engines/` に切り出すことを検討する。採用が 1 自治体でも、パース処理を純粋関数として切り出してユニットテストしたい場合はエンジンにしてよい（ユニットテストは `engines/*.test.ts` と `common/*.test.ts` だけが `npm run test:unit` で走る）。
 
