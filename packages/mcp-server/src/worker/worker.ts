@@ -9,7 +9,7 @@ import {
 import { createMcpHandler } from "@modelcontextprotocol/server";
 import { resolveRole } from "@shisetsu-viewer/api/auth/auth0";
 
-import { createD1DataSource } from "../data/d1DataSource.ts";
+import { createHttpDataSource } from "../data/httpDataSource.ts";
 import { createServer } from "../server/createServer.ts";
 import {
   type Auth0Env,
@@ -24,11 +24,15 @@ import { preflight } from "./preflight.ts";
 
 // wrangler types の Env は手元の .env から secret を拾うため CI では型が欠ける。ここで手書きする
 interface Env extends Auth0Env {
-  DB: D1Database;
+  // api worker への Service Binding。データの読み取りはすべて api を通す
+  API: Fetcher;
   // KVNamespace — typed as unknown here; OAuthProvider handles it internally
   OAUTH_KV: unknown;
   OAUTH_PROVIDER: OAuthHelpers;
 }
+
+// Service Binding では host は使われないが、URL の構築に必要である
+const API_INTERNAL_ORIGIN = "https://api.internal";
 
 interface UpstreamTokens {
   upstreamAccessToken: string;
@@ -161,7 +165,16 @@ const mcpHandler = {
 
     // createMcpHandler は 2026-07-28 のリクエストをステートレスに捌き、2025 系（initialize）の
     // リクエストもリクエストごとの使い捨てインスタンスで受ける（legacy: "stateless"）。
-    const dataSource = createD1DataSource(env.DB);
+    // api の RATE_LIMITER は検証済みの利用者を sub で、それ以外を IP で数える。
+    // Bearer に加えて利用者の IP も渡す（Service Binding では自動で付かない）。
+    const dataSource = createHttpDataSource(
+      API_INTERNAL_ORIGIN,
+      {
+        bearer: upstreamAccessToken,
+        clientIp: request.headers.get("CF-Connecting-IP") ?? undefined,
+      },
+      (input, init) => env.API.fetch(input, init)
+    );
     const handler = createMcpHandler(({ era }) => {
       // 2025 系を捨てて legacy: "reject" に切り替えてよいかを、Workers のログで判断するための記録。
       // legacy が来なくなったのを確かめてから切り替える

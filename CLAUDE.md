@@ -29,7 +29,7 @@ Shisetsu Viewer is a web application for viewing public facility reservation sta
 
 - `@shisetsu-viewer/shared` の `registry.ts` / `types.ts` が自治体データと enum の source of truth。viewer / scraper 双方が import する。
 - Data flow: scrapers が自治体サイトを巡回 → 変換 → **`packages/api` の admin REST へ書き込む**（CI は GitHub OIDC、ローカルは `ADMIN_API_KEY`）。viewer は自分の Worker（BFF）経由で同じ api の公開 REST を叩く（要認証エンドポイントには BFF が Auth0 のアクセストークンを付ける）。D1 に直接書くのは api worker だけ。
-- MCP server は同データを AI 向けに公開（Workers デプロイは D1 直バインドで read-only、local stdio は api 経由で write 可）。
+- MCP server は同データを AI 向けに公開。どの入口も api 経由で読む（Workers デプロイは Service Binding で read-only、local stdio は `ADMIN_API_KEY` で write 可）。
 
 ## Deploy
 
