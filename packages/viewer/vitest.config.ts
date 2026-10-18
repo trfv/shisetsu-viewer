@@ -19,7 +19,9 @@ export default defineConfig({
     },
     setupFiles: ["./test/browser-setup.ts"],
     css: true,
-    exclude: ["node_modules", "e2e/**", "playwright-*/**"],
+    // worker/** は BFF のテスト。vitest-pool-workers で別 config から走らせるため
+    // browser mode の対象から外す。
+    exclude: ["node_modules", "e2e/**", "playwright-*/**", "worker/**"],
     silent: true,
     coverage: {
       provider: "v8",

@@ -21,7 +21,7 @@ import {
 } from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
-import { useAuth0 } from "../contexts/Auth0";
+import { useAuth } from "../contexts/Auth";
 import { useApiQuery } from "../hooks/useApiQuery";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
@@ -187,12 +187,11 @@ const ReservationTab = ({
     hasNextPage,
     fetchMore,
   } = usePaginatedQuery<ReservationDto>(
-    (token, cursor) =>
+    (cursor) =>
       fetchInstitutionReservations(
         id,
         { startDate: formatISO(today, { representation: "date" }) },
-        cursor,
-        token
+        cursor
       ),
     id
   );
@@ -333,7 +332,7 @@ const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
     userInfo: { anonymous, trial },
-  } = useAuth0();
+  } = useAuth();
 
   const handleTabChange = useCallback(
     (_: ChangeEvent<unknown>, newValue: string) => setTab(newValue as TabType),

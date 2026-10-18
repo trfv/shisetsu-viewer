@@ -1,14 +1,14 @@
 import { Redirect } from "wouter";
 
 import { ROUTES } from "../../constants/routes";
-import { useAuth0 } from "../../contexts/Auth0";
+import { useAuth } from "../../contexts/Auth";
 import { Loading } from "../../pages/Loading";
 
 export const AuthGuard = ({ Component }: { Component: React.ReactNode }): React.ReactNode => {
   const {
     isLoading,
     userInfo: { anonymous },
-  } = useAuth0();
+  } = useAuth();
 
   if (anonymous) {
     return isLoading ? <Loading /> : <Redirect to={ROUTES.top} replace />;

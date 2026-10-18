@@ -1,0 +1,18 @@
+# ローカル開発用の Secret。`.dev.vars` にコピーして値を入れる。
+# wrangler と @cloudflare/vite-plugin が dev 実行時に読み込む。`.dev.vars` は gitignore 済み。
+#
+# redirect_uri はリクエストのオリジンから導出される。ローカルなら
+# http://localhost:3000/auth/callback になるので、Auth0 の Application の
+# Allowed Callback URLs と Allowed Logout URLs（http://localhost:3000/）に登録しておく。
+
+AUTH0_CLIENT_ID=
+AUTH0_CLIENT_SECRET=
+
+# Cookie の暗号化鍵。32 バイトを base64url にした文字列の JSON 配列。本番とは別の鍵にする。生成:
+#   node -e 'console.log(JSON.stringify([require("crypto").randomBytes(32).toString("base64url")]))'
+SESSION_KEYS=[]
+
+# Service Binding の API は、既定ではローカルで起動した api を指す（別ターミナルで
+# `npm start -w @shisetsu-viewer/api`）。デプロイ済みの api を使うなら wrangler.jsonc の
+# services に "remote": true を付ける。api は Auth0 のトークンをそのまま検証するので、
+# ローカルでログインして得たトークンでも本番の api で通る。

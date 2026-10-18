@@ -3,7 +3,7 @@ import type { Page } from "@shisetsu-viewer/shared";
    key (安定した識別子) で内容比較し、実体は fetchPageRef 経由で参照する意図的なイディオム */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useAuth0 } from "../contexts/Auth0";
+import { useAuth } from "../contexts/Auth";
 
 type UsePaginatedQueryResult<T> = {
   data: T[] | undefined;
@@ -15,10 +15,10 @@ type UsePaginatedQueryResult<T> = {
 };
 
 export function usePaginatedQuery<TItem>(
-  fetchPage: (token: string, cursor: string | null) => Promise<Page<TItem>>,
+  fetchPage: (cursor: string | null) => Promise<Page<TItem>>,
   key: string
 ): UsePaginatedQueryResult<TItem> {
-  const { token, isLoading: authLoading } = useAuth0();
+  const { isLoading: authLoading } = useAuth();
   const [items, setItems] = useState<TItem[] | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [fetchingMore, setFetchingMore] = useState(false);
@@ -32,7 +32,7 @@ export function usePaginatedQuery<TItem>(
     fetchPageRef.current = fetchPage;
   }, [key]);
 
-  // Initial fetch (resets on key/token change)
+  // Initial fetch (resets on key change)
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;
@@ -44,7 +44,7 @@ export function usePaginatedQuery<TItem>(
       endCursorRef.current = null;
 
       try {
-        const page = await fetchPageRef.current(token || "", null);
+        const page = await fetchPageRef.current(null);
         if (cancelled) return;
         setItems(page.items);
         setHasNextPage(page.pageInfo.hasNextPage);
@@ -61,7 +61,7 @@ export function usePaginatedQuery<TItem>(
     return () => {
       cancelled = true;
     };
-  }, [key, token, authLoading]);
+  }, [key, authLoading]);
 
   const fetchMore = useCallback(async () => {
     if (!hasNextPage || !endCursorRef.current || fetchingMoreRef.current) return;
@@ -69,7 +69,7 @@ export function usePaginatedQuery<TItem>(
     fetchingMoreRef.current = true;
     setFetchingMore(true);
     try {
-      const page = await fetchPageRef.current(token || "", endCursorRef.current);
+      const page = await fetchPageRef.current(endCursorRef.current);
       setItems((prev) => [...(prev ?? []), ...page.items]);
       setHasNextPage(page.pageInfo.hasNextPage);
       endCursorRef.current = page.pageInfo.endCursor;
@@ -79,7 +79,7 @@ export function usePaginatedQuery<TItem>(
       fetchingMoreRef.current = false;
       setFetchingMore(false);
     }
-  }, [hasNextPage, token]);
+  }, [hasNextPage]);
 
   return { data: items, loading, error, hasNextPage, fetchMore, fetchingMore };
 }

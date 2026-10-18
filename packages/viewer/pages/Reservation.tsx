@@ -134,7 +134,7 @@ const ReservationPage = () => {
     fetchMore,
     fetchingMore,
   } = usePaginatedQuery<ReservationSearchHit>(
-    (token, cursor) => searchReservations(queryParams, cursor, token),
+    (cursor) => searchReservations(queryParams, cursor),
     JSON.stringify(queryParams)
   );
 
