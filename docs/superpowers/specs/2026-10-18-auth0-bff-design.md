@@ -68,8 +68,8 @@ viewer 用に **Regular Web Application** を新規に作る。
 
 | 項目 | 値 |
 |---|---|
-| Allowed Callback URLs | `https://app.shisetsudb.com/auth/callback`、`http://localhost:3000/auth/callback` |
-| Allowed Logout URLs | `https://app.shisetsudb.com/`、`http://localhost:3000/` |
+| Allowed Callback URLs | `https://app.shisetsudb.com/auth/callback`、`http://localhost:3000/auth/callback`、`https://*-shisetsu-viewer.trfv-dev.workers.dev/auth/callback` |
+| Allowed Logout URLs | `https://app.shisetsudb.com/`、`http://localhost:3000/`、`https://*-shisetsu-viewer.trfv-dev.workers.dev/` |
 | Connections | `google-oauth2` のみ |
 | Grant Types | Authorization Code、Refresh Token |
 | Refresh Token Rotation | 無効 |
@@ -77,6 +77,12 @@ viewer 用に **Regular Web Application** を新規に作る。
 
 Post Login の Actions は、`client_id` で絞り込んでいなければ全ての Application で動く。
 その場合、ロールとトライアルのクレームは新しい Application にもそのまま付く（未検証事項に挙げる）。
+
+プレビューデプロイ（`<ブランチ名 or 版 ID>-shisetsu-viewer.trfv-dev.workers.dev`）も、同じ Application に URL を足してログインできるようにしている。
+redirect_uri はリクエストのオリジンから組み立てるので、Worker 側の変更は要らない。
+ワイルドカードの前後を固定し、同じサブドメインにある api と mcp-server の Worker を対象から外している。
+認可コードが漏れても、PKCE の verifier と client secret が無ければ交換できない。
+別の Application に分ける方法は採らない。Secret は Worker 単位で版ごとに変えられないため、host を見て client を切り替えるコードが要るからである。
 
 ### refresh token rotation を無効にする理由
 
@@ -289,6 +295,5 @@ SPA 用 Application は手順 6 まで有効なまま残すので、旧 viewer �
 
 ## 対象外
 
-- プレビューデプロイ（`*.trfv-dev.workers.dev`）でのログイン。Auth0 の Allowed Callback URLs はサブドメインのワイルドカードを受け付けるので、必要になれば別の Application で対応できる
 - HTML へのログイン状態の埋め込み（前述）
 - api の CORS 設定の整理。BFF 化の後は viewer からの cross-origin 呼び出しが無くなるが、他の呼び出し元の有無を確かめてから別途扱う
