@@ -26,7 +26,6 @@ Auth0 と同じく、テナント全体を IaC にすることは目指さない
 ## 現状の棚卸し
 
 2026-10-19 に Cloudflare の API で読み取った結果である。
-同じアカウントには、このリポジトリと無関係の Worker（`line-receipt-bot`、`excel-converter`）もある。
 本書の仕組みは `shisetsu-` で始まる 3 つの Worker だけを対象にし、それ以外には触れない。
 
 | Worker | トリガー | 監視パス | ビルド変数 | Secret |
