@@ -67,27 +67,6 @@ const PRIVATE_CACHE = "private, no-store";
 // 公開情報ではあるがキャッシュには載せない。
 const NO_STORE_CACHE = "no-store";
 
-// CORS: viewer（別 origin のブラウザ SPA）からの fetch を許可する。
-// 本番/将来の任意サブドメイン(*.shisetsudb.com) と Workers プレビュー(*.trfv-dev.workers.dev)、
-// ローカル開発(localhost:3000)。https 限定（localhost の http は例外）。
-// suffix は先頭ドット必須で、evil-shisetsudb.com / *.shisetsudb.com.attacker.com を弾く。
-const ALLOWED_ORIGIN_EXACT = new Set(["http://localhost:3000"]);
-const ALLOWED_HOST_SUFFIXES = [".shisetsudb.com", ".trfv-dev.workers.dev"];
-
-/** 許可 origin ならその origin を、そうでなければ null を返す（reflect 方式）。 */
-function allowedOrigin(origin: string | null): string | null {
-  if (!origin) return null;
-  if (ALLOWED_ORIGIN_EXACT.has(origin)) return origin;
-  try {
-    const { protocol, hostname } = new URL(origin);
-    if (protocol !== "https:") return null;
-    if (ALLOWED_HOST_SUFFIXES.some((suffix) => hostname.endsWith(suffix))) return origin;
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 function json(body: unknown, init?: ResponseInit): Response {
   return Response.json(body, init);
 }
@@ -277,11 +256,7 @@ async function handleAdminExport(request: Request, url: URL, env: Env): Promise<
  * 返すだけではブラウザキャッシュにしか効かないので、明示的に put/match する。
  * ヒット時は D1 を一切引かない（Cache API は read-through ではないので Worker 自体は動く）。
  *
- * キーは **メソッドと URL だけの Request** にする。元のリクエストをそのままキーにすると
- * Origin ヘッダが混ざり、かつ Cloudflare の Cache は任意の `Vary` をほぼ解釈しないため、
- * ある origin 向けの `Access-Control-Allow-Origin` を別 origin に返す事故が起きる。
- * CORS ヘッダは fetch 側でリクエストごとに付け直すので、キャッシュ本体には含まれない
- * （handle() は CORS を付けずに返す。この順序が前提）。
+ * キーは **メソッドと URL だけの Request** にする。元のリクエストのヘッダをキーに持ち込まない。
  *
  * 何を載せるかはハンドラが返す `Cache-Control: public` が決める。認証必須の応答は
  * `private, no-store` を返すので、ここに来ても構造的に載らない。
@@ -294,8 +269,7 @@ async function withEdgeCache(
   const cache = caches.default;
   const key = new Request(url.toString(), { method: "GET" });
   const hit = await cache.match(key);
-  // キャッシュ由来の Response はヘッダが immutable なので、CORS を後付けできるよう複製する。
-  if (hit) return new Response(hit.body, hit);
+  if (hit) return hit;
 
   const res = await produce();
   if (res.status === 200 && res.headers.get("Cache-Control")?.includes("public")) {
@@ -353,28 +327,5 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
 }
 
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const origin = allowedOrigin(request.headers.get("Origin"));
-
-    // プリフライトはルーティング・レート制限より前に応答する
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: {
-          ...(origin ? { "Access-Control-Allow-Origin": origin } : {}),
-          "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
-          "Access-Control-Allow-Headers": "Authorization, Content-Type",
-          "Access-Control-Max-Age": "86400",
-          Vary: "Origin",
-        },
-      });
-    }
-
-    const res = await handle(request, env, ctx);
-    if (origin) {
-      res.headers.set("Access-Control-Allow-Origin", origin);
-      res.headers.append("Vary", "Origin");
-    }
-    return res;
-  },
+  fetch: handle,
 } satisfies ExportedHandler<Env>;

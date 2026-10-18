@@ -109,16 +109,6 @@ describe("public endpoints", () => {
     expect(after.building).toBe("会館A");
   });
 
-  it("キャッシュヒットでも CORS は リクエストごとの origin で返る", async () => {
-    // キーから Origin を外している（Cloudflare の Cache は Vary をほぼ解釈しないため）。
-    // CORS は handle() の外で付け直すので、origin が混ざらないことを押さえる。
-    const url = `${BASE}/v1/institutions?limit=1&cors-probe=1`;
-    const first = await SELF.fetch(url, { headers: { Origin: "http://localhost:3000" } });
-    const second = await SELF.fetch(url, { headers: { Origin: "https://app.shisetsudb.com" } });
-    expect(first.headers.get("Access-Control-Allow-Origin")).toBe("http://localhost:3000");
-    expect(second.headers.get("Access-Control-Allow-Origin")).toBe("https://app.shisetsudb.com");
-  });
-
   it("認証必須の GET はキャッシュされない（D1 の変更が即座に見える）", async () => {
     const url = `${BASE}/v1/institutions/${INSTITUTIONS[0].id}/reservations?limit=1`;
     const auth = { Authorization: `Bearer ${await userToken()}` };
