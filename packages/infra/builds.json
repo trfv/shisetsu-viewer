@@ -1,0 +1,61 @@
+{
+  "shisetsu-api": [
+    {
+      "trigger_name": "デフォルト ブランチをデプロイする",
+      "branch_includes": ["master"],
+      "branch_excludes": [],
+      "path_includes": ["package-lock.json", "packages/api/**", "packages/shared/**"],
+      "path_excludes": [],
+      "build_command": "npm test -w @shisetsu-viewer/api",
+      "deploy_command": "npm run deploy:ci -w @shisetsu-viewer/api",
+      "root_directory": "/",
+      "build_caching_enabled": true,
+      "vars": { "NODE_VERSION": "24.14.0" }
+    }
+  ],
+  "shisetsu-mcp-server": [
+    {
+      "trigger_name": "デフォルト ブランチをデプロイする",
+      "branch_includes": ["master"],
+      "branch_excludes": [],
+      "path_includes": [
+        "package-lock.json",
+        "packages/mcp-server/**",
+        "packages/api/**",
+        "packages/shared/**"
+      ],
+      "path_excludes": [],
+      "build_command": "npm test -w @shisetsu-viewer/mcp-server",
+      "deploy_command": "npm run deploy -w @shisetsu-viewer/mcp-server",
+      "root_directory": "/",
+      "build_caching_enabled": true,
+      "vars": { "NODE_VERSION": "24.14.0" }
+    }
+  ],
+  "shisetsu-viewer": [
+    {
+      "trigger_name": "Deploy default branch",
+      "branch_includes": ["master"],
+      "branch_excludes": [],
+      "path_includes": ["*"],
+      "path_excludes": [],
+      "build_command": "npm run build -w @shisetsu-viewer/viewer",
+      "deploy_command": "npm run deploy -w @shisetsu-viewer/viewer",
+      "root_directory": "/",
+      "build_caching_enabled": true,
+      "vars": { "NODE_VERSION": "24.14.0" }
+    },
+    {
+      "trigger_name": "Deploy non-production branches",
+      "branch_includes": ["*"],
+      "branch_excludes": ["master"],
+      "path_includes": ["*"],
+      "path_excludes": [],
+      "build_command": "npm run build -w @shisetsu-viewer/viewer",
+      "deploy_command": "npm run deploy:versions -w @shisetsu-viewer/viewer",
+      "root_directory": "/",
+      "build_caching_enabled": true,
+      "vars": { "NODE_VERSION": "24.14.0" }
+    }
+  ]
+}

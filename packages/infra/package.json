@@ -1,0 +1,11 @@
+{
+  "name": "@shisetsu-viewer/infra",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test '*.test.ts'",
+    "typecheck": "tsc",
+    "check:builds": "node builds.ts"
+  }
+}
