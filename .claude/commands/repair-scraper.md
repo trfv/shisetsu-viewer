@@ -1,6 +1,6 @@
 ---
 description: 構造変化で壊れたスクレイパーを、実サイトで検証しながら自己修復し PR を作る。例：/repair-scraper tokyo-kita
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, AskUserQuestion, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_click, mcp__plugin_playwright_playwright__browser_run_code, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, AskUserQuestion, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_click, mcp__plugin_playwright_playwright__browser_run_code, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__playwright__browser_navigate, mcp__playwright__browser_click, mcp__playwright__browser_run_code_unsafe, mcp__playwright__browser_evaluate, mcp__playwright__browser_snapshot, mcp__playwright__browser_select_option, mcp__playwright__browser_network_requests, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_close
 argument-hint: <municipality-slug>
 ---
 
@@ -36,8 +36,9 @@ argument-hint: <municipality-slug>
 
 1. 現行スクレイパーを Read: `packages/scraper/<municipality>/index.ts`
    - `index.ts` がエンジン（`engines/openreaf.ts` / `engines/webrGrand.ts` 等）を使っている場合はエンジン本体も Read する。セレクタ・ナビゲーションはエンジン側、URL・マッピング・対象一覧は `index.ts` 側にある。
+   - **画面の裏の JSON や CGI を直接取るエンジン**（`engines/eprs.ts`・`engines/genkiplaza.ts`）では、壊れるのはセレクタではなく応答の形・パラメータ・セッション初期化の手順であることが多い。`errorMessage` にエンジンの例外文（例「eprs: サーバがエラーを返しました」「result がありません」「… を要求しましたが … からの週が返りました」）が出ていれば、DOM キャプチャより先に、ライブ探索で画面の通信（`browser_network_requests`）とページの JS（`String(window.<関数名>)`）を見る。純粋関数の前提が変わったら `engines/<engine>.test.ts` も直す。
 2. 失敗レコードの `domSnapshotPath`（失敗時の HTML）と現行セレクタを突き合わせる。**コスト規律**: キャプチャ HTML は丸ごと Read しない。まず Grep で失敗セレクタ（リンク名・XPath・ステータス記号など）の周辺行番号を特定し、offset/limit 付きで部分 Read する。同一キャプチャを再度読み直さない（コストの大半は既読内容の再送で発生する）。
-3. 次のどちらかに該当したら、**Playwright MCP** のライブ探索に切り替える（`browser_navigate` → `browser_snapshot`。同一ページの再 snapshot はしない）:
+3. 次のどちらかに該当したら、**Playwright MCP** のライブ探索に切り替える（`browser_navigate` → `browser_snapshot`。同一ページの再 snapshot はしない。`browser_snapshot` に `filename` を渡すとリポジトリ直下に書き出されるので、渡さないか scratchpad の絶対パスにする）:
 
    - キャプチャ DOM との突き合わせで仮説が立たない
    - フェーズ 3 の verify が 2 回連続で fail した
@@ -66,7 +67,7 @@ argument-hint: <municipality-slug>
    - `pass: false` → `failures` 配列の新しい `errorMessage` / `validationErrors` を読み、フェーズ 2 に戻って次の仮説を立てる。
 4. 5 回試しても pass しない施設、または途中でサイトの全面リニューアル（局所修正では追従不能）と判明した施設は、フェーズ 5（エスカレーション）へ。
 
-**型・lint の維持**: 修正後は `npm run typecheck -w @shisetsu-viewer/scraper` が通ること。pre-commit でも検証されるが、ループ中に都度確認してよい。
+**型・lint の維持**: 修正後は `npm run typecheck -w @shisetsu-viewer/scraper` が通ること。エンジンを直したら `npm run test:unit -w @shisetsu-viewer/scraper` も通すこと。pre-commit でも検証されるが、ループ中に都度確認してよい。
 
 ### フェーズ 4: PR 作成（全対象施設が検証済み pass のとき）
 
@@ -76,39 +77,38 @@ argument-hint: <municipality-slug>
    git switch -c fix/repair-<municipality>-$(date +%Y%m%d)
    ```
 
-2. 変更をコミット（修正したスクレイパー/エンジンのファイルのみ）:
+2. 変更をコミット（修正したスクレイパー/エンジンのファイルのみ）。コミットメッセージは日本語で、何を・なぜ直したかを書く（例: `fix(scraper): 北区のリンク名変更に追従する`）:
 
    ```bash
-   git add packages/scraper/<municipality>/index.ts  # エンジン修正時は packages/scraper/engines/<engine>.ts も
-   git commit -m "fix(scraper): repair <municipality> selectors after site change"
+   git add packages/scraper/<municipality>/index.ts  # エンジン修正時は packages/scraper/engines/<engine>.ts と <engine>.test.ts も
+   git commit
    ```
 
-3. PR を作成（本文に before/after と検証ログを含める）:
+   pre-commit がコマンドを解決できずに落ちたら `PATH="$PWD/node_modules/.bin:$PATH" git commit ...` で回避する（`--no-verify` は使わない）。
+
+3. PR を作成する。本文には before/after と検証ログを含める:
 
    ```bash
-   gh pr create --title "fix(scraper): repair <municipality> selectors" --body "$(cat <<'EOF'
+   gh pr create --title "fix(scraper): <自治体>の<何>の変更に追従する" --body "$(cat <<'EOF'
+   ## 背景
+
+   <municipality> のサイト構造変化により定期スクレイプが構造系失敗。
+
+   ## 変更
+
+   - セレクタ修正: `<before>` → `<after>`（理由を1行）
+
+   ## 検証
+
+   決定論ハーネス `tools/repair/verify.ts` により実サイトで検証済み（全対象施設 pass）:
+
+   - <facility> <roomName>: REPAIR_VERIFY_RESULT pass=true
+   - ...
+
+   🤖 Generated with [Claude Code](https://claude.com/claude-code)
+   EOF
+   )"
    ```
-
-## 背景
-
-<municipality> のサイト構造変化により定期スクレイプが構造系失敗。
-
-## 変更
-
-- セレクタ修正: `<before>` → `<after>`（理由を1行）
-
-## 検証
-
-決定論ハーネス `tools/repair/verify.ts` により実サイトで検証済み（全対象施設 pass）:
-
-- <facility> <roomName>: REPAIR_VERIFY_RESULT pass=true
-- ...
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-EOF
-)"
-
-````
 
 4. マージは人間が行う（このコマンドはマージしない）。
 
@@ -118,12 +118,13 @@ EOF
 
 1. dispatch を投げる:
 
-```bash
-gh workflow run scraper.yml --ref fix/repair-<municipality>-$(date +%Y%m%d) -f municipality=<municipality>
-````
+   ```bash
+   gh workflow run scraper.yml --ref fix/repair-<municipality>-$(date +%Y%m%d) -f municipality=<municipality>
+   ```
 
-- `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
-- `municipality` を絞ると prepare ジョブが `shardTotal=20` で起動して所要時間が短い（`all` 指定時は `100` シャード）。
+   - `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
+   - シャード数は自治体のテスト数 ÷ `density`（入力、既定 5）の切り上げで決まる（`common/shardMatrix.ts`）。`municipality` を絞れば、その自治体のシャードだけが走る。
+   - `municipality` に指定した自治体は `SCRAPER_FORCE_INCLUDE` に渡るので、registry で `scraperCiExcluded: true` の自治体でも走る。
 
 2. 実行 ID を取得し、進捗を watch:
 
