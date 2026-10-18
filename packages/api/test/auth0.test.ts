@@ -1,7 +1,7 @@
 import { SignJWT, exportJWK, generateKeyPair, importJWK, type JWTVerifyGetKey } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { resolveRole } from "../src/auth/auth0.ts";
+import { resolveRole, verifyAccessToken } from "../src/auth/auth0.ts";
 
 const ENV = { AUTH0_DOMAIN: "trfv.jp.auth0.com", AUTH0_AUDIENCE: "https://api.example/" };
 const ISSUER = `https://${ENV.AUTH0_DOMAIN}/`;
@@ -82,5 +82,25 @@ describe("resolveRole", () => {
 
   it("壊れた文字列 → anonymous", async () => {
     expect(await resolveRole("not.a.jwt", ENV, getKey)).toBe("anonymous");
+  });
+});
+
+describe("verifyAccessToken", () => {
+  it("検証に通れば sub とロールを返す", async () => {
+    const token = await sign({
+      sub: "auth0|abc",
+      "https://app.shisetsudb.com/token/claims": { role: "user" },
+    });
+    expect(await verifyAccessToken(token, ENV, getKey)).toEqual({ sub: "auth0|abc", role: "user" });
+  });
+
+  it("sub の無いトークンでもロールは判定する（sub はレート制限の鍵にだけ使う）", async () => {
+    const token = await sign({ "https://app.shisetsudb.com/token/claims": { role: "user" } });
+    expect(await verifyAccessToken(token, ENV, getKey)).toEqual({ sub: undefined, role: "user" });
+  });
+
+  it("期限切れは null", async () => {
+    const token = await sign({ sub: "auth0|abc" }, { expired: true });
+    expect(await verifyAccessToken(token, ENV, getKey)).toBeNull();
   });
 });

@@ -2,7 +2,7 @@ import type { Institution, UpsertReservationsRequest } from "@shisetsu-viewer/sh
 import { createLocalJWKSet, type JWTVerifyGetKey } from "jose";
 
 import { authorizeAdmin } from "./auth/adminAuth.ts";
-import { resolveRole } from "./auth/auth0.ts";
+import { verifyAccessToken, type Principal } from "./auth/auth0.ts";
 import {
   exportReservations,
   getInstitutionDetail,
@@ -103,12 +103,14 @@ function testGithubJwks(env: Env): JWTVerifyGetKey | undefined {
   return createLocalJWKSet(JSON.parse(env.TEST_GITHUB_JWKS_JSON));
 }
 
+function bearerToken(request: Request): string | undefined {
+  return request.headers.get("Authorization")?.replace(/^Bearer /, "") || undefined;
+}
+
 /** reservations 系エンドポイントの認可。user 以外は 401（トークン無し）/ 403（不足） */
-async function authorizeUser(request: Request, env: Env): Promise<Response | null> {
-  const token = request.headers.get("Authorization")?.replace(/^Bearer /, "");
-  if (!token) return error(401, "authentication required");
-  const role = await resolveRole(token, env, testJwks(env));
-  if (role !== "user") return error(403, "insufficient role");
+function authorizeUser(request: Request, principal: Principal | null): Response | null {
+  if (!bearerToken(request)) return error(401, "authentication required");
+  if (principal?.role !== "user") return error(403, "insufficient role");
   return null;
 }
 
@@ -138,11 +140,12 @@ async function handleInstitutionDetail(id: string, env: Env): Promise<Response> 
 
 async function handleInstitutionReservations(
   request: Request,
+  principal: Principal | null,
   id: string,
   url: URL,
   env: Env
 ): Promise<Response> {
-  const denied = await authorizeUser(request, env);
+  const denied = authorizeUser(request, principal);
   if (denied) return denied;
   const startDate = url.searchParams.get("startDate") ?? undefined;
   const endDate = url.searchParams.get("endDate") ?? undefined;
@@ -163,8 +166,13 @@ async function handleInstitutionReservations(
   return json(page, { headers: { "Cache-Control": PRIVATE_CACHE } });
 }
 
-async function handleSearch(request: Request, url: URL, env: Env): Promise<Response> {
-  const denied = await authorizeUser(request, env);
+async function handleSearch(
+  request: Request,
+  principal: Principal | null,
+  url: URL,
+  env: Env
+): Promise<Response> {
+  const denied = authorizeUser(request, principal);
   if (denied) return denied;
   const startDate = url.searchParams.get("startDate");
   const endDate = url.searchParams.get("endDate");
@@ -284,8 +292,20 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
   try {
     // admin 系は除外する。scraper が 500 行ずつのチャンクを短時間に大量 PUT するため、
     // 一律に適用すると本番のデータ投入が壊れる（admin は OIDC / API キーで保護済み）。
-    if (env.RATE_LIMITER && !pathname.startsWith("/v1/admin/")) {
-      const key = request.headers.get("CF-Connecting-IP") ?? "unknown";
+    const isAdmin = pathname.startsWith("/v1/admin/");
+    // トークンの検証はレート制限より先に一度だけ行い、reservations 系の認可にも使い回す。
+    // admin は Auth0 ではなく OIDC / API キーで認可するので検証しない。
+    const principal = isAdmin
+      ? null
+      : await verifyAccessToken(bearerToken(request), env, testJwks(env));
+
+    if (env.RATE_LIMITER && !isAdmin) {
+      // 検証済みの利用者は sub で数え、それ以外は IP で数える。MCP サーバーのように
+      // 多数の利用者を少数の送信元 IP から中継する呼び出し元が、一つの枠を共有しないため。
+      // 検証に失敗したトークンは IP に落ちるので、偽のトークンで枠を増やすことはできない。
+      const key = principal?.sub
+        ? `sub:${principal.sub}`
+        : `ip:${request.headers.get("CF-Connecting-IP") ?? "unknown"}`;
       const { success } = await env.RATE_LIMITER.limit({ key });
       if (!success) {
         return json(
@@ -303,11 +323,13 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
         return await withEdgeCache(url, ctx, () => handleListInstitutions(url, env));
       if (pathname === "/v1/scrape-runs")
         return await withEdgeCache(url, ctx, () => handleScrapeRuns(env));
-      if (pathname === "/v1/reservations/search") return await handleSearch(request, url, env);
+      if (pathname === "/v1/reservations/search")
+        return await handleSearch(request, principal, url, env);
       if (pathname === "/v1/admin/reservations/export")
         return await handleAdminExport(request, url, env);
       const resv = pathname.match(RE_INSTITUTION_RESERVATIONS);
-      if (resv) return await handleInstitutionReservations(request, resv[1] as string, url, env);
+      if (resv)
+        return await handleInstitutionReservations(request, principal, resv[1] as string, url, env);
       const detail = pathname.match(RE_INSTITUTION);
       if (detail) {
         const id = detail[1] as string;

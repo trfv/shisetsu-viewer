@@ -1,27 +1,56 @@
-import { SELF } from "cloudflare:test";
-import { describe, expect, it } from "vitest";
+import { SELF, env } from "cloudflare:test";
+import { SignJWT, exportJWK, generateKeyPair } from "jose";
+import { beforeAll, describe, expect, it } from "vitest";
 
 const BASE = "https://api.test";
+// 上限は 100 req/60s
+const LIMIT = 100;
 
-// レート制限は CF-Connecting-IP をキーにする。テスト間で枠を食い合わないよう
-// テストごとに別 IP を使う（同一キーの状態は worker インスタンス内で共有される）。
-async function get(path: string, ip: string): Promise<Response> {
-  return SELF.fetch(`${BASE}${path}`, { headers: { "CF-Connecting-IP": ip } });
+let privateKey: CryptoKey;
+
+beforeAll(async () => {
+  const pair = await generateKeyPair("RS256", { extractable: true });
+  privateKey = pair.privateKey;
+  const pubJwk = await exportJWK(pair.publicKey);
+  pubJwk.kid = "test-key";
+  pubJwk.alg = "RS256";
+  pubJwk.use = "sig";
+  // 同一 isolate なので worker (SELF.fetch) からも見える
+  env.TEST_JWKS_JSON = JSON.stringify({ keys: [pubJwk] });
+});
+
+async function tokenFor(sub: string): Promise<string> {
+  const now = Math.floor(Date.now() / 1000);
+  return new SignJWT({})
+    .setProtectedHeader({ alg: "RS256", kid: "test-key" })
+    .setSubject(sub)
+    .setIssuer(`https://${env.AUTH0_DOMAIN}/`)
+    .setAudience(env.AUTH0_AUDIENCE)
+    .setIssuedAt(now)
+    .setExpirationTime(now + 3600)
+    .sign(privateKey);
+}
+
+// 無認証のレート制限は CF-Connecting-IP をキーにする。テスト間で枠を食い合わないよう
+// テストごとに別 IP・別 sub を使う（同一キーの状態は worker インスタンス内で共有される）。
+async function get(path: string, ip: string, token?: string): Promise<Response> {
+  const headers: Record<string, string> = { "CF-Connecting-IP": ip };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return SELF.fetch(`${BASE}${path}`, { headers });
+}
+
+/** 429 が返るまで叩き、その応答を返す（上限を少し超えても返らなければ undefined） */
+async function exhaust(ip: string, token?: string): Promise<Response | undefined> {
+  for (let i = 0; i < LIMIT + 5; i++) {
+    const res = await get("/v1/health", ip, token);
+    if (res.status === 429) return res;
+  }
+  return undefined;
 }
 
 describe("レート制限", () => {
   it("無認証の公開エンドポイントは上限超過で 429 + Retry-After を返す", async () => {
-    const ip = "203.0.113.1";
-    let blocked: Response | undefined;
-
-    // 上限は 100 req/60s。超えるまで叩く
-    for (let i = 0; i < 105; i++) {
-      const res = await get("/v1/health", ip);
-      if (res.status === 429) {
-        blocked = res;
-        break;
-      }
-    }
+    const blocked = await exhaust("203.0.113.1");
 
     expect(blocked).toBeDefined();
     expect(blocked?.status).toBe(429);
@@ -32,6 +61,23 @@ describe("レート制限", () => {
   it("上限内なら通常どおり応答する", async () => {
     const res = await get("/v1/health", "203.0.113.2");
     expect(res.status).toBe(200);
+  });
+
+  it("検証済みの利用者は sub で数え、同じ IP の他の利用者や無認証の枠を食わない", async () => {
+    // MCP サーバーのように、多数の利用者を一つの送信元 IP から中継する呼び出し元を想定する
+    const ip = "203.0.113.4";
+    expect(await exhaust(ip, await tokenFor("auth0|rate-a"))).toBeDefined();
+
+    expect((await get("/v1/health", ip, await tokenFor("auth0|rate-b"))).status).toBe(200);
+    expect((await get("/v1/health", ip)).status).toBe(200);
+  });
+
+  it("検証に失敗したトークンは IP で数える（偽のトークンで枠を増やせない）", async () => {
+    const ip = "203.0.113.5";
+    expect(await exhaust(ip)).toBeDefined();
+
+    const res = await get("/v1/health", ip, "not-a-jwt");
+    expect(res.status).toBe(429);
   });
 
   it("admin 系は対象外（scraper が短時間に大量 PUT するため）", async () => {
