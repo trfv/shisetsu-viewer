@@ -32,6 +32,10 @@ export type { MunicipalityConfig, MunicipalityKey } from "./registry.ts";
 
 export { canonicalizeReservation } from "./reservationJson.ts";
 
+export { readClaims } from "./auth.ts";
+
+export type { ClaimsInfo, Role } from "./auth.ts";
+
 export type {
   PageInfo,
   Page,
