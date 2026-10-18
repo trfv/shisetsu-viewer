@@ -2,7 +2,7 @@
    key (安定した識別子) で内容比較し、実体は fetcherRef 経由で参照する意図的なイディオム */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useAuth0 } from "../contexts/Auth0";
+import { useAuth } from "../contexts/Auth";
 
 type UseApiQueryResult<T> = {
   data: T | undefined;
@@ -11,11 +11,8 @@ type UseApiQueryResult<T> = {
   refetch: () => void;
 };
 
-export function useApiQuery<T>(
-  fetcher: (token: string) => Promise<T>,
-  key: string
-): UseApiQueryResult<T> {
-  const { token, isLoading: authLoading } = useAuth0();
+export function useApiQuery<T>(fetcher: () => Promise<T>, key: string): UseApiQueryResult<T> {
+  const { isLoading: authLoading } = useAuth();
   const [data, setData] = useState<T | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -26,6 +23,8 @@ export function useApiQuery<T>(
     fetcherRef.current = fetcher;
   }, [key]);
 
+  // authLoading を待つのは、/auth/me の結果が出る前に叩くと未ログイン扱いの
+  // 応答をキャッシュしてしまうためである。
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;
@@ -34,7 +33,7 @@ export function useApiQuery<T>(
       setLoading(true);
       setError(undefined);
       try {
-        const result = await fetcherRef.current(token || "");
+        const result = await fetcherRef.current();
         if (cancelled) return;
         setData(result);
       } catch (e) {
@@ -49,7 +48,7 @@ export function useApiQuery<T>(
     return () => {
       cancelled = true;
     };
-  }, [key, token, authLoading, refetchCount]);
+  }, [key, authLoading, refetchCount]);
 
   const refetch = useCallback(() => setRefetchCount((c) => c + 1), []);
 

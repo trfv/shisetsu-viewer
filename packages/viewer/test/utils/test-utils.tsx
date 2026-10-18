@@ -5,42 +5,42 @@ import { page, userEvent as browserUserEvent } from "vitest/browser";
 import { Route, Router } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
 
-import { Auth0Context } from "../../contexts/Auth0";
+import { AuthContext } from "../../contexts/Auth";
 
-type Auth0MockConfig = {
+type AuthMockConfig = {
   isLoading?: boolean;
-  token?: string;
+  authenticated?: boolean;
   userInfo?: { anonymous: boolean; trial: boolean };
   login?: () => void;
   logout?: () => void;
 };
 
-const MockAuth0Provider = ({
+const MockAuthProvider = ({
   children,
   config = {},
 }: {
   children: ReactNode;
-  config?: Auth0MockConfig;
+  config?: AuthMockConfig;
 }) => {
   const value = {
     isLoading: config.isLoading ?? false,
-    token: config.token ?? "mock-token",
+    authenticated: config.authenticated ?? true,
     userInfo: config.userInfo ?? { anonymous: false, trial: false },
     login: config.login ?? vi.fn(),
     logout: config.logout ?? vi.fn(),
   };
-  return <Auth0Context.Provider value={value}>{children}</Auth0Context.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 interface CustomRenderOptions {
   initialEntries?: string[];
   route?: string;
-  auth0Config?: Auth0MockConfig;
+  authConfig?: AuthMockConfig;
 }
 
 export async function renderWithProviders(
   ui: ReactElement,
-  { initialEntries = ["/"], route, auth0Config = {} }: CustomRenderOptions = {}
+  { initialEntries = ["/"], route, authConfig = {} }: CustomRenderOptions = {}
 ) {
   // Use browser's native userEvent
   const user = browserUserEvent;
@@ -52,9 +52,9 @@ export async function renderWithProviders(
 
   function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <MockAuth0Provider config={auth0Config}>
+      <MockAuthProvider config={authConfig}>
         <Router hook={hook}>{route ? <Route path={route}>{children}</Route> : children}</Router>
-      </MockAuth0Provider>
+      </MockAuthProvider>
     );
   }
 

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 
 import { ROUTES } from "../../constants/routes";
-import { useAuth0 } from "../../contexts/Auth0";
+import { useAuth } from "../../contexts/Auth";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { HeaderMenuButton } from "../HeaderMenuButton";
 import { SettingsMenu } from "../SettingsMenu";
@@ -12,7 +12,7 @@ export const Header = () => {
   const isMobile = useIsMobile();
   const {
     userInfo: { anonymous, trial },
-  } = useAuth0();
+  } = useAuth();
 
   return (
     <header className={styles["appBar"]}>

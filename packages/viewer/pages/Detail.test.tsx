@@ -12,7 +12,7 @@ import {
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import DetailPage from "./Detail";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 const mockIsMobile = vi.hoisted(() => ({ value: false }));
 vi.mock("../hooks/useIsMobile", () => ({
@@ -154,7 +154,7 @@ describe("Detail Page", () => {
       await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: true, trial: false } },
+        authConfig: { userInfo: { anonymous: true, trial: false } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
@@ -167,7 +167,7 @@ describe("Detail Page", () => {
       await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: true } },
+        authConfig: { userInfo: { anonymous: false, trial: true } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
@@ -180,7 +180,7 @@ describe("Detail Page", () => {
       await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       const reservationTab = screen.getByRole("tab", { name: "予約状況" });
@@ -206,7 +206,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -232,7 +232,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -252,7 +252,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -272,7 +272,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -290,7 +290,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -317,7 +317,7 @@ describe("Detail Page", () => {
         {
           initialEntries: [`/institution/${VALID_UUID}`],
           route: "/institution/:id",
-          auth0Config: { userInfo: { anonymous: false, trial: false } },
+          authConfig: { userInfo: { anonymous: false, trial: false } },
         }
       );
 
@@ -352,7 +352,7 @@ describe("Detail Page", () => {
         {
           initialEntries: [`/institution/${VALID_UUID}`],
           route: "/institution/:id",
-          auth0Config: { userInfo: { anonymous: false, trial: false } },
+          authConfig: { userInfo: { anonymous: false, trial: false } },
         }
       );
 
@@ -394,7 +394,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       await expect
@@ -418,7 +418,7 @@ describe("Detail Page", () => {
       const { user } = await renderWithProviders(<DetailPage />, {
         initialEntries: [`/institution/${VALID_UUID}`],
         route: "/institution/:id",
-        auth0Config: { userInfo: { anonymous: false, trial: false } },
+        authConfig: { userInfo: { anonymous: false, trial: false } },
       });
 
       const institutionTab = screen.getByRole("tab", { name: "施設情報" });

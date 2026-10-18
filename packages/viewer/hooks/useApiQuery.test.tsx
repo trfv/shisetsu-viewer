@@ -6,13 +6,13 @@ import { worker } from "../test/mocks/browser";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import { useApiQuery } from "./useApiQuery";
 
-const BASE = import.meta.env.VITE_API_ENDPOINT;
+const BASE = "/api";
 
 const TestComponent = ({
   fetcher,
   queryKey,
 }: {
-  fetcher: (token: string) => Promise<{ name: string }>;
+  fetcher: () => Promise<{ name: string }>;
   queryKey: string;
 }) => {
   const { data, loading, error } = useApiQuery(fetcher, queryKey);
@@ -32,7 +32,7 @@ describe("useApiQuery", () => {
     );
 
     await renderWithProviders(
-      <TestComponent fetcher={(token) => apiGet(`${BASE}/v1/x`, {}, token)} queryKey="x" />
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/x`, {})} queryKey="x" />
     );
 
     await expect.element(screen.getByText("loading")).toBeInTheDocument();
@@ -42,13 +42,13 @@ describe("useApiQuery", () => {
     worker.use(http.get(`${BASE}/v1/x`, () => HttpResponse.json({ name: "Item A" })));
 
     await renderWithProviders(
-      <TestComponent fetcher={(token) => apiGet(`${BASE}/v1/x`, {}, token)} queryKey="x" />
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/x`, {})} queryKey="x" />
     );
 
     await expect.element(screen.getByText("Item A")).toBeInTheDocument();
   });
 
-  it("Auth0 ロード中はフェッチしない", async () => {
+  it("認証状態のロード中はフェッチしない", async () => {
     let requestCount = 0;
     worker.use(
       http.get(`${BASE}/v1/x`, () => {
@@ -58,8 +58,8 @@ describe("useApiQuery", () => {
     );
 
     await renderWithProviders(
-      <TestComponent fetcher={(token) => apiGet(`${BASE}/v1/x`, {}, token)} queryKey="x" />,
-      { auth0Config: { isLoading: true, token: "" } }
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/x`, {})} queryKey="x" />,
+      { authConfig: { isLoading: true } }
     );
 
     await expect.element(screen.getByText("loading")).toBeInTheDocument();
@@ -72,14 +72,16 @@ describe("useApiQuery", () => {
     worker.use(http.get(`${BASE}/v1/x`, () => HttpResponse.json({}, { status: 500 })));
 
     await renderWithProviders(
-      <TestComponent fetcher={(token) => apiGet(`${BASE}/v1/x`, {}, token)} queryKey="x" />
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/x`, {})} queryKey="x" />
     );
 
     await expect.element(screen.getByText(/error: /)).toBeInTheDocument();
   });
 
-  it("認証済みトークンを fetcher に渡す", async () => {
-    let auth: string | null = null;
+  // BFF 化により Authorization はブラウザ側で付かない。Cookie が同一オリジンで載り、
+  // Worker がトークンに付け替える。
+  it("Authorization ヘッダを送らない", async () => {
+    let auth: string | null = "unset";
     worker.use(
       http.get(`${BASE}/v1/secure`, ({ request }) => {
         auth = request.headers.get("Authorization");
@@ -88,14 +90,11 @@ describe("useApiQuery", () => {
     );
 
     await renderWithProviders(
-      <TestComponent
-        fetcher={(token) => apiGet(`${BASE}/v1/secure`, {}, token)}
-        queryKey="secure"
-      />,
-      { auth0Config: { isLoading: false, token: "tok-42" } }
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/secure`, {})} queryKey="secure" />,
+      { authConfig: { isLoading: false } }
     );
 
     await expect.element(screen.getByText("secure")).toBeInTheDocument();
-    expect(auth).toBe("Bearer tok-42");
+    expect(auth).toBeNull();
   });
 });

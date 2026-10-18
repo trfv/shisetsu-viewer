@@ -124,7 +124,7 @@ const InstitutionPage = () => {
     fetchMore,
     fetchingMore,
   } = usePaginatedQuery<InstitutionSummary>(
-    (_token, cursor) => fetchInstitutions(queryParams, cursor),
+    (cursor) => fetchInstitutions(queryParams, cursor),
     JSON.stringify(queryParams)
   );
 

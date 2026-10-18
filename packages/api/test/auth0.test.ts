@@ -51,11 +51,11 @@ describe("resolveRole", () => {
     expect(await resolveRole(token, ENV, getKey)).toBe("user");
   });
 
-  it("trial: true は role より優先して anonymous", async () => {
+  it("trial: true でも role: user なら user（トライアル利用者も予約検索を使える）", async () => {
     const token = await sign({
       "https://app.shisetsudb.com/token/claims": { role: "user", trial: true },
     });
-    expect(await resolveRole(token, ENV, getKey)).toBe("anonymous");
+    expect(await resolveRole(token, ENV, getKey)).toBe("user");
   });
 
   it("audience 不一致 → anonymous", async () => {

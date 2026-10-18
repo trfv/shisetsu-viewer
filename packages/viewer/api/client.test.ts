@@ -50,21 +50,8 @@ describe("apiGet", () => {
     expect(url.searchParams.get("isHoliday")).toBe("true");
   });
 
-  it("token があれば Authorization ヘッダを付ける", async () => {
-    let auth: string | null = null;
-    worker.use(
-      http.get(`${ENDPOINT}/v1/x`, ({ request }) => {
-        auth = request.headers.get("Authorization");
-        return HttpResponse.json({});
-      })
-    );
-
-    await apiGet(`${ENDPOINT}/v1/x`, {}, "tok-123");
-
-    expect(auth).toBe("Bearer tok-123");
-  });
-
-  it("token がなければ Authorization ヘッダを付けない", async () => {
+  // BFF 化により Authorization はブラウザ側で付けない。トークンは Worker が持つ。
+  it("Authorization ヘッダを付けない", async () => {
     let auth: string | null = "unset";
     worker.use(
       http.get(`${ENDPOINT}/v1/x`, ({ request }) => {
