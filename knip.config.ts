@@ -19,7 +19,10 @@ const config: KnipConfig = {
       entry: ["**/index.test.ts", "*/index.ts", "scripts/*.ts", "tools/**/*.ts"],
       ignoreDependencies: [],
     },
-    "packages/shared": {},
+    "packages/shared": {
+      // Auth0 の Post Login Action の原本。管理画面に貼って使い、テストからは createRequire で読む
+      entry: ["auth0PostLogin.cjs"],
+    },
     "packages/api": {
       entry: ["test/**/*.ts"],
       // `cloudflare:test` は Workers ランタイムの仮想モジュール（npm パッケージではない）。

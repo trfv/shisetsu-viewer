@@ -1,3 +1,5 @@
+import { readClaims } from "@shisetsu-viewer/shared";
+
 import { fromBase64Url, type Session } from "./session.ts";
 
 export interface Auth0Config {
@@ -159,17 +161,11 @@ export async function revokeRefreshToken(
   if (!response.ok) throw new Error(`Auth0 revoke failed: ${response.status}`);
 }
 
-const APP_CLAIMS = "https://app.shisetsudb.com/token/claims";
-const HASURA_CLAIMS = "https://hasura.io/jwt/claims";
-
 /**
  * アクセストークンのクレームから UI 向けのロールを読む。署名は検証しない。
  * BFF が読むのはトークンエンドポイントから TLS で直接受け取ったトークンだけであり、
  * 署名の検証は従来どおり api が行う（mcp-server の extractJwtSub と同じ判断）。
- *
- * anonymous の判定は api の resolveRole（packages/api/src/auth/auth0.ts）に揃える。
- * 揃えないと、UI は予約タブを開くのに api が 401 を返す、という食い違いが起きる。
- * trial は api の認可に影響しない。UI が「（トライアル）」の表示と予約タブの制御に使うので別に返す。
+ * クレームの解釈は api と同じ shared の readClaims を使うので、UI と api の判定は食い違わない。
  */
 export function readRole(accessToken: string): { anonymous: boolean; trial: boolean } {
   try {
@@ -179,12 +175,8 @@ export function readRole(accessToken: string): { anonymous: boolean; trial: bool
       string,
       unknown
     >;
-    const app = claims[APP_CLAIMS] as { role?: string; trial?: boolean } | undefined;
-    const hasura = claims[HASURA_CLAIMS] as Record<string, unknown> | undefined;
-    const user = app?.role
-      ? app.role !== "anonymous"
-      : hasura?.["x-hasura-default-role"] === "user";
-    return { anonymous: !user, trial: app?.trial === true };
+    const { role, trial } = readClaims(claims);
+    return { anonymous: role !== "user", trial };
   } catch {
     return { anonymous: true, trial: false };
   }
