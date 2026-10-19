@@ -106,7 +106,7 @@ describe("COLUMNS定義", () => {
     expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("");
   });
 
-  it("fetched_atのvalueGetterが取得日時を日本時間で返す", () => {
+  it("fetched_atのvalueGetterが取得日時を日本時間の月日と時分で返す", () => {
     const hit = createMockReservationSearchHit();
     const col = COLUMNS.find((c) => c.field === "fetched_at");
     const params = paramsFor(hit);
@@ -114,7 +114,7 @@ describe("COLUMNS定義", () => {
       ...params,
       row: { ...params.row, fetched_at: "2025-06-15T01:23:45.000Z" },
     };
-    expect(col?.valueGetter?.(withFetchedAt as never)).toBe("2025/06/15 10:23:45");
+    expect(col?.valueGetter?.(withFetchedAt as never)).toBe("06/15 10:23");
   });
 
   it("fetched_atのvalueGetterが取得記録のない地区に対して空文字を返す", () => {
@@ -626,7 +626,7 @@ describe("Reservation Page", () => {
       });
 
       await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
-      await expect.element(screen.getByText("2025/06/15 10:23:45")).toBeInTheDocument();
+      await expect.element(screen.getByText("06/15 10:23")).toBeInTheDocument();
     });
 
     it("予約行はクリック可能で、クリック時にonRowClickが実行される", async () => {

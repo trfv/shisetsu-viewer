@@ -133,6 +133,21 @@ describe("DataTable Component", () => {
     await expect.element(screen.getByText("ラベル")).toBeInTheDocument();
   });
 
+  it("wrap=trueのカラムは語の区切りで折り返し、それ以外は1行で省略する", async () => {
+    const colsWithWrap: Columns<TestRow> = [
+      { field: "name", headerName: "名前", type: "string", wrap: true },
+      { field: "age", headerName: "年齢", type: "string" },
+    ];
+    await renderWithProviders(<DataTable columns={colsWithWrap} rows={rows} />);
+
+    await expect
+      .element(screen.getByText("東京"))
+      .toHaveStyle({ whiteSpace: "normal", wordBreak: "keep-all" });
+    await expect
+      .element(screen.getByText("100"))
+      .toHaveStyle({ whiteSpace: "nowrap", textOverflow: "ellipsis" });
+  });
+
   it("getter型でvalueGetterが未定義の場合は空文字を表示する", async () => {
     const colsWithoutGetter: Columns<TestRow> = [
       { field: "name", headerName: "名前", type: "string" },
