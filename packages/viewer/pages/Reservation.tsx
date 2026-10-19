@@ -3,7 +3,7 @@ import { addMonths, endOfMonth, isSameDay } from "date-fns";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
-import { searchReservations } from "../api/endpoints";
+import { fetchScrapeRuns, searchReservations } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
@@ -11,6 +11,7 @@ import { DateRangePicker, type DateRangeValue } from "../components/DateRangePic
 import { SearchPageLayout } from "../components/SearchPageLayout";
 import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
+import { useApiQuery } from "../hooks/useApiQuery";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
@@ -35,7 +36,11 @@ import {
   toggleArrayParam,
 } from "../utils/search";
 
-type ReservationSearchRow = ReservationSearchHit & { id: string; [key: string]: unknown };
+type ReservationSearchRow = ReservationSearchHit & {
+  id: string;
+  fetched_at: string | undefined;
+  [key: string]: unknown;
+};
 
 export const COLUMNS: Columns<ReservationSearchRow> = [
   {
@@ -75,6 +80,12 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
       const obj = params.row.reservation.reservation;
       return formatReservationMap(municipality, obj, params.row.institution.division_labels);
     },
+  },
+  {
+    field: "fetched_at",
+    headerName: "取得日時",
+    type: "getter",
+    valueGetter: (params) => (params.row.fetched_at ? formatDatetime(params.row.fetched_at) : ""),
   },
   {
     field: "updated_at",
@@ -138,14 +149,16 @@ const ReservationPage = () => {
     JSON.stringify(queryParams)
   );
 
-  const reservations = useMemo<ReservationSearchRow[]>(
-    () =>
-      (hits ?? []).map((hit) => ({
-        id: `${hit.institution.id}_${hit.reservation.date}`,
-        ...hit,
-      })),
-    [hits]
-  );
+  const { data: scrapeRuns } = useApiQuery(fetchScrapeRuns, "scrape-runs");
+
+  const reservations = useMemo<ReservationSearchRow[]>(() => {
+    const fetchedAt = new Map(scrapeRuns?.items.map((r) => [r.municipality, r.fetched_at]));
+    return (hits ?? []).map((hit) => ({
+      id: `${hit.institution.id}_${hit.reservation.date}`,
+      fetched_at: fetchedAt.get(hit.institution.municipality),
+      ...hit,
+    }));
+  }, [hits, scrapeRuns]);
 
   const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
     reservationSearchParams;

@@ -105,6 +105,23 @@ describe("COLUMNS定義", () => {
     const col = COLUMNS.find((c) => c.field === "institution_size");
     expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("");
   });
+
+  it("fetched_atのvalueGetterが取得日時を日本時間で返す", () => {
+    const hit = createMockReservationSearchHit();
+    const col = COLUMNS.find((c) => c.field === "fetched_at");
+    const params = paramsFor(hit);
+    const withFetchedAt = {
+      ...params,
+      row: { ...params.row, fetched_at: "2025-06-15T01:23:45.000Z" },
+    };
+    expect(col?.valueGetter?.(withFetchedAt as never)).toBe("2025/06/15 10:23:45");
+  });
+
+  it("fetched_atのvalueGetterが取得記録のない地区に対して空文字を返す", () => {
+    const hit = createMockReservationSearchHit();
+    const col = COLUMNS.find((c) => c.field === "fetched_at");
+    expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("");
+  });
 });
 
 describe("Reservation Page", () => {
@@ -589,6 +606,27 @@ describe("Reservation Page", () => {
 
       await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
       await expect.element(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
+    });
+
+    it("地区ごとの最終取得日時を取得日時列に表示する", async () => {
+      useMswMock([createMockReservationSearchHit()]);
+      worker.use(
+        http.get(`${BASE}/v1/scrape-runs`, () =>
+          HttpResponse.json({
+            items: [
+              { municipality: "MUNICIPALITY_KOUTOU", fetched_at: "2025-06-15T01:23:45.000Z" },
+              { municipality: "MUNICIPALITY_KITA", fetched_at: "2025-06-14T00:00:00.000Z" },
+            ],
+          })
+        )
+      );
+
+      await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou"],
+      });
+
+      await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
+      await expect.element(screen.getByText("2025/06/15 10:23:45")).toBeInTheDocument();
     });
 
     it("予約行はクリック可能で、クリック時にonRowClickが実行される", async () => {
