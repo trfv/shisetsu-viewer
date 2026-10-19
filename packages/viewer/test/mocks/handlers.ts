@@ -53,4 +53,6 @@ export const handlers = [
   http.get(`${BASE}/v1/reservations/search`, () =>
     HttpResponse.json(createMockReservationSearchPage([createMockReservationSearchHit()]))
   ),
+
+  http.get(`${BASE}/v1/scrape-runs`, () => HttpResponse.json({ items: [] })),
 ];
