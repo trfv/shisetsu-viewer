@@ -12,7 +12,7 @@
     "wouter": "3.11.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.63.2",
+    "@cloudflare/vite-plugin": "1.64.0",
     "@cloudflare/vitest-plugin": "1.4.1",
     "@playwright/test": "1.64.0",
     "@types/react": "19.3.0",
