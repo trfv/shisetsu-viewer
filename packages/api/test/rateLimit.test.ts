@@ -1,9 +1,11 @@
 import { SELF, env } from "cloudflare:test";
 import { SignJWT, exportJWK, generateKeyPair } from "jose";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 const BASE = "https://api.test";
 const LIMIT = 100;
+const PERIOD_MS = 60_000;
+const WINDOW_MARGIN_MS = 15_000;
 
 let privateKey: CryptoKey;
 
@@ -47,6 +49,14 @@ async function exhaust(ip: string, token?: string): Promise<Response | undefined
 
 // JWT 付きの連打は 1 回ごとに RS256 を検証するので、Workers Builds の遅い環境では既定の 5 秒を超える
 describe("レート制限", { timeout: 30_000 }, () => {
+  // 窓は壁時計の 60 秒境界で切り替わり全キーのカウントが消えるので、境界の直前に始めると 429 に届かない
+  beforeEach(async () => {
+    const remaining = PERIOD_MS - (Date.now() % PERIOD_MS);
+    if (remaining < WINDOW_MARGIN_MS) {
+      await new Promise((resolve) => setTimeout(resolve, remaining + 100));
+    }
+  }, WINDOW_MARGIN_MS + 5_000);
+
   it("無認証の公開エンドポイントは上限超過で 429 + Retry-After を返す", async () => {
     const blocked = await exhaust("203.0.113.1");
 
