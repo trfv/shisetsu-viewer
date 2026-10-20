@@ -15,7 +15,7 @@ import { useApiQuery } from "../hooks/useApiQuery";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
-import { formatDate, formatDatetime } from "../utils/format";
+import { formatDate, formatShortDatetime } from "../utils/format";
 import {
   MunicipalityOptions,
   SupportedMunicipalityMap,
@@ -48,6 +48,7 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     headerName: "施設名",
     type: "getter",
     maxWidth: 400,
+    wrap: true,
     valueGetter: (params) =>
       `${params.row.institution.building} ${params.row.institution.institution}`,
   },
@@ -74,6 +75,7 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     field: "reservation",
     headerName: "予約状況",
     maxWidth: 400,
+    wrap: true,
     type: "getter",
     valueGetter: (params) => {
       const municipality = params.row.institution.municipality as SupportedMunicipality;
@@ -85,13 +87,13 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     field: "fetched_at",
     headerName: "取得日時",
     type: "getter",
-    valueGetter: (params) => (params.row.fetched_at ? formatDatetime(params.row.fetched_at) : ""),
+    valueGetter: (params) => formatShortDatetime(params.row.fetched_at),
   },
   {
     field: "updated_at",
     headerName: "更新日時",
     type: "getter",
-    valueGetter: (params) => formatDatetime(params.row.reservation.updated_at),
+    valueGetter: (params) => formatShortDatetime(params.row.reservation.updated_at),
   },
 ];
 

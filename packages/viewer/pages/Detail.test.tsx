@@ -216,7 +216,36 @@ describe("Detail Page", () => {
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
       await expect.element(screen.getByText("日付")).toBeInTheDocument();
+      await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
       await expect.element(screen.getByText("更新日時")).toBeInTheDocument();
+    });
+
+    it("施設の地区の最終取得日時を各行に表示する", async () => {
+      useMswDetailMock(defaultDetail, [
+        createMockReservationDto(),
+        createMockReservationDto({ date: "2025-06-20" }),
+      ]);
+      worker.use(
+        http.get(`${BASE}/v1/scrape-runs`, () =>
+          HttpResponse.json({
+            items: [
+              { municipality: "MUNICIPALITY_KOUTOU", fetched_at: "2025-06-15T01:23:45.000Z" },
+              { municipality: "MUNICIPALITY_KITA", fetched_at: "2025-06-14T00:00:00.000Z" },
+            ],
+          })
+        )
+      );
+
+      const { user } = await renderWithProviders(<DetailPage />, {
+        initialEntries: [`/institution/${VALID_UUID}`],
+        route: "/institution/:id",
+        authConfig: { userInfo: { anonymous: false, trial: false } },
+      });
+
+      await user.click(screen.getByRole("tab", { name: "予約状況" }));
+
+      await expect.element(screen.getByText("06/15 10:23").nth(1)).toBeInTheDocument();
+      expect(screen.getByText("06/14 09:00").elements()).toHaveLength(0);
     });
 
     it("予約クエリの startDate にレンダ時点の本日を渡す", async () => {
@@ -403,11 +432,8 @@ describe("Detail Page", () => {
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await vi.waitFor(() => {
-        const allText = document.body.textContent || "";
-        expect(allText).toContain("2024");
-        expect(allText).toContain("2025");
-      });
+      await expect.element(screen.getByText("更新 09/30 21:00")).toBeInTheDocument();
+      await expect.element(screen.getByText("更新 06/19 21:00")).toBeInTheDocument();
     });
   });
 

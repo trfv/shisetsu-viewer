@@ -118,10 +118,12 @@
   content: ":";
 }
 
-.reservationCardUpdatedAt {
+.reservationCardTimestamps {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
   font-size: 0.75rem;
   color: var(--color-text-secondary);
-  text-align: right;
 }
 
 @media (max-width: 679px) {

@@ -58,6 +58,18 @@ export const formatDatetime = (datetime: string | Date | undefined): string => {
   return datetimeFormat.format(parsed);
 };
 
+const shortDatetimeFormat = new Intl.DateTimeFormat("ja-JP", {
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+export const formatShortDatetime = (datetime: string | undefined): string => {
+  const parsed = datetime ? toValidDate(datetime, true) : null;
+  return parsed ? shortDatetimeFormat.format(parsed) : "";
+};
+
 export const formatNumberWithCommas = (value: string | number): string => {
   if (value !== 0 && !value) {
     return "";

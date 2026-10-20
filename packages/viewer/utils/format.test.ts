@@ -6,6 +6,7 @@ import {
   formatMonthDate,
   formatNumberWithCommas,
   formatPrice,
+  formatShortDatetime,
 } from "./format";
 
 const withErrorMock = (fn: () => void) => {
@@ -94,5 +95,23 @@ describe("formatPrice", () => {
   });
   test("number number", () => {
     expect(formatPrice(12345)).toBe("¥12,345");
+  });
+});
+
+describe("formatShortDatetime", () => {
+  test("年と秒を省いて日本時間の月日と時分で返す", () => {
+    expect(formatShortDatetime("2022-02-26T00:00:00.000Z")).toBe("02/26 09:00");
+  });
+  test("タイムゾーン無しの文字列は UTC とみなす", () => {
+    expect(formatShortDatetime("2022-02-26T00:00:00")).toBe("02/26 09:00");
+  });
+  test("undefined はエラーを出さずに空文字を返す", () => {
+    const spy = vi.spyOn(console, "error");
+    expect(formatShortDatetime(undefined)).toBe("");
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+  test("不正な文字列は空文字を返す", () => {
+    expect(formatShortDatetime("invalid")).toBe("");
   });
 });

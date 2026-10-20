@@ -23,6 +23,7 @@ type Column<T> = {
   type: ColumnType;
   description?: string;
   maxWidth?: number;
+  wrap?: boolean;
   hide?: boolean;
   valueGetter?: (row: RowParams<T>) => string;
 };
@@ -55,12 +56,15 @@ const getCellValue = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>
   }
 };
 
-const cellStyle = (col: Column<unknown>): React.CSSProperties => ({
-  maxWidth: col.maxWidth,
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-});
+const cellStyle = (col: Column<unknown>): React.CSSProperties =>
+  col.wrap
+    ? { maxWidth: col.maxWidth, wordBreak: "keep-all" }
+    : {
+        maxWidth: col.maxWidth,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      };
 
 export const DataTable = <T extends Row>({
   columns,

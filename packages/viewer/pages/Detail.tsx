@@ -3,7 +3,11 @@ import { formatISO } from "date-fns";
 import { useCallback, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
-import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
+import {
+  fetchInstitutionDetail,
+  fetchInstitutionReservations,
+  fetchScrapeRuns,
+} from "../api/endpoints";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
@@ -27,7 +31,7 @@ import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
-import { formatDatetime, formatMonthDate } from "../utils/format";
+import { formatMonthDate, formatShortDatetime } from "../utils/format";
 import { isValidUuid } from "../utils/id";
 import { formatUsageFee } from "../utils/institution";
 import {
@@ -198,6 +202,11 @@ const ReservationTab = ({
 
   const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations?.length ?? 0);
 
+  const { data: scrapeRuns } = useApiQuery(fetchScrapeRuns, "scrape-runs");
+  const fetchedAt = formatShortDatetime(
+    scrapeRuns?.items.find((r) => r.municipality === municipality)?.fetched_at
+  );
+
   if (error) {
     throw new Error(error.message);
   }
@@ -234,8 +243,9 @@ const ReservationTab = ({
                   </div>
                 ))}
               </div>
-              <div className={styles["reservationCardUpdatedAt"]}>
-                {formatDatetime(row.updated_at)}
+              <div className={styles["reservationCardTimestamps"]}>
+                {fetchedAt && <span>取得 {fetchedAt}</span>}
+                <span>更新 {formatShortDatetime(row.updated_at)}</span>
               </div>
             </div>
           ))}
@@ -273,6 +283,13 @@ const ReservationTab = ({
                   size="small"
                   variant="head"
                 >
+                  取得日時
+                </TableCell>
+                <TableCell
+                  className={styles["reservationTableHeadCell"]}
+                  size="small"
+                  variant="head"
+                >
                   更新日時
                 </TableCell>
               </TableRow>
@@ -299,7 +316,10 @@ const ReservationTab = ({
                     </TableCell>
                   ))}
                   <TableCell className={styles["reservationTableBodyCell"]} size="small">
-                    {formatDatetime(row.updated_at)}
+                    {fetchedAt}
+                  </TableCell>
+                  <TableCell className={styles["reservationTableBodyCell"]} size="small">
+                    {formatShortDatetime(row.updated_at)}
                   </TableCell>
                 </TableRow>
               ))}
