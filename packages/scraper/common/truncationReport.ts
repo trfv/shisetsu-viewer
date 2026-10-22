@@ -31,7 +31,7 @@ const sameShard = (a: ShardRef, b: ShardRef): boolean =>
 
 const MAX_ROWS = 200;
 
-const esc = (v: string): string => v.replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
+const esc = (v: string): string => v.replace(/[\\|]/g, "\\$&").replace(/\s+/g, " ").trim();
 
 export function buildTruncationReport(
   collected: readonly CollectedTruncation[],

@@ -67,3 +67,12 @@ test("retry したシャードは scrape フェーズの記録を捨てて retry
   assert.match(report ?? "", /勤労福祉会館/);
   assert.match(report ?? "", /駒込/);
 });
+
+test("表のセルを壊さないようバックスラッシュとパイプをエスケープする", () => {
+  const entry = collected("scrape", "tokyo-bunkyo", "1", "大原");
+  const report = buildTruncationReport(
+    [{ ...entry, record: { ...entry.record, context: { roomName: "A\\|B" } } }],
+    []
+  );
+  assert.match(report ?? "", /\| A\\\\\\\|B \|/);
+});
