@@ -72,6 +72,7 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_5]: "施設保守",
       [ReservationStatus.STATUS_6]: "休館",
       [ReservationStatus.STATUS_7]: "工事",
+      [ReservationStatus.STATUS_8]: "抽選",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "午前",

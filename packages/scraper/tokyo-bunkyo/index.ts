@@ -30,6 +30,7 @@ export const STATUS_MAP: Record<string, Status> = {
   // 休館のセルは disabled で選択できないため、実際には取れない
   休館: "RESERVATION_STATUS_STATUS_6",
   工事: "RESERVATION_STATUS_STATUS_7",
+  抽選: "RESERVATION_STATUS_STATUS_8",
 };
 
 const FACILITY_NAMES = [
@@ -283,7 +284,7 @@ export const scraper = defineScraper({
       roomName: roomName.replace(/\s*≪《[^》]*》≫$/, ""),
       date,
       division,
-      status,
+      status: status.replace(/^抽選\s*\(\d+\/\d+\)$/, "抽選"),
     }));
     return rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP);
   },
