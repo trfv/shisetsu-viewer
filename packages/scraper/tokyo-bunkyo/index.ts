@@ -30,6 +30,7 @@ export const STATUS_MAP: Record<string, Status> = {
   // 休館のセルは disabled で選択できないため、実際には取れない
   休館: "RESERVATION_STATUS_STATUS_6",
   工事: "RESERVATION_STATUS_STATUS_7",
+  抽選: "RESERVATION_STATUS_STATUS_8",
 };
 
 const FACILITY_NAMES = [
@@ -117,8 +118,19 @@ async function extractTimeSlots(page: Page): Promise<BunkyoSlot[]> {
   });
 }
 
-async function toggleCells(page: Page, startIndex: number, count: number): Promise<number> {
-  const labels = page.locator("tbody td label:not(.disabled)");
+// 抽選（.lot）と予約のコマを同じバッチで選ぶと「抽選申込と予約申込は同時に行えません」で止まる。
+const CELL_GROUPS = [
+  "tbody td label:not(.disabled):not(.lot)",
+  "tbody td label.lot:not(.disabled)",
+];
+
+async function toggleCells(
+  page: Page,
+  selector: string,
+  startIndex: number,
+  count: number
+): Promise<number> {
+  const labels = page.locator(selector);
   const total = await labels.count();
   let toggled = 0;
   for (let i = startIndex; i < total && toggled < count; i++) {
@@ -136,48 +148,44 @@ async function extractWeek(page: Page, weekIndex: number): Promise<BunkyoSlot[]>
     timeout: 30000,
   });
 
-  const totalCells = await page.locator("tbody td label:not(.disabled)").count();
-  if (totalCells === 0) {
-    return output;
-  }
+  for (const selector of CELL_GROUPS) {
+    const totalCells = await page.locator(selector).count();
+    for (let offset = 0; offset < totalCells; offset += MAX_SELECTIONS) {
+      const batchSize = await toggleCells(page, selector, offset, MAX_SELECTIONS);
+      if (batchSize === 0) break;
 
-  for (let offset = 0; offset < totalCells; offset += MAX_SELECTIONS) {
-    const batchSize = await toggleCells(page, offset, MAX_SELECTIONS);
-    if (batchSize === 0) break;
-
-    // waitForURL より heading を待つ方が堅牢
-    try {
-      await page.locator("button").filter({ hasText: "次へ進む" }).click();
-      await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 30000 });
-
-      const slotData = await extractTimeSlots(page);
-      output.push(...slotData);
-
-      await page.locator("button").filter({ hasText: "前に戻る" }).click();
-      await page.locator("tbody tr td label").first().waitFor({
-        state: "visible",
-        timeout: 30000,
-      });
-    } catch (batchErr) {
-      console.warn(
-        `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
-        batchErr
-      );
-      // SelectTime に残っている可能性がある
+      // waitForURL より heading を待つ方が堅牢
       try {
-        await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
+        await page.locator("button").filter({ hasText: "次へ進む" }).click();
+        await page.getByRole("heading", { name: "時間帯別空き状況" }).waitFor({ timeout: 30000 });
+
+        const slotData = await extractTimeSlots(page);
+        output.push(...slotData);
+
+        await page.locator("button").filter({ hasText: "前に戻る" }).click();
         await page.locator("tbody tr td label").first().waitFor({
           state: "visible",
-          timeout: 15000,
+          timeout: 30000,
         });
-      } catch {
-        throw batchErr;
+      } catch (batchErr) {
+        console.warn(
+          `Failed to extract batch ${offset / MAX_SELECTIONS + 1} at week ${weekIndex + 1}, skipping batch.`,
+          batchErr
+        );
+        // SelectTime に残っている可能性がある
+        try {
+          await page.locator("button").filter({ hasText: "前に戻る" }).click({ timeout: 5000 });
+          await page.locator("tbody tr td label").first().waitFor({
+            state: "visible",
+            timeout: 15000,
+          });
+        } catch {
+          throw batchErr;
+        }
       }
-    }
 
-    // 同時に選べるのは MAX_SELECTIONS 件までなので、次のバッチの前に外す
-    if (offset + MAX_SELECTIONS < totalCells) {
-      await toggleCells(page, offset, batchSize);
+      // 同時に選べるのは MAX_SELECTIONS 件までなので、次のバッチの前に外す
+      await toggleCells(page, selector, offset, batchSize);
     }
   }
 
@@ -251,14 +259,15 @@ export const scraper = defineScraper({
       goNext: async () => {
         const nextButton = page.locator("button").filter({ hasText: "次の期間" });
         if ((await nextButton.count()) === 0) return false;
-        const prevTableContent = await page.locator("tbody").first().innerText();
+        // tbody は日付を持たず状態も svg なので、全コマ同じ状態の週が続くと前週と区別できない
+        const prevHeader = await page.locator("thead").first().innerText();
         await nextButton.click();
         await page.waitForFunction(
           (prev) => {
-            const tbody = document.querySelector("tbody");
-            return tbody !== null && tbody.innerText !== prev;
+            const thead = document.querySelector("thead");
+            return thead !== null && thead.innerText !== prev;
           },
-          prevTableContent,
+          prevHeader,
           { timeout: 15000 }
         );
         await page.locator("tbody tr td label").first().waitFor({
@@ -275,7 +284,7 @@ export const scraper = defineScraper({
       roomName: roomName.replace(/\s*≪《[^》]*》≫$/, ""),
       date,
       division,
-      status,
+      status: status.replace(/^抽選\s*\(\d+\/\d+\)$/, "抽選"),
     }));
     return rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP);
   },
