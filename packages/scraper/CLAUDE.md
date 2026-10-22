@@ -6,6 +6,7 @@ Node が TS を直接実行する（ビルドなし）。1 予約システム = 
 
 - 各自治体の `index.test.ts` は共通の固定ボイラープレート。自治体固有ロジックを書かない。
 - 取得期間は `horizon` で宣言し、日付計算を自前で書かない。`transform` で `as` キャストしない（未マッピング値は `*_INVALID` + 警告）。
+- `collectPaginated` では、サイトの公開期間の終わりは `goNext` が `false`（`extractPage` なら `null`）を返して表す。throw は打ち切りとして `[scraper-truncation]` Issue に載る。`extractPage` の中で例外を握りつぶさない（記録に残らず、静かに欠落する）。
 - `engines/` の修正は同エンジンの全自治体に波及する。修正後は各自治体 1 施設ずつ検証する。tokyo-bunkyo / sumida / edogawa は同系 SPA だが抽出戦略が違うので、エンジンにまとめない。
 
 ## 罠
