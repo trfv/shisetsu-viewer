@@ -24,7 +24,7 @@ function slugify(value: string): string {
   return value.replace(/[^\p{L}\p{N}]+/gu, "_").replace(/^_+|_+$/g, "");
 }
 
-function recordSlug(facility: string, context: Record<string, unknown>): string {
+export function recordSlug(facility: string, context: Record<string, unknown>): string {
   const roomName = typeof context["roomName"] === "string" ? context["roomName"] : "";
   return [slugify(facility), slugify(roomName)].filter(Boolean).join("-") || "failure";
 }

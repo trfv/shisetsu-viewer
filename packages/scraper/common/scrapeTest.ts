@@ -62,6 +62,7 @@ export async function runScrapeTarget<T, E extends { length: number }>(
       }
     },
     ...(expectedDateCount !== undefined && { expectedDateCount }),
+    maxPages: pageCount,
     ...(maintenanceWindowJst !== undefined && { maintenanceWindowJst }),
   });
 }

@@ -223,6 +223,12 @@ jobs:
           pattern: failures-retry-*
           path: failures
           merge-multiple: true
+      # artifact 名のシャードで retry 済みかを判定するので、merge せず artifact ごとのディレクトリに置く
+      - name: Download truncation artifacts
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: truncations-*
+          path: truncations
       # software factory の reconcile が読む自治体別の結果。run 全体の結論は見ない
       - name: Build run summary
         env:
@@ -311,6 +317,62 @@ jobs:
             }
             body += `\n[失敗時のアーティファクト（DOM/screenshot）をダウンロード](${runUrl})\n\n`;
             body += `_最終更新: run ${context.runId}_`;
+
+            if (tracker) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                body, state: 'open',
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title: TITLE, body,
+              });
+            }
+      - name: Build truncation report
+        if: ${{ !cancelled() }}
+        env:
+          RETRIED_SHARDS: ${{ needs.prepare_retry.outputs.failedShards || '[]' }}
+        run: |
+          node packages/scraper/scripts/truncationReport.ts truncations "${RETRIED_SHARDS}" truncation-report.md
+          if [ -s truncation-report.md ]; then
+            { echo "## ページ送りの打ち切り"; echo; cat truncation-report.md; echo; } >> "${GITHUB_STEP_SUMMARY}"
+          fi
+      # dispatch は一部の自治体しか走らないので、打ち切りが無くても Issue を閉じてはいけない
+      - name: Upsert truncation tracker issue
+        if: ${{ !cancelled() && github.event_name == 'schedule' }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const MARKER = '<!-- scraper-truncation-tracker -->';
+            const TITLE = '[scraper-truncation] ページ送りの打ち切り';
+            const report = fs.readFileSync('truncation-report.md', 'utf8').trim();
+
+            const open = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100,
+            });
+            const tracker = open.find(
+              (i) => i.title === TITLE && (i.body || '').includes(MARKER)
+            );
+
+            if (report === '') {
+              if (tracker) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                  body: '直近の定期実行でページ送りの打ち切りは検出されませんでした。自動クローズします。',
+                });
+                await github.rest.issues.update({
+                  owner: context.repo.owner, repo: context.repo.repo, issue_number: tracker.number,
+                  state: 'closed',
+                });
+              }
+              return;
+            }
+
+            const runUrl =
+              `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `${MARKER}\n\n${report}\n\n[実行ログ](${runUrl})\n\n_最終更新: run ${context.runId}_`;
 
             if (tracker) {
               await github.rest.issues.update({

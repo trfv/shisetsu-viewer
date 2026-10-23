@@ -6,6 +6,7 @@ import { test } from "node:test";
 
 import type { Page } from "@playwright/test";
 
+import { collectPaginated } from "./paginate.ts";
 import { runScrapeTest } from "./runScrapeTest.ts";
 import type { TransformOutput } from "./types.ts";
 
@@ -222,4 +223,65 @@ test("searchPage === page のとき二重 close しない", async () => {
     persist: async () => {},
   });
   assert.equal(closed.count, 1);
+});
+
+test("成功してもページ送りを打ち切っていれば _truncations に記録を書く", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "runscrape-"));
+  const closed = { count: 0 };
+  await runScrapeTest({
+    municipality: "tokyo-test",
+    facility: "施設C",
+    context: {},
+    sourceRef: "tokyo-test/index.ts",
+    page: fakePage(closed),
+    baseDir,
+    maxPages: 10,
+    prepare: async () => fakePage(closed),
+    extract: () =>
+      collectPaginated<number>({
+        label: "施設C",
+        maxPages: 10,
+        extractPage: async (i) => [i],
+        goNext: async (i) => {
+          if (i === 2) throw new Error("next button gone");
+          return true;
+        },
+      }),
+    transform: async () => validOutput,
+    persist: async () => {},
+  });
+
+  const record = JSON.parse(
+    await fs.readFile(path.join(baseDir, "tokyo-test", "_truncations", "施設C.json"), "utf8")
+  );
+  assert.equal(record.maxPages, 10);
+  assert.deepEqual(record.truncations, [
+    { label: "施設C", page: 3, phase: "goNext", message: "next button gone" },
+  ]);
+  await assert.rejects(() =>
+    fs.access(path.join(baseDir, "tokyo-test", "_failures", "施設C.json"))
+  );
+});
+
+test("打ち切りなく成功したら古い _truncations の記録を消す", async () => {
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "runscrape-"));
+  await fs.mkdir(path.join(baseDir, "tokyo-test", "_truncations"), { recursive: true });
+  const stale = path.join(baseDir, "tokyo-test", "_truncations", "施設D.json");
+  await fs.writeFile(stale, "{}");
+
+  const closed = { count: 0 };
+  await runScrapeTest({
+    municipality: "tokyo-test",
+    facility: "施設D",
+    context: {},
+    sourceRef: "tokyo-test/index.ts",
+    page: fakePage(closed),
+    baseDir,
+    prepare: async () => fakePage(closed),
+    extract: async () => [1],
+    transform: async () => validOutput,
+    persist: async () => {},
+  });
+
+  await assert.rejects(() => fs.access(stale));
 });

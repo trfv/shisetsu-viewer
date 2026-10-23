@@ -248,14 +248,7 @@ export const scraper = defineScraper({
     return collectPaginated({
       maxPages: pageCount,
       label: target.facilityName,
-      extractPage: async (weekIndex) => {
-        try {
-          return await extractWeek(page, weekIndex);
-        } catch (e) {
-          console.warn(`Failed to extract data at week ${weekIndex + 1}, skipping week.`, e);
-          return [];
-        }
-      },
+      extractPage: (weekIndex) => extractWeek(page, weekIndex),
       goNext: async () => {
         const nextButton = page.locator("button").filter({ hasText: "次の期間" });
         if ((await nextButton.count()) === 0) return false;

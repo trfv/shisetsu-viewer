@@ -9,6 +9,7 @@ import {
   resetPaginationEvents,
   type PaginationTruncation,
 } from "./paginate.ts";
+import { clearTruncationRecord, writeTruncationRecord } from "./truncationRecord.ts";
 import type { TransformOutput } from "./types.ts";
 import { validateTransformOutput } from "./validation.ts";
 
@@ -29,6 +30,7 @@ export interface RunScrapeTestOptions<E extends { length: number }> {
   persist: (transformOutput: TransformOutput) => Promise<void>;
   baseDir?: string;
   expectedDateCount?: number;
+  maxPages?: number;
   /** [開始時, 終了時)（JST の時） */
   maintenanceWindowJst?: readonly [number, number];
   now?: Date;
@@ -96,6 +98,16 @@ export async function runScrapeTest<E extends { length: number }>(
       context,
       ...(baseDir !== undefined && { baseDir }),
     });
+    const target = { municipality, facility, context, ...(baseDir !== undefined && { baseDir }) };
+    if (truncations.length > 0) {
+      await writeTruncationRecord({
+        ...target,
+        truncations,
+        ...(opts.maxPages !== undefined && { maxPages: opts.maxPages }),
+      });
+    } else {
+      await clearTruncationRecord(target);
+    }
   } catch (e) {
     // extract で throw した場合はまだ drain していない
     if (truncations.length === 0) truncations = drainPaginationEvents();
