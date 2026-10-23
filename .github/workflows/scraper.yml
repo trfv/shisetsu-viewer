@@ -24,6 +24,7 @@ on:
           - tokyo-edogawa
           - tokyo-meguro
           - tokyo-shinagawa
+          - tokyo-minato
           - kanagawa-kawasaki
           - all
       density:

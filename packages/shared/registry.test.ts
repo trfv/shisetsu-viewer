@@ -24,6 +24,7 @@ describe("registry", () => {
         "tokyo-kita",
         "tokyo-koutou",
         "tokyo-meguro",
+        "tokyo-minato",
         "tokyo-ota",
         "tokyo-shinagawa",
         "tokyo-sumida",

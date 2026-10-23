@@ -29,6 +29,7 @@ https://app.shisetsudb.com
 - 豊島区
 - 中央区
 - 文京区
+- 港区
 - 目黒区
 - 川崎市
 
