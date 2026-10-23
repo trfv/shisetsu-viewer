@@ -11,7 +11,6 @@ software factory の制御層である。
 現在は **observe モード**（フェーズ 2）で動いている。
 reconcile は作業項目 Issue の作成、更新、クローズと、dependabot PR へのラベル付けまでを行い、エージェントの起動と自動マージはしない。
 図の点線は、フェーズ 3 以降で有効にする部分である。
-旧来の単一 tracker Issue（`[scraper-repair] 構造変化の疑い`）は、observe の動作を確かめて撤去するまで並行して動いている。
 
 ```mermaid
 flowchart TD
