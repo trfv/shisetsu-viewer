@@ -30,6 +30,7 @@ https://app.shisetsudb.com
 - 中央区
 - 文京区
 - 港区
+- 足立区
 - 目黒区
 - 川崎市
 

@@ -35,6 +35,10 @@ export interface PKashikanConfig {
   statusMap: Readonly<Record<string, Status>>;
   /** scraper 側 `horizon.startOffsetDays` と揃える */
   startOffsetDays: number;
+  /** コマ間の空白セルの幅。サイトごとに違う */
+  spacerWidth: string;
+  /** 複数館のサイトは室場の前に会館一覧から target.facilityName を選ぶ */
+  selectBuilding: boolean;
 }
 
 function pad2(value: number): string {
@@ -92,9 +96,11 @@ export function buildSlots(
       }
       if (date < minDate || date > maxDate) return;
 
-      if (row.cells.length === 1 && row.cells[0]?.text === "休館") {
+      // 休館・保守の日は 1 セルが行全体を覆う
+      const wholeDay = row.cells.length === 1 && target.komas.length > 1 ? row.cells[0] : undefined;
+      if (wholeDay !== undefined) {
         for (const division of target.komas) {
-          slots.push({ roomName: target.roomName, date, division, status: "休館" });
+          slots.push({ roomName: target.roomName, date, division, status: wholeDay.text });
         }
         return;
       }
@@ -119,8 +125,8 @@ export function buildSlots(
   return slots;
 }
 
-async function readRawPage(page: Page): Promise<PKashikanRawPage> {
-  return page.evaluate(() => {
+async function readRawPage(page: Page, spacerWidth: string): Promise<PKashikanRawPage> {
+  return page.evaluate((spacer) => {
     const heading =
       [...document.querySelectorAll("h3")]
         .map((h3) => h3.textContent ?? "")
@@ -133,15 +139,22 @@ async function readRawPage(page: Page): Promise<PKashikanRawPage> {
         label: (tds[0]?.textContent ?? "").replace(/\s+/g, " ").trim(),
         cells: tds
           .slice(1)
-          // コマ間の空白セル
-          .filter((td) => td.style.width !== "15px")
+          // 幅だけで判定しない。足立区は 30 分コマ（21:00-21:30）も空白セルと同じ幅
+          .filter(
+            (td) =>
+              !(
+                td.style.width === spacer &&
+                (td.textContent ?? "").trim() === "" &&
+                !td.hasAttribute("onmousedown")
+              )
+          )
           .map((td) => ({
             text: (td.textContent ?? "").trim(),
             time: (td.getAttribute("onmousedown") ?? "").match(/'(\d{8})'/)?.[1] ?? "",
           })),
       }));
     return { heading, rows };
-  });
+  }, spacerWidth);
 }
 
 /** 最終ページの末尾は horizon を越えうるので範囲を持たせる */
@@ -174,6 +187,12 @@ export function pKashikanHooks(config: PKashikanConfig): {
     async prepare(page, target) {
       await page.goto(config.baseUrl);
       await Promise.all([page.waitForNavigation(), page.getByText("期間 の空きを見る").click()]);
+      if (config.selectBuilding) {
+        await Promise.all([
+          page.waitForNavigation(),
+          page.getByText(target.facilityName, { exact: true }).click(),
+        ]);
+      }
       await Promise.all([
         page.waitForNavigation(),
         page.getByText(target.roomName, { exact: true }).click(),
@@ -191,7 +210,7 @@ export function pKashikanHooks(config: PKashikanConfig): {
         label: "p-kashikan",
         extractPage: async (index) => {
           if (index === 0) await showFrom(page, start);
-          return [{ ...(await readRawPage(page)), minDate, maxDate }];
+          return [{ ...(await readRawPage(page, config.spacerWidth)), minDate, maxDate }];
         },
         goNext: async (index) => {
           await showFrom(page, addDays(start, (index + 1) * DAYS_PER_PAGE));

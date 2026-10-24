@@ -17,6 +17,7 @@ describe("registry", () => {
 
       const expected = [
         "kanagawa-kawasaki",
+        "tokyo-adachi",
         "tokyo-arakawa",
         "tokyo-bunkyo",
         "tokyo-chuo",
