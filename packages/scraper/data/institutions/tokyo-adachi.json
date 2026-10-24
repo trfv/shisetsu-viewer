@@ -1,0 +1,1423 @@
+[
+  {
+    "id": "7bfcdd07-f048-427f-b9c8-bf47e4a8d59a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "生涯学習センター",
+    "institution": "研修室1",
+    "building_kana": "ショウガイガクシュウセンター",
+    "institution_kana": "ケンシュウシツ1",
+    "building_system_name": "生涯学習センター",
+    "institution_system_name": "研修室1",
+    "capacity": 90,
+    "area": 126,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区千住五丁目13番5号（学びピア21内）",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-shogakucenter.net/facilities/",
+    "layout_image_url": "https://www.adachi-shogakucenter.net/download/TrainingRoom1.pdf",
+    "lottery_period": "",
+    "note": "電子ピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:30",
+      "RESERVATION_DIVISION_EVENING": "18:00-21:30"
+    }
+  },
+  {
+    "id": "b98e7671-ef23-4d15-9a46-a1ba02c250f6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "生涯学習センター",
+    "institution": "講堂",
+    "building_kana": "ショウガイガクシュウセンター",
+    "institution_kana": "コウドウ",
+    "building_system_name": "生涯学習センター",
+    "institution_system_name": "講堂",
+    "capacity": 198,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 14300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区千住五丁目13番5号（学びピア21内）",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-shogakucenter.net/facilities/",
+    "layout_image_url": "https://www.adachi-shogakucenter.net/download/auditorium.pdf",
+    "lottery_period": "",
+    "note": "電子ピアノ。「講演会、ビデオ鑑賞、式典、軽音楽会等で使えます」",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:30",
+      "RESERVATION_DIVISION_EVENING": "18:00-21:30"
+    }
+  },
+  {
+    "id": "7236eb3e-0e21-4fdd-9239-de8e42214477",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "竹の塚地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "タケノツカチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "竹の塚地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 100,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区竹の塚二丁目25番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-takenotsukacenter.net/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "アップライトピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "18815745-a6b1-4aae-9530-da8991b90ded",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "竹の塚地域学習センター",
+    "institution": "ホール",
+    "building_kana": "タケノツカチイキガクシュウセンター",
+    "institution_kana": "ホール",
+    "building_system_name": "竹の塚地域学習センター",
+    "institution_system_name": "ホール",
+    "capacity": 306,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 10100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 6900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区竹の塚二丁目25番17号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-takenotsukacenter.net/hall/",
+    "layout_image_url": "https://www.adachi-takenotsukacenter.net/download/seating_chart.pdf",
+    "lottery_period": "",
+    "note": "ピアノは有料の付帯設備。「太鼓やエレキギター、ヒップホップダンスなど 大きな音の出る楽器は演奏不可」",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:00",
+      "RESERVATION_DIVISION_EVENING": "17:30-21:30"
+    }
+  },
+  {
+    "id": "ca534ef1-d38e-4c45-9f2c-bb2750297d92",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "中央本町地域学習センター",
+    "institution": "音楽室",
+    "building_kana": "チュウオウホンチョウチイキガクシュウセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "中央本町地域学習センター",
+    "institution_system_name": "音楽室",
+    "capacity": 10,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区中央本町三丁目15番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-chuohonchocenter.net/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "防音。「ピアノ、歌などの練習にお使いいただけます」。譜面台 10 台",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:00",
+      "RESERVATION_DIVISION_EVENING": "17:30-21:30"
+    }
+  },
+  {
+    "id": "d8b5864b-6410-4966-abbd-2ea38b6c69cf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "中央本町地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "チュウオウホンチョウチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "中央本町地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 90,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区中央本町三丁目15番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-chuohonchocenter.net/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "1d70d83c-bf2e-40fd-b7ea-0bb1b8baf137",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "東和地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "トウワチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "東和地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 60,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区東和三丁目12番9号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-towacenter.tokyo/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "「防音設備はなく、隣が第3学習室となりますので大きな音が出る利用はお断りしています」",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "ea9319f1-db3a-48ff-ad16-47d0d3bf6c7c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "佐野地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "サノチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "佐野地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 55,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区佐野二丁目43番5号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://grandio.co.jp/sano/guide/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "985007e0-45bc-4437-9a16-598b5500e8de",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "舎人地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "トネリチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "舎人地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 50,
+    "area": 125,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区舎人一丁目3番26号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.adachi-tonericenter.net/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "アップライトピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "f78a7cce-3a34-4588-a28e-c7ae322f6f89",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "保塚地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "ホツカチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "保塚地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 40,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区保塚町7番16号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://grandio.co.jp/hotsuka/guide/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "8986ef3f-78fc-4284-b17e-b2684959e74e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "江北地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "コウホクチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "江北地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 30,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区江北三丁目39番4号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://tme-adachi.com/kohoku/facility/facility01",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "2c8ebfe1-f322-40f0-81de-2515f2b2afd5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "興本地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "オキモトチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "興本地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 60,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区興野一丁目18番38号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://tme-adachi.com/okimoto/facility/facility01/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "アップライトピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "c1b6fab3-b75a-4173-a3b3-a0f0d2b50476",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "興本地域学習センター",
+    "institution": "第3学習室",
+    "building_kana": "オキモトチイキガクシュウセンター",
+    "institution_kana": "ダイ3ガクシュウシツ",
+    "building_system_name": "興本地域学習センター",
+    "institution_system_name": "第3学習室",
+    "capacity": 10,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区興野一丁目18番38号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://tme-adachi.com/okimoto/facility/facility07/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "「防音対応をしておりますので、軽音楽の練習にもご利用できます」",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:00",
+      "RESERVATION_DIVISION_EVENING": "17:30-21:30"
+    }
+  },
+  {
+    "id": "59087fdf-8268-49c1-ac8b-4612b3bec1ef",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "伊興地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "イコウチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "伊興地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 100,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区伊興二丁目4番22号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://grandio.co.jp/ikou/guide/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "アップライトピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "86e24a36-9f30-48e6-ac1f-db55ed2665b4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "鹿浜地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "シカハマチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "鹿浜地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 50,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区鹿浜六丁目8番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.adachi-shikahamacenter.net/facilities/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "c65772bb-9da8-4fa8-b5c6-bde5ce58f8a9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "新田地域学習センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "シンデンチイキガクシュウセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "新田地域学習センター",
+    "institution_system_name": "レクリエーションホール",
+    "capacity": 80,
+    "area": 174,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区新田二丁目2番2号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://tme-adachi.com/sinden/facility/facility06/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "電子ピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:30-15:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:00",
+      "RESERVATION_DIVISION_EVENING": "18:30-21:30"
+    }
+  },
+  {
+    "id": "9438bae0-9740-4f87-a652-6cd8a5cd99f4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第1レクリエーションホール",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ1レクリエーションホール",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第1レクリエーションホール",
+    "capacity": 48,
+    "area": 86,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.galaxcity.jp/facilities/recreation-hall.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "5a81a288-e65a-43c1-81c4-84eb3c5b6aa0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第2レクリエーションホール",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ2レクリエーションホール",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第2レクリエーションホール",
+    "capacity": 35,
+    "area": 62,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.galaxcity.jp/facilities/recreation-hall.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "1807c06f-5f1d-468b-897a-cc70ce1e6875",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第3レクリエーションホール",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ3レクリエーションホール",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第3レクリエーションホール",
+    "capacity": 70,
+    "area": 126,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 850,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 850,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.galaxcity.jp/facilities/recreation-hall.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "b5bc499e-2112-4915-a857-6ca9f3e26b58",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第1音楽室",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ1オンガクシツ",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第1音楽室",
+    "capacity": 24,
+    "area": 42,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 250,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 250,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.galaxcity.jp/facilities/music-room.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": "ドラムセットあり。アンプの貸出あり"
+  },
+  {
+    "id": "edce509c-ab4f-4c7b-90b2-c44d24aae08f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第2音楽室",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ2オンガクシツ",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第2音楽室",
+    "capacity": 32,
+    "area": 57,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 400,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.galaxcity.jp/facilities/music-room.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": "ドラムセットあり。アンプの貸出あり"
+  },
+  {
+    "id": "334aedb8-b2d0-4add-947b-b2ade73efe19",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "第3音楽室",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "ダイ3オンガクシツ",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "第3音楽室",
+    "capacity": 24,
+    "area": 42,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 250,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 250,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.galaxcity.jp/facilities/music-room.html",
+    "layout_image_url": "https://www.galaxcity.jp/docs/622f816df326c249789be77a4aaa168f4982980a.pdf",
+    "lottery_period": "",
+    "note": "アンプの貸出あり"
+  },
+  {
+    "id": "b5d527a6-7033-4bfe-b329-c36fbae240a6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "ギャラクシティ",
+    "institution": "リハーサル室",
+    "building_kana": "ギャラクシティ",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "ギャラクシティ",
+    "institution_system_name": "リハーサル室",
+    "capacity": 30,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都足立区栗原1-3-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.galaxcity.jp/cultural-hall/guide/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "西新井文化ホール内。アップライトピアノ",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:30",
+      "RESERVATION_DIVISION_AFTERNOON": "13:00-17:00",
+      "RESERVATION_DIVISION_EVENING": "17:30-21:30"
+    }
+  }
+]
