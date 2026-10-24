@@ -341,7 +341,7 @@ describe("toReservationSearchQueryParams", () => {
       (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
     ).map((m) => m.toString());
     expect(result.municipality).toEqual(expectedMunicipalities);
-    expect(result.municipality).toHaveLength(12);
+    expect(result.municipality).toHaveLength(13);
   });
 
   test("returns specific municipality when not 'all'", () => {

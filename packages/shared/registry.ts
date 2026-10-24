@@ -469,6 +469,31 @@ export const MUNICIPALITIES = {
       [FeeDivision.EVENING]: "夜間",
     },
   },
+  MUNICIPALITY_MINATO: {
+    key: "MUNICIPALITY_MINATO",
+    slug: "minato",
+    prefecture: "tokyo",
+    label: "港区",
+    reservationExcluded: false,
+    reservationStatus: {
+      [ReservationStatus.VACANT]: "空き",
+      [ReservationStatus.STATUS_1]: "予約あり",
+      [ReservationStatus.STATUS_2]: "休館日",
+      [ReservationStatus.STATUS_3]: "保守日",
+      [ReservationStatus.STATUS_4]: "受付期間外",
+      [ReservationStatus.STATUS_5]: "閉館",
+    },
+    reservationDivision: {
+      [ReservationDivision.MORNING]: "午前",
+      [ReservationDivision.AFTERNOON]: "午後",
+      [ReservationDivision.EVENING]: "夜間",
+    },
+    feeDivision: {
+      [FeeDivision.MORNING]: "午前",
+      [FeeDivision.AFTERNOON]: "午後",
+      [FeeDivision.EVENING]: "夜間",
+    },
+  },
 } as const satisfies Record<string, MunicipalityConfig>;
 
 export type MunicipalityKey = keyof typeof MUNICIPALITIES;

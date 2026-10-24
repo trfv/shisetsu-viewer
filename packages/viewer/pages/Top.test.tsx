@@ -187,7 +187,7 @@ describe("Top Page", () => {
       const areaHeading = screen.getByRole("heading", { name: "対応地区" }).element();
       const nextSibling = areaHeading.nextElementSibling;
       const listItems = nextSibling?.querySelectorAll("li");
-      expect(listItems).toHaveLength(13);
+      expect(listItems).toHaveLength(14);
 
       const unavailableAreas = screen.getByText(/※現在、予約状況が表示できません/).all();
       expect(unavailableAreas).toHaveLength(2);
