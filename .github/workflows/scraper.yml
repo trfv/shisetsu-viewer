@@ -26,6 +26,8 @@ on:
           - tokyo-shinagawa
           - tokyo-minato
           - tokyo-adachi
+          - tokyo-katsushika
+          - tokyo-katsushika-symphony-hills
           - kanagawa-kawasaki
           - all
       density:

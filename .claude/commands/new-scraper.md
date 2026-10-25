@@ -74,7 +74,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 - 施設分類の一覧
 - 各施設の部屋一覧（`次の一覧` リンクがある場合は全ページ取得）
 
-サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
+サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし「練習」のような広い目的はダンス・演劇の練習も含む（tokyo-katsushika-symphony-hills のレクレーションルーム）。施設側に部屋ごとの利用目的表や「楽器演奏可」の一覧があれば、それで演奏・合唱ができる部屋に絞る。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
 
 検索結果の画面からブラウザの「戻る」で検索フォームに戻ると、フォーム再送信のキャッシュ切れエラーになるサイトがある（p-kashikan 系など）。目的や館を変えるたびにトップから検索をやり直すか、`browser_run_code` でフォームの値を設定して直接 submit する。
 
@@ -93,8 +93,11 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 あわせて以下も確かめる:
 
-- **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する
+- **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する。JSON が無くても、日付送りが「フォームの値を書き換えて submit」だけなら、同じフォームを `page.request.post` で日付を変えて送り、返った HTML を解析できる（例: `engines/aserv.ts`。画面遷移が要らず、画像や JS も取りに行かない）
+- **色で表す状態**: 「色の塗られていない部分は予約可能」のように状態を色だけで表すサイトは、セルの id / class と CSS を突き合わせて、どの値に塗りがあるかを確定する（`page.request.get` で CSS を落として `#<id>` を grep する）。「塗りなしだが押せない」値（受付期間の手前・後ろなど）がよくあるので、凡例どおり空きと見るか、受付期間外と見るかを値ごとに決める
 - **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする
+- **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い
+- **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
 
 #### WebReaf Grand 系の場合
 
@@ -109,7 +112,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 探索結果を提示し、以下を AskUserQuestion で確認:
 
-- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう。選択肢に部屋数を書くときは、説明に並べた部屋を数え直してから書く
+- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう。**選択肢に部屋数を書くときは、説明に並べた部屋を数え直してから書く**（tokyo-katsushika で 20 室を 19 室と書いた）。館ごとの内訳（例: 2+1+1+…）を足し算で示すと数え違いに気づける
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
 - 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
@@ -152,6 +155,7 @@ STATUS_MAP:
 - **OpenReaf 系**（URL が `*.openreaf02.jp`、リンクチェーン + カレンダー + day-next 方式） → `engines/openreaf.ts` の `openreafHooks()` を使用。参照実装: `tokyo-kita`, `tokyo-chuo`
 - **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`
 - **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/`、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
+- **aserv 系**（URL が `reserve.aserv.jp/<団体>/`、館・区分・利用日を選ぶ `cal.do` の日表示） → `engines/aserv.ts` の `aservHooks()` を使用。参照実装: `tokyo-katsushika-symphony-hills`
 - その他のエンジン（`genkiplaza` / `pKashikan`）は `engines/` の各ファイルを参照
 
 同一製品の自治体が既に2つ以上あるのに対応エンジンが無い場合は、新しいエンジンを `engines/` に切り出すことを検討する。採用が 1 自治体でも、パース処理を純粋関数として切り出してユニットテストしたい場合はエンジンにしてよい（ユニットテストは `engines/*.test.ts` と `common/*.test.ts` だけが `npm run test:unit` で走る）。
@@ -266,6 +270,13 @@ MUNICIPALITY_<UPPERCASE_SLUG>: {
 - 既存の同じ予約システム（OpenReaf 等）を使う自治体のエントリを参考にする
 - `reservationExcluded` は「スクレイパー自体が存在しない」かどうか。`false` にしても **viewer には出ない**（viewer は手書きの一覧を持つ。2.6 参照）
 - 定期実行での安定性が未確認なら `scraperCiExcluded: true` で CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区・目黒区と同じ「※現在、予約状況が表示できません」の注記を付ける
+
+**同じ自治体の別予約システム**（区の共通システムとは別に、文化会館の指定管理者が持つシステムなど）は、新しい自治体ではなく親自治体の追加スクレイパーにする（例: tokyo-kita-cocokita、tokyo-katsushika-symphony-hills）:
+
+- 親のエントリの `additionalScrapers` に名前を足し、ディレクトリは `<prefecture>-<slug>-<name>`。`scraper.yml` の choice にも足す（`database.yml` は親だけ）
+- 施設は親の `data/institutions/<prefecture>-<slug>.json` に追記する。viewer・README の変更は要らない
+- 状態と区分のラベルは親と共有なので、親の STATUS / DIVISION の番号に合わせる。1 時間刻みのような時刻の区分は、両方の時間帯を覆う起点で番号を振ると自治体内でラベルが揃う。午前・午後・夜間の実時刻が親と違うときは施設 JSON の `division_labels` で出す
+- `maintenanceWindowJst` は親と共有の毎日の窓なので、追加システムだけの月 1 回のメンテナンスには使えない
 
 追加後、shared パッケージの型チェックも実行:
 
@@ -399,7 +410,7 @@ cd packages/scraper && npx playwright test <prefecture>-<slug>/ --grep "<最初�
 - `reservation` に `INVALID` が含まれていないか（含まれていれば DIVISION_MAP/STATUS_MAP にマッピング漏れ）
 - `reservation` が空 `{}` になっていないか（ステータスのテキストが想定と異なり、マッピングできていない可能性）
 
-1 部屋で問題が無ければ全 target を流し（`npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける）、全ファイルを集計する。Playwright は実行のたびに `test-results/` を消すので、集計は対象の自治体だけを流した直後に行う（間に単一部屋や別自治体のテストを挟むと、集計対象が入れ替わる）:
+1 部屋で問題が無ければ全 target を流し（`WORKERS=1 npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける。ローカルの既定は 4 並列だが CI は 1 並列なので、アクセス制限の当たり方を CI に揃える）、全ファイルを集計する。Playwright は実行のたびに `test-results/` を消すので、集計は対象の自治体だけを流した直後に行う（間に単一部屋や別自治体のテストを挟むと、集計対象が入れ替わる）:
 
 - ファイルごとの日数・最初と最後の日付・1 日あたりの区分数・INVALID 件数・ステータスの内訳
 - 日付の範囲が受付期間と合っているか（打ち切りが早すぎない・遅すぎない）
@@ -437,4 +448,6 @@ INVALID や `{}` が見つかった場合:
 - テスト結果サマリー
 - 注意事項（institution データ `data/institutions/<slug>.json` の作成・更新が必要か等）
 - institution データを作成・更新した場合、マージで Database ワークフロー（`.github/workflows/database.yml`）が自動で D1 に反映する。D1 に施設が無いと予約行が突合できずに捨てられるので、マージ後にワークフローが成功したことを確かめる
-- 本コマンドの改善案の提案
+- 本コマンドの改善点と、その反映内容
+
+改善点（作業中に詰まったこと、手順書に無くて自分で見つけたこと、守れなかった手順）は、提案で終わらせず本ファイル（`.claude/commands/new-scraper.md`）に反映する。スクレイパーとは別のコミット（`docs(commands): ...`）にして同じ PR に積む。書くのは次の自治体でも効く一般的な手順で、その自治体だけの事情はスクレイパーのコードかコミットログに書く。
