@@ -21,7 +21,7 @@ argument-hint: <municipality-slug>
 
 ## スクレイパーパッケージの規約
 
-!cat packages/scraper/CLAUDE.md
+!`git show HEAD:packages/scraper/CLAUDE.md`
 
 ## 手順
 

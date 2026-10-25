@@ -22,11 +22,11 @@ argument-hint: <予約システムURL> <prefecture-slug>
 
 ## スクレイパーパッケージの規約
 
-!cat packages/scraper/CLAUDE.md
+!`git show HEAD:packages/scraper/CLAUDE.md`
 
 ## 既存スクレイパー一覧（参考実装）
 
-!ls packages/scraper/\*/index.ts
+!`git ls-files --full-name ':(top,glob)packages/scraper/*/index.ts'`
 
 ## 共通ユーティリティ（再利用必須）
 
@@ -75,6 +75,8 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 - 各施設の部屋一覧（`次の一覧` リンクがある場合は全ページ取得）
 
 サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
+
+検索結果の画面からブラウザの「戻る」で検索フォームに戻ると、フォーム再送信のキャッシュ切れエラーになるサイトがある（p-kashikan 系など）。目的や館を変えるたびにトップから検索をやり直すか、`browser_run_code` でフォームの値を設定して直接 submit する。
 
 ### 1.3 空き状況テーブルの解析
 
@@ -397,7 +399,7 @@ cd packages/scraper && npx playwright test <prefecture>-<slug>/ --grep "<最初�
 - `reservation` に `INVALID` が含まれていないか（含まれていれば DIVISION_MAP/STATUS_MAP にマッピング漏れ）
 - `reservation` が空 `{}` になっていないか（ステータスのテキストが想定と異なり、マッピングできていない可能性）
 
-1 部屋で問題が無ければ全 target を流し（`npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける）、全ファイルを集計する:
+1 部屋で問題が無ければ全 target を流し（`npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける）、全ファイルを集計する。Playwright は実行のたびに `test-results/` を消すので、集計は対象の自治体だけを流した直後に行う（間に単一部屋や別自治体のテストを挟むと、集計対象が入れ替わる）:
 
 - ファイルごとの日数・最初と最後の日付・1 日あたりの区分数・INVALID 件数・ステータスの内訳
 - 日付の範囲が受付期間と合っているか（打ち切りが早すぎない・遅すぎない）
