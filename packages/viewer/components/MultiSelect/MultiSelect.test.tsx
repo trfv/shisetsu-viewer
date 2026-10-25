@@ -104,6 +104,19 @@ describe("MultiSelect Component", () => {
     await expect.element(screen.getByRole("group", { name: "地区" })).toBeInTheDocument();
   });
 
+  it("選択肢の名前を押しても閉じずに切り替わる", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByText("北区"), { position: { x: 40, y: 8 } });
+
+    expect(handleChange).toHaveBeenCalledWith(["koutou", "kawasaki"]);
+    await expect.element(screen.getByRole("group", { name: "地区" })).toBeInTheDocument();
+  });
+
   it("選択肢を足すと選択肢の順で渡す", async () => {
     const handleChange = vi.fn();
     const { user } = await renderWithProviders(

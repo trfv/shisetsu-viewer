@@ -60,8 +60,10 @@ export const MultiSelect: FC<Props> = ({
     }
   };
 
+  // relatedTarget が null のときは閉じない。ラベルの文字や、Safari のチェックボックスは
+  // クリックしてもフォーカスを取らず、押した時点でパネルが消えて切り替えが届かない。
   const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
-    if (!rootRef.current?.contains(e.relatedTarget)) setOpen(false);
+    if (e.relatedTarget && !rootRef.current?.contains(e.relatedTarget)) setOpen(false);
   };
 
   const selected = options.filter((o) => values.includes(o.value));
