@@ -95,6 +95,8 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 - **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する
 - **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする
+- **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い
+- **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
 
 #### WebReaf Grand 系の場合
 
@@ -109,7 +111,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 探索結果を提示し、以下を AskUserQuestion で確認:
 
-- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう。選択肢に部屋数を書くときは、説明に並べた部屋を数え直してから書く
+- スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう。**選択肢に部屋数を書くときは、説明に並べた部屋を数え直してから書く**（tokyo-katsushika で 20 室を 19 室と書いた）。館ごとの内訳（例: 2+1+1+…）を足し算で示すと数え違いに気づける
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
 - 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
@@ -399,7 +401,7 @@ cd packages/scraper && npx playwright test <prefecture>-<slug>/ --grep "<最初�
 - `reservation` に `INVALID` が含まれていないか（含まれていれば DIVISION_MAP/STATUS_MAP にマッピング漏れ）
 - `reservation` が空 `{}` になっていないか（ステータスのテキストが想定と異なり、マッピングできていない可能性）
 
-1 部屋で問題が無ければ全 target を流し（`npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける）、全ファイルを集計する。Playwright は実行のたびに `test-results/` を消すので、集計は対象の自治体だけを流した直後に行う（間に単一部屋や別自治体のテストを挟むと、集計対象が入れ替わる）:
+1 部屋で問題が無ければ全 target を流し（`WORKERS=1 npx playwright test <prefecture>-<slug>/`。末尾の `/` を付ける。ローカルの既定は 4 並列だが CI は 1 並列なので、アクセス制限の当たり方を CI に揃える）、全ファイルを集計する。Playwright は実行のたびに `test-results/` を消すので、集計は対象の自治体だけを流した直後に行う（間に単一部屋や別自治体のテストを挟むと、集計対象が入れ替わる）:
 
 - ファイルごとの日数・最初と最後の日付・1 日あたりの区分数・INVALID 件数・ステータスの内訳
 - 日付の範囲が受付期間と合っているか（打ち切りが早すぎない・遅すぎない）
@@ -437,4 +439,6 @@ INVALID や `{}` が見つかった場合:
 - テスト結果サマリー
 - 注意事項（institution データ `data/institutions/<slug>.json` の作成・更新が必要か等）
 - institution データを作成・更新した場合、マージで Database ワークフロー（`.github/workflows/database.yml`）が自動で D1 に反映する。D1 に施設が無いと予約行が突合できずに捨てられるので、マージ後にワークフローが成功したことを確かめる
-- 本コマンドの改善案の提案
+- 本コマンドの改善点と、その反映内容
+
+改善点（作業中に詰まったこと、手順書に無くて自分で見つけたこと、守れなかった手順）は、提案で終わらせず本ファイル（`.claude/commands/new-scraper.md`）に反映する。スクレイパーとは別のコミット（`docs(commands): ...`）にして同じ PR に積む。書くのは次の自治体でも効く一般的な手順で、その自治体だけの事情はスクレイパーのコードかコミットログに書く。
