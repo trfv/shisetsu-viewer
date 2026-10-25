@@ -38,9 +38,12 @@
   transform: translateY(-50%) rotate(180deg);
 }
 
-.trigger:focus-visible,
+.trigger:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
 .trigger[aria-expanded="true"] {
-  outline: none;
   border-bottom-color: var(--color-primary);
   border-bottom-width: 2px;
   padding-bottom: 4px;

@@ -35,7 +35,7 @@
   top: 1px;
   width: 6px;
   height: 10px;
-  border: solid #fff;
+  border: solid var(--color-on-primary);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -47,7 +47,7 @@
   top: 6px;
   width: 10px;
   height: 2px;
-  background-color: #fff;
+  background-color: var(--color-on-primary);
 }
 
 .checkbox:focus-visible {
