@@ -69,7 +69,8 @@ type ArakawaDay = { date: string; header: string[]; rows: string[][] };
 
 async function extractDay(page: Page): Promise<ArakawaDay[]> {
   const dateHeader = page.locator('//*[@id="contents"]/div[2]/div/h3');
-  await dateHeader.waitFor();
+  // 「次へ」の遷移が actionTimeout の 10 秒を超えることがあるので、navigationTimeout に揃える
+  await dateHeader.waitFor({ timeout: 30_000 });
   const date = await dateHeader.innerText();
   const table = page.locator('//*[@id="contents"]/div[2]/div/div/table');
   await table.waitFor();

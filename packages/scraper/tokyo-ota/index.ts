@@ -186,12 +186,17 @@ async function extractWeek(page: Page): Promise<OtaDay[]> {
   const table = page.locator("table.box_calendar").first();
   await table.waitFor();
 
-  const year = await page.locator("#optYear").inputValue();
+  // #optYear は週の初日の年なので、年をまたぐ週は 1 月に入った日から繰り上げる
+  let year = Number(await page.locator("#optYear").inputValue());
+  let prevMonth = 0;
 
   const dateThs = await table.locator("tr.date th").all();
   const dates: string[] = [];
   for (const dateTh of dateThs.slice(1)) {
     const dayText = await dateTh.locator("p.day").innerText();
+    const month = Number(dayText.match(/(\d+)月/)?.[1] ?? 0);
+    if (month < prevMonth) year += 1;
+    prevMonth = month;
     dates.push(`${year}年${dayText}`);
   }
 
@@ -279,7 +284,8 @@ export const scraper = defineScraper({
       },
       isDone: (collected) => collected.length >= pageCount,
       goNext: async () => {
-        const nextLink = page.locator("a").filter({ hasText: "次の7日分" });
+        // 分割区画（「第一集会室Ａ」など）のカレンダーにも同じ OffsetNext のリンクが付く
+        const nextLink = page.locator("a").filter({ hasText: "次の7日分" }).first();
         if ((await nextLink.count()) === 0) return false;
         await nextLink.click();
         await page.waitForLoadState("networkidle");
