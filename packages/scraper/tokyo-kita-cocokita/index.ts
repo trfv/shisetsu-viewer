@@ -85,5 +85,7 @@ export const scraper = defineScraper({
     divisionMap: DIVISION_MAP,
     statusMap: STATUS_MAP,
     startOffsetDays: START_OFFSET_DAYS,
+    spacerWidth: "15px",
+    selectBuilding: false,
   }),
 });

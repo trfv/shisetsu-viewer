@@ -90,6 +90,19 @@ describe("p-kashikan", () => {
       );
     });
 
+    it("保守の 1 セル行も全コマに広げる", () => {
+      const slots = buildSlots(
+        [page([{ label: "12/30 (水)", cells: cells("保守") }])],
+        target,
+        "2026-12-30",
+        "2026-12-30"
+      );
+      assert.deepEqual(
+        slots.map((s) => s.status),
+        target.komas.map(() => "保守")
+      );
+    });
+
     it("[minDate, maxDate] の外は捨てる", () => {
       const slots = buildSlots(
         [
