@@ -26,6 +26,7 @@ on:
           - tokyo-shinagawa
           - tokyo-minato
           - tokyo-adachi
+          - tokyo-katsushika
           - kanagawa-kawasaki
           - all
       density:
