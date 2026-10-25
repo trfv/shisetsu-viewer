@@ -4,11 +4,10 @@ import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 import { ReservationDivision } from "../constants/enums";
 import {
   ReservationStatusMap,
-  SupportedMunicipalities,
   getMunicipalitiesFromUrlParam,
   getReservationDivisionLabel,
   type SupportedMunicipality,
-  RESERVATION_EXCLUDED_MUNICIPALITIES,
+  RESERVATION_MUNICIPALITIES,
 } from "./municipality";
 import {
   BRASS,
@@ -147,9 +146,7 @@ export const toReservationSearchParams = (
   maxDate: Date
 ): ReservationSearchParams => {
   return {
-    municipalities: getMunicipalitiesFromUrlParam(m).filter(
-      (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
-    ),
+    municipalities: getMunicipalitiesFromUrlParam(m, RESERVATION_MUNICIPALITIES),
     startDate:
       df &&
       (isSameDay(df, minDate) || isAfter(df, minDate)) &&
@@ -178,10 +175,7 @@ export const toReservationSearchQueryParams = ({
 }: ReservationSearchParams): ReservationSearchQueryParams => {
   return {
     limit: 100,
-    municipality:
-      municipalities.length > 0
-        ? municipalities
-        : SupportedMunicipalities.filter((m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)),
+    municipality: municipalities,
     isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
     isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
     isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,

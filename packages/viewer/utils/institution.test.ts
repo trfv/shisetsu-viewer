@@ -52,7 +52,7 @@ describe("toInstitutionSearchParams", () => {
   test("returns defaults when all params are null", () => {
     const result = toInstitutionSearchParams(null, null, null);
     expect(result).toEqual({
-      municipalities: [],
+      municipalities: [...SupportedMunicipalities],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -61,7 +61,7 @@ describe("toInstitutionSearchParams", () => {
   test("returns defaults when all params are undefined", () => {
     const result = toInstitutionSearchParams(undefined, undefined, undefined);
     expect(result).toEqual({
-      municipalities: [],
+      municipalities: [...SupportedMunicipalities],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -98,14 +98,13 @@ describe("toInstitutionSearchParams", () => {
 });
 
 describe("toInstitutionQueryParams", () => {
-  test("returns all 16 municipalities when none are selected", () => {
+  test("passes an empty municipality list when none are selected", () => {
     const result = toInstitutionQueryParams({
       municipalities: [],
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.municipality).toHaveLength(16);
-    expect(result.municipality).toEqual([...SupportedMunicipalities]);
+    expect(result.municipality).toEqual([]);
   });
 
   test("returns selected municipalities", () => {

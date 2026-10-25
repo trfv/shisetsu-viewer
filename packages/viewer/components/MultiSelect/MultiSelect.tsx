@@ -19,16 +19,18 @@ import styles from "./MultiSelect.module.css";
 type Props = {
   label: string;
   values: string[];
-  placeholder: string;
+  allLabel: string;
+  emptyLabel: string;
   options: { value: string; label: string }[];
   size?: BoxSize;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (values: string[]) => void;
 };
 
 export const MultiSelect: FC<Props> = ({
   label,
   values,
-  placeholder,
+  allLabel,
+  emptyLabel,
   options,
   size = "auto",
   onChange,
@@ -62,10 +64,26 @@ export const MultiSelect: FC<Props> = ({
     if (!rootRef.current?.contains(e.relatedTarget)) setOpen(false);
   };
 
-  const selectedLabels = options
-    .filter((o) => values.includes(o.value))
-    .map((o) => o.label)
-    .join("、");
+  const selected = options.filter((o) => values.includes(o.value));
+  const isAll = selected.length === options.length;
+  const summary = isAll
+    ? allLabel
+    : selected.length === 0
+      ? emptyLabel
+      : selected.map((o) => o.label).join("、");
+
+  const handleAllChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.checked ? options.map((o) => o.value) : []);
+  };
+
+  const handleOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    onChange(
+      options
+        .filter((o) => (o.value === value ? checked : values.includes(o.value)))
+        .map((o) => o.value)
+    );
+  };
 
   return (
     <BaseBox size={size}>
@@ -84,17 +102,26 @@ export const MultiSelect: FC<Props> = ({
           type="button"
         >
           <span className={styles["value"]} id={valueId}>
-            {selectedLabels || placeholder}
+            {summary}
           </span>
         </button>
         {open && (
           <div aria-labelledby={labelId} className={styles["panel"]} id={panelId} role="group">
+            <div className={styles["all"]}>
+              <Checkbox
+                checked={isAll}
+                indeterminate={!isAll && selected.length > 0}
+                label={allLabel}
+                onChange={handleAllChange}
+                value=""
+              />
+            </div>
             {options.map((o) => (
               <Checkbox
                 checked={values.includes(o.value)}
                 key={o.value}
                 label={o.label}
-                onChange={onChange}
+                onChange={handleOptionChange}
                 value={o.value}
               />
             ))}

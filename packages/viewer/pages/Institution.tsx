@@ -17,6 +17,7 @@ import {
   SupportedMunicipalities,
   SupportedMunicipalityMap,
   toMunicipalityUrlParam,
+  type SupportedMunicipality,
 } from "../utils/municipality";
 import {
   AVAILABLE_INSTRUMENT_MAP,
@@ -136,13 +137,12 @@ const InstitutionPage = () => {
   const { municipalities, availableInstruments, institutionSizes } = institutionSearchParams;
 
   const handleMunicipalitiesChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      const { value, checked } = event.target;
+    (next: string[]): void => {
       setQueryParams({
-        m: toMunicipalityUrlParam(toggleArrayParam(municipalities, value, checked)),
+        m: toMunicipalityUrlParam(next as SupportedMunicipality[], SupportedMunicipalities),
       });
     },
-    [setQueryParams, municipalities]
+    [setQueryParams]
   );
 
   const handleAvailableInstrumentsChange = useCallback(
@@ -162,9 +162,13 @@ const InstitutionPage = () => {
   );
 
   const chips = [
-    ...buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
-      setQueryParams({ m: toMunicipalityUrlParam(next) })
-    ),
+    ...(municipalities.length === SupportedMunicipalities.length
+      ? []
+      : buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
+          setQueryParams({
+            m: next.length > 0 ? toMunicipalityUrlParam(next, SupportedMunicipalities) : null,
+          })
+        )),
     ...buildFilterChips(AVAILABLE_INSTRUMENT_MAP, availableInstruments, (next) =>
       setQueryParams({ a: next })
     ),
@@ -183,7 +187,8 @@ const InstitutionPage = () => {
             label="地区"
             onChange={handleMunicipalitiesChange}
             options={MUNICIPALITY_OPTIONS}
-            placeholder="すべて"
+            allLabel="すべて"
+            emptyLabel="選択なし"
             size="medium"
             values={municipalities}
           />

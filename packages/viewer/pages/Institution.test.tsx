@@ -173,6 +173,36 @@ describe("Institution Page", () => {
       await expect.element(screen.getByRole("button", { name: "北区を削除" })).toBeInTheDocument();
     });
 
+    it("最後の地区チップを削除すると全地区に戻る", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "江東区を削除" }));
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 すべて");
+    });
+
+    it("地区を指定しないと「すべて」とすべての地区にチェックが入る", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+
+      await expect.element(screen.getByRole("checkbox", { name: "すべて" })).toBeChecked();
+      await expect.element(screen.getByRole("checkbox", { name: "江東区" })).toBeChecked();
+      await expect.element(screen.getByRole("checkbox", { name: "川崎市" })).toBeChecked();
+    });
+
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {
       useMswMock([]);
 

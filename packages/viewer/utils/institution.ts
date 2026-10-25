@@ -43,7 +43,7 @@ export const toInstitutionSearchParams = (
   i: (string | null)[] | null | undefined
 ): InstitutionSearchParams => {
   return {
-    municipalities: getMunicipalitiesFromUrlParam(m),
+    municipalities: getMunicipalitiesFromUrlParam(m, SupportedMunicipalities),
     availableInstruments: getAvailableInstrumentFromUrlParam(a),
     institutionSizes: getInstitutionSizeFromUrlParam(i),
   };
@@ -56,7 +56,7 @@ export const toInstitutionQueryParams = ({
 }: InstitutionSearchParams): InstitutionsQueryParams => {
   return {
     limit: 100,
-    municipality: municipalities.length > 0 ? municipalities : [...SupportedMunicipalities],
+    municipality: municipalities,
     isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
     isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
     isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,

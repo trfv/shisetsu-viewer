@@ -17,11 +17,10 @@ import { ArrayParam, DateParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatShortDatetime } from "../utils/format";
 import {
-  SupportedMunicipalities,
   SupportedMunicipalityMap,
   toMunicipalityUrlParam,
   type SupportedMunicipality,
-  RESERVATION_EXCLUDED_MUNICIPALITIES,
+  RESERVATION_MUNICIPALITIES,
 } from "../utils/municipality";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
@@ -42,9 +41,10 @@ type ReservationSearchRow = ReservationSearchHit & {
   [key: string]: unknown;
 };
 
-const MUNICIPALITY_OPTIONS = SupportedMunicipalities.filter(
-  (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
-).map((k) => ({ value: k, label: SupportedMunicipalityMap[k]! }));
+const MUNICIPALITY_OPTIONS = RESERVATION_MUNICIPALITIES.map((k) => ({
+  value: k,
+  label: SupportedMunicipalityMap[k]!,
+}));
 
 export const COLUMNS: Columns<ReservationSearchRow> = [
   {
@@ -170,13 +170,12 @@ const ReservationPage = () => {
     reservationSearchParams;
 
   const handleMunicipalitiesChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      const { value, checked } = event.target;
+    (next: string[]): void => {
       setQueryParams({
-        m: toMunicipalityUrlParam(toggleArrayParam(municipalities, value, checked)),
+        m: toMunicipalityUrlParam(next as SupportedMunicipality[], RESERVATION_MUNICIPALITIES),
       });
     },
-    [setQueryParams, municipalities]
+    [setQueryParams]
   );
 
   const handleDateRangeChange = useCallback(
@@ -211,9 +210,13 @@ const ReservationPage = () => {
   );
 
   const chips = [
-    ...buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
-      setQueryParams({ m: toMunicipalityUrlParam(next) })
-    ),
+    ...(municipalities.length === RESERVATION_MUNICIPALITIES.length
+      ? []
+      : buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
+          setQueryParams({
+            m: next.length > 0 ? toMunicipalityUrlParam(next, RESERVATION_MUNICIPALITIES) : null,
+          })
+        )),
     {
       label: isSameDay(startDate, endDate)
         ? formatDate(startDate)
@@ -240,7 +243,8 @@ const ReservationPage = () => {
             label="地区"
             onChange={handleMunicipalitiesChange}
             options={MUNICIPALITY_OPTIONS}
-            placeholder="すべて"
+            allLabel="すべて"
+            emptyLabel="選択なし"
             size="medium"
             values={municipalities}
           />

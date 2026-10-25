@@ -30,6 +30,10 @@ export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] =
     (k) => MUNICIPALITIES[k].reservationExcluded
   ) as SupportedMunicipality[];
 
+export const RESERVATION_MUNICIPALITIES: SupportedMunicipality[] = SupportedMunicipalities.filter(
+  (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
+);
+
 const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
   SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
 );
@@ -49,10 +53,30 @@ export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = 
 export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> =
   Object.fromEntries(SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationStatus]));
 
-export const getMunicipalitiesFromUrlParam = (
-  params: (string | null)[] | null | undefined
-): SupportedMunicipality[] =>
-  SupportedMunicipalities.filter((k) => params?.includes(MUNICIPALITIES[k].slug));
+// 全部外した状態を空配列で表すと m ごと消え、全地区に戻ってしまう。
+const NO_MUNICIPALITY = "none";
 
-export const toMunicipalityUrlParam = (municipalities: SupportedMunicipality[]): string[] =>
-  municipalities.map((k) => MUNICIPALITIES[k].slug);
+export const getMunicipalitiesFromUrlParam = (
+  params: (string | null)[] | null | undefined,
+  candidates: readonly SupportedMunicipality[]
+): SupportedMunicipality[] => {
+  if (params?.includes(NO_MUNICIPALITY)) {
+    return [];
+  }
+  const selected = candidates.filter((k) => params?.includes(MUNICIPALITIES[k].slug));
+  return selected.length > 0 ? selected : [...candidates];
+};
+
+// 全選択は m を消して表す。地区を足したとき、既存のリンクにも新しい地区が入る。
+export const toMunicipalityUrlParam = (
+  municipalities: SupportedMunicipality[],
+  candidates: readonly SupportedMunicipality[]
+): string[] | null => {
+  if (municipalities.length === 0) {
+    return [NO_MUNICIPALITY];
+  }
+  if (candidates.every((k) => municipalities.includes(k))) {
+    return null;
+  }
+  return municipalities.map((k) => MUNICIPALITIES[k].slug);
+};

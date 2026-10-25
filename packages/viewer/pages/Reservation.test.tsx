@@ -204,6 +204,25 @@ describe("Reservation Page", () => {
       await expect.element(screen.getByRole("button", { name: "北区を削除" })).toBeInTheDocument();
     });
 
+    it("「すべて」を外すと検索せずに結果なしになる", async () => {
+      const captured = captureSearchParams();
+
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation"],
+      });
+
+      await expect.poll(() => captured.count).toBe(1);
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+      await user.click(screen.getByRole("checkbox", { name: "すべて" }));
+
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 選択なし");
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
+      expect(captured.count).toBe(1);
+    });
+
     it("URL に予約状況除外対象の自治体があってもチップに出ない", async () => {
       useMswMock([]);
 

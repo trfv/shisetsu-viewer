@@ -2,7 +2,7 @@ import { addMonths } from "date-fns";
 import { describe, expect, test } from "vitest";
 
 import { ReservationDivision } from "../constants/enums";
-import { RESERVATION_EXCLUDED_MUNICIPALITIES, SupportedMunicipalities } from "./municipality";
+import { RESERVATION_MUNICIPALITIES } from "./municipality";
 import {
   formatReservationMap,
   getResevationSearchFilterFromUrlParam,
@@ -154,7 +154,7 @@ describe("toReservationSearchParams", () => {
 
   test("returns defaults when all params are null", () => {
     const result = toReservationSearchParams(null, null, null, null, null, null, minDate, maxDate);
-    expect(result.municipalities).toEqual([]);
+    expect(result.municipalities).toEqual(RESERVATION_MUNICIPALITIES);
     expect(result.startDate).toBe(minDate);
     expect(result.endDate).toEqual(addMonths(minDate, 1));
     expect(result.filter).toEqual([]);
@@ -342,7 +342,7 @@ describe("toReservationSearchQueryParams", () => {
   const startDate = new Date(2026, 0, 15);
   const endDate = new Date(2026, 1, 15);
 
-  test("returns all non-excluded municipalities when none are selected", () => {
+  test("passes an empty municipality list when none are selected", () => {
     const result = toReservationSearchQueryParams({
       municipalities: [],
       startDate,
@@ -351,11 +351,7 @@ describe("toReservationSearchQueryParams", () => {
       availableInstruments: [],
       institutionSizes: [],
     });
-    const expectedMunicipalities = SupportedMunicipalities.filter(
-      (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
-    );
-    expect(result.municipality).toEqual(expectedMunicipalities);
-    expect(result.municipality).toHaveLength(15);
+    expect(result.municipality).toEqual([]);
   });
 
   test("returns selected municipalities", () => {

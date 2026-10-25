@@ -10,16 +10,19 @@ const options = [
   { value: "kawasaki", label: "川崎市" },
 ];
 
+const ALL = ["koutou", "kita", "kawasaki"];
+
 const defaultProps = {
   label: "地区",
   options,
-  placeholder: "すべて",
-  values: [] as string[],
+  allLabel: "すべて",
+  emptyLabel: "選択なし",
+  values: ALL,
   onChange: vi.fn(),
 };
 
 describe("MultiSelect Component", () => {
-  it("未選択のときはプレースホルダを表示する", async () => {
+  it("全部選んでいるときは「すべて」と表示する", async () => {
     await renderWithProviders(<MultiSelect {...defaultProps} />);
 
     await expect
@@ -27,7 +30,15 @@ describe("MultiSelect Component", () => {
       .toHaveAccessibleName("地区 すべて");
   });
 
-  it("選択中の項目を選択肢の順に並べて表示する", async () => {
+  it("何も選んでいないときは「選択なし」と表示する", async () => {
+    await renderWithProviders(<MultiSelect {...defaultProps} values={[]} />);
+
+    await expect
+      .element(screen.getByRole("button", { name: /^地区/ }))
+      .toHaveAccessibleName("地区 選択なし");
+  });
+
+  it("一部を選んでいるときは選択肢の順に並べて表示する", async () => {
     await renderWithProviders(<MultiSelect {...defaultProps} values={["kawasaki", "koutou"]} />);
 
     await expect
@@ -44,7 +55,7 @@ describe("MultiSelect Component", () => {
     await expect.element(screen.getByRole("checkbox", { name: "北区" })).not.toBeInTheDocument();
   });
 
-  it("ボタンを押すと選択肢を開き、もう一度押すと閉じる", async () => {
+  it("ボタンを押すと「すべて」と選択肢を開き、もう一度押すと閉じる", async () => {
     const { user } = await renderWithProviders(<MultiSelect {...defaultProps} />);
 
     const button = screen.getByRole("button", { name: /^地区/ });
@@ -52,23 +63,35 @@ describe("MultiSelect Component", () => {
 
     await expect.element(button).toHaveAttribute("aria-expanded", "true");
     await expect.element(screen.getByRole("group", { name: "地区" })).toBeInTheDocument();
-    expect(screen.getByRole("checkbox").all()).toHaveLength(3);
+    expect(screen.getByRole("checkbox").all()).toHaveLength(4);
 
     await user.click(button);
 
     await expect.element(screen.getByRole("group", { name: "地区" })).not.toBeInTheDocument();
   });
 
-  it("valuesに含まれる選択肢がチェック状態になる", async () => {
+  it("全部選んでいるときは「すべて」とすべての選択肢がチェック状態になる", async () => {
+    const { user } = await renderWithProviders(<MultiSelect {...defaultProps} />);
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+
+    await expect.element(screen.getByRole("checkbox", { name: "すべて" })).toBeChecked();
+    await expect.element(screen.getByRole("checkbox", { name: "江東区" })).toBeChecked();
+    await expect.element(screen.getByRole("checkbox", { name: "北区" })).toBeChecked();
+    await expect.element(screen.getByRole("checkbox", { name: "川崎市" })).toBeChecked();
+  });
+
+  it("一部を選んでいるときは「すべて」が中間状態になる", async () => {
     const { user } = await renderWithProviders(<MultiSelect {...defaultProps} values={["kita"]} />);
 
     await user.click(screen.getByRole("button", { name: /^地区/ }));
 
+    await expect.element(screen.getByRole("checkbox", { name: "すべて" })).toBePartiallyChecked();
     await expect.element(screen.getByRole("checkbox", { name: "江東区" })).not.toBeChecked();
     await expect.element(screen.getByRole("checkbox", { name: "北区" })).toBeChecked();
   });
 
-  it("選択肢を切り替えるとonChangeが値付きで呼ばれ、選択肢は開いたまま", async () => {
+  it("選択肢を外すと残りを選択肢の順で渡し、選択肢は開いたまま", async () => {
     const handleChange = vi.fn();
     const { user } = await renderWithProviders(
       <MultiSelect {...defaultProps} onChange={handleChange} />
@@ -77,9 +100,44 @@ describe("MultiSelect Component", () => {
     await user.click(screen.getByRole("button", { name: /^地区/ }));
     await user.click(screen.getByRole("checkbox", { name: "北区" }));
 
-    expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(handleChange.mock.calls[0]![0].target.value).toBe("kita");
+    expect(handleChange).toHaveBeenCalledWith(["koutou", "kawasaki"]);
     await expect.element(screen.getByRole("group", { name: "地区" })).toBeInTheDocument();
+  });
+
+  it("選択肢を足すと選択肢の順で渡す", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} values={["kawasaki"]} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByRole("checkbox", { name: "江東区" }));
+
+    expect(handleChange).toHaveBeenCalledWith(["koutou", "kawasaki"]);
+  });
+
+  it("「すべて」を外すと空を渡す", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByRole("checkbox", { name: "すべて" }));
+
+    expect(handleChange).toHaveBeenCalledWith([]);
+  });
+
+  it("一部を選んでいるときに「すべて」を押すと全部を渡す", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} values={["kita"]} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByRole("checkbox", { name: "すべて" }));
+
+    expect(handleChange).toHaveBeenCalledWith(ALL);
   });
 
   it("Escapeで閉じてボタンにフォーカスを戻し、外側にはEscapeを伝えない", async () => {
@@ -120,10 +178,9 @@ describe("MultiSelect Component", () => {
     );
 
     await user.click(screen.getByRole("button", { name: /^地区/ }));
-    await user.tab();
-    await user.tab();
-    await user.tab();
-    await user.tab();
+    for (let i = 0; i < 5; i++) {
+      await user.tab();
+    }
 
     await expect.element(screen.getByRole("button", { name: "次の要素" })).toHaveFocus();
     await expect.element(screen.getByRole("group", { name: "地区" })).not.toBeInTheDocument();

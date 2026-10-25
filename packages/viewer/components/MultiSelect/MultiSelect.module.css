@@ -70,3 +70,9 @@
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-4);
 }
+
+.all {
+  grid-column: 1 / -1;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-divider);
+}
