@@ -121,7 +121,12 @@ async function extractDay(page: Page): Promise<KatsushikaDay> {
           header[c] =
             c === 0
               ? (cell.textContent ?? "").replace(/\s+/g, "")
-              : (cell.innerHTML.split(/<br\s*\/?>/i)[0] ?? "").replace(/<[^>]+>/g, "").trim();
+              : (() => {
+                  const firstLineHtml = cell.innerHTML.split(/<br\s*\/?>/i)[0] ?? "";
+                  const tmp = document.createElement("div");
+                  tmp.innerHTML = firstLineHtml;
+                  return (tmp.textContent ?? "").trim();
+                })();
         } else if (cell.tagName === "TH") {
           room = (cell.textContent ?? "").trim();
         } else {
