@@ -1,5 +1,6 @@
 :root {
   --color-header-bg: #2a3544;
+  --color-focus-ring-on-header: var(--color-teal-bright-main);
 
   --color-teal-main: #17706a;
   --color-teal-light: #4a9e94;
@@ -92,7 +93,8 @@
   --color-bg-default: var(--color-bg);
   --color-snackbar-bg: #323232;
   --color-snackbar-text: #fff;
-  --color-focus-ring: rgba(27, 122, 110, 0.4);
+  --color-focus-ring: var(--color-primary);
+  --color-on-primary: var(--color-white);
 
   color-scheme: light;
 }
@@ -127,7 +129,8 @@
   --color-bg-default: var(--color-bg);
   --color-snackbar-bg: #e8ecf0;
   --color-snackbar-text: #1a2332;
-  --color-focus-ring: rgba(77, 184, 172, 0.5);
+  --color-focus-ring: var(--color-primary);
+  --color-on-primary: var(--color-slate-700);
 
   color-scheme: dark;
 }

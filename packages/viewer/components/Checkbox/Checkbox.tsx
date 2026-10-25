@@ -11,6 +11,7 @@ type Props = {
   size?: BoxSize;
   /** CheckboxGroup 内では不要 */
   checked?: boolean;
+  indeterminate?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -19,6 +20,7 @@ export const Checkbox: FC<Props> = ({
   value,
   size = "auto",
   checked = false,
+  indeterminate = false,
   onChange = () => null,
 }) => (
   <BaseBox size={size}>
@@ -27,6 +29,9 @@ export const Checkbox: FC<Props> = ({
         checked={checked}
         className={styles["checkbox"]}
         onChange={onChange}
+        ref={(el) => {
+          if (el) el.indeterminate = indeterminate;
+        }}
         type="checkbox"
         value={value}
       />

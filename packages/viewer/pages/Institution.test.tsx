@@ -32,22 +32,33 @@ describe("COLUMNS定義", () => {
   it("隠しカラム(municipality)のvalueGetterが正しい値を返す", () => {
     const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(col?.valueGetter?.({ ...paramsFor(row), value: row.municipality } as never)).toBe(
-      "江東区"
-    );
+    expect(
+      col?.valueGetter?.({
+        ...paramsFor(row),
+        value: row.municipality,
+      } as never)
+    ).toBe("江東区");
   });
 
   it("隠しカラム(municipality)のvalueGetterが不明な値に対して空文字を返す", () => {
     const row = createMockInstitutionSummary({ municipality: "UNKNOWN" });
     const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(col?.valueGetter?.({ ...paramsFor(row), value: row.municipality } as never)).toBe("");
+    expect(
+      col?.valueGetter?.({
+        ...paramsFor(row),
+        value: row.municipality,
+      } as never)
+    ).toBe("");
   });
 
   it("隠しカラム(is_equipped_music_stand)のvalueGetterが正しい値を返す", () => {
     const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "is_equipped_music_stand");
     expect(
-      col?.valueGetter?.({ ...paramsFor(row), value: row.is_equipped_music_stand } as never)
+      col?.valueGetter?.({
+        ...paramsFor(row),
+        value: row.is_equipped_music_stand,
+      } as never)
     ).toBeTruthy();
   });
 
@@ -55,7 +66,10 @@ describe("COLUMNS定義", () => {
     const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "is_equipped_piano");
     expect(
-      col?.valueGetter?.({ ...paramsFor(row), value: row.is_equipped_piano } as never)
+      col?.valueGetter?.({
+        ...paramsFor(row),
+        value: row.is_equipped_piano,
+      } as never)
     ).toBeTruthy();
   });
 
@@ -87,7 +101,7 @@ describe("COLUMNS定義", () => {
 
 describe("Institution Page", () => {
   describe("検索フォームの表示", () => {
-    it("絞り込みボタンを押すと地区のSelect、利用可能楽器、施設サイズが表示される", async () => {
+    it("絞り込みボタンを押すと地区、利用可能楽器、施設サイズが表示される", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<InstitutionPage />, {
@@ -111,7 +125,7 @@ describe("Institution Page", () => {
       await expect.element(screen.getByText("江東区")).toBeInTheDocument();
     });
 
-    it("municipality=allの場合、地区チップが表示されない", async () => {
+    it("地区を選んでいない場合、地区チップが表示されない", async () => {
       useMswMock([]);
 
       await renderWithProviders(<InstitutionPage />, {
@@ -124,26 +138,69 @@ describe("Institution Page", () => {
   });
 
   describe("検索フォームの操作", () => {
-    it("地区を変更するとチップが更新される", async () => {
+    it("地区を追加で選ぶと選んだ地区が並び、チップが追加される", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<InstitutionPage />, {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+      await user.click(screen.getByRole("checkbox", { name: "北区" }));
 
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 江東区、北区");
+      await expect.element(screen.getByRole("button", { name: "北区を削除" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("button", { name: "江東区を削除" }))
+        .toBeInTheDocument();
+    });
+
+    it("地区のチップを削除すると選択から外れる", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou&m=kita"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "江東区を削除" }));
+
+      await expect
+        .element(screen.getByRole("button", { name: "江東区を削除" }))
+        .not.toBeInTheDocument();
+      await expect.element(screen.getByRole("button", { name: "北区を削除" })).toBeInTheDocument();
+    });
+
+    it("最後の地区チップを削除すると全地区に戻る", async () => {
+      useMswMock([]);
+
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
+      });
+
+      await user.click(screen.getByRole("button", { name: "江東区を削除" }));
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
 
-      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 すべて");
+    });
 
-      const selectElement = screen.getByRole("combobox", { name: "地区" });
-      await user.selectOptions(selectElement, "MUNICIPALITY_KITA");
+    it("地区を指定しないと「すべて」とすべての地区にチェックが入る", async () => {
+      useMswMock([]);
 
-      await vi.waitFor(() => {
-        const elements = screen.getByText("北区").all();
-        expect(elements.length).toBeGreaterThanOrEqual(1);
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution"],
       });
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+
+      await expect.element(screen.getByRole("checkbox", { name: "すべて" })).toBeChecked();
+      await expect.element(screen.getByRole("checkbox", { name: "江東区" })).toBeChecked();
+      await expect.element(screen.getByRole("checkbox", { name: "川崎市" })).toBeChecked();
     });
 
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {

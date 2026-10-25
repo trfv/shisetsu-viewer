@@ -52,7 +52,7 @@ describe("toInstitutionSearchParams", () => {
   test("returns defaults when all params are null", () => {
     const result = toInstitutionSearchParams(null, null, null);
     expect(result).toEqual({
-      municipality: "all",
+      municipalities: [...SupportedMunicipalities],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -61,15 +61,20 @@ describe("toInstitutionSearchParams", () => {
   test("returns defaults when all params are undefined", () => {
     const result = toInstitutionSearchParams(undefined, undefined, undefined);
     expect(result).toEqual({
-      municipality: "all",
+      municipalities: [...SupportedMunicipalities],
       availableInstruments: [],
       institutionSizes: [],
     });
   });
 
-  test("parses municipality URL param", () => {
-    const result = toInstitutionSearchParams("koutou", null, null);
-    expect(result.municipality).toBe("MUNICIPALITY_KOUTOU");
+  test("parses municipality URL params in registry order", () => {
+    const result = toInstitutionSearchParams(["kita", "koutou"], null, null);
+    expect(result.municipalities).toEqual(["MUNICIPALITY_KOUTOU", "MUNICIPALITY_KITA"]);
+  });
+
+  test("ignores unknown municipality URL params", () => {
+    const result = toInstitutionSearchParams(["unknown", "kita"], null, null);
+    expect(result.municipalities).toEqual(["MUNICIPALITY_KITA"]);
   });
 
   test("parses available instruments", () => {
@@ -83,9 +88,9 @@ describe("toInstitutionSearchParams", () => {
   });
 
   test("parses all params together", () => {
-    const result = toInstitutionSearchParams("kawasaki", ["w", "p"], ["s"]);
+    const result = toInstitutionSearchParams(["kawasaki"], ["w", "p"], ["s"]);
     expect(result).toEqual({
-      municipality: "MUNICIPALITY_KAWASAKI",
+      municipalities: ["MUNICIPALITY_KAWASAKI"],
       availableInstruments: ["w", "p"],
       institutionSizes: ["s"],
     });
@@ -93,28 +98,27 @@ describe("toInstitutionSearchParams", () => {
 });
 
 describe("toInstitutionQueryParams", () => {
-  test("returns all 16 municipalities when municipality is 'all'", () => {
+  test("passes an empty municipality list when none are selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.municipality).toHaveLength(16);
-    expect(result.municipality).toEqual(SupportedMunicipalities.map((m) => m.toString()));
+    expect(result.municipality).toEqual([]);
   });
 
-  test("returns specific municipality when not 'all'", () => {
+  test("returns selected municipalities", () => {
     const result = toInstitutionQueryParams({
-      municipality: "MUNICIPALITY_KOUTOU",
+      municipalities: ["MUNICIPALITY_KOUTOU", "MUNICIPALITY_KITA"],
       availableInstruments: [],
       institutionSizes: [],
     });
-    expect(result.municipality).toEqual(["MUNICIPALITY_KOUTOU"]);
+    expect(result.municipality).toEqual(["MUNICIPALITY_KOUTOU", "MUNICIPALITY_KITA"]);
   });
 
   test("sets limit to 100", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -123,7 +127,7 @@ describe("toInstitutionQueryParams", () => {
 
   test("leaves instrument flags undefined when no instruments selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -135,7 +139,7 @@ describe("toInstitutionQueryParams", () => {
 
   test("sets true for strings when selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: ["s"],
       institutionSizes: [],
     });
@@ -147,7 +151,7 @@ describe("toInstitutionQueryParams", () => {
 
   test("sets true for all instruments when all selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: ["s", "w", "b", "p"],
       institutionSizes: [],
     });
@@ -159,7 +163,7 @@ describe("toInstitutionQueryParams", () => {
 
   test("leaves institutionSizes undefined when no sizes selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: [],
       institutionSizes: [],
     });
@@ -168,7 +172,7 @@ describe("toInstitutionQueryParams", () => {
 
   test("sets institutionSizes when sizes are selected", () => {
     const result = toInstitutionQueryParams({
-      municipality: "all",
+      municipalities: [],
       availableInstruments: [],
       institutionSizes: ["l"],
     });

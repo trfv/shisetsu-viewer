@@ -1,80 +1,96 @@
 import { describe, expect, test } from "vitest";
 
 import {
-  convertMunicipalityToUrlParam,
-  getMunicipalityFromUrlParam,
-  MunicipalityOptions,
+  getMunicipalitiesFromUrlParam,
   RESERVATION_EXCLUDED_MUNICIPALITIES,
-  SELECT_OPTION_ALL,
+  RESERVATION_MUNICIPALITIES,
   SupportedMunicipalities,
   SupportedMunicipalityMap,
+  toMunicipalityUrlParam,
 } from "./municipality";
 
-describe("getMunicipalityFromUrlParam", () => {
-  test("returns 'all' for null", () => {
-    expect(getMunicipalityFromUrlParam(null)).toBe(SELECT_OPTION_ALL);
+describe("getMunicipalitiesFromUrlParam", () => {
+  test("returns all candidates for null", () => {
+    expect(getMunicipalitiesFromUrlParam(null, SupportedMunicipalities)).toEqual([
+      ...SupportedMunicipalities,
+    ]);
   });
 
-  test("returns 'all' for undefined", () => {
-    expect(getMunicipalityFromUrlParam(undefined)).toBe(SELECT_OPTION_ALL);
+  test("returns all candidates for undefined", () => {
+    expect(getMunicipalitiesFromUrlParam(undefined, RESERVATION_MUNICIPALITIES)).toEqual(
+      RESERVATION_MUNICIPALITIES
+    );
   });
 
-  test("returns 'all' for empty string", () => {
-    expect(getMunicipalityFromUrlParam("")).toBe(SELECT_OPTION_ALL);
+  test("returns empty array for none", () => {
+    expect(getMunicipalitiesFromUrlParam(["none"], SupportedMunicipalities)).toEqual([]);
   });
 
-  test("returns 'all' for unknown param", () => {
-    expect(getMunicipalityFromUrlParam("unknown")).toBe(SELECT_OPTION_ALL);
+  test("converts slugs to municipality keys in registry order", () => {
+    expect(getMunicipalitiesFromUrlParam(["kawasaki", "koutou"], SupportedMunicipalities)).toEqual([
+      "MUNICIPALITY_KOUTOU",
+      "MUNICIPALITY_KAWASAKI",
+    ]);
   });
 
-  test("returns MUNICIPALITY_KOUTOU for 'koutou'", () => {
-    expect(getMunicipalityFromUrlParam("koutou")).toBe("MUNICIPALITY_KOUTOU");
+  test("ignores unknown, case-mismatched, null and duplicate params", () => {
+    expect(
+      getMunicipalitiesFromUrlParam(
+        ["unknown", "Koutou", null, "kita", "kita"],
+        SupportedMunicipalities
+      )
+    ).toEqual(["MUNICIPALITY_KITA"]);
   });
 
-  test("returns MUNICIPALITY_BUNKYO for 'bunkyo'", () => {
-    expect(getMunicipalityFromUrlParam("bunkyo")).toBe("MUNICIPALITY_BUNKYO");
+  test("ignores slugs outside candidates", () => {
+    expect(getMunicipalitiesFromUrlParam(["suginami", "kita"], RESERVATION_MUNICIPALITIES)).toEqual(
+      ["MUNICIPALITY_KITA"]
+    );
   });
 
-  test("returns MUNICIPALITY_KITA for 'kita'", () => {
-    expect(getMunicipalityFromUrlParam("kita")).toBe("MUNICIPALITY_KITA");
-  });
-
-  test("returns MUNICIPALITY_KAWASAKI for 'kawasaki'", () => {
-    expect(getMunicipalityFromUrlParam("kawasaki")).toBe("MUNICIPALITY_KAWASAKI");
-  });
-
-  test("returns 'all' for case-sensitive mismatch", () => {
-    expect(getMunicipalityFromUrlParam("Koutou")).toBe(SELECT_OPTION_ALL);
+  test("returns all candidates when no param is valid", () => {
+    expect(getMunicipalitiesFromUrlParam(["suginami"], RESERVATION_MUNICIPALITIES)).toEqual(
+      RESERVATION_MUNICIPALITIES
+    );
   });
 });
 
-describe("convertMunicipalityToUrlParam", () => {
-  test("returns null for null", () => {
-    expect(convertMunicipalityToUrlParam(null)).toBeNull();
+describe("toMunicipalityUrlParam", () => {
+  test("converts municipality keys to slugs", () => {
+    expect(
+      toMunicipalityUrlParam(
+        ["MUNICIPALITY_KOUTOU", "MUNICIPALITY_ARAKAWA"],
+        SupportedMunicipalities
+      )
+    ).toEqual(["koutou", "arakawa"]);
   });
 
-  test("returns null for undefined", () => {
-    expect(convertMunicipalityToUrlParam(undefined)).toBeNull();
+  test("returns null when all candidates are selected", () => {
+    expect(
+      toMunicipalityUrlParam(RESERVATION_MUNICIPALITIES, RESERVATION_MUNICIPALITIES)
+    ).toBeNull();
   });
 
-  test("converts MUNICIPALITY_KOUTOU to 'koutou'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_KOUTOU")).toBe("koutou");
+  test("returns none for empty input", () => {
+    expect(toMunicipalityUrlParam([], SupportedMunicipalities)).toEqual(["none"]);
   });
 
-  test("converts MUNICIPALITY_BUNKYO to 'bunkyo'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_BUNKYO")).toBe("bunkyo");
+  test("round-trips through getMunicipalitiesFromUrlParam", () => {
+    for (const selected of [[], ["MUNICIPALITY_KITA"], RESERVATION_MUNICIPALITIES] as const) {
+      expect(
+        getMunicipalitiesFromUrlParam(
+          toMunicipalityUrlParam([...selected], RESERVATION_MUNICIPALITIES),
+          RESERVATION_MUNICIPALITIES
+        )
+      ).toEqual([...selected]);
+    }
   });
+});
 
-  test("converts MUNICIPALITY_KAWASAKI to 'kawasaki'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_KAWASAKI")).toBe("kawasaki");
-  });
-
-  test("converts MUNICIPALITY_ARAKAWA to 'arakawa'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_ARAKAWA")).toBe("arakawa");
-  });
-
-  test("handles string without MUNICIPALITY_ prefix", () => {
-    expect(convertMunicipalityToUrlParam("some_value")).toBe("some_value");
+describe("RESERVATION_MUNICIPALITIES", () => {
+  test("excludes reservation-excluded municipalities", () => {
+    expect(RESERVATION_MUNICIPALITIES).toHaveLength(15);
+    expect(RESERVATION_MUNICIPALITIES).not.toContain("MUNICIPALITY_SUGINAMI");
   });
 });
 
@@ -111,25 +127,6 @@ describe("SupportedMunicipalityMap", () => {
 
   test("has 16 entries matching SupportedMunicipalities", () => {
     expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(16);
-  });
-});
-
-describe("MunicipalityOptions", () => {
-  test("first element is the 'all' option", () => {
-    expect(MunicipalityOptions[0]).toEqual({ value: "all", label: "すべて" });
-  });
-
-  test("has 17 entries (1 for all + 16 municipalities)", () => {
-    expect(MunicipalityOptions).toHaveLength(17);
-  });
-
-  test("all entries have value and label properties", () => {
-    for (const option of MunicipalityOptions) {
-      expect(option).toHaveProperty("value");
-      expect(option).toHaveProperty("label");
-      expect(typeof option.value).toBe("string");
-      expect(typeof option.label).toBe("string");
-    }
   });
 });
 

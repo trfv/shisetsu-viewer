@@ -22,7 +22,8 @@
     border-color var(--transition-short);
 }
 
-.checkbox:checked {
+.checkbox:checked,
+.checkbox:indeterminate {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
@@ -34,9 +35,19 @@
   top: 1px;
   width: 6px;
   height: 10px;
-  border: solid #fff;
+  border: solid var(--color-on-primary);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+
+.checkbox:indeterminate::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  width: 10px;
+  height: 2px;
+  background-color: var(--color-on-primary);
 }
 
 .checkbox:focus-visible {

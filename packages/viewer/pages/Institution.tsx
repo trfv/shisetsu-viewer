@@ -6,17 +6,18 @@ import { fetchInstitutions } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
+import { MultiSelect } from "../components/MultiSelect";
 import { SearchPageLayout } from "../components/SearchPageLayout";
-import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
-import { ArrayParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
+import { ArrayParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import { toInstitutionQueryParams, toInstitutionSearchParams } from "../utils/institution";
 import {
-  MunicipalityOptions,
+  SupportedMunicipalities,
   SupportedMunicipalityMap,
-  convertMunicipalityToUrlParam,
+  toMunicipalityUrlParam,
+  type SupportedMunicipality,
 } from "../utils/municipality";
 import {
   AVAILABLE_INSTRUMENT_MAP,
@@ -24,6 +25,11 @@ import {
   buildFilterChips,
   toggleArrayParam,
 } from "../utils/search";
+
+const MUNICIPALITY_OPTIONS = SupportedMunicipalities.map((k) => ({
+  value: k,
+  label: SupportedMunicipalityMap[k]!,
+}));
 
 export const COLUMNS: Columns<InstitutionSummary> = [
   {
@@ -97,7 +103,7 @@ const InstitutionPage = () => {
 
   const [values, setQueryParams] = useQueryParams(
     {
-      m: StringParam,
+      m: ArrayParam,
       a: ArrayParam,
       i: ArrayParam,
     },
@@ -128,11 +134,13 @@ const InstitutionPage = () => {
     JSON.stringify(queryParams)
   );
 
-  const { municipality, availableInstruments, institutionSizes } = institutionSearchParams;
+  const { municipalities, availableInstruments, institutionSizes } = institutionSearchParams;
 
-  const handleMunicipalityChange = useCallback(
-    (event: SelectChangeEvent<string>): void => {
-      setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
+  const handleMunicipalitiesChange = useCallback(
+    (next: string[]): void => {
+      setQueryParams({
+        m: toMunicipalityUrlParam(next as SupportedMunicipality[], SupportedMunicipalities),
+      });
     },
     [setQueryParams]
   );
@@ -154,14 +162,13 @@ const InstitutionPage = () => {
   );
 
   const chips = [
-    ...(municipality === "all"
+    ...(municipalities.length === SupportedMunicipalities.length
       ? []
-      : [
-          {
-            label: `${MunicipalityOptions.find((o) => o.value === municipality)?.label}`,
-            onDelete: () => setQueryParams({ m: null }),
-          },
-        ]),
+      : buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
+          setQueryParams({
+            m: next.length > 0 ? toMunicipalityUrlParam(next, SupportedMunicipalities) : null,
+          })
+        )),
     ...buildFilterChips(AVAILABLE_INSTRUMENT_MAP, availableInstruments, (next) =>
       setQueryParams({ a: next })
     ),
@@ -176,12 +183,14 @@ const InstitutionPage = () => {
       columns={COLUMNS}
       controls={
         <>
-          <Select
+          <MultiSelect
             label="地区"
-            onChange={handleMunicipalityChange}
-            selectOptions={MunicipalityOptions}
-            size="small"
-            value={municipality}
+            onChange={handleMunicipalitiesChange}
+            options={MUNICIPALITY_OPTIONS}
+            allLabel="すべて"
+            emptyLabel="選択なし"
+            size="medium"
+            values={municipalities}
           />
           <CheckboxGroup
             label="利用可能楽器"
@@ -203,7 +212,7 @@ const InstitutionPage = () => {
           </CheckboxGroup>
         </>
       }
-      empty={!municipality || !institutions?.length}
+      empty={!institutions?.length}
       error={error}
       fetchMore={fetchMore}
       fetchingMore={fetchingMore}

@@ -30,6 +30,36 @@ describe("endpoints", () => {
     expect(url.searchParams.get("cursor")).toBe("cur-1");
   });
 
+  it("fetchInstitutions と searchReservations は地区が空配列なら呼ばずに空のページを返す", async () => {
+    let called = 0;
+    worker.use(
+      http.get(`${BASE}/v1/institutions`, () => {
+        called += 1;
+        return HttpResponse.json({
+          items: [{}],
+          pageInfo: { hasNextPage: false, endCursor: null },
+        });
+      }),
+      http.get(`${BASE}/v1/reservations/search`, () => {
+        called += 1;
+        return HttpResponse.json({
+          items: [{}],
+          pageInfo: { hasNextPage: false, endCursor: null },
+        });
+      })
+    );
+
+    const institutions = await fetchInstitutions({ municipality: [], limit: 100 }, null);
+    const reservations = await searchReservations(
+      { municipality: [], startDate: "2026-08-01", endDate: "2026-08-07" },
+      null
+    );
+
+    expect(called).toBe(0);
+    expect(institutions.items).toEqual([]);
+    expect(reservations.items).toEqual([]);
+  });
+
   it("fetchInstitutionDetail は id をパスに埋める", async () => {
     let captured = "";
     worker.use(

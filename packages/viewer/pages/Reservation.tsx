@@ -8,20 +8,19 @@ import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns } from "../components/DataTable";
 import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
+import { MultiSelect } from "../components/MultiSelect";
 import { SearchPageLayout } from "../components/SearchPageLayout";
-import { Select, type SelectChangeEvent } from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { useApiQuery } from "../hooks/useApiQuery";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
-import { ArrayParam, DateParam, StringParam, useQueryParams } from "../hooks/useQueryParams";
+import { ArrayParam, DateParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatShortDatetime } from "../utils/format";
 import {
-  MunicipalityOptions,
   SupportedMunicipalityMap,
-  convertMunicipalityToUrlParam,
+  toMunicipalityUrlParam,
   type SupportedMunicipality,
-  RESERVATION_EXCLUDED_MUNICIPALITIES,
+  RESERVATION_MUNICIPALITIES,
 } from "../utils/municipality";
 import {
   RESERVATION_SEARCH_FILTER_MAP,
@@ -41,6 +40,11 @@ type ReservationSearchRow = ReservationSearchHit & {
   fetched_at: string | undefined;
   [key: string]: unknown;
 };
+
+const MUNICIPALITY_OPTIONS = RESERVATION_MUNICIPALITIES.map((k) => ({
+  value: k,
+  label: SupportedMunicipalityMap[k]!,
+}));
 
 export const COLUMNS: Columns<ReservationSearchRow> = [
   {
@@ -107,7 +111,7 @@ const ReservationPage = () => {
 
   const [values, setQueryParams] = useQueryParams(
     {
-      m: StringParam,
+      m: ArrayParam,
       df: DateParam,
       dt: DateParam,
       f: ArrayParam,
@@ -162,12 +166,14 @@ const ReservationPage = () => {
     }));
   }, [hits, scrapeRuns]);
 
-  const { municipality, startDate, endDate, filter, availableInstruments, institutionSizes } =
+  const { municipalities, startDate, endDate, filter, availableInstruments, institutionSizes } =
     reservationSearchParams;
 
-  const handleMunicipalityChange = useCallback(
-    (event: SelectChangeEvent<string>): void => {
-      setQueryParams({ m: convertMunicipalityToUrlParam(event.target.value) });
+  const handleMunicipalitiesChange = useCallback(
+    (next: string[]): void => {
+      setQueryParams({
+        m: toMunicipalityUrlParam(next as SupportedMunicipality[], RESERVATION_MUNICIPALITIES),
+      });
     },
     [setQueryParams]
   );
@@ -204,14 +210,13 @@ const ReservationPage = () => {
   );
 
   const chips = [
-    ...(municipality === "all"
+    ...(municipalities.length === RESERVATION_MUNICIPALITIES.length
       ? []
-      : [
-          {
-            label: `${MunicipalityOptions.find((o) => o.value === municipality)?.label}`,
-            onDelete: () => setQueryParams({ m: null }),
-          },
-        ]),
+      : buildFilterChips(SupportedMunicipalityMap, municipalities, (next) =>
+          setQueryParams({
+            m: next.length > 0 ? toMunicipalityUrlParam(next, RESERVATION_MUNICIPALITIES) : null,
+          })
+        )),
     {
       label: isSameDay(startDate, endDate)
         ? formatDate(startDate)
@@ -234,14 +239,14 @@ const ReservationPage = () => {
       columns={COLUMNS}
       controls={
         <>
-          <Select
+          <MultiSelect
             label="地区"
-            onChange={handleMunicipalityChange}
-            selectOptions={MunicipalityOptions.filter(
-              (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m.value as SupportedMunicipality)
-            )}
-            size="small"
-            value={municipality}
+            onChange={handleMunicipalitiesChange}
+            options={MUNICIPALITY_OPTIONS}
+            allLabel="すべて"
+            emptyLabel="選択なし"
+            size="medium"
+            values={municipalities}
           />
           <DateRangePicker
             label="期間指定"
@@ -275,7 +280,7 @@ const ReservationPage = () => {
           </CheckboxGroup>
         </>
       }
-      empty={!municipality || !reservations.length}
+      empty={!reservations.length}
       error={error}
       fetchMore={fetchMore}
       fetchingMore={fetchingMore}

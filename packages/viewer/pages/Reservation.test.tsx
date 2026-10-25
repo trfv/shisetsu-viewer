@@ -37,7 +37,10 @@ const useMswMock = (items: ReservationSearchHit[], hasNextPage = false) => {
 };
 
 const captureSearchParams = () => {
-  const captured: { params: URLSearchParams | null; count: number } = { params: null, count: 0 };
+  const captured: { params: URLSearchParams | null; count: number } = {
+    params: null,
+    count: 0,
+  };
   worker.use(
     http.get(`${BASE}/v1/reservations/search`, ({ request }) => {
       captured.params = new URL(request.url).searchParams;
@@ -126,7 +129,7 @@ describe("COLUMNS定義", () => {
 
 describe("Reservation Page", () => {
   describe("検索フォームの表示", () => {
-    it("絞り込みボタンを押すとSelect、DateRangePicker、CheckboxGroupが表示される", async () => {
+    it("絞り込みボタンを押すと地区、期間指定、絞り込み条件が表示される", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<ReservationPage />, {
@@ -153,7 +156,7 @@ describe("Reservation Page", () => {
       await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
-    it("municipality=allの場合、地区チップが表示されない", async () => {
+    it("地区を選んでいない場合、地区チップが表示されない", async () => {
       useMswMock([]);
 
       await renderWithProviders(<ReservationPage />, {
@@ -165,7 +168,7 @@ describe("Reservation Page", () => {
       await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
     });
 
-    it("予約状況除外対象の自治体がSelectの選択肢から除外されている", async () => {
+    it("予約状況除外対象の自治体が地区の選択肢から除外されている", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<ReservationPage />, {
@@ -173,44 +176,61 @@ describe("Reservation Page", () => {
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
 
-      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
-
-      const select = screen.getByRole("combobox", { name: "地区" });
-      const optionTexts = Array.from(select.element().querySelectorAll("option")).map(
-        (o) => o.textContent
-      );
-
-      expect(optionTexts).toContain("江東区");
-      expect(optionTexts).toContain("北区");
-      expect(optionTexts).toContain("荒川区");
-      expect(optionTexts).toContain("江戸川区");
-
-      expect(optionTexts).not.toContain("杉並区");
+      await expect.element(screen.getByRole("checkbox", { name: "江東区" })).toBeInTheDocument();
+      await expect.element(screen.getByRole("checkbox", { name: "北区" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("checkbox", { name: "杉並区" }))
+        .not.toBeInTheDocument();
     });
   });
 
   describe("検索フォームの操作", () => {
-    it("地区を変更するとチップが更新される", async () => {
+    it("地区を追加で選ぶと選んだ地区が並び、チップが追加される", async () => {
       useMswMock([]);
 
       const { user } = await renderWithProviders(<ReservationPage />, {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await expect.element(screen.getByText("江東区")).toBeInTheDocument();
-
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+      await user.click(screen.getByRole("checkbox", { name: "北区" }));
 
-      await expect.element(screen.getByRole("combobox", { name: "地区" })).toBeInTheDocument();
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 江東区、北区");
+      await expect.element(screen.getByRole("button", { name: "北区を削除" })).toBeInTheDocument();
+    });
 
-      const select = screen.getByRole("combobox", { name: "地区" });
-      await user.selectOptions(select, "MUNICIPALITY_KITA");
+    it("「すべて」を外すと検索せずに結果なしになる", async () => {
+      const captured = captureSearchParams();
 
-      await vi.waitFor(() => {
-        const elements = screen.getByText("北区").all();
-        expect(elements.length).toBeGreaterThanOrEqual(1);
+      const { user } = await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation"],
       });
+
+      await expect.poll(() => captured.count).toBe(1);
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("button", { name: /^地区/ }));
+      await user.click(screen.getByRole("checkbox", { name: "すべて" }));
+
+      await expect
+        .element(screen.getByRole("button", { name: /^地区/ }))
+        .toHaveAccessibleName("地区 選択なし");
+      await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
+      expect(captured.count).toBe(1);
+    });
+
+    it("URL に予約状況除外対象の自治体があってもチップに出ない", async () => {
+      useMswMock([]);
+
+      await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=suginami"],
+      });
+
+      await expect.element(screen.getByText("杉並区")).not.toBeInTheDocument();
     });
 
     it("利用可能楽器チェックボックスを切り替えるとチップが追加される", async () => {
@@ -591,7 +611,9 @@ describe("Reservation Page", () => {
         },
         reservation: createMockReservationDto({
           date: "2025-07-01",
-          reservation: { RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT" },
+          reservation: {
+            RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT",
+          },
           updated_at: "2025-06-30T12:00:00",
         }),
       });
@@ -614,8 +636,14 @@ describe("Reservation Page", () => {
         http.get(`${BASE}/v1/scrape-runs`, () =>
           HttpResponse.json({
             items: [
-              { municipality: "MUNICIPALITY_KOUTOU", fetched_at: "2025-06-15T01:23:45.000Z" },
-              { municipality: "MUNICIPALITY_KITA", fetched_at: "2025-06-14T00:00:00.000Z" },
+              {
+                municipality: "MUNICIPALITY_KOUTOU",
+                fetched_at: "2025-06-15T01:23:45.000Z",
+              },
+              {
+                municipality: "MUNICIPALITY_KITA",
+                fetched_at: "2025-06-14T00:00:00.000Z",
+              },
             ],
           })
         )

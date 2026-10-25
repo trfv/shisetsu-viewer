@@ -25,16 +25,14 @@ export const SupportedMunicipalityMap: Record<string, string> = Object.fromEntri
   SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].label])
 );
 
-export const SELECT_OPTION_ALL = "all";
-
 export const RESERVATION_EXCLUDED_MUNICIPALITIES: SupportedMunicipality[] =
   SupportedMunicipalities.filter(
     (k) => MUNICIPALITIES[k].reservationExcluded
   ) as SupportedMunicipality[];
 
-export const MunicipalityOptions: { value: string; label: string }[] = [
-  { value: SELECT_OPTION_ALL, label: "すべて" },
-].concat(Object.entries(SupportedMunicipalityMap).map(([k, v]) => ({ value: k, label: v })));
+export const RESERVATION_MUNICIPALITIES: SupportedMunicipality[] = SupportedMunicipalities.filter(
+  (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
+);
 
 const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
   SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
@@ -55,18 +53,30 @@ export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = 
 export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> =
   Object.fromEntries(SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationStatus]));
 
-const MUNICIPALITY_URL_PARAMS: Readonly<Record<string, SupportedMunicipality>> = Object.fromEntries(
-  SupportedMunicipalities.map((k) => [MUNICIPALITIES[k].slug, k])
-) as Record<string, SupportedMunicipality>;
+// 全部外した状態を空配列で表すと m ごと消え、全地区に戻ってしまう。
+const NO_MUNICIPALITY = "none";
 
-export const getMunicipalityFromUrlParam = (
-  param: string | null | undefined
-): SupportedMunicipality | typeof SELECT_OPTION_ALL => {
-  return param ? (MUNICIPALITY_URL_PARAMS[param] ?? SELECT_OPTION_ALL) : SELECT_OPTION_ALL;
+export const getMunicipalitiesFromUrlParam = (
+  params: (string | null)[] | null | undefined,
+  candidates: readonly SupportedMunicipality[]
+): SupportedMunicipality[] => {
+  if (params?.includes(NO_MUNICIPALITY)) {
+    return [];
+  }
+  const selected = candidates.filter((k) => params?.includes(MUNICIPALITIES[k].slug));
+  return selected.length > 0 ? selected : [...candidates];
 };
 
-export const convertMunicipalityToUrlParam = (
-  municipality: string | null | undefined
-): string | null => {
-  return municipality?.replace("MUNICIPALITY_", "").toLowerCase() ?? null;
+// 全選択は m を消して表す。地区を足したとき、既存のリンクにも新しい地区が入る。
+export const toMunicipalityUrlParam = (
+  municipalities: SupportedMunicipality[],
+  candidates: readonly SupportedMunicipality[]
+): string[] | null => {
+  if (municipalities.length === 0) {
+    return [NO_MUNICIPALITY];
+  }
+  if (candidates.every((k) => municipalities.includes(k))) {
+    return null;
+  }
+  return municipalities.map((k) => MUNICIPALITIES[k].slug);
 };
