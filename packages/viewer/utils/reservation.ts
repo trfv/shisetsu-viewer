@@ -4,9 +4,8 @@ import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 import { ReservationDivision } from "../constants/enums";
 import {
   ReservationStatusMap,
-  SELECT_OPTION_ALL,
   SupportedMunicipalities,
-  getMunicipalityFromUrlParam,
+  getMunicipalitiesFromUrlParam,
   getReservationDivisionLabel,
   type SupportedMunicipality,
   RESERVATION_EXCLUDED_MUNICIPALITIES,
@@ -129,7 +128,7 @@ export const getResevationSearchFilterFromUrlParam = (
 };
 
 type ReservationSearchParams = {
-  municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
+  municipalities: ReturnType<typeof getMunicipalitiesFromUrlParam>;
   startDate: Date;
   endDate: Date;
   filter: ReturnType<typeof getResevationSearchFilterFromUrlParam>;
@@ -138,7 +137,7 @@ type ReservationSearchParams = {
 };
 
 export const toReservationSearchParams = (
-  m: string | null | undefined,
+  m: (string | null)[] | null | undefined,
   df: Date | null | undefined,
   dt: Date | null | undefined,
   f: (string | null)[] | null | undefined,
@@ -148,7 +147,9 @@ export const toReservationSearchParams = (
   maxDate: Date
 ): ReservationSearchParams => {
   return {
-    municipality: getMunicipalityFromUrlParam(m),
+    municipalities: getMunicipalitiesFromUrlParam(m).filter(
+      (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
+    ),
     startDate:
       df &&
       (isSameDay(df, minDate) || isAfter(df, minDate)) &&
@@ -168,7 +169,7 @@ export const toReservationSearchParams = (
 };
 
 export const toReservationSearchQueryParams = ({
-  municipality,
+  municipalities,
   startDate,
   endDate,
   filter,
@@ -178,11 +179,9 @@ export const toReservationSearchQueryParams = ({
   return {
     limit: 100,
     municipality:
-      municipality !== SELECT_OPTION_ALL
-        ? [municipality]
-        : SupportedMunicipalities.filter(
-            (m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)
-          ).map((m) => m.toString()),
+      municipalities.length > 0
+        ? municipalities
+        : SupportedMunicipalities.filter((m) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(m)),
     isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
     isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
     isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,

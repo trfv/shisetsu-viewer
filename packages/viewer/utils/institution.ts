@@ -3,8 +3,7 @@ import type { InstitutionsQueryParams, UsageFeeEntry } from "@shisetsu-viewer/sh
 import { formatPrice } from "./format";
 import {
   FeeDivisionMap,
-  getMunicipalityFromUrlParam,
-  SELECT_OPTION_ALL,
+  getMunicipalitiesFromUrlParam,
   SupportedMunicipalities,
 } from "./municipality";
 import {
@@ -33,34 +32,31 @@ export const formatUsageFee = (
 };
 
 type InstitutionSearchParams = {
-  municipality: ReturnType<typeof getMunicipalityFromUrlParam>;
+  municipalities: ReturnType<typeof getMunicipalitiesFromUrlParam>;
   availableInstruments: ReturnType<typeof getAvailableInstrumentFromUrlParam>;
   institutionSizes: ReturnType<typeof getInstitutionSizeFromUrlParam>;
 };
 
 export const toInstitutionSearchParams = (
-  m: string | null | undefined,
+  m: (string | null)[] | null | undefined,
   a: (string | null)[] | null | undefined,
   i: (string | null)[] | null | undefined
 ): InstitutionSearchParams => {
   return {
-    municipality: getMunicipalityFromUrlParam(m),
+    municipalities: getMunicipalitiesFromUrlParam(m),
     availableInstruments: getAvailableInstrumentFromUrlParam(a),
     institutionSizes: getInstitutionSizeFromUrlParam(i),
   };
 };
 
 export const toInstitutionQueryParams = ({
-  municipality,
+  municipalities,
   availableInstruments,
   institutionSizes,
 }: InstitutionSearchParams): InstitutionsQueryParams => {
   return {
     limit: 100,
-    municipality:
-      municipality !== SELECT_OPTION_ALL
-        ? [municipality]
-        : SupportedMunicipalities.map((m) => m.toString()),
+    municipality: municipalities.length > 0 ? municipalities : [...SupportedMunicipalities],
     isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
     isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
     isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,

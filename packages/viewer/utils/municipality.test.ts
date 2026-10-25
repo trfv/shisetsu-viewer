@@ -1,80 +1,53 @@
 import { describe, expect, test } from "vitest";
 
 import {
-  convertMunicipalityToUrlParam,
-  getMunicipalityFromUrlParam,
-  MunicipalityOptions,
+  getMunicipalitiesFromUrlParam,
   RESERVATION_EXCLUDED_MUNICIPALITIES,
-  SELECT_OPTION_ALL,
   SupportedMunicipalities,
   SupportedMunicipalityMap,
+  toMunicipalityUrlParam,
 } from "./municipality";
 
-describe("getMunicipalityFromUrlParam", () => {
-  test("returns 'all' for null", () => {
-    expect(getMunicipalityFromUrlParam(null)).toBe(SELECT_OPTION_ALL);
+describe("getMunicipalitiesFromUrlParam", () => {
+  test("returns empty array for null", () => {
+    expect(getMunicipalitiesFromUrlParam(null)).toEqual([]);
   });
 
-  test("returns 'all' for undefined", () => {
-    expect(getMunicipalityFromUrlParam(undefined)).toBe(SELECT_OPTION_ALL);
+  test("returns empty array for undefined", () => {
+    expect(getMunicipalitiesFromUrlParam(undefined)).toEqual([]);
   });
 
-  test("returns 'all' for empty string", () => {
-    expect(getMunicipalityFromUrlParam("")).toBe(SELECT_OPTION_ALL);
+  test("converts slugs to municipality keys", () => {
+    expect(getMunicipalitiesFromUrlParam(["koutou", "kawasaki"])).toEqual([
+      "MUNICIPALITY_KOUTOU",
+      "MUNICIPALITY_KAWASAKI",
+    ]);
   });
 
-  test("returns 'all' for unknown param", () => {
-    expect(getMunicipalityFromUrlParam("unknown")).toBe(SELECT_OPTION_ALL);
+  test("returns keys in registry order regardless of param order", () => {
+    expect(getMunicipalitiesFromUrlParam(["kawasaki", "koutou"])).toEqual([
+      "MUNICIPALITY_KOUTOU",
+      "MUNICIPALITY_KAWASAKI",
+    ]);
   });
 
-  test("returns MUNICIPALITY_KOUTOU for 'koutou'", () => {
-    expect(getMunicipalityFromUrlParam("koutou")).toBe("MUNICIPALITY_KOUTOU");
-  });
-
-  test("returns MUNICIPALITY_BUNKYO for 'bunkyo'", () => {
-    expect(getMunicipalityFromUrlParam("bunkyo")).toBe("MUNICIPALITY_BUNKYO");
-  });
-
-  test("returns MUNICIPALITY_KITA for 'kita'", () => {
-    expect(getMunicipalityFromUrlParam("kita")).toBe("MUNICIPALITY_KITA");
-  });
-
-  test("returns MUNICIPALITY_KAWASAKI for 'kawasaki'", () => {
-    expect(getMunicipalityFromUrlParam("kawasaki")).toBe("MUNICIPALITY_KAWASAKI");
-  });
-
-  test("returns 'all' for case-sensitive mismatch", () => {
-    expect(getMunicipalityFromUrlParam("Koutou")).toBe(SELECT_OPTION_ALL);
+  test("ignores unknown, case-mismatched, null and duplicate params", () => {
+    expect(getMunicipalitiesFromUrlParam(["unknown", "Koutou", null, "kita", "kita"])).toEqual([
+      "MUNICIPALITY_KITA",
+    ]);
   });
 });
 
-describe("convertMunicipalityToUrlParam", () => {
-  test("returns null for null", () => {
-    expect(convertMunicipalityToUrlParam(null)).toBeNull();
+describe("toMunicipalityUrlParam", () => {
+  test("converts municipality keys to slugs", () => {
+    expect(toMunicipalityUrlParam(["MUNICIPALITY_KOUTOU", "MUNICIPALITY_ARAKAWA"])).toEqual([
+      "koutou",
+      "arakawa",
+    ]);
   });
 
-  test("returns null for undefined", () => {
-    expect(convertMunicipalityToUrlParam(undefined)).toBeNull();
-  });
-
-  test("converts MUNICIPALITY_KOUTOU to 'koutou'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_KOUTOU")).toBe("koutou");
-  });
-
-  test("converts MUNICIPALITY_BUNKYO to 'bunkyo'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_BUNKYO")).toBe("bunkyo");
-  });
-
-  test("converts MUNICIPALITY_KAWASAKI to 'kawasaki'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_KAWASAKI")).toBe("kawasaki");
-  });
-
-  test("converts MUNICIPALITY_ARAKAWA to 'arakawa'", () => {
-    expect(convertMunicipalityToUrlParam("MUNICIPALITY_ARAKAWA")).toBe("arakawa");
-  });
-
-  test("handles string without MUNICIPALITY_ prefix", () => {
-    expect(convertMunicipalityToUrlParam("some_value")).toBe("some_value");
+  test("returns empty array for empty input", () => {
+    expect(toMunicipalityUrlParam([])).toEqual([]);
   });
 });
 
@@ -111,25 +84,6 @@ describe("SupportedMunicipalityMap", () => {
 
   test("has 16 entries matching SupportedMunicipalities", () => {
     expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(16);
-  });
-});
-
-describe("MunicipalityOptions", () => {
-  test("first element is the 'all' option", () => {
-    expect(MunicipalityOptions[0]).toEqual({ value: "all", label: "すべて" });
-  });
-
-  test("has 17 entries (1 for all + 16 municipalities)", () => {
-    expect(MunicipalityOptions).toHaveLength(17);
-  });
-
-  test("all entries have value and label properties", () => {
-    for (const option of MunicipalityOptions) {
-      expect(option).toHaveProperty("value");
-      expect(option).toHaveProperty("label");
-      expect(typeof option.value).toBe("string");
-      expect(typeof option.label).toBe("string");
-    }
   });
 });
 
