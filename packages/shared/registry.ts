@@ -423,8 +423,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "目黒区",
     reservationExcluded: false,
-    // 定期実行での安定性が未検証（予約データ 0 行）。dispatch で観測してから解除する
-    scraperCiExcluded: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",

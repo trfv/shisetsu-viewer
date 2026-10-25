@@ -269,7 +269,7 @@ MUNICIPALITY_<UPPERCASE_SLUG>: {
 - 追加後は `npm run test:unit -w @shisetsu-viewer/scraper` の registry ドリフト検査が、scraper.yml / database.yml の choice・README の対応地区・施設 JSON の追記漏れを指摘する。全て緑にすること
 - 既存の同じ予約システム（OpenReaf 等）を使う自治体のエントリを参考にする
 - `reservationExcluded` は「スクレイパー自体が存在しない」かどうか。`false` にしても **viewer には出ない**（viewer は手書きの一覧を持つ。2.6 参照）
-- 定期実行での安定性が未確認なら `scraperCiExcluded: true` で CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区・目黒区と同じ「※現在、予約状況が表示できません」の注記を付ける
+- 定期実行での安定性が未確認なら `scraperCiExcluded: true` で CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区と同じ「※現在、予約状況が表示できません」の注記を付ける
 
 **同じ自治体の別予約システム**（区の共通システムとは別に、文化会館の指定管理者が持つシステムなど）は、新しい自治体ではなく親自治体の追加スクレイパーにする（例: tokyo-kita-cocokita、tokyo-katsushika-symphony-hills）:
 
