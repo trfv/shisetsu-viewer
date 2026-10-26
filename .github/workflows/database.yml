@@ -55,7 +55,7 @@ jobs:
         id: set-cache-keys
         run: |
           NODE_MODULES_HASH=$(sha256sum package-lock.json | awk '{ print $1 }')
-          echo "nodeModulesCacheKey=${{ runner.os }}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
+          echo "nodeModulesCacheKey=${ImageOS}-node-modules-${NODE_MODULES_HASH}" >> $GITHUB_OUTPUT
       - name: Set Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
