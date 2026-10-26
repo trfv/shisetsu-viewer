@@ -17,6 +17,7 @@ export interface WebrGrandConfig {
 
 export interface WebrGrandTarget {
   facilityName: string;
+  rooms?: readonly string[];
 }
 
 type WebrGrandTable = { division: string; header: string[]; rows: string[][] };
@@ -211,9 +212,9 @@ export function webrGrandHooks(config: WebrGrandConfig): {
       return output;
     },
 
-    transform(extracted) {
+    transform(extracted, target) {
       // header[0] = "2026年3月"（ナビ矢印含む）、header[1] = "定員"、header[2:] = "12\n木", ...
-      const slots: RawSlot[] = extracted.flatMap(({ division, header, rows }) => {
+      const allSlots: RawSlot[] = extracted.flatMap(({ division, header, rows }) => {
         const dates = buildISODateStrings(header[0] ?? "", header.slice(2));
         return dates.flatMap((date, i) =>
           rows.map((row) => ({
@@ -224,6 +225,13 @@ export function webrGrandHooks(config: WebrGrandConfig): {
           }))
         );
       });
+      const { rooms } = target;
+      const slots = rooms ? allSlots.filter((s) => rooms.includes(s.roomName)) : allSlots;
+      const seen = new Set(slots.map((s) => s.roomName));
+      const unseen = (rooms ?? []).filter((r) => !seen.has(r));
+      if (allSlots.length > 0 && unseen.length > 0) {
+        console.warn(`Rooms not found in ${target.facilityName}: ${unseen.join(", ")}`);
+      }
       return rawSlotsToOutput(
         keepDatesCoveredByAllDivisions(slots, extracted, divisions),
         config.divisionMap,
