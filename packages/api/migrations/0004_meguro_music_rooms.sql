@@ -1,0 +1,61 @@
+-- 0004: 目黒区の施設を、予約サイトの使用目的「楽器演奏」で出る 26 室に絞る（177 室 → 26 室）。
+-- 施設 JSON から消しても Database ワークフローの upsert は行を消さないため、ここで消す。
+-- reservations は 1 室あたり最大 238 日で、削除は最大 151 室 × 238 ≈ 3.6 万行。
+DELETE FROM reservations WHERE institution_id IN (
+  SELECT id FROM institutions WHERE municipality = 'MUNICIPALITY_MEGURO' AND id NOT IN (
+    'e5fe651b-f705-4b6b-8f3c-bad40ff6a2c2',
+    'ca68e345-de62-401a-b565-129551921500',
+    '83c255ea-9992-432c-aedb-90ff36fa3478',
+    '234b27d8-5738-47b0-911a-66a398a3f89e',
+    '8b8cf630-1f25-442d-b87a-78ca14651b4e',
+    '23740827-300c-4a8c-993a-6a14c4533cc9',
+    '8ceaba5d-db36-4f7b-a221-052effa7e77f',
+    'e5790160-d231-403c-b0a6-55e4485bcc83',
+    '9e7ed07b-f457-45ea-8725-bbcc9686ce77',
+    'ec129e7d-03bb-46ab-9774-5f96801e7c23',
+    'aa1d940c-3f39-4502-9142-da1335af7728',
+    'b611aea2-9222-4a50-a6bf-43c60ca82ace',
+    '9893cc29-5607-46ad-a323-9085de7f509d',
+    'e07d0beb-80c6-4104-807f-cd5ff410cc9b',
+    '60bf2c75-6c26-4d2d-8cd7-0df001be3b74',
+    '87c0ad0a-7b11-423a-ba3c-c078e5a9c7ab',
+    'e24d4c03-3eaf-41ee-8208-ec82349dc70c',
+    '04914b9d-4b50-438b-b22c-935e5bd24864',
+    '653e5ff0-5709-4e7d-9c41-1d65d6e530c3',
+    '97c24f87-ee40-44f7-866e-74fcf0863084',
+    'f08ce20c-8d2d-4352-aa11-0205de8d720c',
+    '7756f84c-2575-4a92-8d71-c7dfc3e6cc75',
+    '8a177f78-e26b-4d33-9a64-a1021f61b878',
+    'f68eb9fd-388e-4da2-aef2-f43c4a1609d5',
+    '9cda3e59-d8a3-4f8d-bc93-2bee2eda9c00',
+    '5bc0037b-17c6-491b-a6d9-235809a6b435'
+  )
+);
+DELETE FROM institutions WHERE municipality = 'MUNICIPALITY_MEGURO' AND id NOT IN (
+  'e5fe651b-f705-4b6b-8f3c-bad40ff6a2c2',
+  'ca68e345-de62-401a-b565-129551921500',
+  '83c255ea-9992-432c-aedb-90ff36fa3478',
+  '234b27d8-5738-47b0-911a-66a398a3f89e',
+  '8b8cf630-1f25-442d-b87a-78ca14651b4e',
+  '23740827-300c-4a8c-993a-6a14c4533cc9',
+  '8ceaba5d-db36-4f7b-a221-052effa7e77f',
+  'e5790160-d231-403c-b0a6-55e4485bcc83',
+  '9e7ed07b-f457-45ea-8725-bbcc9686ce77',
+  'ec129e7d-03bb-46ab-9774-5f96801e7c23',
+  'aa1d940c-3f39-4502-9142-da1335af7728',
+  'b611aea2-9222-4a50-a6bf-43c60ca82ace',
+  '9893cc29-5607-46ad-a323-9085de7f509d',
+  'e07d0beb-80c6-4104-807f-cd5ff410cc9b',
+  '60bf2c75-6c26-4d2d-8cd7-0df001be3b74',
+  '87c0ad0a-7b11-423a-ba3c-c078e5a9c7ab',
+  'e24d4c03-3eaf-41ee-8208-ec82349dc70c',
+  '04914b9d-4b50-438b-b22c-935e5bd24864',
+  '653e5ff0-5709-4e7d-9c41-1d65d6e530c3',
+  '97c24f87-ee40-44f7-866e-74fcf0863084',
+  'f08ce20c-8d2d-4352-aa11-0205de8d720c',
+  '7756f84c-2575-4a92-8d71-c7dfc3e6cc75',
+  '8a177f78-e26b-4d33-9a64-a1021f61b878',
+  'f68eb9fd-388e-4da2-aef2-f43c4a1609d5',
+  '9cda3e59-d8a3-4f8d-bc93-2bee2eda9c00',
+  '5bc0037b-17c6-491b-a6d9-235809a6b435'
+);
