@@ -92,10 +92,14 @@ jobs:
           key: ${{ steps.runner-image.outputs.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
       - name: Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
+        uses: ./.github/actions/playwright-install
+        with:
+          args: install --with-deps chromium
       - name: Install Playwright system dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
+        uses: ./.github/actions/playwright-install
+        with:
+          args: install-deps chromium
       - name: Test with coverage
         run: TZ=Asia/Tokyo npx vitest run --coverage --reporter=default --reporter=github-actions
         working-directory: packages/viewer
@@ -141,10 +145,14 @@ jobs:
           key: ${{ steps.runner-image.outputs.os }}-playwright-all-${{ hashFiles('**/package-lock.json') }}
       - name: Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        uses: ./.github/actions/playwright-install
+        with:
+          args: install --with-deps
       - name: Install Playwright system dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps
+        uses: ./.github/actions/playwright-install
+        with:
+          args: install-deps
       - name: Run E2E tests
         run: npx playwright test
         working-directory: packages/viewer

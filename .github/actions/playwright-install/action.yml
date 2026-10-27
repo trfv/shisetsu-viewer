@@ -1,0 +1,29 @@
+name: "Playwright Install"
+description: "Run a playwright install command with a per-attempt timeout and retries"
+
+inputs:
+  args:
+    description: "Arguments after `npx playwright` (e.g. `install --with-deps chromium`)"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run playwright ${{ inputs.args }}
+      shell: bash
+      env:
+        ARGS: ${{ inputs.args }}
+      # ブラウザのダウンロードや apt が無言で止まることがある。ジョブの timeout まで待たずに殺してやり直す
+      run: |
+        for attempt in 1 2 3; do
+          echo "::group::playwright ${ARGS} (attempt ${attempt})"
+          # shellcheck disable=SC2086
+          if timeout -k 30 180 npx playwright ${ARGS}; then
+            echo "::endgroup::"
+            exit 0
+          fi
+          echo "::endgroup::"
+          echo "playwright ${ARGS} attempt ${attempt} timed out or failed; retrying" >&2
+        done
+        echo "playwright ${ARGS} failed after 3 attempts" >&2
+        exit 1
