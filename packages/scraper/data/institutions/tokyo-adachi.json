@@ -1419,5 +1419,171 @@
       "RESERVATION_DIVISION_AFTERNOON": "13:00-17:00",
       "RESERVATION_DIVISION_EVENING": "17:30-21:30"
     }
+  },
+  {
+    "id": "9c2a738c-972e-42ab-9894-c490af759f92",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "シアター1010",
+    "institution": "音楽練習室1",
+    "building_kana": "シアターセンジュ",
+    "institution_kana": "オンガクレンシュウシツ1",
+    "building_system_name": "シアター1010",
+    "institution_system_name": "音楽練習室 1",
+    "capacity": 20,
+    "area": 51,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4180,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都足立区千住3-92",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.t1010.jp/html/guide/music.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "千住ミルディスⅠ番館内。アップライトピアノ常備。5～20名での合唱、楽器練習など",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
+  },
+  {
+    "id": "0dccd887-eadf-450f-b455-2bcae902c3dc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "building": "シアター1010",
+    "institution": "音楽練習室2",
+    "building_kana": "シアターセンジュ",
+    "institution_kana": "オンガクレンシュウシツ2",
+    "building_system_name": "シアター1010",
+    "institution_system_name": "音楽練習室 2",
+    "capacity": 5,
+    "area": 24,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2080,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2080,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2080,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2080,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 3130,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都足立区千住3-92",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.t1010.jp/html/guide/music.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "千住ミルディスⅠ番館内。ドラムセット、ギター・ベースアンプ、キーボード常備。バンド練習など",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:30-11:30",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:00-14:00",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "14:30-16:30",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:00-19:00",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
   }
 ]
