@@ -6,7 +6,7 @@ updates:
       - "/"
       - "/.github/actions/scrape"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     cooldown:
       default-days: 5
       include:
@@ -24,7 +24,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     open-pull-requests-limit: 10
     cooldown:
       default-days: 5
@@ -49,54 +49,31 @@ updates:
           - "@testing-library/*"
           - "@playwright/test"
           - "msw"
+          - "vitest-browser-react"
       cloudflare:
         applies-to: version-updates
         patterns:
           - "wrangler"
           - "miniflare"
           - "@cloudflare/vitest-plugin"
+          - "@cloudflare/vite-plugin"
       build:
         applies-to: version-updates
         patterns:
           - "vite"
           - "@vitejs/*"
-          - "@swc/*"
       linting:
         applies-to: version-updates
         patterns:
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
-          - "typescript-eslint"
-          - "prettier"
-          - "prettier-*"
+          - "oxlint"
+          - "oxfmt"
+          - "knip"
       production-dependencies:
         applies-to: version-updates
         dependency-type: "production"
-        exclude-patterns:
-          - "react"
-          - "react-dom"
       development-dependencies:
         applies-to: version-updates
         dependency-type: "development"
-        exclude-patterns:
-          - "vitest"
-          - "@vitest/*"
-          - "@testing-library/*"
-          - "@playwright/test"
-          - "msw"
-          - "vite"
-          - "@vitejs/*"
-          - "@swc/*"
-          - "wrangler"
-          - "miniflare"
-          - "@cloudflare/vitest-plugin"
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
-          - "typescript-eslint"
-          - "prettier"
-          - "prettier-*"
       security-production:
         applies-to: security-updates
         dependency-type: "production"
@@ -109,13 +86,6 @@ updates:
           - "*"
     ignore:
       - dependency-name: "@mizchi/lsmcp"
-      # 素の typescript は typescript-eslint / knip / prettier-plugin-organize-imports の API 提供役。
-      # これらが TS7 に対応するまで major を固定する
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
-      # ESLint 10 は eslint-plugin-react が peer 未対応 (#3977)。対応したら解除する
-      - dependency-name: "eslint"
-        update-types: ["version-update:semver-major"]
       # 型だけ先行すると Node 24 に存在しない API がコンパイルを通る。.node-version と一緒に上げる
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
