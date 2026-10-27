@@ -119,13 +119,26 @@ export const MultiSelect: FC<Props> = ({
               />
             </div>
             {options.map((o) => (
-              <Checkbox
-                checked={values.includes(o.value)}
+              <div
+                className={styles["option"]}
                 key={o.value}
-                label={o.label}
-                onChange={handleOptionChange}
-                value={o.value}
-              />
+                onDoubleClick={() => onChange([o.value])}
+              >
+                <Checkbox
+                  checked={values.includes(o.value)}
+                  label={o.label}
+                  onChange={handleOptionChange}
+                  value={o.value}
+                />
+                <button
+                  aria-label={`${o.label}のみ選択`}
+                  className={styles["only"]}
+                  onClick={() => onChange([o.value])}
+                  type="button"
+                >
+                  のみ
+                </button>
+              </div>
             ))}
           </div>
         )}

@@ -153,6 +153,49 @@ describe("MultiSelect Component", () => {
     expect(handleChange).toHaveBeenCalledWith(ALL);
   });
 
+  it("「のみ」を押すとその選択肢だけを渡し、選択肢は開いたまま", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByRole("button", { name: "北区のみ選択" }));
+
+    expect(handleChange).toHaveBeenCalledExactlyOnceWith(["kita"]);
+    await expect.element(screen.getByRole("group", { name: "地区" })).toBeInTheDocument();
+  });
+
+  it("キーボードで「のみ」に移ってEnterで選べる", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.click(screen.getByRole("checkbox", { name: "江東区" }));
+    handleChange.mockClear();
+    await user.tab();
+
+    await expect.element(screen.getByRole("button", { name: "江東区のみ選択" })).toHaveFocus();
+
+    await user.keyboard("{Enter}");
+
+    expect(handleChange).toHaveBeenCalledExactlyOnceWith(["koutou"]);
+  });
+
+  it("選択肢をダブルクリックすると最後にその選択肢だけを渡す", async () => {
+    const handleChange = vi.fn();
+    const { user } = await renderWithProviders(
+      <MultiSelect {...defaultProps} onChange={handleChange} />
+    );
+
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    await user.dblClick(screen.getByRole("checkbox", { name: "川崎市" }));
+
+    expect(handleChange).toHaveBeenLastCalledWith(["kawasaki"]);
+  });
+
   it("Escapeで閉じてボタンにフォーカスを戻し、外側にはEscapeを伝えない", async () => {
     const outerKeyDown = vi.fn();
     document.addEventListener("keydown", outerKeyDown);
@@ -191,7 +234,7 @@ describe("MultiSelect Component", () => {
     );
 
     await user.click(screen.getByRole("button", { name: /^地区/ }));
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       await user.tab();
     }
 
