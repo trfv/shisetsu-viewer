@@ -10,7 +10,7 @@ beforeAll(async () => {
       const { worker: mswWorker } = await import("./mocks/browser");
       worker = mswWorker;
       await worker.start({
-        onUnhandledRequest: "bypass",
+        onUnhandledFrame: "bypass",
         quiet: true,
       });
     } catch {
