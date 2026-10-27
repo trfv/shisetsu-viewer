@@ -1,19 +1,19 @@
-import type { ReservationSearchHit } from "@shisetsu-viewer/shared";
+import type { ReservationSearchHit, ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
 import { addMonths, endOfMonth, isSameDay } from "date-fns";
-import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { use, useCallback, useDeferredValue, useMemo, useState, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
-import { fetchScrapeRuns, searchReservations } from "../api/endpoints";
+import { searchReservations } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import { type Columns } from "../components/DataTable";
+import { type Columns, type RowParams } from "../components/DataTable";
 import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
 import { MultiSelect } from "../components/MultiSelect";
-import { SearchPageLayout } from "../components/SearchPageLayout";
+import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
-import { useApiQuery } from "../hooks/useApiQuery";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { usePages } from "../hooks/usePages";
 import { ArrayParam, DateParam, useQueryParams } from "../hooks/useQueryParams";
+import { useScrapeRuns } from "../hooks/useScrapeRuns";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatShortDatetime } from "../utils/format";
 import { formatInstitutionName } from "../utils/institution";
@@ -94,6 +94,45 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
   },
 ];
 
+const ReservationResults = ({
+  params,
+  onRowClick,
+}: {
+  params: ReservationSearchQueryParams;
+  onRowClick: (params: RowParams<ReservationSearchRow>) => void;
+}) => {
+  // usePages の中で use() する前に作っておかないと、予約の取得を待ってから取得日時を取りに行く。
+  const scrapeRunsPromise = useScrapeRuns();
+  const fetchPage = useCallback(
+    (cursor: string | null) => searchReservations(params, cursor),
+    [params]
+  );
+  const { items, hasNextPage, fetchMore } = usePages(
+    `reservations:${JSON.stringify(params)}`,
+    fetchPage
+  );
+  const scrapeRuns = use(scrapeRunsPromise);
+
+  const rows = useMemo<ReservationSearchRow[]>(() => {
+    const fetchedAt = new Map(scrapeRuns.items.map((r) => [r.municipality, r.fetched_at]));
+    return items.map((hit) => ({
+      id: `${hit.institution.id}_${hit.reservation.date}`,
+      fetched_at: fetchedAt.get(hit.institution.municipality),
+      ...hit,
+    }));
+  }, [items, scrapeRuns]);
+
+  return (
+    <SearchResults
+      columns={COLUMNS}
+      fetchMore={fetchMore}
+      hasNextPage={hasNextPage}
+      onRowClick={onRowClick}
+      rows={rows}
+    />
+  );
+};
+
 const ReservationPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
@@ -136,28 +175,22 @@ const ReservationPage = () => {
     [reservationSearchParams]
   );
 
-  const {
-    data: hits,
-    loading,
-    error,
-    hasNextPage: hasMore,
-    fetchMore,
-    fetchingMore,
-  } = usePaginatedQuery<ReservationSearchHit>(
-    (cursor) => searchReservations(queryParams, cursor),
-    JSON.stringify(queryParams)
+  // values は毎 render 新しいオブジェクトになるので、文字列にしてから deferred にする。
+  const queryKey = JSON.stringify(queryParams);
+  const deferredQueryKey = useDeferredValue(queryKey);
+  const deferredQueryParams = useMemo(
+    () => JSON.parse(deferredQueryKey) as ReservationSearchQueryParams,
+    [deferredQueryKey]
   );
 
-  const { data: scrapeRuns } = useApiQuery(fetchScrapeRuns, "scrape-runs");
-
-  const reservations = useMemo<ReservationSearchRow[]>(() => {
-    const fetchedAt = new Map(scrapeRuns?.items.map((r) => [r.municipality, r.fetched_at]));
-    return (hits ?? []).map((hit) => ({
-      id: `${hit.institution.id}_${hit.reservation.date}`,
-      fetched_at: fetchedAt.get(hit.institution.municipality),
-      ...hit,
-    }));
-  }, [hits, scrapeRuns]);
+  const handleRowClick = useCallback(
+    (params: RowParams<ReservationSearchRow>) => {
+      if (params.row.institution.id) {
+        setLocation(ROUTES.detail.replace(":id", params.row.institution.id));
+      }
+    },
+    [setLocation]
+  );
 
   const { municipalities, startDate, endDate, filter, availableInstruments, institutionSizes } =
     reservationSearchParams;
@@ -229,7 +262,6 @@ const ReservationPage = () => {
   return (
     <SearchPageLayout
       chips={chips}
-      columns={COLUMNS}
       controls={
         <>
           <MultiSelect
@@ -273,19 +305,15 @@ const ReservationPage = () => {
           </CheckboxGroup>
         </>
       }
-      empty={!reservations.length}
-      error={error}
-      fetchMore={fetchMore}
-      fetchingMore={fetchingMore}
-      hasNextPage={hasMore}
-      loading={loading}
-      onRowClick={(params) => {
-        if (params.row.institution.id) {
-          setLocation(ROUTES.detail.replace(":id", params.row.institution.id));
-        }
-      }}
-      rows={reservations}
-    />
+      pending={queryKey !== deferredQueryKey}
+      resetKey={deferredQueryKey}
+    >
+      <ReservationResults
+        key={deferredQueryKey}
+        onRowClick={handleRowClick}
+        params={deferredQueryParams}
+      />
+    </SearchPageLayout>
   );
 };
 

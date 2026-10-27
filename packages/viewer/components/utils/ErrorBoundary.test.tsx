@@ -75,31 +75,13 @@ describe("ErrorBoundary Component", () => {
     await expect.element(screen.getByText("復帰した")).toBeInTheDocument();
   });
 
-  it("unhandledrejectionイベントでエラー表示する", async () => {
+  it("fallback を渡すとエラーを渡して描画する", async () => {
     await renderWithProviders(
-      <ErrorBoundary>
-        <div>正常</div>
+      <ErrorBoundary fallback={(error) => <div>fallback: {error.message}</div>}>
+        <ThrowingChild />
       </ErrorBoundary>
     );
 
-    await expect.element(screen.getByText("正常")).toBeInTheDocument();
-
-    const rejectedPromise = Promise.reject(new Error("test rejection"));
-    rejectedPromise.catch(() => {});
-
-    window.dispatchEvent(
-      new PromiseRejectionEvent("unhandledrejection", {
-        promise: rejectedPromise,
-        reason: new Error("test rejection"),
-      })
-    );
-
-    await expect
-      .element(
-        screen.getByText(
-          "予期せぬエラーが発生しました。再読み込みしてください。何度も発生する場合は管理者にお問い合わせください。"
-        )
-      )
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("fallback: Test error")).toBeInTheDocument();
   });
 });

@@ -34,7 +34,7 @@ type Props<T> = {
   columns: Columns<T>;
   rows: T[];
   onRowClick?: (params: RowParams<T>) => void;
-  fetchMore?: () => Promise<void>;
+  fetchMore?: () => void;
   hasNextPage?: boolean;
 };
 

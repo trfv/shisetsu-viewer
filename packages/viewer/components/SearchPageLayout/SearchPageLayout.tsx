@@ -1,9 +1,10 @@
-import { type ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 
 import { DataTable, type Columns, type Row, type RowParams } from "../DataTable";
 import { SearchForm } from "../SearchForm";
 import { Snackbar } from "../Snackbar";
 import { Spinner } from "../Spinner";
+import { ErrorBoundary } from "../utils/ErrorBoundary";
 
 import styles from "./SearchPageLayout.module.css";
 
@@ -12,33 +13,17 @@ type ChipItem = {
   onDelete?: () => void;
 };
 
-type Props<T extends Row> = {
+type Props = {
   chips: ChipItem[];
   controls: ReactNode;
-  loading: boolean;
-  fetchingMore: boolean;
-  empty: boolean;
-  columns: Columns<T>;
-  rows: T[];
-  onRowClick?: (params: RowParams<T>) => void;
-  fetchMore?: () => Promise<void>;
-  hasNextPage?: boolean;
-  error?: Error | undefined;
+  pending: boolean;
+  resetKey: string;
+  children: ReactNode;
 };
 
-export const SearchPageLayout = <T extends Row>({
-  chips,
-  controls,
-  loading,
-  fetchingMore,
-  empty,
-  columns,
-  rows,
-  onRowClick,
-  fetchMore,
-  hasNextPage,
-  error,
-}: Props<T>) => {
+const renderError = (error: Error) => <Snackbar open={true} message={error.message} />;
+
+export const SearchPageLayout = ({ chips, controls, pending, resetKey, children }: Props) => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["searchBox"]}>
@@ -46,24 +31,51 @@ export const SearchPageLayout = <T extends Row>({
           <SearchForm chips={chips}>{controls}</SearchForm>
         </div>
       </div>
-      <div className={styles["resultBox"]}>
-        {loading && !fetchingMore ? (
-          <div className={styles["resultBoxNoData"]}>
-            <Spinner />
-          </div>
-        ) : empty ? (
-          <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>
-        ) : (
-          <DataTable
-            columns={columns}
-            rows={rows}
-            {...(fetchMore ? { fetchMore } : {})}
-            {...(hasNextPage !== undefined ? { hasNextPage } : {})}
-            {...(onRowClick ? { onRowClick } : {})}
-          />
-        )}
+      <div
+        aria-busy={pending}
+        className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
+      >
+        <ErrorBoundary fallback={renderError} resetKey={resetKey}>
+          <Suspense
+            fallback={
+              <div className={styles["resultBoxNoData"]}>
+                <Spinner />
+              </div>
+            }
+          >
+            {children}
+          </Suspense>
+        </ErrorBoundary>
       </div>
-      {error && <Snackbar open={true} message={error.message} />}
     </main>
+  );
+};
+
+type ResultsProps<T extends Row> = {
+  columns: Columns<T>;
+  rows: T[];
+  onRowClick?: (params: RowParams<T>) => void;
+  fetchMore?: () => void;
+  hasNextPage?: boolean;
+};
+
+export const SearchResults = <T extends Row>({
+  columns,
+  rows,
+  onRowClick,
+  fetchMore,
+  hasNextPage,
+}: ResultsProps<T>) => {
+  if (rows.length === 0) {
+    return <div className={styles["resultBoxNoData"]}>表示するデータが存在しません</div>;
+  }
+  return (
+    <DataTable
+      columns={columns}
+      rows={rows}
+      {...(fetchMore ? { fetchMore } : {})}
+      {...(hasNextPage !== undefined ? { hasNextPage } : {})}
+      {...(onRowClick ? { onRowClick } : {})}
+    />
   );
 };

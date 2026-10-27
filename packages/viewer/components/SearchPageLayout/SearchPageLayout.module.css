@@ -28,6 +28,11 @@
   max-width: 1280px;
 }
 
+.resultBoxPending {
+  opacity: 0.5;
+  transition: opacity 0.2s 0.1s;
+}
+
 .resultBoxNoData {
   width: 100%;
   height: 100%;

@@ -309,6 +309,47 @@ describe("Institution Page", () => {
     });
   });
 
+  describe("条件の変更", () => {
+    it("新しい結果が届くまで前の結果を残し、結果の領域を aria-busy にする", async () => {
+      const { promise: released, resolve: release } = Promise.withResolvers<void>();
+      worker.use(
+        http.get(`${BASE}/v1/institutions`, async ({ request }) => {
+          const strings = new URL(request.url).searchParams.get("isAvailableStrings");
+          if (!strings) {
+            return HttpResponse.json(
+              createMockInstitutionsPage([
+                createMockInstitutionSummary({ institution: "前の結果" }),
+              ])
+            );
+          }
+          await released;
+          return HttpResponse.json(
+            createMockInstitutionsPage([createMockInstitutionSummary({ institution: "次の結果" })])
+          );
+        })
+      );
+
+      const { user } = await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
+      });
+      const previous = screen.getByText("前の結果", { exact: false });
+      await expect.element(previous).toBeInTheDocument();
+
+      await user.click(screen.getByRole("button", { name: "絞り込み" }));
+      await user.click(screen.getByRole("checkbox", { name: "弦楽器" }));
+
+      await expect
+        .poll(() => previous.element().closest("[aria-busy]")?.getAttribute("aria-busy"))
+        .toBe("true");
+      await expect.element(screen.getByRole("progressbar")).not.toBeInTheDocument();
+
+      release();
+
+      await expect.element(screen.getByText("次の結果", { exact: false })).toBeInTheDocument();
+      await expect.element(screen.getByText("前の結果", { exact: false })).not.toBeInTheDocument();
+    });
+  });
+
   describe("データが返却された場合", () => {
     it("DataTableに施設データを表示する", async () => {
       const item1 = createMockInstitutionSummary({
