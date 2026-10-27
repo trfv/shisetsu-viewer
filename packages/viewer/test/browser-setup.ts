@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { afterEach, beforeAll, afterAll, vi } from "vitest";
+import { cleanup } from "vitest-browser-react";
 
 import { resetCache } from "../api/cache";
 
@@ -77,7 +78,10 @@ beforeAll(async () => {
   };
 });
 
-afterEach(() => {
+afterEach(async () => {
+  // vitest-browser-react の cleanup は次のテストの beforeEach で走る。先にキャッシュだけ消すと、
+  // 前のテストの deferred な描画が取り直し、その要求を次のテストの MSW ハンドラが数えてしまう。
+  await cleanup();
   resetCache();
   if (worker) {
     worker.resetHandlers();
