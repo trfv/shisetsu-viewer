@@ -44,7 +44,7 @@ describe("seal / unseal", () => {
   it("改ざんした値は null になる", async () => {
     const keys = await importKeys(JSON.stringify([newKey()]));
     const sealed = await seal(keys, "x", { a: 1 });
-    const tampered = `${sealed.slice(0, -2)}${sealed.endsWith("A") ? "B" : "A"}${sealed.slice(-1)}`;
+    const tampered = `${sealed.slice(0, -2)}${sealed.at(-2) === "A" ? "B" : "A"}${sealed.slice(-1)}`;
 
     expect(await unseal(keys, "x", tampered)).toBeNull();
     expect(await unseal(keys, "x", "!!!")).toBeNull();
