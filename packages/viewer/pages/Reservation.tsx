@@ -16,6 +16,7 @@ import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, DateParam, useQueryParams } from "../hooks/useQueryParams";
 import { InstitutionSizeMap } from "../utils/enums";
 import { formatDate, formatShortDatetime } from "../utils/format";
+import { formatInstitutionName } from "../utils/institution";
 import {
   SupportedMunicipalityMap,
   toMunicipalityUrlParam,
@@ -53,15 +54,7 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     type: "getter",
     maxWidth: 400,
     wrap: true,
-    valueGetter: (params) =>
-      `${params.row.institution.building} ${params.row.institution.institution}`,
-  },
-  {
-    field: "municipality",
-    headerName: "地区",
-    type: "getter",
-    hide: true,
-    valueGetter: (params) => SupportedMunicipalityMap[params.row.institution.municipality] || "",
+    valueGetter: (params) => formatInstitutionName(params.row.institution),
   },
   {
     field: "institution_size",

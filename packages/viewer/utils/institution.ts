@@ -5,6 +5,7 @@ import {
   FeeDivisionMap,
   getMunicipalitiesFromUrlParam,
   SupportedMunicipalities,
+  SupportedMunicipalityMap,
 } from "./municipality";
 import {
   BRASS,
@@ -30,6 +31,17 @@ export const formatUsageFee = (
     )
     .join(" ");
 };
+
+export const formatInstitutionName = ({
+  municipality,
+  building,
+  institution,
+}: {
+  municipality: string;
+  building: string | null;
+  institution: string | null;
+}): string =>
+  [SupportedMunicipalityMap[municipality], building, institution].filter(Boolean).join(" ");
 
 type InstitutionSearchParams = {
   municipalities: ReturnType<typeof getMunicipalitiesFromUrlParam>;

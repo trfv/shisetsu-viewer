@@ -33,7 +33,7 @@ import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatMonthDate, formatShortDatetime } from "../utils/format";
 import { isValidUuid } from "../utils/id";
-import { formatUsageFee } from "../utils/institution";
+import { formatInstitutionName, formatUsageFee } from "../utils/institution";
 import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
   getReservationDivisionLabel,
@@ -372,7 +372,7 @@ const DetailContent = ({ id }: { id: string }) => {
           <Skeleton height={40} width={WIDTHS.large} />
         ) : (
           <h2>
-            {`${institution?.building ?? ""} ${institution?.institution ?? ""}`}
+            {institution && formatInstitutionName(institution)}
             {institution?.website_url && (
               <IconButton href={institution?.website_url} target="_blank">
                 <OpenInNewIcon />

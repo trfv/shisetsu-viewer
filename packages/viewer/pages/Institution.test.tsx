@@ -29,28 +29,6 @@ const paramsFor = (row: InstitutionSummary) => ({
 });
 
 describe("COLUMNS定義", () => {
-  it("隠しカラム(municipality)のvalueGetterが正しい値を返す", () => {
-    const row = createMockInstitutionSummary();
-    const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(
-      col?.valueGetter?.({
-        ...paramsFor(row),
-        value: row.municipality,
-      } as never)
-    ).toBe("江東区");
-  });
-
-  it("隠しカラム(municipality)のvalueGetterが不明な値に対して空文字を返す", () => {
-    const row = createMockInstitutionSummary({ municipality: "UNKNOWN" });
-    const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(
-      col?.valueGetter?.({
-        ...paramsFor(row),
-        value: row.municipality,
-      } as never)
-    ).toBe("");
-  });
-
   it("隠しカラム(is_equipped_music_stand)のvalueGetterが正しい値を返す", () => {
     const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "is_equipped_music_stand");
@@ -92,10 +70,12 @@ describe("COLUMNS定義", () => {
     ).toBe("");
   });
 
-  it("building_and_institutionのvalueGetterが空値にフォールバックする", () => {
-    const row = createMockInstitutionSummary({ building: "", institution: "" });
+  it("building_and_institutionのvalueGetterが区名を施設名の前に付ける", () => {
+    const row = createMockInstitutionSummary();
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
-    expect(col?.valueGetter?.(paramsFor(row) as never)).toBe(" ");
+    expect(col?.valueGetter?.(paramsFor(row) as never)).toBe(
+      "江東区 テスト文化センター 音楽練習室A"
+    );
   });
 });
 
@@ -349,8 +329,12 @@ describe("Institution Page", () => {
 
       await expect.element(screen.getByText("施設名")).toBeInTheDocument();
 
-      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      await expect.element(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 テスト文化センター 音楽練習室A"))
+        .toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 サンプル会館 リハーサル室B"))
+        .toBeInTheDocument();
     });
 
     it("hasNextPageがtrueでendCursorが存在する場合、IntersectionObserver発火時にfetchMoreが呼ばれる", async () => {
@@ -378,7 +362,7 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await expect.element(screen.getByText("施設ビル0 練習室0")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区 施設ビル0 練習室0")).toBeInTheDocument();
 
       await vi.waitFor(
         () => {
@@ -400,9 +384,11 @@ describe("Institution Page", () => {
         initialEntries: ["/institution?m=koutou"],
       });
 
-      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 テスト文化センター 音楽練習室A"))
+        .toBeInTheDocument();
 
-      const cell = screen.getByText("テスト文化センター 音楽練習室A");
+      const cell = screen.getByText("江東区 テスト文化センター 音楽練習室A");
       const row = cell.element().closest("tr");
       await expect.element(row).toHaveStyle({ cursor: "pointer" });
 
