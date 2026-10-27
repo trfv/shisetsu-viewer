@@ -230,3 +230,11 @@ h6 {
   width: 0.75em;
   height: 0.75em;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

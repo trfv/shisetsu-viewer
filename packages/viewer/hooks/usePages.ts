@@ -1,7 +1,9 @@
 import type { Page } from "@shisetsu-viewer/shared";
-import { use, useCallback, useRef, useState, useTransition } from "react";
+import { addTransitionType, use, useCallback, useRef, useState, useTransition } from "react";
 
 import { useCachedPromise } from "./useCachedPromise";
+
+export const FETCH_MORE = "fetch-more";
 
 export function usePages<T>(key: string, fetchPage: (cursor: string | null) => Promise<Page<T>>) {
   const first = useCachedPromise(key, () => fetchPage(null));
@@ -21,7 +23,10 @@ export function usePages<T>(key: string, fetchPage: (cursor: string | null) => P
     const next = fetchPage(endCursor);
     // transition の描画より先にアンマウントされると誰も use() せず、reject が unhandledrejection になる。
     next.catch(() => {});
-    startTransition(() => setPages((prev) => [...prev, next]));
+    startTransition(() => {
+      addTransitionType(FETCH_MORE);
+      setPages((prev) => [...prev, next]);
+    });
   }, [endCursor, fetchPage]);
 
   return {

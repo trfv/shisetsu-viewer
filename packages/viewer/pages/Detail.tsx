@@ -1,6 +1,6 @@
 import type { InstitutionDetail } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
-import { Suspense, use, useCallback, useState, type ChangeEvent } from "react";
+import { Suspense, use, useCallback, useState, ViewTransition, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
@@ -25,7 +25,7 @@ import { useAuth } from "../contexts/Auth";
 import { useCachedPromise } from "../hooks/useCachedPromise";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
-import { usePages } from "../hooks/usePages";
+import { FETCH_MORE, usePages } from "../hooks/usePages";
 import { useScrapeRuns } from "../hooks/useScrapeRuns";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatMonthDate, formatShortDatetime } from "../utils/format";
@@ -388,24 +388,30 @@ const DetailContent = ({ id }: { id: string }) => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["title"]}>
-        <Suspense fallback={<Skeleton height={40} width={WIDTHS.large} />}>
-          <Title institution={institution} />
-        </Suspense>
+        <ViewTransition>
+          <Suspense fallback={<Skeleton height={40} width={WIDTHS.large} />}>
+            <Title institution={institution} />
+          </Suspense>
+        </ViewTransition>
       </div>
       <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
         <Tab label="施設情報" value="institution" />
         <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
       </TabGroup>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
-        <Suspense fallback={<InstitutionTab institution={undefined} loading={true} />}>
-          <InstitutionTabContent institution={institution} />
-        </Suspense>
+        <ViewTransition>
+          <Suspense fallback={<InstitutionTab institution={undefined} loading={true} />}>
+            <InstitutionTabContent institution={institution} />
+          </Suspense>
+        </ViewTransition>
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <Suspense fallback={<ReservationLoading />}>
-            <ReservationTabContent id={id} institution={institution} />
-          </Suspense>
+          <ViewTransition update={{ [FETCH_MORE]: "none", default: "auto" }}>
+            <Suspense fallback={<ReservationLoading />}>
+              <ReservationTabContent id={id} institution={institution} />
+            </Suspense>
+          </ViewTransition>
         )}
       </TabPanel>
     </main>
