@@ -1,7 +1,8 @@
 ---
 description: 新しい自治体の予約システム用スクレイパーを作成する。URLを引数に渡す。例：/new-scraper https://example-yoyaku.jp/ tokyo-example
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, AskUserQuestion, EnterPlanMode, ExitPlanMode, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_click, mcp__plugin_playwright_playwright__browser_run_code, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__playwright__browser_navigate, mcp__playwright__browser_click, mcp__playwright__browser_run_code_unsafe, mcp__playwright__browser_evaluate, mcp__playwright__browser_snapshot, mcp__playwright__browser_select_option, mcp__playwright__browser_network_requests, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_close
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, AskUserQuestion, EnterPlanMode, ExitPlanMode, mcp__playwright__browser_navigate, mcp__playwright__browser_click, mcp__playwright__browser_run_code_unsafe, mcp__playwright__browser_evaluate, mcp__playwright__browser_snapshot, mcp__playwright__browser_select_option, mcp__playwright__browser_network_requests, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_close
 argument-hint: <予約システムURL> <prefecture-slug>
+model: sonnet
 ---
 
 # 新規スクレイパー作成ワークフロー
