@@ -213,6 +213,7 @@ export const scraper = defineScraper({
 - 午前系 (9:00-12:00 前後) → `RESERVATION_DIVISION_MORNING`
 - 午後系 (13:00-17:00 前後) → `RESERVATION_DIVISION_AFTERNOON`
 - 夜間系 (17:00-22:00 前後) → `RESERVATION_DIVISION_EVENING`
+- 午後や夜間が 2 コマに分かれている（2 時間 × 5 コマなど） → `*_ONE` / `*_TWO`。D1 の生成列は `AFTERNOON` が無ければ `AFTERNOON_ONE` と `_TWO` の両方が空いた日を「午後空き」とみなすので、検索に載る。`DIVISION_n` に逃がすとどの検索にも載らない
 - それ以外 → `RESERVATION_DIVISION_DIVISION_1` 〜 `_12` を順に割り当て
 
 #### STATUS マッピングルール:
@@ -303,7 +304,7 @@ for (const target of scraper.targets) {
 
 ### 2.5 （既存の institution データがない場合） institution データの作成
 
-`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。最小の実例は `data/institutions/tokyo-chuo.json`、enum 値の判定基準は `tasks/institution-data-prompt.md` を参照。
+`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。最小の実例は `data/institutions/tokyo-chuo.json`、enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
 
 ```json
 [
