@@ -13,7 +13,8 @@ runs:
       shell: bash
       env:
         ARGS: ${{ inputs.args }}
-      # ブラウザのダウンロードや apt が無言で止まることがある。ジョブの timeout まで待たずに殺してやり直す
+      # ブラウザのダウンロードが無言で止まることがある。ジョブの timeout まで待たずに殺してやり直す。
+      # --with-deps / install-deps は渡さない。殺しても sudo 下の apt-get が dpkg のロックを握ったまま残り、やり直しが全部失敗する
       run: |
         for attempt in 1 2 3; do
           echo "::group::playwright ${ARGS} (attempt ${attempt})"
