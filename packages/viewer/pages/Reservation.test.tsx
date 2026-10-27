@@ -61,27 +61,7 @@ const paramsFor = (hit: ReservationSearchHit) => ({
 });
 
 describe("COLUMNS定義", () => {
-  it("隠しカラム(municipality)のvalueGetterが正しい値を返す", () => {
-    const hit = createMockReservationSearchHit();
-    const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("江東区");
-  });
-
-  it("隠しカラム(municipality)のvalueGetterが不明な値に対して空文字を返す", () => {
-    const hit = createMockReservationSearchHit({
-      institution: {
-        id: "test-id",
-        municipality: "UNKNOWN",
-        building: "テスト",
-        institution: "テスト施設",
-        institution_size: "INSTITUTION_SIZE_MEDIUM",
-      },
-    });
-    const col = COLUMNS.find((c) => c.field === "municipality");
-    expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("");
-  });
-
-  it("building_and_institutionのvalueGetterが空値にフォールバックする", () => {
+  it("building_and_institutionのvalueGetterが空値を詰める", () => {
     const hit = createMockReservationSearchHit({
       institution: {
         id: "test-id",
@@ -92,7 +72,7 @@ describe("COLUMNS定義", () => {
       },
     });
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
-    expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe(" ");
+    expect(col?.valueGetter?.(paramsFor(hit) as never)).toBe("江東区");
   });
 
   it("institution_sizeのvalueGetterが不明な値に対して空文字を返す", () => {
@@ -544,7 +524,9 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await expect.element(screen.getByText("テスト文化センター0 音楽練習室A")).toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 テスト文化センター0 音楽練習室A"))
+        .toBeInTheDocument();
 
       await vi.waitFor(() => {
         expect(document.querySelectorAll('[data-testid="skeleton"]').length).toBeGreaterThanOrEqual(
@@ -581,7 +563,7 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await expect.element(screen.getByText("施設0 練習室")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区 施設0 練習室")).toBeInTheDocument();
 
       const skeletons = document.querySelectorAll('[data-testid="skeleton"]');
       expect(skeletons.length).toBe(0);
@@ -626,8 +608,12 @@ describe("Reservation Page", () => {
 
       await expect.element(screen.getByText("施設名")).toBeInTheDocument();
 
-      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
-      await expect.element(screen.getByText("サンプル会館 リハーサル室B")).toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 テスト文化センター 音楽練習室A"))
+        .toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 サンプル会館 リハーサル室B"))
+        .toBeInTheDocument();
     });
 
     it("地区ごとの最終取得日時を取得日時列に表示する", async () => {
@@ -674,9 +660,11 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await expect.element(screen.getByText("テスト文化センター 音楽練習室A")).toBeInTheDocument();
+      await expect
+        .element(screen.getByText("江東区 テスト文化センター 音楽練習室A"))
+        .toBeInTheDocument();
 
-      const cell = screen.getByText("テスト文化センター 音楽練習室A");
+      const cell = screen.getByText("江東区 テスト文化センター 音楽練習室A");
       const row = cell.element().closest("tr");
       await expect.element(row!).toHaveStyle({ cursor: "pointer" });
 
@@ -700,11 +688,11 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation?m=koutou"],
       });
 
-      await expect.element(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区 テスト施設 音楽室")).toBeInTheDocument();
 
-      await user.click(screen.getByText("テスト施設 音楽室"));
+      await user.click(screen.getByText("江東区 テスト施設 音楽室"));
 
-      await expect.element(screen.getByText("テスト施設 音楽室")).toBeInTheDocument();
+      await expect.element(screen.getByText("江東区 テスト施設 音楽室")).toBeInTheDocument();
     });
   });
 });

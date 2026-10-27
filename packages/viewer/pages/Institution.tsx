@@ -12,7 +12,11 @@ import { ROUTES } from "../constants/routes";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
 import { ArrayParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
-import { toInstitutionQueryParams, toInstitutionSearchParams } from "../utils/institution";
+import {
+  formatInstitutionName,
+  toInstitutionQueryParams,
+  toInstitutionSearchParams,
+} from "../utils/institution";
 import {
   SupportedMunicipalities,
   SupportedMunicipalityMap,
@@ -37,14 +41,8 @@ export const COLUMNS: Columns<InstitutionSummary> = [
     headerName: "施設名",
     type: "getter",
     maxWidth: 400,
-    valueGetter: (params) => `${params.row.building ?? ""} ${params.row.institution ?? ""}`,
-  },
-  {
-    field: "municipality",
-    headerName: "地区",
-    type: "getter",
-    hide: true,
-    valueGetter: (params) => SupportedMunicipalityMap[params.value as string] || "",
+    wrap: true,
+    valueGetter: (params) => formatInstitutionName(params.row),
   },
   {
     field: "institution_size",

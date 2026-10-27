@@ -1,8 +1,31 @@
 import { describe, expect, test } from "vitest";
 
 import { FeeDivision } from "../constants/enums";
-import { formatUsageFee, toInstitutionQueryParams, toInstitutionSearchParams } from "./institution";
+import {
+  formatInstitutionName,
+  formatUsageFee,
+  toInstitutionQueryParams,
+  toInstitutionSearchParams,
+} from "./institution";
 import { SupportedMunicipalities } from "./municipality";
+
+describe("formatInstitutionName", () => {
+  test("区名・建物名・施設名を空白でつなぐ", () => {
+    expect(
+      formatInstitutionName({
+        municipality: "MUNICIPALITY_KOUTOU",
+        building: "亀戸文化センター",
+        institution: "第1練習室",
+      })
+    ).toBe("江東区 亀戸文化センター 第1練習室");
+  });
+
+  test("不明な区と空の名前は詰める", () => {
+    expect(
+      formatInstitutionName({ municipality: "UNKNOWN", building: null, institution: "練習室" })
+    ).toBe("練習室");
+  });
+});
 
 describe("formatUsageFee", () => {
   test("returns empty string for undefined municipality", () => {
