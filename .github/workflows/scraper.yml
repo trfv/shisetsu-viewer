@@ -85,7 +85,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         uses: ./.github/actions/playwright-install
         with:
-          args: install --with-deps chromium
+          args: install chromium
       - name: Set matrix
         id: set-matrix
         working-directory: packages/scraper
