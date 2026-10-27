@@ -7,7 +7,6 @@ model: sonnet
 
 # 新規スクレイパー作成ワークフロー
 
-あなたは施設予約システムのスクレイパー実装の専門家です。
 与えられた予約システム URL に対して、Playwright MCP を使ってサイトを探索し、スクレイパーコードを生成・検証します。
 
 **重要**: スクレイピングの対象は音楽練習が可能なものを優先します。利用目的などから絞り込んだ上でスクレイピングしてください。
@@ -35,19 +34,19 @@ model: sonnet
 
 - `defineScraper(definition)` — `../common/defineScraper.ts` — スクレイパー定義（必須。全自治体この形式）
 - `collectPaginated(opts)` — `../common/paginate.ts` — 「抽出 → 次ページ」の標準ページ送りループ
-- `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` — `../common/reservation.ts` — transform の最終工程（`as` キャスト禁止。未マッピング値は INVALID フォールバック + 警告）
+- `rawSlotsToOutput(slots, DIVISION_MAP, STATUS_MAP)` — `../common/reservation.ts` — transform の最終工程
 - `getCellValue(cell)` — `../common/playwrightUtils.ts` — テーブルセルからテキスト or img src を取得
 - `selectAllOptions(selectLocator)` — `../common/playwrightUtils.ts` — セレクトボックスの全選択
 - `toISODateString(dateString)` — `../common/dateUtils.ts` — 和暦・西暦日付を ISO 変換
 - `stripTrailingEmptyValue(arr)` — `../common/arrayUtils.ts` — 配列末尾の空文字除去
 
-スクレイプ期間は `horizon: { startOffsetDays, monthsAhead, unit }` で宣言する（`../common/horizon.ts`）。日付計算コードを自前で書かないこと。
-
 ---
 
 ## フェーズ 1: サイト探索
 
-**Playwright MCP** (`browser_navigate`, `browser_click`, `browser_run_code`（環境によって `browser_run_code_unsafe`）, `browser_snapshot`) を使って対象サイトを探索します。
+**Playwright MCP** (`browser_navigate`, `browser_click`, `browser_run_code_unsafe`, `browser_snapshot`) を使って対象サイトを探索します。
+
+`browser_snapshot` は画面の構造を掴む最初の数回にとどめ、一覧や表の中身は `browser_run_code_unsafe` で必要な値だけを JSON にして返す。snapshot は 1 回で数千〜数万トークンになり、施設数ぶん繰り返すと探索だけでコンテキストが埋まる。
 
 `browser_snapshot` に `filename` を渡すとリポジトリ直下に書き出されるので、渡さないか scratchpad の絶対パスにする。
 
@@ -70,14 +69,14 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 未知のシステムの場合はトップから空き状況テーブルまでのナビゲーションパスを記録する。
 典型的な階層: 施設分類 → 施設 → 部屋 → カレンダー → 日次テーブル
 
-`browser_run_code` を活用して効率的に一括取得:
+`browser_run_code_unsafe` で一括取得する:
 
 - 施設分類の一覧
 - 各施設の部屋一覧（`次の一覧` リンクがある場合は全ページ取得）
 
 サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし「練習」のような広い目的はダンス・演劇の練習も含む（tokyo-katsushika-symphony-hills のレクレーションルーム）。施設側に部屋ごとの利用目的表や「楽器演奏可」の一覧があれば、それで演奏・合唱ができる部屋に絞る。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
 
-検索結果の画面からブラウザの「戻る」で検索フォームに戻ると、フォーム再送信のキャッシュ切れエラーになるサイトがある（p-kashikan 系など）。目的や館を変えるたびにトップから検索をやり直すか、`browser_run_code` でフォームの値を設定して直接 submit する。
+検索結果の画面からブラウザの「戻る」で検索フォームに戻ると、フォーム再送信のキャッシュ切れエラーになるサイトがある（p-kashikan 系など）。目的や館を変えるたびにトップから検索をやり直すか、`browser_run_code_unsafe` でフォームの値を設定して直接 submit する。
 
 ### 1.3 空き状況テーブルの解析
 
@@ -227,49 +226,10 @@ export const scraper = defineScraper({
 
 `packages/shared/registry.ts` の `MUNICIPALITIES` オブジェクトに新しいエントリを追加する。
 
-既存エントリの構造を Read で確認した上で、以下の形式で追加:
+同じ予約システム製品を使う自治体のエントリを Read し、その形を写して追加する。
 
-```typescript
-MUNICIPALITY_<UPPERCASE_SLUG>: {
-  key: "MUNICIPALITY_<UPPERCASE_SLUG>",
-  slug: "<slug>",
-  prefecture: "<tokyo|kanagawa|...>",
-  label: "<日本語表示名>",
-  reservationExcluded: false,
-  reservationStatus: {
-    // STATUS_MAP の逆引き: enum値 → 日本語表示名
-    // スクレイパーの STATUS_MAP が "○" → RESERVATION_STATUS_VACANT なら:
-    [ReservationStatus.VACANT]: "空き",
-    // STATUS_1 〜 STATUS_N: サイトで使われるステータスの日本語表示名
-    [ReservationStatus.STATUS_1]: "<表示名>",
-    // ...
-  },
-  reservationDivision: {
-    // DIVISION_MAP の逆引き: enum値 → 日本語表示名
-    [ReservationDivision.MORNING]: "午前",
-    [ReservationDivision.AFTERNOON]: "午後",
-    [ReservationDivision.EVENING]: "夜間",
-    // DIVISION_1 〜 DIVISION_N がある場合:
-    [ReservationDivision.DIVISION_1]: "<表示名>",
-    // ...
-  },
-  feeDivision: {
-    // 料金区分（reservationDivision と同じ場合が多い）
-    [FeeDivision.MORNING]: "午前",
-    [FeeDivision.AFTERNOON]: "午後",
-    [FeeDivision.EVENING]: "夜間",
-    // ...
-  },
-},
-```
-
-**重要ポイント:**
-
-- `reservationStatus` の値は viewer で表示されるラベル。スクレイパーの STATUS_MAP のキー（生テキスト）ではなく、人間が読める日本語名にする
-- `reservationDivision` も同様。`"9:00-12:00"` のような生テキストではなく `"午前"` のような表示名
-- `feeDivision` のキーは必ず `FeeDivision.*` を使う。`ReservationDivision.*` を流用すると施設 JSON の `FEE_DIVISION_*` 値と食い違い、viewer で料金ラベルが引けなくなる（杉並区で実際に起きた不具合）
+- `reservationStatus` / `reservationDivision` は STATUS_MAP / DIVISION_MAP の逆引き（enum 値 → 表示名）。値は viewer に出るラベルなので、生テキスト（`"○"`、`"9:00-12:00"`）ではなく `"空き"`、`"午前"` のような日本語名にする
 - 追加後は `npm run test:unit -w @shisetsu-viewer/scraper` の registry ドリフト検査が、scraper.yml / database.yml の choice・README の対応地区・施設 JSON の追記漏れを指摘する。全て緑にすること
-- 既存の同じ予約システム（OpenReaf 等）を使う自治体のエントリを参考にする
 - `reservationExcluded` は「スクレイパー自体が存在しない」かどうか。`false` にしても **viewer には出ない**（viewer は手書きの一覧を持つ。2.6 参照）
 - 定期実行での安定性が未確認なら `scraperCiExcluded: true` で CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区と同じ「※現在、予約状況が表示できません」の注記を付ける
 
@@ -288,7 +248,7 @@ npm run typecheck -w @shisetsu-viewer/shared
 
 ### 2.4 index.test.ts 生成
 
-`packages/scraper/<prefecture>-<slug>/index.test.ts` を生成。**全自治体共通の固定ボイラープレート**であり、自治体固有のロジックを書いてはならない:
+`packages/scraper/<prefecture>-<slug>/index.test.ts` を次の内容そのままで生成する:
 
 ```typescript
 import { test } from "@playwright/test";
@@ -305,47 +265,14 @@ for (const target of scraper.targets) {
 
 ### 2.5 （既存の institution データがない場合） institution データの作成
 
-`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。最小の実例は `data/institutions/tokyo-chuo.json`、enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
-
-```json
-[
-  {
-    "id": "<uuidgen 等で採番した UUID>",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_<UPPERCASE_SLUG>",
-    "building": "<施設名>",
-    "institution": "<部屋名>",
-    "building_kana": "<シセツメイ（カタカナ）>",
-    "institution_kana": "<ヘヤメイ（カタカナ）>",
-    "building_system_name": "<予約システム上の施設名>",
-    "institution_system_name": "<予約システム上の部屋名>",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  }
-]
-```
+`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。レコードの形は `data/institutions/tokyo-chuo.json` を写し、`id` は `uuidgen` で採番する。enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
 
 `building_system_name` + `institution_system_name` はスクレイパー出力と施設レコードを突合するキーなので、予約システム上の表記と正確に一致させること。楽器利用可否はサイトに明示的な記載がある場合のみ設定する（推測禁止）。
 
 雛形を作ったら、`tasks/institution-data-prompt.md` の手順で中身を埋める（UNKNOWN と空のままで済ませない）:
 
 1. **予約システム自体の館情報を先に見る**。「館・施設一覧」等に住所・電話番号・館情報 PDF／公式ページへのリンクがあることが多い
-2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェントを並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）
+2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く
 3. 楽器種別の可否は部屋単位で明記されていることがまず無い。「和太鼓不可」「ドラムセット常備」のような間接的な記述は UNKNOWN のまま `note` に文言を残すのが既定（迷ったらユーザーに確認）
 4. 料金はテンプレートでは「埋めない」項目だが、根拠付きで取れたら入れるかユーザーに確認する。土日祝が別料金なら holiday に分け、同額なら平日と同じ値を入れる
 
@@ -421,16 +348,7 @@ cd packages/scraper && npx playwright test <prefecture>-<slug>/ --grep "<最初�
 
 ### 3.6 問題修正
 
-INVALID や `{}` が見つかった場合:
-
-1. どの生テキストがマッピングされていないか特定
-2. DIVISION_MAP または STATUS_MAP に追加
-3. 再テスト
-
-テーブル構造が想定と異なる場合:
-
-1. `extract`（エンジン使用時はエンジン側）の行解析ロジックを修正
-2. 再テスト
+INVALID や `{}` は、マッピングされていない生テキストを DIVISION_MAP / STATUS_MAP に足して直す。テーブル構造が想定と違うなら `extract`（エンジン使用時はエンジン側）を直す。どちらも 3.4 からやり直す。
 
 ---
 
