@@ -18,7 +18,7 @@ export function usePaginatedQuery<TItem>(
   fetchPage: (cursor: string | null) => Promise<Page<TItem>>,
   key: string
 ): UsePaginatedQueryResult<TItem> {
-  const { isLoading: authLoading } = useAuth();
+  useAuth();
   const [items, setItems] = useState<TItem[] | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [fetchingMore, setFetchingMore] = useState(false);
@@ -33,7 +33,6 @@ export function usePaginatedQuery<TItem>(
   }, [key]);
 
   useEffect(() => {
-    if (authLoading) return;
     let cancelled = false;
 
     const fetchInitial = async () => {
@@ -60,7 +59,7 @@ export function usePaginatedQuery<TItem>(
     return () => {
       cancelled = true;
     };
-  }, [key, authLoading]);
+  }, [key]);
 
   const fetchMore = useCallback(async () => {
     if (!hasNextPage || !endCursorRef.current || fetchingMoreRef.current) return;

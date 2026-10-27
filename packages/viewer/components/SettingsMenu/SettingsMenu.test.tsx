@@ -1,10 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 
+import { login, logout } from "../../contexts/Auth";
 import { ColorModeProvider } from "../../contexts/ColorMode";
-import { renderWithProviders, screen } from "../../test/utils/test-utils";
+import { renderWithProviders, screen, type AuthMockConfig } from "../../test/utils/test-utils";
 import { SettingsMenu } from "./SettingsMenu";
 
-const renderSettingsMenu = (authConfig = {}) =>
+vi.mock("../../contexts/Auth", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../../contexts/Auth")>()),
+  login: vi.fn(),
+  logout: vi.fn(),
+}));
+
+const renderSettingsMenu = (authConfig: AuthMockConfig = {}) =>
   renderWithProviders(
     <ColorModeProvider>
       <SettingsMenu />
@@ -19,8 +26,8 @@ describe("SettingsMenu", () => {
     await expect.element(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
   });
 
-  it("isLoading中でも歯車ボタンが表示される", async () => {
-    await renderSettingsMenu({ isLoading: true });
+  it("認証状態の取得中でも歯車ボタンが表示される", async () => {
+    await renderSettingsMenu({ pending: true });
 
     await expect.element(screen.getByRole("button", { name: "設定" })).toBeInTheDocument();
   });
@@ -82,8 +89,8 @@ describe("SettingsMenu", () => {
   });
 
   describe("ログイン/ログアウト", () => {
-    it("isLoading中は無効化される", async () => {
-      const { user } = await renderSettingsMenu({ isLoading: true });
+    it("認証状態の取得中は無効化される", async () => {
+      const { user } = await renderSettingsMenu({ pending: true });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
 
@@ -103,8 +110,7 @@ describe("SettingsMenu", () => {
     });
 
     it("ログアウトをクリックするとlogoutが呼ばれる", async () => {
-      const logout = vi.fn();
-      const { user } = await renderSettingsMenu({ authenticated: true, logout });
+      const { user } = await renderSettingsMenu({ authenticated: true });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem", { name: "ログアウト" }));
@@ -122,8 +128,7 @@ describe("SettingsMenu", () => {
     });
 
     it("ログインをクリックするとloginが呼ばれる", async () => {
-      const login = vi.fn();
-      const { user } = await renderSettingsMenu({ authenticated: false, login });
+      const { user } = await renderSettingsMenu({ authenticated: false });
 
       await user.click(screen.getByRole("button", { name: "設定" }));
       await user.click(screen.getByRole("menuitem"));

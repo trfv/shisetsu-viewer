@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
-import { useAuth } from "../../contexts/Auth";
+import { login, logout, useAuth } from "../../contexts/Auth";
 import { useColorMode } from "../../contexts/ColorMode";
 import {
   BrightnessAutoIcon,
@@ -19,9 +19,41 @@ const COLOR_MODE_ITEMS = [
   { mode: "dark", icon: DarkModeIcon, label: "ダーク" },
 ] as const;
 
+const AuthMenuItemLoading = () => (
+  <button
+    aria-disabled={true}
+    className={styles["menuItem"]}
+    disabled={true}
+    role="menuitem"
+    type="button"
+  >
+    <span aria-hidden="true" className={styles["loadingDot"]} />
+    <span>読み込み中...</span>
+  </button>
+);
+
+const AuthMenuItem = ({ onAction }: { onAction: () => void }) => {
+  const { authenticated } = useAuth();
+
+  const handleClick = useCallback(() => {
+    onAction();
+    if (authenticated) {
+      logout();
+    } else {
+      login();
+    }
+  }, [authenticated, onAction]);
+
+  return (
+    <button className={styles["menuItem"]} onClick={handleClick} role="menuitem" type="button">
+      {authenticated ? <LogoutIcon size={16} /> : <LoginIcon size={16} />}
+      <span>{authenticated ? "ログアウト" : "ログイン"}</span>
+    </button>
+  );
+};
+
 export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, authenticated, login, logout } = useAuth();
   const { mode, setMode } = useColorMode();
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -51,15 +83,6 @@ export const SettingsMenu = () => {
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [isOpen, close]);
-
-  const handleAuthAction = useCallback(() => {
-    close();
-    if (authenticated) {
-      logout();
-    } else {
-      login();
-    }
-  }, [authenticated, login, logout, close]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
@@ -98,23 +121,9 @@ export const SettingsMenu = () => {
           <div className={styles["divider"]} role="separator" />
 
           <div className={styles["section"]}>
-            <button
-              aria-disabled={isLoading}
-              className={styles["menuItem"]}
-              disabled={isLoading}
-              onClick={handleAuthAction}
-              role="menuitem"
-              type="button"
-            >
-              {isLoading ? (
-                <span aria-hidden="true" className={styles["loadingDot"]} />
-              ) : authenticated ? (
-                <LogoutIcon size={16} />
-              ) : (
-                <LoginIcon size={16} />
-              )}
-              <span>{isLoading ? "読み込み中..." : authenticated ? "ログアウト" : "ログイン"}</span>
-            </button>
+            <Suspense fallback={<AuthMenuItemLoading />}>
+              <AuthMenuItem onAction={close} />
+            </Suspense>
           </div>
         </div>
       )}

@@ -49,6 +49,32 @@ describe("ErrorBoundary Component", () => {
       .toBeInTheDocument();
   });
 
+  it("resetKey が変わるとエラー状態を解除する", async () => {
+    let shouldThrow = true;
+    const MaybeThrowing = () => {
+      if (shouldThrow) throw new Error("Test error");
+      return <div>復帰した</div>;
+    };
+
+    const { rerender } = await renderWithProviders(
+      <ErrorBoundary resetKey="a">
+        <MaybeThrowing />
+      </ErrorBoundary>
+    );
+    await expect
+      .element(screen.getByText("予期せぬエラーが発生しました。", { exact: false }))
+      .toBeInTheDocument();
+
+    shouldThrow = false;
+    await rerender(
+      <ErrorBoundary resetKey="b">
+        <MaybeThrowing />
+      </ErrorBoundary>
+    );
+
+    await expect.element(screen.getByText("復帰した")).toBeInTheDocument();
+  });
+
   it("unhandledrejectionイベントでエラー表示する", async () => {
     await renderWithProviders(
       <ErrorBoundary>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 
 import { ROUTES } from "../../constants/routes";
@@ -7,11 +7,31 @@ import { MenuIcon } from "../icons";
 
 import styles from "./HeaderMenuButton.module.css";
 
-export const HeaderMenuButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const DisabledReservationItem = () => (
+  <span className={styles["menuItemDisabled"]} role="menuitem">
+    予約検索
+  </span>
+);
+
+const ReservationItem = ({ onClick }: { onClick: () => void }) => {
   const {
     userInfo: { anonymous, trial },
   } = useAuth();
+  if (anonymous) return <DisabledReservationItem />;
+  return (
+    <Link
+      className={styles["menuItemLink"]}
+      onClick={onClick}
+      role="menuitem"
+      to={ROUTES.reservation}
+    >
+      {`予約検索${trial ? "（トライアル）" : ""}`}
+    </Link>
+  );
+};
+
+export const HeaderMenuButton = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -59,20 +79,9 @@ export const HeaderMenuButton = () => {
       {isOpen && (
         <div aria-label="ナビゲーション" className={styles["menu"]} role="menu">
           <div className={styles["section"]}>
-            {anonymous ? (
-              <span className={styles["menuItemDisabled"]} role="menuitem">
-                予約検索
-              </span>
-            ) : (
-              <Link
-                className={styles["menuItemLink"]}
-                onClick={close}
-                role="menuitem"
-                to={ROUTES.reservation}
-              >
-                {`予約検索${trial ? "（トライアル）" : ""}`}
-              </Link>
-            )}
+            <Suspense fallback={<DisabledReservationItem />}>
+              <ReservationItem onClick={close} />
+            </Suspense>
             <Link
               className={styles["menuItemLink"]}
               onClick={close}
