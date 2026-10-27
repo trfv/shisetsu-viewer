@@ -3,7 +3,7 @@ description: "Run a playwright install command with a per-attempt timeout and re
 
 inputs:
   args:
-    description: "Arguments after `npx playwright` (e.g. `install --with-deps chromium`)"
+    description: "Arguments after `npx playwright` (e.g. `install chromium`)"
     required: true
 
 runs:
