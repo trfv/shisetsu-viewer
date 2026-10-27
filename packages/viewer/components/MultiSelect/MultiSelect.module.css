@@ -79,3 +79,42 @@
   padding-bottom: 4px;
   border-bottom: 1px solid var(--color-divider);
 }
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+/* display や visibility で隠すとフォーカスできず、キーボードから届かない。 */
+.only {
+  opacity: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  transition: opacity var(--transition-short);
+}
+
+.option:hover .only,
+.only:focus-visible {
+  opacity: 1;
+}
+
+.only:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .only {
+    opacity: 1;
+  }
+}
