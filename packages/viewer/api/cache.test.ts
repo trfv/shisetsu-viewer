@@ -41,16 +41,13 @@ describe("cached", () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
-  it("reject された Promise は捨て、次の呼び出しで取り直す", async () => {
-    const fetcher = vi
-      .fn<() => Promise<string>>()
-      .mockRejectedValueOnce(new Error("boom"))
-      .mockResolvedValueOnce("A");
+  it("reject された Promise も TTL までは同じものを返す", async () => {
+    const fetcher = vi.fn(() => Promise.reject(new Error("boom")));
 
     await expect(cached("k", fetcher)).rejects.toThrow("boom");
 
-    await expect(cached("k", fetcher)).resolves.toBe("A");
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    await expect(cached("k", fetcher)).rejects.toThrow("boom");
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 
   it("誰も待っていない Promise が reject されても unhandledrejection を起こさない", async () => {

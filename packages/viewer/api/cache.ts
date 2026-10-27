@@ -14,11 +14,10 @@ export function cached<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
   }
 
   const promise = fetcher();
-  // catch を付けておかないと、use() されないまま reject されたときに unhandledrejection になり、
-  // ルートの ErrorBoundary が全画面エラーに切り替わる。
-  promise.catch(() => {
-    if (entries.get(key)?.promise === promise) entries.delete(key);
-  });
+  // reject されても TTL までは捨てない。捨てると、マウント前にサスペンドしたコンポーネントは
+  // 再試行のたびに取り直し、失敗し続ける取得が止まらない。
+  // catch は unhandledrejection を出さないためだけに付ける。
+  promise.catch(() => {});
   entries.set(key, { promise, expiresAt: now + TTL_MS });
   return promise;
 }

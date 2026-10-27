@@ -39,7 +39,7 @@ useEffect は 22 か所ある。置き換えるのは ① と ② で、③ は 
 ### Promise キャッシュ（`api/cache.ts`）
 
 - key → `{ promise, expiresAt }` の Map をモジュールに置く。TTL はすべての key で 60 秒。`use()` に渡す Promise は render をまたいで同一である必要があり、render 中に `fetch()` すると StrictMode の二重 render や再 render のたびに再サスペンドするため。
-- 失敗した Promise は Map から消す。ErrorBoundary を reset したときに取り直せるようにする。
+- 失敗した Promise も TTL まで残す。消すと、マウント前にサスペンドしたコンポーネント（Promise を自分で作る検索結果など）が再試行のたびに取り直し、失敗し続ける取得が止まらない。検索ページは条件を変えれば key が変わるので取り直せる。
 - 保存する Promise には空の `.catch()` を付ける。先読みしただけで誰も `use()` しないまま reject されると `unhandledrejection` が起き、ルートの ErrorBoundary が全画面エラーに切り替わるため。
 - TTL の判定は key が変わったとき（マウント時・フィルタ変更時）だけ行う。同じ key の再 render（`useIsMobile` の変化など）で Promise を差し替えると、再サスペンドしてちらつく。実装は `useCachedPromise(key, fetcher)` の中で `useMemo(() => cached(key, fetcher), [key])` とする。
 - 同じ key は画面をまたいで共有する（例: `scrape-runs` は Detail と Reservation の両方で使う）。D1 rows read の節約にもなる。
