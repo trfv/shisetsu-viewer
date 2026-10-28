@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { useMediaQuery } from "../hooks/useMediaQuery";
+
 type Mode = "system" | "light" | "dark";
 
 type ColorModeContext = {
@@ -40,16 +42,7 @@ const getStoredMode = (): Mode => {
 
 export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<Mode>(getStoredMode);
-  const [prefersDark, setPrefersDark] = useState(
-    () => window.matchMedia(PREFERS_DARK_QUERY).matches
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia(PREFERS_DARK_QUERY);
-    const handler = (e: MediaQueryListEvent) => setPrefersDark(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
+  const prefersDark = useMediaQuery(PREFERS_DARK_QUERY);
 
   const persistAndSetMode = useCallback((next: Mode) => {
     try {

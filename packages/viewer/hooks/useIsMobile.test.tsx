@@ -15,7 +15,9 @@ describe("useIsMobile Hook", () => {
     originalMatchMedia = window.matchMedia;
 
     window.matchMedia = vi.fn().mockImplementation((query: string) => ({
-      matches: mediaQueryMatches,
+      get matches() {
+        return mediaQueryMatches;
+      },
       media: query,
       onchange: null,
       addEventListener: vi.fn((event: string, handler: (e: MediaQueryListEvent) => void) => {
@@ -45,6 +47,7 @@ describe("useIsMobile Hook", () => {
   });
 
   const fireMediaChange = (matches: boolean) => {
+    mediaQueryMatches = matches;
     for (const [key, handlers] of listeners) {
       if (key.endsWith(":change")) {
         for (const handler of handlers) {
