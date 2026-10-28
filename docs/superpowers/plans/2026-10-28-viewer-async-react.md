@@ -69,10 +69,12 @@ const [isPending, startTransition] = useTransition();
 const fetchMore = () => {
   const cursor = resolved.at(-1)?.pageInfo.endCursor;
   if (isPending || !cursor) return;
-  startTransition(() => setPages((ps) => [...ps, fetchPage(cursor)]));
+  const next = fetchPage(cursor);
+  startTransition(() => setPages((ps) => [...ps, next]));
 };
 ```
 
+- 次のページの Promise は更新関数の外で作る。React は更新関数を再実行することがあり、中で取得すると呼ばれるたびに別の Promise になって解決しない。
 - `use()` はループの中や条件分岐の中で呼べる。oxlint の `rules-of-hooks` も通ることを確かめた（`useState` を同じ形で書くとエラーになる）。
 - `fetchingMore` は `isPending` で置き換える。transition の中で追加したページがサスペンドしても、既存の行は残る。
 - 結果リストは `key={queryKey}` で包む。条件が変わったら `pages` を初期化する。

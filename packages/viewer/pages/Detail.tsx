@@ -1,13 +1,9 @@
-import type { InstitutionDetail, ReservationDto } from "@shisetsu-viewer/shared";
+import type { InstitutionDetail } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
 import { Suspense, use, useCallback, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
-import {
-  fetchInstitutionDetail,
-  fetchInstitutionReservations,
-  fetchScrapeRuns,
-} from "../api/endpoints";
+import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
@@ -26,11 +22,11 @@ import {
 import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
 import { useAuth } from "../contexts/Auth";
-import { useApiQuery } from "../hooks/useApiQuery";
 import { useCachedPromise } from "../hooks/useCachedPromise";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { usePages } from "../hooks/usePages";
+import { useScrapeRuns } from "../hooks/useScrapeRuns";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatMonthDate, formatShortDatetime } from "../utils/format";
 import { isValidUuid } from "../utils/id";
@@ -223,40 +219,29 @@ const ReservationTab = ({
   // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [today] = useState(() => new Date());
 
+  const startDate = formatISO(today, { representation: "date" });
+
+  const scrapeRunsPromise = useScrapeRuns();
+  const fetchPage = useCallback(
+    (cursor: string | null) => fetchInstitutionReservations(id, { startDate }, cursor),
+    [id, startDate]
+  );
   const {
-    loading,
-    data: reservations,
-    error,
+    items: reservations,
     hasNextPage,
     fetchMore,
-  } = usePaginatedQuery<ReservationDto>(
-    (cursor) =>
-      fetchInstitutionReservations(
-        id,
-        { startDate: formatISO(today, { representation: "date" }) },
-        cursor
-      ),
-    id
-  );
+  } = usePages(`institution-reservations:${id}:${startDate}`, fetchPage);
+  const scrapeRuns = use(scrapeRunsPromise);
 
-  const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations?.length ?? 0);
+  const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations.length);
 
-  const { data: scrapeRuns } = useApiQuery(fetchScrapeRuns, "scrape-runs");
   const fetchedAt = formatShortDatetime(
-    scrapeRuns?.items.find((r) => r.municipality === municipality)?.fetched_at
+    scrapeRuns.items.find((r) => r.municipality === municipality)?.fetched_at
   );
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  if (loading) {
-    return <ReservationLoading />;
-  }
 
   return (
     <div className={styles["reservationContainer"]}>
-      {!reservations?.length || RESERVATION_EXCLUDED_MUNICIPALITIES.includes(municipality) ? (
+      {!reservations.length || RESERVATION_EXCLUDED_MUNICIPALITIES.includes(municipality) ? (
         <div className={styles["reservationNoData"]}>表示するデータが存在しません</div>
       ) : isMobile ? (
         <div className={styles["reservationCardList"]}>

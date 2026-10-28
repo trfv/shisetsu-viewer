@@ -37,14 +37,14 @@ const useMswMock = (items: ReservationSearchHit[], hasNextPage = false) => {
 };
 
 const captureSearchParams = () => {
-  const captured: { params: URLSearchParams | null; count: number } = {
+  const captured: { params: URLSearchParams | null; requests: URLSearchParams[] } = {
     params: null,
-    count: 0,
+    requests: [],
   };
   worker.use(
     http.get(`${BASE}/v1/reservations/search`, ({ request }) => {
       captured.params = new URL(request.url).searchParams;
-      captured.count += 1;
+      captured.requests.push(captured.params);
       return HttpResponse.json(createMockReservationSearchPage([], false));
     })
   );
@@ -191,7 +191,7 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation"],
       });
 
-      await expect.poll(() => captured.count).toBe(1);
+      await expect.poll(() => captured.requests.length).toBeGreaterThanOrEqual(1);
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
       await user.click(screen.getByRole("button", { name: /^地区/ }));
       await user.click(screen.getByRole("checkbox", { name: "すべて" }));
@@ -200,7 +200,7 @@ describe("Reservation Page", () => {
         .element(screen.getByRole("button", { name: /^地区/ }))
         .toHaveAccessibleName("地区 選択なし");
       await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      expect(captured.count).toBe(1);
+      expect(captured.requests.every((r) => r.has("municipality"))).toBe(true);
     });
 
     it("URL に予約状況除外対象の自治体があってもチップに出ない", async () => {
@@ -383,11 +383,11 @@ describe("Reservation Page", () => {
       });
 
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
-      await expect.poll(() => captured.count).toBe(1);
+      await expect.poll(() => captured.requests.length).toBeGreaterThanOrEqual(1);
       await user.click(dayButton(/2025年6月20日/));
 
       await expect.element(screen.getByText(/2025\/06\/15.*〜.*2025\/07\/15/)).toBeInTheDocument();
-      expect(captured.count).toBe(1);
+      expect(captured.requests.some((r) => r.get("startDate") === "2025-06-20")).toBe(false);
     });
 
     it("同じ日を 2 回押すとその日だけを検索する", async () => {

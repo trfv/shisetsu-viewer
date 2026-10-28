@@ -1,15 +1,15 @@
-import type { InstitutionSummary } from "@shisetsu-viewer/shared";
-import { useCallback, useMemo, type ChangeEvent } from "react";
+import type { InstitutionsQueryParams, InstitutionSummary } from "@shisetsu-viewer/shared";
+import { useCallback, useDeferredValue, useMemo, type ChangeEvent } from "react";
 import { useLocation, useSearch } from "wouter";
 
 import { fetchInstitutions } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
-import { type Columns } from "../components/DataTable";
+import { type Columns, type RowParams } from "../components/DataTable";
 import { MultiSelect } from "../components/MultiSelect";
-import { SearchPageLayout } from "../components/SearchPageLayout";
+import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
-import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
+import { usePages } from "../hooks/usePages";
 import { ArrayParam, useQueryParams } from "../hooks/useQueryParams";
 import { AvailabilityDivisionMap, EquipmentDivisionMap, InstitutionSizeMap } from "../utils/enums";
 import {
@@ -95,6 +95,33 @@ export const COLUMNS: Columns<InstitutionSummary> = [
   },
 ];
 
+const InstitutionResults = ({
+  params,
+  onRowClick,
+}: {
+  params: InstitutionsQueryParams;
+  onRowClick: (params: RowParams<InstitutionSummary>) => void;
+}) => {
+  const fetchPage = useCallback(
+    (cursor: string | null) => fetchInstitutions(params, cursor),
+    [params]
+  );
+  const { items, hasNextPage, fetchMore } = usePages(
+    `institutions:${JSON.stringify(params)}`,
+    fetchPage
+  );
+
+  return (
+    <SearchResults
+      columns={COLUMNS}
+      fetchMore={fetchMore}
+      hasNextPage={hasNextPage}
+      onRowClick={onRowClick}
+      rows={items}
+    />
+  );
+};
+
 const InstitutionPage = () => {
   const [pathname, setLocation] = useLocation();
   const search = useSearch();
@@ -120,16 +147,21 @@ const InstitutionPage = () => {
     [institutionSearchParams]
   );
 
-  const {
-    data: institutions,
-    loading,
-    error,
-    hasNextPage: hasMore,
-    fetchMore,
-    fetchingMore,
-  } = usePaginatedQuery<InstitutionSummary>(
-    (cursor) => fetchInstitutions(queryParams, cursor),
-    JSON.stringify(queryParams)
+  // values は毎 render 新しいオブジェクトになるので、文字列にしてから deferred にする。
+  const queryKey = JSON.stringify(queryParams);
+  const deferredQueryKey = useDeferredValue(queryKey);
+  const deferredQueryParams = useMemo(
+    () => JSON.parse(deferredQueryKey) as InstitutionsQueryParams,
+    [deferredQueryKey]
+  );
+
+  const handleRowClick = useCallback(
+    (params: RowParams<InstitutionSummary>) => {
+      if (params.row.id) {
+        setLocation(ROUTES.detail.replace(":id", params.row.id));
+      }
+    },
+    [setLocation]
   );
 
   const { municipalities, availableInstruments, institutionSizes } = institutionSearchParams;
@@ -178,7 +210,6 @@ const InstitutionPage = () => {
   return (
     <SearchPageLayout
       chips={chips}
-      columns={COLUMNS}
       controls={
         <>
           <MultiSelect
@@ -210,19 +241,15 @@ const InstitutionPage = () => {
           </CheckboxGroup>
         </>
       }
-      empty={!institutions?.length}
-      error={error}
-      fetchMore={fetchMore}
-      fetchingMore={fetchingMore}
-      hasNextPage={hasMore}
-      loading={loading}
-      onRowClick={(params) => {
-        if (params.row.id) {
-          setLocation(ROUTES.detail.replace(":id", params.row.id));
-        }
-      }}
-      rows={institutions ?? []}
-    />
+      pending={queryKey !== deferredQueryKey}
+      resetKey={deferredQueryKey}
+    >
+      <InstitutionResults
+        key={deferredQueryKey}
+        onRowClick={handleRowClick}
+        params={deferredQueryParams}
+      />
+    </SearchPageLayout>
   );
 };
 
