@@ -231,6 +231,11 @@ h6 {
   height: 0.75em;
 }
 
+/* 既定では遷移中の疑似要素が画面を覆ってクリックを受け止め、drawer の連続操作を取りこぼす。 */
+::view-transition {
+  pointer-events: none;
+}
+
 /* 結果の領域は前後で高さが大きく変わる（Spinner → 数百件のカード）。既定のままだと
    スナップショットが箱に合わせて引き伸ばされるので、縮尺を変えずに上端から切り抜く。 */
 ::view-transition-group(.search-results) {
