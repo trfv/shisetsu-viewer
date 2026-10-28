@@ -1,6 +1,6 @@
 import type { InstitutionDetail } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
-import { Suspense, use, useCallback, useState, type ChangeEvent } from "react";
+import { Suspense, use, useCallback, useState, ViewTransition, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
@@ -25,7 +25,7 @@ import { useAuth } from "../contexts/Auth";
 import { useCachedPromise } from "../hooks/useCachedPromise";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
-import { usePages } from "../hooks/usePages";
+import { FETCH_MORE, usePages } from "../hooks/usePages";
 import { useScrapeRuns } from "../hooks/useScrapeRuns";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatMonthDate, formatShortDatetime } from "../utils/format";
@@ -372,6 +372,8 @@ const DetailPage = () => {
   return <DetailContent id={id} />;
 };
 
+// fallback と中身を別々に包む。Suspense ごと包むと同じ要素の update になり、
+// Skeleton の大きさから中身の大きさへ伸び縮みして、文字が拡大して見える。
 const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
@@ -388,8 +390,16 @@ const DetailContent = ({ id }: { id: string }) => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["title"]}>
-        <Suspense fallback={<Skeleton height={40} width={WIDTHS.large} />}>
-          <Title institution={institution} />
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <Skeleton height={40} width={WIDTHS.large} />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>
+            <Title institution={institution} />
+          </ViewTransition>
         </Suspense>
       </div>
       <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
@@ -397,14 +407,30 @@ const DetailContent = ({ id }: { id: string }) => {
         <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
       </TabGroup>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
-        <Suspense fallback={<InstitutionTab institution={undefined} loading={true} />}>
-          <InstitutionTabContent institution={institution} />
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <InstitutionTab institution={undefined} loading={true} />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>
+            <InstitutionTabContent institution={institution} />
+          </ViewTransition>
         </Suspense>
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <Suspense fallback={<ReservationLoading />}>
-            <ReservationTabContent id={id} institution={institution} />
+          <Suspense
+            fallback={
+              <ViewTransition>
+                <ReservationLoading />
+              </ViewTransition>
+            }
+          >
+            <ViewTransition update={{ [FETCH_MORE]: "none", default: "auto" }}>
+              <ReservationTabContent id={id} institution={institution} />
+            </ViewTransition>
           </Suspense>
         )}
       </TabPanel>

@@ -230,3 +230,25 @@ h6 {
   width: 0.75em;
   height: 0.75em;
 }
+
+/* 結果の領域は前後で高さが大きく変わる（Spinner → 数百件のカード）。既定のままだと
+   スナップショットが箱に合わせて引き伸ばされるので、縮尺を変えずに上端から切り抜く。 */
+::view-transition-group(.search-results) {
+  overflow: clip;
+}
+
+::view-transition-old(.search-results),
+::view-transition-new(.search-results) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

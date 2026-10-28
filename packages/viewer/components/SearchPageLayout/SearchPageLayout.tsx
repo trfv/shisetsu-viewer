@@ -1,5 +1,6 @@
-import { Suspense, type ReactNode } from "react";
+import { Suspense, ViewTransition, type ReactNode } from "react";
 
+import { FETCH_MORE } from "../../hooks/usePages";
 import { DataTable, type Columns, type Row, type RowParams } from "../DataTable";
 import { SearchForm } from "../SearchForm";
 import { Snackbar } from "../Snackbar";
@@ -31,22 +32,24 @@ export const SearchPageLayout = ({ chips, controls, pending, resetKey, children 
           <SearchForm chips={chips}>{controls}</SearchForm>
         </div>
       </div>
-      <div
-        aria-busy={pending}
-        className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
-      >
-        <ErrorBoundary fallback={renderError} resetKey={resetKey}>
-          <Suspense
-            fallback={
-              <div className={styles["resultBoxNoData"]}>
-                <Spinner />
-              </div>
-            }
-          >
-            {children}
-          </Suspense>
-        </ErrorBoundary>
-      </div>
+      <ViewTransition update={{ [FETCH_MORE]: "none", default: "search-results" }}>
+        <div
+          aria-busy={pending}
+          className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
+        >
+          <ErrorBoundary fallback={renderError} resetKey={resetKey}>
+            <Suspense
+              fallback={
+                <div className={styles["resultBoxNoData"]}>
+                  <Spinner />
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
+          </ErrorBoundary>
+        </div>
+      </ViewTransition>
     </main>
   );
 };

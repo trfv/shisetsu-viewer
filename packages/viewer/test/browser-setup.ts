@@ -7,6 +7,12 @@ import { resetCache } from "../api/cache";
 let worker: any;
 
 beforeAll(async () => {
+  // 遷移中は ::view-transition が画面を覆い、userEvent のクリックが下の要素に届かない。
+  const style = document.createElement("style");
+  style.textContent =
+    "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }";
+  document.head.append(style);
+
   if (typeof window !== "undefined") {
     try {
       const { worker: mswWorker } = await import("./mocks/browser");

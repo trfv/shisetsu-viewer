@@ -20,6 +20,9 @@ export default defineConfig({
 
     video: "retain-on-failure",
 
+    // 遷移中は ::view-transition が画面を覆い、クリックが下の要素に届かない。
+    contextOptions: { reducedMotion: "reduce" },
+
     actionTimeout: 10000,
     navigationTimeout: 30000,
   },
