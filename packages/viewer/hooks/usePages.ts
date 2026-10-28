@@ -19,6 +19,8 @@ export function usePages<T>(key: string, fetchPage: (cursor: string | null) => P
     requestedRef.current = endCursor;
     // 更新関数の中で取得すると、React が更新関数を再実行するたびに別の Promise になり、解決しない。
     const next = fetchPage(endCursor);
+    // transition の描画より先にアンマウントされると誰も use() せず、reject が unhandledrejection になる。
+    next.catch(() => {});
     startTransition(() => setPages((prev) => [...prev, next]));
   }, [endCursor, fetchPage]);
 
