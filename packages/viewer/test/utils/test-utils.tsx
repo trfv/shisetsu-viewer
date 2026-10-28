@@ -1,5 +1,4 @@
-import { ReactElement, ReactNode } from "react";
-import { vi } from "vitest";
+import { ReactElement, ReactNode, Suspense, useState } from "react";
 import { render } from "vitest-browser-react";
 import { page, userEvent as browserUserEvent } from "vitest/browser";
 import { Route, Router } from "wouter";
@@ -7,29 +6,32 @@ import { memoryLocation } from "wouter/memory-location";
 
 import { AuthContext } from "../../contexts/Auth";
 
-type AuthMockConfig = {
-  isLoading?: boolean;
+export type AuthMockConfig = {
+  pending?: boolean;
   authenticated?: boolean;
   userInfo?: { anonymous: boolean; trial: boolean };
-  login?: () => void;
-  logout?: () => void;
 };
 
-const MockAuthProvider = ({
+export const MockAuthProvider = ({
   children,
   config = {},
 }: {
   children: ReactNode;
   config?: AuthMockConfig;
 }) => {
-  const value = {
-    isLoading: config.isLoading ?? false,
-    authenticated: config.authenticated ?? true,
-    userInfo: config.userInfo ?? { anonymous: false, trial: false },
-    login: config.login ?? vi.fn(),
-    logout: config.logout ?? vi.fn(),
-  };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const [value] = useState(() =>
+    config.pending
+      ? new Promise<never>(() => {})
+      : Promise.resolve({
+          authenticated: config.authenticated ?? true,
+          userInfo: config.userInfo ?? { anonymous: false, trial: false },
+        })
+  );
+  return (
+    <AuthContext value={value}>
+      <Suspense fallback={null}>{children}</Suspense>
+    </AuthContext>
+  );
 };
 
 interface CustomRenderOptions {

@@ -59,10 +59,9 @@ describe("useApiQuery", () => {
 
     await renderWithProviders(
       <TestComponent fetcher={() => apiGet(`${BASE}/v1/x`, {})} queryKey="x" />,
-      { authConfig: { isLoading: true } }
+      { authConfig: { pending: true } }
     );
 
-    await expect.element(screen.getByText("loading")).toBeInTheDocument();
     await vi.waitFor(() => {
       expect(requestCount).toBe(0);
     });
@@ -88,8 +87,7 @@ describe("useApiQuery", () => {
     );
 
     await renderWithProviders(
-      <TestComponent fetcher={() => apiGet(`${BASE}/v1/secure`, {})} queryKey="secure" />,
-      { authConfig: { isLoading: false } }
+      <TestComponent fetcher={() => apiGet(`${BASE}/v1/secure`, {})} queryKey="secure" />
     );
 
     await expect.element(screen.getByText("secure")).toBeInTheDocument();

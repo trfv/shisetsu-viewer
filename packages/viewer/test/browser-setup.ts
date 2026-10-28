@@ -2,6 +2,8 @@
 
 import { afterEach, beforeAll, afterAll, vi } from "vitest";
 
+import { resetCache } from "../api/cache";
+
 let worker: any;
 
 beforeAll(async () => {
@@ -76,6 +78,7 @@ beforeAll(async () => {
 });
 
 afterEach(() => {
+  resetCache();
   if (worker) {
     worker.resetHandlers();
   }

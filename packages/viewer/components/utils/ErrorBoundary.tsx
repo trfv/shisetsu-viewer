@@ -2,18 +2,23 @@ import { Component, type ReactNode, type ErrorInfo } from "react";
 
 import { Snackbar } from "../Snackbar";
 
-type Props = { children?: ReactNode };
-type State = { hasError: boolean };
+type Props = { children?: ReactNode; resetKey?: unknown };
+type State = { hasError: boolean; resetKey: unknown };
 
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, resetKey: props.resetKey };
     this.handleUnhandledRejection = this.handleUnhandledRejection.bind(this);
   }
 
-  static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(): Partial<State> {
     return { hasError: true };
+  }
+
+  static getDerivedStateFromProps(props: Props, state: State): Partial<State> | null {
+    if (props.resetKey === state.resetKey) return null;
+    return { hasError: false, resetKey: props.resetKey };
   }
 
   override componentDidCatch(error: Error, errorInfo: ErrorInfo) {

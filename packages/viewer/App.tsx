@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Redirect, Route, Router, Switch } from "wouter";
+import { Redirect, Route, Router, Switch, useLocation } from "wouter";
 
 import { Header } from "./components/Header";
 import { AuthGuard } from "./components/utils/AuthGuard";
@@ -17,6 +17,33 @@ const Detail = lazy(() => import("./pages/Detail"));
 const Reservation = lazy(() => import("./pages/Reservation"));
 /* istanbul ignore next */
 const Top = lazy(() => import("./pages/Top"));
+const Routes = () => {
+  const [location] = useLocation();
+  return (
+    <ErrorBoundary resetKey={location}>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <Route path={ROUTES.reservation}>
+            <AuthGuard Component={<Reservation />} />
+          </Route>
+          <Route path={ROUTES.detail}>
+            <Detail />
+          </Route>
+          <Route path={ROUTES.institution}>
+            <Institution />
+          </Route>
+          <Route path={ROUTES.top}>
+            <Top />
+          </Route>
+          <Route>
+            <Redirect to={ROUTES.top} />
+          </Route>
+        </Switch>
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
 const App = () => {
   return (
     <ErrorBoundary>
@@ -24,27 +51,7 @@ const App = () => {
         <Router>
           <ScrollToTop />
           <Header />
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <Switch>
-                <Route path={ROUTES.reservation}>
-                  <AuthGuard Component={<Reservation />} />
-                </Route>
-                <Route path={ROUTES.detail}>
-                  <Detail />
-                </Route>
-                <Route path={ROUTES.institution}>
-                  <Institution />
-                </Route>
-                <Route path={ROUTES.top}>
-                  <Top />
-                </Route>
-                <Route>
-                  <Redirect to={ROUTES.top} />
-                </Route>
-              </Switch>
-            </Suspense>
-          </ErrorBoundary>
+          <Routes />
         </Router>
       </ColorModeProvider>
     </ErrorBoundary>

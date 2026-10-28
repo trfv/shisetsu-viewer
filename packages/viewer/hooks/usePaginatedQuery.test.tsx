@@ -59,10 +59,9 @@ describe("usePaginatedQuery", () => {
     );
 
     await renderWithProviders(<TestComponent queryKey="k" />, {
-      authConfig: { isLoading: true },
+      authConfig: { pending: true },
     });
 
-    await expect.element(screen.getByText("loading")).toBeInTheDocument();
     await vi.waitFor(() => {
       expect(requestCount).toBe(0);
     });

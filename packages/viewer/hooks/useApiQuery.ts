@@ -12,7 +12,7 @@ type UseApiQueryResult<T> = {
 };
 
 export function useApiQuery<T>(fetcher: () => Promise<T>, key: string): UseApiQueryResult<T> {
-  const { isLoading: authLoading } = useAuth();
+  useAuth();
   const [data, setData] = useState<T | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -23,9 +23,7 @@ export function useApiQuery<T>(fetcher: () => Promise<T>, key: string): UseApiQu
     fetcherRef.current = fetcher;
   }, [key]);
 
-  // /auth/me の結果より先に叩くと、未ログイン扱いの応答をキャッシュしてしまう。
   useEffect(() => {
-    if (authLoading) return;
     let cancelled = false;
 
     const run = async () => {
@@ -47,7 +45,7 @@ export function useApiQuery<T>(fetcher: () => Promise<T>, key: string): UseApiQu
     return () => {
       cancelled = true;
     };
-  }, [key, authLoading, refetchCount]);
+  }, [key, refetchCount]);
 
   const refetch = useCallback(() => setRefetchCount((c) => c + 1), []);
 

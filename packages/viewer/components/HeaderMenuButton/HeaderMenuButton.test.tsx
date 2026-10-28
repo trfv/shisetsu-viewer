@@ -48,7 +48,7 @@ describe("HeaderMenuButton", () => {
 
     const reservationLink = screen.getByText("予約検索");
     await expect.element(reservationLink).toBeInTheDocument();
-    expect(reservationLink.element().tagName).toBe("A");
+    await expect.poll(() => reservationLink.element().tagName).toBe("A");
   });
 
   it("トライアルユーザーの場合、予約検索にトライアル表示が付く", async () => {

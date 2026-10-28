@@ -1,6 +1,6 @@
 import type { InstitutionDetail, ReservationDto } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
-import { useCallback, useState, type ChangeEvent } from "react";
+import { Suspense, use, useCallback, useState, type ChangeEvent } from "react";
 import { Redirect, useParams } from "wouter";
 
 import {
@@ -27,6 +27,7 @@ import { ROUTES } from "../constants/routes";
 import { WIDTHS } from "../constants/styles";
 import { useAuth } from "../contexts/Auth";
 import { useApiQuery } from "../hooks/useApiQuery";
+import { useCachedPromise } from "../hooks/useCachedPromise";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { usePaginatedQuery } from "../hooks/usePaginatedQuery";
@@ -166,20 +167,58 @@ const InstitutionTab = ({
   );
 };
 
+const InstitutionTabContent = ({ institution }: { institution: Promise<InstitutionDetail> }) => (
+  <InstitutionTab institution={use(institution)} loading={false} />
+);
+
+const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => {
+  const detail = use(institution);
+  return (
+    <h2>
+      {formatInstitutionName(detail)}
+      {detail.website_url && (
+        <IconButton href={detail.website_url} target="_blank">
+          <OpenInNewIcon />
+        </IconButton>
+      )}
+    </h2>
+  );
+};
+
+const ReservationLoading = () => (
+  <div className={styles["reservationContainer"]}>
+    <div className={styles["reservationNoData"]}>
+      <Spinner />
+    </div>
+  </div>
+);
+
+const ReservationTabContent = ({
+  id,
+  institution,
+}: {
+  id: string;
+  institution: Promise<InstitutionDetail>;
+}) => {
+  const detail = use(institution);
+  return (
+    <ReservationTab
+      id={id}
+      municipality={detail.municipality as SupportedMunicipality}
+      divisionLabels={detail.division_labels}
+    />
+  );
+};
+
 const ReservationTab = ({
   id,
   municipality,
   divisionLabels,
 }: {
   id: string;
-  municipality: SupportedMunicipality | undefined;
+  municipality: SupportedMunicipality;
   divisionLabels: Partial<Record<string, string>> | undefined;
 }) => {
-  /* istanbul ignore next -- municipality is always defined */
-  if (!municipality) {
-    throw new Error("municipality is undefined");
-  }
-
   const isMobile = useIsMobile();
   // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [today] = useState(() => new Date());
@@ -211,13 +250,13 @@ const ReservationTab = ({
     throw new Error(error.message);
   }
 
+  if (loading) {
+    return <ReservationLoading />;
+  }
+
   return (
     <div className={styles["reservationContainer"]}>
-      {loading ? (
-        <div className={styles["reservationNoData"]}>
-          <Spinner />
-        </div>
-      ) : !reservations?.length || RESERVATION_EXCLUDED_MUNICIPALITIES.includes(municipality) ? (
+      {!reservations?.length || RESERVATION_EXCLUDED_MUNICIPALITIES.includes(municipality) ? (
         <div className={styles["reservationNoData"]}>表示するデータが存在しません</div>
       ) : isMobile ? (
         <div className={styles["reservationCardList"]}>
@@ -359,42 +398,29 @@ const DetailContent = ({ id }: { id: string }) => {
     []
   );
 
-  const { loading, data: institution, error } = useApiQuery(() => fetchInstitutionDetail(id), id);
-
-  if (error) {
-    throw new Error(error.message);
-  }
+  const institution = useCachedPromise(`institution:${id}`, () => fetchInstitutionDetail(id));
 
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["title"]}>
-        {loading ? (
-          <Skeleton height={40} width={WIDTHS.large} />
-        ) : (
-          <h2>
-            {institution && formatInstitutionName(institution)}
-            {institution?.website_url && (
-              <IconButton href={institution?.website_url} target="_blank">
-                <OpenInNewIcon />
-              </IconButton>
-            )}
-          </h2>
-        )}
+        <Suspense fallback={<Skeleton height={40} width={WIDTHS.large} />}>
+          <Title institution={institution} />
+        </Suspense>
       </div>
       <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
         <Tab label="施設情報" value="institution" />
         <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
       </TabGroup>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
-        <InstitutionTab institution={institution} loading={loading} />
+        <Suspense fallback={<InstitutionTab institution={undefined} loading={true} />}>
+          <InstitutionTabContent institution={institution} />
+        </Suspense>
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <ReservationTab
-            id={id}
-            municipality={institution?.municipality as SupportedMunicipality | undefined}
-            divisionLabels={institution?.division_labels}
-          />
+          <Suspense fallback={<ReservationLoading />}>
+            <ReservationTabContent id={id} institution={institution} />
+          </Suspense>
         )}
       </TabPanel>
     </main>
