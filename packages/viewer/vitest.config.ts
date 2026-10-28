@@ -24,7 +24,7 @@ export default defineConfig({
     silent: true,
     coverage: {
       provider: "v8",
-      reporter: ["text"],
+      reporter: ["text", "html"],
       exclude: [
         "node_modules/",
         "test/",
