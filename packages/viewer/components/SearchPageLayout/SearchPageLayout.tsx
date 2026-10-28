@@ -32,7 +32,7 @@ export const SearchPageLayout = ({ chips, controls, pending, resetKey, children 
           <SearchForm chips={chips}>{controls}</SearchForm>
         </div>
       </div>
-      <ViewTransition update={{ [FETCH_MORE]: "none", default: "auto" }}>
+      <ViewTransition update={{ [FETCH_MORE]: "none", default: "search-results" }}>
         <div
           aria-busy={pending}
           className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
