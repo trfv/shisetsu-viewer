@@ -372,6 +372,8 @@ const DetailPage = () => {
   return <DetailContent id={id} />;
 };
 
+// fallback と中身を別々に包む。Suspense ごと包むと同じ要素の update になり、
+// Skeleton の大きさから中身の大きさへ伸び縮みして、文字が拡大して見える。
 const DetailContent = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<TabType>("institution");
   const {
@@ -388,30 +390,48 @@ const DetailContent = ({ id }: { id: string }) => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["title"]}>
-        <ViewTransition>
-          <Suspense fallback={<Skeleton height={40} width={WIDTHS.large} />}>
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <Skeleton height={40} width={WIDTHS.large} />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>
             <Title institution={institution} />
-          </Suspense>
-        </ViewTransition>
+          </ViewTransition>
+        </Suspense>
       </div>
       <TabGroup className={styles["tabGroup"] ?? ""} onChange={handleTabChange} value={tab}>
         <Tab label="施設情報" value="institution" />
         <Tab disabled={anonymous || trial} label="予約状況" value="reservation" />
       </TabGroup>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="institution">
-        <ViewTransition>
-          <Suspense fallback={<InstitutionTab institution={undefined} loading={true} />}>
+        <Suspense
+          fallback={
+            <ViewTransition>
+              <InstitutionTab institution={undefined} loading={true} />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition>
             <InstitutionTabContent institution={institution} />
-          </Suspense>
-        </ViewTransition>
+          </ViewTransition>
+        </Suspense>
       </TabPanel>
       <TabPanel className={styles["tabPanel"] ?? ""} currentValue={tab} tabValue="reservation">
         {!(anonymous || trial) && (
-          <ViewTransition update={{ [FETCH_MORE]: "none", default: "auto" }}>
-            <Suspense fallback={<ReservationLoading />}>
+          <Suspense
+            fallback={
+              <ViewTransition>
+                <ReservationLoading />
+              </ViewTransition>
+            }
+          >
+            <ViewTransition update={{ [FETCH_MORE]: "none", default: "auto" }}>
               <ReservationTabContent id={id} institution={institution} />
-            </Suspense>
-          </ViewTransition>
+            </ViewTransition>
+          </Suspense>
         )}
       </TabPanel>
     </main>
