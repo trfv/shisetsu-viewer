@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@shisetsu-viewer/shared": "0.0.1",
-    "jose": "6.2.13"
+    "jose": "6.2.14"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "1.4.7",
