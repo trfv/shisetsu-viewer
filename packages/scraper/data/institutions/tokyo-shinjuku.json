@@ -1,0 +1,1370 @@
+[
+  {
+    "id": "12d7fd44-df8d-4eb3-b5cc-a1a17b9ee694",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "四谷地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "ヨツヤチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "四谷地域センター",
+    "institution_system_name": "多目的ホール（１００）",
+    "capacity": 100,
+    "area": 200,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区内藤町87番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://ycc.tokyo",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "0213a41e-918b-4245-a5cb-1e0e52cfae81",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "四谷地域センター",
+    "institution": "音楽室（集会室1）",
+    "building_kana": "ヨツヤチイキセンター",
+    "institution_kana": "オンガクシツシュウカイシツイチ",
+    "building_system_name": "四谷地域センター",
+    "institution_system_name": "音楽室（集会室１）（３０）",
+    "capacity": 30,
+    "area": 68,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区内藤町87番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://ycc.tokyo",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "a1840cd1-21a1-472e-adc8-5daefb684ac5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "榎町地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "エノキチョウチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "榎町地域センター",
+    "institution_system_name": "多目的ホール（１２０）",
+    "capacity": 120,
+    "area": 151,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区早稲田町85番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://enoki-chiiki.tokyo/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "410f3ae0-f932-4987-8e63-ff5279db974f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "榎町地域センター",
+    "institution": "軽音楽室",
+    "building_kana": "エノキチョウチイキセンター",
+    "institution_kana": "ケイオンガクシツ",
+    "building_system_name": "榎町地域センター",
+    "institution_system_name": "軽音楽室（１８）",
+    "capacity": 18,
+    "area": 36,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区早稲田町85番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://enoki-chiiki.tokyo/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "56ecaf0a-0a3b-4a35-a7be-122bb06feeb8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "榎町地域センター",
+    "institution": "地下ホールA",
+    "building_kana": "エノキチョウチイキセンター",
+    "institution_kana": "チカホールエー",
+    "building_system_name": "榎町地域センター",
+    "institution_system_name": "地下ホールＡ（５４）",
+    "capacity": 54,
+    "area": 71,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区早稲田町85番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://enoki-chiiki.tokyo/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "f820a1a6-bf27-439f-b155-7231400e2844",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "榎町地域センター",
+    "institution": "地下ホールB",
+    "building_kana": "エノキチョウチイキセンター",
+    "institution_kana": "チカホールビー",
+    "building_system_name": "榎町地域センター",
+    "institution_system_name": "地下ホールＢ（３２）",
+    "capacity": 32,
+    "area": 44,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区早稲田町85番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://enoki-chiiki.tokyo/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "8118bcd4-f257-4406-9b0d-0dfe31ab8afb",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "若松地域センター",
+    "institution": "3Fホール",
+    "building_kana": "ワカマツチイキセンター",
+    "institution_kana": "サンガイホール",
+    "building_system_name": "若松地域センター",
+    "institution_system_name": "３Ｆホール（１３０）",
+    "capacity": 130,
+    "area": 158,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区若松町12番6号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://wakamatsucenter.com/index",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "00003493-e214-497c-aebb-67fa7848a69a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "若松地域センター",
+    "institution": "スタジオYM",
+    "building_kana": "ワカマツチイキセンター",
+    "institution_kana": "スタジオワイエム",
+    "building_system_name": "若松地域センター",
+    "institution_system_name": "スタジオＹＭ（１５）",
+    "capacity": 15,
+    "area": 68,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区若松町12番6号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://wakamatsucenter.com/index",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "d77011fb-4eba-4153-9753-d983ae704021",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "若松地域センター",
+    "institution": "B1ホール",
+    "building_kana": "ワカマツチイキセンター",
+    "institution_kana": "ビーワンホール",
+    "building_system_name": "若松地域センター",
+    "institution_system_name": "Ｂ１ホール（４０）",
+    "capacity": 40,
+    "area": 81,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区若松町12番6号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://wakamatsucenter.com/index",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "5459cacb-3f82-4e39-95c7-be343038a4be",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "大久保地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "オオクボチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "大久保地域センター",
+    "institution_system_name": "多目的ホール（１２０）",
+    "capacity": 120,
+    "area": 162.9,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区大久保2丁目12番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://ookubocc.tokyo/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "d09d23b8-a2ee-4aa0-9684-8091691c4ac5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "戸塚地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "トヅカチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "戸塚地域センター",
+    "institution_system_name": "多目的ホール（１８０）",
+    "capacity": 180,
+    "area": 176,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4400,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区高田馬場2丁目18番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.tcc-tokyo.net",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "9902fdfb-568b-40d4-b02d-ee6cef23c817",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "戸塚地域センター",
+    "institution": "音楽室",
+    "building_kana": "トヅカチイキセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "戸塚地域センター",
+    "institution_system_name": "音楽室（２０）",
+    "capacity": 20,
+    "area": 39,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区高田馬場2丁目18番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.tcc-tokyo.net",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "5c28f0ca-2542-4734-b945-81db95fef74b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "落合第一地域センター",
+    "institution": "4Fホール",
+    "building_kana": "オチアイダイイチチイキセンター",
+    "institution_kana": "ヨンガイホール",
+    "building_system_name": "落合第一地域センター",
+    "institution_system_name": "４Ｆホール（１５０）",
+    "capacity": 150,
+    "area": 201,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 5000,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6200,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6200,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区下落合4丁目6番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ochiai1center.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "247670af-d36c-4f8e-8ff2-0360457a3f6c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "落合第二地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "オチアイダイニチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "落合第二地域センター",
+    "institution_system_name": "多目的ホール（１００）",
+    "capacity": 100,
+    "area": 180,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5600,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5600,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区中落合4丁目17番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ochiai2center.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "bbb56014-8714-4709-b5c3-3286611ad90a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "落合第二地域センター",
+    "institution": "音楽室",
+    "building_kana": "オチアイダイニチイキセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "落合第二地域センター",
+    "institution_system_name": "音楽室（１８）",
+    "capacity": 18,
+    "area": 36,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区中落合4丁目17番13号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.ochiai2center.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "242dae54-fad4-42b6-82cd-a1411170b423",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "柏木地域センター",
+    "institution": "音楽室",
+    "building_kana": "カシワギチイキセンター",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "柏木地域センター",
+    "institution_system_name": "音楽室（１５）",
+    "capacity": 15,
+    "area": 67.5,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区北新宿2丁目3番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://kashiwagicc.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "96f9d0ab-fcbd-458a-bea3-4e3dc8f8de65",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "柏木地域センター",
+    "institution": "多目的ホール",
+    "building_kana": "カシワギチイキセンター",
+    "institution_kana": "タモクテキホール",
+    "building_system_name": "柏木地域センター",
+    "institution_system_name": "多目的ホール（１２０）",
+    "capacity": 120,
+    "area": 187.8,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 5800,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区北新宿2丁目3番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "http://kashiwagicc.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "7860c5f9-aa2a-46bb-ab84-f2a9d2d14cdf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "角筈地域センター",
+    "institution": "レクリエーションホール",
+    "building_kana": "ツノハズチイキセンター",
+    "institution_kana": "レクリエーションホール",
+    "building_system_name": "角筈地域センター",
+    "institution_system_name": "レクリエーションホール（９０）",
+    "capacity": 90,
+    "area": 150,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 4700,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "東京都新宿区西新宿4丁目33番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://tsunohazucc.com/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "地域センター設置のアップライトピアノ以外の楽器は使用できない（料金表 PDF の注記）"
+  }
+]

@@ -89,14 +89,14 @@ describe("toMunicipalityUrlParam", () => {
 
 describe("RESERVATION_MUNICIPALITIES", () => {
   test("excludes reservation-excluded municipalities", () => {
-    expect(RESERVATION_MUNICIPALITIES).toHaveLength(16);
+    expect(RESERVATION_MUNICIPALITIES).toHaveLength(17);
     expect(RESERVATION_MUNICIPALITIES).not.toContain("MUNICIPALITY_SUGINAMI");
   });
 });
 
 describe("SupportedMunicipalities", () => {
-  test("has 17 entries", () => {
-    expect(SupportedMunicipalities).toHaveLength(17);
+  test("has 18 entries", () => {
+    expect(SupportedMunicipalities).toHaveLength(18);
   });
 
   test("contains all expected municipalities", () => {
@@ -111,6 +111,7 @@ describe("SupportedMunicipalities", () => {
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_SUGINAMI");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_CHUO");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_SHINAGAWA");
+    expect(SupportedMunicipalities).toContain("MUNICIPALITY_SHINJUKU");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_MEGURO");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_SETAGAYA");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_MINATO");
@@ -126,8 +127,8 @@ describe("SupportedMunicipalityMap", () => {
     expect(SupportedMunicipalityMap["MUNICIPALITY_KAWASAKI"]).toBe("川崎市");
   });
 
-  test("has 17 entries matching SupportedMunicipalities", () => {
-    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(17);
+  test("has 18 entries matching SupportedMunicipalities", () => {
+    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(18);
   });
 });
 
