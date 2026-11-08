@@ -7,6 +7,7 @@ usage: $0 [DIR]
 
 施設マスタのフィールド別・自治体別の網羅率を表示する。
 null・空文字・空配列・*_UNKNOWN・キーの欠落を未入力として数える。
+note と division_labels は空が正しい施設が多いので数えない。
 DIR の既定値は packages/scraper/data/institutions（実行時の作業ディレクトリによらない）。
 EOF
   exit 2
@@ -28,7 +29,7 @@ jq -nr '
   [inputs | {m: (input_filename | split("/") | last | rtrimstr(".json") | sub("^[^-]+-"; "")), rows: .}]
   | sort_by(.m) as $ms
   | ($ms | map(.rows[] | keys_unsorted[]) | reduce .[] as $k ([]; if index([$k]) then . else . + [$k] end)
-     | map(select(. != "id" and . != "prefecture" and . != "municipality"))) as $fields
+     | map(select(IN("id", "prefecture", "municipality", "note", "division_labels") | not))) as $fields
   | ($ms | map(.rows | length) | add) as $total
   | ($ms | map(.m as $m | {key: $m, value: (reduce $fields[] as $f ({}; .[$f] = ([$ms[] | select(.m == $m) | .rows[] | select(.[$f] | filled)] | length)))}) | from_entries) as $c
   | ($fields | map({key: ., value: (. as $f | [$c[] | .[$f]] | add)}) | from_entries) as $all
