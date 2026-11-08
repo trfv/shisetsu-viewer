@@ -272,7 +272,7 @@ export interface WebrGrandSlotConfig extends WebrGrandConfig {
   maxSelection: number;
 }
 
-export type WebrGrandSlotTable = { date: string; header: string[]; rows: string[][] };
+type WebrGrandSlotTable = { date: string; header: string[]; rows: string[][] };
 export type WebrGrandSlotPage = { days: WebrGrandTable[]; slots: WebrGrandSlotTable[] };
 
 const ALL_DAY = "全日";
