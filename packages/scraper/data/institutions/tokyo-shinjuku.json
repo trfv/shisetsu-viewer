@@ -1366,5 +1366,426 @@
     "layout_image_url": "",
     "lottery_period": "",
     "note": "地域センター設置のアップライトピアノ以外の楽器は使用できない（料金表 PDF の注記）"
+  },
+  {
+    "id": "32366a79-db5f-42f0-a7d2-944ef47092ec",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "四谷スポーツスクエア",
+    "institution": "音楽室",
+    "building_kana": "ヨツヤスポーツスクエア",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "四谷スポーツスクエア",
+    "institution_system_name": "音楽室",
+    "capacity": 21,
+    "area": 57,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区四谷1丁目6番4号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://yotsuya-sports-square.jp/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING": "9:00-12:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "12:20-15:20",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:40-18:40",
+      "RESERVATION_DIVISION_EVENING": "19:00-22:00"
+    }
+  },
+  {
+    "id": "1bb520bb-6719-4780-b6ae-1944934046ea",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "新宿文化センター",
+    "institution": "大ホール",
+    "building_kana": "シンジュクブンカセンター",
+    "institution_kana": "ダイホール",
+    "building_system_name": "新宿文化センター",
+    "institution_system_name": "大ホール",
+    "capacity": 1601,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 50800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 101700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 127100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 60950,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 122000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 152500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区新宿6丁目14番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.regasu-shinjuku.or.jp/bunka-center/facilities/main-hall/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "建物の構造上、複数の和太鼓の使用はできない場合がある（施設ページ）。料金は練習利用（公演日以外）"
+  },
+  {
+    "id": "e7c32079-ea5a-4a16-9873-030b18cb72e6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "新宿文化センター",
+    "institution": "リハーサル室",
+    "building_kana": "シンジュクブンカセンター",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "新宿文化センター",
+    "institution_system_name": "リハーサル室",
+    "capacity": 100,
+    "area": 202,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 15400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 9300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 23100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区新宿6丁目14番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.regasu-shinjuku.or.jp/bunka-center/facilities/rehersal-room/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "大ホールの楽屋として優先受付のため、練習利用できない日がある（施設ページ）"
+  },
+  {
+    "id": "de8e48cb-bf25-4878-981d-9794830b0a93",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "新宿文化センター",
+    "institution": "小ホール",
+    "building_kana": "シンジュクブンカセンター",
+    "institution_kana": "ショウホール",
+    "building_system_name": "新宿文化センター",
+    "institution_system_name": "小ホール",
+    "capacity": 210,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 17300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21650,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 10500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20750,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 26000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区新宿6丁目14番1号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.regasu-shinjuku.or.jp/bunka-center/facilities/2nd-hall/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "振動が伝わりやすいため、金管楽器・打楽器を使用する催し物には利用できない（施設ページ）。料金は練習利用（公演日以外）"
+  },
+  {
+    "id": "231d26f9-2175-48da-a272-e3e5b43b0cce",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "四谷区民ホール",
+    "institution": "ホール",
+    "building_kana": "ヨツヤクミンホール",
+    "institution_kana": "ホール",
+    "building_system_name": "区民ホール",
+    "institution_system_name": "四谷・ホール（入場料なし）",
+    "capacity": 392,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 18900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 37800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 47200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 22600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 45200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 56400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区内藤町87番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://shinjuku.hall-info.jp/yotsuya/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "料金は入場料を徴収しない場合"
+  },
+  {
+    "id": "7fe1d27e-abaf-4af8-b988-5bb7783e6a34",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "牛込箪笥区民ホール",
+    "institution": "ホール",
+    "building_kana": "ウシゴメタンスクミンホール",
+    "institution_kana": "ホール",
+    "building_system_name": "区民ホール",
+    "institution_system_name": "牛込箪笥・ホール（入場料なし）",
+    "capacity": 392,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 13600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 27200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 34000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 16300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 32600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 40400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区箪笥町15番地",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://shinjuku.hall-info.jp/tansu/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "料金は入場料を徴収しない場合"
+  },
+  {
+    "id": "e3b676b0-3a78-4e48-83df-2c5c48d9e8f6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "building": "角筈区民ホール",
+    "institution": "ホール",
+    "building_kana": "ツノハズクミンホール",
+    "institution_kana": "ホール",
+    "building_system_name": "区民ホール",
+    "institution_system_name": "角筈・ホール（入場料なし）",
+    "capacity": 212,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 23200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 11100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 22200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 27600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "東京都新宿区西新宿4丁目33番7号",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://shinjuku.hall-info.jp/tsunohazu/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "天井等改修工事のため 2027-03-31 利用分まで休館。料金は入場料を徴収しない場合"
   }
 ]
