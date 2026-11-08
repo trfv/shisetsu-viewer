@@ -23,6 +23,7 @@ on:
           - tokyo-ota
           - tokyo-edogawa
           - tokyo-meguro
+          - tokyo-setagaya
           - tokyo-shinagawa
           - tokyo-minato
           - tokyo-adachi

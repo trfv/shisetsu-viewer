@@ -28,6 +28,7 @@ describe("registry", () => {
         "tokyo-meguro",
         "tokyo-minato",
         "tokyo-ota",
+        "tokyo-setagaya",
         "tokyo-shinagawa",
         "tokyo-sumida",
         "tokyo-toshima",

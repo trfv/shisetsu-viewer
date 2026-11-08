@@ -50,6 +50,10 @@ model: sonnet
 
 `browser_snapshot` に `filename` を渡すとリポジトリ直下に書き出されるので、渡さないか scratchpad の絶対パスにする。
 
+画面を離れるときに `beforeunload` の確認ダイアログを出すサイト（WebR Grand 系など）では、`page.goto` のたびに探索が止まる。`browser_run_code_unsafe` の冒頭で `page.on("dialog", (d) => d.accept())` を掛ける。
+
+一度に大量の施設や日付を選んで「次へ」を押すと、応答が数十秒かかり `click` の既定の待ちでタイムアウトする。`click({ noWaitAfter: true })` のあと `waitForURL` を長めの timeout で待つ。
+
 ### 1.1 トップページ確認
 
 - `browser_navigate` で URL にアクセス
@@ -77,6 +81,8 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし「練習」のような広い目的はダンス・演劇の練習も含む（tokyo-katsushika-symphony-hills のレクレーションルーム）。施設側に部屋ごとの利用目的表や「楽器演奏可」の一覧があれば、それで演奏・合唱ができる部屋に絞る。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
 
+目的検索が施設だけでなく **部屋** まで絞っていることがある（tokyo-setagaya）。同じ館をカテゴリー経由と目的検索経由で開いて部屋数を比べ、絞られていれば、目的ごとに全施設を選んで部屋一覧を取ると対象の候補がそのまま出る。「音量大／小」「80dB 以上／未満」のような音量の区分がある場合、小さい側は会議室まで含んで大きく膨らむので、目的ごとの部屋数を並べてユーザーに選んでもらう。
+
 検索結果の画面からブラウザの「戻る」で検索フォームに戻ると、フォーム再送信のキャッシュ切れエラーになるサイトがある（p-kashikan 系など）。目的や館を変えるたびにトップから検索をやり直すか、`browser_run_code_unsafe` でフォームの値を設定して直接 submit する。
 
 ### 1.3 空き状況テーブルの解析
@@ -97,7 +103,8 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 - **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する。JSON が無くても、日付送りが「フォームの値を書き換えて submit」だけなら、同じフォームを `page.request.post` で日付を変えて送り、返った HTML を解析できる（例: `engines/aserv.ts`。画面遷移が要らず、画像や JS も取りに行かない）
 - **色で表す状態**: 「色の塗られていない部分は予約可能」のように状態を色だけで表すサイトは、セルの id / class と CSS を突き合わせて、どの値に塗りがあるかを確定する（`page.request.get` で CSS を落として `#<id>` を grep する）。「塗りなしだが押せない」値（受付期間の手前・後ろなど）がよくあるので、凡例どおり空きと見るか、受付期間外と見るかを値ごとに決める
 - **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする。受付期間より先を要求しても「受付期間外」と出さず、全コマ空きで返すサイトがある（reserve1.jp の月表示）。月や日のセレクトの選択肢が受付中の範囲を表していることが多いので、それを打ち切りの根拠にする
-- **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い
+- **束ねた表示と実際のコマ**: 「午前／午後／夜間」で絞る表示は、実際の予約単位（コマ）を束ねていることがある。区の施設ページの料金表で時間枠を確かめ、時間帯別の画面と同じ日を突き合わせる。tokyo-setagaya は実際は 5 コマで、夕方が「午後」と「夜間」の両方に数えられ、束ねた表示の「△」からはどのコマが空いているか分からなかった。コマ単位で取れるならそちらを選ぶ（`*_ONE` / `*_TWO` に載せれば D1 の「午後空き」検索にも載る）
+- **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い。文字が無くアイコン（`<i class="fa ...">`）だけのセルは `innerText` が空になり、`STATUS_MAP` の `""` で `INVALID` に変わるので「Unmapped」の警告も出ない（tokyo-setagaya の時間帯別画面の「取消処理中」）。集計で INVALID が出たら、そのセルの HTML と画面の凡例を見る
 - **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
 
 #### WebReaf Grand 系の場合
@@ -108,6 +115,9 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 - 2週間カレンダー表示で、prev/next リンクでページング
 - 日ごとのクリック不要で効率的にスクレイプ可能
 - `tokyo-toshima` / `tokyo-meguro` を参照実装として使用
+- 実際のコマが絞り込みの区分より細かいサイトは `webrGrandSlotHooks()`。「全日」表示を 1 パス取り、「△」の日だけ時間帯別の画面で開く（一度に選べる件数に上限がある。tokyo-setagaya は 10 件で `maxSelection`）。部屋ごとのコマ構成は時間帯別画面の見出しから学ぶので、`DIVISION_MAP` のキーは時間帯の文字列にする。参照実装: `tokyo-setagaya`
+- トップでカテゴリーのボタンがタブの中に隠れているサイトは `categoryTab` にタブのリンク名を渡す
+- 「その他の条件で絞り込む」の開閉が postback をまたいで残るサイトがある。エンジンは区分のラベルが見えないときだけ開く
 
 ### 1.4 ユーザーへの確認
 
@@ -154,7 +164,7 @@ STATUS_MAP:
 まず既知の予約システム製品かを判定する。**既知製品ならエンジンを使い、index.ts は設定（URL・マップ・targets）だけになる**:
 
 - **OpenReaf 系**（URL が `*.openreaf02.jp`、リンクチェーン + カレンダー + day-next 方式） → `engines/openreaf.ts` の `openreafHooks()` を使用。参照実装: `tokyo-kita`, `tokyo-chuo`
-- **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`
+- **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`。コマ単位で取るなら `webrGrandSlotHooks()`（参照実装: `tokyo-setagaya`）
 - **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/`、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
 - **aserv 系**（URL が `reserve.aserv.jp/<団体>/`、館・区分・利用日を選ぶ `cal.do` の日表示） → `engines/aserv.ts` の `aservHooks()` を使用。参照実装: `tokyo-katsushika-symphony-hills`
 - **reserve1 系**（Reserve Mart。URL が `www.reserve1.jp/studio/member/`、種別 × 月の月別状況） → `engines/reserve1.ts` の `reserve1Hooks()` を使用。`office` は入口を通った後の画面の hidden にある。参照実装: `kanagawa-kawasaki-jichi`
@@ -274,7 +284,7 @@ for (const target of scraper.targets) {
 雛形を作ったら、`tasks/institution-data-prompt.md` の手順で中身を埋める（UNKNOWN と空のままで済ませない）:
 
 1. **予約システム自体の館情報を先に見る**。「館・施設一覧」等に住所・電話番号・館情報 PDF／公式ページへのリンクがあることが多い
-2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く
+2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く。エージェントは圧縮された PDF を読めず「取得できず」と返すことがある。その PDF は `curl` で scratchpad に落とし、Read で直接読む（pdftotext は入っていない）
 3. 楽器種別の可否は部屋単位で明記されていることがまず無い。「和太鼓不可」「ドラムセット常備」のような間接的な記述は UNKNOWN のまま `note` に文言を残すのが既定（迷ったらユーザーに確認）
 4. 料金はテンプレートでは「埋めない」項目だが、根拠付きで取れたら入れるかユーザーに確認する。土日祝が別料金なら holiday に分け、同額なら平日と同じ値を入れる
 5. 既存の JSON に `JSON.parse` → `JSON.stringify` で追記すると、`41.0` のような数値が `41` に変わる。追記後に `git diff | grep '^-[^-]'` で既存行が変わっていないか確かめる

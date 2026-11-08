@@ -13,6 +13,8 @@ export interface WebrGrandConfig {
   statusMap: Readonly<Record<string, Status>>;
   /** 部分一致で複数ヒットするサイトは true */
   facilityCellExact?: boolean;
+  /** カテゴリーのボタンが別タブに隠れているサイトで、先に開くリンクの名前 */
+  categoryTab?: string;
 }
 
 export interface WebrGrandTarget {
@@ -21,6 +23,14 @@ export interface WebrGrandTarget {
 }
 
 type WebrGrandTable = { division: string; header: string[]; rows: string[][] };
+
+// 定員列を挟むサイトと挟まないサイトがあるので、日付セルの位置は見出しから探す。
+function dateColumns(header: readonly string[]): { start: number; cells: string[] } {
+  const start = header.findIndex(
+    (h, i) => i > 0 && /^\d{1,2}$/.test(h.split("\n")[0]?.trim() ?? "")
+  );
+  return start < 0 ? { start: 0, cells: [] } : { start, cells: header.slice(start) };
+}
 
 function buildISODateStrings(monthHeader: string, dateCells: string[]): string[] {
   const match = monthHeader.match(/(\d{4})年(\d{1,2})月/);
@@ -45,7 +55,7 @@ export function keepDatesCoveredByAllDivisions(
 ): RawSlot[] {
   const datesByDivision = new Map<string, Set<string>>(divisions.map((d) => [d, new Set()]));
   for (const { division, header } of tables) {
-    for (const date of buildISODateStrings(header[0] ?? "", header.slice(2))) {
+    for (const date of buildISODateStrings(header[0] ?? "", dateColumns(header).cells)) {
       datesByDivision.get(division)?.add(date);
     }
   }
@@ -141,6 +151,35 @@ export async function discoverWebrGrandTargets(
   return targets;
 }
 
+function roomNameOf(cell: string): string {
+  return cell.trim().split(" ")[0] || "";
+}
+
+async function showFromToday(page: Page, division: string): Promise<void> {
+  await page.getByRole("textbox", { name: "表示開始日" }).fill(format(new Date(), "yyyy/M/d"));
+  await page.keyboard.press("Escape");
+  // 開閉が postback をまたいで残るサイトがあり、無条件に押すと閉じてしまう。
+  const option = page
+    .locator("label")
+    .filter({ hasText: new RegExp(`^${division}$`) })
+    .first();
+  if (!(await option.isVisible())) {
+    await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
+  }
+  await option.click();
+  await page.getByRole("button", { name: "表示" }).click();
+  await page.locator("table").first().waitFor();
+}
+
+async function goNextPeriod(page: Page): Promise<boolean> {
+  const nextLink = page.locator("a[href=\"javascript:__doPostBack('period','next')\"]").first();
+  if ((await nextLink.count()) === 0) return false;
+  await nextLink.click();
+  await page.waitForLoadState("domcontentloaded");
+  await page.locator("table").first().waitFor();
+  return true;
+}
+
 export function webrGrandHooks(config: WebrGrandConfig): {
   prepare: (page: Page, target: WebrGrandTarget) => Promise<Page>;
   extract: (page: Page, target: WebrGrandTarget, pageCount: number) => Promise<WebrGrandTable[]>;
@@ -155,6 +194,7 @@ export function webrGrandHooks(config: WebrGrandConfig): {
       if (!category) throw new Error(`Unknown facility: ${target.facilityName}`);
 
       await page.goto(config.baseUrl);
+      if (config.categoryTab) await page.getByRole("link", { name: config.categoryTab }).click();
       await page.getByRole("button", { name: category }).click();
       await page.locator("table").first().waitFor();
 
@@ -178,33 +218,15 @@ export function webrGrandHooks(config: WebrGrandConfig): {
     },
 
     async extract(page, target, pageCount) {
-      const startDateString = format(new Date(), "yyyy/M/d");
       const output: WebrGrandTable[] = [];
 
       for (const division of divisions) {
-        const dateInput = page.getByRole("textbox", { name: "表示開始日" });
-        await dateInput.fill(startDateString);
-        await page.keyboard.press("Escape");
-
-        await page.getByRole("button", { name: "その他の条件で絞り込む" }).click();
-        await page.getByText(division, { exact: true }).click();
-        await page.getByRole("button", { name: "表示" }).click();
-        await page.locator("table").first().waitFor();
-
+        await showFromToday(page, division);
         const tables = await collectPaginated({
           maxPages: pageCount,
           label: `${target.facilityName} ${division}`,
           extractPage: () => extractTables(page, division),
-          goNext: async () => {
-            const nextLink = page
-              .locator("a[href=\"javascript:__doPostBack('period','next')\"]")
-              .first();
-            if ((await nextLink.count()) === 0) return false;
-            await nextLink.click();
-            await page.waitForLoadState("domcontentloaded");
-            await page.locator("table").first().waitFor();
-            return true;
-          },
+          goNext: () => goNextPeriod(page),
         });
         output.push(...tables);
       }
@@ -213,15 +235,15 @@ export function webrGrandHooks(config: WebrGrandConfig): {
     },
 
     transform(extracted, target) {
-      // header[0] = "2026年3月"（ナビ矢印含む）、header[1] = "定員"、header[2:] = "12\n木", ...
       const allSlots: RawSlot[] = extracted.flatMap(({ division, header, rows }) => {
-        const dates = buildISODateStrings(header[0] ?? "", header.slice(2));
+        const { start, cells } = dateColumns(header);
+        const dates = buildISODateStrings(header[0] ?? "", cells);
         return dates.flatMap((date, i) =>
           rows.map((row) => ({
-            roomName: (row[0] || "").trim().split(" ")[0] || "",
+            roomName: roomNameOf(row[0] ?? ""),
             date,
             division,
-            status: (row[i + 2] || "").trim(),
+            status: (row[i + start] || "").trim(),
           }))
         );
       });
@@ -241,6 +263,197 @@ export function webrGrandHooks(config: WebrGrandConfig): {
 
     discover(page) {
       return discoverWebrGrandTargets(page, config);
+    },
+  };
+}
+
+export interface WebrGrandSlotConfig extends WebrGrandConfig {
+  /** 時間帯別の画面へ一度に送れる「部屋 × 日」の上限 */
+  maxSelection: number;
+}
+
+type WebrGrandSlotTable = { date: string; header: string[]; rows: string[][] };
+export type WebrGrandSlotPage = { days: WebrGrandTable[]; slots: WebrGrandSlotTable[] };
+
+const ALL_DAY = "全日";
+const PARTIAL = "△";
+
+function slotDateToISO(dateHeader: string): string | null {
+  const match = dateHeader.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+  if (!match?.[1] || !match[2] || !match[3]) return null;
+  return format(new Date(+match[1], +match[2] - 1, +match[3]), "yyyy-MM-dd");
+}
+
+export function normalizeSlotHeader(header: string): string {
+  return header.replace(/\s+/g, "").replace(/〜/g, "～");
+}
+
+async function pickCheckValues(
+  page: Page,
+  rooms: readonly string[] | undefined,
+  knownRooms: ReadonlySet<string>
+): Promise<string[]> {
+  return page.locator("table tr").evaluateAll(
+    (trs, { wanted, known, partial }) => {
+      const picked: string[] = [];
+      for (const tr of trs) {
+        const cells = [...tr.querySelectorAll("th,td")].filter((c) => c instanceof HTMLElement);
+        const room = (cells[0]?.innerText ?? "").trim().split(" ")[0] ?? "";
+        if (wanted && !wanted.includes(room)) continue;
+        let learnSlots = !known.includes(room);
+        for (const cell of cells.slice(1)) {
+          const input = cell.querySelector('input[name="checkdate"]');
+          if (!(input instanceof HTMLInputElement)) continue;
+          if (cell.innerText.trim() === partial || learnSlots) {
+            picked.push(input.value);
+            learnSlots = false;
+          }
+        }
+      }
+      return picked;
+    },
+    { wanted: rooms ? [...rooms] : null, known: [...knownRooms], partial: PARTIAL }
+  );
+}
+
+async function checkOnly(page: Page, values: readonly string[]): Promise<void> {
+  await page.locator('input[name="checkdate"]').evaluateAll(
+    (inputs, wanted) => {
+      for (const input of inputs) {
+        if (!(input instanceof HTMLInputElement)) continue;
+        if (input.checked !== wanted.includes(input.value)) input.click();
+      }
+    },
+    [...values]
+  );
+}
+
+async function readSlotTables(page: Page): Promise<WebrGrandSlotTable[]> {
+  // 記号の代わりにアイコンだけを置くセルがある（取消処理中）。その class を値として読む。
+  const tables = await page.locator("table").evaluateAll((elements) =>
+    elements.map((table) =>
+      [...table.querySelectorAll("tr")].map((tr) =>
+        [...tr.querySelectorAll("th,td")].map((c) => {
+          const text = c instanceof HTMLElement ? c.innerText.trim() : "";
+          return text || (c.querySelector("i")?.className.trim() ?? "");
+        })
+      )
+    )
+  );
+  return tables.flatMap(([header, ...rows]) => {
+    const date = slotDateToISO(header?.[0] ?? "");
+    if (!header || !date) return [];
+    return [{ date, header: header.slice(1).map(normalizeSlotHeader), rows }];
+  });
+}
+
+async function fetchSlotTables(
+  page: Page,
+  values: readonly string[],
+  maxSelection: number
+): Promise<WebrGrandSlotTable[]> {
+  const output: WebrGrandSlotTable[] = [];
+  for (let i = 0; i < values.length; i += maxSelection) {
+    await checkOnly(page, values.slice(i, i + maxSelection));
+    await page.getByRole("link", { name: "次へ進む" }).click();
+    await page.waitForURL(/Jikantaibetsu/);
+    output.push(...(await readSlotTables(page)));
+    await page.getByRole("link", { name: "前に戻る" }).click();
+    await page.waitForURL(/Shisetsubetsu/);
+    await page.locator("table").first().waitFor();
+  }
+  // 戻った画面はチェックを保持しており、残すと次の期間の postback に乗る。
+  await checkOnly(page, []);
+  return output;
+}
+
+export function slotPagesToRawSlots(
+  pages: readonly WebrGrandSlotPage[],
+  rooms: readonly string[] | undefined
+): { slots: RawSlot[]; dropped: string[] } {
+  const detail = new Map<string, Map<string, string>>();
+  const slotsOfRoom = new Map<string, string[]>();
+  for (const { date, header, rows } of pages.flatMap((p) => p.slots)) {
+    for (const row of rows) {
+      const room = roomNameOf(row[0] ?? "");
+      detail.set(`${room}|${date}`, new Map(header.map((h, i) => [h, (row[i + 1] ?? "").trim()])));
+      if (!slotsOfRoom.has(room)) slotsOfRoom.set(room, header);
+    }
+  }
+
+  const slots: RawSlot[] = [];
+  const dropped: string[] = [];
+  for (const { header, rows } of pages.flatMap((p) => p.days)) {
+    const { start, cells } = dateColumns(header);
+    const dates = buildISODateStrings(header[0] ?? "", cells);
+    for (const row of rows) {
+      const roomName = roomNameOf(row[0] ?? "");
+      if (rooms && !rooms.includes(roomName)) continue;
+      dates.forEach((date, i) => {
+        const bySlot = detail.get(`${roomName}|${date}`);
+        if (bySlot) {
+          for (const [division, status] of bySlot) slots.push({ roomName, date, division, status });
+          return;
+        }
+        const dayStatus = (row[i + start] ?? "").trim();
+        const slotHeaders = slotsOfRoom.get(roomName);
+        if (dayStatus === PARTIAL || !slotHeaders) {
+          dropped.push(`${roomName} ${date}`);
+          return;
+        }
+        for (const division of slotHeaders)
+          slots.push({ roomName, date, division, status: dayStatus });
+      });
+    }
+  }
+  return { slots, dropped };
+}
+
+/** 全日表示の ○・× などは全コマへ展開し、△ の日だけ時間帯別の画面でコマごとに取る */
+export function webrGrandSlotHooks(config: WebrGrandSlotConfig): {
+  prepare: (page: Page, target: WebrGrandTarget) => Promise<Page>;
+  extract: (page: Page, target: WebrGrandTarget, pageCount: number) => Promise<WebrGrandSlotPage[]>;
+  transform: (extracted: WebrGrandSlotPage[], target: WebrGrandTarget) => TransformOutput;
+  discover: (page: Page) => Promise<DiscoveredTarget[]>;
+} {
+  const { prepare, discover } = webrGrandHooks(config);
+
+  return {
+    prepare,
+    discover,
+
+    async extract(page, target, pageCount) {
+      await showFromToday(page, ALL_DAY);
+      const knownRooms = new Set<string>();
+      return collectPaginated({
+        maxPages: pageCount,
+        label: `${target.facilityName} ${ALL_DAY}`,
+        extractPage: async () => {
+          const days = await extractTables(page, ALL_DAY);
+          const values = await pickCheckValues(page, target.rooms, knownRooms);
+          const slots = await fetchSlotTables(page, values, config.maxSelection);
+          for (const { rows } of slots)
+            for (const row of rows) knownRooms.add(roomNameOf(row[0] ?? ""));
+          return [{ days, slots }];
+        },
+        goNext: () => goNextPeriod(page),
+      });
+    },
+
+    transform(extracted, target) {
+      const { slots, dropped } = slotPagesToRawSlots(extracted, target.rooms);
+      if (dropped.length > 0) {
+        console.warn(
+          `Dropped ${dropped.length} room-days without slot detail in ${target.facilityName} ` +
+            `(e.g. ${dropped.slice(0, 3).join(", ")}); D1 keeps the previous values for them.`
+        );
+      }
+      const seen = new Set(slots.map((s) => s.roomName));
+      const unseen = (target.rooms ?? []).filter((r) => !seen.has(r));
+      if (extracted.length > 0 && unseen.length > 0) {
+        console.warn(`Rooms not found in ${target.facilityName}: ${unseen.join(", ")}`);
+      }
+      return rawSlotsToOutput(slots, config.divisionMap, config.statusMap);
     },
   };
 }

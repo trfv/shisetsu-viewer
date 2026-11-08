@@ -24,6 +24,7 @@ on:
           - tokyo-suginami
           - tokyo-chuo
           - tokyo-meguro
+          - tokyo-setagaya
           - tokyo-shinagawa
           - tokyo-minato
           - tokyo-adachi

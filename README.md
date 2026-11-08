@@ -33,6 +33,7 @@ https://app.shisetsudb.com
 - 足立区
 - 葛飾区
 - 目黒区
+- 世田谷区
 - 川崎市
 
 ## 備考
