@@ -19,6 +19,7 @@
     "knip": "6.44.0",
     "oxfmt": "0.75.0",
     "oxlint": "1.90.0",
+    "tsrs": "0.22.0-ts7.1.0-beta",
     "typescript": "7.0.2"
   },
   "engines": {

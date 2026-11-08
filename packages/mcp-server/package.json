@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "wrangler types && tsc",
+    "typecheck": "wrangler types && tsrs",
     "test": "vitest run",
     "start": "node --env-file=.env src/stdio.ts",
     "cli": "node --env-file=.env src/cli/cli.ts",
