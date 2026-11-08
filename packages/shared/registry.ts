@@ -392,6 +392,8 @@ export const MUNICIPALITIES = {
     prefecture: "kanagawa",
     label: "川崎市",
     reservationExcluded: false,
+    // 総合自治会館（市民自治財団の reserve1.jp）はふれあいネットとは別に予約状況を出している
+    additionalScrapers: ["jichi"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約あり",
@@ -403,6 +405,8 @@ export const MUNICIPALITIES = {
       [ReservationStatus.STATUS_7]: "時間外",
       [ReservationStatus.STATUS_8]: "取消処理中",
       [ReservationStatus.STATUS_9]: "開放予定",
+      [ReservationStatus.STATUS_10]: "利用不可",
+      [ReservationStatus.STATUS_11]: "仮予約",
     },
     reservationDivision: {
       [ReservationDivision.MORNING]: "午前",

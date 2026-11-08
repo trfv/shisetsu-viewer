@@ -26,7 +26,7 @@ const SYMBOL_CATEGORIES: Readonly<Record<string, SlotCategory>> = {
 // 「受付」は「受付中」を誤分類するので含めない。
 const LABEL_CATEGORIES: readonly (readonly [RegExp, SlotCategory])[] = [
   [
-    /空きなし|空枠なし|空いていません|空いてません|予約あり|予約済|予約不可|使用中|使用禁止|利用不可|利用中止|選択不可|取消|音出し|抽選/,
+    /空きなし|空枠なし|空いていません|空いてません|予約あり|予約済|予約不可|使用中|使用禁止|利用不可|利用中止|選択不可|取消|音出し|抽選|仮予約/,
     "UNAVAILABLE",
   ],
   // 「空いて」は大田区の img alt「空いています」に当てる。

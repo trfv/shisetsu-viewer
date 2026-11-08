@@ -1090,5 +1090,237 @@
     "layout_image_url": "",
     "lottery_period": "",
     "note": ""
+  },
+  {
+    "id": "b08ee529-fab7-4155-aee3-5016bc5780aa",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "川崎市総合自治会館",
+    "institution": "ホール",
+    "building_kana": "カワサキシソウゴウジチカイカン",
+    "institution_kana": "ホール",
+    "building_system_name": "川崎市総合自治会館",
+    "institution_system_name": "ホール",
+    "capacity": 200,
+    "area": 199.58,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6930,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11550,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11550,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8310,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13860,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 13860,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市中原区小杉町3-600",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.jichizaidan.or.jp/facilities/hall/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "ピアノは有料（3,300円）。楽器の使用は事前に相談。楽器の種類によっては利用できない場合がある（利用用途）"
+  },
+  {
+    "id": "6eb2244b-c596-4048-ba4a-d735858261be",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "川崎市総合自治会館",
+    "institution": "多目的室1",
+    "building_kana": "カワサキシソウゴウジチカイカン",
+    "institution_kana": "タモクテキシツ1",
+    "building_system_name": "川崎市総合自治会館",
+    "institution_system_name": "多目的室１",
+    "capacity": 24,
+    "area": 29.7,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1650,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2420,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2530,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1980,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3030,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市中原区小杉町3-600",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.jichizaidan.or.jp/facilities/multipurpose-room-1/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "歌レッスン、電子ピアノ等の利用もできる。太鼓、金管楽器、エレキギター等は使用できない（施設案内）。楽器練習・合唱練習は非営利のみ"
+  },
+  {
+    "id": "b7b3fca7-1f30-4664-b612-8696dae7de4e",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "川崎市総合自治会館",
+    "institution": "多目的室2",
+    "building_kana": "カワサキシソウゴウジチカイカン",
+    "institution_kana": "タモクテキシツ2",
+    "building_system_name": "川崎市総合自治会館",
+    "institution_system_name": "多目的室２",
+    "capacity": 24,
+    "area": 29.7,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1650,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2420,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2530,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1980,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3030,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市中原区小杉町3-600",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.jichizaidan.or.jp/facilities/multipurpose-room-2/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "歌レッスン、電子ピアノ等の利用もできる。太鼓、金管楽器、エレキギター等は使用できない（施設案内）。楽器練習・合唱練習は非営利のみ"
+  },
+  {
+    "id": "be0662b2-58b1-4d7f-b064-0f67fc0a0e2b",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "川崎市総合自治会館",
+    "institution": "多目的室3",
+    "building_kana": "カワサキシソウゴウジチカイカン",
+    "institution_kana": "タモクテキシツ3",
+    "building_system_name": "川崎市総合自治会館",
+    "institution_system_name": "多目的室３",
+    "capacity": 12,
+    "area": 24.09,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1430,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2090,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1710,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2640,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市中原区小杉町3-600",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.jichizaidan.or.jp/facilities/multipurpose-room-3/",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": "歌レッスン、電子ピアノ等の利用もできる。太鼓、金管楽器、エレキギター等は使用できない（施設案内）。楽器練習・合唱練習は非営利のみ"
   }
 ]
