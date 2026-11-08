@@ -30,6 +30,7 @@ on:
           - tokyo-katsushika
           - tokyo-katsushika-symphony-hills
           - kanagawa-kawasaki
+          - kanagawa-kawasaki-jichi
           - all
       density:
         description: "Tests per shard (higher = fewer shards)"
