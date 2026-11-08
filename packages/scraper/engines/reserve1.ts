@@ -34,8 +34,8 @@ export interface Reserve1Month {
 
 function text(html: string): string {
   return html
-    .replace(/<br\s*\/?>/g, "")
-    .replace(/<[^>]+>/g, "")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/[<>]/g, "")
     .replace(/&nbsp;/g, " ")
     .trim();
 }
