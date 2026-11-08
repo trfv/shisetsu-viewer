@@ -386,6 +386,33 @@ export const MUNICIPALITIES = {
       [FeeDivision.EVENING]: "夜間",
     },
   },
+  MUNICIPALITY_NAKANO: {
+    key: "MUNICIPALITY_NAKANO",
+    slug: "nakano",
+    prefecture: "tokyo",
+    label: "中野区",
+    reservationExcluded: true,
+    reservationStatus: {
+      [ReservationStatus.VACANT]: "空き",
+      [ReservationStatus.STATUS_1]: "一部空き",
+      [ReservationStatus.STATUS_2]: "空きなし",
+      [ReservationStatus.STATUS_3]: "申込期間外",
+      [ReservationStatus.STATUS_4]: "休館",
+      [ReservationStatus.STATUS_5]: "公開対象外",
+      [ReservationStatus.STATUS_6]: "抽選",
+    },
+    reservationDivision: {
+      [ReservationDivision.MORNING]: "午前",
+      [ReservationDivision.AFTERNOON]: "午後",
+      [ReservationDivision.EVENING]: "夜間",
+    },
+    feeDivision: {
+      [FeeDivision.MORNING]: "午前",
+      [FeeDivision.AFTERNOON]: "午後",
+      [FeeDivision.EVENING]: "夜間",
+      [FeeDivision.ONE_HOUR]: "1時間",
+    },
+  },
   MUNICIPALITY_KAWASAKI: {
     key: "MUNICIPALITY_KAWASAKI",
     slug: "kawasaki",
