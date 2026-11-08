@@ -55,6 +55,7 @@ model: sonnet
 - `browser_navigate` で URL にアクセス
 - snapshot でページ構造を確認
 - 「空き状況の確認」「空き状況」「施設予約」等のリンクを探す
+- 渡された URL がエラーページ（「ページがありません」など）なら、施設サイト側の入口が hidden 項目付きの form POST になっていないか見る（`page.$$eval('form', ...)` で action・hidden を列挙する）。団体の識別子が hidden にだけ載っていて、URL 単体では開けない共用基盤がある（reserve1.jp）。入口を通した後の画面は、識別子だけで cookie なしでも開けることが多いので、新しいコンテキストで確かめる
 
 ### 1.2 施設階層の探索
 
@@ -95,7 +96,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 - **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する。JSON が無くても、日付送りが「フォームの値を書き換えて submit」だけなら、同じフォームを `page.request.post` で日付を変えて送り、返った HTML を解析できる（例: `engines/aserv.ts`。画面遷移が要らず、画像や JS も取りに行かない）
 - **色で表す状態**: 「色の塗られていない部分は予約可能」のように状態を色だけで表すサイトは、セルの id / class と CSS を突き合わせて、どの値に塗りがあるかを確定する（`page.request.get` で CSS を落として `#<id>` を grep する）。「塗りなしだが押せない」値（受付期間の手前・後ろなど）がよくあるので、凡例どおり空きと見るか、受付期間外と見るかを値ごとに決める
-- **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする
+- **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする。受付期間より先を要求しても「受付期間外」と出さず、全コマ空きで返すサイトがある（reserve1.jp の月表示）。月や日のセレクトの選択肢が受付中の範囲を表していることが多いので、それを打ち切りの根拠にする
 - **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い
 - **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
 
@@ -156,6 +157,7 @@ STATUS_MAP:
 - **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`
 - **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/`、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
 - **aserv 系**（URL が `reserve.aserv.jp/<団体>/`、館・区分・利用日を選ぶ `cal.do` の日表示） → `engines/aserv.ts` の `aservHooks()` を使用。参照実装: `tokyo-katsushika-symphony-hills`
+- **reserve1 系**（Reserve Mart。URL が `www.reserve1.jp/studio/member/`、種別 × 月の月別状況） → `engines/reserve1.ts` の `reserve1Hooks()` を使用。`office` は入口を通った後の画面の hidden にある。参照実装: `kanagawa-kawasaki-jichi`
 - その他のエンジン（`genkiplaza` / `pKashikan`）は `engines/` の各ファイルを参照
 
 同一製品の自治体が既に2つ以上あるのに対応エンジンが無い場合は、新しいエンジンを `engines/` に切り出すことを検討する。採用が 1 自治体でも、パース処理を純粋関数として切り出してユニットテストしたい場合はエンジンにしてよい（ユニットテストは `engines/*.test.ts` と `common/*.test.ts` だけが `npm run test:unit` で走る）。
@@ -275,6 +277,7 @@ for (const target of scraper.targets) {
 2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く
 3. 楽器種別の可否は部屋単位で明記されていることがまず無い。「和太鼓不可」「ドラムセット常備」のような間接的な記述は UNKNOWN のまま `note` に文言を残すのが既定（迷ったらユーザーに確認）
 4. 料金はテンプレートでは「埋めない」項目だが、根拠付きで取れたら入れるかユーザーに確認する。土日祝が別料金なら holiday に分け、同額なら平日と同じ値を入れる
+5. 既存の JSON に `JSON.parse` → `JSON.stringify` で追記すると、`41.0` のような数値が `41` に変わる。追記後に `git diff | grep '^-[^-]'` で既存行が変わっていないか確かめる
 
 ### 2.6 viewer・ドキュメントへの追加
 
@@ -321,6 +324,7 @@ npm run test:unit -w @shisetsu-viewer/scraper
 - `registryDrift.test.ts` — scraper.yml / database.yml の choice、README の対応地区、施設 JSON の存在。**失敗が新自治体の追記漏れ箇所を教えてくれる**
 - `packages/shared/registry.test.ts` にも自治体の一覧が固定で書かれている（`npm test -w @shisetsu-viewer/shared`）
 - エンジンを作った・直した場合は `engines/<engine>.test.ts` も通す
+- 状態ラベルを registry に足したら、`tools/spotcheck/symbolMap.ts` の `LABEL_CATEGORIES` が分類できるかを `symbolMap.test.ts` が見る。落ちたら正規表現にラベルを足す
 
 ### 3.4 単一部屋テスト
 
