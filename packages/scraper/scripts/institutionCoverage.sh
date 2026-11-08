@@ -7,7 +7,7 @@ usage: $0 [DIR]
 
 施設マスタのフィールド別・自治体別の網羅率を表示する。
 null・空文字・空配列・*_UNKNOWN・キーの欠落を未入力として数える。
-DIR の既定値は data/institutions（このスクリプトからの相対）。
+DIR の既定値は packages/scraper/data/institutions（実行時の作業ディレクトリによらない）。
 EOF
   exit 2
 }
