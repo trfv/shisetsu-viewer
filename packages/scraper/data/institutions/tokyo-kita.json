@@ -10,21 +10,51 @@
     "building_system_name": "赤羽会館",
     "institution_system_name": "講堂",
     "capacity": 646,
-    "area": null,
+    "area": 754,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 18600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 32700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 42160,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 22320,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 39180,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 50600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "北区赤羽南1丁目13−1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.akabanekaikan.jp/hall-guide/facility/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.akabanekaikan.jp/wp-content/uploads/2018/04/2d7b57138033494eed0c846cfd879d75.pdf",
+    "lottery_period": "7か月前15日-24日に抽選（区内登録者のみ）、6か月前2日から先着（北区民以外は15日から）",
     "note": ""
   },
   {
@@ -37,22 +67,52 @@
     "institution_kana": "リハーサルシツ",
     "building_system_name": "赤羽会館",
     "institution_system_name": "リハ室",
-    "capacity": null,
+    "capacity": 25,
     "area": 74,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1640,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3080,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1640,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3080,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "北区赤羽南1丁目13−1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.akabanekaikan.jp/hall-guide/facility/",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "7日前から（講堂使用者が優先）",
     "note": ""
   },
   {
@@ -73,8 +133,34 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 4020,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9220,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4020,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9220,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "北区赤羽北2-25-8-201",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -83,8 +169,8 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/fureai/akabanekita.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kita.lg.jp/_res/projects/default_project/_page_/001/002/377/akabanekita.pdf",
+    "lottery_period": "3ヶ月前の同日（北区民以外は2ヶ月前同日）",
     "note": ""
   },
   {
@@ -107,29 +193,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3840,
+        "fee": 2560,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6630,
+        "fee": 4420,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 8640,
+        "fee": 5760,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3840,
+        "fee": 2560,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6630,
+        "fee": 4420,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 8640,
+        "fee": 5760,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -165,29 +251,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1540,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4140,
+        "fee": 2760,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 5400,
+        "fee": 3600,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1540,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4140,
+        "fee": 2760,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 5400,
+        "fee": 3600,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -240,7 +326,7 @@
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_5/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_5/",
-    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": ""
   },
   {
@@ -280,7 +366,7 @@
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_6/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_6/",
-    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": ""
   },
   {
@@ -297,18 +383,45 @@
     "area": 126,
     "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 900,
-        "division": "FEE_DIVISION_ONE_HOUR"
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 900,
-        "division": "FEE_DIVISION_ONE_HOUR"
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "北区豊島5-3-13",
@@ -316,11 +429,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_1/",
-    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-11:45",
@@ -346,15 +459,15 @@
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
     "address": "北区豊島5-3-13",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_2/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://kitabunka.or.jp/system/wp-content/themes/kitabunka-2026/img/cocokita/cocokita_floorguide.pdf",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": ""
   },
   {
@@ -370,19 +483,58 @@
     "capacity": 40,
     "area": 63,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "北区豊島5-3-13",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_3/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://kitabunka.or.jp/system/wp-content/themes/kitabunka-2026/img/cocokita/cocokita_floorguide.pdf",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-11:45",
@@ -405,18 +557,45 @@
     "area": 94,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 900,
-        "division": "FEE_DIVISION_ONE_HOUR"
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 900,
-        "division": "FEE_DIVISION_ONE_HOUR"
+        "fee": 1800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "北区豊島5-3-13",
@@ -424,11 +603,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
     "layout_image_url": "https://kitabunka.or.jp/cocokita/room/facility_4/",
-    "lottery_period": "3ヶ月前の初日（北区民以外は2ヶ月前）",
+    "lottery_period": "4ヶ月前20日から区民抽選、3ヶ月前10日から区民予約（北区民以外は2ヶ月前1日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-11:45",
@@ -436,38 +615,6 @@
       "RESERVATION_DIVISION_AFTERNOON_TWO": "15:00-17:45",
       "RESERVATION_DIVISION_EVENING": "18:00-20:45"
     }
-  },
-  {
-    "id": "d8510c4c-e606-4b0e-b886-71df35554b83",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KITA",
-    "building": "志茂東ふれあい館",
-    "institution": "ホールA・B",
-    "building_kana": "シモヒガシフレアイカン",
-    "institution_kana": "ホールA・B",
-    "building_system_name": "",
-    "institution_system_name": "",
-    "capacity": 160,
-    "area": 141.3,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "北区志茂4-44-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.city.kita.tokyo.jp/shisetsu/shisetsu/kaikan/s051.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
   },
   {
     "id": "cbf8c36c-4892-4c07-b0d5-fbef3bedc884",
@@ -489,29 +636,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 4650,
+        "fee": 3100,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 8220,
+        "fee": 5480,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 10650,
+        "fee": 7100,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 4650,
+        "fee": 3100,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 8220,
+        "fee": 5480,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 10650,
+        "fee": 7100,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -548,37 +695,37 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 6000,
+        "fee": 5280,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 3090,
+        "fee": 2720,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 6000,
+        "fee": 5280,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -589,7 +736,7 @@
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "website_url": "https://www.city.kita.lg.jp/living/community/1002262/1026462/1026702.html",
     "layout_image_url": "",
     "lottery_period": "3ヵ月前の同日",
     "note": ""
@@ -615,37 +762,37 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2820,
+        "fee": 1680,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 3930,
+        "fee": 2360,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 3930,
+        "fee": 2360,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 5550,
+        "fee": 3320,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2820,
+        "fee": 1680,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 3930,
+        "fee": 2360,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 3930,
+        "fee": 2360,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 5550,
+        "fee": 3320,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -656,7 +803,7 @@
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "website_url": "https://www.city.kita.lg.jp/living/community/1002262/1026462/1026702.html",
     "layout_image_url": "",
     "lottery_period": "3ヵ月前の同日",
     "note": ""
@@ -682,37 +829,37 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2970,
+        "fee": 1780,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4140,
+        "fee": 2480,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 4140,
+        "fee": 2480,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 5850,
+        "fee": 3520,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2970,
+        "fee": 1780,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4140,
+        "fee": 2480,
         "division": "FEE_DIVISION_AFTERNOON_ONE"
       },
       {
-        "fee": 4140,
+        "fee": 2480,
         "division": "FEE_DIVISION_AFTERNOON_TWO"
       },
       {
-        "fee": 5850,
+        "fee": 3520,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -723,7 +870,7 @@
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "http://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/shinmachi.html",
+    "website_url": "https://www.city.kita.lg.jp/living/community/1002262/1026462/1026702.html",
     "layout_image_url": "",
     "lottery_period": "3ヵ月前の同日",
     "note": ""
@@ -750,45 +897,45 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
@@ -800,7 +947,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "http://takikan.com/about/98-2017-08-24-07-05-23",
-    "layout_image_url": "",
+    "layout_image_url": "https://takikan.com/images/guide/%E4%BB%A4%E5%92%8C6%E5%B9%B4%E7%89%88%E3%83%91%E3%83%B3%E3%83%95%E3%83%AC%E3%83%83%E3%83%88.pdf",
     "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
@@ -826,45 +973,45 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 2310,
+        "fee": 1720,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
@@ -876,7 +1023,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "http://takikan.com/about/98-2017-08-24-07-05-23",
-    "layout_image_url": "",
+    "layout_image_url": "https://takikan.com/images/guide/%E4%BB%A4%E5%92%8C6%E5%B9%B4%E7%89%88%E3%83%91%E3%83%B3%E3%83%95%E3%83%AC%E3%83%83%E3%83%88.pdf",
     "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
@@ -900,29 +1047,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 9540,
+        "fee": 7620,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 16950,
+        "fee": 13560,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 21900,
+        "fee": 17520,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 9540,
+        "fee": 7620,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 16950,
+        "fee": 13560,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 21900,
+        "fee": 17520,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -934,7 +1081,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "http://takikan.com/about/97-2017-08-24-07-05-3",
-    "layout_image_url": "",
+    "layout_image_url": "https://takikan.com/images/guide/%E4%BB%A4%E5%92%8C6%E5%B9%B4%E7%89%88%E3%83%91%E3%83%B3%E3%83%95%E3%83%AC%E3%83%83%E3%83%88.pdf",
     "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
@@ -958,29 +1105,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 23520,
+        "fee": 19600,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 41760,
+        "fee": 34800,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 53580,
+        "fee": 44660,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 28120,
+        "fee": 23440,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 50040,
+        "fee": 41700,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 64260,
+        "fee": 53560,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -989,11 +1136,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://takikan.com/about/96-2017-08-24-07-05-02",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://takikan.com/images/guide/dai_zasekihyo.pdf",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
   {
@@ -1016,29 +1163,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 23520,
+        "fee": 19600,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 41760,
+        "fee": 34800,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 53580,
+        "fee": 44660,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 28120,
+        "fee": 23440,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 50040,
+        "fee": 41700,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 64260,
+        "fee": 53560,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -1047,11 +1194,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://takikan.com/about/96-2017-08-24-07-05-02",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://takikan.com/images/guide/%E4%BB%A4%E5%92%8C6%E5%B9%B4%E7%89%88%E3%83%91%E3%83%B3%E3%83%95%E3%83%AC%E3%83%83%E3%83%88.pdf",
+    "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
   {
@@ -1072,8 +1219,34 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1920,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4680,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1920,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4680,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "北区東田端2-20-51",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1082,8 +1255,8 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.kita.tokyo.jp/chiikishinko/kurashi/volunteer/shisetsu/fureai/higashitabata.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kita.lg.jp/_res/projects/default_project/_page_/001/002/389/higasitabata.pdf",
+    "lottery_period": "3ヶ月前の同日（北区民以外は2ヶ月前同日）",
     "note": ""
   },
   {
@@ -1106,29 +1279,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 7220,
+        "fee": 4820,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 12780,
+        "fee": 8520,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 16500,
+        "fee": 11000,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 8640,
+        "fee": 5760,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 15260,
+        "fee": 10180,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 19740,
+        "fee": 13160,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -1164,29 +1337,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 8940,
+        "fee": 5960,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 15860,
+        "fee": 10580,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 20340,
+        "fee": 13560,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 10620,
+        "fee": 7080,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 18960,
+        "fee": 12640,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 24360,
+        "fee": 16240,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -1224,45 +1397,45 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 1380,
+        "fee": 920,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
@@ -1300,45 +1473,45 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
@@ -1376,45 +1549,45 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_1"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_2"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_3"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_4"
       },
       {
-        "fee": 900,
+        "fee": 600,
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
@@ -1450,29 +1623,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 2460,
+        "fee": 1960,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4620,
+        "fee": 3680,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6000,
+        "fee": 4800,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 2460,
+        "fee": 1960,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4620,
+        "fee": 3680,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6000,
+        "fee": 4800,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -1484,7 +1657,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.hokutopia.jp/hall-guide/halls/tsutsuji_hall#rehe",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.hokutopia.jp/wp-content/uploads/2022/01/8279038e041cc51fac6520fd1744ab9a.pdf",
     "lottery_period": "6ヶ月前の月初から（北区民以外は6か月前の15日から）",
     "note": ""
   },
@@ -1508,29 +1681,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 11400,
+        "fee": 7600,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 20040,
+        "fee": 13360,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 19260,
+        "fee": 17100,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 13700,
+        "fee": 9140,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 24060,
+        "fee": 16040,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 23120,
+        "fee": 20520,
         "division": "FEE_DIVISION_EVENING"
       }
     ],

@@ -5,30 +5,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "リハーサル室",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "リハーサルシツ",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "リハーサル室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 40,
+    "area": 73,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/others.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/application_guide_v2.pdf",
+    "lottery_period": "3ヶ月前の月1日-10日にシステムで抽選",
     "note": ""
   },
   {
@@ -37,30 +63,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "大ホール",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "ダイホール",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "大ホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 1200,
+    "area": 1307,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 93400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 160000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 191200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 112000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 192000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 229400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/hall_l.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/hall_l_area.pdf",
+    "lottery_period": "12ヶ月前抽選",
     "note": ""
   },
   {
@@ -69,30 +121,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "小ホール",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "ショウホール",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "小ホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 200,
+    "area": 260,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 19300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 33200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 39600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 23200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 39800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 47500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/hall_s.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/hall_s_area.pdf",
+    "lottery_period": "6ヶ月前抽選",
     "note": ""
   },
   {
@@ -101,30 +179,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "第1練習室",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "ダイイチレンシュウシツ",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第１練習室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 30,
+    "area": 54,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/others.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/application_guide_v2.pdf",
+    "lottery_period": "3ヶ月前の月1日-10日にシステムで抽選",
     "note": ""
   },
   {
@@ -133,30 +237,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "第2練習室",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "ダイニレンシュウシツ",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第２練習室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 20,
+    "area": 42,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/others.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/application_guide_v2.pdf",
+    "lottery_period": "3ヶ月前の月1日-10日にシステムで抽選",
     "note": ""
   },
   {
@@ -165,30 +295,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "めぐろパーシモンホール",
     "institution": "第3練習室",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロパーシモンホール",
+    "institution_kana": "ダイサンレンシュウシツ",
     "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第３練習室",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 20,
+    "area": 47,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区八雲1-1-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/others.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/application_guide_v2.pdf",
+    "lottery_period": "3ヶ月前の月1日-10日にシステムで抽選",
     "note": ""
   },
   {
@@ -197,30 +353,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "上目黒住区センター",
     "institution": "B101",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "カミメグロジュウクセンター",
+    "institution_kana": "B101",
     "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０１【旧第１会議室】",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 47,
+    "area": 67.58,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区祐天寺2-6-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/chuuou/shisetsu/koukyoushisetsu/kamime.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -229,30 +411,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "上目黒住区センター",
     "institution": "B102（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "カミメグロジュウクセンター",
+    "institution_kana": "B102（レクホール）",
     "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０２（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 87,
+    "area": 125.34,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区祐天寺2-6-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/chuuou/shisetsu/koukyoushisetsu/kamime.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -261,30 +469,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "上目黒住区センター",
     "institution": "B103（音楽室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "カミメグロジュウクセンター",
+    "institution_kana": "B103（オンガクシツ）",
     "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０３（音楽室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 48,
+    "area": 68.66,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "weekday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区祐天寺2-6-6",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/chuuou/shisetsu/koukyoushisetsu/kamime.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -293,30 +527,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "中央町社会教育館",
     "institution": "B101（音楽室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "チュウオウチョウシャカイキョウイクカン",
+    "institution_kana": "B101（オンガクシツ）",
     "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０１（音楽室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 25,
+    "area": 42.6,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区中央町2-4-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/chuocho.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -325,30 +585,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "中央町社会教育館",
     "institution": "B107(和室)",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "チュウオウチョウシャカイキョウイクカン",
+    "institution_kana": "B107(ワシツ)",
     "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０７(和室)【旧第７研修室】",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 30,
+    "area": 44.54,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区中央町2-4-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/chuocho.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -357,30 +643,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "中央町社会教育館",
     "institution": "B109（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "チュウオウチョウシャカイキョウイクカン",
+    "institution_kana": "B109（レクホール）",
     "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０９（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 100,
+    "area": 150.38,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区中央町2-4-18",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/chuocho.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -389,30 +701,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "中小企業センター",
     "institution": "ホール",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "チュウショウキギョウセンター",
+    "institution_kana": "ホール",
     "building_system_name": "中小企業センター",
     "institution_system_name": "ホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 417,
+    "area": 359,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "weekday_usage_fee": [
+      {
+        "fee": 18000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 18800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 21600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 22600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 22600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区目黒2-4-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://megurokuchushokigyocenter.jp/facility/room",
+    "layout_image_url": "https://megurokuchushokigyocenter.jp/wp-content/uploads/documents/heimenzu.pdf",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -421,30 +759,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "中目黒GTプラザホール",
     "institution": "中目黒GTプラザホール",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ナカメグロジーティープラザホール",
+    "institution_kana": "ナカメグロジーティープラザホール",
     "building_system_name": "中目黒ＧＴプラザホール",
     "institution_system_name": "中目黒ＧＴプラザホール",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 150,
+    "area": 160,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "weekday_usage_fee": [
+      {
+        "fee": 10100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 17300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 12100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 24700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区上目黒2-1-3",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.persimmon.or.jp/about/gt.html",
+    "layout_image_url": "https://www.persimmon.or.jp/media/gt_stage.pdf",
+    "lottery_period": "6ヶ月前抽選",
     "note": ""
   },
   {
@@ -453,30 +817,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "田道住区センター三田分室",
     "institution": "別館201（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "デンドウジュウクセンターミタブンシツ",
+    "institution_kana": "ベッカン201（レクホール）",
     "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館２０１（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 50,
+    "area": 171.34,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区三田1-11-26",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/toubu/shisetsu/koukyoushisetsu/mita.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -485,30 +875,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "田道住区センター三田分室",
     "institution": "別館B101（音楽室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "デンドウジュウクセンターミタブンシツ",
+    "institution_kana": "ベッカンB101（オンガクシツ）",
     "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館Ｂ１０１（音楽室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 15,
+    "area": 77.22,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区三田1-11-26",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/toubu/shisetsu/koukyoushisetsu/mita.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -517,30 +933,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "田道住区センター三田分室",
     "institution": "別館B102（音楽室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "デンドウジュウクセンターミタブンシツ",
+    "institution_kana": "ベッカンB102（オンガクシツ）",
     "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館Ｂ１０２（音楽室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 20,
+    "area": 121.66,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区三田1-11-26",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/toubu/shisetsu/koukyoushisetsu/mita.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -549,30 +991,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "田道住区センター三田分室",
     "institution": "101（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "デンドウジュウクセンターミタブンシツ",
+    "institution_kana": "101（レクホール）",
     "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "１０１（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 71,
+    "area": 104,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "weekday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区三田2-10-33",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/toubu/shisetsu/koukyoushisetsu/mita.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -581,30 +1049,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "東山社会教育館",
     "institution": "203",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ヒガシヤマシャカイキョウイクカン",
+    "institution_kana": "203",
     "building_system_name": "東山社会教育館",
     "institution_system_name": "２０３【旧第３研修室】",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 60,
+    "area": 89.8,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区東山3-24-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/higashiyama.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -613,30 +1107,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "東山社会教育館",
     "institution": "204(音楽室)",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ヒガシヤマシャカイキョウイクカン",
+    "institution_kana": "204(オンガクシツ)",
     "building_system_name": "東山社会教育館",
     "institution_system_name": "２０４(音楽室)【旧第４研修室】",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 45,
+    "area": 68.82,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区東山3-24-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/higashiyama.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -645,30 +1165,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "東山社会教育館",
     "institution": "207（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ヒガシヤマシャカイキョウイクカン",
+    "institution_kana": "207（レクホール）",
     "building_system_name": "東山社会教育館",
     "institution_system_name": "２０７（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 100,
+    "area": 154.43,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区東山3-24-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/higashiyama.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -677,30 +1223,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "目黒本町社会教育館",
     "institution": "301（視聴覚室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロホンチョウシャカイキョウイクカン",
+    "institution_kana": "301（シチョウカクシツ）",
     "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０１（視聴覚室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 30,
+    "area": 49,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区目黒本町2-1-20",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/kyoiku_megurohonmachi.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -709,30 +1281,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "目黒本町社会教育館",
     "institution": "306",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロホンチョウシャカイキョウイクカン",
+    "institution_kana": "306",
     "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０６【旧第６研修室】",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 51,
+    "area": 84,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区目黒本町2-1-20",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/kyoiku_megurohonmachi.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -741,30 +1339,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "目黒本町社会教育館",
     "institution": "307（レクホール）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "メグロホンチョウシャカイキョウイクカン",
+    "institution_kana": "307（レクホール）",
     "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０７（レクホール）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 100,
+    "area": 158,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区目黒本町2-1-20",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/kyoiku_megurohonmachi.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -773,30 +1397,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "緑が丘文化会館",
     "institution": "別館203（音楽室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ミドリガオカブンカカイカン",
+    "institution_kana": "ベッカン203（オンガクシツ）",
     "building_system_name": "緑が丘文化会館",
     "institution_system_name": "別館２０３（音楽室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 55,
+    "area": 80,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区緑が丘2-7-20",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/kyoiku_midorigaoka.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   },
   {
@@ -805,30 +1455,56 @@
     "municipality": "MUNICIPALITY_MEGURO",
     "building": "緑が丘文化会館",
     "institution": "301（視聴覚室）",
-    "building_kana": "",
-    "institution_kana": "",
+    "building_kana": "ミドリガオカブンカカイカン",
+    "institution_kana": "301（シチョウカクシツ）",
     "building_system_name": "緑が丘文化会館",
     "institution_system_name": "３０１（視聴覚室）",
-    "capacity": null,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "capacity": 44,
+    "area": 65,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
-    "address": "",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "",
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "目黒区緑が丘2-14-23",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.meguro.tokyo.jp/shougaigakushuu/shisetsu/bunkakouryuu/kyoiku_midorigaoka.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前1日-末日抽選、3ヶ月前5日から先着",
     "note": ""
   }
 ]

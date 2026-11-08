@@ -10,21 +10,51 @@
     "building_system_name": "麻生市民館",
     "institution_system_name": "大会議室",
     "capacity": 300,
-    "area": null,
+    "area": 393,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3920,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7050,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4704,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6576,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8460,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市麻生区万福寺1-5-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.kawasaki.jp/asao/page/0000029328.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://asao-mirai.com/asao/hall-guide/conference-room/",
+    "layout_image_url": "https://asao-mirai.com/wp-content/uploads/2026/03/A21_daikaigi_heimenzu1.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -38,21 +68,51 @@
     "building_system_name": "麻生市民館",
     "institution_system_name": "大ホール",
     "capacity": 1010,
-    "area": null,
+    "area": 1183,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市麻生区万福寺1-5-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://www.city.kawasaki.jp/asao/page/0000029328.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://asao-mirai.com/asao/hall-guide/hall/",
+    "layout_image_url": "https://asao-mirai.com/wp-content/uploads/2026/03/A09_zasekihyo.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -68,19 +128,49 @@
     "capacity": 200,
     "area": 245,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 16090,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24440,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 32180,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 19300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 29320,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 38610,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/images/facility/floormap.jpg",
+    "lottery_period": "6ヶ月前の1日に抽選会（1月は4日）、以降1週間前まで窓口で随時",
     "note": ""
   },
   {
@@ -96,19 +186,49 @@
     "capacity": 10,
     "area": 53,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1930,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2340,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2640,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3160,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/images/facility/floormap.jpg",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -124,19 +244,49 @@
     "capacity": 8,
     "area": 38,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1420,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1620,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1930,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1940,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2310,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/images/facility/floormap.jpg",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -152,19 +302,49 @@
     "capacity": 1100,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 63550,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 96390,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 127110,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 76260,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 115660,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 152530,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/cms/wp-content/uploads/2018/12/hall_seat.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降1ヶ月前まで窓口で随時",
     "note": ""
   },
   {
@@ -180,19 +360,49 @@
     "capacity": 2013,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 79440,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 120490,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 158880,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 95320,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 144580,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 190650,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/cms/wp-content/uploads/2018/12/hall_seat.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降1ヶ月前まで窓口で随時",
     "note": ""
   },
   {
@@ -208,19 +418,49 @@
     "capacity": 1655,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 71500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 108440,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 143000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 85800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 130120,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 171600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/cms/wp-content/uploads/2018/12/hall_seat.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降1ヶ月前まで窓口で随時",
     "note": ""
   },
   {
@@ -240,14 +480,14 @@
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
     "address": "川崎市川崎区富士見1-1-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://culttz.city.kawasaki.jp/",
-    "layout_image_url": "",
+    "layout_image_url": "https://culttz.city.kawasaki.jp/cms/wp-content/uploads/2018/12/hall_seat.pdf",
     "lottery_period": "",
     "note": ""
   },
@@ -264,14 +504,44 @@
     "capacity": 100,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 8000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市高津区新作1-19-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.kawasaki-shiminplaza.jp/",
@@ -292,19 +562,49 @@
     "capacity": 489,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 14300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 18100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 11400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 17100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 21700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市高津区新作1-19-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-shiminplaza.jp/",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "毎月1日に1年後の同月分を抽選会、2日から随時",
     "note": ""
   },
   {
@@ -320,19 +620,49 @@
     "capacity": null,
     "area": 684,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4070,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3660,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4880,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7320,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区東扇島38-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.kawasakiport.or.jp/",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -348,19 +678,41 @@
     "capacity": 72,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3050,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2240,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2240,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3050,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区堤根34-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/350/page/0000022800.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -376,19 +728,41 @@
     "capacity": null,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 810,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 610,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 610,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 810,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区堤根34-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/350/page/0000022800.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -404,19 +778,41 @@
     "capacity": 24,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1120,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 810,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 810,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1120,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区堤根34-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/350/page/0000022800.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -432,19 +828,41 @@
     "capacity": 210,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6110,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4580,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4580,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6110,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市川崎区堤根34-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.kawasaki.jp/350/page/0000022800.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -458,21 +876,51 @@
     "building_system_name": "幸市民館",
     "institution_system_name": "大ホール",
     "capacity": 840,
-    "area": null,
+    "area": 872,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区戸手本町1-11-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/saiwai/page/0000149343.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kawasaki.jp/saiwai/cmsfiles/contents/0000149/149343/1zasekihyou.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -488,19 +936,49 @@
     "capacity": 264,
     "area": 293,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3760,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4780,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4510,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5730,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7080,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区木月祗園町2-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kian.or.jp/kic/001.shtml",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kian.or.jp/kic/images/facilities/001hall.png",
+    "lottery_period": "6ヶ月前の同日に窓口で抽選、以降2週間前まで随時",
     "note": ""
   },
   {
@@ -513,22 +991,52 @@
     "institution_kana": "レセプションルーム",
     "building_system_name": "国際交流センター",
     "institution_system_name": "レセプションルーム",
-    "capacity": null,
+    "capacity": 150,
     "area": 261,
-    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2850,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3460,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4270,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3420,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4150,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5120,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区木月祗園町2-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.kian.or.jp/kic/001.shtml",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kian.or.jp/kic/images/inward/floor1a.png",
+    "lottery_period": "6ヶ月前の同日に窓口で抽選、以降2週間前まで随時",
     "note": ""
   },
   {
@@ -542,21 +1050,51 @@
     "building_system_name": "産業振興会館",
     "institution_system_name": "ホール",
     "capacity": 478,
-    "area": null,
+    "area": 336,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7330,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11610,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11610,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7330,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11610,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11610,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区堀川町66番地20",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://kawasaki-sanshinkaikan.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://kawasaki-sanshinkaikan.jp/wp-content/uploads/2019/01/zumen-1f.pdf",
+    "lottery_period": "1年前の同日に窓口で抽選、以降随時",
     "note": ""
   },
   {
@@ -626,21 +1164,51 @@
     "building_system_name": "すくらむ２１",
     "institution_system_name": "ホール",
     "capacity": 850,
-    "area": null,
+    "area": 1479,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 6720,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7530,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12930,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8060,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9030,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 15510,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市高津区溝口2丁目20番1号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.scrum21.or.jp/facility",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.scrum21.or.jp/pdf/facility/holl_seat_map.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会、以降2週間前まで随時",
     "note": ""
   },
   {
@@ -653,22 +1221,52 @@
     "institution_kana": "ホール",
     "building_system_name": "総合福祉センター（エポック）",
     "institution_system_name": "ホール",
-    "capacity": 923,
+    "capacity": 907,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 9770,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13440,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17110,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 11730,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 16130,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20530,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区上小田中6-22-5",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://sfc-kawasaki.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://sfc-kawasaki.jp/wp-content/uploads/2024/03/%E5%AE%A2%E5%B8%AD%E5%B9%B3%E9%9D%A2%E5%9B%B3-1.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）",
     "note": ""
   },
   {
@@ -684,19 +1282,49 @@
     "capacity": 600,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市高津区溝口1-4-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-takatsu.jp/shiminkan/hall-guide/hall/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-takatsu.jp/assets/uploads/2025/03/Z001_zesekihyou.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -710,21 +1338,51 @@
     "building_system_name": "多摩市民館",
     "institution_system_name": "視聴覚室",
     "capacity": 42,
-    "area": null,
+    "area": 100,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2120,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2680,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3470,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2544,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3216,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4164,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市多摩区登戸1775番地1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/tama/page/0000031985.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kawasaki.jp/tama/cmsfiles/contents/0000031/31949/tamasiminkan-annaizu.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -738,21 +1396,51 @@
     "building_system_name": "多摩市民館",
     "institution_system_name": "大会議室",
     "capacity": 200,
-    "area": null,
+    "area": 160,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3920,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5480,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 7050,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4704,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6576,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 8460,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市多摩区登戸1775番地1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/tama/page/0000031985.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kawasaki.jp/tama/cmsfiles/contents/0000031/31949/tamasiminkan-annaizu.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -766,21 +1454,51 @@
     "building_system_name": "多摩市民館",
     "institution_system_name": "大ホール",
     "capacity": 908,
-    "area": null,
+    "area": 659,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市多摩区登戸1775番地1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/tama/page/0000031985.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kawasaki.jp/tama/cmsfiles/contents/0000031/31960/zaseki2021.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -796,19 +1514,49 @@
     "capacity": 6500,
     "area": 2872,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 20160,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 20160,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20160,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 24190,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 24190,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 24190,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区等々力1番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://kawasaki-todoroki-park.co.jp/guide/arena/",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、1区分のみの利用は1ヶ月前から窓口",
     "note": ""
   },
   {
@@ -824,19 +1572,49 @@
     "capacity": 42,
     "area": 77,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2120,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2680,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3470,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2544,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3216,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4164,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区新丸子東3丁目1100番地12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.nakahara-shiminkan.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.nakahara-shiminkan.jp/wp-content/uploads/2025/04/floor-1.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -852,19 +1630,49 @@
     "capacity": 60,
     "area": 86,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2120,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2680,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3470,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2544,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3216,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4164,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区新丸子東3丁目1100番地12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.nakahara-shiminkan.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.nakahara-shiminkan.jp/wp-content/uploads/2025/04/floor-1.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -877,22 +1685,52 @@
     "institution_kana": "ダイゴカイギシツ",
     "building_system_name": "中原市民館",
     "institution_system_name": "第５会議室",
-    "capacity": 30,
+    "capacity": 24,
     "area": 44,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1230,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1790,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2240,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1476,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2148,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2688,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区新丸子東3丁目1100番地12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.nakahara-shiminkan.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.nakahara-shiminkan.jp/wp-content/uploads/2025/04/floor-1.pdf",
+    "lottery_period": "4ヶ月前17-23日にふれあいネットで抽選申込、24日抽選、29日から随時",
     "note": ""
   },
   {
@@ -908,19 +1746,49 @@
     "capacity": 375,
     "area": 291,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4140,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 6160,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 10190,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4968,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7392,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 12228,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市中原区新丸子東3丁目1100番地12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.nakahara-shiminkan.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.nakahara-shiminkan.jp/wp-content/uploads/2025/04/hallheimenzu.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -936,19 +1804,49 @@
     "capacity": 910,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市宮前区宮前平2-20-4",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.kawasaki.jp/miyamae/category/117-11-3-0-0-0-0-0-0-0.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.kawasaki.jp/miyamae/cmsfiles/contents/0000026/26520/kyakuseki2022.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {
@@ -964,19 +1862,49 @@
     "capacity": 1997,
     "area": null,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 262770,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 410460,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 581570,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 315320,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 492550,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 697880,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区大宮町1310",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-sym-hall.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-sym-hall.jp/rental/hall/pdf/seat-type.pdf",
+    "lottery_period": "公演は18ヶ月前の1-9日に抽選申込、11日以降抽選会。練習は6ヶ月前の1日から随時",
     "note": ""
   },
   {
@@ -992,19 +1920,49 @@
     "capacity": 150,
     "area": 136.5,
     "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7430,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11610,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 16500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8910,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 13930,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 19800,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-sym-hall.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-sym-hall.jp/rental/download/assets/pdf/assembly/drawing_01.pdf",
+    "lottery_period": "6ヶ月前の1日に抽選会、翌日から随時",
     "note": ""
   },
   {
@@ -1020,19 +1978,49 @@
     "capacity": 8,
     "area": 40.9,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1520,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1740,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2240,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1830,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2090,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2680,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-sym-hall.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-sym-hall.jp/rental/download/assets/pdf/practice/drawing_01.pdf",
+    "lottery_period": "4ヶ月前の1日に抽選会、翌日から随時",
     "note": ""
   },
   {
@@ -1048,19 +2036,49 @@
     "capacity": 8,
     "area": 41.0,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1520,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1740,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2240,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1830,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2090,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2680,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-sym-hall.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-sym-hall.jp/rental/download/assets/pdf/practice/drawing_03.pdf",
+    "lottery_period": "4ヶ月前の1日に抽選会、翌日から随時",
     "note": ""
   },
   {
@@ -1076,19 +2094,49 @@
     "capacity": 16,
     "area": 70.8,
     "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2540,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2950,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3870,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3040,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3540,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 4640,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.kawasaki-sym-hall.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.kawasaki-sym-hall.jp/rental/download/assets/pdf/practice/drawing_02.pdf",
+    "lottery_period": "4ヶ月前の1日に抽選会、翌日から随時",
     "note": ""
   },
   {
