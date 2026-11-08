@@ -17,26 +17,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区一之江2-6-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ichinoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ichinoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -57,26 +57,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区一之江2-6-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ichinoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ichinoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -97,26 +97,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区江戸川2-33-9",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_edogawa/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_edogawa/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -139,42 +139,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 4400,
+        "fee": 4840,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 8280,
+        "fee": 9100,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 11210,
+        "fee": 12330,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 5240,
+        "fee": 5760,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 9950,
+        "fee": 10940,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 13410,
+        "fee": 14750,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区中葛西3-10-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_kasai/room.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_kasai/map.html",
+    "lottery_period": "5ヶ月前抽選",
     "note": ""
   },
   {
@@ -195,26 +195,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 670,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 670,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区上一色2-6-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kamiisshiki_center/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kamiisshiki_center/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -235,26 +235,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区上一色2-6-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kamiisshiki_center/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kamiisshiki_center/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -275,26 +275,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区北葛西2-11-39",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakasai/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakasai/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -315,13 +315,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -333,7 +333,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -355,26 +355,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区北小岩6-35-17",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -395,26 +395,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区北小岩6-35-17",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_kitakoiwa_co/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -435,13 +435,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -453,7 +453,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.green-palace.jp/facility/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.green-palace.jp/grnwp/wp-content/uploads/2022/03/facility_floar_04.jpg",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -475,13 +475,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -489,150 +489,12 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.green-palace.jp/facility/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.green-palace.jp/grnwp/wp-content/uploads/2022/03/facility_floar_02.jpg",
     "lottery_period": "3ヶ月前抽選",
-    "note": ""
-  },
-  {
-    "id": "5aa90fda-9bc7-438f-a82c-a0659531930f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
-    "institution": "講習室",
-    "building_kana": "コイワアーバンプラザ",
-    "institution_kana": "コウシュウシツ",
-    "building_system_name": "小岩アーバンプラザ",
-    "institution_system_name": "講習室",
-    "capacity": 48,
-    "area": 121,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 630,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 630,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "address": "江戸川区北小岩1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  },
-  {
-    "id": "13b1f574-8997-4882-8287-d9ca37d93331",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
-    "institution": "集会室第1・2",
-    "building_kana": "コイワアーバンプラザ",
-    "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "小岩アーバンプラザ",
-    "institution_system_name": "集会室第１・２",
-    "capacity": 84,
-    "area": 221,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 1260,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 1260,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "address": "江戸川区北小岩1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/room.html",
-    "layout_image_url": "",
-    "lottery_period": "3ヶ月前抽選",
-    "note": "集会室第1と第2はつなげてご利用することができ、その場合のみカラオケや演劇、ピアノ等楽器演奏などでもご利用いただけます"
-  },
-  {
-    "id": "6dc5f3ea-9092-4e74-9c24-443af098748c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
-    "institution": "ホール",
-    "building_kana": "コイワアーバンプラザ",
-    "institution_kana": "ホール",
-    "building_system_name": "小岩アーバンプラザ",
-    "institution_system_name": "ホール",
-    "capacity": 386,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 10050,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 20120,
-        "division": "FEE_DIVISION_AFTERNOON"
-      },
-      {
-        "fee": 25150,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 12050,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 24100,
-        "division": "FEE_DIVISION_AFTERNOON"
-      },
-      {
-        "fee": 30170,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "江戸川区北小岩1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
     "note": ""
   },
   {
@@ -653,13 +515,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -671,7 +533,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.library.city.edogawa.tokyo.jp/toshow/introduction/html/edg_koiwa_02.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.library.city.edogawa.tokyo.jp/toshow/introduction/html/images/f.jpg",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -693,26 +555,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区東小岩3-6-9",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.library.city.edogawa.tokyo.jp/toshow/introduction/html/edg_koiwa_02.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.library.city.edogawa.tokyo.jp/toshow/introduction/html/images/f.jpg",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -733,26 +595,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区平井4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -773,26 +635,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区平井4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -815,42 +677,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3040,
+        "fee": 3340,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6080,
+        "fee": 6680,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 7550,
+        "fee": 8300,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3670,
+        "fee": 4030,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 7330,
+        "fee": 8060,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 9010,
+        "fee": 9910,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区平井4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_komatsugawa/map.html",
+    "lottery_period": "5ヶ月前抽選",
     "note": ""
   },
   {
@@ -871,13 +733,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -889,7 +751,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/guide.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -911,13 +773,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 4080,
+        "fee": 4480,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 4920,
+        "fee": 5410,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -926,10 +788,10 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/guide.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/map.html",
     "lottery_period": "11ヶ月前抽選",
     "note": ""
   },
@@ -951,26 +813,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 730,
+        "fee": 800,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 730,
+        "fee": 800,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区小松川3-6-3",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_komatsugawasakura/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -991,26 +853,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区一之江7-35-22",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_ichinoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_ichinoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1031,26 +893,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区一之江7-35-22",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_ichinoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_ichinoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1071,13 +933,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -1085,11 +947,11 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_shishibone/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_shishibone/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -1113,42 +975,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3040,
+        "fee": 3340,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6080,
+        "fee": 6680,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 7550,
+        "fee": 8300,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3670,
+        "fee": 4030,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 7330,
+        "fee": 8060,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 9010,
+        "fee": 9910,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区鹿骨1-54-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_shishibone/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_shishibone/map.html",
+    "lottery_period": "5ヶ月前抽選",
     "note": ""
   },
   {
@@ -1169,26 +1031,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区上篠崎4-21-8",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1209,26 +1071,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区篠崎町7-27-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1249,26 +1111,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区篠崎町7-27-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1289,26 +1151,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 670,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 670,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区船堀7-15-12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.sakurakan-edogawa.jp/institution.html#guidance",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.sakurakan-edogawa.jp/about/",
+    "layout_image_url": "https://www.sakurakan-edogawa.jp/files/topics/96_ext_03_3_L.jpg",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1329,26 +1191,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区清新町1-2-2",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_seishinchou/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_seishinchou/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1369,331 +1231,27 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 1250,
+        "fee": 1370,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 1470,
+        "fee": 1610,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区清新町1-2-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_seishinchou/guide.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_seishinchou/map.html",
     "lottery_period": "5ヶ月前抽選",
     "note": "図書館に隣接のため音量制限あり。舞台・ピアノ使用有無で料金が変わる。"
-  },
-  {
-    "id": "039b6aa4-2204-4f13-a972-3ee34d2de3c1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
-    "institution": "研修室",
-    "building_kana": "ソウゴウブンカセンター",
-    "institution_kana": "ケンシュウシツ",
-    "building_system_name": "総合文化センター",
-    "institution_system_name": "研修室",
-    "capacity": 204,
-    "area": 370,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING_ONE",
-      "FEE_DIVISION_EVENING_TWO"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 7850,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 5135,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 5135,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 5920,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 5920,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 7850,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 5135,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 5135,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 5920,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 5920,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "address": "江戸川区中央4-14-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://edogawa-bunkacenter.jp/facilities/conferenceroom.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  },
-  {
-    "id": "6d549f16-ea74-48f5-9ca5-dd03c5f1f369",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
-    "institution": "小ホール",
-    "building_kana": "ソウゴウブンカセンター",
-    "institution_kana": "ショウホール",
-    "building_system_name": "総合文化センター",
-    "institution_system_name": "小ホール",
-    "capacity": 502,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING_ONE",
-      "FEE_DIVISION_EVENING_TWO"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 14150,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 28280,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 35410,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 42430,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 63690,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 16970,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 33950,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 42430,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 50920,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 76380,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "address": "江戸川区中央4-14-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://edogawa-bunkacenter.jp/facilities/hall2.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  },
-  {
-    "id": "e0564417-1513-4351-b52c-55d47fa11a61",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
-    "institution": "大ホール",
-    "building_kana": "ソウゴウブンカセンター",
-    "institution_kana": "ダイホール",
-    "building_system_name": "総合文化センター",
-    "institution_system_name": "大ホール",
-    "capacity": 1497,
-    "area": null,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING_ONE",
-      "FEE_DIVISION_EVENING_TWO"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 47150,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 94280,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 117850,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 141430,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 212130,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 56570,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 113150,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 141430,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 169720,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 254580,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "address": "江戸川区中央4-14-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://edogawa-bunkacenter.jp/facilities/hall.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  },
-  {
-    "id": "0dd5f8ee-e798-4747-bef8-e7df5adc8298",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
-    "institution": "リハーサルルーム",
-    "building_kana": "ソウゴウブンカセンター",
-    "institution_kana": "リハーサルルーム",
-    "building_system_name": "総合文化センター",
-    "institution_system_name": "リハーサル室",
-    "capacity": 200,
-    "area": 210,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING_ONE",
-      "FEE_DIVISION_EVENING_TWO"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 3350,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 3350,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_EVENING_ONE"
-      },
-      {
-        "fee": 1675,
-        "division": "FEE_DIVISION_EVENING_TWO"
-      }
-    ],
-    "address": "江戸川区中央4-14-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://edogawa-bunkacenter.jp/facilities/practice.html",
-    "layout_image_url": "",
-    "lottery_period": "5ヶ月前抽選",
-    "note": "ティンパニ・バスドラムが借りられる"
   },
   {
     "id": "ddeb216f-7502-f1ab-e4ed-0ee6360683f3",
@@ -1715,42 +1273,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 1575,
+        "fee": 1150,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 2040,
+        "fee": 1490,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 2355,
+        "fee": 1720,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 1575,
+        "fee": 1150,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 2040,
+        "fee": 1490,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 2355,
+        "fee": 1720,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区船堀4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.towerhall.jp/1facility/facility-up.html",
-    "layout_image_url": "",
-    "lottery_period": "5ヶ月前の1日",
+    "layout_image_url": "https://www.towerhall.jp/tower/wp-content/uploads/2022/03/302.gif",
+    "lottery_period": "5ヶ月前抽選",
     "note": ""
   },
   {
@@ -1773,42 +1331,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 10995,
+        "fee": 8060,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 20430,
+        "fee": 14980,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 26715,
+        "fee": 19590,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 12570,
+        "fee": 9210,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 25140,
+        "fee": 18430,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 31425,
+        "fee": 23040,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区船堀4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.towerhall.jp/1facility/facility-up.html",
-    "layout_image_url": "",
-    "lottery_period": "12ヶ月前の1日",
+    "layout_image_url": "https://www.towerhall.jp/tower/wp-content/uploads/2022/04/hallsmall-za.jpg",
+    "lottery_period": "12ヶ月前抽選",
     "note": ""
   },
   {
@@ -1831,42 +1389,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 28275,
+        "fee": 20730,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 56580,
+        "fee": 41490,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 70725,
+        "fee": 51860,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 34575,
+        "fee": 25350,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 69150,
+        "fee": 50710,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 84855,
+        "fee": 62220,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区船堀4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.towerhall.jp/1facility/facility-up.html",
-    "layout_image_url": "",
-    "lottery_period": "12ヶ月前の1日",
+    "layout_image_url": "https://www.towerhall.jp/tower/wp-content/uploads/2022/04/hallbig-za.jpg",
+    "lottery_period": "12ヶ月前抽選",
     "note": ""
   },
   {
@@ -1889,39 +1447,39 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 4875,
+        "fee": 3570,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区船堀4-1-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.towerhall.jp/1facility/facility-up.html",
     "layout_image_url": "https://www.towerhall.jp/1facility/4F_map.html",
     "lottery_period": "5ヶ月前抽選",
@@ -1945,26 +1503,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区東瑞江1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -1985,26 +1543,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区東瑞江1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2027,41 +1585,41 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3040,
+        "fee": 3340,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6080,
+        "fee": 6680,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 7550,
+        "fee": 8300,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3670,
+        "fee": 4030,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 7330,
+        "fee": 8060,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 9010,
+        "fee": 9910,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区東瑞江1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.toshima-plaza.jp/facilities/musicroom.html",
-    "layout_image_url": "",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/map.html",
     "lottery_period": "5ヶ月前抽選",
     "note": ""
   },
@@ -2082,15 +1640,15 @@
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
     "address": "江戸川区東瑞江1-17-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/kuyakusho/c_toubu/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2111,13 +1669,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2129,7 +1687,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": "ご利用の際は上履きをご用意ください"
   },
@@ -2151,13 +1709,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2169,7 +1727,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": "ご利用の際は上履きをご用意ください"
   },
@@ -2191,26 +1749,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区瑞江2-5-7",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/room.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2231,26 +1789,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区瑞江2-5-7",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/room.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2273,42 +1831,42 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 8280,
+        "fee": 9100,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 17180,
+        "fee": 18890,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 21480,
+        "fee": 23620,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 9950,
+        "fee": 10940,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 20640,
+        "fee": 22700,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 25770,
+        "fee": 28340,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "address": "江戸川区瑞江2-5-7",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/room.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_tobu_friend/map.html",
+    "lottery_period": "11ヶ月前抽選",
     "note": ""
   },
   {
@@ -2329,13 +1887,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2347,7 +1905,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_nagashima_kuwagawa/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_nagashima_kuwagawa/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -2369,13 +1927,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2387,7 +1945,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/n_hirai/guide.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/n_hirai/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -2401,34 +1959,34 @@
     "institution_kana": "シュウカイシツダイ1",
     "building_system_name": "新田コミュニティ会館",
     "institution_system_name": "集会室第１",
-    "capacity": 36,
-    "area": 70,
-    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "capacity": 30,
+    "area": 50,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_ONE_HOUR"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区篠崎町7-27-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "address": "江戸川区中葛西7-17-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinden/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinden/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2441,34 +1999,34 @@
     "institution_kana": "シュウカイシツダイ2・3",
     "building_system_name": "新田コミュニティ会館",
     "institution_system_name": "集会室第２・３",
-    "capacity": 54,
-    "area": 108,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "capacity": 60,
+    "area": 99,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_ONE_HOUR"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区篠崎町7-27-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e037/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinozaki_hall/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "address": "江戸川区中葛西7-17-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinden/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_shinden/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2489,26 +2047,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区江戸川6-46",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ninoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ninoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2529,26 +2087,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 1050,
+        "fee": 1130,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 1050,
+        "fee": 1130,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区江戸川6-46",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ninoe/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_ninoe/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2569,13 +2127,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2587,7 +2145,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_higashikasai/room.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_higashikasai/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -2609,26 +2167,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区平井4-18-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_hirai/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_hirai/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2649,26 +2207,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区平井4-18-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_hirai/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e033/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_hirai/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2689,26 +2247,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 900,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 900,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区船堀1-3-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_funabori/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_funabori/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2729,26 +2287,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区船堀1-3-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_funabori/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_funabori/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2769,13 +2327,13 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 320,
+        "fee": 350,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
@@ -2787,7 +2345,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_matsue/guide.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_plaza_matsue/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
@@ -2822,13 +2380,13 @@
     "address": "江戸川区松江7-5-12",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsue/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsue/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2849,26 +2407,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区松江7-5-12",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsue/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsue/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2882,33 +2440,33 @@
     "building_system_name": "松島コミュニティ会館",
     "institution_system_name": "音楽室第１",
     "capacity": 14,
-    "area": null,
+    "area": 34,
     "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_ONE_HOUR"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区松島4-25-6",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2922,33 +2480,33 @@
     "building_system_name": "松島コミュニティ会館",
     "institution_system_name": "音楽室第２",
     "capacity": 14,
-    "area": null,
+    "area": 31,
     "institution_size": "INSTITUTION_SIZE_SMALL",
     "fee_divisions": [
       "FEE_DIVISION_ONE_HOUR"
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区松島4-25-6",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e031/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_matsushima/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -2969,26 +2527,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区西瑞江3-18-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_mizue/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_mizue/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -3009,26 +2567,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区西瑞江3-18-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_mizue/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e036/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_mizue/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -3049,26 +2607,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区南葛西6-8-9",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikasai/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikasai/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -3089,26 +2647,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 420,
+        "fee": 460,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区南葛西6-8-9",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikasai/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikasai/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -3129,26 +2687,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 210,
+        "fee": 230,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区南小岩7-17-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/map.html",
+    "lottery_period": "3ヶ月前抽選",
     "note": ""
   },
   {
@@ -3169,106 +2727,26 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 630,
+        "fee": 690,
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
     "address": "江戸川区南小岩7-17-10",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
-    "note": ""
-  },
-  {
-    "id": "c0658eea-3d2f-4482-b3a1-a9ccaa553b86",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "臨海町コミュニティ会館",
-    "institution": "音楽室",
-    "building_kana": "リンカイマチコミュニティカイカン",
-    "institution_kana": "オンガクシツ",
-    "building_system_name": "臨海町コミュニティ会館",
-    "institution_system_name": "音楽室",
-    "capacity": 30,
-    "area": 62,
-    "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 320,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 320,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "address": "江戸川区臨海町2-2-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/room.html",
-    "layout_image_url": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/map.html",
     "lottery_period": "3ヶ月前抽選",
-    "note": "太鼓・ドラムなど、他室への影響が考えられる場合はご利用いただけない場合もございますので、事前にご相談ください"
-  },
-  {
-    "id": "3a679c61-b8ac-423a-ad27-bb874317b4cf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "臨海町コミュニティ会館",
-    "institution": "集会室第6",
-    "building_kana": "リンカイマチコミュニティカイカン",
-    "institution_kana": "シュウカイシツダイ6",
-    "building_system_name": "臨海町コミュニティ会館",
-    "institution_system_name": "集会室第６",
-    "capacity": 48,
-    "area": 101,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_ONE_HOUR"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 420,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 420,
-        "division": "FEE_DIVISION_ONE_HOUR"
-      }
-    ],
-    "address": "江戸川区臨海町2-2-9",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/guide.html",
-    "layout_image_url": "",
-    "lottery_period": "",
     "note": ""
   }
 ]

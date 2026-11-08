@@ -17,18 +17,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区池上四丁目21番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/ikegamibunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   },
   {
@@ -63,11 +89,11 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/plaza_riyouannai202409.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "打楽器の使用は他部屋の状況による。",
     "division_labels": {
@@ -110,11 +136,11 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/plaza_riyouannai202409.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "打楽器の使用は他部屋の状況による。",
     "division_labels": {
@@ -175,11 +201,11 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.ota-bunka.or.jp/facilities/plaza",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/plaza_riyouannai202409.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "打楽器の使用は他部屋の状況による。アンプ不可。"
   },
@@ -219,7 +245,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/Aprico_RiyouAnnai2025.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "2022年1月～2023年2月(予定)まで休館"
   },
@@ -259,7 +285,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/Aprico_RiyouAnnai2025.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "2022年1月～2023年2月(予定)まで休館"
   },
@@ -317,7 +343,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/aprico/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/Aprico_RiyouAnnai2025.pdf",
     "lottery_period": "6ヶ月前の1日",
     "note": "2022年1月～2023年2月(予定)まで休館"
   },
@@ -357,7 +383,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/ootabunkanomori_riyouannnai_2026.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "利用料金は2022年4月1日以降のものを記載した。",
     "division_labels": {
@@ -404,7 +430,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/ootabunkanomori_riyouannnai_2026.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "和太鼓OK,付帯設備に和太鼓あり",
     "division_labels": {
@@ -451,7 +477,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/ootabunkanomori_riyouannnai_2026.pdf",
     "lottery_period": "3ヶ月前の1日",
     "note": "和太鼓不可",
     "division_labels": {
@@ -516,7 +542,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkanomori/index.html",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.ota-bunka.or.jp/files/ootabunkanomori_riyouannnai_2026.pdf",
     "lottery_period": "6ヶ月前の1日",
     "note": "舞台のみの利用は約半額"
   },
@@ -538,18 +564,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区西糀谷二丁目14番5号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/kojiyabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   },
   {
@@ -570,18 +622,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 18800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 25100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 25100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 18800,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 25100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 25100,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区新蒲田一丁目18番16号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://shinkamata.jp/",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "layout_image_url": "https://shinkamata.jp/wp/wp-content/themes/actio/img/pdf/03_%E8%88%9E%E5%8F%B0%E5%B9%B3%E9%9D%A2%E5%9B%B3%E9%BB%92%E5%A3%81.pdf",
+    "lottery_period": "4ヶ月前16日-末日抽選、3ヶ月前9日から先着",
     "note": ""
   },
   {
@@ -595,7 +673,7 @@
     "building_system_name": "田園調布せせらぎ館",
     "institution_system_name": "第一多目的室A",
     "capacity": 60,
-    "area": null,
+    "area": 104,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
@@ -604,29 +682,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3600,
+        "fee": 3000,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3600,
+        "fee": 3000,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -635,11 +713,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
-    "layout_image_url": "",
-    "lottery_period": "3ヶ月前",
+    "layout_image_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/dai1tamokuteki.files/tamokuteki.pdf",
+    "lottery_period": "4ヶ月前16日-末日抽選、3ヶ月前8日から先着",
     "note": "使用不可楽器...管楽器：トランペット、トロンボーン、ホルン、チューバ、サクソフォーン、ファゴット等、弦楽器：エレクトリックギター、エレクトリックベース等、打楽器：ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等、その他：電子オルガン、電子ピアノ、シンセサイザー等"
   },
   {
@@ -653,7 +731,7 @@
     "building_system_name": "田園調布せせらぎ館",
     "institution_system_name": "第一多目的室B",
     "capacity": 60,
-    "area": null,
+    "area": 97.5,
     "institution_size": "INSTITUTION_SIZE_MEDIUM",
     "fee_divisions": [
       "FEE_DIVISION_MORNING",
@@ -662,29 +740,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 3600,
+        "fee": 3000,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 3600,
+        "fee": 3000,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 6480,
+        "fee": 5400,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -693,11 +771,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
-    "layout_image_url": "",
-    "lottery_period": "3ヶ月前",
+    "layout_image_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/dai1tamokuteki.files/tamokuteki.pdf",
+    "lottery_period": "4ヶ月前16日-末日抽選、3ヶ月前8日から先着",
     "note": "使用不可楽器...管楽器：トランペット、トロンボーン、ホルン、チューバ、サクソフォーン、ファゴット等、弦楽器：エレクトリックギター、エレクトリックベース等、打楽器：ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等、その他：電子オルガン、電子ピアノ、シンセサイザー等"
   },
   {
@@ -720,29 +798,29 @@
     ],
     "weekday_usage_fee": [
       {
-        "fee": 720,
+        "fee": 600,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 720,
+        "fee": 1000,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 1200,
+        "fee": 1000,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
     "holiday_usage_fee": [
       {
-        "fee": 720,
+        "fee": 600,
         "division": "FEE_DIVISION_MORNING"
       },
       {
-        "fee": 720,
+        "fee": 1000,
         "division": "FEE_DIVISION_AFTERNOON"
       },
       {
-        "fee": 1200,
+        "fee": 1000,
         "division": "FEE_DIVISION_EVENING"
       }
     ],
@@ -751,11 +829,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/index.html",
-    "layout_image_url": "",
-    "lottery_period": "3ヶ月前",
+    "layout_image_url": "https://www.city.ota.tokyo.jp/shisetsu/seseragi/dai2tamokuteki.files/2tamokuteki.pdf",
+    "lottery_period": "4ヶ月前16日-末日抽選、3ヶ月前8日から先着",
     "note": "使用不可楽器...ティンパニ、ドラム、ティンバル、チャンゴ、和太鼓等"
   },
   {
@@ -776,18 +854,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 960,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 960,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 720,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 960,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 960,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区萩中一丁目7番30号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/haginakabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   },
   {
@@ -808,18 +912,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区田園調布本町7番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/minemachibunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   },
   {
@@ -840,18 +970,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 900,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1200,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区田園調布本町7番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/minemachibunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   },
   {
@@ -872,18 +1028,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2500,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 3300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区南雪谷五丁目18番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
   },
   {
@@ -904,18 +1086,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区南雪谷五丁目18番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
   },
   {
@@ -936,18 +1144,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1900,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区南雪谷五丁目18番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
   },
   {
@@ -968,18 +1202,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1300,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区南雪谷五丁目18番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。音楽練習は合唱程度のみ。"
   },
   {
@@ -1000,18 +1260,44 @@
       "FEE_DIVISION_AFTERNOON",
       "FEE_DIVISION_EVENING"
     ],
-    "weekday_usage_fee": [],
-    "holiday_usage_fee": [],
+    "weekday_usage_fee": [
+      {
+        "fee": 740,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 740,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 1000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
     "address": "大田区南雪谷五丁目18番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.ota.tokyo.jp/shisetsu/bunkacenter/yukigayabunkacenter.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "4ヶ月前16日-末日一次抽選(少年育成団体)、3ヶ月前16日-末日二次抽選、2ヶ月前9日から先着",
     "note": "文化センターは区内団体のみ利用可。"
   }
 ]

@@ -49,7 +49,7 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a001/shisetsuannai/koukyoushisetsu/bunka002.html",
@@ -109,13 +109,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
@@ -172,13 +172,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
@@ -235,13 +235,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
@@ -298,13 +298,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
@@ -361,13 +361,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
@@ -424,13 +424,13 @@
       }
     ],
     "address": "荒川区荒川二丁目57番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "http://www.arakawa-shakyo.or.jp/facility/across_arakawa.html",
+    "website_url": "https://www.arakawa-shakyo.or.jp/across/",
     "layout_image_url": "",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "新型コロナ対策中のある時期の定員しか記載なし。",
@@ -496,15 +496,15 @@
       }
     ],
     "address": "荒川七丁目6番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -569,15 +569,15 @@
       }
     ],
     "address": "荒川七丁目6番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -642,15 +642,15 @@
       }
     ],
     "address": "荒川七丁目6番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -715,15 +715,15 @@
       }
     ],
     "address": "荒川七丁目6番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba007.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -788,15 +788,15 @@
       }
     ],
     "address": "町屋六丁目13番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba013.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -861,15 +861,15 @@
       }
     ],
     "address": "町屋六丁目13番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba013.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -928,15 +928,15 @@
       }
     ],
     "address": "南千住三丁目28番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1001,15 +1001,15 @@
       }
     ],
     "address": "南千住三丁目28番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1074,15 +1074,15 @@
       }
     ],
     "address": "南千住三丁目28番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba001.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1147,15 +1147,15 @@
       }
     ],
     "address": "西尾久三丁目7番15号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba022.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -1214,15 +1214,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1287,15 +1287,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1360,15 +1360,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1433,15 +1433,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1506,15 +1506,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1579,15 +1579,15 @@
       }
     ],
     "address": "西尾久二丁目25番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba015.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1652,15 +1652,15 @@
       }
     ],
     "address": "荒川三丁目3番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1725,15 +1725,15 @@
       }
     ],
     "address": "荒川三丁目3番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1798,15 +1798,15 @@
       }
     ],
     "address": "荒川三丁目3番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1871,15 +1871,15 @@
       }
     ],
     "address": "荒川三丁目3番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -1944,15 +1944,15 @@
       }
     ],
     "address": "荒川三丁目3番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba006.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -2017,15 +2017,15 @@
       }
     ],
     "address": "荒川区東尾久五丁目9番3号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a036/shisetsuannai/koukyoushisetsu/hiroba020.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -2084,15 +2084,15 @@
       }
     ],
     "address": "南千住八丁目2番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -2157,15 +2157,15 @@
       }
     ],
     "address": "南千住八丁目2番2号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba004.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -2230,10 +2230,10 @@
       }
     ],
     "address": "荒川区荒川3-49-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.arakawa-sgc.com/",
@@ -2303,10 +2303,10 @@
       }
     ],
     "address": "荒川区荒川3-49-1",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.arakawa-sgc.com/",
@@ -2376,15 +2376,15 @@
       }
     ],
     "address": "西尾久八丁目33番31号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba016.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -2392,73 +2392,6 @@
       "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
       "RESERVATION_DIVISION_EVENING": "18:45-21:45"
     }
-  },
-  {
-    "id": "aceb35b3-825c-457c-810a-6866febbe7f7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "西日暮里二丁目ひろば館",
-    "institution": "遊戯室",
-    "building_kana": "ニシニッポリニチョウメヒロバカン",
-    "institution_kana": "ユウギシツ",
-    "building_system_name": "西日暮里二丁目ひろば館",
-    "institution_system_name": "遊戯室",
-    "capacity": 15,
-    "area": 90,
-    "institution_size": "INSTITUTION_SIZE_LARGE",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "荒川区西日暮里二丁目32番25号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a036/shisetsuannai/koukyoushisetsu/hiroba028.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
   },
   {
     "id": "6a22acfd-ca3a-4726-b395-034d243738d9",
@@ -2516,15 +2449,15 @@
       }
     ],
     "address": "西日暮里六丁目24番4号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba026.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -2532,475 +2465,6 @@
       "RESERVATION_DIVISION_AFTERNOON_TWO": "15:30-18:30",
       "RESERVATION_DIVISION_EVENING": "18:45-21:45"
     }
-  },
-  {
-    "id": "698c5bf2-50be-40f0-bde2-b2fd3de7c3de",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "日暮里ひろば館",
-    "institution": "201洋室",
-    "building_kana": "ニッポリヒロバカン",
-    "institution_kana": "201ヨウシツ",
-    "building_system_name": "日暮里ひろば館",
-    "institution_system_name": "２０１洋室",
-    "capacity": 50,
-    "area": 60,
-    "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "西日暮里二丁目10番9号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
-  },
-  {
-    "id": "fc337e43-94dd-4199-89ba-27057f8b97ea",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "日暮里ひろば館",
-    "institution": "301洋室",
-    "building_kana": "ニッポリヒロバカン",
-    "institution_kana": "301ヨウシツ",
-    "building_system_name": "日暮里ひろば館",
-    "institution_system_name": "３０１洋室",
-    "capacity": 80,
-    "area": 96,
-    "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "西日暮里二丁目10番9号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
-  },
-  {
-    "id": "da6bd749-8f57-4c87-8f29-3906dcb0df62",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "日暮里ひろば館",
-    "institution": "302洋室",
-    "building_kana": "ニッポリヒロバカン",
-    "institution_kana": "302ヨウシツ",
-    "building_system_name": "日暮里ひろば館",
-    "institution_system_name": "３０２洋室",
-    "capacity": 25,
-    "area": 32,
-    "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "西日暮里二丁目10番9号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
-  },
-  {
-    "id": "517c6ac9-dc58-446d-9ead-7871f803c8f9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "日暮里ひろば館",
-    "institution": "304洋室",
-    "building_kana": "ニッポリヒロバカン",
-    "institution_kana": "304ヨウシツ",
-    "building_system_name": "日暮里ひろば館",
-    "institution_system_name": "３０４洋室",
-    "capacity": 12,
-    "area": 16,
-    "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "西日暮里二丁目10番9号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba029.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": ""
-  },
-  {
-    "id": "981530a9-0d81-4fed-a779-bec2155339ce",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "東尾久ひろば館",
-    "institution": "101洋室",
-    "building_kana": "ヒガシオグヒロバカン",
-    "institution_kana": "101ヨウシツ",
-    "building_system_name": "東尾久ひろば館",
-    "institution_system_name": "１０１洋室",
-    "capacity": 30,
-    "area": 71,
-    "institution_size": "INSTITUTION_SIZE_MEDIUM",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 900,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "東尾久三丁目5番3号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": "令和4年3月31日をもって閉館"
-  },
-  {
-    "id": "fa9e759d-e326-482c-943e-5aa925de56f1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "東尾久ひろば館",
-    "institution": "201洋室",
-    "building_kana": "ヒガシオグヒロバカン",
-    "institution_kana": "201ヨウシツ",
-    "building_system_name": "東尾久ひろば館",
-    "institution_system_name": "２０１洋室",
-    "capacity": 15,
-    "area": 22,
-    "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "東尾久三丁目5番3号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": "令和4年3月31日をもって閉館"
-  },
-  {
-    "id": "94701f06-97b8-405f-a5ce-1d1b9b7000fe",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_ARAKAWA",
-    "building": "東尾久ひろば館",
-    "institution": "301洋室",
-    "building_kana": "ヒガシオグヒロバカン",
-    "institution_kana": "301ヨウシツ",
-    "building_system_name": "東尾久ひろば館",
-    "institution_system_name": "３０１洋室",
-    "capacity": 20,
-    "area": 47,
-    "institution_size": "INSTITUTION_SIZE_SMALL",
-    "fee_divisions": [
-      "FEE_DIVISION_MORNING",
-      "FEE_DIVISION_AFTERNOON_ONE",
-      "FEE_DIVISION_AFTERNOON_TWO",
-      "FEE_DIVISION_EVENING"
-    ],
-    "weekday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "holiday_usage_fee": [
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_MORNING"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_ONE"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_AFTERNOON_TWO"
-      },
-      {
-        "fee": 600,
-        "division": "FEE_DIVISION_EVENING"
-      }
-    ],
-    "address": "東尾久三丁目5番3号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://www.city.arakawa.tokyo.jp/a009/shisetsuannai/koukyoushisetsu/hiroba018.html",
-    "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
-    "note": "令和4年3月31日をもって閉館"
   },
   {
     "id": "b4ab050c-f74f-423e-a62c-96e83ee3d379",
@@ -3058,15 +2522,15 @@
       }
     ],
     "address": "荒川区東尾久2-37-14",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/chiikikatsudou/fureaikan/higashioguriyou.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3131,15 +2595,15 @@
       }
     ],
     "address": "東日暮里一丁目17番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba024.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3204,15 +2668,15 @@
       }
     ],
     "address": "荒川区東日暮里6-28-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3269,15 +2733,15 @@
       }
     ],
     "address": "荒川区東日暮里6-28-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3334,15 +2798,15 @@
       }
     ],
     "address": "荒川区東日暮里6-28-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3399,15 +2863,15 @@
       }
     ],
     "address": "荒川区東日暮里6-28-15",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba031.html",
     "layout_image_url": "",
-    "lottery_period": "",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3472,15 +2936,15 @@
       }
     ],
     "address": "町屋一丁目35番8号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba014.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3545,14 +3009,14 @@
       }
     ],
     "address": "荒川区荒川七丁目20番1号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://machiya.acc-arakawa.jp/index.html",
-    "layout_image_url": "",
+    "website_url": "https://machiya.acc-arakawa.jp/facility",
+    "layout_image_url": "https://machiya.acc-arakawa.jp/wp-content/themes/machibun/assets/images/img_facility_map_02.webp",
     "lottery_period": "1ヶ月前の同じ日",
     "note": "",
     "division_labels": {
@@ -3618,15 +3082,15 @@
       }
     ],
     "address": "荒川三丁目36番4号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba010.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3691,15 +3155,15 @@
       }
     ],
     "address": "荒川区南千住七丁目1番1号アクレスティ南千住2階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba003.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -3758,15 +3222,15 @@
       }
     ],
     "address": "南千住六丁目36番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba002.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -3831,15 +3295,15 @@
       }
     ],
     "address": "南千住六丁目36番13号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba002.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -3898,15 +3362,15 @@
       }
     ],
     "address": "荒川区荒川五丁目12番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.arakawa.tokyo.jp/a035/shisetsuannai/miyachihirobakan.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -3965,15 +3429,15 @@
       }
     ],
     "address": "荒川区荒川五丁目12番10号",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
     "website_url": "https://www.city.arakawa.tokyo.jp/a035/shisetsuannai/miyachihirobakan.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -4026,11 +3490,11 @@
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.sunny-move.jp/move/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.sunny-move.jp/move/download/pdf/4f_05_02st_zumen.pdf",
     "lottery_period": "11ヶ月前",
     "note": "",
     "division_labels": {
@@ -4093,7 +3557,7 @@
     "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.sunny-move.jp/move/",
-    "layout_image_url": "",
+    "layout_image_url": "https://www.sunny-move.jp/move/download/pdf/3f_02_01hall_heimenzu_5retu.pdf",
     "lottery_period": "11ヶ月前",
     "note": "席数296"
   },
@@ -4153,15 +3617,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -4226,15 +3690,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -4299,15 +3763,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -4372,15 +3836,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -4445,15 +3909,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": "",
     "division_labels": {
       "RESERVATION_DIVISION_MORNING": "9:00-12:00",
@@ -4518,15 +3982,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -4585,15 +4049,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   },
   {
@@ -4652,15 +4116,15 @@
       }
     ],
     "address": "東日暮里三丁目11番19号 3階、4階",
-    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.arakawa.tokyo.jp/a011/shisetsuannai/koukyoushisetsu/hiroba025.html",
     "layout_image_url": "",
-    "lottery_period": "1ヶ月前の同じ日",
+    "lottery_period": "2ヶ月前の同じ日（一般団体は1ヶ月前の同じ日）",
     "note": ""
   }
 ]

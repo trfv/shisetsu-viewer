@@ -50,11 +50,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://chuo-shakyo.jp/facility/harumi#ms-room",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/img/floor_harumi.png",
+    "lottery_period": "2か月前1日-10日にシステムで抽選、2か月前12日に結果発表",
     "note": ""
   },
   {
@@ -108,11 +108,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://chuo-shakyo.jp/facility/tsukiji#training-room",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/img/floor_tsukiji1.png",
+    "lottery_period": "2か月前1日-10日にシステムで抽選、2か月前12日に結果発表",
     "note": ""
   },
   {
@@ -166,11 +166,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#tsukishima",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://chuo-shakyo.jp/facility/tsukishima#hole",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/pdf/tsukishima-overall.pdf",
+    "lottery_period": "6か月前1日に会館で抽選会",
     "note": ""
   },
   {
@@ -224,11 +224,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#tsukishima",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://chuo-shakyo.jp/facility/tsukishima#hole",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/pdf/tsukishima-floor.pdf",
+    "lottery_period": "6か月前1日に会館で抽選会",
     "note": ""
   },
   {
@@ -282,11 +282,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/music-room",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://chuo-shakyo.jp/facility/nihonbashi#training-room",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/img/floor_nihonbashi1.png",
+    "lottery_period": "2か月前1日-10日にシステムで抽選、2か月前12日に結果発表",
     "note": ""
   },
   {
@@ -340,11 +340,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
-    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#nihonbashi",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://chuo-shakyo.jp/facility/nihonbashi#hole",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/pdf/nihonbashi-overall.pdf",
+    "lottery_period": "6か月前1日に会館で抽選会",
     "note": ""
   },
   {
@@ -398,11 +398,11 @@
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
-    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
-    "website_url": "https://chuo-shakyo.shopro.co.jp/facilities-list/hall#nihonbashi",
-    "layout_image_url": "",
-    "lottery_period": "",
+    "website_url": "https://chuo-shakyo.jp/facility/nihonbashi#hole",
+    "layout_image_url": "https://chuo-shakyo.jp/wp-content/themes/chuo-shakyo-wp-theme/assets/pdf/nihonbashi-floor.pdf",
+    "lottery_period": "6か月前1日に会館で抽選会",
     "note": ""
   }
 ]
