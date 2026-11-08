@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test 'src/*.test.ts'",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "typecheck:tsrs": "tsrs"
   }
 }

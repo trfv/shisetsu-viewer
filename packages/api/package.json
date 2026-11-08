@@ -10,6 +10,7 @@
   },
   "scripts": {
     "typecheck": "wrangler types && tsc",
+    "typecheck:tsrs": "tsrs",
     "test": "vitest run",
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
