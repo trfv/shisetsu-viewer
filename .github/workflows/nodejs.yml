@@ -45,6 +45,10 @@ jobs:
         run: npm run format:check:all
       - name: Typecheck
         run: npm run typecheck:all
+      # tsrs は beta。tsc との食い違いを見るだけで、合否は tsc で決める
+      - name: Typecheck (tsrs)
+        continue-on-error: true
+        run: npm run typecheck:tsrs:all
       - name: Check for unused files, dependencies and exports
         run: npm run knip
 
