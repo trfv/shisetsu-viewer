@@ -592,6 +592,482 @@
     "note": ""
   },
   {
+    "id": "9891bcf0-17c5-4692-b698-8e1713a277dc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "第1練習室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイ1レンシュウシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "第１練習室",
+    "capacity": 27,
+    "area": 60.46,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5150,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2000,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5150,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=155",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id155_329.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": ""
+  },
+  {
+    "id": "9a90c014-7217-4117-a15e-f38809258470",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "第2練習室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイ2レンシュウシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "第２練習室",
+    "capacity": 10,
+    "area": 32.96,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5",
+      "FEE_DIVISION_DIVISION_6"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_6"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_5"
+      },
+      {
+        "fee": 2900,
+        "division": "FEE_DIVISION_DIVISION_6"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=156",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id156_331.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:15-17:15",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:30-19:30",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
+  },
+  {
+    "id": "204c98a5-54a3-422e-b914-589c6f53381a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "第3練習室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイ3レンシュウシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "第３練習室",
+    "capacity": 16,
+    "area": 32.64,
+    "institution_size": "INSTITUTION_SIZE_SMALL",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1100,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 2200,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 2700,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=157",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id157_333.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": ""
+  },
+  {
+    "id": "7cf0dbd4-6e28-40ff-a648-a2f97336f84d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "第4練習室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイ4レンシュウシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "第４練習室",
+    "capacity": 10,
+    "area": 61.25,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_DIVISION_1",
+      "FEE_DIVISION_DIVISION_2",
+      "FEE_DIVISION_DIVISION_3",
+      "FEE_DIVISION_DIVISION_4",
+      "FEE_DIVISION_DIVISION_5",
+      "FEE_DIVISION_DIVISION_6"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_5"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_6"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_1"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_2"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_3"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_4"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_5"
+      },
+      {
+        "fee": 4000,
+        "division": "FEE_DIVISION_DIVISION_6"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=158",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id158_335.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": "",
+    "division_labels": {
+      "RESERVATION_DIVISION_MORNING_ONE": "9:00-11:00",
+      "RESERVATION_DIVISION_MORNING_TWO": "11:00-13:00",
+      "RESERVATION_DIVISION_AFTERNOON_ONE": "13:15-15:15",
+      "RESERVATION_DIVISION_AFTERNOON_TWO": "15:15-17:15",
+      "RESERVATION_DIVISION_EVENING_ONE": "17:30-19:30",
+      "RESERVATION_DIVISION_EVENING_TWO": "19:30-21:30"
+    }
+  },
+  {
+    "id": "a4649611-636a-4756-9c1e-10182f281a4c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "第5練習室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイ5レンシュウシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "第５練習室",
+    "capacity": 38,
+    "area": 72,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 2550,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5150,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 2550,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5150,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 6300,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=159",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id159_337.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": ""
+  },
+  {
+    "id": "38b8179b-de1e-4ed1-b4fc-75c4f4412647",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "大会議室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "ダイカイギシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "大会議室",
+    "capacity": 216,
+    "area": 503.04,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 11700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 23500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 29600,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 14400,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 28800,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 36000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=160",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id160_339.jpg",
+    "lottery_period": "7ヵ月前20日-6ヵ月前1日",
+    "note": ""
+  },
+  {
+    "id": "b39ab11a-2236-4c85-af98-c235c0f7feee",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "building": "江東公会堂",
+    "institution": "リハーサル室",
+    "building_kana": "コウトウコウカイドウ",
+    "institution_kana": "リハーサルシツ",
+    "building_system_name": "江東公会堂（ティアラこうとう）",
+    "institution_system_name": "リハーサル室",
+    "capacity": 70,
+    "area": 110.77,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9350,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3700,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 7400,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 9350,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江東区住吉2-28-36",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kcf.or.jp/tiara/shisetsu/ichiran/detail/?id=154",
+    "layout_image_url": "https://www.kcf.or.jp/cms/files/image/id154_327.jpg",
+    "lottery_period": "4ヵ月前20日-3ヵ月前1日",
+    "note": ""
+  },
+  {
     "id": "34939752-60e0-4707-ae54-7d0c2708d4b6",
     "prefecture": "PREFECTURE_TOKYO",
     "municipality": "MUNICIPALITY_KOUTOU",

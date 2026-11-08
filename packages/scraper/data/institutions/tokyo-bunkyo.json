@@ -1152,6 +1152,180 @@
     "note": "文京区民半額,使用可能楽器の記載なし"
   },
   {
+    "id": "0f6eb962-3058-4151-b665-80afaf47c10f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールA",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールA",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＡ",
+    "capacity": 80,
+    "area": 144,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/documents/6405/komagome_huroagaido20250225.pdf",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
+    "id": "7cd39244-2d6b-4b5c-9530-cee07bdef83e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールA+B",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールA B",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＡ＋Ｂ",
+    "capacity": 200,
+    "area": 288,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 7200,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 11000,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/documents/6405/komagome_huroagaido20250225.pdf",
+    "lottery_period": "3か月前から",
+    "note": "文京区民半額,ホールA・B同時申し込み"
+  },
+  {
+    "id": "1987bb5f-7cd4-4509-83b5-18f0dc71d832",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "building": "駒込地域活動センター",
+    "institution": "ホールB",
+    "building_kana": "コマゴメチイキカツドウセンター",
+    "institution_kana": "ホールB",
+    "building_system_name": "駒込地域活動センター",
+    "institution_system_name": "ホールＢ",
+    "capacity": 80,
+    "area": 144,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3600,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 5500,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "文京区本駒込3-22-4",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.bunkyo.lg.jp/shisetsu/kumin/chiiki/komagome/honkoma.html",
+    "layout_image_url": "https://www.city.bunkyo.lg.jp/documents/6405/komagome_huroagaido20250225.pdf",
+    "lottery_period": "2か月前から",
+    "note": "文京区民半額"
+  },
+  {
     "id": "efdf9f12-5b36-42d1-94b5-05d2b1d94ea5",
     "prefecture": "PREFECTURE_TOKYO",
     "municipality": "MUNICIPALITY_BUNKYO",

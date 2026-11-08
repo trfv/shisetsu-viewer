@@ -866,6 +866,64 @@
     "note": ""
   },
   {
+    "id": "cb982acd-9e25-473e-8ad6-f9989b8d5dd7",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "幸市民館",
+    "institution": "大ホール",
+    "building_kana": "コウシミンカン",
+    "institution_kana": "ダイホール",
+    "building_system_name": "幸市民館",
+    "institution_system_name": "大ホール",
+    "capacity": 840,
+    "area": 872,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市幸区戸手本町1-11-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.kawasaki.jp/saiwai/page/0000149343.html",
+    "layout_image_url": "https://www.city.kawasaki.jp/saiwai/cmsfiles/contents/0000149/149343/1zasekihyou.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
+    "note": ""
+  },
+  {
     "id": "5d08e2d7-445c-4728-ae24-cbc697261bc4",
     "prefecture": "PREFECTURE_KANAGAWA",
     "municipality": "MUNICIPALITY_KAWASAKI",
@@ -1040,6 +1098,62 @@
     "note": ""
   },
   {
+    "id": "9e004269-c29b-43e5-a627-163abf8ea84d",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "サンピアンかわさき",
+    "institution": "音楽室",
+    "building_kana": "サンピアンカワサキ",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "サンピアンかわさき",
+    "institution_system_name": "音楽室",
+    "capacity": null,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_UNKNOWN",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "川崎市川崎区富士見2-5-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.kawasaki.jp/280/page/0000148828.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
+    "id": "10cd355e-dc6b-489b-998f-483ee1114fcd",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "サンピアンかわさき",
+    "institution": "ホール",
+    "building_kana": "サンピアンカワサキ",
+    "institution_kana": "ホール",
+    "building_system_name": "サンピアンかわさき",
+    "institution_system_name": "ホール",
+    "capacity": 762,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [],
+    "weekday_usage_fee": [],
+    "holiday_usage_fee": [],
+    "address": "川崎市川崎区富士見2-5-2",
+    "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNKNOWN",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNKNOWN",
+    "website_url": "https://www.city.kawasaki.jp/280/page/0000148828.html",
+    "layout_image_url": "",
+    "lottery_period": "",
+    "note": ""
+  },
+  {
     "id": "981c9e92-2a6a-42ad-b226-7e6d9b3a8aeb",
     "prefecture": "PREFECTURE_KANAGAWA",
     "municipality": "MUNICIPALITY_KAWASAKI",
@@ -1153,6 +1267,64 @@
     "website_url": "https://sfc-kawasaki.jp/",
     "layout_image_url": "https://sfc-kawasaki.jp/wp-content/uploads/2024/03/%E5%AE%A2%E5%B8%AD%E5%B9%B3%E9%9D%A2%E5%9B%B3-1.pdf",
     "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）",
+    "note": ""
+  },
+  {
+    "id": "3fae42fe-3671-4459-a1bb-9a1182adfb96",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "building": "高津市民館",
+    "institution": "大ホール",
+    "building_kana": "タカツシミンカン",
+    "institution_kana": "ダイホール",
+    "building_system_name": "高津市民館",
+    "institution_system_name": "大ホール",
+    "capacity": 600,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 7390,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 9850,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 17020,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8868,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 11820,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 20424,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "川崎市高津区溝口1-4-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.kawasaki-takatsu.jp/shiminkan/hall-guide/hall/",
+    "layout_image_url": "https://www.kawasaki-takatsu.jp/assets/uploads/2025/03/Z001_zesekihyou.pdf",
+    "lottery_period": "12ヶ月前の1日に抽選会（1月は4日）、以降14日前まで窓口で随時",
     "note": ""
   },
   {

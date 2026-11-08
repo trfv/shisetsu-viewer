@@ -498,6 +498,144 @@
     "note": ""
   },
   {
+    "id": "5aa90fda-9bc7-438f-a82c-a0659531930f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "小岩アーバンプラザ",
+    "institution": "講習室",
+    "building_kana": "コイワアーバンプラザ",
+    "institution_kana": "コウシュウシツ",
+    "building_system_name": "小岩アーバンプラザ",
+    "institution_system_name": "講習室",
+    "capacity": 48,
+    "area": 121,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 670,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 670,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "江戸川区北小岩1-17-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/map.html",
+    "lottery_period": "3ヶ月前抽選",
+    "note": ""
+  },
+  {
+    "id": "13b1f574-8997-4882-8287-d9ca37d93331",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "小岩アーバンプラザ",
+    "institution": "集会室第1・2",
+    "building_kana": "コイワアーバンプラザ",
+    "institution_kana": "シュウカイシツダイ1・2",
+    "building_system_name": "小岩アーバンプラザ",
+    "institution_system_name": "集会室第１・２",
+    "capacity": 84,
+    "area": 221,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 1340,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 1340,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "江戸川区北小岩1-17-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/room.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/map.html",
+    "lottery_period": "3ヶ月前抽選",
+    "note": "集会室第1と第2はつなげてご利用することができ、その場合のみカラオケや演劇、ピアノ等楽器演奏などでもご利用いただけます"
+  },
+  {
+    "id": "6dc5f3ea-9092-4e74-9c24-443af098748c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "小岩アーバンプラザ",
+    "institution": "ホール",
+    "building_kana": "コイワアーバンプラザ",
+    "institution_kana": "ホール",
+    "building_system_name": "小岩アーバンプラザ",
+    "institution_system_name": "ホール",
+    "capacity": 386,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 11050,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 22130,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 27660,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 13250,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 26510,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 33180,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江戸川区北小岩1-17-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNKNOWN",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_koiwa_urban/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/documents/6717/butai.pdf",
+    "lottery_period": "11ヶ月前抽選",
+    "note": ""
+  },
+  {
     "id": "130d4937-b14b-4ba8-9be5-b9cb81b24ec7",
     "prefecture": "PREFECTURE_TOKYO",
     "municipality": "MUNICIPALITY_EDOGAWA",
@@ -1252,6 +1390,274 @@
     "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_seishinchou/map.html",
     "lottery_period": "5ヶ月前抽選",
     "note": "図書館に隣接のため音量制限あり。舞台・ピアノ使用有無で料金が変わる。"
+  },
+  {
+    "id": "039b6aa4-2204-4f13-a972-3ee34d2de3c1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "総合文化センター",
+    "institution": "研修室",
+    "building_kana": "ソウゴウブンカセンター",
+    "institution_kana": "ケンシュウシツ",
+    "building_system_name": "総合文化センター",
+    "institution_system_name": "研修室",
+    "capacity": 204,
+    "area": 370,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 8630,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5645,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 5645,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6510,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6510,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 8630,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 5645,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 5645,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 6510,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 6510,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "江戸川区中央4-14-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://edogawa-bunkacenter.jp/facilities/conferenceroom/",
+    "layout_image_url": "https://edogawa-bunkacenter.jp/wp-content/uploads/2026/07/floormap.pdf",
+    "lottery_period": "5ヶ月前抽選",
+    "note": ""
+  },
+  {
+    "id": "6d549f16-ea74-48f5-9ca5-dd03c5f1f369",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "総合文化センター",
+    "institution": "小ホール",
+    "building_kana": "ソウゴウブンカセンター",
+    "institution_kana": "ショウホール",
+    "building_system_name": "総合文化センター",
+    "institution_system_name": "小ホール",
+    "capacity": 502,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 15560,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 31100,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 38950,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 18660,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 37340,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 46670,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江戸川区中央4-14-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://edogawa-bunkacenter.jp/facilities/hall2/",
+    "layout_image_url": "https://edogawa-bunkacenter.jp/wp-content/uploads/2026/07/smallhall_seat.pdf",
+    "lottery_period": "12ヶ月前抽選",
+    "note": ""
+  },
+  {
+    "id": "e0564417-1513-4351-b52c-55d47fa11a61",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "総合文化センター",
+    "institution": "大ホール",
+    "building_kana": "ソウゴウブンカセンター",
+    "institution_kana": "ダイホール",
+    "building_system_name": "総合文化センター",
+    "institution_system_name": "大ホール",
+    "capacity": 1497,
+    "area": null,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON",
+      "FEE_DIVISION_EVENING"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 51860,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 103700,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 129630,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 62220,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 124460,
+        "division": "FEE_DIVISION_AFTERNOON"
+      },
+      {
+        "fee": 155570,
+        "division": "FEE_DIVISION_EVENING"
+      }
+    ],
+    "address": "江戸川区中央4-14-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://edogawa-bunkacenter.jp/facilities/hall/",
+    "layout_image_url": "https://edogawa-bunkacenter.jp/wp-content/uploads/2026/07/largehall_seat.pdf",
+    "lottery_period": "12ヶ月前抽選",
+    "note": ""
+  },
+  {
+    "id": "0dd5f8ee-e798-4747-bef8-e7df5adc8298",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "総合文化センター",
+    "institution": "リハーサルルーム",
+    "building_kana": "ソウゴウブンカセンター",
+    "institution_kana": "リハーサルルーム",
+    "building_system_name": "総合文化センター",
+    "institution_system_name": "リハーサル室",
+    "capacity": 200,
+    "area": 210,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_MORNING",
+      "FEE_DIVISION_AFTERNOON_ONE",
+      "FEE_DIVISION_AFTERNOON_TWO",
+      "FEE_DIVISION_EVENING_ONE",
+      "FEE_DIVISION_EVENING_TWO"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 3680,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 3680,
+        "division": "FEE_DIVISION_MORNING"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_AFTERNOON_ONE"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_AFTERNOON_TWO"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_EVENING_ONE"
+      },
+      {
+        "fee": 1840,
+        "division": "FEE_DIVISION_EVENING_TWO"
+      }
+    ],
+    "address": "江戸川区中央4-14-1",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://edogawa-bunkacenter.jp/facilities/conferenceroom/",
+    "layout_image_url": "https://edogawa-bunkacenter.jp/wp-content/uploads/2026/07/floormap.pdf",
+    "lottery_period": "5ヶ月前抽選",
+    "note": "ティンパニ・バスドラムが借りられる"
   },
   {
     "id": "ddeb216f-7502-f1ab-e4ed-0ee6360683f3",
@@ -2746,6 +3152,86 @@
     "is_equipped_piano": "EQUIPMENT_DIVISION_UNEQUIPPED",
     "website_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/guide.html",
     "layout_image_url": "https://www.city.edogawa.tokyo.jp/e035/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_minamikoiwa_co/map.html",
+    "lottery_period": "3ヶ月前抽選",
+    "note": ""
+  },
+  {
+    "id": "c0658eea-3d2f-4482-b3a1-a9ccaa553b86",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "臨海町コミュニティ会館",
+    "institution": "音楽室",
+    "building_kana": "リンカイマチコミュニティカイカン",
+    "institution_kana": "オンガクシツ",
+    "building_system_name": "臨海町コミュニティ会館",
+    "institution_system_name": "音楽室",
+    "capacity": 30,
+    "area": 62,
+    "institution_size": "INSTITUTION_SIZE_MEDIUM",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 350,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 350,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "江戸川区臨海町2-2-9",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_EQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/room.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/map.html",
+    "lottery_period": "3ヶ月前抽選",
+    "note": "太鼓・ドラムなど、他室への影響が考えられる場合はご利用いただけない場合もございますので、事前にご相談ください"
+  },
+  {
+    "id": "3a679c61-b8ac-423a-ad27-bb874317b4cf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "building": "臨海町コミュニティ会館",
+    "institution": "集会室第6",
+    "building_kana": "リンカイマチコミュニティカイカン",
+    "institution_kana": "シュウカイシツダイ6",
+    "building_system_name": "臨海町コミュニティ会館",
+    "institution_system_name": "集会室第６",
+    "capacity": 48,
+    "area": 101,
+    "institution_size": "INSTITUTION_SIZE_LARGE",
+    "fee_divisions": [
+      "FEE_DIVISION_ONE_HOUR"
+    ],
+    "weekday_usage_fee": [
+      {
+        "fee": 460,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "holiday_usage_fee": [
+      {
+        "fee": 460,
+        "division": "FEE_DIVISION_ONE_HOUR"
+      }
+    ],
+    "address": "江戸川区臨海町2-2-9",
+    "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
+    "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_available_percussion": "AVAILABILITY_DIVISION_UNAVAILABLE",
+    "is_equipped_music_stand": "EQUIPMENT_DIVISION_UNEQUIPPED",
+    "is_equipped_piano": "EQUIPMENT_DIVISION_EQUIPPED",
+    "website_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/guide.html",
+    "layout_image_url": "https://www.city.edogawa.tokyo.jp/e034/kuseijoho/gaiyo/shisetsuguide/bunya/bunkachiiki/c_rinkaichou/map.html",
     "lottery_period": "3ヶ月前抽選",
     "note": ""
   }
