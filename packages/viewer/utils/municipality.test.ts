@@ -95,8 +95,8 @@ describe("RESERVATION_MUNICIPALITIES", () => {
 });
 
 describe("SupportedMunicipalities", () => {
-  test("has 17 entries", () => {
-    expect(SupportedMunicipalities).toHaveLength(17);
+  test("has 18 entries", () => {
+    expect(SupportedMunicipalities).toHaveLength(18);
   });
 
   test("contains all expected municipalities", () => {
@@ -126,18 +126,19 @@ describe("SupportedMunicipalityMap", () => {
     expect(SupportedMunicipalityMap["MUNICIPALITY_KAWASAKI"]).toBe("川崎市");
   });
 
-  test("has 17 entries matching SupportedMunicipalities", () => {
-    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(17);
+  test("has 18 entries matching SupportedMunicipalities", () => {
+    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(18);
   });
 });
 
 describe("RESERVATION_EXCLUDED_MUNICIPALITIES", () => {
   test("has 2 entries", () => {
-    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(1);
+    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toHaveLength(2);
   });
 
   test("contains the expected excluded municipalities", () => {
     expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_SUGINAMI");
+    expect(RESERVATION_EXCLUDED_MUNICIPALITIES).toContain("MUNICIPALITY_NAKANO");
   });
 
   test("does not contain non-excluded municipalities", () => {
