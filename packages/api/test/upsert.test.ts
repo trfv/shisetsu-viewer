@@ -52,7 +52,7 @@ describe("upsertReservations（差分 upsert）", () => {
     expect(second.rowsWritten).toBe(0);
   });
 
-  it("1 行だけ変えると 1 行のみ更新、その行の updated_at だけ進む", async () => {
+  it("1 行だけ空きに変えると、その行と vacated_at の索引だけを書き、その行の updated_at だけ進む", async () => {
     const rows = reservationRows(30);
     await upsertReservations(env.DB, rows);
     const before = await env.DB.prepare(
@@ -73,7 +73,7 @@ describe("upsertReservations（差分 upsert）", () => {
     // updated_at に strftime の %f でミリ秒差を出す
     await new Promise((resolve) => setTimeout(resolve, 5));
     const res = await upsertReservations(env.DB, changed);
-    expect(res.rowsWritten).toBe(1);
+    expect(res.rowsWritten).toBe(2);
 
     const after = await env.DB.prepare(
       `SELECT date, updated_at, is_morning_vacant AS m FROM reservations ORDER BY date`
@@ -107,6 +107,60 @@ describe("upsertReservations（差分 upsert）", () => {
       },
     ]);
     expect(second.rowsWritten).toBe(0);
+  });
+});
+
+const VACANT = "RESERVATION_STATUS_VACANT";
+const FILLED = "RESERVATION_STATUS_STATUS_1";
+const vacancyRow = (morning: string, evening = FILLED) => ({
+  institution_id: INST_ID,
+  date: "2026-08-01",
+  reservation: { RESERVATION_DIVISION_MORNING: morning, RESERVATION_DIVISION_EVENING: evening },
+});
+const readVacatedAt = () =>
+  env.DB.prepare(
+    `SELECT morning_vacated_at AS m, afternoon_vacated_at AS a, evening_vacated_at AS e,
+            vacated_at AS v
+     FROM reservations WHERE institution_id = ?`
+  )
+    .bind(INST_ID)
+    .first<{ m: string | null; a: string | null; e: string | null; v: string | null }>();
+
+describe("upsertReservations の vacated_at", () => {
+  it("初めて取得した空き枠には付けない", async () => {
+    await upsertReservations(env.DB, [vacancyRow(VACANT, VACANT)]);
+    expect(await readVacatedAt()).toEqual({ m: null, a: null, e: null, v: null });
+  });
+
+  it("空きに変わった区分にだけ付け、vacated_at にも同じ時刻を書く", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const got = await readVacatedAt();
+    expect(got?.m).not.toBeNull();
+    expect(got?.e).toBeNull();
+    expect(got?.v).toBe(got?.m);
+  });
+
+  it("埋まっても消さず、別の区分が空いたときは元の区分の時刻を保つ", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const first = await readVacatedAt();
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await upsertReservations(env.DB, [vacancyRow(FILLED, VACANT)]);
+    const second = await readVacatedAt();
+    expect(second?.m).toBe(first?.m);
+    expect(second?.e).not.toBeNull();
+    expect(second?.v).toBe(second?.e);
+    expect(second!.v! > first!.v!).toBe(true);
+  });
+
+  it("空きのまま他の区分だけ変わっても付け直さない", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const first = await readVacatedAt();
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await upsertReservations(env.DB, [vacancyRow(VACANT, "RESERVATION_STATUS_STATUS_2")]);
+    expect(await readVacatedAt()).toEqual(first);
   });
 });
 

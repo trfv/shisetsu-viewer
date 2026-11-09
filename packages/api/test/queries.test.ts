@@ -141,6 +141,74 @@ describe("searchReservations", () => {
   });
 });
 
+const [A, B] = [INSTITUTIONS[0].id, INSTITUTIONS[1].id];
+const hoursAgo = (h: number) => new Date(Date.now() - h * 60 * 60 * 1000).toISOString();
+const searchSeptember = async (params: { isEveningVacant?: boolean; isNewlyVacant?: boolean }) => {
+  const page = await searchReservations(
+    env.DB,
+    { startDate: "2026-09-01", endDate: "2026-09-05", ...params },
+    await loadHolidays(env.DB)
+  );
+  return page.items;
+};
+
+const setColumns = (id: string, date: string, columns: Record<string, string | null>) =>
+  env.DB.prepare(
+    `UPDATE reservations SET ${Object.keys(columns)
+      .map((c) => `${c} = ?`)
+      .join(", ")} WHERE institution_id = ? AND date = ?`
+  ).bind(...Object.values(columns), id, date);
+
+describe("searchReservations の isNewlyVacant", () => {
+  beforeAll(async () => {
+    const recent = hoursAgo(1);
+    const old = hoursAgo(48);
+    await env.DB.batch([
+      setColumns(A, "2026-09-01", { morning_vacated_at: recent, vacated_at: recent }),
+      setColumns(B, "2026-09-01", { morning_vacated_at: old, vacated_at: old }),
+      setColumns(A, "2026-09-02", { morning_vacated_at: recent, vacated_at: recent }),
+      setColumns(A, "2026-09-03", { evening_vacated_at: recent, vacated_at: recent }),
+      setColumns(B, "2026-09-05", {
+        reservation: canonicalizeReservation({
+          RESERVATION_DIVISION_MORNING: "RESERVATION_STATUS_VACANT",
+          RESERVATION_DIVISION_AFTERNOON: "RESERVATION_STATUS_STATUS_1",
+          RESERVATION_DIVISION_EVENING: "RESERVATION_STATUS_VACANT",
+        }),
+        morning_vacated_at: recent,
+        vacated_at: recent,
+      }),
+    ]);
+  });
+
+  it("24 時間以内に空きに変わり、今も空いている区分のある枠だけを返す", async () => {
+    const items = await searchSeptember({ isNewlyVacant: true });
+    expect(items.map((h) => [h.institution.id, h.reservation.date])).toEqual([
+      [A, "2026-09-01"],
+      [B, "2026-09-05"],
+    ]);
+  });
+
+  it("区分の空きと組み合わせると、その区分が新しく空いた枠に限る", async () => {
+    expect(await searchSeptember({ isEveningVacant: true, isNewlyVacant: true })).toEqual([]);
+  });
+
+  it("新しく空いた区分にだけ印を付ける", async () => {
+    const items = await searchSeptember({});
+    const flags = (id: string, date: string) => {
+      const r = items.find((h) => h.institution.id === id && h.reservation.date === date)!;
+      return [
+        r.reservation.is_morning_newly_vacant,
+        r.reservation.is_afternoon_newly_vacant,
+        r.reservation.is_evening_newly_vacant,
+      ];
+    };
+    expect(flags(A, "2026-09-01")).toEqual([true, false, false]);
+    expect(flags(B, "2026-09-01")).toEqual([false, false, false]);
+    expect(flags(A, "2026-09-02")).toEqual([false, false, false]);
+    expect(flags(B, "2026-09-05")).toEqual([true, false, false]);
+  });
+});
+
 describe("is_holiday のクエリ時導出", () => {
   it("土曜(08-01) と 祝日(08-11) は true、平日(08-03) は false", async () => {
     const holidays = await loadHolidays(env.DB);

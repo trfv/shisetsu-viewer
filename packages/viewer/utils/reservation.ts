@@ -1,4 +1,4 @@
-import type { ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
+import type { ReservationDto, ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
 import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 
 import { ReservationDivision } from "../constants/enums";
@@ -72,10 +72,44 @@ export const sortByReservationDivision = (obj: Record<string, string>): [string,
   );
 };
 
+const NEWLY_VACANT_MARK = "（新）";
+
+export const getNewlyVacantDivisions = (
+  reservation: Pick<
+    ReservationDto,
+    "is_morning_newly_vacant" | "is_afternoon_newly_vacant" | "is_evening_newly_vacant"
+  >
+): Set<string> => {
+  const divisions: string[] = [];
+  if (reservation.is_morning_newly_vacant) {
+    divisions.push(
+      ReservationDivision.MORNING,
+      ReservationDivision.MORNING_ONE,
+      ReservationDivision.MORNING_TWO
+    );
+  }
+  if (reservation.is_afternoon_newly_vacant) {
+    divisions.push(
+      ReservationDivision.AFTERNOON,
+      ReservationDivision.AFTERNOON_ONE,
+      ReservationDivision.AFTERNOON_TWO
+    );
+  }
+  if (reservation.is_evening_newly_vacant) {
+    divisions.push(
+      ReservationDivision.EVENING,
+      ReservationDivision.EVENING_ONE,
+      ReservationDivision.EVENING_TWO
+    );
+  }
+  return new Set(divisions);
+};
+
 export const formatReservationMap = (
   municipality: SupportedMunicipality | undefined,
   obj: Record<string, string> | undefined,
-  divisionLabels?: Partial<Record<string, string>>
+  divisionLabels?: Partial<Record<string, string>>,
+  newlyVacantDivisions?: ReadonlySet<string>
 ): string => {
   if (!municipality || !obj) {
     return "";
@@ -89,7 +123,9 @@ export const formatReservationMap = (
         .map(([division, status]) =>
           [
             getReservationDivisionLabel(municipality, division, divisionLabels),
-            ReservationStatusMap[municipality]?.[status],
+            `${ReservationStatusMap[municipality]?.[status] ?? ""}${
+              newlyVacantDivisions?.has(division) ? NEWLY_VACANT_MARK : ""
+            }`,
           ].join(": ")
         )
         .join(" ")
@@ -101,12 +137,14 @@ const IS_ONLY_MORNING_VACANT = "m";
 const IS_ONLY_AFTERNOON_VACANT = "a";
 const IS_ONLY_EVENING_VACANT = "e";
 const IS_ONLY_HOLIDAY = "h";
+const IS_ONLY_NEWLY_VACANT = "n";
 
 export const RESERVATION_SEARCH_FILTER_MAP = {
   [IS_ONLY_MORNING_VACANT]: "午前空き",
   [IS_ONLY_AFTERNOON_VACANT]: "午後空き",
   [IS_ONLY_EVENING_VACANT]: "夜間空き",
   [IS_ONLY_HOLIDAY]: "土日祝のみ",
+  [IS_ONLY_NEWLY_VACANT]: "新しく空いた",
 } as const;
 
 const ReservationSearchFilters = [
@@ -114,6 +152,7 @@ const ReservationSearchFilters = [
   IS_ONLY_AFTERNOON_VACANT,
   IS_ONLY_EVENING_VACANT,
   IS_ONLY_HOLIDAY,
+  IS_ONLY_NEWLY_VACANT,
 ] as const;
 
 export type ReservationSearchFilter = (typeof ReservationSearchFilters)[number];
@@ -187,5 +226,6 @@ export const toReservationSearchQueryParams = ({
     isMorningVacant: filter.includes(IS_ONLY_MORNING_VACANT) ? true : undefined,
     isAfternoonVacant: filter.includes(IS_ONLY_AFTERNOON_VACANT) ? true : undefined,
     isEveningVacant: filter.includes(IS_ONLY_EVENING_VACANT) ? true : undefined,
+    isNewlyVacant: filter.includes(IS_ONLY_NEWLY_VACANT) ? true : undefined,
   };
 };

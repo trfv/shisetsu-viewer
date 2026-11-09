@@ -20,6 +20,11 @@ const MAX_LIMIT = 100;
 // search 系は ORDER BY が全件ソートを誘発しうるので 100 に据え置く
 const MAX_EXPORT_LIMIT = 1000;
 const AVAILABLE = "AVAILABILITY_DIVISION_AVAILABLE";
+const NEWLY_VACANT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+function newlyVacantSince(): string {
+  return new Date(Date.now() - NEWLY_VACANT_WINDOW_MS).toISOString();
+}
 
 function clampLimit(limit: number | undefined): number {
   if (!limit || limit < 1) return DEFAULT_LIMIT;
@@ -228,10 +233,16 @@ interface ReservationRow {
   is_morning_vacant: number;
   is_afternoon_vacant: number;
   is_evening_vacant: number;
+  morning_vacated_at: string | null;
+  afternoon_vacated_at: string | null;
+  evening_vacated_at: string | null;
   updated_at: string;
 }
 
-function toReservationDto(row: ReservationRow): ReservationDto {
+const isNewlyVacant = (vacant: number, vacatedAt: string | null, since: string) =>
+  toBool(vacant) && vacatedAt !== null && vacatedAt >= since;
+
+function toReservationDto(row: ReservationRow, since: string): ReservationDto {
   return {
     institution_id: row.institution_id,
     date: row.date,
@@ -240,6 +251,13 @@ function toReservationDto(row: ReservationRow): ReservationDto {
     is_morning_vacant: toBool(row.is_morning_vacant),
     is_afternoon_vacant: toBool(row.is_afternoon_vacant),
     is_evening_vacant: toBool(row.is_evening_vacant),
+    is_morning_newly_vacant: isNewlyVacant(row.is_morning_vacant, row.morning_vacated_at, since),
+    is_afternoon_newly_vacant: isNewlyVacant(
+      row.is_afternoon_vacant,
+      row.afternoon_vacated_at,
+      since
+    ),
+    is_evening_newly_vacant: isNewlyVacant(row.is_evening_vacant, row.evening_vacated_at, since),
     updated_at: row.updated_at,
   };
 }
@@ -285,6 +303,7 @@ export async function listInstitutionReservations(
   holidays: string[]
 ): Promise<Page<ReservationDto>> {
   const limit = clampLimit(params.limit);
+  const since = newlyVacantSince();
   const conditions: string[] = [`institution_id = ?`];
   const args: unknown[] = [JSON.stringify(holidays), id];
   if (params.startDate) {
@@ -305,6 +324,7 @@ export async function listInstitutionReservations(
   const sql = `
     SELECT institution_id, date, reservation,
            is_morning_vacant, is_afternoon_vacant, is_evening_vacant, updated_at,
+           morning_vacated_at, afternoon_vacated_at, evening_vacated_at,
            ${IS_HOLIDAY_EXPR("date")} AS is_holiday
     FROM reservations
     WHERE ${conditions.join(" AND ")}
@@ -320,7 +340,7 @@ export async function listInstitutionReservations(
   const rows = hasNextPage ? results.slice(0, limit) : results;
   const last = rows.at(-1);
   return {
-    items: rows.map(toReservationDto),
+    items: rows.map((row) => toReservationDto(row, since)),
     pageInfo: {
       hasNextPage,
       endCursor: hasNextPage && last ? encodeCursor({ date: last.date }) : null,
@@ -343,6 +363,7 @@ export async function searchReservations(
   holidays: string[]
 ): Promise<Page<ReservationSearchHit>> {
   const limit = clampLimit(params.limit);
+  const since = newlyVacantSince();
   const conditions: string[] = [`r.date >= ?`, `r.date <= ?`];
   // 先頭は SELECT 式の IS_HOLIDAY_EXPR が使う祝日配列
   const args: unknown[] = [JSON.stringify(holidays), params.startDate, params.endDate];
@@ -356,14 +377,24 @@ export async function searchReservations(
     args.push(JSON.stringify(holidays));
   }
   const vacancyFilters: [boolean | undefined, string][] = [
-    [params.isMorningVacant, "r.is_morning_vacant"],
-    [params.isAfternoonVacant, "r.is_afternoon_vacant"],
-    [params.isEveningVacant, "r.is_evening_vacant"],
+    [params.isMorningVacant, "morning"],
+    [params.isAfternoonVacant, "afternoon"],
+    [params.isEveningVacant, "evening"],
   ];
-  for (const [flag, column] of vacancyFilters) {
+  for (const [flag, division] of vacancyFilters) {
     if (flag === true) {
-      conditions.push(`${column} = 1`);
+      conditions.push(`r.is_${division}_vacant = 1`);
     }
+  }
+  if (params.isNewlyVacant === true) {
+    const selected = vacancyFilters.filter(([flag]) => flag === true);
+    const divisions = (selected.length > 0 ? selected : vacancyFilters).map(([, d]) => d);
+    conditions.push(`r.vacated_at >= ?`);
+    args.push(since);
+    conditions.push(
+      `(${divisions.map((d) => `(r.is_${d}_vacant = 1 AND r.${d}_vacated_at >= ?)`).join(" OR ")})`
+    );
+    args.push(...divisions.map(() => since));
   }
   const availabilityFilters: [boolean | undefined, string][] = [
     [params.isAvailableStrings, "i.is_available_strings"],
@@ -389,14 +420,17 @@ export async function searchReservations(
     }
   }
 
+  // 新しく空いた枠は少なく、プランナーが ORDER BY に合う idx(date) を選ぶと日付範囲を全走査する。
+  // 直近の分だけを引けるよう索引を名指しし、並べ替えは少数の一時 B-tree に任せる
   const sql = `
     SELECT r.institution_id, r.date, r.reservation, r.updated_at,
            r.is_morning_vacant, r.is_afternoon_vacant, r.is_evening_vacant,
+           r.morning_vacated_at, r.afternoon_vacated_at, r.evening_vacated_at,
            ${IS_HOLIDAY_EXPR("r.date")} AS is_holiday,
            i.id AS i_id, i.municipality AS i_municipality, i.building AS i_building,
            i.institution AS i_institution, i.institution_size AS i_institution_size,
            i.division_labels AS i_division_labels
-    FROM reservations r
+    FROM reservations r ${params.isNewlyVacant === true ? "INDEXED BY idx_reservations_vacated_at" : ""}
     JOIN institutions i ON i.id = r.institution_id
     WHERE ${conditions.join(" AND ")}
     ORDER BY r.date, r.institution_id
@@ -412,7 +446,7 @@ export async function searchReservations(
   const last = rows.at(-1);
   return {
     items: rows.map((row) => ({
-      reservation: toReservationDto(row),
+      reservation: toReservationDto(row, since),
       institution: {
         id: row.i_id,
         municipality: row.i_municipality,

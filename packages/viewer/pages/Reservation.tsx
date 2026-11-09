@@ -41,6 +41,7 @@ import {
 import {
   RESERVATION_SEARCH_FILTER_MAP,
   formatReservationMap,
+  getNewlyVacantDivisions,
   toReservationSearchParams,
   toReservationSearchQueryParams,
 } from "../utils/reservation";
@@ -92,7 +93,12 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     valueGetter: (params) => {
       const municipality = params.row.institution.municipality as SupportedMunicipality;
       const obj = params.row.reservation.reservation;
-      return formatReservationMap(municipality, obj, params.row.institution.division_labels);
+      return formatReservationMap(
+        municipality,
+        obj,
+        params.row.institution.division_labels,
+        getNewlyVacantDivisions(params.row.reservation)
+      );
     },
     renderCell: (params) => (
       <ReservationStatusList
