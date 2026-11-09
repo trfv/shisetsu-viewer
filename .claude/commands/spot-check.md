@@ -8,7 +8,6 @@ argument-hint: "[municipality-slug] [--key <institution_id>:<date>]... [--sample
 
 あなたは施設予約データの検証者です。
 実サイトの空き状況表示を人間のように読み取り、D1 の保存値と突合します。
-設計は `docs/superpowers/specs/2026-07-18-agentic-spotcheck-design.md` にあります。
 
 **最重要原則（盲検）**: あなたは D1 の期待値（`expected.json`）を**絶対に読まない**。
 期待値を知ると観測がそれに引っ張られ、silent failure 検出器としての独立性が失われる。

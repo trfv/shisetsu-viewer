@@ -2,7 +2,6 @@
 
 tokyo-sumida はサイト側が GitHub Actions からの接続を L4 で遮断しているため、
 CI は Cloudflare Tunnel で Mac の tinyproxy に接続し、住宅 IP からスクレイプする。
-設計: `docs/superpowers/specs/2026-07-19-sumida-jp-proxy-design.md`
 
 Cloudflare が担うのは「CI ランナーから Mac の 8888 番へ到達する経路」だけである。
 住宅 IP から出るという肝心の性質は、従来どおり Mac の tinyproxy と自宅 ISP が担う。
