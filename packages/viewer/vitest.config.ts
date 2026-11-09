@@ -14,7 +14,8 @@ export default defineConfig({
           browser: "chromium",
         },
       ],
-      provider: playwright(),
+      // 動いている要素はクリックが静止まで待たされ、テストの進みがずれる。
+      provider: playwright({ contextOptions: { reducedMotion: "reduce" } }),
       headless: true,
     },
     setupFiles: ["./test/browser-setup.ts"],
