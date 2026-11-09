@@ -132,6 +132,18 @@ describe("public endpoints", () => {
     const body = (await res.json()) as { items: { municipality: string }[] };
     expect(body.items.map((r) => r.municipality)).toContain("MUNICIPALITY_KOUTOU");
   });
+
+  it("GET /v1/holidays → 200 + Cache-Control", async () => {
+    const res = await SELF.fetch(`${BASE}/v1/holidays?startDate=2026-08-01&endDate=2026-08-31`);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Cache-Control")).toBe("public, max-age=86400");
+    expect(await res.json()).toEqual({ items: [{ date: "2026-08-11", name: "山の日" }] });
+  });
+
+  it("GET /v1/holidays は日付の範囲が無いと 400", async () => {
+    const res = await SELF.fetch(`${BASE}/v1/holidays?startDate=2026-08-01`);
+    expect(res.status).toBe(400);
+  });
 });
 
 describe("reservations 認可", () => {

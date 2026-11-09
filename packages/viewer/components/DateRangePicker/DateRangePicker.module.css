@@ -46,6 +46,7 @@
   color: var(--color-saturday);
 }
 
-.sunday:not(:global(.rdp-disabled)) {
+.sunday:not(:global(.rdp-disabled)),
+.holiday:not(:global(.rdp-disabled)) {
   color: var(--color-sunday);
 }

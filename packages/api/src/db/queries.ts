@@ -7,6 +7,7 @@ import type {
   ReservationExportRow,
   ReservationSearchHit,
   ReservationSearchQueryParams,
+  Holiday,
   ScrapeRun,
   UsageFeeEntry,
 } from "@shisetsu-viewer/shared";
@@ -253,6 +254,18 @@ function parseReservation(value: string): Record<string, string> {
 export async function loadHolidays(db: D1Database): Promise<string[]> {
   const { results } = await db.prepare(`SELECT date FROM holidays`).all<{ date: string }>();
   return results.map((r) => r.date);
+}
+
+export async function listHolidays(
+  db: D1Database,
+  startDate: string,
+  endDate: string
+): Promise<Holiday[]> {
+  const { results } = await db
+    .prepare(`SELECT date, name FROM holidays WHERE date BETWEEN ? AND ? ORDER BY date`)
+    .bind(startDate, endDate)
+    .all<Holiday>();
+  return results.map((r) => ({ date: r.date, name: r.name }));
 }
 
 const IS_HOLIDAY_EXPR = (dateCol: string) =>

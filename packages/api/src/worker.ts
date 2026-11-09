@@ -7,6 +7,7 @@ import {
   exportReservations,
   getInstitutionDetail,
   listInstitutionReservations,
+  listHolidays,
   listInstitutions,
   listScrapeRuns,
   loadHolidays,
@@ -54,6 +55,7 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PUBLIC_CACHE = "public, max-age=300";
 // 施設マスタは週〜月単位でしか変わらないので長めに持たせる（upsert 直後の最大 10 分の陳腐化は許容）
 const INSTITUTIONS_CACHE = "public, max-age=600";
+const HOLIDAYS_CACHE = "public, max-age=86400";
 // Cache-Control 無しの 200 はエッジの heuristic freshness で既定 2 時間キャッシュされうる。
 // Authorization 付きは自動バイパスされる仕様だが、そこに依存しない
 const PRIVATE_CACHE = "private, no-store";
@@ -199,6 +201,15 @@ async function handleScrapeRuns(env: Env): Promise<Response> {
   return json({ items }, { headers: { "Cache-Control": PUBLIC_CACHE } });
 }
 
+async function handleHolidays(url: URL, env: Env): Promise<Response> {
+  const startDate = url.searchParams.get("startDate");
+  const endDate = url.searchParams.get("endDate");
+  if (!startDate || !DATE_RE.test(startDate)) return error(400, "invalid startDate");
+  if (!endDate || !DATE_RE.test(endDate)) return error(400, "invalid endDate");
+  const items = await listHolidays(env.DB, startDate, endDate);
+  return json({ items }, { headers: { "Cache-Control": HOLIDAYS_CACHE } });
+}
+
 async function handleAdminReservations(request: Request, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const body = (await request.json().catch(() => null)) as UpsertReservationsRequest | null;
@@ -297,6 +308,8 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
         return await withEdgeCache(url, ctx, () => handleListInstitutions(url, env));
       if (pathname === "/v1/scrape-runs")
         return await withEdgeCache(url, ctx, () => handleScrapeRuns(env));
+      if (pathname === "/v1/holidays")
+        return await withEdgeCache(url, ctx, () => handleHolidays(url, env));
       if (pathname === "/v1/reservations/search")
         return await handleSearch(request, principal, url, env);
       if (pathname === "/v1/admin/reservations/export")

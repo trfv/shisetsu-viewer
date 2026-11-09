@@ -45,6 +45,7 @@ export type {
   ReservationExportRow,
   ReservationSearchHit,
   ScrapeRun,
+  Holiday,
   UpsertReservationsRequest,
   UpsertResponse,
   InstitutionsQueryParams,

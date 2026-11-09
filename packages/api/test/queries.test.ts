@@ -4,6 +4,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import {
   getInstitutionDetail,
+  listHolidays,
   listInstitutionReservations,
   listInstitutions,
   listScrapeRuns,
@@ -245,5 +246,17 @@ describe("listScrapeRuns", () => {
     const byMuni = new Map(runs.map((r) => [r.municipality, r.fetched_at]));
     expect(byMuni.get("MUNICIPALITY_KOUTOU")).toBe("2026-08-01T17:23:00.000Z");
     expect(byMuni.get("MUNICIPALITY_TOSHIMA")).toBe("2026-08-01T05:25:00.000Z");
+  });
+});
+
+describe("listHolidays", () => {
+  it("範囲内の祝日を日付と名前で返す", async () => {
+    expect(await listHolidays(env.DB, "2026-08-01", "2026-08-12")).toEqual([
+      { date: "2026-08-11", name: "山の日" },
+    ]);
+  });
+
+  it("範囲外の祝日は返さない", async () => {
+    expect(await listHolidays(env.DB, "2026-08-12", "2026-08-12")).toEqual([]);
   });
 });

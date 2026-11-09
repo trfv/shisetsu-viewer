@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { worker } from "../test/mocks/browser";
 import {
+  fetchHolidays,
   fetchInstitutionDetail,
   fetchInstitutionReservations,
   fetchInstitutions,
@@ -123,5 +124,22 @@ describe("endpoints", () => {
     const result = await fetchScrapeRuns();
 
     expect(result.items).toHaveLength(1);
+  });
+
+  it("fetchHolidays は期間を /v1/holidays に載せる", async () => {
+    let captured = "";
+    worker.use(
+      http.get(`${BASE}/v1/holidays`, ({ request }) => {
+        captured = request.url;
+        return HttpResponse.json({ items: [{ date: "2026-11-23", name: "勤労感謝の日" }] });
+      })
+    );
+
+    const result = await fetchHolidays({ startDate: "2026-11-01", endDate: "2026-11-30" });
+
+    const url = new URL(captured);
+    expect(url.searchParams.get("startDate")).toBe("2026-11-01");
+    expect(url.searchParams.get("endDate")).toBe("2026-11-30");
+    expect(result.items).toEqual([{ date: "2026-11-23", name: "勤労感謝の日" }]);
   });
 });

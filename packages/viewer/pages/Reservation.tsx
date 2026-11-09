@@ -1,6 +1,19 @@
-import type { ReservationSearchHit, ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
-import { addMonths, endOfMonth, isSameDay } from "date-fns";
-import { use, useCallback, useDeferredValue, useMemo, useState, type ChangeEvent } from "react";
+import type {
+  Holiday,
+  ReservationSearchHit,
+  ReservationSearchQueryParams,
+} from "@shisetsu-viewer/shared";
+import { addMonths, endOfMonth, isSameDay, parseISO } from "date-fns";
+import {
+  Suspense,
+  use,
+  useCallback,
+  useDeferredValue,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type ComponentProps,
+} from "react";
 import { useLocation, useSearch } from "wouter";
 
 import { searchReservations } from "../api/endpoints";
@@ -11,6 +24,7 @@ import { DateRangePicker, type DateRangeValue } from "../components/DateRangePic
 import { MultiSelect } from "../components/MultiSelect";
 import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
+import { useHolidays } from "../hooks/useHolidays";
 import { usePages } from "../hooks/usePages";
 import { ArrayParam, DateParam, useQueryParams } from "../hooks/useQueryParams";
 import { useScrapeRuns } from "../hooks/useScrapeRuns";
@@ -94,6 +108,17 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
   },
 ];
 
+type DateRangePickerProps = Omit<ComponentProps<typeof DateRangePicker>, "holidays">;
+
+const HolidayDateRangePicker = ({
+  holidaysPromise,
+  ...props
+}: DateRangePickerProps & { holidaysPromise: Promise<{ items: Holiday[] }> }) => {
+  const { items } = use(holidaysPromise);
+  const holidays = useMemo(() => items.map((h) => parseISO(h.date)), [items]);
+  return <DateRangePicker {...props} holidays={holidays} />;
+};
+
 const ReservationResults = ({
   params,
   onRowClick,
@@ -140,6 +165,7 @@ const ReservationPage = () => {
   // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [minDate] = useState(() => new Date());
   const [maxDate] = useState(() => addMonths(endOfMonth(new Date()), 6));
+  const holidaysPromise = useHolidays(minDate, maxDate);
 
   const [values, setQueryParams] = useQueryParams(
     {
@@ -211,6 +237,14 @@ const ReservationPage = () => {
     [setQueryParams]
   );
 
+  const datePickerProps: DateRangePickerProps = {
+    label: "期間指定",
+    maxDate,
+    minDate,
+    onChange: handleDateRangeChange,
+    value: { from: startDate, to: endDate },
+  };
+
   const handleFilterChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const { value, checked } = event.target;
@@ -273,13 +307,9 @@ const ReservationPage = () => {
             size="medium"
             values={municipalities}
           />
-          <DateRangePicker
-            label="期間指定"
-            maxDate={maxDate}
-            minDate={minDate}
-            onChange={handleDateRangeChange}
-            value={{ from: startDate, to: endDate }}
-          />
+          <Suspense fallback={<DateRangePicker {...datePickerProps} holidays={[]} />}>
+            <HolidayDateRangePicker {...datePickerProps} holidaysPromise={holidaysPromise} />
+          </Suspense>
           <CheckboxGroup label="絞り込み" onChange={handleFilterChange} values={filter}>
             {Object.entries(RESERVATION_SEARCH_FILTER_MAP).map(([value, label]) => (
               <Checkbox key={value} label={label} value={value} />
