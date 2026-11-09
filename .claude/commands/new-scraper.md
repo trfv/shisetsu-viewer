@@ -72,6 +72,10 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 `data/targets/<prefecture>-<slug>.candidates.json` に全施設・全部屋の候補（`musicLikely` フラグ付き）が書き出されるので、手作業での一覧転記は不要。musicLikely を目印に音楽練習可能な対象をキュレーションし、各候補の `target` フィールドをそのまま targets に貼る。candidates.json は作業用でコミットしない（scratchpad に退避する）。
 
+`--engine` で選べるのは openreaf / webrGrand だけ。e-PRS など `discover` フックを持つエンジンは、targets を空にした `index.ts`（`eprsHooks` の設定だけ）を先に置き、`npm run discover -- <prefecture>-<slug>` で回す。
+
+discover の候補は利用目的の検索結果なので、**目的に合わない部屋と、期間内に満室の部屋は載らない**。館の全部屋は予約システムの「館・施設一覧」にあり、折りたたみの中身も DOM に最初から入っている（e-PRS は `div[data-area]` の `施設一覧` 行。クリック不要）。件数を突き合わせ、候補から外れた部屋がなぜ外れたかを確かめてから、ユーザーに対象を選んでもらう。
+
 未知のシステムの場合はトップから空き状況テーブルまでのナビゲーションパスを記録する。
 典型的な階層: 施設分類 → 施設 → 部屋 → カレンダー → 日次テーブル
 
@@ -79,6 +83,8 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 - 施設分類の一覧
 - 各施設の部屋一覧（`次の一覧` リンクがある場合は全ページ取得）
+
+利用目的の選択肢は、館の種類ごとの系統が 1 つのセレクトに並び、同じラベル（「音楽」「演劇」）が複数あることがある。探索では値（`23_40` など）で選び、エンジンの `searchPurpose` / `discoverPurposes` には重複しないラベルだけを渡す（エンジンはラベルで選ぶ）。
 
 サイトに「利用目的」での検索があれば、音楽系の目的（楽器練習・楽器演奏・合唱・演奏会など）× 地区で検索して候補を列挙するのが早い。ただし「練習」のような広い目的はダンス・演劇の練習も含む（tokyo-katsushika-symphony-hills のレクレーションルーム）。施設側に部屋ごとの利用目的表や「楽器演奏可」の一覧があれば、それで演奏・合唱ができる部屋に絞る。ただし **検索結果が「期間内に空きのある部屋」に絞られていないか** を確かめる（「該当する空き施設が見つかりませんでした」が出るなら絞られている）。絞られているなら、検索結果をスクレイプの入口にすると満室の週に部屋が消える。
 
@@ -103,7 +109,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 
 - **画面の裏の通信**: `browser_network_requests` やページの JS（`String(window.<関数名>)`）を見て、週送り・部屋切り替えが Ajax で JSON を返しているか確かめる。部屋コードと日付を指定して JSON を直接取れるなら、DOM を辿るより速く壊れにくい（例: `engines/eprs.ts`）。その場合は、セッション初期化に何が要るか（トップを開くだけか、検索を 1 回通すか）、cookie なしの新しいコンテキストで失敗するかを確かめる。応答の文字コード（Shift_JIS 等）にも注意する。JSON が無くても、日付送りが「フォームの値を書き換えて submit」だけなら、同じフォームを `page.request.post` で日付を変えて送り、返った HTML を解析できる（例: `engines/aserv.ts`。画面遷移が要らず、画像や JS も取りに行かない）
 - **色で表す状態**: 「色の塗られていない部分は予約可能」のように状態を色だけで表すサイトは、セルの id / class と CSS を突き合わせて、どの値に塗りがあるかを確定する（`page.request.get` で CSS を落として `#<id>` を grep する）。「塗りなしだが押せない」値（受付期間の手前・後ろなど）がよくあるので、凡例どおり空きと見るか、受付期間外と見るかを値ごとに決める
-- **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする。受付期間より先を要求しても「受付期間外」と出さず、全コマ空きで返すサイトがある（reserve1.jp の月表示）。月や日のセレクトの選択肢が受付中の範囲を表していることが多いので、それを打ち切りの根拠にする
+- **受付期間**: 部屋の種類ごとに、何ヶ月先まで受付中か（「受付期間外」になる日）を確かめる。毎週送らず月 1 点ずつ見ると速い。部屋ごとに期間が大きく違う場合は、horizon を最長に合わせて「全セルが受付期間外の週」で打ち切るか、`horizon` を target ごとの関数にする。受付期間より先を要求しても「受付期間外」と出さず、全コマ空きで返すサイトがある（reserve1.jp の月表示）。月や日のセレクトの選択肢が受付中の範囲を表していることが多いので、それを打ち切りの根拠にする。候補の部屋ごとに 1 年強を週単位で取り、受付中 `#`／期間外 `.`／混在 `+` の 1 行に並べると形が一目で分かる。ホールは直近の数週が期間外でその先が受付中（`.+####…`）、学校開放は翌月だけ受付中（`...+###+...`）のように、先頭が期間外の部屋がある。打ち切りは「受付中の週を見た後の、全セル期間外の週」で判定する
 - **束ねた表示と実際のコマ**: 「午前／午後／夜間」で絞る表示は、実際の予約単位（コマ）を束ねていることがある。区の施設ページの料金表で時間枠を確かめ、時間帯別の画面と同じ日を突き合わせる。tokyo-setagaya は実際は 5 コマで、夕方が「午後」と「夜間」の両方に数えられ、束ねた表示の「△」からはどのコマが空いているか分からなかった。コマ単位で取れるならそちらを選ぶ（`*_ONE` / `*_TWO` に載せれば D1 の「午後空き」検索にも載る）
 - **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い。文字が無くアイコン（`<i class="fa ...">`）だけのセルは `innerText` が空になり、`STATUS_MAP` の `""` で `INVALID` に変わるので「Unmapped」の警告も出ない（tokyo-setagaya の時間帯別画面の「取消処理中」）。集計で INVALID が出たら、そのセルの HTML と画面の凡例を見る
 - **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
@@ -125,6 +131,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 探索結果を提示し、以下を AskUserQuestion で確認:
 
 - スクレイプ対象の施設・部屋（全部屋か、音楽系のみか）。discovery を実行した場合は candidates.json の musicLikely 一覧を提示して選んでもらう。**選択肢に部屋数を書くときは、説明に並べた部屋を数え直してから書く**（tokyo-katsushika で 20 室を 19 室と書いた）。館ごとの内訳（例: 2+1+1+…）を足し算で示すと数え違いに気づける
+- 同じ部屋を料金の違いで別の部屋として並べるサイトがある（「ホール（入場料あり）／（入場料なし）」「大ホール／大ホール１階席」）。数週ぶんの空き状況を突き合わせ、一致すれば片方だけを対象にする
 - 既存の institution データ (`data/institutions/<slug>.json`) がある場合、対象部屋との整合性
 - 既存の institution データがない場合、施設・部屋の名称をどの程度正確にスクレイプする必要があるか
 
@@ -166,7 +173,7 @@ STATUS_MAP:
 
 - **OpenReaf 系**（URL が `*.openreaf02.jp`、リンクチェーン + カレンダー + day-next 方式） → `engines/openreaf.ts` の `openreafHooks()` を使用。参照実装: `tokyo-kita`, `tokyo-chuo`
 - **WebR Grand 系**（施設別空き状況ページに「その他の条件で絞り込む」+ 2週間カレンダー） → `engines/webrGrand.ts` の `webrGrandHooks()` を使用。参照実装: `tokyo-meguro`, `tokyo-toshima`。コマ単位で取るなら `webrGrandSlotHooks()`（参照実装: `tokyo-setagaya`）
-- **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/`、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
+- **e-PRS 系**（URL が `www.cm9.eprs.jp/<自治体>/web/` や `www.<自治体>.eprs.jp/<系統>/web/`（新宿区は `/chiiki/web/`）、いつ／どこで／何をする の空き状況検索 + 週表示） → `engines/eprs.ts` の `eprsHooks()` を使用。参照実装: `tokyo-shinagawa`
 - **aserv 系**（URL が `reserve.aserv.jp/<団体>/`、館・区分・利用日を選ぶ `cal.do` の日表示） → `engines/aserv.ts` の `aservHooks()` を使用。参照実装: `tokyo-katsushika-symphony-hills`
 - **reserve1 系**（Reserve Mart。URL が `www.reserve1.jp/studio/member/`、種別 × 月の月別状況） → `engines/reserve1.ts` の `reserve1Hooks()` を使用。`office` は入口を通った後の画面の hidden にある。参照実装: `kanagawa-kawasaki-jichi`
 - その他のエンジン（`genkiplaza` / `pKashikan`）は `engines/` の各ファイルを参照
@@ -280,12 +287,14 @@ for (const target of scraper.targets) {
 
 `data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。レコードの形は `data/institutions/tokyo-chuo.json` を写し、`id` は `uuidgen` で採番する。enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
 
+部屋名に定員が付くサイト（`多目的ホール（１００）` など）は、`institution_system_name` にその文字列をそのまま入れ、`institution`（表示名）からは定員を外して英数字を半角にする。定員は `capacity` に持つ。
+
 `building_system_name` + `institution_system_name` はスクレイパー出力と施設レコードを突合するキーなので、予約システム上の表記と正確に一致させること。楽器利用可否はサイトに明示的な記載がある場合のみ設定する（推測禁止）。
 
 雛形を作ったら、`tasks/institution-data-prompt.md` の手順で中身を埋める（UNKNOWN と空のままで済ませない）:
 
 1. **予約システム自体の館情報を先に見る**。「館・施設一覧」等に住所・電話番号・館情報 PDF／公式ページへのリンクがあることが多い
-2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く。エージェントは圧縮された PDF を読めず「取得できず」と返すことがある。その PDF は `curl` で scratchpad に落とし、Read で直接読む（pdftotext は入っていない）。区の PDF は日本語フォントに文字の対応表が無く、Read でも館名・部屋名だけが抜け落ちる（数字だけ残る）ことがある。pdftoppm も入っていないので 10 ページを超える PDF は画像としても読めない。その場合は指定管理者のページを根拠にする
+2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く。エージェントは圧縮された PDF を読めず「取得できず」と返すことがある。その PDF は `curl` で scratchpad に落とし、Read で直接読む（pdftotext は入っていない）。区の PDF は日本語フォントに文字の対応表が無く、Read でも館名・部屋名だけが抜け落ちる（数字だけ残る）ことがある。その場合と 10 ページを超える PDF は、pdftoppm が無く Read の `pages` も使えないので、`gs -sDEVICE=png16m -r110 -sOutputFile=p%02d.png` でページごとの PNG にして Read する。それでも読めなければ指定管理者のページを根拠にする
 3. 楽器種別の可否は部屋単位で明記されていることがまず無い。「和太鼓不可」「ドラムセット常備」のような間接的な記述は UNKNOWN のまま `note` に文言を残すのが既定（迷ったらユーザーに確認）
 4. 料金はテンプレートでは「埋めない」項目だが、根拠付きで取れたら入れるかユーザーに確認する。土日祝が別料金なら holiday に分け、同額なら平日と同じ値を入れる
 5. 既存の JSON に `JSON.parse` → `JSON.stringify` で追記すると、`41.0` のような数値が `41` に変わる。追記後に `git diff | grep '^-[^-]'` で既存行が変わっていないか確かめる
@@ -360,6 +369,7 @@ cd packages/scraper && npx playwright test <prefecture>-<slug>/ --grep "<最初�
 - 日付の範囲が受付期間と合っているか（打ち切りが早すぎない・遅すぎない）
 - **別の部屋なのに出力が完全に一致するもの**がないか。あれば、部屋の指定が効いていない（セッションの取り違え）可能性がある。画面で同じ週を表示したまま部屋だけ切り替えて比べ、サイト側で連動しているだけか確かめる
 - 少なくとも 1 部屋 1 週間分を、画面の表示とセル単位で突き合わせる
+- 受付期間の確認などで scratchpad に書く単発スクリプトは、`@playwright/test` を import しても解決できない（解決はスクリプトの置き場所から始まる）。`/…/node_modules/@playwright/test/index.mjs` を絶対パスで import する
 
 ### 3.6 問題修正
 

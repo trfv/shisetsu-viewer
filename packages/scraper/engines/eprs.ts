@@ -251,14 +251,17 @@ export function eprsHooks(config: EprsConfig): {
 
     async extract(page, target, pageCount) {
       const start = addDays(new Date(), config.startOffsetDays);
+      let seenInPeriod = false;
       const weeks = await collectPaginated({
         maxPages: pageCount,
         label: `${target.facilityName} ${target.roomName}`,
         extractPage: async (pageIndex) => {
           const startDay = Number(format(addDays(start, pageIndex * DAYS_PER_PAGE), "yyyyMMdd"));
           const zones = await fetchWeek(page, config, target, startDay);
-          // 先頭週は当日近くが受付期間外になりうるので、2 週目以降だけ打ち切りを判定する
-          if (pageIndex > 0 && isOutOfPeriodWeek(zones, config.outOfPeriodStatus)) return null;
+          // 受付中の週を見るまでは打ち切らない。ホールは直近の数週が受付期間外で、その先が受付中になる
+          const outOfPeriod = isOutOfPeriodWeek(zones, config.outOfPeriodStatus);
+          if (outOfPeriod && seenInPeriod) return null;
+          if (!outOfPeriod) seenInPeriod = true;
           return [{ startDay, zones }];
         },
         // 週は開始日を指定して取り直すので、画面上のページ送りは無い

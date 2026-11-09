@@ -30,6 +30,7 @@ describe("registry", () => {
         "tokyo-ota",
         "tokyo-setagaya",
         "tokyo-shinagawa",
+        "tokyo-shinjuku",
         "tokyo-sumida",
         "tokyo-toshima",
       ];
