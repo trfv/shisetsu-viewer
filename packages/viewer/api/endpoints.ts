@@ -1,4 +1,5 @@
 import type {
+  Holiday,
   InstitutionDetail,
   InstitutionsQueryParams,
   InstitutionSummary,
@@ -50,4 +51,11 @@ export function searchReservations(
 
 export function fetchScrapeRuns(): Promise<{ items: ScrapeRun[] }> {
   return apiGet(`${BASE}/v1/scrape-runs`, {});
+}
+
+export function fetchHolidays(params: {
+  startDate: string;
+  endDate: string;
+}): Promise<{ items: Holiday[] }> {
+  return apiGet(`${BASE}/v1/holidays`, params);
 }

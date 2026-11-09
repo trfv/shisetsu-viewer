@@ -16,11 +16,19 @@ type Props = {
   onChange: (value: DateRangeValue) => void;
   minDate: Date;
   maxDate: Date;
+  holidays: Date[];
 };
 
 // 開始日だけ決まった途中の状態は親に渡さずここで持つ。Drawer は閉じるとアンマウントするので、
 // 途中で閉じれば選ぶ前の期間に戻る。
-export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, maxDate }) => {
+export const DateRangePicker: FC<Props> = ({
+  label,
+  value,
+  onChange,
+  minDate,
+  maxDate,
+  holidays,
+}) => {
   const [draft, setDraft] = useState<DateRange | null>(null);
 
   const handleSelect = (range: DateRange) => {
@@ -45,8 +53,12 @@ export const DateRangePicker: FC<Props> = ({ label, value, onChange, minDate, ma
         endMonth={maxDate}
         locale={ja}
         mode="range"
-        modifiers={{ saturday: { dayOfWeek: [6] }, sunday: { dayOfWeek: [0] } }}
-        modifiersClassNames={{ saturday: styles["saturday"]!, sunday: styles["sunday"]! }}
+        modifiers={{ saturday: { dayOfWeek: [6] }, sunday: { dayOfWeek: [0] }, holiday: holidays }}
+        modifiersClassNames={{
+          saturday: styles["saturday"]!,
+          sunday: styles["sunday"]!,
+          holiday: styles["holiday"]!,
+        }}
         onSelect={handleSelect}
         required
         resetOnSelect

@@ -3,6 +3,9 @@ import { describe, it, expect, vi } from "vitest";
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
 import { DateRangePicker } from "./DateRangePicker";
 
+const colorOf = (name: RegExp) =>
+  getComputedStyle(screen.getByRole("button", { name }).element()).color;
+
 describe("DateRangePicker Component", () => {
   const defaultProps = {
     label: "日付",
@@ -10,6 +13,7 @@ describe("DateRangePicker Component", () => {
     onChange: vi.fn(),
     minDate: new Date(2021, 0, 5),
     maxDate: new Date(2021, 2, 31),
+    holidays: [new Date(2021, 0, 11)],
   };
 
   it("ラベルを表示する", async () => {
@@ -50,5 +54,12 @@ describe("DateRangePicker Component", () => {
     await renderWithProviders(<DateRangePicker {...defaultProps} />);
 
     await expect.element(screen.getByRole("button", { name: /2021年1月4日/ })).toBeDisabled();
+  });
+
+  it("祝日を日曜と同じ色で表示する", async () => {
+    await renderWithProviders(<DateRangePicker {...defaultProps} />);
+
+    expect(colorOf(/2021年1月11日/)).toBe(colorOf(/2021年1月17日/));
+    expect(colorOf(/2021年1月11日/)).not.toBe(colorOf(/2021年1月13日/));
   });
 });

@@ -55,4 +55,5 @@ export const handlers = [
   ),
 
   http.get(`${BASE}/v1/scrape-runs`, () => HttpResponse.json({ items: [] })),
+  http.get(`${BASE}/v1/holidays`, () => HttpResponse.json({ items: [] })),
 ];

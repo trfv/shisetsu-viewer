@@ -54,6 +54,11 @@ export interface ReservationExportRow {
   reservation: Record<string, string>;
 }
 
+export interface Holiday {
+  date: string; // YYYY-MM-DD
+  name: string;
+}
+
 export interface ScrapeRun {
   municipality: string; // MUNICIPALITY_*
   fetched_at: string; // ISO 8601

@@ -3,12 +3,13 @@ import { describe, expect, it } from "vitest";
 import { isAllowedApiPath, proxyToApi } from "./proxy.ts";
 
 describe("isAllowedApiPath", () => {
-  it("読み取り 5 経路を許可する", () => {
+  it("読み取り 6 経路を許可する", () => {
     expect(isAllowedApiPath("/v1/institutions")).toBe(true);
     expect(isAllowedApiPath("/v1/institutions/abc-123")).toBe(true);
     expect(isAllowedApiPath("/v1/institutions/abc-123/reservations")).toBe(true);
     expect(isAllowedApiPath("/v1/reservations/search")).toBe(true);
     expect(isAllowedApiPath("/v1/scrape-runs")).toBe(true);
+    expect(isAllowedApiPath("/v1/holidays")).toBe(true);
   });
 
   it("admin 系を拒否する", () => {
