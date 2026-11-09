@@ -22,6 +22,7 @@ on:
           - tokyo-sumida
           - tokyo-ota
           - tokyo-suginami
+          - tokyo-nakano
           - tokyo-chuo
           - tokyo-meguro
           - tokyo-setagaya

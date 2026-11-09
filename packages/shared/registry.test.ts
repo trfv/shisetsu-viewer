@@ -40,7 +40,7 @@ describe("registry", () => {
 
     it("excludes municipalities with reservationExcluded=true", () => {
       const targets = getReservationTargets();
-      const excludedSlugs: string[] = ["suginami"];
+      const excludedSlugs: string[] = ["suginami", "nakano"];
 
       for (const slug of excludedSlugs) {
         assert.equal(
