@@ -1,15 +1,14 @@
-import { useEffect, type FC, type ReactNode } from "react";
+import { useEffect, ViewTransition, type FC, type ReactNode } from "react";
 
 import styles from "./Drawer.module.css";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  anchor?: "right" | "top";
   children: ReactNode;
 };
 
-export const Drawer: FC<Props> = ({ open, onClose, anchor = "right", children }) => {
+export const Drawer: FC<Props> = ({ open, onClose, children }) => {
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -30,19 +29,16 @@ export const Drawer: FC<Props> = ({ open, onClose, anchor = "right", children })
     };
   }, [open]);
 
-  const anchorClass = anchor === "top" ? styles["top"] : styles["right"];
-  const openClass = anchor === "top" ? styles["topOpen"] : styles["rightOpen"];
-
   if (!open) return null;
 
   return (
     <>
-      <div
-        className={`${styles["overlay"]} ${styles["overlayOpen"]}`}
-        data-testid="drawer-overlay"
-        onClick={onClose}
-      />
-      <div className={`${styles["panel"]} ${anchorClass} ${openClass}`}>{children}</div>
+      <ViewTransition enter="drawer-overlay-in" exit="drawer-overlay-out" update="none">
+        <div className={styles["overlay"]} data-testid="drawer-overlay" onClick={onClose} />
+      </ViewTransition>
+      <ViewTransition enter="drawer-panel-in" exit="drawer-panel-out" update="none">
+        <div className={styles["panel"]}>{children}</div>
+      </ViewTransition>
     </>
   );
 };

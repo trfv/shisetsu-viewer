@@ -26,3 +26,21 @@
     min-height: 1.5rem;
   }
 }
+
+.menu > * {
+  animation: menu-item-in 320ms cubic-bezier(0.32, 0.72, 0, 1) backwards;
+  animation-delay: calc((sibling-index() - 1) * 40ms);
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu > * {
+    animation: none;
+  }
+}

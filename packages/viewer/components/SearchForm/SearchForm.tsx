@@ -1,4 +1,4 @@
-import { useCallback, useState, type ReactNode } from "react";
+import { startTransition, useCallback, useState, type ReactNode } from "react";
 
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { FullBox } from "../Box";
@@ -25,7 +25,9 @@ export const SearchForm = ({ chips, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = useCallback(() => {
-    setIsOpen((prev) => !prev);
+    startTransition(() => {
+      setIsOpen((prev) => !prev);
+    });
   }, []);
 
   return (

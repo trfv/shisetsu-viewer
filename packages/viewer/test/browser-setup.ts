@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { afterEach, beforeAll, afterAll, vi } from "vitest";
+import { cleanup } from "vitest-browser-react";
 
 import { resetCache } from "../api/cache";
 
@@ -83,7 +84,10 @@ beforeAll(async () => {
   };
 });
 
-afterEach(() => {
+afterEach(async () => {
+  // vitest-browser-react は次のテストの beforeEach でしか片付けない。ファイル最後のテストの木が残ると、
+  // 取得中だった Suspense がリセット後のキャッシュを引き直し、素通りした 404 を投げる。
+  await cleanup();
   resetCache();
   if (worker) {
     worker.resetHandlers();
