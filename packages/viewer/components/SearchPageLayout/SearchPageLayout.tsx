@@ -1,10 +1,9 @@
 import { Suspense, ViewTransition, type ReactNode } from "react";
 
 import { FETCH_MORE } from "../../hooks/usePages";
-import { DataTable, type Columns, type Row, type RowParams } from "../DataTable";
+import { DataTable, DataTableSkeleton, type Columns, type Row, type RowParams } from "../DataTable";
 import { SearchForm } from "../SearchForm";
 import { Snackbar } from "../Snackbar";
-import { Spinner } from "../Spinner";
 import { ErrorBoundary } from "../utils/ErrorBoundary";
 
 import styles from "./SearchPageLayout.module.css";
@@ -38,15 +37,7 @@ export const SearchPageLayout = ({ chips, controls, pending, resetKey, children 
           className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
         >
           <ErrorBoundary fallback={renderError} resetKey={resetKey}>
-            <Suspense
-              fallback={
-                <div className={styles["resultBoxNoData"]}>
-                  <Spinner />
-                </div>
-              }
-            >
-              {children}
-            </Suspense>
+            <Suspense fallback={<DataTableSkeleton />}>{children}</Suspense>
           </ErrorBoundary>
         </div>
       </ViewTransition>
