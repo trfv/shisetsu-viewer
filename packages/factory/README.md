@@ -4,8 +4,6 @@ software factory の制御層である。
 定期スクレイプの結果、master の CI、dependabot PR を読み、あるべき作業項目と比べて GitHub Issue を維持する。
 人間が起動しなくても、維持の仕事が検知から作業項目まで進むようにするのが目的である。
 
-設計は `docs/superpowers/specs/2026-10-04-software-factory-design.md`、実装計画は `docs/superpowers/plans/2026-10-04-software-factory-phase0-2.md` にある。
-
 ## 運用フロー
 
 現在は **observe モード**（フェーズ 2）で動いている。
