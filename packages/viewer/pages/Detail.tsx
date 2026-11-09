@@ -4,11 +4,11 @@ import { Suspense, use, useCallback, useState, ViewTransition, type ChangeEvent 
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
+import { DataTableSkeleton } from "../components/DataTable";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
 import { Skeleton } from "../components/Skeleton";
-import { Spinner } from "../components/Spinner";
 import { Tab } from "../components/Tab";
 import { TabGroup, TabPanel } from "../components/TabGroup";
 import {
@@ -183,9 +183,7 @@ const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => 
 
 const ReservationLoading = () => (
   <div className={styles["reservationContainer"]}>
-    <div className={styles["reservationNoData"]}>
-      <Spinner />
-    </div>
+    <DataTableSkeleton />
   </div>
 );
 

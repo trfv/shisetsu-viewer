@@ -236,7 +236,7 @@ h6 {
   pointer-events: none;
 }
 
-/* 結果の領域は前後で高さが大きく変わる（Spinner → 数百件のカード）。既定のままだと
+/* 結果の領域は前後で高さが大きく変わる（スケルトン → 数百件のカード）。既定のままだと
    スナップショットが箱に合わせて引き伸ばされるので、縮尺を変えずに上端から切り抜く。 */
 ::view-transition-group(.search-results) {
   overflow: clip;

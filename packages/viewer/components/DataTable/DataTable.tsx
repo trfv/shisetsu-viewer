@@ -186,3 +186,52 @@ export const DataTable = <T extends Row>({
     </TableContainer>
   );
 };
+
+const SKELETON_CELL_WIDTHS = ["70%", "45%", "60%", "35%", "50%"];
+const SKELETON_ROWS = Array.from({ length: 8 }, (_, i) => i);
+const SKELETON_CARDS = Array.from({ length: 4 }, (_, i) => i);
+
+export const DataTableSkeleton = () => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div aria-label="読み込み中" className={styles["cardList"]} role="progressbar">
+        {SKELETON_CARDS.map((card) => (
+          <div className={styles["skeletonCard"]} key={card}>
+            <Skeleton height="1.4em" width="60%" />
+            <Skeleton width="85%" />
+            <Skeleton width="50%" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <TableContainer aria-label="読み込み中" role="progressbar">
+      <Table>
+        <TableHead>
+          <TableRow>
+            {SKELETON_CELL_WIDTHS.map((width) => (
+              <TableCell key={width} size="small" variant="head">
+                <Skeleton width="50%" />
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {SKELETON_ROWS.map((row) => (
+            <TableRow key={row}>
+              {SKELETON_CELL_WIDTHS.map((width) => (
+                <TableCell key={width} size="small">
+                  <Skeleton width={width} />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};

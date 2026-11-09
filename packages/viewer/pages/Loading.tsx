@@ -1,13 +1,9 @@
 import type { FC } from "react";
 
-import { Spinner } from "../components/Spinner";
-
 import styles from "./Loading.module.css";
 
-export const Loading: FC = () => {
-  return (
-    <main className={styles["main"]}>
-      <Spinner size={60} />
-    </main>
-  );
-};
+export const Loading: FC = () => (
+  <main>
+    <div aria-label="読み込み中" className={styles["bar"]} role="progressbar" />
+  </main>
+);

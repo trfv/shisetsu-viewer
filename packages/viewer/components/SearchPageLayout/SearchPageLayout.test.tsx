@@ -24,7 +24,7 @@ const Throwing = (): never => {
 };
 
 describe("SearchPageLayout", () => {
-  test("結果の取得中は Spinner を表示する", async () => {
+  test("結果の取得中はスケルトンを表示する", async () => {
     await renderWithProviders(
       <SearchPageLayout {...layoutProps}>
         <Suspending promise={new Promise<never>(() => {})} />
