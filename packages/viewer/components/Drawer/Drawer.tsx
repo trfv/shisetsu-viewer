@@ -33,10 +33,10 @@ export const Drawer: FC<Props> = ({ open, onClose, children }) => {
 
   return (
     <>
-      <ViewTransition enter="drawer-overlay-in" exit="drawer-overlay-out">
+      <ViewTransition enter="drawer-overlay-in" exit="drawer-overlay-out" update="none">
         <div className={styles["overlay"]} data-testid="drawer-overlay" onClick={onClose} />
       </ViewTransition>
-      <ViewTransition enter="drawer-panel-in" exit="drawer-panel-out">
+      <ViewTransition enter="drawer-panel-in" exit="drawer-panel-out" update="none">
         <div className={styles["panel"]}>{children}</div>
       </ViewTransition>
     </>

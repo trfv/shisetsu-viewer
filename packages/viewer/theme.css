@@ -267,6 +267,19 @@ h6 {
   animation: drawer-fade-out 220ms ease-in forwards;
 }
 
+/* 開閉以外の遷移では、開いている Drawer を結果の上に描くだけにする。old を残すと半透明の overlay が二重になる。 */
+::view-transition-old(drawer-overlay),
+::view-transition-old(drawer-panel) {
+  display: none;
+}
+
+::view-transition-group(drawer-overlay),
+::view-transition-group(drawer-panel),
+::view-transition-new(drawer-overlay),
+::view-transition-new(drawer-panel) {
+  animation: none;
+}
+
 @keyframes drawer-slide-in {
   from {
     transform: translateX(100%);
