@@ -46,6 +46,23 @@ describe("MultiSelect Component", () => {
       .toHaveAccessibleName("地区 江東区、川崎市");
   });
 
+  it("選択肢の名前が長くても選択肢は横にスクロールしない", async () => {
+    const { user } = await renderWithProviders(
+      <MultiSelect
+        {...defaultProps}
+        options={[
+          { value: "setagaya", label: "世田谷区" },
+          { value: "edogawa", label: "江戸川区" },
+        ]}
+        size="medium"
+        values={["setagaya", "edogawa"]}
+      />
+    );
+    await user.click(screen.getByRole("button", { name: /^地区/ }));
+    const panel = screen.getByRole("group", { name: "地区" }).element();
+    expect(panel.scrollWidth).toBeLessThanOrEqual(panel.clientWidth);
+  });
+
   it("初期状態では選択肢を表示しない", async () => {
     await renderWithProviders(<MultiSelect {...defaultProps} />);
 
