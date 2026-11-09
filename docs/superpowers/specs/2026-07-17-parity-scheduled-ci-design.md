@@ -2,7 +2,7 @@
 
 - 日付: 2026-07-17
 - 対象: `packages/scraper/tools/backend/parity.ts`、`.github/workflows/scraper.yml`
-- 背景: Phase 3 バックエンド刷新（`docs/superpowers/plans/2026-07-12-backend-rebuild.md`）の「2 週間パリティゲート」
+- 背景: Phase 3 バックエンド刷新の「2 週間パリティゲート」
 
 ## 目的
 
