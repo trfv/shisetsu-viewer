@@ -1,13 +1,9 @@
 [
   {
     "id": "cedcecb1-97b5-4bf9-b8d8-417fbec0b1e1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "亀戸文化センター",
+    "building_id": "da590f2c-fb5a-4fb1-b97e-559344355e05",
     "institution": "大研修室",
-    "building_kana": "カメイドブンカセンター",
     "institution_kana": "ダイケンシュウシツ",
-    "building_system_name": "亀戸文化センター",
     "institution_system_name": "大研修室　（２階）",
     "capacity": 126,
     "area": 199.18,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区亀戸2-19-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "ff4eb700-8fe8-491a-a327-bf8f9de6e1d6",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "運営室",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "ウンエイシツ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "運営室",
     "capacity": 10,
     "area": 34.5,
@@ -103,7 +94,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -117,13 +107,9 @@
   },
   {
     "id": "3a3499ef-2e80-4275-a9db-6e28dfb928b6",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "教材製作室",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "キョウザイセイサクシツ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "教材製作室",
     "capacity": 20,
     "area": 37.6,
@@ -161,7 +147,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -175,13 +160,9 @@
   },
   {
     "id": "451832cb-7086-4fc8-a097-fca7a8259cbc",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "サブ・レクホール",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "サブレクホール",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "サブ・レクホール",
     "capacity": 60,
     "area": 124,
@@ -219,7 +200,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -233,13 +213,9 @@
   },
   {
     "id": "cb03753a-c82f-4a8d-81c7-a64e0a38fbda",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "第1音楽スタジオ",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "ダイイチオンガクスタジオ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "第１音楽スタジオ",
     "capacity": 10,
     "area": 36.4,
@@ -304,7 +280,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -326,13 +301,9 @@
   },
   {
     "id": "37f928c6-a487-4866-a51b-f66a153f89cc",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "大研修室",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "ダイケンシュウシツ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "大研修室",
     "capacity": 80,
     "area": 163.2,
@@ -370,7 +341,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -384,13 +354,9 @@
   },
   {
     "id": "fbcc4d0e-5da7-4f18-967b-2b7d9c614595",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "第2音楽スタジオ",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "ダイニオンガクスタジオ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "第２音楽スタジオ",
     "capacity": 10,
     "area": 36.4,
@@ -455,7 +421,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -477,13 +442,9 @@
   },
   {
     "id": "d1a12a0c-8c0f-4771-a800-a1fce033e713",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "リハーサル室",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "リハーサルシツ",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "リハーサル室",
     "capacity": 20,
     "area": 105.9,
@@ -521,7 +482,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -535,13 +495,9 @@
   },
   {
     "id": "5efcfead-45d1-4ebc-aaea-ff10b68dc759",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東区文化センター",
+    "building_id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
     "institution": "レクホール",
-    "building_kana": "コウトウクブンカセンター",
     "institution_kana": "レクホール",
-    "building_system_name": "江東区文化センター",
     "institution_system_name": "レクホール",
     "capacity": 300,
     "area": 442,
@@ -579,7 +535,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区東陽4-11-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -593,13 +548,9 @@
   },
   {
     "id": "9891bcf0-17c5-4692-b698-8e1713a277dc",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "第1練習室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイ1レンシュウシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "第１練習室",
     "capacity": 27,
     "area": 60.46,
@@ -637,7 +588,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -651,13 +601,9 @@
   },
   {
     "id": "9a90c014-7217-4117-a15e-f38809258470",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "第2練習室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイ2レンシュウシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "第２練習室",
     "capacity": 10,
     "area": 32.96,
@@ -722,7 +668,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -744,13 +689,9 @@
   },
   {
     "id": "204c98a5-54a3-422e-b914-589c6f53381a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "第3練習室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイ3レンシュウシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "第３練習室",
     "capacity": 16,
     "area": 32.64,
@@ -788,7 +729,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -802,13 +742,9 @@
   },
   {
     "id": "7cf0dbd4-6e28-40ff-a648-a2f97336f84d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "第4練習室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイ4レンシュウシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "第４練習室",
     "capacity": 10,
     "area": 61.25,
@@ -873,7 +809,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -895,13 +830,9 @@
   },
   {
     "id": "a4649611-636a-4756-9c1e-10182f281a4c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "第5練習室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイ5レンシュウシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "第５練習室",
     "capacity": 38,
     "area": 72,
@@ -939,7 +870,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -953,13 +883,9 @@
   },
   {
     "id": "38b8179b-de1e-4ed1-b4fc-75c4f4412647",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "大会議室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "ダイカイギシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "大会議室",
     "capacity": 216,
     "area": 503.04,
@@ -997,7 +923,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1011,13 +936,9 @@
   },
   {
     "id": "b39ab11a-2236-4c85-af98-c235c0f7feee",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "江東公会堂",
+    "building_id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
     "institution": "リハーサル室",
-    "building_kana": "コウトウコウカイドウ",
     "institution_kana": "リハーサルシツ",
-    "building_system_name": "江東公会堂（ティアラこうとう）",
     "institution_system_name": "リハーサル室",
     "capacity": 70,
     "area": 110.77,
@@ -1055,7 +976,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区住吉2-28-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1069,13 +989,9 @@
   },
   {
     "id": "34939752-60e0-4707-ae54-7d0c2708d4b6",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "砂町文化センター",
+    "building_id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
     "institution": "サブ・レクホール",
-    "building_kana": "スナマチブンカセンター",
     "institution_kana": "サブ・レクホール",
-    "building_system_name": "砂町文化センター",
     "institution_system_name": "サブ・レクホール",
     "capacity": 100,
     "area": 181.6,
@@ -1113,7 +1029,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区北砂5-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1127,13 +1042,9 @@
   },
   {
     "id": "3fd17f9d-37a3-440f-b479-6a0f8f32ac92",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "砂町文化センター",
+    "building_id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
     "institution": "第1音楽室",
-    "building_kana": "スナマチブンカセンター",
     "institution_kana": "ダイ1オンガクシツ",
-    "building_system_name": "砂町文化センター",
     "institution_system_name": "第１音楽室",
     "capacity": 8,
     "area": 21.9,
@@ -1198,7 +1109,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区北砂5-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1220,13 +1130,9 @@
   },
   {
     "id": "bc494b57-7d78-4e76-909c-e25b7fe3b9f8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "砂町文化センター",
+    "building_id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
     "institution": "第1研修室",
-    "building_kana": "スナマチブンカセンター",
     "institution_kana": "ダイ1ケンシュウシツ",
-    "building_system_name": "砂町文化センター",
     "institution_system_name": "第１研修室",
     "capacity": 200,
     "area": 225.2,
@@ -1264,7 +1170,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区北砂5-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1278,13 +1183,9 @@
   },
   {
     "id": "8dd2dd38-6cd3-46c4-b158-1a30669758b1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "砂町文化センター",
+    "building_id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
     "institution": "第2音楽室",
-    "building_kana": "スナマチブンカセンター",
     "institution_kana": "ダイ2オンガクシツ",
-    "building_system_name": "砂町文化センター",
     "institution_system_name": "第２音楽室",
     "capacity": 10,
     "area": 25,
@@ -1349,7 +1250,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区北砂5-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1371,13 +1271,9 @@
   },
   {
     "id": "12de35f1-c225-4334-bf0b-248616ba3a1e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "砂町文化センター",
+    "building_id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
     "institution": "第2研修室",
-    "building_kana": "スナマチブンカセンター",
     "institution_kana": "ダイ2ケンシュウシツ",
-    "building_system_name": "砂町文化センター",
     "institution_system_name": "第２研修室",
     "capacity": 230,
     "area": 268.3,
@@ -1415,7 +1311,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区北砂5-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1429,13 +1324,9 @@
   },
   {
     "id": "f53ae298-228e-414f-828e-e922b3153ca0",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "総合区民センター",
+    "building_id": "806f31b3-e870-450c-957f-d4ab4954b9e9",
     "institution": "第1研修室",
-    "building_kana": "ソウゴウクミンセンター",
     "institution_kana": "ダイ1ケンシュウシツ",
-    "building_system_name": "総合区民センター",
     "institution_system_name": "第１研修室",
     "capacity": 20,
     "area": 51.2,
@@ -1473,7 +1364,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区大島4-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1487,13 +1377,9 @@
   },
   {
     "id": "a72e6efd-a14c-4315-8e8d-1027a91fd104",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "総合区民センター",
+    "building_id": "806f31b3-e870-450c-957f-d4ab4954b9e9",
     "institution": "レクホール",
-    "building_kana": "ソウゴウクミンセンター",
     "institution_kana": "レクホール",
-    "building_system_name": "総合区民センター",
     "institution_system_name": "レクホール",
     "capacity": 390,
     "area": 320,
@@ -1531,7 +1417,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区大島4-5-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1545,13 +1430,9 @@
   },
   {
     "id": "1bfd66ac-1983-45c0-afaf-4935214c6e36",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "豊洲文化センター",
+    "building_id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
     "institution": "音楽練習室",
-    "building_kana": "トヨスブンカセンター",
     "institution_kana": "オンガクレンシュウシツ",
-    "building_system_name": "豊洲文化センター",
     "institution_system_name": "音楽練習室",
     "capacity": 20,
     "area": 29.8,
@@ -1616,7 +1497,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区豊洲2-2-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1638,13 +1518,9 @@
   },
   {
     "id": "d28f2e82-0f72-4aca-943a-10c18293dc5d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "豊洲文化センター",
+    "building_id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
     "institution": "サブ・レクホール",
-    "building_kana": "トヨスブンカセンター",
     "institution_kana": "サブ・レクホール",
-    "building_system_name": "豊洲文化センター",
     "institution_system_name": "サブ・レクホール",
     "capacity": 136,
     "area": 128.9,
@@ -1682,7 +1558,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区豊洲2-2-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1696,13 +1571,9 @@
   },
   {
     "id": "10f34c41-4493-472b-aa14-113e37cbed4f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "豊洲文化センター",
+    "building_id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
     "institution": "第7研修室",
-    "building_kana": "トヨスブンカセンター",
     "institution_kana": "ダイ7ケンシュウシツ",
-    "building_system_name": "豊洲文化センター",
     "institution_system_name": "第７研修室",
     "capacity": 30,
     "area": 41,
@@ -1740,7 +1611,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区豊洲2-2-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1754,13 +1624,9 @@
   },
   {
     "id": "7033422d-f882-42c3-b141-877f303de0d4",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "豊洲文化センター",
+    "building_id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
     "institution": "第8研修室",
-    "building_kana": "トヨスブンカセンター",
     "institution_kana": "ダイ8ケンシュウシツ",
-    "building_system_name": "豊洲文化センター",
     "institution_system_name": "第８研修室",
     "capacity": 30,
     "area": 38.9,
@@ -1798,7 +1664,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区豊洲2-2-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1812,13 +1677,9 @@
   },
   {
     "id": "65e2f55a-e265-4e5d-91b9-62822e1f5bcf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "豊洲文化センター",
+    "building_id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
     "institution": "レクホール",
-    "building_kana": "トヨスブンカセンター",
     "institution_kana": "レクホール",
-    "building_system_name": "豊洲文化センター",
     "institution_system_name": "レクホール",
     "capacity": 300,
     "area": 330.5,
@@ -1856,7 +1717,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区豊洲2-2-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1870,13 +1730,9 @@
   },
   {
     "id": "5320a802-e31b-45b7-a846-692127b118f1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "東大島文化センター",
+    "building_id": "23fb72cf-9063-4a53-9777-783ac7c0c0f4",
     "institution": "AV・ホール",
-    "building_kana": "ヒガシオオシマブンカセンター",
     "institution_kana": "AV・ホール",
-    "building_system_name": "東大島文化センター",
     "institution_system_name": "ＡＶ・ホール",
     "capacity": 80,
     "area": 106.4,
@@ -1914,7 +1770,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区大島8-33-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1928,13 +1783,9 @@
   },
   {
     "id": "a854f781-f768-4395-9d17-47f0022881d9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "東大島文化センター",
+    "building_id": "23fb72cf-9063-4a53-9777-783ac7c0c0f4",
     "institution": "音楽スタジオ",
-    "building_kana": "ヒガシオオシマブンカセンター",
     "institution_kana": "オンガクスタジオ",
-    "building_system_name": "東大島文化センター",
     "institution_system_name": "音楽スタジオ",
     "capacity": 12,
     "area": 40.2,
@@ -1999,7 +1850,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区大島8-33-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2021,13 +1871,9 @@
   },
   {
     "id": "816cffd3-7262-41b6-9104-ad0a948d5504",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "東大島文化センター",
+    "building_id": "23fb72cf-9063-4a53-9777-783ac7c0c0f4",
     "institution": "第6研修室",
-    "building_kana": "ヒガシオオシマブンカセンター",
     "institution_kana": "ダイ6ケンシュウシツ",
-    "building_system_name": "東大島文化センター",
     "institution_system_name": "第６研修室",
     "capacity": 30,
     "area": 70.4,
@@ -2065,7 +1911,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区大島8-33-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2079,13 +1924,9 @@
   },
   {
     "id": "18408d2e-2742-4769-86a4-a0a0abb243f8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "東大島文化センター",
+    "building_id": "23fb72cf-9063-4a53-9777-783ac7c0c0f4",
     "institution": "レクホール",
-    "building_kana": "ヒガシオオシマブンカセンター",
     "institution_kana": "レクホール",
-    "building_system_name": "東大島文化センター",
     "institution_system_name": "レクホール",
     "capacity": 250,
     "area": 285.3,
@@ -2123,7 +1964,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区大島8-33-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2137,13 +1977,9 @@
   },
   {
     "id": "91c91063-55b2-4068-989e-710a2e3c6e75",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "深川江戸資料館",
+    "building_id": "327e45d8-6ec6-44e6-90e1-0fc3154f638f",
     "institution": "レクホール",
-    "building_kana": "フカガワエドシリョウカン",
     "institution_kana": "レクホール",
-    "building_system_name": "深川江戸資料館",
     "institution_system_name": "レクホール",
     "capacity": 120,
     "area": 263.97,
@@ -2181,7 +2017,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区白河1-3-28",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2195,13 +2030,9 @@
   },
   {
     "id": "0ac9e0de-8c60-4b2a-b8b5-2ba63357e873",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "古石場文化センター",
+    "building_id": "7051cb30-de2c-4f2a-bcb1-3af37d1ace77",
     "institution": "音楽スタジオ",
-    "building_kana": "フルイシバブンカセンター",
     "institution_kana": "オンガクスタジオ",
-    "building_system_name": "古石場文化センター",
     "institution_system_name": "音楽スタジオ",
     "capacity": 18,
     "area": 85,
@@ -2266,7 +2097,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区古石場2-13-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2288,13 +2118,9 @@
   },
   {
     "id": "c1bc0403-3a7f-496a-ac61-9d8e06259a54",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "古石場文化センター",
+    "building_id": "7051cb30-de2c-4f2a-bcb1-3af37d1ace77",
     "institution": "第2会議室",
-    "building_kana": "フルイシバブンカセンター",
     "institution_kana": "ダイ2カイギシツ",
-    "building_system_name": "古石場文化センター",
     "institution_system_name": "第２会議室",
     "capacity": 12,
     "area": 28,
@@ -2332,7 +2158,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区古石場2-13-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2346,13 +2171,9 @@
   },
   {
     "id": "b5d894ce-9a84-47c4-82e2-acbe354e3841",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "古石場文化センター",
+    "building_id": "7051cb30-de2c-4f2a-bcb1-3af37d1ace77",
     "institution": "第3研修室",
-    "building_kana": "フルイシバブンカセンター",
     "institution_kana": "ダイ3ケンシュウシツ",
-    "building_system_name": "古石場文化センター",
     "institution_system_name": "第３研修室",
     "capacity": 30,
     "area": 63,
@@ -2390,7 +2211,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区古石場2-13-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2404,13 +2224,9 @@
   },
   {
     "id": "b3e89c6f-92d8-4bae-8896-513f3d8ca0e9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "古石場文化センター",
+    "building_id": "7051cb30-de2c-4f2a-bcb1-3af37d1ace77",
     "institution": "大研修室",
-    "building_kana": "フルイシバブンカセンター",
     "institution_kana": "ダイケンシュウシツ",
-    "building_system_name": "古石場文化センター",
     "institution_system_name": "大研修室",
     "capacity": 240,
     "area": 342,
@@ -2448,7 +2264,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区古石場2-13-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2462,13 +2277,9 @@
   },
   {
     "id": "e75a2ea8-bc9d-4305-9f9f-ebc912fa4498",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "森下文化センター",
+    "building_id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
     "institution": "AV・ホール",
-    "building_kana": "モリシタブンカセンター",
     "institution_kana": "AV・ホール",
-    "building_system_name": "森下文化センター",
     "institution_system_name": "ＡＶ・ホール",
     "capacity": 140,
     "area": 177,
@@ -2506,7 +2317,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区森下3-12-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2520,13 +2330,9 @@
   },
   {
     "id": "e5a55c73-2ac6-4fb1-82df-f1636ed12fe7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "森下文化センター",
+    "building_id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
     "institution": "音楽スタジオ",
-    "building_kana": "モリシタブンカセンター",
     "institution_kana": "オンガクスタジオ",
-    "building_system_name": "森下文化センター",
     "institution_system_name": "音楽スタジオ",
     "capacity": 12,
     "area": 37.9,
@@ -2591,7 +2397,6 @@
         "division": "FEE_DIVISION_DIVISION_6"
       }
     ],
-    "address": "江東区森下3-12-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2613,13 +2418,9 @@
   },
   {
     "id": "25fc8dd4-b14f-4307-b816-762ab5b99600",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "森下文化センター",
+    "building_id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
     "institution": "第1レクホール",
-    "building_kana": "モリシタブンカセンター",
     "institution_kana": "ダイ1レクホール",
-    "building_system_name": "森下文化センター",
     "institution_system_name": "第１レクホール",
     "capacity": 350,
     "area": 394.7,
@@ -2657,7 +2458,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区森下3-12-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2671,13 +2471,9 @@
   },
   {
     "id": "46efacbd-a5b0-4d9f-9b1a-73f85d129798",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "森下文化センター",
+    "building_id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
     "institution": "第2レクホール",
-    "building_kana": "モリシタブンカセンター",
     "institution_kana": "ダイ2レクホール",
-    "building_system_name": "森下文化センター",
     "institution_system_name": "第２レクホール",
     "capacity": 60,
     "area": 121.7,
@@ -2715,7 +2511,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区森下3-12-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2729,13 +2524,9 @@
   },
   {
     "id": "0cd95c96-878f-4604-8d65-12ba53eafced",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_KOUTOU",
-    "building": "森下文化センター",
+    "building_id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
     "institution": "多目的ホール",
-    "building_kana": "モリシタブンカセンター",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "森下文化センター",
     "institution_system_name": "多目的ホール",
     "capacity": 270,
     "area": 317.6,
@@ -2773,7 +2564,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江東区森下3-12-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",

@@ -9,7 +9,7 @@
 
 ## 指示
 
-`packages/scraper/data/institutions/<TARGET>.json` の情報を Web から探して埋めてください。
+`packages/scraper/data/institutions/<TARGET>.json`（部屋）と `packages/scraper/data/buildings/<TARGET>.json`（建物）の情報を Web から探して埋めてください。部屋は `building_id` で建物を指します。
 
 ### 参考ファイル
 
@@ -20,7 +20,7 @@
 
 | フィールド                | 基準                                                                                                        |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `address`                 | 建物の住所。同一建物の全レコードで共通                                                                      |
+| `address`                 | 建物の住所（buildings 側）。本館と別館で所在地が違えば別の建物にする                                        |
 | `website_url`             | 施設の公式サイト URL。見つからなければ空文字のまま                                                          |
 | `capacity`                | 定員（人数）。Web で確認できた値を記入。不明は `null`                                                       |
 | `area`                    | 面積（m²）。Web で確認できた値を記入。不明は `null`                                                         |
@@ -54,8 +54,8 @@
 
 ### 変更しないフィールド
 
-- `id`, `prefecture`, `municipality`
-- `building`, `building_kana`, `building_system_name`（建物名・建物名カナ・予約システム上の建物名）
+- `id`, `building_id`, 建物の `prefecture`, `municipality`, `reservation_system`
+- 建物の `name`, `kana`, `system_name`（建物名・建物名カナ・予約システム上の建物名）
 - `institution`, `institution_kana`, `institution_system_name`（施設名・施設名カナ・予約システム上の施設名）
 
 ### 推奨ワークフロー

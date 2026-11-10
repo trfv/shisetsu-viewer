@@ -1,6 +1,6 @@
-import type { Institution, InstitutionDetail, Page } from "@shisetsu-viewer/shared";
+import type { Building, InstitutionDetail, Page } from "@shisetsu-viewer/shared";
 
-import type { InstitutionKeyMap, ReservationRow } from "./types.ts";
+import type { InstitutionKeyMap, InstitutionRecord, ReservationRow } from "./types.ts";
 
 const CHUNK = 500;
 const MAX_RETRIES = 3;
@@ -86,7 +86,12 @@ export async function upsertReservations(
   return written;
 }
 
-export async function upsertInstitutions(rows: Institution[]): Promise<number> {
+export async function upsertBuildings(rows: Building[]): Promise<number> {
+  const res = await putJson<UpsertResponse>("/v1/admin/buildings", { rows });
+  return res.rowsWritten;
+}
+
+export async function upsertInstitutions(rows: InstitutionRecord[]): Promise<number> {
   const res = await putJson<UpsertResponse>("/v1/admin/institutions", { rows });
   return res.rowsWritten;
 }
@@ -116,7 +121,41 @@ export async function fetchInstitutionKeyMap(municipality: string): Promise<Inst
   return map;
 }
 
-export async function exportInstitutions(municipality: string): Promise<Institution[]> {
-  const items = await listInstitutions(municipality);
-  return items.map(({ updated_at: _updatedAt, ...institution }) => institution);
+// api に建物の読み取り経路がまだ無いので、部屋の写しから建物を組み立て、reservation_system は手元の JSON から引き継ぐ
+export async function exportInstitutions(
+  municipality: string,
+  localBuildings: Building[]
+): Promise<{ buildings: Building[]; institutions: InstitutionRecord[] }> {
+  const reservationSystems = new Map(localBuildings.map((b) => [b.id, b.reservation_system]));
+  const buildings = new Map<string, Building>();
+  const institutions: InstitutionRecord[] = [];
+  for (const detail of await listInstitutions(municipality)) {
+    const {
+      id,
+      updated_at: _updatedAt,
+      building_id: buildingId,
+      prefecture,
+      municipality: _municipality,
+      building,
+      building_kana,
+      building_system_name,
+      address,
+      ...room
+    } = detail;
+    if (!buildingId) throw new Error(`institution ${id} に building_id がありません`);
+    if (!buildings.has(buildingId)) {
+      buildings.set(buildingId, {
+        id: buildingId,
+        prefecture,
+        municipality: detail.municipality,
+        name: building,
+        kana: building_kana,
+        system_name: building_system_name,
+        address,
+        reservation_system: reservationSystems.get(buildingId) ?? null,
+      });
+    }
+    institutions.push({ id, building_id: buildingId, ...room });
+  }
+  return { buildings: [...buildings.values()], institutions };
 }

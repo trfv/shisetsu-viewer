@@ -1,0 +1,92 @@
+[
+  {
+    "id": "a13d8d76-3be9-4e22-a725-a692b815240d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "赤羽会館",
+    "kana": "アカバネカイカン",
+    "system_name": "赤羽会館",
+    "address": "北区赤羽南1丁目13−1",
+    "reservation_system": "tokyo-kita"
+  },
+  {
+    "id": "eb3860ee-53b2-4b2a-a2cd-916fe49295a9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "赤羽北ふれあい館",
+    "kana": "アカバネキタフレアイカン",
+    "system_name": "",
+    "address": "北区赤羽北2-25-8-201",
+    "reservation_system": null
+  },
+  {
+    "id": "9d93522b-0165-42fc-aeac-ded85bd25a7f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "北区立元気ぷらざ",
+    "kana": "キタクリツゲンキプラザ",
+    "system_name": "北区立元気ぷらざ",
+    "address": "北区志茂1-2-22",
+    "reservation_system": "tokyo-kita-genkiplaza"
+  },
+  {
+    "id": "d8ad4950-f025-4483-9342-cafdfce9022a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "ココキタ",
+    "kana": "ココキタ",
+    "system_name": "ココキタ",
+    "address": "北区豊島5-3-13",
+    "reservation_system": "tokyo-kita-cocokita"
+  },
+  {
+    "id": "29f44a85-33c4-4a30-b94f-cf824d888e46",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "十条台ふれあい館",
+    "kana": "ジュウジョウダイフレアイカン",
+    "system_name": "",
+    "address": "北区中十条1-2-18",
+    "reservation_system": null
+  },
+  {
+    "id": "6a85f27d-fdc5-4722-ad20-f0a46d4f2323",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "新町コミュニティアリーナ",
+    "kana": "シンマチコミュニティアリーナ",
+    "system_name": "",
+    "address": "北区田端新町2-27-17",
+    "reservation_system": null
+  },
+  {
+    "id": "57e382c1-affd-4766-b309-ebec3ae9942f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "滝野川会館",
+    "kana": "タキノカワカイカン",
+    "system_name": "滝野川会館",
+    "address": "北区西ヶ原1-23-3",
+    "reservation_system": "tokyo-kita"
+  },
+  {
+    "id": "8909a243-1041-4210-a3e2-f9b105287a24",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "東田端ふれあい館",
+    "kana": "ヒガシタバタフレアイカン",
+    "system_name": "",
+    "address": "北区東田端2-20-51",
+    "reservation_system": null
+  },
+  {
+    "id": "14eb4d1a-f986-4ebd-8d44-bfaa5ae8ca4c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KITA",
+    "name": "北とぴあ",
+    "kana": "ホクトピア",
+    "system_name": "北とぴあ",
+    "address": "北区王子1丁目11−1",
+    "reservation_system": "tokyo-kita"
+  }
+]

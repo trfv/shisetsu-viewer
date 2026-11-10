@@ -1,0 +1,142 @@
+[
+  {
+    "id": "677677d4-e5fd-49bb-99a0-2aa8c0c55679",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "生涯学習センター",
+    "kana": "ショウガイガクシュウセンター",
+    "system_name": "生涯学習センター",
+    "address": "東京都足立区千住五丁目13番5号（学びピア21内）",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "75c53a22-6d5b-40b9-a037-0ec0b61560dc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "竹の塚地域学習センター",
+    "kana": "タケノツカチイキガクシュウセンター",
+    "system_name": "竹の塚地域学習センター",
+    "address": "東京都足立区竹の塚二丁目25番17号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "550e0a3b-40c2-41da-bed7-0a29774de1e0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "中央本町地域学習センター",
+    "kana": "チュウオウホンチョウチイキガクシュウセンター",
+    "system_name": "中央本町地域学習センター",
+    "address": "東京都足立区中央本町三丁目15番1号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "479f7c3f-2032-48dc-86e3-eddbda3b6a40",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "東和地域学習センター",
+    "kana": "トウワチイキガクシュウセンター",
+    "system_name": "東和地域学習センター",
+    "address": "東京都足立区東和三丁目12番9号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "84966a83-5364-481c-9ef5-4c045cfb6df8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "佐野地域学習センター",
+    "kana": "サノチイキガクシュウセンター",
+    "system_name": "佐野地域学習センター",
+    "address": "東京都足立区佐野二丁目43番5号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "1348dfe6-ae0d-4360-9762-21bcc3be67c7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "舎人地域学習センター",
+    "kana": "トネリチイキガクシュウセンター",
+    "system_name": "舎人地域学習センター",
+    "address": "東京都足立区舎人一丁目3番26号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "97affcbd-acd7-4a11-a0a6-d2d438493635",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "保塚地域学習センター",
+    "kana": "ホツカチイキガクシュウセンター",
+    "system_name": "保塚地域学習センター",
+    "address": "東京都足立区保塚町7番16号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "f879bd49-6c97-479e-9722-1e60f1a343ad",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "江北地域学習センター",
+    "kana": "コウホクチイキガクシュウセンター",
+    "system_name": "江北地域学習センター",
+    "address": "東京都足立区江北三丁目39番4号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "749633fd-0483-4d44-b6f3-93fc9621a0de",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "興本地域学習センター",
+    "kana": "オキモトチイキガクシュウセンター",
+    "system_name": "興本地域学習センター",
+    "address": "東京都足立区興野一丁目18番38号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "293f3b1a-8e7e-41e6-9d57-5b106717558c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "伊興地域学習センター",
+    "kana": "イコウチイキガクシュウセンター",
+    "system_name": "伊興地域学習センター",
+    "address": "東京都足立区伊興二丁目4番22号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "3dbe8706-8554-465d-9eeb-a33cd2b14d65",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "鹿浜地域学習センター",
+    "kana": "シカハマチイキガクシュウセンター",
+    "system_name": "鹿浜地域学習センター",
+    "address": "東京都足立区鹿浜六丁目8番1号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "ce401798-651d-4c85-b73b-9fa135702b31",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "新田地域学習センター",
+    "kana": "シンデンチイキガクシュウセンター",
+    "system_name": "新田地域学習センター",
+    "address": "東京都足立区新田二丁目2番2号",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "faa4b176-25f0-48e4-88d9-2177f51a7284",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "ギャラクシティ",
+    "kana": "ギャラクシティ",
+    "system_name": "ギャラクシティ",
+    "address": "東京都足立区栗原1-3-1",
+    "reservation_system": "tokyo-adachi"
+  },
+  {
+    "id": "05340b8b-c0b7-4179-9ede-e4841a2df59f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ADACHI",
+    "name": "シアター1010",
+    "kana": "シアターセンジュ",
+    "system_name": "シアター1010",
+    "address": "東京都足立区千住3-92",
+    "reservation_system": "tokyo-adachi-1010"
+  }
+]

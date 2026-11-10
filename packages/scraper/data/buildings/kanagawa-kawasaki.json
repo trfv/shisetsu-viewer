@@ -1,0 +1,182 @@
+[
+  {
+    "id": "47667431-ba64-487e-9417-d1955df3bfcd",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "麻生市民館",
+    "kana": "アソウシミンカン",
+    "system_name": "麻生市民館",
+    "address": "川崎市麻生区万福寺1-5-2",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "カルッツかわさき",
+    "kana": "カルッツカワサキ",
+    "system_name": "カルッツかわさき",
+    "address": "川崎市川崎区富士見1-1-4",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "7524a915-9b08-4f9a-bdac-a4c29f05b2e9",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "川崎市民プラザ",
+    "kana": "カワサキシミンプラザ",
+    "system_name": "川崎市民プラザ",
+    "address": "川崎市高津区新作1-19-1",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "8a2e60cd-92b1-4138-a96e-bd7e583adcfe",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "川崎マリエン",
+    "kana": "カワサキマリエン",
+    "system_name": "川崎マリエン",
+    "address": "川崎市川崎区東扇島38-1",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "8f59de8d-c328-4f7e-9381-92a18c193e6d",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "かわさき老人福祉・地域交流C",
+    "kana": "カワサキロウジンフクシ・チイキコウリュウシー",
+    "system_name": "かわさき老人福祉・地域交流Ｃ",
+    "address": "川崎市川崎区堤根34-15",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "6d216204-2720-4624-a11f-770bcc7bd9d3",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "幸市民館",
+    "kana": "コウシミンカン",
+    "system_name": "幸市民館",
+    "address": "川崎市幸区戸手本町1-11-2",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "8e87db30-9ade-40ec-87e8-81716fee276d",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "国際交流センター",
+    "kana": "コクサイコウリュウセンター",
+    "system_name": "国際交流センター",
+    "address": "川崎市中原区木月祗園町2-2",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "2af2db63-d576-40a4-aab4-b218f082b8f5",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "産業振興会館",
+    "kana": "サンギョウシンコウカイカン",
+    "system_name": "産業振興会館",
+    "address": "川崎市幸区堀川町66番地20",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "a4fb4038-c1f3-48c4-98d3-664e6302ea28",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "サンピアンかわさき",
+    "kana": "サンピアンカワサキ",
+    "system_name": "サンピアンかわさき",
+    "address": "川崎市川崎区富士見2-5-2",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "91519c8e-0b97-4bb0-976c-a1a2d799b963",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "すくらむ21",
+    "kana": "スクラム21",
+    "system_name": "すくらむ２１",
+    "address": "川崎市高津区溝口2丁目20番1号",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "05274ada-c7f6-4c78-8ff7-5769f1ff0702",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "総合福祉センター（エポック）",
+    "kana": "ソウゴウフクシセンター（エポック）",
+    "system_name": "総合福祉センター（エポック）",
+    "address": "川崎市中原区上小田中6-22-5",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "fc742295-9e3b-4a9c-b02d-7db2913cbd19",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "高津市民館",
+    "kana": "タカツシミンカン",
+    "system_name": "高津市民館",
+    "address": "川崎市高津区溝口1-4-1",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "2a123915-e717-4fec-b1e0-803b57693b66",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "多摩市民館",
+    "kana": "タマシミンカン",
+    "system_name": "多摩市民館",
+    "address": "川崎市多摩区登戸1775番地1",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "7e45e9d0-0e98-4c75-8e60-c370fe57c37c",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "とどろきアリーナ",
+    "kana": "トドロキアリーナ",
+    "system_name": "とどろきアリーナ",
+    "address": "川崎市中原区等々力1番3号",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "fe2e8898-9d57-43d2-9b43-0302e8cae465",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "中原市民館",
+    "kana": "ナカハラシミンカン",
+    "system_name": "中原市民館",
+    "address": "川崎市中原区新丸子東3丁目1100番地12",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "9aaf4477-0c13-467c-8af7-2977e754f729",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "宮前市民館",
+    "kana": "ミヤマエシミンカン",
+    "system_name": "宮前市民館",
+    "address": "川崎市宮前区宮前平2-20-4",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "ミューザ川崎シンフォニーホール",
+    "kana": "ミューザカワサキシンフォニーホール",
+    "system_name": "ミューザ川崎シンフォニーホール",
+    "address": "川崎市幸区大宮町1310",
+    "reservation_system": "kanagawa-kawasaki"
+  },
+  {
+    "id": "8b28711f-923f-4680-818d-86acb71b0e77",
+    "prefecture": "PREFECTURE_KANAGAWA",
+    "municipality": "MUNICIPALITY_KAWASAKI",
+    "name": "川崎市総合自治会館",
+    "kana": "カワサキシソウゴウジチカイカン",
+    "system_name": "川崎市総合自治会館",
+    "address": "川崎市中原区小杉町3-600",
+    "reservation_system": "kanagawa-kawasaki-jichi"
+  }
+]

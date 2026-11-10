@@ -1,0 +1,142 @@
+[
+  {
+    "id": "23cc5828-670d-4e79-a4bd-9f1955d3679c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "四谷地域センター",
+    "kana": "ヨツヤチイキセンター",
+    "system_name": "四谷地域センター",
+    "address": "東京都新宿区内藤町87番地",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "70fee124-2677-4f7b-862d-fd137329a50e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "榎町地域センター",
+    "kana": "エノキチョウチイキセンター",
+    "system_name": "榎町地域センター",
+    "address": "東京都新宿区早稲田町85番地",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "20e8e4b0-07eb-46f2-9293-d089cdcaaeea",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "若松地域センター",
+    "kana": "ワカマツチイキセンター",
+    "system_name": "若松地域センター",
+    "address": "東京都新宿区若松町12番6号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "3c1c9c44-d690-48c1-9186-3247a42e2231",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "大久保地域センター",
+    "kana": "オオクボチイキセンター",
+    "system_name": "大久保地域センター",
+    "address": "東京都新宿区大久保2丁目12番7号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "d6e60786-1c3a-4624-bf3f-15dde92b8a36",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "戸塚地域センター",
+    "kana": "トヅカチイキセンター",
+    "system_name": "戸塚地域センター",
+    "address": "東京都新宿区高田馬場2丁目18番1号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "2caf2dfb-578b-423a-b1c5-1ae21c073156",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "落合第一地域センター",
+    "kana": "オチアイダイイチチイキセンター",
+    "system_name": "落合第一地域センター",
+    "address": "東京都新宿区下落合4丁目6番7号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "edbf63bc-6e2b-4efa-a886-137407485f03",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "落合第二地域センター",
+    "kana": "オチアイダイニチイキセンター",
+    "system_name": "落合第二地域センター",
+    "address": "東京都新宿区中落合4丁目17番13号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "4aed886f-2582-49ca-bac0-aaddf7877c24",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "柏木地域センター",
+    "kana": "カシワギチイキセンター",
+    "system_name": "柏木地域センター",
+    "address": "東京都新宿区北新宿2丁目3番7号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "07a5e4f7-c6bb-4a5f-b9af-20b70b030c85",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "角筈地域センター",
+    "kana": "ツノハズチイキセンター",
+    "system_name": "角筈地域センター",
+    "address": "東京都新宿区西新宿4丁目33番7号",
+    "reservation_system": "tokyo-shinjuku"
+  },
+  {
+    "id": "1277207d-2616-4021-83cf-9ac366eff09f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "四谷スポーツスクエア",
+    "kana": "ヨツヤスポーツスクエア",
+    "system_name": "四谷スポーツスクエア",
+    "address": "東京都新宿区四谷1丁目6番4号",
+    "reservation_system": "tokyo-shinjuku-regasu"
+  },
+  {
+    "id": "0878bd83-93b2-4818-8241-8b2bcf9bf720",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "新宿文化センター",
+    "kana": "シンジュクブンカセンター",
+    "system_name": "新宿文化センター",
+    "address": "東京都新宿区新宿6丁目14番1号",
+    "reservation_system": "tokyo-shinjuku-regasu"
+  },
+  {
+    "id": "7c31f271-d608-48af-b3bc-dc213306197d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "四谷区民ホール",
+    "kana": "ヨツヤクミンホール",
+    "system_name": "区民ホール",
+    "address": "東京都新宿区内藤町87番地",
+    "reservation_system": "tokyo-shinjuku-regasu"
+  },
+  {
+    "id": "5d042d51-a01d-4e55-8407-8dbc8e7d584e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "牛込箪笥区民ホール",
+    "kana": "ウシゴメタンスクミンホール",
+    "system_name": "区民ホール",
+    "address": "東京都新宿区箪笥町15番地",
+    "reservation_system": "tokyo-shinjuku-regasu"
+  },
+  {
+    "id": "3b084e64-9bae-4316-a37e-0e5c4829287e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINJUKU",
+    "name": "角筈区民ホール",
+    "kana": "ツノハズクミンホール",
+    "system_name": "区民ホール",
+    "address": "東京都新宿区西新宿4丁目33番7号",
+    "reservation_system": "tokyo-shinjuku-regasu"
+  }
+]

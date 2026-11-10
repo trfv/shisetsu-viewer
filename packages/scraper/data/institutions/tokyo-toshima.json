@@ -1,13 +1,9 @@
 [
   {
     "id": "1a0f6aea-2e9e-4e29-865a-ae1e696c1ef1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "池袋本町第一区民集会室",
+    "building_id": "ea503196-aeb4-4f2a-a765-f1e1049e9ae3",
     "institution": "会議室",
-    "building_kana": "イケブクロホンチョウダイイチクミンシュウカイシツ",
     "institution_kana": "カイギシツ",
-    "building_system_name": "池袋本町第一区民集会室",
     "institution_system_name": "会議室",
     "capacity": 25,
     "area": 40.25,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区池袋本町3-9-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "a311175d-c2da-4b7e-9879-0e25fae03754",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "区民ひろば西巣鴨第一",
+    "building_id": "17cbbdfe-47ef-4d68-a068-1f0105b6838d",
     "institution": "洋室",
-    "building_kana": "クミンヒロバニシスガモテイイチ",
     "institution_kana": "ヨウシツ",
-    "building_system_name": "区民ひろば西巣鴨第一",
     "institution_system_name": "洋室",
     "capacity": 50,
     "area": 87.1,
@@ -85,7 +76,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西巣鴨2-35-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -99,13 +89,9 @@
   },
   {
     "id": "e653cc88-2529-4021-9baf-11620bf8f0a3",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "区民ひろば富士見台",
+    "building_id": "53225363-b462-4cd7-831f-747fdd119533",
     "institution": "集会室（洋室1）",
-    "building_kana": "クミンヒロバフジミダイ",
     "institution_kana": "シュウカイシツ（ヨウシツ1）",
-    "building_system_name": "区民ひろば富士見台",
     "institution_system_name": "洋室１",
     "capacity": 75,
     "area": 104.6,
@@ -125,7 +111,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南長崎1-6-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -139,13 +124,9 @@
   },
   {
     "id": "6aaa7a22-f180-41aa-8b40-625997ca779c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "区民ひろば南池袋",
+    "building_id": "8a8ca647-eb42-4a2b-b095-1bc07e528b7a",
     "institution": "集会室（洋室1）",
-    "building_kana": "クミンヒロバミナミイケブクロ",
     "institution_kana": "シュウカイシツ（ヨウシツ1）",
-    "building_system_name": "区民ひろば南池袋",
     "institution_system_name": "洋室１",
     "capacity": 80,
     "area": 120,
@@ -165,7 +146,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南池袋3-5-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -179,13 +159,9 @@
   },
   {
     "id": "44e3c27c-355c-4791-9e75-7a97294cdc47",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "駒込地域文化創造館",
+    "building_id": "267dec17-d8ab-4408-badb-28f934d43f91",
     "institution": "音楽室",
-    "building_kana": "コマゴメチイキブンカソウゾウカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "駒込地域文化創造館",
     "institution_system_name": "音楽室",
     "capacity": 50,
     "area": 69,
@@ -223,7 +199,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区駒込2丁目2−2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -237,13 +212,9 @@
   },
   {
     "id": "280864b0-a71c-4eb3-8639-80fd0f154967",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "駒込地域文化創造館",
+    "building_id": "267dec17-d8ab-4408-badb-28f934d43f91",
     "institution": "第1会議室",
-    "building_kana": "コマゴメチイキブンカソウゾウカン",
     "institution_kana": "ダイ1カイギシツ",
-    "building_system_name": "駒込地域文化創造館",
     "institution_system_name": "第１会議室",
     "capacity": 60,
     "area": 82,
@@ -281,7 +252,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区駒込2丁目2−2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -295,13 +265,9 @@
   },
   {
     "id": "d3653b2a-db24-4452-9321-344aabd91e52",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "巣鴨地域文化創造館",
+    "building_id": "1b9f9310-c189-483c-964e-f93606ef7d61",
     "institution": "多目的ホール",
-    "building_kana": "スガモチイキブンカソウゾウカン",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "巣鴨地域文化創造館",
     "institution_system_name": "多目的ホール",
     "capacity": 90,
     "area": 139,
@@ -339,7 +305,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区巣鴨4-15-11",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -353,13 +318,9 @@
   },
   {
     "id": "67468a94-58c8-7331-5b9e-93b4a0990833",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司が谷公園丘の上テラス",
+    "building_id": "1015a589-c451-4958-8c09-2d40c9a1074b",
     "institution": "防音室",
-    "building_kana": "ゾウシガヤコウエンオカノウエテラス",
     "institution_kana": "ボウオンシツ",
-    "building_system_name": "雑司が谷公園丘の上テラス",
     "institution_system_name": "防音室",
     "capacity": 8,
     "area": null,
@@ -379,7 +340,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "豊島区雑司が谷2-12-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -393,13 +353,9 @@
   },
   {
     "id": "38d522fa-159a-48cc-b904-b760d4e11749",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司ヶ谷地域文化創造館",
+    "building_id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
     "institution": "音楽室",
-    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "雑司が谷地域文化創造館",
     "institution_system_name": "音楽室",
     "capacity": 80,
     "area": 138,
@@ -437,7 +393,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区雑司が谷3-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -451,13 +406,9 @@
   },
   {
     "id": "4b2f19b9-5905-4556-8df8-d18da176269d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司ヶ谷地域文化創造館",
+    "building_id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
     "institution": "第1練習室",
-    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
     "institution_kana": "ダイ1レンシュウシツ",
-    "building_system_name": "雑司が谷地域文化創造館",
     "institution_system_name": "第１練習室",
     "capacity": 70,
     "area": 142,
@@ -495,7 +446,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区雑司が谷3-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -509,13 +459,9 @@
   },
   {
     "id": "133c8525-ba25-413e-93f3-506ff9cfb6c9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司ヶ谷地域文化創造館",
+    "building_id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
     "institution": "第2練習室",
-    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
     "institution_kana": "ダイ2レンシュウシツ",
-    "building_system_name": "雑司が谷地域文化創造館",
     "institution_system_name": "第２練習室",
     "capacity": 80,
     "area": 220,
@@ -553,7 +499,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区雑司が谷3-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -567,13 +512,9 @@
   },
   {
     "id": "97330d93-ab00-aa23-5d1f-d6e330c1871e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司ヶ谷地域文化創造館",
+    "building_id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
     "institution": "第4会議室",
-    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
     "institution_kana": "ダイ4カイギシツ",
-    "building_system_name": "雑司が谷地域文化創造館",
     "institution_system_name": "第４会議室",
     "capacity": 50,
     "area": 80,
@@ -611,7 +552,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区雑司が谷3-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -625,13 +565,9 @@
   },
   {
     "id": "5356ff3f-2d01-4b76-8569-4d9c59c01539",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "雑司ヶ谷地域文化創造館",
+    "building_id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
     "institution": "多目的ホール",
-    "building_kana": "ゾウシガヤチイキブンカソウゾウカン",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "雑司が谷地域文化創造館",
     "institution_system_name": "多目的ホール",
     "capacity": 120,
     "area": 286,
@@ -669,7 +605,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区雑司が谷3-1-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -683,13 +618,9 @@
   },
   {
     "id": "7e8aacc4-c8f1-41b5-8980-db7a60e51972",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "高田第一区民集会室",
+    "building_id": "d2f64407-8a61-42e1-aba4-e9d20ee0ac42",
     "institution": "会議室",
-    "building_kana": "タカダテイイチクミンシュウカイシツ",
     "institution_kana": "カイギシツ",
-    "building_system_name": "高田第一区民集会室",
     "institution_system_name": "会議室",
     "capacity": 40,
     "area": 59.12,
@@ -727,7 +658,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区高田2-11-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -741,13 +671,9 @@
   },
   {
     "id": "fa732db1-f2e1-4ce7-b241-0fa72f760f6c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "千早地域文化創造館",
+    "building_id": "15fddeca-ef6a-4408-a06a-f9dacd96962a",
     "institution": "音楽室",
-    "building_kana": "チハヤチイキブンカソウゾウカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "千早地域文化創造館",
     "institution_system_name": "音楽室",
     "capacity": 50,
     "area": 79,
@@ -785,7 +711,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区千早2-35-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -799,13 +724,9 @@
   },
   {
     "id": "12e5abfa-5aaa-7040-22f2-051474468465",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "千早地域文化創造館",
+    "building_id": "15fddeca-ef6a-4408-a06a-f9dacd96962a",
     "institution": "第1会議室",
-    "building_kana": "チハヤチイキブンカソウゾウカン",
     "institution_kana": "ダイ1カイギシツ",
-    "building_system_name": "千早地域文化創造館",
     "institution_system_name": "第１会議室",
     "capacity": 80,
     "area": 118,
@@ -843,7 +764,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区千早2-35-12",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -857,13 +777,9 @@
   },
   {
     "id": "9c0491bf-4ff9-271d-381b-51be4712449a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "千早地域文化創造館",
+    "building_id": "15fddeca-ef6a-4408-a06a-f9dacd96962a",
     "institution": "第3会議室",
-    "building_kana": "チハヤチイキブンカソウゾウカン",
     "institution_kana": "ダイ3カイギシツ",
-    "building_system_name": "千早地域文化創造館",
     "institution_system_name": "第３会議室",
     "capacity": 30,
     "area": 53,
@@ -901,7 +817,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区千早2-35-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -915,13 +830,9 @@
   },
   {
     "id": "c8a47397-3ebc-039b-9518-1181d98e4fb8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "千早地域文化創造館",
+    "building_id": "15fddeca-ef6a-4408-a06a-f9dacd96962a",
     "institution": "和室",
-    "building_kana": "チハヤチイキブンカソウゾウカン",
     "institution_kana": "ワシツ",
-    "building_system_name": "千早地域文化創造館",
     "institution_system_name": "和室",
     "capacity": 24,
     "area": 41,
@@ -959,7 +870,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区千早2-35-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -973,13 +883,9 @@
   },
   {
     "id": "c3872168-791d-47e0-9f0a-89db83d4e3a2",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "シンフォニースペース",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "シンフォニースペース",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 100,
     "area": 170.8,
@@ -1017,7 +923,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1031,13 +936,9 @@
   },
   {
     "id": "b4ede96f-3eb1-483d-bbac-f0ba68b7fb73",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "ミーティングルーム5",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "ミーティングルーム5",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 28,
     "area": 78.3,
@@ -1075,7 +976,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1089,13 +989,9 @@
   },
   {
     "id": "e5b5608f-ac45-4732-8fc4-129348c417e3",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "ミーティングルーム7",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "ミーティングルーム7",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 28,
     "area": 79.2,
@@ -1133,7 +1029,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1147,13 +1042,9 @@
   },
   {
     "id": "c9dae7b7-e3b0-4b0b-921a-acfb1bc74890",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームL",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームL",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 100,
     "area": 162,
@@ -1191,7 +1082,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1205,13 +1095,9 @@
   },
   {
     "id": "fcc02928-23c5-4a7a-8da9-0df8dfb31ded",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームM1",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームM1",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 40,
     "area": 80,
@@ -1249,7 +1135,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1263,13 +1148,9 @@
   },
   {
     "id": "2e3e283c-4fa1-47fc-b23d-e5c5cf5e02dd",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームM2",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームM2",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 30,
     "area": 50,
@@ -1307,7 +1188,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1321,13 +1201,9 @@
   },
   {
     "id": "3e487e18-325f-4b01-bfef-76e718328864",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームM3",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームM3",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 50,
     "area": 100,
@@ -1365,7 +1241,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1379,13 +1254,9 @@
   },
   {
     "id": "f001710b-cbb8-40dd-afc5-50847c41dddb",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームS1",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームS1",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 10,
     "area": 24,
@@ -1423,7 +1294,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1437,13 +1307,9 @@
   },
   {
     "id": "7aee8a70-30fe-40f1-96f6-ac23eb3a83f8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "東京藝術劇場",
+    "building_id": "01e22864-2a5f-4083-afb2-94ff593a3090",
     "institution": "リハーサルルームS2",
-    "building_kana": "トウキョウゲイジュツゲキジョウ",
     "institution_kana": "リハーサルルームS2",
-    "building_system_name": "",
     "institution_system_name": "",
     "capacity": 10,
     "area": 24,
@@ -1481,7 +1347,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋1-8-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1495,13 +1360,9 @@
   },
   {
     "id": "7372c890-1497-0a0e-c579-9ba89d04b10e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "としま区民センター",
+    "building_id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
     "institution": "小ホール",
-    "building_kana": "トシマクミンセンター",
     "institution_kana": "ショウホール",
-    "building_system_name": "としま区民センター",
     "institution_system_name": "小ホール",
     "capacity": 160,
     "area": 135,
@@ -1539,7 +1400,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区東池袋1-20-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1553,13 +1413,9 @@
   },
   {
     "id": "fd3351d1-ccfa-4db5-846b-14a191d1be35",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "としま区民センター",
+    "building_id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
     "institution": "スタジオA",
-    "building_kana": "トシマクミンセンター",
     "institution_kana": "スタジオA",
-    "building_system_name": "としま区民センター",
     "institution_system_name": "スタジオＡ",
     "capacity": 5,
     "area": 16,
@@ -1597,7 +1453,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区東池袋1-20-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1611,13 +1466,9 @@
   },
   {
     "id": "885d0685-b54b-4d8d-a786-f890c0d853d2",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "としま区民センター",
+    "building_id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
     "institution": "スタジオB",
-    "building_kana": "トシマクミンセンター",
     "institution_kana": "スタジオB",
-    "building_system_name": "としま区民センター",
     "institution_system_name": "スタジオＢ",
     "capacity": 10,
     "area": 37.5,
@@ -1655,7 +1506,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区東池袋1-20-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1669,13 +1519,9 @@
   },
   {
     "id": "3bd571cc-3be8-4110-9e70-e6e29d8c2f59",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "としま区民センター",
+    "building_id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
     "institution": "スタジオC",
-    "building_kana": "トシマクミンセンター",
     "institution_kana": "スタジオC",
-    "building_system_name": "としま区民センター",
     "institution_system_name": "スタジオＣ",
     "capacity": 15,
     "area": 57,
@@ -1713,7 +1559,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区東池袋1-20-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1727,13 +1572,9 @@
   },
   {
     "id": "348789ac-be11-d700-03a2-ce5a6bada896",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "としま区民センター",
+    "building_id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
     "institution": "多目的ホール",
-    "building_kana": "トシマクミンセンター",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "としま区民センター",
     "institution_system_name": "多目的ホール",
     "capacity": 480,
     "area": 330.4,
@@ -1771,7 +1612,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区東池袋1-20-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1785,13 +1625,9 @@
   },
   {
     "id": "11970315-08dd-47fd-941b-2ad5308ed3c8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "豊島産業振興プラザ",
+    "building_id": "240829bb-ee60-4017-9780-a491452331f6",
     "institution": "第1音楽室",
-    "building_kana": "トシマサンギョウシンコウプラザ",
     "institution_kana": "ダイ1オンガクシツ",
-    "building_system_name": "としま産業振興プラザ※イケビズ",
     "institution_system_name": "第１音楽室",
     "capacity": 20,
     "area": 43,
@@ -1829,7 +1665,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋2-37-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1843,13 +1678,9 @@
   },
   {
     "id": "5c806fe9-1c22-4da1-8360-38bf80934e95",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "豊島産業振興プラザ",
+    "building_id": "240829bb-ee60-4017-9780-a491452331f6",
     "institution": "第2音楽室",
-    "building_kana": "トシマサンギョウシンコウプラザ",
     "institution_kana": "ダイ2オンガクシツ",
-    "building_system_name": "としま産業振興プラザ※イケビズ",
     "institution_system_name": "第２音楽室",
     "capacity": 5,
     "area": 11.8,
@@ -1887,7 +1718,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋2-37-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1901,13 +1731,9 @@
   },
   {
     "id": "7248e9ee-a473-46ce-b358-7f87f7580ac9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "豊島産業振興プラザ",
+    "building_id": "240829bb-ee60-4017-9780-a491452331f6",
     "institution": "第3音楽室",
-    "building_kana": "トシマサンギョウシンコウプラザ",
     "institution_kana": "ダイ3オンガクシツ",
-    "building_system_name": "としま産業振興プラザ※イケビズ",
     "institution_system_name": "第３音楽室",
     "capacity": 5,
     "area": 12.5,
@@ -1945,7 +1771,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区西池袋2-37-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1959,13 +1784,9 @@
   },
   {
     "id": "75e1ec39-2348-4b5e-b207-40b58b816d07",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "ふるさと千川館",
+    "building_id": "df141e8f-de09-42f9-8743-48c89bee424d",
     "institution": "多目的ホール",
-    "building_kana": "フルサトセンカワカン",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "ふるさと千川館",
     "institution_system_name": "多目的ホール",
     "capacity": 150,
     "area": 356,
@@ -1985,7 +1806,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "豊島区要町3-55-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1999,13 +1819,9 @@
   },
   {
     "id": "8a7150db-aee1-43a4-b1df-995bcf41f591",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "ふるさと千川館",
+    "building_id": "df141e8f-de09-42f9-8743-48c89bee424d",
     "institution": "ふるさと千川の部屋",
-    "building_kana": "フルサトセンカワカン",
     "institution_kana": "フルサトセンカワノヘヤ",
-    "building_system_name": "ふるさと千川館",
     "institution_system_name": "ふるさと千川の部屋",
     "capacity": 36,
     "area": 50,
@@ -2025,7 +1841,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "豊島区要町3-55-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2039,13 +1854,9 @@
   },
   {
     "id": "952b3c9c-bae1-4fa1-8f6f-409fd20f91ed",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "音楽室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "音楽室",
     "capacity": 40,
     "area": 119,
@@ -2083,7 +1894,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2097,13 +1907,9 @@
   },
   {
     "id": "006613e6-c010-55e1-44e2-c12f36a3116d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "第1会議室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ダイ1カイギシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "第１会議室",
     "capacity": 127,
     "area": 80,
@@ -2141,7 +1947,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2155,13 +1960,9 @@
   },
   {
     "id": "7ebd96cc-e2a3-6230-d090-024e6cc255db",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "第2会議室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ダイ2カイギシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "第２会議室",
     "capacity": 30,
     "area": 56,
@@ -2199,7 +2000,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2213,13 +2013,9 @@
   },
   {
     "id": "86669df4-d132-efc5-ce0f-30782a2a1c91",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "第3会議室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ダイ3カイギシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "第３会議室",
     "capacity": 24,
     "area": 49,
@@ -2257,7 +2053,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2271,13 +2066,9 @@
   },
   {
     "id": "39b970d6-0f19-48e2-a051-ce4b95502939",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "第4会議室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ダイ4カイギシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "第４会議室",
     "capacity": 24,
     "area": 50,
@@ -2315,7 +2106,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2329,13 +2119,9 @@
   },
   {
     "id": "b2112f5f-4b5a-42a6-9750-22986779fd02",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "第5会議室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ダイ5カイギシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "第５会議室",
     "capacity": 40,
     "area": 140,
@@ -2373,7 +2159,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2387,13 +2172,9 @@
   },
   {
     "id": "5ce71867-fd59-96ee-5208-5f357f764a2c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南大塚地域文化創造館",
+    "building_id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
     "institution": "和室",
-    "building_kana": "ミナミオオツカチイキブンカソウゾウカン",
     "institution_kana": "ワシツ",
-    "building_system_name": "南大塚地域文化創造館",
     "institution_system_name": "和室",
     "capacity": 24,
     "area": 56,
@@ -2431,7 +2212,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南大塚2-36-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2445,13 +2225,9 @@
   },
   {
     "id": "b92118f9-c3a0-4592-9c8d-c099ac8e8bef",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_TOSHIMA",
-    "building": "南長崎第一区民集会室",
+    "building_id": "9cc7e957-48b4-4e14-8ccd-3f397b211ce9",
     "institution": "会議室",
-    "building_kana": "ミナミナガサキダイイチクミンシュウカイシツ",
     "institution_kana": "カイギシツ",
-    "building_system_name": "南長崎第一区民集会室",
     "institution_system_name": "会議室",
     "capacity": 30,
     "area": 46.8,
@@ -2489,7 +2265,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "豊島区南長崎1-6-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",

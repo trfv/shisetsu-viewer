@@ -1,0 +1,242 @@
+[
+  {
+    "id": "448baa3f-c6a3-4788-8d4e-3a680ef35435",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "アクト２１",
+    "kana": "アクトニジュウイチ",
+    "system_name": "アクト２１",
+    "address": "荒川区東尾久五丁目9番3号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "021a7a1f-c889-4ec9-a121-18ea0534eb59",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "アクロスあらかわ",
+    "kana": "アクロスアラカワ",
+    "system_name": "アクロスあらかわ",
+    "address": "荒川区荒川二丁目57番8号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "791d8254-13a4-4b59-897d-a26721ed13c2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "荒川山吹ふれあい館",
+    "kana": "アラカワヤマブキフレアイカン",
+    "system_name": "荒川山吹ふれあい館",
+    "address": "荒川七丁目6番8号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "96990e87-efa1-4d1c-8943-12f77523e457",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "荒木田ふれあい館",
+    "kana": "アラキダフレアイカン",
+    "system_name": "荒木田ふれあい館",
+    "address": "町屋六丁目13番2号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "cef13a73-f670-4e4e-9cd4-9cc29d777f5f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "石浜ふれあい館",
+    "kana": "イシハマフレアイカン",
+    "system_name": "石浜ふれあい館",
+    "address": "南千住三丁目28番2号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "d34e2909-9673-4e38-a84b-97d30ed0f7fe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "尾久区民事務所ひろば館",
+    "kana": "オククミンジムショヒロバカン",
+    "system_name": "尾久区民事務所ひろば館",
+    "address": "西尾久三丁目7番15号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "b405c8cb-28f8-425f-9a09-47e283dad285",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "尾久ふれあい館",
+    "kana": "オクフレアイカン",
+    "system_name": "尾久ふれあい館",
+    "address": "西尾久二丁目25番13号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "beeb6876-b266-448c-a4b0-28fdf5e0dd05",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "峡田ふれあい館",
+    "kana": "カイタフレアイカン",
+    "system_name": "峡田ふれあい館",
+    "address": "荒川三丁目3番10号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "074c0cb0-5e8d-40a2-ab0e-031ed2fed5f9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "熊野前ひろば館",
+    "kana": "クマノゼンヒロバカン",
+    "system_name": "熊野前ひろば館",
+    "address": "荒川区東尾久五丁目9番3号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "346e4103-079b-4f96-8529-e3e5a0346224",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "汐入ふれあい館",
+    "kana": "シオイリフレアイカン",
+    "system_name": "汐入ふれあい館",
+    "address": "南千住八丁目2番2号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "712bdb33-7d64-4f20-af3a-13e34a7ca31c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "生涯学習センター",
+    "kana": "ショウガイガクシュウセンター",
+    "system_name": "生涯学習センター",
+    "address": "荒川区荒川3-49-1",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "23707664-a318-403e-8349-54abed24a2f1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "西尾久ふれあい館",
+    "kana": "ニシオヒサフレアイカン",
+    "system_name": "西尾久ふれあい館",
+    "address": "西尾久八丁目33番31号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "0a377945-9b14-4173-95f6-29fa601e91dd",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "西日暮里ふれあい館",
+    "kana": "ニシニッポリフレアイカン",
+    "system_name": "西日暮里ふれあい館",
+    "address": "西日暮里六丁目24番4号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "f08a58d8-24e1-4171-b692-3d6f4f5c4fe1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "東尾久本町通りふれあい館",
+    "kana": "ヒガシオクホンチョウドオリフレアイカン",
+    "system_name": "東尾久本町通りふれあい館",
+    "address": "荒川区東尾久2-37-14",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "087457a1-1589-48a7-a8f2-63243f151fdf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "東日暮里ふれあい館",
+    "kana": "ヒガシニッポリフレアイカン",
+    "system_name": "東日暮里ふれあい館",
+    "address": "東日暮里一丁目17番13号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "37501f9d-fdd2-4ea5-82c5-6071a7070cf3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "ひぐらしふれあい館",
+    "kana": "ヒグラシフレアイカン",
+    "system_name": "ひぐらしふれあい館",
+    "address": "荒川区東日暮里6-28-15",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "3a4c6052-92da-41f3-9b0f-0988fe941483",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "町屋ふれあい館",
+    "kana": "マチヤフレアイカン",
+    "system_name": "町屋ふれあい館",
+    "address": "町屋一丁目35番8号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "82e7d078-3a37-4f80-a8d0-3b3a36cd67bc",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "町屋文化センター",
+    "kana": "マチヤブンカセンター",
+    "system_name": "町屋文化センター",
+    "address": "荒川区荒川七丁目20番1号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "e2ee16ad-b865-4b5a-8797-90bad875aea2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "三河島ひろば館",
+    "kana": "ミカワシマムネヒロバカン",
+    "system_name": "三河島ひろば館",
+    "address": "荒川三丁目36番4号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "22c0c95f-fdc8-4568-ad41-a238a00512d3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "南千住駅前ふれあい館",
+    "kana": "ミナミセンジュエキマエフレアイカン",
+    "system_name": "南千住駅前ふれあい館",
+    "address": "荒川区南千住七丁目1番1号アクレスティ南千住2階",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "3ca165b0-2554-482d-902f-4c0262da0aed",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "南千住ふれあい館",
+    "kana": "ミナミセンジュフレアイカン",
+    "system_name": "南千住ふれあい館",
+    "address": "南千住六丁目36番13号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "db313a78-00ae-46cd-a608-fd7b5cfbf948",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "宮地ひろば館",
+    "kana": "ミヤジヒロバカン",
+    "system_name": "宮地ひろば館",
+    "address": "荒川区荒川五丁目12番10号",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "4e213e61-fd04-4720-8af0-50b7e93b91e1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "ムーブ町屋",
+    "kana": "ムーブマチヤ",
+    "system_name": "ムーブ町屋",
+    "address": "荒川区荒川7-50-9 センターまちや3F",
+    "reservation_system": "tokyo-arakawa"
+  },
+  {
+    "id": "85c81fcd-bfe2-4a39-95de-685d75067aff",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_ARAKAWA",
+    "name": "夕やけこやけふれあい館",
+    "kana": "ユウヤケコヤケフレアイカン",
+    "system_name": "夕やけこやけふれあい館",
+    "address": "東日暮里三丁目11番19号 3階、4階",
+    "reservation_system": "tokyo-arakawa"
+  }
+]

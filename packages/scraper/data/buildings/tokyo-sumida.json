@@ -1,0 +1,42 @@
+[
+  {
+    "id": "8b44ff9e-309d-4db3-a3cf-0403d71307c8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "name": "社会福祉会館",
+    "kana": "シャカイフクシカイカン",
+    "system_name": "社会福祉会館",
+    "address": "墨田区東墨田二丁目7番1号",
+    "reservation_system": "tokyo-sumida"
+  },
+  {
+    "id": "30e111a3-afb2-4701-bbad-bb7aa16be445",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "name": "すみだ生涯学習センター（ユートリヤ）",
+    "kana": "スミダショウガイガクシュウセンター（ユートリヤ）",
+    "system_name": "すみだ生涯学習センター",
+    "address": "墨田区東向島二丁目38番7号",
+    "reservation_system": "tokyo-sumida"
+  },
+  {
+    "id": "9ac6531b-2ed0-45b4-b400-aef43e7beb81",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "name": "曳舟文化センター",
+    "kana": "ヒキフネブンカセンター",
+    "system_name": "曳舟文化センター",
+    "address": "墨田区京島一丁目38番11号",
+    "reservation_system": "tokyo-sumida"
+  },
+  {
+    "id": "5901155b-3ace-4fce-99b9-9e2506ef905f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SUMIDA",
+    "name": "みどりコミュニティセンター",
+    "kana": "ミドリコミュニティセンター",
+    "system_name": "みどりコミュニティセンター",
+    "address": "墨田区緑三丁目7番3号",
+    "reservation_system": "tokyo-sumida"
+  }
+]

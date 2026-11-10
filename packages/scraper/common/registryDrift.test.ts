@@ -75,12 +75,14 @@ describe("registry drift", () => {
     assert.deepEqual(sorted(dirs), sorted(getScraperTargets()));
   });
 
-  it("全自治体の施設 JSON (data/institutions/<target>.json) が存在している", () => {
+  it("全自治体の施設 JSON (data/{buildings,institutions}/<target>.json) が存在している", () => {
     for (const target of getAllMunicipalityTargets()) {
-      assert.ok(
-        existsSync(join(scraperRoot, "data/institutions", `${target}.json`)),
-        `data/institutions/${target}.json がありません`
-      );
+      for (const dir of ["buildings", "institutions"]) {
+        assert.ok(
+          existsSync(join(scraperRoot, "data", dir, `${target}.json`)),
+          `data/${dir}/${target}.json がありません`
+        );
+      }
     }
   });
 });

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ea503196-aeb4-4f2a-a765-f1e1049e9ae3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "池袋本町第一区民集会室",
+    "kana": "イケブクロホンチョウダイイチクミンシュウカイシツ",
+    "system_name": "池袋本町第一区民集会室",
+    "address": "豊島区池袋本町3-9-4",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "17cbbdfe-47ef-4d68-a068-1f0105b6838d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "区民ひろば西巣鴨第一",
+    "kana": "クミンヒロバニシスガモテイイチ",
+    "system_name": "区民ひろば西巣鴨第一",
+    "address": "豊島区西巣鴨2-35-3",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "53225363-b462-4cd7-831f-747fdd119533",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "区民ひろば富士見台",
+    "kana": "クミンヒロバフジミダイ",
+    "system_name": "区民ひろば富士見台",
+    "address": "豊島区南長崎1-6-1",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "8a8ca647-eb42-4a2b-b095-1bc07e528b7a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "区民ひろば南池袋",
+    "kana": "クミンヒロバミナミイケブクロ",
+    "system_name": "区民ひろば南池袋",
+    "address": "豊島区南池袋3-5-12",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "267dec17-d8ab-4408-badb-28f934d43f91",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "駒込地域文化創造館",
+    "kana": "コマゴメチイキブンカソウゾウカン",
+    "system_name": "駒込地域文化創造館",
+    "address": "豊島区駒込2丁目2−2",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "1b9f9310-c189-483c-964e-f93606ef7d61",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "巣鴨地域文化創造館",
+    "kana": "スガモチイキブンカソウゾウカン",
+    "system_name": "巣鴨地域文化創造館",
+    "address": "豊島区巣鴨4-15-11",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "1015a589-c451-4958-8c09-2d40c9a1074b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "雑司が谷公園丘の上テラス",
+    "kana": "ゾウシガヤコウエンオカノウエテラス",
+    "system_name": "雑司が谷公園丘の上テラス",
+    "address": "豊島区雑司が谷2-12-1",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "75b1dd81-d70f-4f57-9948-ff063a3cc40a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "雑司ヶ谷地域文化創造館",
+    "kana": "ゾウシガヤチイキブンカソウゾウカン",
+    "system_name": "雑司が谷地域文化創造館",
+    "address": "豊島区雑司が谷3-1-7",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "d2f64407-8a61-42e1-aba4-e9d20ee0ac42",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "高田第一区民集会室",
+    "kana": "タカダテイイチクミンシュウカイシツ",
+    "system_name": "高田第一区民集会室",
+    "address": "豊島区高田2-11-2",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "15fddeca-ef6a-4408-a06a-f9dacd96962a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "千早地域文化創造館",
+    "kana": "チハヤチイキブンカソウゾウカン",
+    "system_name": "千早地域文化創造館",
+    "address": "豊島区千早2-35-12",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "01e22864-2a5f-4083-afb2-94ff593a3090",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "東京藝術劇場",
+    "kana": "トウキョウゲイジュツゲキジョウ",
+    "system_name": "",
+    "address": "豊島区西池袋1-8-1",
+    "reservation_system": null
+  },
+  {
+    "id": "01037b46-3def-44cd-9bf0-1ff64fb9c1d3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "としま区民センター",
+    "kana": "トシマクミンセンター",
+    "system_name": "としま区民センター",
+    "address": "豊島区東池袋1-20-10",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "240829bb-ee60-4017-9780-a491452331f6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "豊島産業振興プラザ",
+    "kana": "トシマサンギョウシンコウプラザ",
+    "system_name": "としま産業振興プラザ※イケビズ",
+    "address": "豊島区西池袋2-37-4",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "df141e8f-de09-42f9-8743-48c89bee424d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "ふるさと千川館",
+    "kana": "フルサトセンカワカン",
+    "system_name": "ふるさと千川館",
+    "address": "豊島区要町3-55-18",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "5f78a0b4-ce5a-45bf-8b42-43d16178874a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "南大塚地域文化創造館",
+    "kana": "ミナミオオツカチイキブンカソウゾウカン",
+    "system_name": "南大塚地域文化創造館",
+    "address": "豊島区南大塚2-36-1",
+    "reservation_system": "tokyo-toshima"
+  },
+  {
+    "id": "9cc7e957-48b4-4e14-8ccd-3f397b211ce9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TOSHIMA",
+    "name": "南長崎第一区民集会室",
+    "kana": "ミナミナガサキダイイチクミンシュウカイシツ",
+    "system_name": "南長崎第一区民集会室",
+    "address": "豊島区南長崎1-6-1",
+    "reservation_system": "tokyo-toshima"
+  }
+]

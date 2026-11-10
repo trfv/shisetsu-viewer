@@ -1,0 +1,102 @@
+[
+  {
+    "id": "da590f2c-fb5a-4fb1-b97e-559344355e05",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "亀戸文化センター",
+    "kana": "カメイドブンカセンター",
+    "system_name": "亀戸文化センター",
+    "address": "江東区亀戸2-19-1",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "66495718-a734-4c3b-b7e0-e1f7d01d85d6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "江東区文化センター",
+    "kana": "コウトウクブンカセンター",
+    "system_name": "江東区文化センター",
+    "address": "江東区東陽4-11-3",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "5c01f715-8d41-4b7e-820e-5767ebdc75f5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "江東公会堂",
+    "kana": "コウトウコウカイドウ",
+    "system_name": "江東公会堂（ティアラこうとう）",
+    "address": "江東区住吉2-28-36",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "9bae0402-19cb-43d0-bf68-d7202ff5cbdf",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "砂町文化センター",
+    "kana": "スナマチブンカセンター",
+    "system_name": "砂町文化センター",
+    "address": "江東区北砂5-1-7",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "806f31b3-e870-450c-957f-d4ab4954b9e9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "総合区民センター",
+    "kana": "ソウゴウクミンセンター",
+    "system_name": "総合区民センター",
+    "address": "江東区大島4-5-1",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "89aea809-abee-45be-a729-c4ee4cfa44f8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "豊洲文化センター",
+    "kana": "トヨスブンカセンター",
+    "system_name": "豊洲文化センター",
+    "address": "江東区豊洲2-2-18",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "23fb72cf-9063-4a53-9777-783ac7c0c0f4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "東大島文化センター",
+    "kana": "ヒガシオオシマブンカセンター",
+    "system_name": "東大島文化センター",
+    "address": "江東区大島8-33-9",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "327e45d8-6ec6-44e6-90e1-0fc3154f638f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "深川江戸資料館",
+    "kana": "フカガワエドシリョウカン",
+    "system_name": "深川江戸資料館",
+    "address": "江東区白河1-3-28",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "7051cb30-de2c-4f2a-bcb1-3af37d1ace77",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "古石場文化センター",
+    "kana": "フルイシバブンカセンター",
+    "system_name": "古石場文化センター",
+    "address": "江東区古石場2-13-2",
+    "reservation_system": "tokyo-koutou"
+  },
+  {
+    "id": "79d89135-1a3a-4e2c-b4fe-171551ae5455",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_KOUTOU",
+    "name": "森下文化センター",
+    "kana": "モリシタブンカセンター",
+    "system_name": "森下文化センター",
+    "address": "江東区森下3-12-17",
+    "reservation_system": "tokyo-koutou"
+  }
+]

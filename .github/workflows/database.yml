@@ -36,6 +36,7 @@ on:
   push:
     branches: [master]
     paths:
+      - "packages/scraper/data/buildings/**"
       - "packages/scraper/data/institutions/**"
 
 jobs:

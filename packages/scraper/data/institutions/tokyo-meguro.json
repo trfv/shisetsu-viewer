@@ -1,13 +1,9 @@
 [
   {
     "id": "e5fe651b-f705-4b6b-8f3c-bad40ff6a2c2",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "リハーサル室",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "リハーサルシツ",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "リハーサル室",
     "capacity": 40,
     "area": 73,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "ca68e345-de62-401a-b565-129551921500",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "大ホール",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "ダイホール",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "大ホール",
     "capacity": 1200,
     "area": 1307,
@@ -103,7 +94,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -117,13 +107,9 @@
   },
   {
     "id": "83c255ea-9992-432c-aedb-90ff36fa3478",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "小ホール",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "ショウホール",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "小ホール",
     "capacity": 200,
     "area": 260,
@@ -161,7 +147,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -175,13 +160,9 @@
   },
   {
     "id": "234b27d8-5738-47b0-911a-66a398a3f89e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "第1練習室",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "ダイイチレンシュウシツ",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第１練習室",
     "capacity": 30,
     "area": 54,
@@ -219,7 +200,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -233,13 +213,9 @@
   },
   {
     "id": "8b8cf630-1f25-442d-b87a-78ca14651b4e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "第2練習室",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "ダイニレンシュウシツ",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第２練習室",
     "capacity": 20,
     "area": 42,
@@ -277,7 +253,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -291,13 +266,9 @@
   },
   {
     "id": "23740827-300c-4a8c-993a-6a14c4533cc9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "めぐろパーシモンホール",
+    "building_id": "c7e61144-1d41-4f0c-8019-f1f615a8848e",
     "institution": "第3練習室",
-    "building_kana": "メグロパーシモンホール",
     "institution_kana": "ダイサンレンシュウシツ",
-    "building_system_name": "めぐろパーシモンホール",
     "institution_system_name": "第３練習室",
     "capacity": 20,
     "area": 47,
@@ -335,7 +306,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区八雲1-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -349,13 +319,9 @@
   },
   {
     "id": "8ceaba5d-db36-4f7b-a221-052effa7e77f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "上目黒住区センター",
+    "building_id": "5019b818-5f1e-4763-a99c-77da171fd805",
     "institution": "B101",
-    "building_kana": "カミメグロジュウクセンター",
     "institution_kana": "B101",
-    "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０１【旧第１会議室】",
     "capacity": 47,
     "area": 67.58,
@@ -393,7 +359,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区祐天寺2-6-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -407,13 +372,9 @@
   },
   {
     "id": "e5790160-d231-403c-b0a6-55e4485bcc83",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "上目黒住区センター",
+    "building_id": "5019b818-5f1e-4763-a99c-77da171fd805",
     "institution": "B102（レクホール）",
-    "building_kana": "カミメグロジュウクセンター",
     "institution_kana": "B102（レクホール）",
-    "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０２（レクホール）",
     "capacity": 87,
     "area": 125.34,
@@ -451,7 +412,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区祐天寺2-6-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -465,13 +425,9 @@
   },
   {
     "id": "9e7ed07b-f457-45ea-8725-bbcc9686ce77",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "上目黒住区センター",
+    "building_id": "5019b818-5f1e-4763-a99c-77da171fd805",
     "institution": "B103（音楽室）",
-    "building_kana": "カミメグロジュウクセンター",
     "institution_kana": "B103（オンガクシツ）",
-    "building_system_name": "上目黒住区センター",
     "institution_system_name": "Ｂ１０３（音楽室）",
     "capacity": 48,
     "area": 68.66,
@@ -509,7 +465,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区祐天寺2-6-6",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -523,13 +478,9 @@
   },
   {
     "id": "ec129e7d-03bb-46ab-9774-5f96801e7c23",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "中央町社会教育館",
+    "building_id": "792b9c9e-97fa-4dad-967f-066c41d669f9",
     "institution": "B101（音楽室）",
-    "building_kana": "チュウオウチョウシャカイキョウイクカン",
     "institution_kana": "B101（オンガクシツ）",
-    "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０１（音楽室）",
     "capacity": 25,
     "area": 42.6,
@@ -567,7 +518,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区中央町2-4-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -581,13 +531,9 @@
   },
   {
     "id": "aa1d940c-3f39-4502-9142-da1335af7728",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "中央町社会教育館",
+    "building_id": "792b9c9e-97fa-4dad-967f-066c41d669f9",
     "institution": "B107(和室)",
-    "building_kana": "チュウオウチョウシャカイキョウイクカン",
     "institution_kana": "B107(ワシツ)",
-    "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０７(和室)【旧第７研修室】",
     "capacity": 30,
     "area": 44.54,
@@ -625,7 +571,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区中央町2-4-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -639,13 +584,9 @@
   },
   {
     "id": "b611aea2-9222-4a50-a6bf-43c60ca82ace",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "中央町社会教育館",
+    "building_id": "792b9c9e-97fa-4dad-967f-066c41d669f9",
     "institution": "B109（レクホール）",
-    "building_kana": "チュウオウチョウシャカイキョウイクカン",
     "institution_kana": "B109（レクホール）",
-    "building_system_name": "中央町社会教育館",
     "institution_system_name": "Ｂ１０９（レクホール）",
     "capacity": 100,
     "area": 150.38,
@@ -683,7 +624,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区中央町2-4-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -697,13 +637,9 @@
   },
   {
     "id": "9893cc29-5607-46ad-a323-9085de7f509d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "中小企業センター",
+    "building_id": "187cff22-e03e-4e65-98e5-ed58660ac775",
     "institution": "ホール",
-    "building_kana": "チュウショウキギョウセンター",
     "institution_kana": "ホール",
-    "building_system_name": "中小企業センター",
     "institution_system_name": "ホール",
     "capacity": 417,
     "area": 359,
@@ -741,7 +677,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区目黒2-4-36",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -755,13 +690,9 @@
   },
   {
     "id": "e07d0beb-80c6-4104-807f-cd5ff410cc9b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "中目黒GTプラザホール",
+    "building_id": "04d5071a-bf5a-4eb8-91e5-c9c94a4ce64d",
     "institution": "中目黒GTプラザホール",
-    "building_kana": "ナカメグロジーティープラザホール",
     "institution_kana": "ナカメグロジーティープラザホール",
-    "building_system_name": "中目黒ＧＴプラザホール",
     "institution_system_name": "中目黒ＧＴプラザホール",
     "capacity": 150,
     "area": 160,
@@ -799,7 +730,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区上目黒2-1-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -813,13 +743,9 @@
   },
   {
     "id": "60bf2c75-6c26-4d2d-8cd7-0df001be3b74",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "田道住区センター三田分室別館",
+    "building_id": "00977ab0-4ded-4420-8ddd-d49389a16082",
     "institution": "別館201（レクホール）",
-    "building_kana": "デンドウジュウクセンターミタブンシツベッカン",
     "institution_kana": "ベッカン201（レクホール）",
-    "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館２０１（レクホール）",
     "capacity": 50,
     "area": 171.34,
@@ -857,7 +783,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区三田1-11-26",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -871,13 +796,9 @@
   },
   {
     "id": "87c0ad0a-7b11-423a-ba3c-c078e5a9c7ab",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "田道住区センター三田分室別館",
+    "building_id": "00977ab0-4ded-4420-8ddd-d49389a16082",
     "institution": "別館B101（音楽室）",
-    "building_kana": "デンドウジュウクセンターミタブンシツベッカン",
     "institution_kana": "ベッカンB101（オンガクシツ）",
-    "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館Ｂ１０１（音楽室）",
     "capacity": 15,
     "area": 77.22,
@@ -915,7 +836,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区三田1-11-26",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -929,13 +849,9 @@
   },
   {
     "id": "e24d4c03-3eaf-41ee-8208-ec82349dc70c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "田道住区センター三田分室別館",
+    "building_id": "00977ab0-4ded-4420-8ddd-d49389a16082",
     "institution": "別館B102（音楽室）",
-    "building_kana": "デンドウジュウクセンターミタブンシツベッカン",
     "institution_kana": "ベッカンB102（オンガクシツ）",
-    "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "別館Ｂ１０２（音楽室）",
     "capacity": 20,
     "area": 121.66,
@@ -973,7 +889,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区三田1-11-26",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -987,13 +902,9 @@
   },
   {
     "id": "04914b9d-4b50-438b-b22c-935e5bd24864",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "田道住区センター三田分室",
+    "building_id": "00bdc23e-5c1e-4ca1-a168-1b155a73d974",
     "institution": "101（レクホール）",
-    "building_kana": "デンドウジュウクセンターミタブンシツ",
     "institution_kana": "101（レクホール）",
-    "building_system_name": "田道住区センター三田分室",
     "institution_system_name": "１０１（レクホール）",
     "capacity": 71,
     "area": 104,
@@ -1031,7 +942,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区三田2-10-33",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1045,13 +955,9 @@
   },
   {
     "id": "653e5ff0-5709-4e7d-9c41-1d65d6e530c3",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "東山社会教育館",
+    "building_id": "8d126733-b9f2-44c7-9feb-c19afa2f62d6",
     "institution": "203",
-    "building_kana": "ヒガシヤマシャカイキョウイクカン",
     "institution_kana": "203",
-    "building_system_name": "東山社会教育館",
     "institution_system_name": "２０３【旧第３研修室】",
     "capacity": 60,
     "area": 89.8,
@@ -1089,7 +995,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区東山3-24-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1103,13 +1008,9 @@
   },
   {
     "id": "97c24f87-ee40-44f7-866e-74fcf0863084",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "東山社会教育館",
+    "building_id": "8d126733-b9f2-44c7-9feb-c19afa2f62d6",
     "institution": "204(音楽室)",
-    "building_kana": "ヒガシヤマシャカイキョウイクカン",
     "institution_kana": "204(オンガクシツ)",
-    "building_system_name": "東山社会教育館",
     "institution_system_name": "２０４(音楽室)【旧第４研修室】",
     "capacity": 45,
     "area": 68.82,
@@ -1147,7 +1048,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区東山3-24-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1161,13 +1061,9 @@
   },
   {
     "id": "f08ce20c-8d2d-4352-aa11-0205de8d720c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "東山社会教育館",
+    "building_id": "8d126733-b9f2-44c7-9feb-c19afa2f62d6",
     "institution": "207（レクホール）",
-    "building_kana": "ヒガシヤマシャカイキョウイクカン",
     "institution_kana": "207（レクホール）",
-    "building_system_name": "東山社会教育館",
     "institution_system_name": "２０７（レクホール）",
     "capacity": 100,
     "area": 154.43,
@@ -1205,7 +1101,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区東山3-24-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1219,13 +1114,9 @@
   },
   {
     "id": "7756f84c-2575-4a92-8d71-c7dfc3e6cc75",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "目黒本町社会教育館",
+    "building_id": "c5ffaf2b-6923-40fe-9ab5-430f2e424f90",
     "institution": "301（視聴覚室）",
-    "building_kana": "メグロホンチョウシャカイキョウイクカン",
     "institution_kana": "301（シチョウカクシツ）",
-    "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０１（視聴覚室）",
     "capacity": 30,
     "area": 49,
@@ -1263,7 +1154,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区目黒本町2-1-20",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1277,13 +1167,9 @@
   },
   {
     "id": "8a177f78-e26b-4d33-9a64-a1021f61b878",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "目黒本町社会教育館",
+    "building_id": "c5ffaf2b-6923-40fe-9ab5-430f2e424f90",
     "institution": "306",
-    "building_kana": "メグロホンチョウシャカイキョウイクカン",
     "institution_kana": "306",
-    "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０６【旧第６研修室】",
     "capacity": 51,
     "area": 84,
@@ -1321,7 +1207,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区目黒本町2-1-20",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1335,13 +1220,9 @@
   },
   {
     "id": "f68eb9fd-388e-4da2-aef2-f43c4a1609d5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "目黒本町社会教育館",
+    "building_id": "c5ffaf2b-6923-40fe-9ab5-430f2e424f90",
     "institution": "307（レクホール）",
-    "building_kana": "メグロホンチョウシャカイキョウイクカン",
     "institution_kana": "307（レクホール）",
-    "building_system_name": "目黒本町社会教育館",
     "institution_system_name": "３０７（レクホール）",
     "capacity": 100,
     "area": 158,
@@ -1379,7 +1260,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区目黒本町2-1-20",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1393,13 +1273,9 @@
   },
   {
     "id": "9cda3e59-d8a3-4f8d-bc93-2bee2eda9c00",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "緑が丘文化会館別館",
+    "building_id": "18b5328b-3beb-4c4c-8aeb-09fd44d82e82",
     "institution": "別館203（音楽室）",
-    "building_kana": "ミドリガオカブンカカイカンベッカン",
     "institution_kana": "ベッカン203（オンガクシツ）",
-    "building_system_name": "緑が丘文化会館",
     "institution_system_name": "別館２０３（音楽室）",
     "capacity": 55,
     "area": 80,
@@ -1437,7 +1313,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区緑が丘2-7-20",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1451,13 +1326,9 @@
   },
   {
     "id": "5bc0037b-17c6-491b-a6d9-235809a6b435",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MEGURO",
-    "building": "緑が丘文化会館",
+    "building_id": "54143456-ca25-47ff-9228-7dc8b0f9b728",
     "institution": "301（視聴覚室）",
-    "building_kana": "ミドリガオカブンカカイカン",
     "institution_kana": "301（シチョウカクシツ）",
-    "building_system_name": "緑が丘文化会館",
     "institution_system_name": "３０１（視聴覚室）",
     "capacity": 44,
     "area": 65,
@@ -1495,7 +1366,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "目黒区緑が丘2-14-23",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
