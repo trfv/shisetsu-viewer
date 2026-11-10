@@ -59,7 +59,7 @@ model: sonnet
 - `browser_navigate` で URL にアクセス
 - snapshot でページ構造を確認
 - 「空き状況の確認」「空き状況」「施設予約」等のリンクを探す
-- 深く探索する前に、空き状況の画面を 1 つ開いて Cloudflare Turnstile（`div.turnstile`、「私はロボットではありません」）が出ないか確かめる。出たら回避（待ち時間の調整・指紋偽装・解決サービス）はせず、探索を止めてユーザーに見送るか確認する（杉並区は約 25 回の更新後、中野区は最初の表示で出た）。見送っても施設マスタだけ作ることはできる。その場合は registry を `reservationExcluded: true` にし、scraper のディレクトリと scraper.yml の choice は作らず、2.5・2.6 だけ行う。viewer の「※現在、予約状況が表示できません」の注記と、除外自治体の件数を固定したテスト（`utils/municipality.test.ts`・`pages/Top.test.tsx`・`packages/shared/registry.test.ts` の `excludedSlugs`）も更新する
+- 深く探索する前に、空き状況の画面を 1 つ開いて Cloudflare Turnstile（`div.turnstile`、「私はロボットではありません」）が出ないか確かめる。出たら回避（待ち時間の調整・指紋偽装・解決サービス）はせず、探索を止めてユーザーに見送るか確認する（杉並区は約 25 回の更新後、中野区は最初の表示で出た）。見送っても施設マスタだけ作ることはできる。その場合は registry を `reservationExcluded: true` にし、`RESERVATION_SYSTEMS` には `scraped: false` で足し、scraper のディレクトリと scraper.yml の choice は作らず、2.5・2.6 だけ行う。viewer の「※現在、予約状況が表示できません」の注記と、除外自治体の件数を固定したテスト（`utils/municipality.test.ts`・`pages/Top.test.tsx`・`packages/shared/registry.test.ts` の `excludedSlugs`）も更新する
 - 渡された URL がエラーページ（「ページがありません」など）なら、施設サイト側の入口が hidden 項目付きの form POST になっていないか見る（`page.$$eval('form', ...)` で action・hidden を列挙する）。団体の識別子が hidden にだけ載っていて、URL 単体では開けない共用基盤がある（reserve1.jp）。入口を通した後の画面は、識別子だけで cookie なしでも開けることが多いので、新しいコンテキストで確かめる
 
 ### 1.2 施設階層の探索
@@ -244,21 +244,21 @@ export const scraper = defineScraper({
 
 ### 2.3 registry.ts への自治体追加
 
-`packages/shared/registry.ts` の `MUNICIPALITIES` オブジェクトに新しいエントリを追加する。
+`packages/shared/registry.ts` の `MUNICIPALITIES` と `RESERVATION_SYSTEMS` に新しいエントリを追加する。`RESERVATION_SYSTEMS` のキーは scraper の target 名（ディレクトリ名）で、`label`（予約システムの名前）と `url`（利用者が開く入口）を持たせる。国内 proxy やメンテナンス窓も予約システムの欄に書く。
 
 同じ予約システム製品を使う自治体のエントリを Read し、その形を写して追加する。
 
 - `reservationStatus` / `reservationDivision` は STATUS_MAP / DIVISION_MAP の逆引き（enum 値 → 表示名）。値は viewer に出るラベルなので、生テキスト（`"○"`、`"9:00-12:00"`）ではなく `"空き"`、`"午前"` のような日本語名にする
 - 追加後は `npm run test:unit -w @shisetsu-viewer/scraper` の registry ドリフト検査が、scraper.yml / database.yml の choice・README の対応地区・施設 JSON の追記漏れを指摘する。全て緑にすること
 - `reservationExcluded` は「スクレイパー自体が存在しない」かどうか。`false` にしても **viewer には出ない**（viewer は手書きの一覧を持つ。2.6 参照）
-- 定期実行での安定性が未確認なら `scraperCiExcluded: true` で CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区と同じ「※現在、予約状況が表示できません」の注記を付ける
+- 定期実行での安定性が未確認なら予約システムを `scraperCiExcluded: true` にして CI から外す選択肢もある。その場合は予約データが入らないので、viewer では杉並区と同じ「※現在、予約状況が表示できません」の注記を付ける
 
 **同じ自治体の別予約システム**（区の共通システムとは別に、文化会館の指定管理者が持つシステムなど）は、新しい自治体ではなく親自治体の追加スクレイパーにする（例: tokyo-kita-cocokita、tokyo-katsushika-symphony-hills）:
 
-- 親のエントリの `additionalScrapers` に名前を足し、ディレクトリは `<prefecture>-<slug>-<name>`。`scraper.yml` の choice にも足す（`database.yml` は親だけ）
+- `RESERVATION_SYSTEMS` に `<prefecture>-<slug>-<name>` のエントリを親の `municipality` で足し、ディレクトリも同じ名前にする。`scraper.yml` の choice にも足す（`database.yml` は親だけ）
 - 施設は親の `data/institutions/<prefecture>-<slug>.json` に追記する。viewer・README の変更は要らない
 - 状態と区分のラベルは親と共有なので、親の STATUS / DIVISION の番号に合わせる。1 時間刻みのような時刻の区分は、両方の時間帯を覆う起点で番号を振ると自治体内でラベルが揃う。午前・午後・夜間の実時刻が親と違うときは施設 JSON の `division_labels` で出す
-- `maintenanceWindowJst` は親と共有の毎日の窓なので、追加システムだけの月 1 回のメンテナンスには使えない
+- `maintenanceWindowJst` は毎日の窓なので、月 1 回のメンテナンスには使えない
 
 追加後、shared パッケージの型チェックも実行:
 

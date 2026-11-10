@@ -1,5 +1,5 @@
-import { getMunicipalityByScraperTarget } from "@shisetsu-viewer/shared";
+import { getReservationSystem } from "@shisetsu-viewer/shared";
 
 export function isViaJpProxy(target: string): boolean {
-  return getMunicipalityByScraperTarget(target)?.scraperViaJpProxy === true;
+  return getReservationSystem(target)?.scraperViaJpProxy === true;
 }

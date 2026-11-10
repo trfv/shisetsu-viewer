@@ -13,6 +13,7 @@ export type {
   Reservation,
   TransformOutput,
   UsageFeeEntry,
+  Building,
   Institution,
 } from "./types.ts";
 
@@ -26,9 +27,16 @@ export {
   getReservationTargets,
   getScraperTargets,
   getAllMunicipalityTargets,
+  RESERVATION_SYSTEMS,
+  getReservationSystem,
 } from "./registry.ts";
 
-export type { MunicipalityConfig, MunicipalityKey } from "./registry.ts";
+export type {
+  MunicipalityConfig,
+  MunicipalityKey,
+  ReservationSystemConfig,
+  ReservationSystemKey,
+} from "./registry.ts";
 
 export { canonicalizeReservation } from "./reservationJson.ts";
 

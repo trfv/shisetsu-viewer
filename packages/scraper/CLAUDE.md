@@ -16,7 +16,7 @@ Node が TS を直接実行する（ビルドなし）。1 予約システム = 
 - `export:institutions` の並びは D1 の BINARY 照合で、Postgres 時代と前後が入れ替わる箇所がある。差分が並び替えだけなら取り込まなくてよい。
 - 解決キー（`facility_name-room_name`）が空の施設がある（予約を持たない施設マスタ）。キーマップ上は `"-"` に潰れるが実害はない。
 - 施設キーマップを引く `GET /v1/institutions?...&detail=true` はエッジキャッシュに載せない（upsert 直後に古い id 対応表を掴まないため）。
-- 国内 proxy 経由の自治体（registry の `scraperViaJpProxy`）の故障の切り分けは `tools/jp-proxy/README.md`。
+- 国内 proxy 経由の予約システム（registry の `RESERVATION_SYSTEMS` の `scraperViaJpProxy`）の故障の切り分けは `tools/jp-proxy/README.md`。
 
 ## Environment
 

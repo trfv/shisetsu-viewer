@@ -1,9 +1,9 @@
 import { defineConfig } from "@playwright/test";
-import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
+import { RESERVATION_SYSTEMS, type ReservationSystemConfig } from "@shisetsu-viewer/shared";
 
 const isCI = !!process.env.CI;
 
-// GitHub Actions から遮断されている自治体（registry の scraperViaJpProxy）向けに、
+// GitHub Actions から遮断されている予約システム（registry の scraperViaJpProxy）向けに、
 // scrape アクションが対象ジョブでのみ設定する。未設定なら従来どおり直接続。
 const scraperProxy = process.env["SCRAPER_PROXY"];
 
@@ -15,13 +15,9 @@ const forceInclude = (process.env["SCRAPER_FORCE_INCLUDE"] ?? "")
   .map((s) => s.trim())
   .filter(Boolean);
 
-const ciExcludedTargets = Object.values<MunicipalityConfig>(MUNICIPALITIES)
-  .filter((m) => m.scraperCiExcluded)
-  // 追加スクレイパー（例 tokyo-kita-genkiplaza）も親自治体の除外設定を継承する
-  .flatMap((m) => {
-    const base = `${m.prefecture}-${m.slug}`;
-    return [base, ...(m.additionalScrapers ?? []).map((name) => `${base}-${name}`)];
-  })
+const ciExcludedTargets = Object.values<ReservationSystemConfig>(RESERVATION_SYSTEMS)
+  .filter((s) => s.scraped && s.scraperCiExcluded)
+  .map((s) => s.key)
   .filter((target) => !forceInclude.includes(target));
 
 /**

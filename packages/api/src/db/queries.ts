@@ -54,6 +54,7 @@ function parseJsonArray<T>(value: unknown): T[] {
 
 interface InstitutionRow {
   id: string;
+  building_id: string | null;
   prefecture: string;
   municipality: string;
   building: string;
@@ -86,6 +87,7 @@ interface InstitutionRow {
 function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
   return {
     id: row.id,
+    building_id: row.building_id,
     prefecture: row.prefecture,
     municipality: row.municipality,
     building: row.building,

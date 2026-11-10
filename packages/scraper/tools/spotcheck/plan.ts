@@ -7,6 +7,7 @@ import { parseArgs } from "node:util";
 import {
   MUNICIPALITIES,
   getMunicipalityBySlug,
+  getReservationSystem,
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
 
@@ -142,8 +143,9 @@ if (shouldFillRandom) {
     values.municipality !== undefined
       ? [values.municipality]
       : Object.values<MunicipalityConfig>(MUNICIPALITIES)
-          .filter((m) => !m.reservationExcluded && !m.scraperCiExcluded)
-          .map((m) => `${m.prefecture}-${m.slug}`);
+          .filter((m) => !m.reservationExcluded)
+          .map((m) => `${m.prefecture}-${m.slug}`)
+          .filter((target) => !getReservationSystem(target)?.scraperCiExcluded);
   for (const target of targets) {
     if (keys.length >= clampedCap) break;
     // date('now') は UTC。JST 早朝に前日を拾うと、サイトは過去日を表示しないので

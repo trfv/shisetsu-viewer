@@ -1,4 +1,4 @@
-import type { Institution, UpsertReservationsRequest } from "@shisetsu-viewer/shared";
+import type { Building, Institution, UpsertReservationsRequest } from "@shisetsu-viewer/shared";
 import { createLocalJWKSet, type JWTVerifyGetKey } from "jose";
 
 import { authorizeAdmin } from "./auth/adminAuth.ts";
@@ -16,6 +16,7 @@ import {
 import {
   recordScrapeRun,
   todayRowsWritten,
+  upsertBuildings,
   upsertHolidays,
   upsertInstitutions,
   upsertReservations,
@@ -41,6 +42,7 @@ export interface Env {
 const MAX_RESERVATION_ROWS = 500;
 // ADMIN_API_KEY 漏洩時に D1 無料枠を一撃で使い切られないための上限。実運用の 3 倍以上
 const MAX_INSTITUTION_ROWS = 2_000;
+const MAX_BUILDING_ROWS = 1_000;
 const MAX_HOLIDAY_ROWS = 1_000;
 // 全行変化日への防御。超過分は 202 で受け流し次回 run に委ねる
 const DAILY_WRITE_BUDGET = 80_000;
@@ -236,6 +238,15 @@ async function handleAdminInstitutions(request: Request, env: Env): Promise<Resp
   return json({ received: body.rows.length, rowsWritten, deferred: false });
 }
 
+async function handleAdminBuildings(request: Request, env: Env): Promise<Response> {
+  if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
+  const body = (await request.json().catch(() => null)) as { rows?: Building[] } | null;
+  if (!body || !Array.isArray(body.rows)) return error(400, "invalid body");
+  if (body.rows.length > MAX_BUILDING_ROWS) return error(400, "too many rows");
+  const { rowsWritten } = await upsertBuildings(env.DB, body.rows);
+  return json({ received: body.rows.length, rowsWritten, deferred: false });
+}
+
 async function handleAdminHolidays(request: Request, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const body = (await request.json().catch(() => null)) as {
@@ -325,6 +336,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
     }
     if (request.method === "PUT") {
       if (pathname === "/v1/admin/reservations") return await handleAdminReservations(request, env);
+      if (pathname === "/v1/admin/buildings") return await handleAdminBuildings(request, env);
       if (pathname === "/v1/admin/institutions") return await handleAdminInstitutions(request, env);
       if (pathname === "/v1/admin/holidays") return await handleAdminHolidays(request, env);
     }

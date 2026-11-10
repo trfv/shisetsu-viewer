@@ -119,6 +119,46 @@ describe("書き込み予算ガード", () => {
   });
 });
 
+const putBuildings = (headers: HeadersInit, body: unknown) =>
+  SELF.fetch(`${BASE}/v1/admin/buildings`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+  });
+
+describe("PUT /v1/admin/buildings", () => {
+  const building = {
+    id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+    prefecture: "PREFECTURE_TOKYO",
+    municipality: "MUNICIPALITY_KOUTOU",
+    name: "admin 経路の会館",
+    kana: "あどみんけいろのかいかん",
+    system_name: "admin-kaikan",
+    address: "",
+    reservation_system: "tokyo-koutou",
+  };
+  it("X-Admin-Key なしは 401", async () => {
+    const res = await putBuildings({ "Content-Type": "application/json" }, { rows: [building] });
+    expect(res.status).toBe(401);
+  });
+
+  it("正しい X-Admin-Key で upsert し、再送は rowsWritten = 0", async () => {
+    const first = await putBuildings(adminHeaders(), { rows: [building] });
+    expect(first.status).toBe(200);
+    expect(await first.json()).toMatchObject({ received: 1, deferred: false });
+    const second = await putBuildings(adminHeaders(), { rows: [building] });
+    expect(await second.json()).toEqual({ received: 1, rowsWritten: 0, deferred: false });
+  });
+
+  it("rows が無い body は 400、上限(1000)超過も 400", async () => {
+    expect((await putBuildings(adminHeaders(), {})).status).toBe(400);
+    const rows = Array.from({ length: 1001 }, () => building);
+    const res = await putBuildings(adminHeaders(), { rows });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: "too many rows" });
+  });
+});
+
 describe("行数上限", () => {
   it("institutions は上限(2000)超過で 400", async () => {
     const rows = Array.from({ length: 2001 }, (_, i) => ({

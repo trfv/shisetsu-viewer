@@ -124,8 +124,21 @@ export type UsageFeeEntry = {
   fee: number;
 };
 
+export type Building = {
+  id: string;
+  prefecture: string;
+  municipality: string;
+  name: string;
+  kana: string;
+  system_name: string;
+  address: string;
+  /** RESERVATION_SYSTEMS のキー。予約システムを持たない手動登録の建物は null */
+  reservation_system: string | null;
+};
+
 export type Institution = {
   id: string;
+  building_id?: string | null;
   prefecture: string;
   municipality: string;
   building: string;
