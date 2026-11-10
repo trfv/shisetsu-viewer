@@ -93,17 +93,13 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     valueGetter: (params) => {
       const municipality = params.row.institution.municipality as SupportedMunicipality;
       const obj = params.row.reservation.reservation;
-      return formatReservationMap(
-        municipality,
-        obj,
-        params.row.institution.division_labels,
-        getNewlyVacantDivisions(params.row.reservation)
-      );
+      return formatReservationMap(municipality, obj, params.row.institution.division_labels);
     },
     renderCell: (params) => (
       <ReservationStatusList
         divisionLabels={params.row.institution.division_labels}
         municipality={params.row.institution.municipality as SupportedMunicipality}
+        newlyVacantDivisions={getNewlyVacantDivisions(params.row.reservation)}
         reservation={params.row.reservation.reservation}
       />
     ),

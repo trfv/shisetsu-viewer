@@ -23,3 +23,14 @@
   font-weight: 400;
   color: var(--color-text-secondary);
 }
+
+.new {
+  align-self: center;
+  padding: 0 4px;
+  border-radius: 4px;
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1.5;
+}

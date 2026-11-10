@@ -5,7 +5,6 @@ import { ReservationDivision } from "../constants/enums";
 import { RESERVATION_MUNICIPALITIES } from "./municipality";
 import {
   formatReservationMap,
-  getNewlyVacantDivisions,
   getResevationSearchFilterFromUrlParam,
   sortByReservationDivision,
   toReservationSearchParams,
@@ -107,22 +106,6 @@ describe("formatReservationMap", () => {
       [ReservationDivision.MORNING]: "9:00-11:45",
     });
     expect(result).toBe("9:00-11:45: ○ 13:00-17:00: ○");
-  });
-
-  test("新しく空いた区分のステータスに印を付ける", () => {
-    const obj = {
-      [ReservationDivision.MORNING_ONE]: "RESERVATION_STATUS_VACANT",
-      [ReservationDivision.MORNING_TWO]: "RESERVATION_STATUS_VACANT",
-      [ReservationDivision.EVENING]: "RESERVATION_STATUS_VACANT",
-    };
-    const newly = getNewlyVacantDivisions({
-      is_morning_newly_vacant: true,
-      is_afternoon_newly_vacant: false,
-      is_evening_newly_vacant: false,
-    });
-    expect(formatReservationMap("MUNICIPALITY_KOUTOU", obj, undefined, newly)).toBe(
-      "①: 空き（新） ②: 空き（新） 夜間: 空き"
-    );
   });
 });
 

@@ -72,8 +72,6 @@ export const sortByReservationDivision = (obj: Record<string, string>): [string,
   );
 };
 
-const NEWLY_VACANT_MARK = "（新）";
-
 export const getNewlyVacantDivisions = (
   reservation: Pick<
     ReservationDto,
@@ -108,8 +106,7 @@ export const getNewlyVacantDivisions = (
 export const formatReservationMap = (
   municipality: SupportedMunicipality | undefined,
   obj: Record<string, string> | undefined,
-  divisionLabels?: Partial<Record<string, string>>,
-  newlyVacantDivisions?: ReadonlySet<string>
+  divisionLabels?: Partial<Record<string, string>>
 ): string => {
   if (!municipality || !obj) {
     return "";
@@ -123,9 +120,7 @@ export const formatReservationMap = (
         .map(([division, status]) =>
           [
             getReservationDivisionLabel(municipality, division, divisionLabels),
-            `${ReservationStatusMap[municipality]?.[status] ?? ""}${
-              newlyVacantDivisions?.has(division) ? NEWLY_VACANT_MARK : ""
-            }`,
+            ReservationStatusMap[municipality]?.[status],
           ].join(": ")
         )
         .join(" ")
