@@ -4,7 +4,7 @@ import path from "path";
 import { getAllMunicipalityTargets } from "@shisetsu-viewer/shared";
 import type { Institution } from "@shisetsu-viewer/shared";
 
-import { upsertInstitutions } from "./backend/d1Api.ts";
+import { upsertInstitutions } from "./backend/api.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data/institutions");
 

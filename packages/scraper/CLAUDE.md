@@ -20,4 +20,4 @@ Node が TS を直接実行する（ビルドなし）。1 予約システム = 
 
 ## Environment
 
-`.env`（`D1_API_ENDPOINT`, `ADMIN_API_KEY`）。CI は GitHub OIDC で認証し、job に `permissions: id-token: write` があれば `ADMIN_API_KEY` は要らない。
+`.env`（`API_ENDPOINT`, `ADMIN_API_KEY`）。CI は GitHub OIDC で認証し、job に `permissions: id-token: write` があれば `ADMIN_API_KEY` は要らない。

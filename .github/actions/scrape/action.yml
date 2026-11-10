@@ -155,7 +155,7 @@ runs:
       env:
         # OIDC トークンはジョブの permissions: id-token: write により
         # ACTIONS_ID_TOKEN_REQUEST_* が自動注入される
-        D1_API_ENDPOINT: ${{ env.D1_API_ENDPOINT }}
+        API_ENDPOINT: ${{ env.API_ENDPOINT }}
       run: |
         node tools/updateReservations.ts ${{ inputs.municipality }}
     - name: Upload failure records

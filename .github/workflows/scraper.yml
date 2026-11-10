@@ -1,6 +1,6 @@
 permissions:
   contents: read
-  id-token: write # D1 API への GitHub OIDC 認証
+  id-token: write # api への GitHub OIDC 認証
 name: Run Scraper
 
 on:
@@ -121,7 +121,7 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           # 予約データの唯一の書き込み先。未設定ならアップロードが起動時に失敗する
-          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          API_ENDPOINT: ${{ vars.API_ENDPOINT }}
           CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         with:
@@ -185,7 +185,7 @@ jobs:
         uses: ./.github/actions/scrape
         env:
           # 予約データの唯一の書き込み先。未設定ならアップロードが起動時に失敗する
-          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          API_ENDPOINT: ${{ vars.API_ENDPOINT }}
           CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         with:
