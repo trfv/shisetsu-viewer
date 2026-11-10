@@ -2,7 +2,7 @@ name: Update Database
 
 permissions:
   contents: read
-  id-token: write # D1 API への GitHub OIDC 認証
+  id-token: write # api への GitHub OIDC 認証
 
 on:
   workflow_dispatch:
@@ -102,7 +102,7 @@ jobs:
         if: github.event_name == 'push'
         shell: bash
         env:
-          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          API_ENDPOINT: ${{ vars.API_ENDPOINT }}
           BEFORE: ${{ github.event.before }}
         run: |
           git fetch --quiet --depth=1 origin "$BEFORE"
@@ -114,7 +114,7 @@ jobs:
           want="${GITHUB_SHA:0:12}"
           # Workers Builds は テスト → マイグレーション → デプロイで 2〜3 分かかる
           for _ in $(seq 1 40); do
-            got=$(curl -fsS "$D1_API_ENDPOINT/v1/health" | jq -r '.version // ""' || true)
+            got=$(curl -fsS "$API_ENDPOINT/v1/health" | jq -r '.version // ""' || true)
             if [ "$got" = "$want" ]; then
               echo "api $want が稼働中"
               exit 0
@@ -129,6 +129,6 @@ jobs:
         working-directory: packages/scraper
         env:
           # 施設マスタの唯一の書き込み先。未設定なら起動時に失敗する
-          D1_API_ENDPOINT: ${{ vars.D1_API_ENDPOINT }}
+          API_ENDPOINT: ${{ vars.API_ENDPOINT }}
         run: |
           node tools/updateInstitutions.ts ${{ needs.prepare.outputs.municipality }}

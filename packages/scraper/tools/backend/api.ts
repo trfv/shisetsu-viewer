@@ -35,7 +35,7 @@ interface UpsertResponse {
 }
 
 async function putJson<T>(path: string, body: unknown): Promise<T> {
-  const endpoint = requireEnv("D1_API_ENDPOINT");
+  const endpoint = requireEnv("API_ENDPOINT");
   const headers = { "Content-Type": "application/json", ...(await getAuthHeaders()) };
   let lastError: unknown;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -47,7 +47,7 @@ async function putJson<T>(path: string, body: unknown): Promise<T> {
       });
       if (res.status >= 500) throw new Error(`HTTP error! status: ${res.status}`);
       if (!res.ok && res.status !== 202) {
-        throw new Error(`D1 API error ${res.status}: ${await res.text()}`);
+        throw new Error(`API error ${res.status}: ${await res.text()}`);
       }
       return (await res.json()) as T;
     } catch (error) {
@@ -97,7 +97,7 @@ export async function upsertInstitutions(rows: InstitutionRecord[]): Promise<num
 }
 
 async function getAllPages<T>(path: string, params: Record<string, string>): Promise<T[]> {
-  const endpoint = requireEnv("D1_API_ENDPOINT");
+  const endpoint = requireEnv("API_ENDPOINT");
   const all: T[] = [];
   let cursor: string | null = null;
   do {

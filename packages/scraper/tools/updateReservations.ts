@@ -2,7 +2,7 @@ import fs from "fs/promises";
 
 import { getMunicipalityKeyByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
 
-import { fetchInstitutionKeyMap, upsertReservations } from "./backend/d1Api.ts";
+import { fetchInstitutionKeyMap, upsertReservations } from "./backend/api.ts";
 import { buildReservationRows } from "./backend/transform.ts";
 import type { FileData } from "./backend/types.ts";
 
