@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { formatDate, formatDatetime } from "../../utils/format";
@@ -26,6 +28,7 @@ type Column<T> = {
   wrap?: boolean;
   hide?: boolean;
   valueGetter?: (row: RowParams<T>) => string;
+  renderCell?: (row: RowParams<T>) => ReactNode;
 };
 
 export type Columns<T> = Column<T>[];
@@ -55,6 +58,14 @@ const getCellValue = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>
       return String(value);
   }
 };
+
+const renderCellContent = <T extends Row>(
+  col: Column<T>,
+  row: T,
+  columns: Columns<T>,
+  value: string
+): ReactNode =>
+  col.renderCell ? col.renderCell({ id: row.id, value: row[col.field], row, columns }) : value;
 
 const cellStyle = (col: Column<unknown>): React.CSSProperties =>
   col.wrap
@@ -99,7 +110,9 @@ export const DataTable = <T extends Row>({
               {detailCols.map((col) => (
                 <div className={styles["cardRow"]} key={`${row.id}-${col.field}`}>
                   <span className={styles["cardLabel"]}>{col.headerName}</span>
-                  <span className={styles["cardValue"]}>{getCellValue(col, row, columns)}</span>
+                  <span className={styles["cardValue"]}>
+                    {renderCellContent(col, row, columns, getCellValue(col, row, columns))}
+                  </span>
                 </div>
               ))}
             </div>
@@ -161,7 +174,7 @@ export const DataTable = <T extends Row>({
                       title={value}
                       variant="body"
                     >
-                      {value}
+                      {renderCellContent(col, row, columns, value)}
                     </TableCell>
                   );
                 })}

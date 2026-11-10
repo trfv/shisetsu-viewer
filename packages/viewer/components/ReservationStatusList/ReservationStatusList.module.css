@@ -1,0 +1,25 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  gap: 4px;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.vacant {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.division {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
