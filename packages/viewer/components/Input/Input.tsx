@@ -33,28 +33,35 @@ export const Input: FC<Props> = ({
 }: Props) => {
   const inputClass = `${inputStyles["input"]}${multiline ? ` ${inputStyles["textarea"]}` : ""}`;
 
+  const control = multiline ? (
+    <textarea
+      className={inputClass}
+      readOnly={readOnly}
+      rows={rows}
+      value={value ?? ""}
+      {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+    />
+  ) : (
+    <input
+      className={inputStyles["input"]}
+      readOnly={readOnly}
+      type="text"
+      value={value ?? ""}
+      {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+    />
+  );
+
   return (
     <BaseBox size={size} component="label" display="flex" flexDirection="column">
       <SmallLabel label={label} />
       <Spacer axis="vertical" size={4} />
       {loading ? (
-        <Skeleton height={32} />
-      ) : multiline ? (
-        <textarea
-          className={inputClass}
-          readOnly={readOnly}
-          rows={rows}
-          value={value ?? ""}
-          {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
-        />
+        <span className={inputStyles["loading"]}>
+          {control}
+          <Skeleton height="auto" />
+        </span>
       ) : (
-        <input
-          className={inputStyles["input"]}
-          readOnly={readOnly}
-          type="text"
-          value={value ?? ""}
-          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
-        />
+        control
       )}
     </BaseBox>
   );
