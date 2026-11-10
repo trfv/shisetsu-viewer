@@ -5,8 +5,10 @@ import { authorizeAdmin } from "./auth/adminAuth.ts";
 import { verifyAccessToken, type Principal } from "./auth/auth0.ts";
 import {
   exportReservations,
+  getBuildingDetail,
   getInstitutionDetail,
   listInstitutionReservations,
+  listBuildings,
   listHolidays,
   listInstitutions,
   listScrapeRuns,
@@ -49,6 +51,7 @@ const DAILY_WRITE_BUDGET = 80_000;
 
 const ID_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
 const RE_INSTITUTION = new RegExp(`^/v1/institutions/(${ID_PATTERN})$`, "i");
+const RE_BUILDING = new RegExp(`^/v1/buildings/(${ID_PATTERN})$`, "i");
 const RE_INSTITUTION_RESERVATIONS = new RegExp(
   `^/v1/institutions/(${ID_PATTERN})/reservations$`,
   "i"
@@ -114,6 +117,8 @@ async function handleListInstitutions(url: URL, env: Env): Promise<Response> {
   const detail = parseBoolParam(url, "detail");
   const page = await listInstitutions(env.DB, {
     municipality: parseListParam(url, "municipality"),
+    buildingId: url.searchParams.get("buildingId") ?? undefined,
+    reservationSystem: parseListParam(url, "reservationSystem"),
     isAvailableStrings: parseBoolParam(url, "isAvailableStrings"),
     isAvailableWoodwind: parseBoolParam(url, "isAvailableWoodwind"),
     isAvailableBrass: parseBoolParam(url, "isAvailableBrass"),
@@ -131,6 +136,22 @@ async function handleListInstitutions(url: URL, env: Env): Promise<Response> {
 async function handleInstitutionDetail(id: string, env: Env): Promise<Response> {
   const detail = await getInstitutionDetail(env.DB, id);
   if (!detail) return error(404, "institution not found");
+  return json(detail, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
+}
+
+async function handleListBuildings(url: URL, env: Env): Promise<Response> {
+  const page = await listBuildings(env.DB, {
+    municipality: parseListParam(url, "municipality"),
+    reservationSystem: parseListParam(url, "reservationSystem"),
+    limit: parseLimit(url),
+    cursor: url.searchParams.get("cursor") ?? undefined,
+  });
+  return json(page, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
+}
+
+async function handleBuildingDetail(id: string, env: Env): Promise<Response> {
+  const detail = await getBuildingDetail(env.DB, id);
+  if (!detail) return error(404, "building not found");
   return json(detail, { headers: { "Cache-Control": INSTITUTIONS_CACHE } });
 }
 
@@ -181,6 +202,8 @@ async function handleSearch(
       startDate,
       endDate,
       municipality: parseListParam(url, "municipality"),
+      buildingId: url.searchParams.get("buildingId") ?? undefined,
+      reservationSystem: parseListParam(url, "reservationSystem"),
       isHoliday: parseBoolParam(url, "isHoliday"),
       isMorningVacant: parseBoolParam(url, "isMorningVacant"),
       isAfternoonVacant: parseBoolParam(url, "isAfternoonVacant"),
@@ -317,6 +340,8 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
         return json({ ok: true, version: env.CF_VERSION_METADATA?.tag || null });
       if (pathname === "/v1/institutions")
         return await withEdgeCache(url, ctx, () => handleListInstitutions(url, env));
+      if (pathname === "/v1/buildings")
+        return await withEdgeCache(url, ctx, () => handleListBuildings(url, env));
       if (pathname === "/v1/scrape-runs")
         return await withEdgeCache(url, ctx, () => handleScrapeRuns(env));
       if (pathname === "/v1/holidays")
@@ -328,6 +353,11 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
       const resv = pathname.match(RE_INSTITUTION_RESERVATIONS);
       if (resv)
         return await handleInstitutionReservations(request, principal, resv[1] as string, url, env);
+      const building = pathname.match(RE_BUILDING);
+      if (building) {
+        const id = building[1] as string;
+        return await withEdgeCache(url, ctx, () => handleBuildingDetail(id, env));
+      }
       const detail = pathname.match(RE_INSTITUTION);
       if (detail) {
         const id = detail[1] as string;

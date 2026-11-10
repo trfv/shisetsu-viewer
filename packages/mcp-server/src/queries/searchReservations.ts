@@ -5,6 +5,7 @@ import { RESERVATION_FIELDS, SEARCH_INSTITUTION_FIELDS } from "./fields.ts";
 import { pick } from "./pick.ts";
 import {
   afterSchema,
+  buildingIdSchema,
   dateSchema,
   fieldsSchema,
   firstSchema,
@@ -13,11 +14,14 @@ import {
   municipalitySchema,
   onlyTrue,
   pageInfoSchema,
+  reservationSystemSchema,
   rowSchema,
 } from "./schemas.ts";
 
 export const searchReservationsInput = z.object({
   municipality: municipalitySchema,
+  buildingId: buildingIdSchema,
+  reservationSystem: reservationSystemSchema,
   startDate: dateSchema.describe("開始日 (YYYY-MM-DD)"),
   endDate: dateSchema.describe("終了日 (YYYY-MM-DD)"),
   isHoliday: z.boolean().optional().describe("trueで祝日のみに絞り込み"),
@@ -51,6 +55,8 @@ export async function executeSearchReservations(
     startDate: args.startDate,
     endDate: args.endDate,
     municipality: args.municipality,
+    buildingId: args.buildingId,
+    reservationSystem: args.reservationSystem,
     institutionSizes: args.institutionSizes,
     isHoliday: onlyTrue(args.isHoliday),
     isMorningVacant: onlyTrue(args.isMorningVacant),

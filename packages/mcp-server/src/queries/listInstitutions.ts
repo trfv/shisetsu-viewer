@@ -5,6 +5,7 @@ import { INSTITUTION_LIST_FIELDS } from "./fields.ts";
 import { pick } from "./pick.ts";
 import {
   afterSchema,
+  buildingIdSchema,
   fieldsSchema,
   firstSchema,
   institutionSizesSchema,
@@ -12,11 +13,14 @@ import {
   municipalitySchema,
   onlyTrue,
   pageInfoSchema,
+  reservationSystemSchema,
   rowSchema,
 } from "./schemas.ts";
 
 export const listInstitutionsInput = z.object({
   municipality: municipalitySchema,
+  buildingId: buildingIdSchema,
+  reservationSystem: reservationSystemSchema,
   institutionSizes: institutionSizesSchema,
   ...instrumentFilterSchemas,
   fields: fieldsSchema(INSTITUTION_LIST_FIELDS),
@@ -36,6 +40,8 @@ export async function executeListInstitutions(
 ): Promise<z.output<typeof listInstitutionsOutput>> {
   const page = await dataSource.listInstitutions({
     municipality: args.municipality,
+    buildingId: args.buildingId,
+    reservationSystem: args.reservationSystem,
     institutionSizes: args.institutionSizes,
     isAvailableStrings: onlyTrue(args.isAvailableStrings),
     isAvailableWoodwind: onlyTrue(args.isAvailableWoodwind),

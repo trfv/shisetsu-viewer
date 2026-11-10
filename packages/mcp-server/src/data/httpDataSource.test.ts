@@ -45,6 +45,23 @@ describe("createHttpDataSource", () => {
     expect(headers["Authorization"]).toBe("Bearer tok");
   });
 
+  it("buildingId と reservationSystem を検索の query に載せる", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({ items: [], pageInfo: { hasNextPage: false, endCursor: null } })
+    );
+    const ds = createHttpDataSource(ENDPOINT, {});
+    await ds.searchReservations({
+      startDate: "2026-11-01",
+      endDate: "2026-11-30",
+      buildingId: "b1",
+      reservationSystem: ["tokyo-kita", "tokyo-kita-genkiplaza"],
+    });
+    const url = new URL(fetchMock.mock.calls[0]![0] as string);
+    expect(url.pathname).toBe("/v1/reservations/search");
+    expect(url.searchParams.get("buildingId")).toBe("b1");
+    expect(url.searchParams.get("reservationSystem")).toBe("tokyo-kita,tokyo-kita-genkiplaza");
+  });
+
   it("returns null for a 404 institution detail", async () => {
     fetchMock.mockResolvedValue(jsonResponse({ error: "not found" }, 404));
     const ds = createHttpDataSource(ENDPOINT, {});

@@ -36,7 +36,7 @@ for (const target of targets) {
     throw new Error(`registry に scraper target=${target} の自治体がありません`);
   }
 
-  const keyMap = await fetchInstitutionKeyMap(municipality);
+  const keyMap = await fetchInstitutionKeyMap(municipality, target);
   const { rows, unmatchedKeys } = buildReservationRows(fileData, keyMap);
   if (unmatchedKeys.length > 0) {
     console.warn(`${target}: unmatched facility keys: ${unmatchedKeys.join(", ")}`);

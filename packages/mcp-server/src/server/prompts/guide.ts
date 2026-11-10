@@ -19,7 +19,7 @@ ${buildMunicipalityTable()}
 
 ## 推奨ワークフロー
 
-1. **施設を探す** → \`list_institutions\` で自治体・楽器利用可否・施設サイズでフィルタ
+1. **施設を探す** → \`list_institutions\` で自治体・建物・予約システム・楽器利用可否・施設サイズでフィルタ
 2. **詳細を見る** → \`get_institution_detail\` で料金・住所・設備を確認
 3. **空きを確認** → 特定施設なら \`get_institution_reservations\`、横断検索なら \`search_reservations\`
 
@@ -27,6 +27,9 @@ ${buildMunicipalityTable()}
 
 ### 楽器利用可否フィルタ
 \`isAvailableStrings\`, \`isAvailableWoodwind\`, \`isAvailableBrass\`, \`isAvailablePercussion\` には \`true\`（利用可）または \`false\`（利用不可）を指定できます。
+
+### 建物・予約システム
+同じ建物の部屋は \`building_id\` が同じです。\`buildingId\` に指定すると、その建物の部屋だけに絞れます。\`reservationSystem\` には予約システムのキー（例: \`tokyo-kita\`）を指定します。
 
 ### 施設サイズ
 - \`INSTITUTION_SIZE_LARGE\` — 100人以上

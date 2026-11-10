@@ -221,11 +221,25 @@ describe("upsertInstitutions", () => {
   });
 
   it("division_labels は未指定なら {}、指定すれば詳細 API まで round-trip する", async () => {
-    await upsertInstitutions(env.DB, [base]);
+    const buildingId = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
+    await upsertBuildings(env.DB, [
+      {
+        id: buildingId,
+        prefecture: "PREFECTURE_TOKYO",
+        municipality: "MUNICIPALITY_KOUTOU",
+        name: "館",
+        kana: "かん",
+        system_name: "bsys",
+        address: "",
+        reservation_system: "tokyo-koutou",
+      },
+    ]);
+    const room = { ...base, building_id: buildingId };
+    await upsertInstitutions(env.DB, [room]);
     expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual({});
 
     const labels = { RESERVATION_DIVISION_MORNING: "9:00-11:45" };
-    const res = await upsertInstitutions(env.DB, [{ ...base, division_labels: labels }]);
+    const res = await upsertInstitutions(env.DB, [{ ...room, division_labels: labels }]);
     expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
     expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual(labels);
   });

@@ -14,7 +14,7 @@ export function registerSearchReservations(server: McpServer, dataSource: DataSo
     {
       description: `複数施設を横断して空き状況を検索します。特定の日付範囲・時間帯で空いている施設を見つけるのに最適です。
 
-【使い方】startDate/endDate(YYYY-MM-DD)は必須。時間帯フィルタ: isMorningVacant(午前), isAfternoonVacant(午後), isEveningVacant(夜間)にtrueを指定。楽器フィルタ: isAvailableStrings等にtrueを指定で利用可のみ。
+【使い方】startDate/endDate(YYYY-MM-DD)は必須。時間帯フィルタ: isMorningVacant(午前), isAfternoonVacant(午後), isEveningVacant(夜間)にtrueを指定。楽器フィルタ: isAvailableStrings等にtrueを指定で利用可のみ。建物で絞るときは buildingId に list_institutions の building_id を指定。
 【レスポンス】reservations: 配列(各エントリに reservation + institution サブオブジェクト), pageInfo: { hasNextPage, endCursor }, count`,
       annotations: { title: "予約横断検索", ...READ_ONLY },
       inputSchema: searchReservationsInput,

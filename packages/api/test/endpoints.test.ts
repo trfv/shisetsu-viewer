@@ -2,7 +2,7 @@ import { SELF, env } from "cloudflare:test";
 import { SignJWT, exportJWK, generateKeyPair } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { INSTITUTIONS, seed } from "./fixtures.ts";
+import { BUILDINGS, INSTITUTIONS, seed } from "./fixtures.ts";
 
 const BASE = "https://api.example.com";
 const ISSUER = `https://${env.AUTH0_DOMAIN}/`;
@@ -70,16 +70,16 @@ describe("public endpoints", () => {
     const first = await SELF.fetch(url);
     expect(first.headers.get("Cache-Control")).toBe("no-store");
 
-    await env.DB.prepare(`UPDATE institutions SET building_system_name = ? WHERE id = ?`)
-      .bind("renamed", INSTITUTIONS[2].id)
+    await env.DB.prepare(`UPDATE buildings SET system_name = ? WHERE id = ?`)
+      .bind("renamed", BUILDINGS[1].id)
       .run();
 
     const second = (await (await SELF.fetch(url)).json()) as { items: Record<string, string>[] };
     expect(second.items[0]?.["building_system_name"]).toBe("renamed");
 
     // 他のテストの実行順に依存させないため元に戻す
-    await env.DB.prepare(`UPDATE institutions SET building_system_name = ? WHERE id = ?`)
-      .bind(INSTITUTIONS[2].building_system_name, INSTITUTIONS[2].id)
+    await env.DB.prepare(`UPDATE buildings SET system_name = ? WHERE id = ?`)
+      .bind(BUILDINGS[1].system_name, BUILDINGS[1].id)
       .run();
   });
 
@@ -90,6 +90,24 @@ describe("public endpoints", () => {
     expect(body.building).toBe("非RFC館");
   });
 
+  it("GET /v1/buildings と /v1/buildings/:id は公開でキャッシュされる", async () => {
+    const list = await SELF.fetch(`${BASE}/v1/buildings?reservationSystem=tokyo-toshima`);
+    expect(list.status).toBe(200);
+    expect(list.headers.get("Cache-Control")).toBe("public, max-age=600");
+    const body = (await list.json()) as { items: { id: string }[] };
+    expect(body.items.map((b) => b.id)).toEqual([BUILDINGS[1].id]);
+
+    const detail = await SELF.fetch(`${BASE}/v1/buildings/${BUILDINGS[1].id}`);
+    expect(detail.status).toBe(200);
+    const room = ((await detail.json()) as { institutions: { id: string }[] }).institutions;
+    expect(room.map((i) => i.id)).toEqual([INSTITUTIONS[2].id]);
+  });
+
+  it("存在しない建物は 404", async () => {
+    const res = await SELF.fetch(`${BASE}/v1/buildings/99999999-9999-4999-8999-999999999999`);
+    expect(res.status).toBe(404);
+  });
+
   it("不正な ID 形式は 404", async () => {
     const res = await SELF.fetch(`${BASE}/v1/institutions/not-a-uuid`);
     expect(res.status).toBe(404);
@@ -97,15 +115,15 @@ describe("public endpoints", () => {
 
   it("公開 GET はエッジキャッシュから返る（D1 の変更が max-age 内は見えない）", async () => {
     const url = `${BASE}/v1/institutions/${INSTITUTIONS[1].id}`;
-    const before = (await (await SELF.fetch(url)).json()) as { building: string };
-    expect(before.building).toBe("会館A");
+    const before = (await (await SELF.fetch(url)).json()) as { institution: string };
+    expect(before.institution).toBe("ホール");
 
-    await env.DB.prepare(`UPDATE institutions SET building = ? WHERE id = ?`)
+    await env.DB.prepare(`UPDATE institutions SET institution = ? WHERE id = ?`)
       .bind("差し替え後", INSTITUTIONS[1].id)
       .run();
 
-    const after = (await (await SELF.fetch(url)).json()) as { building: string };
-    expect(after.building).toBe("会館A");
+    const after = (await (await SELF.fetch(url)).json()) as { institution: string };
+    expect(after.institution).toBe("ホール");
   });
 
   it("認証必須の GET はキャッシュされない（D1 の変更が即座に見える）", async () => {

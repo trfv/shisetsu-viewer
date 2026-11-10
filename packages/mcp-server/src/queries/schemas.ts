@@ -1,17 +1,21 @@
-import { MUNICIPALITIES } from "@shisetsu-viewer/shared";
+import { MUNICIPALITIES, RESERVATION_SYSTEMS } from "@shisetsu-viewer/shared";
 import { z } from "zod";
 
 export const MUNICIPALITY_HELP = Object.values(MUNICIPALITIES)
   .map((config) => `${config.key} (${config.label})`)
   .join(", ");
 
+const RESERVATION_SYSTEM_HELP = Object.values(RESERVATION_SYSTEMS)
+  .map((system) => `${system.key} (${system.label})`)
+  .join(", ");
+
 export const INSTITUTION_SIZE_HELP =
   "INSTITUTION_SIZE_LARGE (100人以上), INSTITUTION_SIZE_MEDIUM (50〜99人), INSTITUTION_SIZE_SMALL (50人未満)";
 
 // z.string().uuid() は使わない。施設 ID に RFC 4122 非準拠の UUID が含まれ、厳格検証で弾かれる。
-export const institutionIdSchema = z
-  .string()
-  .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/);
+const ID_PATTERN = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
+export const institutionIdSchema = z.string().regex(ID_PATTERN);
 
 export const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
@@ -19,6 +23,17 @@ export const municipalitySchema = z
   .array(z.string())
   .optional()
   .describe(`自治体キーでフィルタ。指定可能な値: ${MUNICIPALITY_HELP}`);
+
+export const buildingIdSchema = z
+  .string()
+  .regex(ID_PATTERN)
+  .optional()
+  .describe("建物 ID でフィルタ (list_institutions の building_id)");
+
+export const reservationSystemSchema = z
+  .array(z.string())
+  .optional()
+  .describe(`予約システムでフィルタ。指定可能な値: ${RESERVATION_SYSTEM_HELP}`);
 
 export const institutionSizesSchema = z
   .array(z.string())

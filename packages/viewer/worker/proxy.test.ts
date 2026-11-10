@@ -3,19 +3,22 @@ import { describe, expect, it } from "vitest";
 import { isAllowedApiPath, proxyToApi } from "./proxy.ts";
 
 describe("isAllowedApiPath", () => {
-  it("読み取り 6 経路を許可する", () => {
+  it("読み取り 8 経路を許可する", () => {
     expect(isAllowedApiPath("/v1/institutions")).toBe(true);
     expect(isAllowedApiPath("/v1/institutions/abc-123")).toBe(true);
     expect(isAllowedApiPath("/v1/institutions/abc-123/reservations")).toBe(true);
     expect(isAllowedApiPath("/v1/reservations/search")).toBe(true);
     expect(isAllowedApiPath("/v1/scrape-runs")).toBe(true);
     expect(isAllowedApiPath("/v1/holidays")).toBe(true);
+    expect(isAllowedApiPath("/v1/buildings")).toBe(true);
+    expect(isAllowedApiPath("/v1/buildings/abc-123")).toBe(true);
   });
 
   it("admin 系を拒否する", () => {
     expect(isAllowedApiPath("/v1/admin/reservations")).toBe(false);
     expect(isAllowedApiPath("/v1/admin/institutions")).toBe(false);
     expect(isAllowedApiPath("/v1/admin/holidays")).toBe(false);
+    expect(isAllowedApiPath("/v1/admin/buildings")).toBe(false);
     expect(isAllowedApiPath("/v1/admin/reservations/export")).toBe(false);
   });
 
@@ -30,6 +33,7 @@ describe("isAllowedApiPath", () => {
   it("institution の id にスラッシュを含む偽装を拒否する", () => {
     expect(isAllowedApiPath("/v1/institutions/a/b")).toBe(false);
     expect(isAllowedApiPath("/v1/institutions/a/reservations/b")).toBe(false);
+    expect(isAllowedApiPath("/v1/buildings/a/b")).toBe(false);
   });
 });
 

@@ -7,6 +7,8 @@ const ALLOWED_PATHS: RegExp[] = [
   /^\/v1\/institutions$/,
   /^\/v1\/institutions\/[^/]+$/,
   /^\/v1\/institutions\/[^/]+\/reservations$/,
+  /^\/v1\/buildings$/,
+  /^\/v1\/buildings\/[^/]+$/,
   /^\/v1\/reservations\/search$/,
   /^\/v1\/scrape-runs$/,
   /^\/v1\/holidays$/,
