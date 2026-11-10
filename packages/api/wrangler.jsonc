@@ -5,8 +5,10 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
-  // api.shisetsudb.com は旧 Hasura の A レコードが占有している
-  "routes": [{ "pattern": "d1-api.shisetsudb.com", "custom_domain": true }],
+  "routes": [
+    { "pattern": "api.shisetsudb.com", "custom_domain": true },
+    { "pattern": "d1-api.shisetsudb.com", "custom_domain": true },
+  ],
   "observability": { "enabled": true },
   // ここに無い Secret があると deploy が止まる
   "secrets": { "required": ["ADMIN_API_KEY"] },

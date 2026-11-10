@@ -53,7 +53,7 @@ flowchart LR
 
   subgraph cf["Cloudflare"]
     viewer["viewer Worker<br/>app.shisetsudb.com<br/>静的アセット + BFF"]
-    api["api Worker<br/>d1-api.shisetsudb.com"]
+    api["api Worker<br/>api.shisetsudb.com"]
     mcp["mcp-server Worker<br/>mcp.shisetsudb.com"]
     d1[("D1<br/>shisetsu-db")]
     kv[("KV<br/>OAUTH_KV")]
