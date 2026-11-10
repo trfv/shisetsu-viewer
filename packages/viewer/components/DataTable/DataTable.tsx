@@ -59,10 +59,13 @@ const getCellValue = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>
   }
 };
 
-const renderCellContent = <T extends Row>(col: Column<T>, row: T, columns: Columns<T>): ReactNode =>
-  col.renderCell
-    ? col.renderCell({ id: row.id, value: row[col.field], row, columns })
-    : getCellValue(col, row, columns);
+const renderCellContent = <T extends Row>(
+  col: Column<T>,
+  row: T,
+  columns: Columns<T>,
+  value: string
+): ReactNode =>
+  col.renderCell ? col.renderCell({ id: row.id, value: row[col.field], row, columns }) : value;
 
 const cellStyle = (col: Column<unknown>): React.CSSProperties =>
   col.wrap
@@ -108,7 +111,7 @@ export const DataTable = <T extends Row>({
                 <div className={styles["cardRow"]} key={`${row.id}-${col.field}`}>
                   <span className={styles["cardLabel"]}>{col.headerName}</span>
                   <span className={styles["cardValue"]}>
-                    {renderCellContent(col, row, columns)}
+                    {renderCellContent(col, row, columns, getCellValue(col, row, columns))}
                   </span>
                 </div>
               ))}
@@ -171,7 +174,7 @@ export const DataTable = <T extends Row>({
                       title={value}
                       variant="body"
                     >
-                      {col.renderCell ? renderCellContent(col, row, columns) : value}
+                      {renderCellContent(col, row, columns, value)}
                     </TableCell>
                   );
                 })}
