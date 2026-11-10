@@ -217,11 +217,11 @@ describe("upsertBuildings", () => {
     expect(row?.reservation_system).toBeNull();
   });
 
-  it("同じ予約システムで system_name が重複する別 id は UNIQUE で拒否される", async () => {
+  it("同じ予約システムで system_name が同じ別の建物を受け付ける", async () => {
     await upsertBuildings(env.DB, [building]);
-    await expect(
-      upsertBuildings(env.DB, [{ ...building, id: "dddddddd-dddd-4ddd-8ddd-dddddddddddd" }])
-    ).rejects.toThrow();
+    const annex = { ...building, id: "dddddddd-dddd-4ddd-8ddd-dddddddddddd", name: "赤羽会館別館" };
+    const res = await upsertBuildings(env.DB, [annex]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
   });
 
   it("building_id だけを持つ部屋は、建物の欄を buildings から写して入る", async () => {

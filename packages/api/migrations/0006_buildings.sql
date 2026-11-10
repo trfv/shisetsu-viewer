@@ -13,11 +13,8 @@ CREATE TABLE buildings (
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
 );
+-- (reservation_system, system_name) は UNIQUE にしない。目黒区は本館と別館を予約サイト上で同じ施設名で出す
 CREATE INDEX idx_buildings_list ON buildings (municipality, kana, id);
--- 空文字はスクレイプ対象外の手動登録なので除く
-CREATE UNIQUE INDEX idx_buildings_system_key
-  ON buildings (reservation_system, system_name)
-  WHERE system_name <> '';
 
 ALTER TABLE institutions ADD COLUMN building_id TEXT REFERENCES buildings (id);
 CREATE INDEX idx_institutions_building ON institutions (building_id, institution_kana, id);
