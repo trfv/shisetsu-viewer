@@ -124,7 +124,7 @@ argument-hint: <municipality-slug>
 
    - `--ref` は今回作った修正ブランチ。これにより `workflow_dispatch` の prepare ジョブが PR ブランチをチェックアウトして CI を回す。
    - シャード数は自治体のテスト数 ÷ `density`（入力、既定 5）の切り上げで決まる（`common/shardMatrix.ts`）。`municipality` を絞れば、その自治体のシャードだけが走る。
-   - `municipality` に指定した自治体は `SCRAPER_FORCE_INCLUDE` に渡るので、registry で `scraperCiExcluded: true` の自治体でも走る。
+   - `municipality` に指定した自治体は `SCRAPER_FORCE_INCLUDE` に渡るので、registry の `RESERVATION_SYSTEMS` で `scraperCiExcluded: true` の予約システムでも走る。
 
 2. 実行 ID を取得し、進捗を watch:
 

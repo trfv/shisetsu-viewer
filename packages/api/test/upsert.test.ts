@@ -1,4 +1,4 @@
-import type { Institution } from "@shisetsu-viewer/shared";
+import type { Building, Institution } from "@shisetsu-viewer/shared";
 import { env } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -6,6 +6,7 @@ import { getInstitutionDetail } from "../src/db/queries.ts";
 import {
   recordScrapeRun,
   todayRowsWritten,
+  upsertBuildings,
   upsertHolidays,
   upsertInstitutions,
   upsertReservations,
@@ -16,6 +17,7 @@ const INST_ID = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 beforeEach(async () => {
   await env.DB.exec("DELETE FROM reservations");
   await env.DB.exec("DELETE FROM institutions");
+  await env.DB.exec("DELETE FROM buildings");
   await env.DB.exec("DELETE FROM holidays");
   await env.DB.exec("DELETE FROM scrape_runs");
 });
@@ -176,6 +178,112 @@ describe("upsertInstitutions", () => {
     const res = await upsertInstitutions(env.DB, [{ ...base, division_labels: labels }]);
     expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
     expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual(labels);
+  });
+});
+
+function legacyColumns(id = INST_ID) {
+  return env.DB.prepare(
+    `SELECT building_id, prefecture, municipality, building, building_kana, building_system_name, address
+     FROM institutions WHERE id = ?`
+  )
+    .bind(id)
+    .first();
+}
+
+describe("upsertBuildings", () => {
+  const BUILDING_ID = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
+  const building: Building = {
+    id: BUILDING_ID,
+    prefecture: "PREFECTURE_TOKYO",
+    municipality: "MUNICIPALITY_KITA",
+    name: "赤羽会館",
+    kana: "アカバネカイカン",
+    system_name: "赤羽会館",
+    address: "北区赤羽南1丁目13−1",
+    reservation_system: "tokyo-kita",
+  };
+  it("新規 insert 後、同一データ再送は rows_written = 0", async () => {
+    const first = await upsertBuildings(env.DB, [building]);
+    expect(first.rowsWritten).toBeGreaterThanOrEqual(1);
+    const second = await upsertBuildings(env.DB, [building]);
+    expect(second.rowsWritten).toBe(0);
+  });
+
+  it("予約システムの無い手動登録の建物は reservation_system が NULL で入る", async () => {
+    await upsertBuildings(env.DB, [{ ...building, reservation_system: null }]);
+    const row = await env.DB.prepare(`SELECT reservation_system FROM buildings WHERE id = ?`)
+      .bind(BUILDING_ID)
+      .first<{ reservation_system: string | null }>();
+    expect(row?.reservation_system).toBeNull();
+  });
+
+  it("同じ予約システムで system_name が同じ別の建物を受け付ける", async () => {
+    await upsertBuildings(env.DB, [building]);
+    const annex = { ...building, id: "dddddddd-dddd-4ddd-8ddd-dddddddddddd", name: "赤羽会館別館" };
+    const res = await upsertBuildings(env.DB, [annex]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+  });
+
+  it("building_id だけを持つ部屋は、建物の欄を buildings から写して入る", async () => {
+    await upsertBuildings(env.DB, [building]);
+    const {
+      prefecture: _p,
+      municipality: _m,
+      building: _b,
+      building_kana: _bk,
+      building_system_name: _bs,
+      address: _a,
+      ...room
+    } = base;
+    await upsertInstitutions(env.DB, [{ ...room, building_id: BUILDING_ID } as Institution]);
+    expect(await legacyColumns()).toEqual({
+      building_id: BUILDING_ID,
+      prefecture: "PREFECTURE_TOKYO",
+      municipality: "MUNICIPALITY_KITA",
+      building: "赤羽会館",
+      building_kana: "アカバネカイカン",
+      building_system_name: "赤羽会館",
+      address: "北区赤羽南1丁目13−1",
+    });
+    expect((await getInstitutionDetail(env.DB, INST_ID))?.building_id).toBe(BUILDING_ID);
+  });
+
+  it("building_id を持つ部屋は、送られた建物の欄より buildings を優先する", async () => {
+    await upsertBuildings(env.DB, [building]);
+    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
+    expect(await legacyColumns()).toMatchObject({
+      building: "赤羽会館",
+      address: building.address,
+    });
+  });
+
+  it("建物を更新すると、その建物の部屋の写しも更新される", async () => {
+    await upsertBuildings(env.DB, [building]);
+    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
+    const res = await upsertBuildings(env.DB, [{ ...building, address: "北区赤羽南1-13-1" }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(2);
+    expect(await legacyColumns()).toMatchObject({ address: "北区赤羽南1-13-1" });
+  });
+
+  it("building_id を送らない旧形式の再送で、入っている building_id を消さない", async () => {
+    await upsertBuildings(env.DB, [building]);
+    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
+    await upsertInstitutions(env.DB, [{ ...base, note: "改定" }]);
+    expect(await legacyColumns()).toMatchObject({ building_id: BUILDING_ID });
+  });
+
+  it("旧形式の部屋に後から building_id を足すと更新される", async () => {
+    await upsertBuildings(env.DB, [building]);
+    await upsertInstitutions(env.DB, [base]);
+    const res = await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+    expect(await legacyColumns()).toMatchObject({ building_id: BUILDING_ID });
+  });
+
+  it("存在しない building_id を指す部屋は外部キーで拒否される", async () => {
+    await expect(
+      upsertInstitutions(env.DB, [{ ...base, building_id: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee" }])
+    ).rejects.toThrow();
   });
 });
 

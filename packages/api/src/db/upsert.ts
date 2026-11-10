@@ -1,4 +1,4 @@
-import { canonicalizeReservation, type Institution } from "@shisetsu-viewer/shared";
+import { canonicalizeReservation, type Building, type Institution } from "@shisetsu-viewer/shared";
 
 export interface UpsertResult {
   rowsWritten: number;
@@ -39,6 +39,26 @@ export async function upsertReservations(
   return { rowsWritten: rowsWritten(result) };
 }
 
+const BUILDING_COLUMNS = [
+  "prefecture",
+  "municipality",
+  "name",
+  "kana",
+  "system_name",
+  "address",
+  "reservation_system",
+] as const;
+
+// 部屋の建物の欄は buildings の写し。building_id を持つ行は送られてきた値より buildings を優先する
+const COPIED_FROM_BUILDING: Readonly<Record<string, string>> = {
+  prefecture: "prefecture",
+  municipality: "municipality",
+  building: "name",
+  building_kana: "kana",
+  building_system_name: "system_name",
+  address: "address",
+};
+
 const INSTITUTION_COLUMNS = [
   "prefecture",
   "municipality",
@@ -75,14 +95,14 @@ const JSON_COLUMN_DEFAULTS: Readonly<Record<string, unknown>> = {
   division_labels: {},
 };
 
-const INSTITUTION_UPSERT_SQL = (() => {
-  const insertCols = ["id", ...INSTITUTION_COLUMNS];
+const BUILDING_UPSERT_SQL = (() => {
+  const insertCols = ["id", ...BUILDING_COLUMNS];
   const selectExprs = insertCols.map((c) => `je.value ->> '$.${c}'`);
-  const setClause = INSTITUTION_COLUMNS.map((c) => `${c} = excluded.${c}`).join(",\n         ");
-  const changeGuard = INSTITUTION_COLUMNS.map((c) => `institutions.${c} IS NOT excluded.${c}`).join(
+  const setClause = BUILDING_COLUMNS.map((c) => `${c} = excluded.${c}`).join(",\n         ");
+  const changeGuard = BUILDING_COLUMNS.map((c) => `buildings.${c} IS NOT excluded.${c}`).join(
     "\n          OR "
   );
-  return `INSERT INTO institutions (${insertCols.join(", ")})
+  return `INSERT INTO buildings (${insertCols.join(", ")})
        SELECT ${selectExprs.join(", ")}
        FROM json_each(?1) AS je
        WHERE TRUE
@@ -92,6 +112,63 @@ const INSTITUTION_UPSERT_SQL = (() => {
        WHERE ${changeGuard}`;
 })();
 
+const SYNC_INSTITUTIONS_FROM_BUILDINGS_SQL = (() => {
+  const entries = Object.entries(COPIED_FROM_BUILDING);
+  const setClause = entries.map(([i, b]) => `${i} = b.${b}`).join(",\n         ");
+  const changeGuard = entries
+    .map(([i, b]) => `institutions.${i} IS NOT b.${b}`)
+    .join("\n          OR ");
+  return `UPDATE institutions SET
+         ${setClause},
+         updated_at = ${NOW}
+       FROM buildings AS b
+       WHERE b.id = institutions.building_id
+         AND b.id IN (SELECT je.value ->> '$.id' FROM json_each(?1) AS je)
+         AND (${changeGuard})`;
+})();
+
+const INSTITUTION_UPSERT_SQL = (() => {
+  const insertCols = ["id", "building_id", ...INSTITUTION_COLUMNS];
+  const selectExprs = insertCols.map((c) => {
+    const fromBuilding = COPIED_FROM_BUILDING[c];
+    return fromBuilding
+      ? `COALESCE(b.${fromBuilding}, je.value ->> '$.${c}')`
+      : `je.value ->> '$.${c}'`;
+  });
+  const setClause = INSTITUTION_COLUMNS.map((c) => `${c} = excluded.${c}`).join(",\n         ");
+  const changeGuard = INSTITUTION_COLUMNS.map((c) => `institutions.${c} IS NOT excluded.${c}`).join(
+    "\n          OR "
+  );
+  // building_id を送らない旧形式の行で、入っている building_id を消さない
+  return `INSERT INTO institutions (${insertCols.join(", ")})
+       SELECT ${selectExprs.join(", ")}
+       FROM json_each(?1) AS je
+       LEFT JOIN buildings AS b ON b.id = je.value ->> '$.building_id'
+       WHERE TRUE
+       ON CONFLICT (id) DO UPDATE SET
+         ${setClause},
+         building_id = COALESCE(excluded.building_id, institutions.building_id),
+         updated_at = ${NOW}
+       WHERE ${changeGuard}
+          OR institutions.building_id IS NOT COALESCE(excluded.building_id, institutions.building_id)`;
+})();
+
+export async function upsertBuildings(db: D1Database, rows: Building[]): Promise<UpsertResult> {
+  if (rows.length === 0) return { rowsWritten: 0 };
+  const payload = JSON.stringify(
+    rows.map((row) => {
+      const record: Record<string, unknown> = { id: row.id };
+      for (const c of BUILDING_COLUMNS) record[c] = row[c] ?? null;
+      return record;
+    })
+  );
+  const results = await db.batch([
+    db.prepare(BUILDING_UPSERT_SQL).bind(payload),
+    db.prepare(SYNC_INSTITUTIONS_FROM_BUILDINGS_SQL).bind(payload),
+  ]);
+  return { rowsWritten: results.reduce((sum, r) => sum + rowsWritten(r), 0) };
+}
+
 export async function upsertInstitutions(
   db: D1Database,
   rows: Institution[]
@@ -99,7 +176,7 @@ export async function upsertInstitutions(
   if (rows.length === 0) return { rowsWritten: 0 };
   const payload = JSON.stringify(
     rows.map((row) => {
-      const record: Record<string, unknown> = { id: row.id };
+      const record: Record<string, unknown> = { id: row.id, building_id: row.building_id ?? null };
       for (const c of INSTITUTION_COLUMNS) {
         const value = (row as Record<string, unknown>)[c];
         record[c] =

@@ -7,13 +7,6 @@ export interface MunicipalityConfig {
   readonly label: string;
   /** true = スクレイパーが存在しない */
   readonly reservationExcluded: boolean;
-  readonly scraperCiExcluded?: boolean;
-  /** サイトが GitHub Actions からの接続を遮断している */
-  readonly scraperViaJpProxy?: boolean;
-  /** [開始時, 終了時)（JST、半開区間） */
-  readonly maintenanceWindowJst?: readonly [number, number];
-  /** 同一自治体の別予約システム。target は `<prefecture>-<slug>-<name>`、DB 上の municipality は親と同じ */
-  readonly additionalScrapers?: readonly string[];
   readonly reservationStatus: Readonly<Record<string, string>>;
   readonly reservationDivision: Readonly<Record<string, string>>;
   readonly feeDivision: Readonly<Record<string, string>>;
@@ -101,8 +94,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "北区",
     reservationExcluded: false,
-    // 元気ぷらざ（独自 CGI）とココキタ（p-kashikan）は区の共通システム（OpenReaf）とは別に予約状況を出している
-    additionalScrapers: ["genkiplaza", "cocokita"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "○",
       [ReservationStatus.STATUS_1]: "△",
@@ -251,7 +242,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "墨田区",
     reservationExcluded: false,
-    scraperViaJpProxy: true,
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "一部空き",
@@ -280,7 +270,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "大田区",
     reservationExcluded: false,
-    maintenanceWindowJst: [2, 5],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約済",
@@ -419,8 +408,6 @@ export const MUNICIPALITIES = {
     prefecture: "kanagawa",
     label: "川崎市",
     reservationExcluded: false,
-    // 総合自治会館（市民自治財団の reserve1.jp）はふれあいネットとは別に予約状況を出している
-    additionalScrapers: ["jichi"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約あり",
@@ -541,7 +528,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "新宿区",
     reservationExcluded: false,
-    additionalScrapers: ["regasu"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約あり",
@@ -600,7 +586,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "足立区",
     reservationExcluded: false,
-    additionalScrapers: ["1010"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約あり",
@@ -647,8 +632,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "葛飾区",
     reservationExcluded: false,
-    // シンフォニーヒルズ・リリオホール（指定管理者の reserve.aserv.jp）は区の共通システムとは別に予約状況を出している
-    additionalScrapers: ["symphony-hills"],
     reservationStatus: {
       [ReservationStatus.VACANT]: "空き",
       [ReservationStatus.STATUS_1]: "予約あり",
@@ -696,6 +679,208 @@ export type MunicipalityKey = keyof typeof MUNICIPALITIES;
 
 export const MUNICIPALITY_KEYS = Object.keys(MUNICIPALITIES) as MunicipalityKey[];
 
+export interface ReservationSystemConfig {
+  /** scraper の target 名。scraped なら同名のディレクトリがある */
+  readonly key: string;
+  readonly municipality: MunicipalityKey;
+  readonly label: string;
+  readonly url: string;
+  readonly scraped: boolean;
+  readonly scraperCiExcluded?: boolean;
+  /** サイトが GitHub Actions からの接続を遮断している */
+  readonly scraperViaJpProxy?: boolean;
+  /** [開始時, 終了時)（JST、半開区間） */
+  readonly maintenanceWindowJst?: readonly [number, number];
+}
+
+export const RESERVATION_SYSTEMS = {
+  "tokyo-koutou": {
+    key: "tokyo-koutou",
+    municipality: "MUNICIPALITY_KOUTOU",
+    label: "江東区文化コミュニティ財団 施設予約システム",
+    url: "https://www.kcf.or.jp/yoyaku/shisetsu/",
+    scraped: true,
+  },
+  "tokyo-bunkyo": {
+    key: "tokyo-bunkyo",
+    municipality: "MUNICIPALITY_BUNKYO",
+    label: "文京区施設予約システム",
+    url: "https://www.shisetsu.city.bunkyo.lg.jp/user/Home",
+    scraped: true,
+  },
+  "tokyo-kita": {
+    key: "tokyo-kita",
+    municipality: "MUNICIPALITY_KITA",
+    label: "北区施設予約システム",
+    url: "https://kita-yoyaku.openreaf02.jp/",
+    scraped: true,
+  },
+  "tokyo-kita-genkiplaza": {
+    key: "tokyo-kita-genkiplaza",
+    municipality: "MUNICIPALITY_KITA",
+    label: "北区立元気ぷらざ",
+    url: "https://genkiplaza.tokyo.jp/yoyaku/user.cgi",
+    scraped: true,
+  },
+  "tokyo-kita-cocokita": {
+    key: "tokyo-kita-cocokita",
+    municipality: "MUNICIPALITY_KITA",
+    label: "北区 ココキタ",
+    url: "https://k5.p-kashikan.jp/cocokita/",
+    scraped: true,
+  },
+  "tokyo-toshima": {
+    key: "tokyo-toshima",
+    municipality: "MUNICIPALITY_TOSHIMA",
+    label: "豊島区施設予約システム",
+    url: "https://www2.pf489.com/toshima/WebR/",
+    scraped: true,
+  },
+  "tokyo-edogawa": {
+    key: "tokyo-edogawa",
+    municipality: "MUNICIPALITY_EDOGAWA",
+    label: "江戸川区施設予約システム",
+    url: "https://www.shisetsuyoyaku.city.edogawa.tokyo.jp/user/Home",
+    scraped: true,
+  },
+  "tokyo-arakawa": {
+    key: "tokyo-arakawa",
+    municipality: "MUNICIPALITY_ARAKAWA",
+    label: "荒川区施設予約システム",
+    url: "https://shisetsu.city.arakawa.tokyo.jp/stagia/reserve/gin_menu",
+    scraped: true,
+  },
+  "tokyo-sumida": {
+    key: "tokyo-sumida",
+    municipality: "MUNICIPALITY_SUMIDA",
+    label: "墨田区施設予約システム",
+    url: "https://yoyaku03.city.sumida.lg.jp/user/Home",
+    scraped: true,
+    scraperViaJpProxy: true,
+  },
+  "tokyo-ota": {
+    key: "tokyo-ota",
+    municipality: "MUNICIPALITY_OTA",
+    label: "うぐいすネット",
+    url: "https://www.yoyaku.city.ota.tokyo.jp/eshisetsu/menu/Welcome.cgi",
+    scraped: true,
+    maintenanceWindowJst: [2, 5],
+  },
+  "tokyo-suginami": {
+    key: "tokyo-suginami",
+    municipality: "MUNICIPALITY_SUGINAMI",
+    label: "杉並区施設予約システム",
+    url: "https://www.shisetsuyoyaku.city.suginami.tokyo.jp/user/Home",
+    scraped: false,
+  },
+  "tokyo-nakano": {
+    key: "tokyo-nakano",
+    municipality: "MUNICIPALITY_NAKANO",
+    label: "中野区施設予約システム",
+    url: "https://www3.11489.jp/nakano/user/Home",
+    scraped: false,
+  },
+  "tokyo-chuo": {
+    key: "tokyo-chuo",
+    municipality: "MUNICIPALITY_CHUO",
+    label: "中央区施設予約システム",
+    url: "https://chuo-yoyaku.openreaf02.jp/",
+    scraped: true,
+  },
+  "tokyo-shinagawa": {
+    key: "tokyo-shinagawa",
+    municipality: "MUNICIPALITY_SHINAGAWA",
+    label: "品川区施設予約システム",
+    url: "https://www.cm9.eprs.jp/shinagawa/web/",
+    scraped: true,
+  },
+  "tokyo-shinjuku": {
+    key: "tokyo-shinjuku",
+    municipality: "MUNICIPALITY_SHINJUKU",
+    label: "新宿区施設予約システム",
+    url: "https://www.shinjuku.eprs.jp/chiiki/web/",
+    scraped: true,
+  },
+  "tokyo-shinjuku-regasu": {
+    key: "tokyo-shinjuku-regasu",
+    municipality: "MUNICIPALITY_SHINJUKU",
+    label: "新宿未来創造財団 施設予約システム",
+    url: "https://www.shinjuku.eprs.jp/regasu/web/",
+    scraped: true,
+  },
+  "tokyo-meguro": {
+    key: "tokyo-meguro",
+    municipality: "MUNICIPALITY_MEGURO",
+    label: "目黒区施設予約システム",
+    url: "https://resv.city.meguro.tokyo.jp/Web/Home/WgR_ModeSelect",
+    scraped: true,
+  },
+  "tokyo-setagaya": {
+    key: "tokyo-setagaya",
+    municipality: "MUNICIPALITY_SETAGAYA",
+    label: "せたがやiちば",
+    url: "https://setagaya.keyakinet.net/Web/Home",
+    scraped: true,
+  },
+  "tokyo-minato": {
+    key: "tokyo-minato",
+    municipality: "MUNICIPALITY_MINATO",
+    label: "港区施設予約システム",
+    url: "https://web101.rsv.ws-scs.jp/web/",
+    scraped: true,
+  },
+  "tokyo-adachi": {
+    key: "tokyo-adachi",
+    municipality: "MUNICIPALITY_ADACHI",
+    label: "足立区施設予約システム",
+    url: "https://k5.p-kashikan.jp/adachi-ku/",
+    scraped: true,
+  },
+  "tokyo-adachi-1010": {
+    key: "tokyo-adachi-1010",
+    municipality: "MUNICIPALITY_ADACHI",
+    label: "シアター1010",
+    url: "https://theatre1010.com/Client/ReservationCalendar.aspx",
+    scraped: true,
+  },
+  "tokyo-katsushika": {
+    key: "tokyo-katsushika",
+    municipality: "MUNICIPALITY_KATSUSHIKA",
+    label: "葛飾区施設予約システム",
+    url: "https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/",
+    scraped: true,
+  },
+  "tokyo-katsushika-symphony-hills": {
+    key: "tokyo-katsushika-symphony-hills",
+    municipality: "MUNICIPALITY_KATSUSHIKA",
+    label: "かつしかシンフォニーヒルズ・リリオホール",
+    url: "https://reserve.aserv.jp/k-mil/",
+    scraped: true,
+  },
+  "kanagawa-kawasaki": {
+    key: "kanagawa-kawasaki",
+    municipality: "MUNICIPALITY_KAWASAKI",
+    label: "ふれあいネット",
+    url: "https://www.fureai-net.city.kawasaki.jp/web/index.jsp",
+    scraped: true,
+  },
+  "kanagawa-kawasaki-jichi": {
+    key: "kanagawa-kawasaki-jichi",
+    municipality: "MUNICIPALITY_KAWASAKI",
+    label: "川崎市総合自治会館",
+    url: "https://www.reserve1.jp/studio/member/VisitorLogin.php",
+    scraped: true,
+  },
+} as const satisfies Record<string, ReservationSystemConfig>;
+
+export type ReservationSystemKey = keyof typeof RESERVATION_SYSTEMS;
+
+export function getReservationSystem(key: string): ReservationSystemConfig | undefined {
+  return Object.hasOwn(RESERVATION_SYSTEMS, key)
+    ? RESERVATION_SYSTEMS[key as ReservationSystemKey]
+    : undefined;
+}
+
 export function getMunicipalityBySlug(slug: string): MunicipalityConfig | undefined {
   return Object.values(MUNICIPALITIES).find((m) => m.slug === slug);
 }
@@ -714,27 +899,17 @@ export function getAllMunicipalityTargets(): string[] {
   return Object.values(MUNICIPALITIES).map((m) => `${m.prefecture}-${m.slug}`);
 }
 
-function matchesScraperTarget(config: MunicipalityConfig, target: string): boolean {
-  const base = `${config.prefecture}-${config.slug}`;
-  if (base === target) return true;
-  return (config.additionalScrapers ?? []).some((name) => `${base}-${name}` === target);
-}
-
 export function getScraperTargets(): string[] {
-  return Object.values<MunicipalityConfig>(MUNICIPALITIES)
-    .filter((m) => !m.reservationExcluded)
-    .flatMap((m) => {
-      const base = `${m.prefecture}-${m.slug}`;
-      return [base, ...(m.additionalScrapers ?? []).map((name) => `${base}-${name}`)];
-    });
-}
-
-export function getMunicipalityByScraperTarget(target: string): MunicipalityConfig | undefined {
-  return Object.values<MunicipalityConfig>(MUNICIPALITIES).find((m) =>
-    matchesScraperTarget(m, target)
-  );
+  return Object.values<ReservationSystemConfig>(RESERVATION_SYSTEMS)
+    .filter((s) => s.scraped)
+    .map((s) => s.key);
 }
 
 export function getMunicipalityKeyByScraperTarget(target: string): MunicipalityKey | undefined {
-  return MUNICIPALITY_KEYS.find((key) => matchesScraperTarget(MUNICIPALITIES[key], target));
+  return getReservationSystem(target)?.municipality;
+}
+
+export function getMunicipalityByScraperTarget(target: string): MunicipalityConfig | undefined {
+  const key = getMunicipalityKeyByScraperTarget(target);
+  return key ? MUNICIPALITIES[key] : undefined;
 }
