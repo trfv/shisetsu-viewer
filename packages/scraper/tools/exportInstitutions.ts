@@ -3,7 +3,7 @@ import path from "path";
 
 import { getAllMunicipalityTargets, type Building } from "@shisetsu-viewer/shared";
 
-import { exportInstitutions } from "./backend/d1Api.ts";
+import { exportInstitutions } from "./backend/api.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data");
 
