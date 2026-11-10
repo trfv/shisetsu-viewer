@@ -125,6 +125,43 @@ describe("DataTable Component", () => {
     expect(skeletons.length).toBe(0);
   });
 
+  it("renderCell があれば要素を描き、セルの title には valueGetter の文字列を残す", async () => {
+    const colsWithRender: Columns<TestRow> = [
+      {
+        field: "label",
+        headerName: "ラベル",
+        type: "getter",
+        valueGetter: (params) => `${params.row.name}-${params.row.age}`,
+        renderCell: (params) => <strong>{params.row.name}</strong>,
+      },
+    ];
+    await renderWithProviders(<DataTable columns={colsWithRender} rows={rows.slice(0, 1)} />);
+
+    const strong = screen.getByText("東京", { exact: true });
+    await expect.element(strong).toBeInTheDocument();
+    expect(strong.element().tagName).toBe("STRONG");
+    expect(strong.element().closest("td")?.getAttribute("title")).toBe("東京-100");
+  });
+
+  it("モバイルのカードでも renderCell の要素を描く", async () => {
+    mockIsMobile.value = true;
+    const colsWithRender: Columns<TestRow> = [
+      { field: "name", headerName: "名前", type: "string" },
+      {
+        field: "label",
+        headerName: "ラベル",
+        type: "getter",
+        valueGetter: (params) => `${params.row.name}-${params.row.age}`,
+        renderCell: (params) => <strong>{params.row.age}</strong>,
+      },
+    ];
+    await renderWithProviders(<DataTable columns={colsWithRender} rows={rows.slice(0, 1)} />);
+
+    const strong = screen.getByText("100", { exact: true });
+    await expect.element(strong).toBeInTheDocument();
+    expect(strong.element().tagName).toBe("STRONG");
+  });
+
   it("行がない場合はヘッダーのみ表示する", async () => {
     await renderWithProviders(<DataTable columns={columns} rows={[]} />);
 

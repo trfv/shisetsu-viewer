@@ -22,6 +22,7 @@ import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns, type RowParams } from "../components/DataTable";
 import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
 import { MultiSelect } from "../components/MultiSelect";
+import { ReservationStatusList } from "../components/ReservationStatusList";
 import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
 import { useHolidays } from "../hooks/useHolidays";
@@ -93,6 +94,13 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
       const obj = params.row.reservation.reservation;
       return formatReservationMap(municipality, obj, params.row.institution.division_labels);
     },
+    renderCell: (params) => (
+      <ReservationStatusList
+        divisionLabels={params.row.institution.division_labels}
+        municipality={params.row.institution.municipality as SupportedMunicipality}
+        reservation={params.row.reservation.reservation}
+      />
+    ),
   },
   {
     field: "fetched_at",
