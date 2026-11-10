@@ -1,4 +1,7 @@
 import type {
+  BuildingDetail,
+  BuildingDto,
+  BuildingsQueryParams,
   InstitutionDetail,
   InstitutionSummary,
   InstitutionsQueryParams,
@@ -59,14 +62,15 @@ function parseJsonArray<T>(value: unknown): T[] {
 
 interface InstitutionRow {
   id: string;
-  building_id: string | null;
-  prefecture: string;
-  municipality: string;
-  building: string;
+  building_id: string;
+  b_prefecture: string;
+  b_municipality: string;
+  b_name: string;
+  b_kana: string;
+  b_system_name: string;
+  b_address: string;
   institution: string;
-  building_kana: string;
   institution_kana: string;
-  building_system_name: string;
   institution_system_name: string;
   capacity: number | null;
   area: number | null;
@@ -74,7 +78,6 @@ interface InstitutionRow {
   fee_divisions: string;
   weekday_usage_fee: string;
   holiday_usage_fee: string;
-  address: string;
   is_available_strings: string;
   is_available_woodwind: string;
   is_available_brass: string;
@@ -93,13 +96,13 @@ function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
   return {
     id: row.id,
     building_id: row.building_id,
-    prefecture: row.prefecture,
-    municipality: row.municipality,
-    building: row.building,
+    prefecture: row.b_prefecture,
+    municipality: row.b_municipality,
+    building: row.b_name,
     institution: row.institution,
-    building_kana: row.building_kana,
+    building_kana: row.b_kana,
     institution_kana: row.institution_kana,
-    building_system_name: row.building_system_name,
+    building_system_name: row.b_system_name,
     institution_system_name: row.institution_system_name,
     capacity: row.capacity,
     area: row.area,
@@ -107,7 +110,7 @@ function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
     fee_divisions: parseJsonArray<string>(row.fee_divisions),
     weekday_usage_fee: parseJsonArray<UsageFeeEntry>(row.weekday_usage_fee),
     holiday_usage_fee: parseJsonArray<UsageFeeEntry>(row.holiday_usage_fee),
-    address: row.address,
+    address: row.b_address,
     is_available_strings: row.is_available_strings,
     is_available_woodwind: row.is_available_woodwind,
     is_available_brass: row.is_available_brass,
@@ -126,8 +129,9 @@ function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
 function toInstitutionSummary(row: InstitutionRow): InstitutionSummary {
   return {
     id: row.id,
-    municipality: row.municipality,
-    building: row.building,
+    building_id: row.building_id,
+    municipality: row.b_municipality,
+    building: row.b_name,
     institution: row.institution,
     institution_size: row.institution_size,
     is_available_strings: row.is_available_strings,
@@ -144,6 +148,46 @@ function placeholders(n: number): string {
   return Array.from({ length: n }, () => "?").join(", ");
 }
 
+// 鍵が欠けた旧形式のカーソルは null にし、呼び出し側で先頭ページとして扱う
+function cursorValues(cursor: string | undefined, keys: readonly string[]): string[] | null {
+  if (!cursor) return null;
+  const c = decodeCursor(cursor);
+  if (!c) return null;
+  const values = keys.map((k) => c[k]);
+  return values.every((v) => v !== undefined) ? (values as string[]) : null;
+}
+
+function pushIn(
+  conditions: string[],
+  args: unknown[],
+  column: string,
+  values: string[] | undefined
+): void {
+  if (values && values.length > 0) {
+    conditions.push(`${column} IN (${placeholders(values.length)})`);
+    args.push(...values);
+  }
+}
+
+// 部屋の行にある建物の欄（building / address など）は写しなので読まない。b_ 接頭辞で buildings から引く
+const INSTITUTION_COLUMNS = `
+  i.*, b.prefecture AS b_prefecture, b.municipality AS b_municipality, b.name AS b_name,
+  b.kana AS b_kana, b.system_name AS b_system_name, b.address AS b_address`;
+
+// CROSS JOIN で建物を外側に固定する。統計が無いとプランナーが部屋を外側に選び、全件を並べ替えて LIMIT で止まらない
+const INSTITUTION_LIST_FROM = `
+  SELECT ${INSTITUTION_COLUMNS}
+  FROM buildings b
+  CROSS JOIN institutions i ON i.building_id = b.id`;
+
+const INSTITUTION_CURSOR_KEYS = [
+  "municipality",
+  "building_kana",
+  "building_id",
+  "institution_kana",
+  "id",
+] as const;
+
 export async function listInstitutions(
   db: D1Database,
   params: InstitutionsQueryParams
@@ -152,15 +196,17 @@ export async function listInstitutions(
   const conditions: string[] = [];
   const args: unknown[] = [];
 
-  if (params.municipality && params.municipality.length > 0) {
-    conditions.push(`municipality IN (${placeholders(params.municipality.length)})`);
-    args.push(...params.municipality);
+  pushIn(conditions, args, "b.municipality", params.municipality);
+  pushIn(conditions, args, "b.reservation_system", params.reservationSystem);
+  if (params.buildingId) {
+    conditions.push(`b.id = ?`);
+    args.push(params.buildingId);
   }
   const availabilityFilters: [boolean | undefined, string][] = [
-    [params.isAvailableStrings, "is_available_strings"],
-    [params.isAvailableWoodwind, "is_available_woodwind"],
-    [params.isAvailableBrass, "is_available_brass"],
-    [params.isAvailablePercussion, "is_available_percussion"],
+    [params.isAvailableStrings, "i.is_available_strings"],
+    [params.isAvailableWoodwind, "i.is_available_woodwind"],
+    [params.isAvailableBrass, "i.is_available_brass"],
+    [params.isAvailablePercussion, "i.is_available_percussion"],
   ];
   for (const [flag, column] of availabilityFilters) {
     if (flag === true) {
@@ -168,23 +214,18 @@ export async function listInstitutions(
       args.push(AVAILABLE);
     }
   }
-  if (params.institutionSizes && params.institutionSizes.length > 0) {
-    conditions.push(`institution_size IN (${placeholders(params.institutionSizes.length)})`);
-    args.push(...params.institutionSizes);
-  }
-  if (params.cursor) {
-    const c = decodeCursor(params.cursor);
-    if (c) {
-      conditions.push(`(municipality, building_kana, institution_kana, id) > (?, ?, ?, ?)`);
-      args.push(c["municipality"], c["building_kana"], c["institution_kana"], c["id"]);
-    }
+  pushIn(conditions, args, "i.institution_size", params.institutionSizes);
+  const c = cursorValues(params.cursor, INSTITUTION_CURSOR_KEYS);
+  if (c) {
+    conditions.push(`(b.municipality, b.kana, b.id, i.institution_kana, i.id) > (?, ?, ?, ?, ?)`);
+    args.push(...c);
   }
 
   const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
   const sql = `
-    SELECT * FROM institutions
+    ${INSTITUTION_LIST_FROM}
     ${where}
-    ORDER BY municipality, building_kana, institution_kana, id
+    ORDER BY b.municipality, b.kana, b.id, i.institution_kana, i.id
     LIMIT ?`;
   args.push(limit + 1);
 
@@ -204,8 +245,9 @@ export async function listInstitutions(
       endCursor:
         hasNextPage && last
           ? encodeCursor({
-              municipality: last.municipality,
-              building_kana: last.building_kana,
+              municipality: last.b_municipality,
+              building_kana: last.b_kana,
+              building_id: last.building_id,
               institution_kana: last.institution_kana,
               id: last.id,
             })
@@ -219,10 +261,101 @@ export async function getInstitutionDetail(
   id: string
 ): Promise<InstitutionDetail | null> {
   const row = await db
-    .prepare(`SELECT * FROM institutions WHERE id = ?`)
+    .prepare(
+      `SELECT ${INSTITUTION_COLUMNS}
+       FROM institutions i JOIN buildings b ON b.id = i.building_id
+       WHERE i.id = ?`
+    )
     .bind(id)
     .first<InstitutionRow>();
   return row ? toInstitutionDetail(row) : null;
+}
+
+interface BuildingRow {
+  id: string;
+  prefecture: string;
+  municipality: string;
+  name: string;
+  kana: string;
+  system_name: string;
+  address: string;
+  reservation_system: string | null;
+  updated_at: string;
+}
+
+function toBuildingDto(row: BuildingRow): BuildingDto {
+  return {
+    id: row.id,
+    prefecture: row.prefecture,
+    municipality: row.municipality,
+    name: row.name,
+    kana: row.kana,
+    system_name: row.system_name,
+    address: row.address,
+    reservation_system: row.reservation_system,
+    updated_at: row.updated_at,
+  };
+}
+
+const BUILDING_CURSOR_KEYS = ["municipality", "kana", "id"] as const;
+
+export async function listBuildings(
+  db: D1Database,
+  params: BuildingsQueryParams
+): Promise<Page<BuildingDto>> {
+  const limit = clampLimit(params.limit);
+  const conditions: string[] = [];
+  const args: unknown[] = [];
+  pushIn(conditions, args, "municipality", params.municipality);
+  pushIn(conditions, args, "reservation_system", params.reservationSystem);
+  const c = cursorValues(params.cursor, BUILDING_CURSOR_KEYS);
+  if (c) {
+    conditions.push(`(municipality, kana, id) > (?, ?, ?)`);
+    args.push(...c);
+  }
+  const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+  const sql = `
+    SELECT * FROM buildings
+    ${where}
+    ORDER BY municipality, kana, id
+    LIMIT ?`;
+  args.push(limit + 1);
+
+  const { results } = await db
+    .prepare(sql)
+    .bind(...args)
+    .all<BuildingRow>();
+  const hasNextPage = results.length > limit;
+  const page = hasNextPage ? results.slice(0, limit) : results;
+  const last = page.at(-1);
+  return {
+    items: page.map(toBuildingDto),
+    pageInfo: {
+      hasNextPage,
+      endCursor:
+        hasNextPage && last
+          ? encodeCursor({ municipality: last.municipality, kana: last.kana, id: last.id })
+          : null,
+    },
+  };
+}
+
+export async function getBuildingDetail(
+  db: D1Database,
+  id: string
+): Promise<BuildingDetail | null> {
+  const [building, institutions] = await db.batch([
+    db.prepare(`SELECT * FROM buildings WHERE id = ?`).bind(id),
+    db
+      .prepare(`${INSTITUTION_LIST_FROM} WHERE b.id = ? ORDER BY i.institution_kana, i.id`)
+      .bind(id),
+  ]);
+  const row = (building?.results as BuildingRow[] | undefined)?.[0];
+  if (!row) return null;
+  return {
+    ...toBuildingDto(row),
+    institutions: ((institutions?.results ?? []) as InstitutionRow[]).map(toInstitutionSummary),
+  };
 }
 
 interface ReservationRow {
@@ -350,6 +483,7 @@ export async function listInstitutionReservations(
 
 interface SearchRow extends ReservationRow {
   i_id: string;
+  i_building_id: string;
   i_municipality: string;
   i_building: string;
   i_institution: string;
@@ -368,9 +502,11 @@ export async function searchReservations(
   // 先頭は SELECT 式の IS_HOLIDAY_EXPR が使う祝日配列
   const args: unknown[] = [JSON.stringify(holidays), params.startDate, params.endDate];
 
-  if (params.municipality && params.municipality.length > 0) {
-    conditions.push(`i.municipality IN (${placeholders(params.municipality.length)})`);
-    args.push(...params.municipality);
+  pushIn(conditions, args, "b.municipality", params.municipality);
+  pushIn(conditions, args, "b.reservation_system", params.reservationSystem);
+  if (params.buildingId) {
+    conditions.push(`i.building_id = ?`);
+    args.push(params.buildingId);
   }
   if (params.isHoliday === true) {
     conditions.push(IS_HOLIDAY_EXPR("r.date"));
@@ -398,10 +534,7 @@ export async function searchReservations(
       args.push(AVAILABLE);
     }
   }
-  if (params.institutionSizes && params.institutionSizes.length > 0) {
-    conditions.push(`i.institution_size IN (${placeholders(params.institutionSizes.length)})`);
-    args.push(...params.institutionSizes);
-  }
+  pushIn(conditions, args, "i.institution_size", params.institutionSizes);
   if (params.cursor) {
     const c = decodeCursor(params.cursor);
     if (c) {
@@ -415,11 +548,12 @@ export async function searchReservations(
            r.is_morning_vacant, r.is_afternoon_vacant, r.is_evening_vacant,
            r.morning_vacated_at, r.afternoon_vacated_at, r.evening_vacated_at,
            ${IS_HOLIDAY_EXPR("r.date")} AS is_holiday,
-           i.id AS i_id, i.municipality AS i_municipality, i.building AS i_building,
-           i.institution AS i_institution, i.institution_size AS i_institution_size,
-           i.division_labels AS i_division_labels
+           i.id AS i_id, i.building_id AS i_building_id, b.municipality AS i_municipality,
+           b.name AS i_building, i.institution AS i_institution,
+           i.institution_size AS i_institution_size, i.division_labels AS i_division_labels
     FROM reservations r
     JOIN institutions i ON i.id = r.institution_id
+    JOIN buildings b ON b.id = i.building_id
     WHERE ${conditions.join(" AND ")}
     ORDER BY r.date, r.institution_id
     LIMIT ?`;
@@ -437,6 +571,7 @@ export async function searchReservations(
       reservation: toReservationDto(row, since),
       institution: {
         id: row.i_id,
+        building_id: row.i_building_id,
         municipality: row.i_municipality,
         building: row.i_building,
         institution: row.i_institution,

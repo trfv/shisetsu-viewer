@@ -78,6 +78,8 @@ export function createHttpDataSource(
     async listInstitutions(params: InstitutionsQueryParams): Promise<Page<InstitutionSummary>> {
       const sp = new URLSearchParams();
       appendList(sp, "municipality", params.municipality);
+      appendStr(sp, "buildingId", params.buildingId);
+      appendList(sp, "reservationSystem", params.reservationSystem);
       appendBool(sp, "isAvailableStrings", params.isAvailableStrings);
       appendBool(sp, "isAvailableWoodwind", params.isAvailableWoodwind);
       appendBool(sp, "isAvailableBrass", params.isAvailableBrass);
@@ -125,6 +127,8 @@ export function createHttpDataSource(
       appendStr(sp, "startDate", params.startDate);
       appendStr(sp, "endDate", params.endDate);
       appendList(sp, "municipality", params.municipality);
+      appendStr(sp, "buildingId", params.buildingId);
+      appendList(sp, "reservationSystem", params.reservationSystem);
       appendBool(sp, "isHoliday", params.isHoliday);
       appendBool(sp, "isMorningVacant", params.isMorningVacant);
       appendBool(sp, "isAfternoonVacant", params.isAfternoonVacant);

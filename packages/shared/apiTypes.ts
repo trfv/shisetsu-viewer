@@ -1,4 +1,4 @@
-import type { Institution } from "./types.ts";
+import type { Building, Institution } from "./types.ts";
 
 export interface PageInfo {
   hasNextPage: boolean;
@@ -13,6 +13,7 @@ export interface Page<T> {
 export type InstitutionSummary = Pick<
   Institution,
   | "id"
+  | "building_id"
   | "municipality"
   | "building"
   | "institution"
@@ -26,6 +27,10 @@ export type InstitutionSummary = Pick<
 > & { updated_at: string };
 
 export type InstitutionDetail = Institution & { updated_at: string };
+
+export type BuildingDto = Building & { updated_at: string };
+
+export type BuildingDetail = BuildingDto & { institutions: InstitutionSummary[] };
 
 /** updated_at は取得時刻ではなく最終変化時刻（取得時刻は ScrapeRun） */
 export interface ReservationDto {
@@ -46,7 +51,13 @@ export interface ReservationSearchHit {
   reservation: ReservationDto;
   institution: Pick<
     Institution,
-    "id" | "municipality" | "building" | "institution" | "institution_size" | "division_labels"
+    | "id"
+    | "building_id"
+    | "municipality"
+    | "building"
+    | "institution"
+    | "institution_size"
+    | "division_labels"
   >;
 }
 
@@ -87,6 +98,8 @@ export interface UpsertResponse {
 // exactOptionalPropertyTypes 下でパーサの `T | undefined` をそのまま渡せるよう、明示的に `| undefined`
 export interface InstitutionsQueryParams {
   municipality?: string[] | undefined;
+  buildingId?: string | undefined;
+  reservationSystem?: string[] | undefined;
   isAvailableStrings?: boolean | undefined;
   isAvailableWoodwind?: boolean | undefined;
   isAvailableBrass?: boolean | undefined;
@@ -98,8 +111,17 @@ export interface InstitutionsQueryParams {
   detail?: boolean | undefined;
 }
 
+export interface BuildingsQueryParams {
+  municipality?: string[] | undefined;
+  reservationSystem?: string[] | undefined;
+  limit?: number | undefined;
+  cursor?: string | undefined;
+}
+
 export interface ReservationSearchQueryParams {
   municipality?: string[] | undefined;
+  buildingId?: string | undefined;
+  reservationSystem?: string[] | undefined;
   startDate: string; // YYYY-MM-DD
   endDate: string;
   isHoliday?: boolean | undefined;

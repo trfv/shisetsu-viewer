@@ -37,6 +37,36 @@ function fakeDataSource(overrides: Partial<DataSource>): DataSource {
   };
 }
 
+describe("建物と予約システムのフィルタ", () => {
+  it("buildingId と reservationSystem を一覧と検索に渡す", async () => {
+    const ds = fakeDataSource({});
+    const buildingId = "00000000-0000-0000-0000-0000000000b1";
+    await executeListInstitutions(
+      listInstitutionsInput.parse({ buildingId, reservationSystem: ["tokyo-kita"] }),
+      ds
+    );
+    expect(ds.listInstitutions).toHaveBeenCalledWith(
+      expect.objectContaining({ buildingId, reservationSystem: ["tokyo-kita"] })
+    );
+    await executeSearchReservations(
+      searchReservationsInput.parse({
+        startDate: "2026-11-01",
+        endDate: "2026-11-30",
+        buildingId,
+        reservationSystem: ["tokyo-kita"],
+      }),
+      ds
+    );
+    expect(ds.searchReservations).toHaveBeenCalledWith(
+      expect.objectContaining({ buildingId, reservationSystem: ["tokyo-kita"] })
+    );
+  });
+
+  it("ID の形でない buildingId を弾く", () => {
+    expect(listInstitutionsInput.safeParse({ buildingId: "not-an-id" }).success).toBe(false);
+  });
+});
+
 describe("楽器フィルタ", () => {
   it('true と文字列の "true" はフィルタとして送り、false は送らない', async () => {
     const ds = fakeDataSource({});

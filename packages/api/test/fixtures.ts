@@ -1,28 +1,45 @@
 import { canonicalizeReservation } from "@shisetsu-viewer/shared";
 
+export const BUILDINGS = [
+  {
+    id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    prefecture: "PREFECTURE_TOKYO",
+    municipality: "MUNICIPALITY_KOUTOU",
+    name: "会館A",
+    kana: "かいかんA",
+    system_name: "kaikan-a",
+    address: "江東区1-1",
+    reservation_system: "tokyo-koutou",
+  },
+  {
+    id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    prefecture: "PREFECTURE_TOKYO",
+    municipality: "MUNICIPALITY_TOSHIMA",
+    name: "非RFC館",
+    kana: "ひあーるえふかん",
+    system_name: "hi-rfc",
+    address: "豊島区1-1",
+    reservation_system: "tokyo-toshima",
+  },
+] as const;
+
 export const INSTITUTIONS = [
   {
     id: "11111111-1111-4111-8111-111111111111",
-    prefecture: "PREFECTURE_TOKYO",
+    building_id: BUILDINGS[0].id,
     municipality: "MUNICIPALITY_KOUTOU",
-    building: "会館A",
     institution: "音楽室",
-    building_kana: "かいかんA",
     institution_kana: "おんがくしつ",
-    building_system_name: "kaikan-a",
     institution_system_name: "ongakushitsu",
     institution_size: "INSTITUTION_SIZE_LARGE",
     is_available_brass: "AVAILABILITY_DIVISION_AVAILABLE",
   },
   {
     id: "22222222-2222-4222-8222-222222222222",
-    prefecture: "PREFECTURE_TOKYO",
+    building_id: BUILDINGS[0].id,
     municipality: "MUNICIPALITY_KOUTOU",
-    building: "会館A",
     institution: "ホール",
-    building_kana: "かいかんA",
     institution_kana: "ほーる",
-    building_system_name: "kaikan-a",
     institution_system_name: "hall",
     institution_size: "INSTITUTION_SIZE_MEDIUM",
     is_available_brass: "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -30,13 +47,10 @@ export const INSTITUTIONS = [
   {
     // 非 RFC UUID（version nibble 不正）
     id: "f4d8d9d8-8594-b8b4-0000-000000000001",
-    prefecture: "PREFECTURE_TOKYO",
+    building_id: BUILDINGS[1].id,
     municipality: "MUNICIPALITY_TOSHIMA",
-    building: "非RFC館",
     institution: "練習室",
-    building_kana: "ひあーるえふかん",
     institution_kana: "れんしゅうしつ",
-    building_system_name: "hi-rfc",
     institution_system_name: "renshuushitsu",
     institution_size: "INSTITUTION_SIZE_SMALL",
     is_available_brass: "AVAILABILITY_DIVISION_AVAILABLE",
@@ -50,24 +64,43 @@ function augustDate(day: number): string {
 export async function seed(db: D1Database): Promise<void> {
   const stmts: D1PreparedStatement[] = [];
 
+  for (const b of BUILDINGS) {
+    stmts.push(
+      db
+        .prepare(
+          `INSERT INTO buildings
+             (id, prefecture, municipality, name, kana, system_name, address, reservation_system)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+        )
+        .bind(
+          b.id,
+          b.prefecture,
+          b.municipality,
+          b.name,
+          b.kana,
+          b.system_name,
+          b.address,
+          b.reservation_system
+        )
+    );
+  }
+
+  // 部屋の建物の欄（写し）は空のままにし、読み取りが buildings から引いていることを確かめる
   for (const i of INSTITUTIONS) {
     stmts.push(
       db
         .prepare(
           `INSERT INTO institutions
-             (id, prefecture, municipality, building, institution, building_kana, institution_kana,
-              building_system_name, institution_system_name, institution_size, is_available_brass)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+             (id, building_id, prefecture, municipality, institution, institution_kana,
+              institution_system_name, institution_size, is_available_brass)
+           VALUES (?, ?, 'PREFECTURE_TOKYO', ?, ?, ?, ?, ?, ?)`
         )
         .bind(
           i.id,
-          i.prefecture,
+          i.building_id,
           i.municipality,
-          i.building,
           i.institution,
-          i.building_kana,
           i.institution_kana,
-          i.building_system_name,
           i.institution_system_name,
           i.institution_size,
           i.is_available_brass

@@ -9,6 +9,7 @@ import type {
 
 export const INSTITUTION_LIST_FIELDS = [
   "id",
+  "building_id",
   "municipality",
   "building",
   "institution",
@@ -24,6 +25,7 @@ export const INSTITUTION_LIST_FIELDS = [
 
 export const INSTITUTION_DETAIL_FIELDS = [
   "id",
+  "building_id",
   "prefecture",
   "municipality",
   "building",
@@ -54,6 +56,7 @@ export const RESERVATION_FIELDS = [
 
 export const SEARCH_INSTITUTION_FIELDS = [
   "id",
+  "building_id",
   "municipality",
   "building",
   "institution",

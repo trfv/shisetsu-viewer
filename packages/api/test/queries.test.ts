@@ -2,8 +2,11 @@ import { canonicalizeReservation } from "@shisetsu-viewer/shared";
 import { env } from "cloudflare:test";
 import { beforeAll, describe, expect, it } from "vitest";
 
+import { encodeCursor } from "../src/db/cursor.ts";
 import {
+  getBuildingDetail,
   getInstitutionDetail,
+  listBuildings,
   listHolidays,
   listInstitutionReservations,
   listInstitutions,
@@ -11,14 +14,14 @@ import {
   loadHolidays,
   searchReservations,
 } from "../src/db/queries.ts";
-import { INSTITUTIONS, seed } from "./fixtures.ts";
+import { BUILDINGS, INSTITUTIONS, seed } from "./fixtures.ts";
 
 beforeAll(async () => {
   await seed(env.DB);
 });
 
 describe("listInstitutions", () => {
-  it("municipality / building_kana / institution_kana / id 順で返す", async () => {
+  it("建物の municipality / kana / id、部屋の institution_kana / id の順で返す", async () => {
     const page = await listInstitutions(env.DB, {});
     expect(page.items.map((i) => i.id)).toEqual([
       INSTITUTIONS[0].id,
@@ -51,6 +54,77 @@ describe("listInstitutions", () => {
   it("isAvailableBrass フィルタ（AVAILABLE のみ）", async () => {
     const page = await listInstitutions(env.DB, { isAvailableBrass: true });
     expect(page.items.map((i) => i.id).sort()).toEqual([INSTITUTIONS[0].id, INSTITUTIONS[2].id]);
+  });
+
+  it("建物の欄を部屋の行の写しではなく buildings から返す", async () => {
+    const page = await listInstitutions(env.DB, { detail: true });
+    expect(page.items[0]).toMatchObject({
+      building_id: BUILDINGS[0].id,
+      municipality: "MUNICIPALITY_KOUTOU",
+      building: "会館A",
+      building_kana: "かいかんA",
+      building_system_name: "kaikan-a",
+      address: "江東区1-1",
+    });
+  });
+
+  it("buildingId フィルタ", async () => {
+    const page = await listInstitutions(env.DB, { buildingId: BUILDINGS[1].id });
+    expect(page.items.map((i) => i.id)).toEqual([INSTITUTIONS[2].id]);
+  });
+
+  it("reservationSystem フィルタ", async () => {
+    const page = await listInstitutions(env.DB, { reservationSystem: ["tokyo-koutou"] });
+    expect(page.items.map((i) => i.id)).toEqual([INSTITUTIONS[0].id, INSTITUTIONS[1].id]);
+  });
+
+  it("building_id を持たない旧形式のカーソルは先頭ページとして扱う", async () => {
+    const legacy = encodeCursor({
+      municipality: "MUNICIPALITY_KOUTOU",
+      building_kana: "かいかんA",
+      institution_kana: "ほーる",
+      id: INSTITUTIONS[1].id,
+    });
+    const page = await listInstitutions(env.DB, { cursor: legacy });
+    expect(page.items.map((i) => i.id)).toEqual(INSTITUTIONS.map((i) => i.id));
+  });
+});
+
+describe("listBuildings", () => {
+  it("municipality / kana / id 順で返す", async () => {
+    const page = await listBuildings(env.DB, {});
+    expect(page.items.map((b) => b.id)).toEqual([BUILDINGS[0].id, BUILDINGS[1].id]);
+    expect(page.items[0]).toMatchObject({ name: "会館A", reservation_system: "tokyo-koutou" });
+  });
+
+  it("limit + cursor でページングする", async () => {
+    const first = await listBuildings(env.DB, { limit: 1 });
+    expect(first.pageInfo.hasNextPage).toBe(true);
+    const second = await listBuildings(env.DB, { limit: 1, cursor: first.pageInfo.endCursor! });
+    expect(second.items.map((b) => b.id)).toEqual([BUILDINGS[1].id]);
+    expect(second.pageInfo.hasNextPage).toBe(false);
+  });
+
+  it("municipality と reservationSystem で絞る", async () => {
+    const byMunicipality = await listBuildings(env.DB, { municipality: ["MUNICIPALITY_TOSHIMA"] });
+    expect(byMunicipality.items.map((b) => b.id)).toEqual([BUILDINGS[1].id]);
+    const bySystem = await listBuildings(env.DB, { reservationSystem: ["tokyo-koutou"] });
+    expect(bySystem.items.map((b) => b.id)).toEqual([BUILDINGS[0].id]);
+  });
+});
+
+describe("getBuildingDetail", () => {
+  it("建物と部屋の一覧を返す", async () => {
+    const detail = await getBuildingDetail(env.DB, BUILDINGS[0].id);
+    expect(detail?.name).toBe("会館A");
+    expect(detail?.institutions.map((i) => [i.id, i.building])).toEqual([
+      [INSTITUTIONS[0].id, "会館A"],
+      [INSTITUTIONS[1].id, "会館A"],
+    ]);
+  });
+
+  it("存在しない ID は null", async () => {
+    expect(await getBuildingDetail(env.DB, "99999999-9999-4999-8999-999999999999")).toBeNull();
   });
 });
 
@@ -124,6 +198,36 @@ describe("searchReservations", () => {
     expect(hit.institution.municipality).toBe("MUNICIPALITY_KOUTOU");
     expect(hit.institution.id).toBeDefined();
     expect(hit.institution.division_labels).toEqual({});
+  });
+
+  it("buildingId と reservationSystem で絞る", async () => {
+    const holidays = await loadHolidays(env.DB);
+    const range = { startDate: "2026-08-01", endDate: "2026-08-01" };
+    const byBuilding = await searchReservations(
+      env.DB,
+      { ...range, buildingId: BUILDINGS[0].id },
+      holidays
+    );
+    expect(byBuilding.items.map((h) => h.institution.id)).toEqual([
+      INSTITUTIONS[0].id,
+      INSTITUTIONS[1].id,
+    ]);
+    expect(byBuilding.items[0]?.institution).toMatchObject({
+      building_id: BUILDINGS[0].id,
+      building: "会館A",
+    });
+    const byOtherBuilding = await searchReservations(
+      env.DB,
+      { ...range, buildingId: BUILDINGS[1].id },
+      holidays
+    );
+    expect(byOtherBuilding.items).toHaveLength(0);
+    const bySystem = await searchReservations(
+      env.DB,
+      { ...range, reservationSystem: ["tokyo-toshima"] },
+      holidays
+    );
+    expect(bySystem.items).toHaveLength(0);
   });
 
   it("municipality で絞る（予約データの無い toshima は 0 件）", async () => {
