@@ -1,13 +1,9 @@
 [
   {
     "id": "a5597226-83dd-407b-bdbe-872572e4b012",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "麻布区民センター",
+    "building_id": "85a56db1-156f-4af4-a59c-7d335dd7690d",
     "institution": "区民ホール",
-    "building_kana": "アザブクミンセンター",
     "institution_kana": "クミンホール",
-    "building_system_name": "麻布区民センター",
     "institution_system_name": "区民ホール：２３７名",
     "capacity": 237,
     "area": 216,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区六本木5-16-45 麻布地区総合支所2階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "96c64bc1-28c9-41b1-919c-e7a83a792d23",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "赤坂区民センター",
+    "building_id": "8f4bf23f-61cd-489b-bbbe-49864ae1c49e",
     "institution": "区民ホール",
-    "building_kana": "アカサカクミンセンター",
     "institution_kana": "クミンホール",
-    "building_system_name": "赤坂区民センター",
     "institution_system_name": "区民ホール：４００名",
     "capacity": 400,
     "area": 477,
@@ -103,7 +94,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区赤坂4-18-13 赤坂コミュニティーぷらざ3階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -117,13 +107,9 @@
   },
   {
     "id": "aff0f53d-df93-435c-b3a6-06b001103b81",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "赤坂区民センター",
+    "building_id": "8f4bf23f-61cd-489b-bbbe-49864ae1c49e",
     "institution": "リハーサル室",
-    "building_kana": "アカサカクミンセンター",
     "institution_kana": "リハーサルシツ",
-    "building_system_name": "赤坂区民センター",
     "institution_system_name": "リハーサル室：１２名",
     "capacity": 12,
     "area": 59,
@@ -161,7 +147,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区赤坂4-18-13 赤坂コミュニティーぷらざ3階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -175,13 +160,9 @@
   },
   {
     "id": "320eccc4-6988-4bee-8d23-78f761233289",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "赤坂区民センター",
+    "building_id": "8f4bf23f-61cd-489b-bbbe-49864ae1c49e",
     "institution": "多目的室",
-    "building_kana": "アカサカクミンセンター",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "赤坂区民センター",
     "institution_system_name": "多目的室：９０名",
     "capacity": 90,
     "area": 147,
@@ -219,7 +200,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区赤坂4-18-13 赤坂コミュニティーぷらざ3階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -233,13 +213,9 @@
   },
   {
     "id": "630cace4-3ead-4d8f-bbdd-8382b5b297ed",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "高輪区民センター",
+    "building_id": "88a945e4-fa00-471b-bb50-986e5164b3c6",
     "institution": "区民ホール",
-    "building_kana": "タカナワクミンセンター",
     "institution_kana": "クミンホール",
-    "building_system_name": "高輪区民センター",
     "institution_system_name": "区民ホール：２２４名",
     "capacity": 224,
     "area": 225,
@@ -277,7 +253,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区高輪1-16-25 高輪コミュニティーぷらざ3階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -291,13 +266,9 @@
   },
   {
     "id": "a28681ef-1871-4d17-992c-d3f6ca081913",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "高輪区民センター",
+    "building_id": "88a945e4-fa00-471b-bb50-986e5164b3c6",
     "institution": "音楽スタジオ",
-    "building_kana": "タカナワクミンセンター",
     "institution_kana": "オンガクスタジオ",
-    "building_system_name": "高輪区民センター",
     "institution_system_name": "音楽スタジオ：３０名",
     "capacity": 30,
     "area": 81,
@@ -335,7 +306,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区高輪1-16-25 高輪コミュニティーぷらざ3階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -349,13 +319,9 @@
   },
   {
     "id": "a5cf8dde-199a-4db2-9fae-1d4d5971d741",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "芝浦港南区民センター",
+    "building_id": "12619f0e-802a-4c7d-aca2-dae7aebca628",
     "institution": "区民ホール",
-    "building_kana": "シバウラコウナンクミンセンター",
     "institution_kana": "クミンホール",
-    "building_system_name": "芝浦港南区民センター",
     "institution_system_name": "区民ホール：２３５名",
     "capacity": 235,
     "area": 204,
@@ -393,7 +359,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区芝浦4-13-1 トリニティー芝浦1階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -407,13 +372,9 @@
   },
   {
     "id": "c110dbf4-284b-45f9-a275-e8bc49ea339f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "台場区民センター",
+    "building_id": "d3f5a4c9-9e67-41ee-8056-5d94d8341124",
     "institution": "区民ホール",
-    "building_kana": "ダイバクミンセンター",
     "institution_kana": "クミンホール",
-    "building_system_name": "台場区民センター",
     "institution_system_name": "区民ホール：２５０名",
     "capacity": 250,
     "area": 472,
@@ -451,7 +412,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区台場1-5-1 台場コミュニティーぷらざ1階",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -465,13 +425,9 @@
   },
   {
     "id": "341f2913-3221-405a-a4da-e6ea061858ea",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "港区立産業振興センター",
+    "building_id": "5ed30c17-c33a-4070-8da5-c01c3a555430",
     "institution": "ホール大",
-    "building_kana": "ミナトクリツサンギョウシンコウセンター",
     "institution_kana": "ホールダイ",
-    "building_system_name": "港区立産業振興センター",
     "institution_system_name": "ホール大：２８０名",
     "capacity": 280,
     "area": 216,
@@ -509,7 +465,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区芝5-36-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -523,13 +478,9 @@
   },
   {
     "id": "4f877f9c-a1bc-42a6-a1c6-9385da90afc4",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "港区立産業振興センター",
+    "building_id": "5ed30c17-c33a-4070-8da5-c01c3a555430",
     "institution": "ホール小",
-    "building_kana": "ミナトクリツサンギョウシンコウセンター",
     "institution_kana": "ホールショウ",
-    "building_system_name": "港区立産業振興センター",
     "institution_system_name": "ホール小：１２０名",
     "capacity": 120,
     "area": 143,
@@ -567,7 +518,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区芝5-36-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -581,13 +531,9 @@
   },
   {
     "id": "29412e26-1a3e-49c6-96dd-4ce99f659901",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "男女平等参画センター",
+    "building_id": "e1d2ac06-432d-4109-87fe-73919a6a90ee",
     "institution": "ホール",
-    "building_kana": "ダンジョビョウドウサンカクセンター",
     "institution_kana": "ホール",
-    "building_system_name": "男女平等参画センター",
     "institution_system_name": "ホール：２０８名",
     "capacity": 208,
     "area": 230,
@@ -625,7 +571,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区芝浦1-16-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -639,13 +584,9 @@
   },
   {
     "id": "9de4ddb4-3aab-42dd-9119-28da93fe0e57",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "神明いきいきプラザ",
+    "building_id": "984b891c-55f8-452c-b4f5-94c32477f10d",
     "institution": "音楽スタジオ",
-    "building_kana": "シンメイイキイキプラザ",
     "institution_kana": "オンガクスタジオ",
-    "building_system_name": "神明いきいきプラザ",
     "institution_system_name": "音楽スタジオ：１０名",
     "capacity": 10,
     "area": null,
@@ -683,7 +624,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区浜松町1-6-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -697,13 +637,9 @@
   },
   {
     "id": "e8fb70d3-c3c0-4d48-a87d-965d40b9a41a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "ありすいきいきプラザ",
+    "building_id": "89d8f2c1-b3f4-4085-9d06-796ee213f770",
     "institution": "多目的室",
-    "building_kana": "アリスイキイキプラザ",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "ありすいきいきプラザ",
     "institution_system_name": "多目的室：４８名",
     "capacity": 48,
     "area": 88.56,
@@ -741,7 +677,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区南麻布4-6-7",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -755,13 +690,9 @@
   },
   {
     "id": "b1985d41-cd20-4596-a205-a076c822ce06",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "白金台いきいきプラザ",
+    "building_id": "6b0bf50b-d78e-46c0-9af3-41ffa98e3316",
     "institution": "ホール",
-    "building_kana": "シロカネダイイキイキプラザ",
     "institution_kana": "ホール",
-    "building_system_name": "白金台いきいきプラザ",
     "institution_system_name": "ホール：１２０名",
     "capacity": 120,
     "area": 257,
@@ -799,7 +730,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区白金台4-8-5",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -813,13 +743,9 @@
   },
   {
     "id": "4e435172-163e-4ccc-b8f9-7af6d4abc9f7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_MINATO",
-    "building": "港南いきいきプラザ",
+    "building_id": "985734f4-5c7e-46ff-81b6-32339fbd492d",
     "institution": "多目的室",
-    "building_kana": "コウナンイキイキプラザ",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "港南いきいきプラザ",
     "institution_system_name": "多目的室：３０名",
     "capacity": 30,
     "area": 60.7,
@@ -857,7 +783,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都港区港南4-2-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",

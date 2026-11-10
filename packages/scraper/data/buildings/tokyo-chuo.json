@@ -1,0 +1,42 @@
+[
+  {
+    "id": "71182e73-5ebb-4499-95f0-38f29fc21040",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "name": "アートはるみ",
+    "kana": "アートハルミ",
+    "system_name": "アートはるみ",
+    "address": "東京都中央区晴海1丁目4番1号",
+    "reservation_system": "tokyo-chuo"
+  },
+  {
+    "id": "35d866c9-d7c5-4444-96e0-a6b380a03f71",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "name": "築地社会教育会館",
+    "kana": "ツキジシャカイキョウイクカイカン",
+    "system_name": "築地社会教育会館",
+    "address": "東京都中央区築地4丁目15番地1号",
+    "reservation_system": "tokyo-chuo"
+  },
+  {
+    "id": "6cee641f-65d4-4546-b438-b65664766cf9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "name": "月島社会教育会館",
+    "kana": "ツキシマシャカイキョウイクカイカン",
+    "system_name": "月島社会教育会館",
+    "address": "東京都中央区月島4丁目1番1号",
+    "reservation_system": "tokyo-chuo"
+  },
+  {
+    "id": "9d6a1902-6137-424c-b879-22a6cc22aaf6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_CHUO",
+    "name": "日本橋社会教育会館",
+    "kana": "ニホンバシシャカイキョウイクカイカン",
+    "system_name": "日本橋社会教育会館",
+    "address": "東京都中央区日本橋人形町1丁目1番17号",
+    "reservation_system": "tokyo-chuo"
+  }
+]

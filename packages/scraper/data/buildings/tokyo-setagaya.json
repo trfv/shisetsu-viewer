@@ -1,0 +1,172 @@
+[
+  {
+    "id": "23dc4206-5297-47a4-bf9b-41b5916dc639",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "桜丘区民センター",
+    "kana": "サクラガオカクミンセンター",
+    "system_name": "桜丘区民センター",
+    "address": "東京都世田谷区桜丘5丁目14番1号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "d8294331-42eb-4a59-8148-914eb90ff062",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "太子堂区民センター",
+    "kana": "タイシドウクミンセンター",
+    "system_name": "太子堂区民センター",
+    "address": "東京都世田谷区太子堂1丁目14番20号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "b5b04b37-0e7e-442d-a88f-9a0972e53fd8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "弦巻区民センター",
+    "kana": "ツルマキクミンセンター",
+    "system_name": "弦巻区民センター",
+    "address": "東京都世田谷区弦巻1丁目26番11号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "ad313723-9330-4843-b197-76663c519e14",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "宮坂区民センター",
+    "kana": "ミヤサカクミンセンター",
+    "system_name": "宮坂区民センター",
+    "address": "東京都世田谷区宮坂1丁目24番6号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "11807da0-afd2-4cd1-8e17-047c06b136a3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "代田区民センター",
+    "kana": "ダイタクミンセンター",
+    "system_name": "代田区民センター",
+    "address": "東京都世田谷区代田6丁目34番13号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "c4562dc5-012c-46f5-98b2-368221c06a13",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "玉川台区民センター",
+    "kana": "タマガワダイクミンセンター",
+    "system_name": "玉川台区民センター",
+    "address": "東京都世田谷区玉川台1丁目6番15号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "65a5f9bf-918d-453a-89c1-4a6a661d7591",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "鎌田区民センター",
+    "kana": "カマタクミンセンター",
+    "system_name": "鎌田区民センター",
+    "address": "東京都世田谷区鎌田3丁目35番1号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "beed6789-f824-4ecb-94d4-ef30338cbf7c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "粕谷区民センター",
+    "kana": "カスヤクミンセンター",
+    "system_name": "粕谷区民センター",
+    "address": "東京都世田谷区粕谷4丁目13番6号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "970e12fa-fbd4-4189-a998-d0dc0298eb5f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "上北沢区民センター",
+    "kana": "カミキタザワクミンセンター",
+    "system_name": "上北沢区民センター",
+    "address": "東京都世田谷区上北沢3丁目8番9号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "a1471ef8-6ffd-4317-adb8-e69b27b1befb",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "烏山区民センター",
+    "kana": "カラスヤマクミンセンター",
+    "system_name": "烏山区民センター",
+    "address": "東京都世田谷区南烏山6丁目2番19号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "eaa4f339-a756-4ff8-aff4-d23681a249a8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "上馬地区会館",
+    "kana": "カミウマチクカイカン",
+    "system_name": "上馬地区会館",
+    "address": "東京都世田谷区上馬4丁目10番17号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "29842a4c-be7a-494f-9f96-e38b0fd4c62d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "花見堂地区会館",
+    "kana": "ハナミドウチクカイカン",
+    "system_name": "花見堂地区会館",
+    "address": "東京都世田谷区代田1丁目13番14号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "8a907148-abda-458d-9e6b-286e82645d2d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "尾山台地区会館",
+    "kana": "オヤマダイチクカイカン",
+    "system_name": "尾山台地区会館",
+    "address": "東京都世田谷区等々力2丁目17番14号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "c086ce14-4642-47ee-92a8-4c5c784db8db",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "新代田区民集会所",
+    "kana": "シンダイタクミンシュウカイジョ",
+    "system_name": "新代田区民集会所",
+    "address": "東京都世田谷区羽根木1丁目6番14号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "0830955c-262b-4707-b622-f7230c5b134b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "砧総合支所区民集会所",
+    "kana": "キヌタソウゴウシショクミンシュウカイジョ",
+    "system_name": "砧総合支所区民集会所",
+    "address": "東京都世田谷区成城6丁目2番1号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "366c922a-0c46-48cc-8b63-46dcd02c42b6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "希望丘区民集会所",
+    "kana": "キボウガオカクミンシュウカイジョ",
+    "system_name": "希望丘区民集会所",
+    "address": "東京都世田谷区船橋6丁目25番1号",
+    "reservation_system": "tokyo-setagaya"
+  },
+  {
+    "id": "4cbac7a6-6f39-47b5-86e6-31dd47570139",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SETAGAYA",
+    "name": "上馬高齢者集会所",
+    "kana": "カミウマコウレイシャシュウカイジョ",
+    "system_name": "上馬高齢者集会所",
+    "address": "東京都世田谷区上馬4丁目36番9号",
+    "reservation_system": "tokyo-setagaya"
+  }
+]

@@ -1,13 +1,9 @@
 [
   {
     "id": "a68d7691-2cd3-4cc6-a62e-5c425de5cab7",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "麻生市民館",
+    "building_id": "47667431-ba64-487e-9417-d1955df3bfcd",
     "institution": "大会議室",
-    "building_kana": "アソウシミンカン",
     "institution_kana": "ダイカイギシツ",
-    "building_system_name": "麻生市民館",
     "institution_system_name": "大会議室",
     "capacity": 300,
     "area": 393,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市麻生区万福寺1-5-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "9313ab0b-4d5b-49f9-9de4-41c418683d88",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "麻生市民館",
+    "building_id": "47667431-ba64-487e-9417-d1955df3bfcd",
     "institution": "大ホール",
-    "building_kana": "アソウシミンカン",
     "institution_kana": "ダイホール",
-    "building_system_name": "麻生市民館",
     "institution_system_name": "大ホール",
     "capacity": 1010,
     "area": 1183,
@@ -103,7 +94,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市麻生区万福寺1-5-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -117,13 +107,9 @@
   },
   {
     "id": "e6c383c3-8171-48c3-8c27-95230fc258b6",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "アクトスタジオ",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "アクトスタジオ",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "アクトスタジオ",
     "capacity": 200,
     "area": 245,
@@ -161,7 +147,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -175,13 +160,9 @@
   },
   {
     "id": "411c86d8-61d5-4e99-a411-439284b08580",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "音楽練習室1",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "オンガクレンシュウシツ1",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "音楽練習室１",
     "capacity": 10,
     "area": 53,
@@ -219,7 +200,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -233,13 +213,9 @@
   },
   {
     "id": "9c26f21a-4a42-4dd0-bc69-e4444071d82e",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "音楽練習室2",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "オンガクレンシュウシツ2",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "音楽練習室２",
     "capacity": 8,
     "area": 38,
@@ -277,7 +253,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -291,13 +266,9 @@
   },
   {
     "id": "2543b253-2575-4501-9576-63dcb25904b1",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "ホール1階",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "ホールイチカイ",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "ホール１階",
     "capacity": 1100,
     "area": null,
@@ -335,7 +306,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -349,13 +319,9 @@
   },
   {
     "id": "4291de4a-dd02-4e42-9b33-f6c7615fafef",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "ホール1-3階",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "ホールイチ－サンカイ",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "ホール１－３階",
     "capacity": 2013,
     "area": null,
@@ -393,7 +359,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -407,13 +372,9 @@
   },
   {
     "id": "2f5c2e18-91b8-4bd7-9760-5f00b3bec5aa",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "ホール1-2階",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "ホールイチ－ニカイ",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "ホール１－２階",
     "capacity": 1655,
     "area": null,
@@ -451,7 +412,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -465,13 +425,9 @@
   },
   {
     "id": "9b0b3477-ca32-4ad1-999f-58895af4f861",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "カルッツかわさき",
+    "building_id": "c62eb5a8-bc75-4d5d-960e-24a7936a9375",
     "institution": "ホール練習利用",
-    "building_kana": "カルッツカワサキ",
     "institution_kana": "ホールレンシュウリヨウ",
-    "building_system_name": "カルッツかわさき",
     "institution_system_name": "ホール練習利用",
     "capacity": null,
     "area": null,
@@ -479,7 +435,6 @@
     "fee_divisions": [],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "川崎市川崎区富士見1-1-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -493,13 +448,9 @@
   },
   {
     "id": "93d9923d-7d14-47cf-94d7-053721abcc03",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市民プラザ",
+    "building_id": "7524a915-9b08-4f9a-bdac-a4c29f05b2e9",
     "institution": "ステージ",
-    "building_kana": "カワサキシミンプラザ",
     "institution_kana": "ステージ",
-    "building_system_name": "川崎市民プラザ",
     "institution_system_name": "ステージ",
     "capacity": 100,
     "area": null,
@@ -537,7 +488,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市高津区新作1-19-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -551,13 +501,9 @@
   },
   {
     "id": "1150e9d7-998a-41d2-b7c8-6635e144606a",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市民プラザ",
+    "building_id": "7524a915-9b08-4f9a-bdac-a4c29f05b2e9",
     "institution": "ふるさと劇場",
-    "building_kana": "カワサキシミンプラザ",
     "institution_kana": "フルサトゲキジョウ",
-    "building_system_name": "川崎市民プラザ",
     "institution_system_name": "ふるさと劇場",
     "capacity": 489,
     "area": null,
@@ -595,7 +541,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市高津区新作1-19-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -609,13 +554,9 @@
   },
   {
     "id": "00390d05-3893-4580-b44f-aae3fb8f8fc7",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎マリエン",
+    "building_id": "8a2e60cd-92b1-4138-a96e-bd7e583adcfe",
     "institution": "体育室",
-    "building_kana": "カワサキマリエン",
     "institution_kana": "タイイクシツ",
-    "building_system_name": "川崎マリエン",
     "institution_system_name": "体育室",
     "capacity": null,
     "area": 684,
@@ -653,7 +594,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区東扇島38-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -667,13 +607,9 @@
   },
   {
     "id": "cb0771b5-39be-464b-9127-32b70881dc4a",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "かわさき老人福祉・地域交流C",
+    "building_id": "8f59de8d-c328-4f7e-9381-92a18c193e6d",
     "institution": "大広間",
-    "building_kana": "カワサキロウジンフクシ・チイキコウリュウシー",
     "institution_kana": "オオヒロマ",
-    "building_system_name": "かわさき老人福祉・地域交流Ｃ",
     "institution_system_name": "大広間",
     "capacity": 72,
     "area": null,
@@ -703,7 +639,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区堤根34-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -717,13 +652,9 @@
   },
   {
     "id": "2bfa4336-f63c-4fd5-9f59-67370810cc64",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "かわさき老人福祉・地域交流C",
+    "building_id": "8f59de8d-c328-4f7e-9381-92a18c193e6d",
     "institution": "工作室",
-    "building_kana": "カワサキロウジンフクシ・チイキコウリュウシー",
     "institution_kana": "コウサクシツ",
-    "building_system_name": "かわさき老人福祉・地域交流Ｃ",
     "institution_system_name": "工作室",
     "capacity": null,
     "area": null,
@@ -753,7 +684,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区堤根34-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -767,13 +697,9 @@
   },
   {
     "id": "fa4dde03-c481-4894-bf45-a4a492cbbb1c",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "かわさき老人福祉・地域交流C",
+    "building_id": "8f59de8d-c328-4f7e-9381-92a18c193e6d",
     "institution": "多目的室",
-    "building_kana": "カワサキロウジンフクシ・チイキコウリュウシー",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "かわさき老人福祉・地域交流Ｃ",
     "institution_system_name": "多目的室",
     "capacity": 24,
     "area": null,
@@ -803,7 +729,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区堤根34-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -817,13 +742,9 @@
   },
   {
     "id": "77c139c4-769c-4db5-a98d-946feaa74340",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "かわさき老人福祉・地域交流C",
+    "building_id": "8f59de8d-c328-4f7e-9381-92a18c193e6d",
     "institution": "ホール",
-    "building_kana": "カワサキロウジンフクシ・チイキコウリュウシー",
     "institution_kana": "ホール",
-    "building_system_name": "かわさき老人福祉・地域交流Ｃ",
     "institution_system_name": "ホール",
     "capacity": 210,
     "area": null,
@@ -853,7 +774,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市川崎区堤根34-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -867,13 +787,9 @@
   },
   {
     "id": "cb982acd-9e25-473e-8ad6-f9989b8d5dd7",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "幸市民館",
+    "building_id": "6d216204-2720-4624-a11f-770bcc7bd9d3",
     "institution": "大ホール",
-    "building_kana": "コウシミンカン",
     "institution_kana": "ダイホール",
-    "building_system_name": "幸市民館",
     "institution_system_name": "大ホール",
     "capacity": 840,
     "area": 872,
@@ -911,7 +827,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区戸手本町1-11-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -925,13 +840,9 @@
   },
   {
     "id": "5d08e2d7-445c-4728-ae24-cbc697261bc4",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "国際交流センター",
+    "building_id": "8e87db30-9ade-40ec-87e8-81716fee276d",
     "institution": "ホール",
-    "building_kana": "コクサイコウリュウセンター",
     "institution_kana": "ホール",
-    "building_system_name": "国際交流センター",
     "institution_system_name": "ホール",
     "capacity": 264,
     "area": 293,
@@ -969,7 +880,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区木月祗園町2-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -983,13 +893,9 @@
   },
   {
     "id": "3f671dfd-6511-4653-adfd-c548772a7dcb",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "国際交流センター",
+    "building_id": "8e87db30-9ade-40ec-87e8-81716fee276d",
     "institution": "レセプションルーム",
-    "building_kana": "コクサイコウリュウセンター",
     "institution_kana": "レセプションルーム",
-    "building_system_name": "国際交流センター",
     "institution_system_name": "レセプションルーム",
     "capacity": 150,
     "area": 261,
@@ -1027,7 +933,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区木月祗園町2-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1041,13 +946,9 @@
   },
   {
     "id": "22856e0d-c984-4867-87e3-0ba61ceedb30",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "産業振興会館",
+    "building_id": "2af2db63-d576-40a4-aab4-b218f082b8f5",
     "institution": "ホール",
-    "building_kana": "サンギョウシンコウカイカン",
     "institution_kana": "ホール",
-    "building_system_name": "産業振興会館",
     "institution_system_name": "ホール",
     "capacity": 478,
     "area": 336,
@@ -1085,7 +986,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区堀川町66番地20",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1099,13 +999,9 @@
   },
   {
     "id": "9e004269-c29b-43e5-a627-163abf8ea84d",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "サンピアンかわさき",
+    "building_id": "a4fb4038-c1f3-48c4-98d3-664e6302ea28",
     "institution": "音楽室",
-    "building_kana": "サンピアンカワサキ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "サンピアンかわさき",
     "institution_system_name": "音楽室",
     "capacity": null,
     "area": null,
@@ -1113,7 +1009,6 @@
     "fee_divisions": [],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "川崎市川崎区富士見2-5-2",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1127,13 +1022,9 @@
   },
   {
     "id": "10cd355e-dc6b-489b-998f-483ee1114fcd",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "サンピアンかわさき",
+    "building_id": "a4fb4038-c1f3-48c4-98d3-664e6302ea28",
     "institution": "ホール",
-    "building_kana": "サンピアンカワサキ",
     "institution_kana": "ホール",
-    "building_system_name": "サンピアンかわさき",
     "institution_system_name": "ホール",
     "capacity": 762,
     "area": null,
@@ -1141,7 +1032,6 @@
     "fee_divisions": [],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "川崎市川崎区富士見2-5-2",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1155,13 +1045,9 @@
   },
   {
     "id": "981c9e92-2a6a-42ad-b226-7e6d9b3a8aeb",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "すくらむ21",
+    "building_id": "91519c8e-0b97-4bb0-976c-a1a2d799b963",
     "institution": "ホール",
-    "building_kana": "スクラム21",
     "institution_kana": "ホール",
-    "building_system_name": "すくらむ２１",
     "institution_system_name": "ホール",
     "capacity": 850,
     "area": 1479,
@@ -1199,7 +1085,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市高津区溝口2丁目20番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1213,13 +1098,9 @@
   },
   {
     "id": "252c278a-fe89-422f-86e9-6b498fc57fcc",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "総合福祉センター（エポック）",
+    "building_id": "05274ada-c7f6-4c78-8ff7-5769f1ff0702",
     "institution": "ホール",
-    "building_kana": "ソウゴウフクシセンター（エポック）",
     "institution_kana": "ホール",
-    "building_system_name": "総合福祉センター（エポック）",
     "institution_system_name": "ホール",
     "capacity": 907,
     "area": null,
@@ -1257,7 +1138,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区上小田中6-22-5",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1271,13 +1151,9 @@
   },
   {
     "id": "3fae42fe-3671-4459-a1bb-9a1182adfb96",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "高津市民館",
+    "building_id": "fc742295-9e3b-4a9c-b02d-7db2913cbd19",
     "institution": "大ホール",
-    "building_kana": "タカツシミンカン",
     "institution_kana": "ダイホール",
-    "building_system_name": "高津市民館",
     "institution_system_name": "大ホール",
     "capacity": 600,
     "area": null,
@@ -1315,7 +1191,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市高津区溝口1-4-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1329,13 +1204,9 @@
   },
   {
     "id": "3efd470c-2f75-4c89-891b-5732f4d655e9",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "多摩市民館",
+    "building_id": "2a123915-e717-4fec-b1e0-803b57693b66",
     "institution": "視聴覚室",
-    "building_kana": "タマシミンカン",
     "institution_kana": "シチョウカクシツ",
-    "building_system_name": "多摩市民館",
     "institution_system_name": "視聴覚室",
     "capacity": 42,
     "area": 100,
@@ -1373,7 +1244,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市多摩区登戸1775番地1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1387,13 +1257,9 @@
   },
   {
     "id": "3189456d-de47-4634-a9a2-0078e8b60868",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "多摩市民館",
+    "building_id": "2a123915-e717-4fec-b1e0-803b57693b66",
     "institution": "大会議室",
-    "building_kana": "タマシミンカン",
     "institution_kana": "ダイカイギシツ",
-    "building_system_name": "多摩市民館",
     "institution_system_name": "大会議室",
     "capacity": 200,
     "area": 160,
@@ -1431,7 +1297,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市多摩区登戸1775番地1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1445,13 +1310,9 @@
   },
   {
     "id": "6a7bbd39-76dd-426a-8a6b-007036968ad6",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "多摩市民館",
+    "building_id": "2a123915-e717-4fec-b1e0-803b57693b66",
     "institution": "大ホール",
-    "building_kana": "タマシミンカン",
     "institution_kana": "ダイホール",
-    "building_system_name": "多摩市民館",
     "institution_system_name": "大ホール",
     "capacity": 908,
     "area": 659,
@@ -1489,7 +1350,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市多摩区登戸1775番地1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1503,13 +1363,9 @@
   },
   {
     "id": "9ba71326-649e-4b64-b2ed-01ccb078f4ca",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "とどろきアリーナ",
+    "building_id": "7e45e9d0-0e98-4c75-8e60-c370fe57c37c",
     "institution": "メインアリーナ",
-    "building_kana": "トドロキアリーナ",
     "institution_kana": "メインアリーナ",
-    "building_system_name": "とどろきアリーナ",
     "institution_system_name": "メインアリーナ",
     "capacity": 6500,
     "area": 2872,
@@ -1547,7 +1403,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区等々力1番3号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1561,13 +1416,9 @@
   },
   {
     "id": "726bbd09-f3fd-4f06-8ca2-e7b11cea0132",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "中原市民館",
+    "building_id": "fe2e8898-9d57-43d2-9b43-0302e8cae465",
     "institution": "音楽室",
-    "building_kana": "ナカハラシミンカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "中原市民館",
     "institution_system_name": "音楽室",
     "capacity": 42,
     "area": 77,
@@ -1605,7 +1456,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区新丸子東3丁目1100番地12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1619,13 +1469,9 @@
   },
   {
     "id": "5f98365e-c7fc-45c2-bf71-ee312cdb644d",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "中原市民館",
+    "building_id": "fe2e8898-9d57-43d2-9b43-0302e8cae465",
     "institution": "視聴覚室",
-    "building_kana": "ナカハラシミンカン",
     "institution_kana": "シチョウカクシツ",
-    "building_system_name": "中原市民館",
     "institution_system_name": "視聴覚室",
     "capacity": 60,
     "area": 86,
@@ -1663,7 +1509,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区新丸子東3丁目1100番地12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1677,13 +1522,9 @@
   },
   {
     "id": "652d75c7-caf7-4a58-9db4-eb28ee6353b0",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "中原市民館",
+    "building_id": "fe2e8898-9d57-43d2-9b43-0302e8cae465",
     "institution": "第5会議室",
-    "building_kana": "ナカハラシミンカン",
     "institution_kana": "ダイゴカイギシツ",
-    "building_system_name": "中原市民館",
     "institution_system_name": "第５会議室",
     "capacity": 24,
     "area": 44,
@@ -1721,7 +1562,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区新丸子東3丁目1100番地12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1735,13 +1575,9 @@
   },
   {
     "id": "d94b7143-cad4-4df6-ba4b-f2939202521b",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "中原市民館",
+    "building_id": "fe2e8898-9d57-43d2-9b43-0302e8cae465",
     "institution": "多目的ホール",
-    "building_kana": "ナカハラシミンカン",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "中原市民館",
     "institution_system_name": "多目的ホール",
     "capacity": 375,
     "area": 291,
@@ -1779,7 +1615,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区新丸子東3丁目1100番地12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1793,13 +1628,9 @@
   },
   {
     "id": "50584fbc-2edf-416e-97e0-0e3a1dd2be42",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "宮前市民館",
+    "building_id": "9aaf4477-0c13-467c-8af7-2977e754f729",
     "institution": "大ホール",
-    "building_kana": "ミヤマエシミンカン",
     "institution_kana": "ダイホール",
-    "building_system_name": "宮前市民館",
     "institution_system_name": "大ホール",
     "capacity": 910,
     "area": null,
@@ -1837,7 +1668,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市宮前区宮前平2-20-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1851,13 +1681,9 @@
   },
   {
     "id": "e5636b9b-982b-419a-b539-805ca7e18a8d",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "ミューザ川崎シンフォニーホール",
+    "building_id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
     "institution": "音楽ホール",
-    "building_kana": "ミューザカワサキシンフォニーホール",
     "institution_kana": "オンガクホール",
-    "building_system_name": "ミューザ川崎シンフォニーホール",
     "institution_system_name": "音楽ホール",
     "capacity": 1997,
     "area": null,
@@ -1895,7 +1721,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1909,13 +1734,9 @@
   },
   {
     "id": "50e98efb-8841-47bb-b5b3-44cf4753239f",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "ミューザ川崎シンフォニーホール",
+    "building_id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
     "institution": "市民交流室",
-    "building_kana": "ミューザカワサキシンフォニーホール",
     "institution_kana": "シミンコウリュウシツ",
-    "building_system_name": "ミューザ川崎シンフォニーホール",
     "institution_system_name": "市民交流室",
     "capacity": 150,
     "area": 136.5,
@@ -1953,7 +1774,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1967,13 +1787,9 @@
   },
   {
     "id": "6234be01-1948-4e90-b925-cf435ada3ed4",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "ミューザ川崎シンフォニーホール",
+    "building_id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
     "institution": "練習室1",
-    "building_kana": "ミューザカワサキシンフォニーホール",
     "institution_kana": "レンシュウシツイチ",
-    "building_system_name": "ミューザ川崎シンフォニーホール",
     "institution_system_name": "練習室１",
     "capacity": 8,
     "area": 40.9,
@@ -2011,7 +1827,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2025,13 +1840,9 @@
   },
   {
     "id": "41d7836d-29bd-4584-a3d8-e6758448aea8",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "ミューザ川崎シンフォニーホール",
+    "building_id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
     "institution": "練習室3",
-    "building_kana": "ミューザカワサキシンフォニーホール",
     "institution_kana": "レンシュウシツサン",
-    "building_system_name": "ミューザ川崎シンフォニーホール",
     "institution_system_name": "練習室３",
     "capacity": 8,
     "area": 41.0,
@@ -2069,7 +1880,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2083,13 +1893,9 @@
   },
   {
     "id": "552463fd-d3ce-4113-806e-06cdecbfd84e",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "ミューザ川崎シンフォニーホール",
+    "building_id": "6d5a6dac-e22f-4866-bc33-23fca33c32e5",
     "institution": "練習室2",
-    "building_kana": "ミューザカワサキシンフォニーホール",
     "institution_kana": "レンシュウシツニ",
-    "building_system_name": "ミューザ川崎シンフォニーホール",
     "institution_system_name": "練習室２",
     "capacity": 16,
     "area": 70.8,
@@ -2127,7 +1933,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市幸区大宮町1310",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2141,13 +1946,9 @@
   },
   {
     "id": "b08ee529-fab7-4155-aee3-5016bc5780aa",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市総合自治会館",
+    "building_id": "8b28711f-923f-4680-818d-86acb71b0e77",
     "institution": "ホール",
-    "building_kana": "カワサキシソウゴウジチカイカン",
     "institution_kana": "ホール",
-    "building_system_name": "川崎市総合自治会館",
     "institution_system_name": "ホール",
     "capacity": 200,
     "area": 199.58,
@@ -2185,7 +1986,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区小杉町3-600",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -2199,13 +1999,9 @@
   },
   {
     "id": "6eb2244b-c596-4048-ba4a-d735858261be",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市総合自治会館",
+    "building_id": "8b28711f-923f-4680-818d-86acb71b0e77",
     "institution": "多目的室1",
-    "building_kana": "カワサキシソウゴウジチカイカン",
     "institution_kana": "タモクテキシツ1",
-    "building_system_name": "川崎市総合自治会館",
     "institution_system_name": "多目的室１",
     "capacity": 24,
     "area": 29.7,
@@ -2243,7 +2039,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区小杉町3-600",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2257,13 +2052,9 @@
   },
   {
     "id": "b7b3fca7-1f30-4664-b612-8696dae7de4e",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市総合自治会館",
+    "building_id": "8b28711f-923f-4680-818d-86acb71b0e77",
     "institution": "多目的室2",
-    "building_kana": "カワサキシソウゴウジチカイカン",
     "institution_kana": "タモクテキシツ2",
-    "building_system_name": "川崎市総合自治会館",
     "institution_system_name": "多目的室２",
     "capacity": 24,
     "area": 29.7,
@@ -2301,7 +2092,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区小杉町3-600",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2315,13 +2105,9 @@
   },
   {
     "id": "be0662b2-58b1-4d7f-b064-0f67fc0a0e2b",
-    "prefecture": "PREFECTURE_KANAGAWA",
-    "municipality": "MUNICIPALITY_KAWASAKI",
-    "building": "川崎市総合自治会館",
+    "building_id": "8b28711f-923f-4680-818d-86acb71b0e77",
     "institution": "多目的室3",
-    "building_kana": "カワサキシソウゴウジチカイカン",
     "institution_kana": "タモクテキシツ3",
-    "building_system_name": "川崎市総合自治会館",
     "institution_system_name": "多目的室３",
     "capacity": 12,
     "area": 24.09,
@@ -2359,7 +2145,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "川崎市中原区小杉町3-600",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",

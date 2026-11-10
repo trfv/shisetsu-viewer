@@ -10,7 +10,7 @@ const MONTH_VIEW = "24";
 export const CLOSED = "休館日";
 
 export interface Reserve1Target {
-  /** 施設 JSON の building_system_name と一致させる */
+  /** 建物 JSON の system_name と一致させる */
   facilityName: string;
   grand: string;
   /** 部屋名から「（定員n名）」を除いた表記 */
