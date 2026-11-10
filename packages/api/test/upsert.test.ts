@@ -52,7 +52,7 @@ describe("upsertReservations（差分 upsert）", () => {
     expect(second.rowsWritten).toBe(0);
   });
 
-  it("1 行だけ空きに変えると、その行と vacated_at の索引だけを書き、その行の updated_at だけ進む", async () => {
+  it("1 行だけ変えると 1 行のみ更新、その行の updated_at だけ進む", async () => {
     const rows = reservationRows(30);
     await upsertReservations(env.DB, rows);
     const before = await env.DB.prepare(
@@ -73,7 +73,7 @@ describe("upsertReservations（差分 upsert）", () => {
     // updated_at に strftime の %f でミリ秒差を出す
     await new Promise((resolve) => setTimeout(resolve, 5));
     const res = await upsertReservations(env.DB, changed);
-    expect(res.rowsWritten).toBe(2);
+    expect(res.rowsWritten).toBe(1);
 
     const after = await env.DB.prepare(
       `SELECT date, updated_at, is_morning_vacant AS m FROM reservations ORDER BY date`
@@ -119,26 +119,24 @@ const vacancyRow = (morning: string, evening = FILLED) => ({
 });
 const readVacatedAt = () =>
   env.DB.prepare(
-    `SELECT morning_vacated_at AS m, afternoon_vacated_at AS a, evening_vacated_at AS e,
-            vacated_at AS v
+    `SELECT morning_vacated_at AS m, afternoon_vacated_at AS a, evening_vacated_at AS e
      FROM reservations WHERE institution_id = ?`
   )
     .bind(INST_ID)
-    .first<{ m: string | null; a: string | null; e: string | null; v: string | null }>();
+    .first<{ m: string | null; a: string | null; e: string | null }>();
 
-describe("upsertReservations の vacated_at", () => {
+describe("upsertReservations の *_vacated_at", () => {
   it("初めて取得した空き枠には付けない", async () => {
     await upsertReservations(env.DB, [vacancyRow(VACANT, VACANT)]);
-    expect(await readVacatedAt()).toEqual({ m: null, a: null, e: null, v: null });
+    expect(await readVacatedAt()).toEqual({ m: null, a: null, e: null });
   });
 
-  it("空きに変わった区分にだけ付け、vacated_at にも同じ時刻を書く", async () => {
+  it("空きに変わった区分にだけ付ける", async () => {
     await upsertReservations(env.DB, [vacancyRow(FILLED)]);
     await upsertReservations(env.DB, [vacancyRow(VACANT)]);
     const got = await readVacatedAt();
     expect(got?.m).not.toBeNull();
     expect(got?.e).toBeNull();
-    expect(got?.v).toBe(got?.m);
   });
 
   it("埋まっても消さず、別の区分が空いたときは元の区分の時刻を保つ", async () => {
@@ -150,8 +148,6 @@ describe("upsertReservations の vacated_at", () => {
     const second = await readVacatedAt();
     expect(second?.m).toBe(first?.m);
     expect(second?.e).not.toBeNull();
-    expect(second?.v).toBe(second?.e);
-    expect(second!.v! > first!.v!).toBe(true);
   });
 
   it("空きのまま他の区分だけ変わっても付け直さない", async () => {

@@ -137,14 +137,12 @@ const IS_ONLY_MORNING_VACANT = "m";
 const IS_ONLY_AFTERNOON_VACANT = "a";
 const IS_ONLY_EVENING_VACANT = "e";
 const IS_ONLY_HOLIDAY = "h";
-const IS_ONLY_NEWLY_VACANT = "n";
 
 export const RESERVATION_SEARCH_FILTER_MAP = {
   [IS_ONLY_MORNING_VACANT]: "午前空き",
   [IS_ONLY_AFTERNOON_VACANT]: "午後空き",
   [IS_ONLY_EVENING_VACANT]: "夜間空き",
   [IS_ONLY_HOLIDAY]: "土日祝のみ",
-  [IS_ONLY_NEWLY_VACANT]: "新しく空いた",
 } as const;
 
 const ReservationSearchFilters = [
@@ -152,7 +150,6 @@ const ReservationSearchFilters = [
   IS_ONLY_AFTERNOON_VACANT,
   IS_ONLY_EVENING_VACANT,
   IS_ONLY_HOLIDAY,
-  IS_ONLY_NEWLY_VACANT,
 ] as const;
 
 export type ReservationSearchFilter = (typeof ReservationSearchFilters)[number];
@@ -226,6 +223,5 @@ export const toReservationSearchQueryParams = ({
     isMorningVacant: filter.includes(IS_ONLY_MORNING_VACANT) ? true : undefined,
     isAfternoonVacant: filter.includes(IS_ONLY_AFTERNOON_VACANT) ? true : undefined,
     isEveningVacant: filter.includes(IS_ONLY_EVENING_VACANT) ? true : undefined,
-    isNewlyVacant: filter.includes(IS_ONLY_NEWLY_VACANT) ? true : undefined,
   };
 };

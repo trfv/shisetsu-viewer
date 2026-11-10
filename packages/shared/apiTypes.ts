@@ -106,7 +106,6 @@ export interface ReservationSearchQueryParams {
   isMorningVacant?: boolean | undefined;
   isAfternoonVacant?: boolean | undefined;
   isEveningVacant?: boolean | undefined;
-  isNewlyVacant?: boolean | undefined;
   isAvailableStrings?: boolean | undefined;
   isAvailableWoodwind?: boolean | undefined;
   isAvailableBrass?: boolean | undefined;

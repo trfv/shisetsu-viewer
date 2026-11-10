@@ -377,24 +377,14 @@ export async function searchReservations(
     args.push(JSON.stringify(holidays));
   }
   const vacancyFilters: [boolean | undefined, string][] = [
-    [params.isMorningVacant, "morning"],
-    [params.isAfternoonVacant, "afternoon"],
-    [params.isEveningVacant, "evening"],
+    [params.isMorningVacant, "r.is_morning_vacant"],
+    [params.isAfternoonVacant, "r.is_afternoon_vacant"],
+    [params.isEveningVacant, "r.is_evening_vacant"],
   ];
-  for (const [flag, division] of vacancyFilters) {
+  for (const [flag, column] of vacancyFilters) {
     if (flag === true) {
-      conditions.push(`r.is_${division}_vacant = 1`);
+      conditions.push(`${column} = 1`);
     }
-  }
-  if (params.isNewlyVacant === true) {
-    const selected = vacancyFilters.filter(([flag]) => flag === true);
-    const divisions = (selected.length > 0 ? selected : vacancyFilters).map(([, d]) => d);
-    conditions.push(`r.vacated_at >= ?`);
-    args.push(since);
-    conditions.push(
-      `(${divisions.map((d) => `(r.is_${d}_vacant = 1 AND r.${d}_vacated_at >= ?)`).join(" OR ")})`
-    );
-    args.push(...divisions.map(() => since));
   }
   const availabilityFilters: [boolean | undefined, string][] = [
     [params.isAvailableStrings, "i.is_available_strings"],
@@ -420,8 +410,6 @@ export async function searchReservations(
     }
   }
 
-  // 新しく空いた枠は少なく、プランナーが ORDER BY に合う idx(date) を選ぶと日付範囲を全走査する。
-  // 直近の分だけを引けるよう索引を名指しし、並べ替えは少数の一時 B-tree に任せる
   const sql = `
     SELECT r.institution_id, r.date, r.reservation, r.updated_at,
            r.is_morning_vacant, r.is_afternoon_vacant, r.is_evening_vacant,
@@ -430,7 +418,7 @@ export async function searchReservations(
            i.id AS i_id, i.municipality AS i_municipality, i.building AS i_building,
            i.institution AS i_institution, i.institution_size AS i_institution_size,
            i.division_labels AS i_division_labels
-    FROM reservations r ${params.isNewlyVacant === true ? "INDEXED BY idx_reservations_vacated_at" : ""}
+    FROM reservations r
     JOIN institutions i ON i.id = r.institution_id
     WHERE ${conditions.join(" AND ")}
     ORDER BY r.date, r.institution_id

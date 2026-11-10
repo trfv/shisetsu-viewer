@@ -506,16 +506,4 @@ describe("toReservationSearchQueryParams", () => {
     expect(result.isEveningVacant).toBe(true);
     expect(result.isHoliday).toBe(true);
   });
-
-  test("新しく空いた枠の絞り込みを isNewlyVacant に渡す", () => {
-    const result = toReservationSearchQueryParams({
-      municipalities: [],
-      startDate,
-      endDate,
-      filter: getResevationSearchFilterFromUrlParam(["n"]),
-      availableInstruments: [],
-      institutionSizes: [],
-    });
-    expect(result.isNewlyVacant).toBe(true);
-  });
 });

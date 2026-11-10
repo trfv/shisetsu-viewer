@@ -185,7 +185,6 @@ async function handleSearch(
       isMorningVacant: parseBoolParam(url, "isMorningVacant"),
       isAfternoonVacant: parseBoolParam(url, "isAfternoonVacant"),
       isEveningVacant: parseBoolParam(url, "isEveningVacant"),
-      isNewlyVacant: parseBoolParam(url, "isNewlyVacant"),
       isAvailableStrings: parseBoolParam(url, "isAvailableStrings"),
       isAvailableWoodwind: parseBoolParam(url, "isAvailableWoodwind"),
       isAvailableBrass: parseBoolParam(url, "isAvailableBrass"),

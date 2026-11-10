@@ -8,7 +8,6 @@ const NOW = `strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`;
 
 const VACATED = (division: "morning" | "afternoon" | "evening") =>
   `(excluded.is_${division}_vacant AND NOT reservations.is_${division}_vacant)`;
-const ANY_VACATED = `(${VACATED("morning")} OR ${VACATED("afternoon")} OR ${VACATED("evening")})`;
 
 function rowsWritten(result: D1Response): number {
   return result.meta.rows_written ?? result.meta.changes ?? 0;
@@ -38,8 +37,7 @@ export async function upsertReservations(
          updated_at  = ${NOW},
          morning_vacated_at   = IIF(${VACATED("morning")}, ${NOW}, reservations.morning_vacated_at),
          afternoon_vacated_at = IIF(${VACATED("afternoon")}, ${NOW}, reservations.afternoon_vacated_at),
-         evening_vacated_at   = IIF(${VACATED("evening")}, ${NOW}, reservations.evening_vacated_at),
-         vacated_at           = IIF(${ANY_VACATED}, ${NOW}, reservations.vacated_at)
+         evening_vacated_at   = IIF(${VACATED("evening")}, ${NOW}, reservations.evening_vacated_at)
        WHERE reservations.reservation IS NOT excluded.reservation`
     )
     .bind(payload)
