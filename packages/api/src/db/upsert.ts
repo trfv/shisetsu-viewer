@@ -6,6 +6,9 @@ export interface UpsertResult {
 
 const NOW = `strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`;
 
+const VACATED = (division: "morning" | "afternoon" | "evening") =>
+  `(excluded.is_${division}_vacant AND NOT reservations.is_${division}_vacant)`;
+
 function rowsWritten(result: D1Response): number {
   return result.meta.rows_written ?? result.meta.changes ?? 0;
 }
@@ -31,7 +34,10 @@ export async function upsertReservations(
        WHERE TRUE
        ON CONFLICT (institution_id, date) DO UPDATE SET
          reservation = excluded.reservation,
-         updated_at  = ${NOW}
+         updated_at  = ${NOW},
+         morning_vacated_at   = IIF(${VACATED("morning")}, ${NOW}, reservations.morning_vacated_at),
+         afternoon_vacated_at = IIF(${VACATED("afternoon")}, ${NOW}, reservations.afternoon_vacated_at),
+         evening_vacated_at   = IIF(${VACATED("evening")}, ${NOW}, reservations.evening_vacated_at)
        WHERE reservations.reservation IS NOT excluded.reservation`
     )
     .bind(payload)

@@ -110,6 +110,56 @@ describe("upsertReservations（差分 upsert）", () => {
   });
 });
 
+const VACANT = "RESERVATION_STATUS_VACANT";
+const FILLED = "RESERVATION_STATUS_STATUS_1";
+const vacancyRow = (morning: string, evening = FILLED) => ({
+  institution_id: INST_ID,
+  date: "2026-08-01",
+  reservation: { RESERVATION_DIVISION_MORNING: morning, RESERVATION_DIVISION_EVENING: evening },
+});
+const readVacatedAt = () =>
+  env.DB.prepare(
+    `SELECT morning_vacated_at AS m, afternoon_vacated_at AS a, evening_vacated_at AS e
+     FROM reservations WHERE institution_id = ?`
+  )
+    .bind(INST_ID)
+    .first<{ m: string | null; a: string | null; e: string | null }>();
+
+describe("upsertReservations の *_vacated_at", () => {
+  it("初めて取得した空き枠には付けない", async () => {
+    await upsertReservations(env.DB, [vacancyRow(VACANT, VACANT)]);
+    expect(await readVacatedAt()).toEqual({ m: null, a: null, e: null });
+  });
+
+  it("空きに変わった区分にだけ付ける", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const got = await readVacatedAt();
+    expect(got?.m).not.toBeNull();
+    expect(got?.e).toBeNull();
+  });
+
+  it("埋まっても消さず、別の区分が空いたときは元の区分の時刻を保つ", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const first = await readVacatedAt();
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await upsertReservations(env.DB, [vacancyRow(FILLED, VACANT)]);
+    const second = await readVacatedAt();
+    expect(second?.m).toBe(first?.m);
+    expect(second?.e).not.toBeNull();
+  });
+
+  it("空きのまま他の区分だけ変わっても付け直さない", async () => {
+    await upsertReservations(env.DB, [vacancyRow(FILLED)]);
+    await upsertReservations(env.DB, [vacancyRow(VACANT)]);
+    const first = await readVacatedAt();
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await upsertReservations(env.DB, [vacancyRow(VACANT, "RESERVATION_STATUS_STATUS_2")]);
+    expect(await readVacatedAt()).toEqual(first);
+  });
+});
+
 const base: Institution = {
   id: INST_ID,
   prefecture: "PREFECTURE_TOKYO",

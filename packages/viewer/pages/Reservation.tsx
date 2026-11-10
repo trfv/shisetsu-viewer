@@ -41,6 +41,7 @@ import {
 import {
   RESERVATION_SEARCH_FILTER_MAP,
   formatReservationMap,
+  getNewlyVacantDivisions,
   toReservationSearchParams,
   toReservationSearchQueryParams,
 } from "../utils/reservation";
@@ -98,6 +99,7 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
       <ReservationStatusList
         divisionLabels={params.row.institution.division_labels}
         municipality={params.row.institution.municipality as SupportedMunicipality}
+        newlyVacantDivisions={getNewlyVacantDivisions(params.row.reservation)}
         reservation={params.row.reservation.reservation}
       />
     ),

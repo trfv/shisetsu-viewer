@@ -36,6 +36,9 @@ export interface ReservationDto {
   is_morning_vacant: boolean;
   is_afternoon_vacant: boolean;
   is_evening_vacant: boolean;
+  is_morning_newly_vacant: boolean;
+  is_afternoon_newly_vacant: boolean;
+  is_evening_newly_vacant: boolean;
   updated_at: string;
 }
 

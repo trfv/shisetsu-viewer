@@ -86,6 +86,9 @@ export const createMockReservationDto = (overrides?: Partial<ReservationDto>): R
   is_morning_vacant: true,
   is_afternoon_vacant: false,
   is_evening_vacant: true,
+  is_morning_newly_vacant: false,
+  is_afternoon_newly_vacant: false,
+  is_evening_newly_vacant: false,
   updated_at: "2024-09-30T12:00:00",
   ...overrides,
 });

@@ -1,4 +1,4 @@
-import type { ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
+import type { ReservationDto, ReservationSearchQueryParams } from "@shisetsu-viewer/shared";
 import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 
 import { ReservationDivision } from "../constants/enums";
@@ -70,6 +70,37 @@ export const sortByReservationDivision = (obj: Record<string, string>): [string,
       RESERVATION_DIVISION_ORDER[a as ReservationDivisionKey] -
       RESERVATION_DIVISION_ORDER[b as ReservationDivisionKey]
   );
+};
+
+export const getNewlyVacantDivisions = (
+  reservation: Pick<
+    ReservationDto,
+    "is_morning_newly_vacant" | "is_afternoon_newly_vacant" | "is_evening_newly_vacant"
+  >
+): Set<string> => {
+  const divisions: string[] = [];
+  if (reservation.is_morning_newly_vacant) {
+    divisions.push(
+      ReservationDivision.MORNING,
+      ReservationDivision.MORNING_ONE,
+      ReservationDivision.MORNING_TWO
+    );
+  }
+  if (reservation.is_afternoon_newly_vacant) {
+    divisions.push(
+      ReservationDivision.AFTERNOON,
+      ReservationDivision.AFTERNOON_ONE,
+      ReservationDivision.AFTERNOON_TWO
+    );
+  }
+  if (reservation.is_evening_newly_vacant) {
+    divisions.push(
+      ReservationDivision.EVENING,
+      ReservationDivision.EVENING_ONE,
+      ReservationDivision.EVENING_TWO
+    );
+  }
+  return new Set(divisions);
 };
 
 export const formatReservationMap = (
