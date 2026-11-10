@@ -32,3 +32,15 @@
   resize: vertical;
   min-height: 3em;
 }
+
+.loading {
+  display: grid;
+}
+
+.loading > * {
+  grid-area: 1 / 1;
+}
+
+.loading > :first-child {
+  visibility: hidden;
+}

@@ -296,6 +296,7 @@ const ReservationPage = () => {
   return (
     <SearchPageLayout
       chips={chips}
+      columns={COLUMNS}
       controls={
         <>
           <MultiSelect

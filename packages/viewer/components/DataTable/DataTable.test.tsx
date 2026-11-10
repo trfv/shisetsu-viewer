@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 import { renderWithProviders, screen } from "../../test/utils/test-utils";
-import { DataTable, type Columns } from "./DataTable";
+import { DataTable, DataTableSkeleton, type Columns } from "./DataTable";
 
 const mockIsMobile = vi.hoisted(() => ({ value: false }));
 vi.mock("../../hooks/useIsMobile", () => ({
@@ -382,5 +382,29 @@ describe("Mobile Card View", () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
 
     expect(fetchMore).toHaveBeenCalled();
+  });
+});
+
+describe("DataTableSkeleton", () => {
+  afterEach(() => {
+    mockIsMobile.value = false;
+  });
+
+  it("表と同じ見出しを表示し、hide=trueのカラムは表示しない", async () => {
+    mockIsMobile.value = false;
+    await renderWithProviders(<DataTableSkeleton columns={columns} />);
+
+    const headers = Array.from(document.querySelectorAll("th"), (th) => th.textContent);
+    expect(headers).toEqual(["名前", "年齢", "ラベル", "作成日", "更新日時", "スコア"]);
+  });
+
+  it("モバイルでは先頭以外のカラム名をカードのラベルに表示する", async () => {
+    mockIsMobile.value = true;
+    await renderWithProviders(<DataTableSkeleton columns={columns} />);
+
+    expect(document.querySelector("table")).toBeNull();
+    expect(screen.getByText("年齢").all().length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("名前").all()).toHaveLength(0);
+    expect(screen.getByText("非表示列").all()).toHaveLength(0);
   });
 });

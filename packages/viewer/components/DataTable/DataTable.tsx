@@ -187,21 +187,37 @@ export const DataTable = <T extends Row>({
   );
 };
 
-const SKELETON_CELL_WIDTHS = ["70%", "45%", "60%", "35%", "50%"];
-const SKELETON_ROWS = Array.from({ length: 8 }, (_, i) => i);
-const SKELETON_CARDS = Array.from({ length: 4 }, (_, i) => i);
+const SKELETON_ROWS = Array.from({ length: 20 }, (_, i) => i);
+const SKELETON_CARDS = Array.from({ length: 6 }, (_, i) => i);
+const SKELETON_RATIOS = [0.8, 0.55, 0.7, 0.45];
+const skeletonRatio = (index: number) => SKELETON_RATIOS[index % SKELETON_RATIOS.length]!;
 
-export const DataTableSkeleton = () => {
+export const DataTableSkeleton = <T extends Row>({ columns }: { columns: Columns<T> }) => {
   const isMobile = useIsMobile();
 
+  const visibleCols = columns.filter((column) => !column.hide);
+
   if (isMobile) {
+    const titleCol = visibleCols[0];
+    const detailCols = visibleCols.slice(1);
+
     return (
       <div aria-label="読み込み中" className={styles["cardList"]} role="progressbar">
         {SKELETON_CARDS.map((card) => (
           <div className={styles["skeletonCard"]} key={card}>
-            <Skeleton height="1.4em" width="60%" />
-            <Skeleton width="85%" />
-            <Skeleton width="50%" />
+            {titleCol && (
+              <div className={styles["cardTitle"]}>
+                <Skeleton variant="text" width={`${skeletonRatio(card) * 100}%`} />
+              </div>
+            )}
+            {detailCols.map((col) => (
+              <div className={styles["skeletonCardRow"]} key={col.field}>
+                <span className={styles["cardLabel"]}>{col.headerName}</span>
+                <span className={styles["cardValue"]} style={{ width: "30%" }}>
+                  <Skeleton variant="text" />
+                </span>
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -210,12 +226,21 @@ export const DataTableSkeleton = () => {
 
   return (
     <TableContainer aria-label="読み込み中" role="progressbar">
-      <Table>
+      <Table stickyHeader={true}>
         <TableHead>
           <TableRow>
-            {SKELETON_CELL_WIDTHS.map((width) => (
-              <TableCell key={width} size="small" variant="head">
-                <Skeleton width="50%" />
+            {visibleCols.map((col) => (
+              <TableCell
+                align={col.type === "number" ? "right" : "left"}
+                key={col.field}
+                size="small"
+                style={{
+                  ...cellStyle(col as Column<unknown>),
+                  borderBottomColor: "var(--color-text-primary)",
+                }}
+                variant="head"
+              >
+                {col.headerName}
               </TableCell>
             ))}
           </TableRow>
@@ -223,9 +248,19 @@ export const DataTableSkeleton = () => {
         <TableBody>
           {SKELETON_ROWS.map((row) => (
             <TableRow key={row}>
-              {SKELETON_CELL_WIDTHS.map((width) => (
-                <TableCell key={width} size="small">
-                  <Skeleton width={width} />
+              {visibleCols.map((col) => (
+                <TableCell
+                  key={col.field}
+                  size="small"
+                  style={{
+                    ...cellStyle(col as Column<unknown>),
+                    borderBottomColor: "var(--color-text-secondary)",
+                  }}
+                >
+                  <Skeleton
+                    variant="text"
+                    width={col.maxWidth ? col.maxWidth * skeletonRatio(row) : "100%"}
+                  />
                 </TableCell>
               ))}
             </TableRow>

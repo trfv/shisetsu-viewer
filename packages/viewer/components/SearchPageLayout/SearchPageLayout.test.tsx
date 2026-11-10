@@ -12,6 +12,7 @@ const rows: Foo[] = [{ id: "1", name: "施設A" }];
 
 const layoutProps = {
   chips: [],
+  columns,
   controls: <div>controls</div>,
   pending: false,
   resetKey: "k",

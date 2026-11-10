@@ -7,12 +7,25 @@ type Props = {
   height?: number | string;
   style?: CSSProperties;
   className?: string;
+  variant?: "block" | "text";
 };
 
-export const Skeleton: FC<Props> = ({ width = "100%", height = "1.2em", style, className }) => (
+export const Skeleton: FC<Props> = ({
+  width = "100%",
+  height,
+  style,
+  className,
+  variant = "block",
+}) => (
   <span
-    className={`${styles["skeleton"]}${className ? ` ${className}` : ""}`}
+    className={[styles["skeleton"], variant === "text" && styles["text"], className]
+      .filter(Boolean)
+      .join(" ")}
     data-testid="skeleton"
-    style={{ width, height, ...style }}
+    style={{
+      width,
+      height: height ?? (variant === "text" ? undefined : "1.2em"),
+      ...style,
+    }}
   />
 );
