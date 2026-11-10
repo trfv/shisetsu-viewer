@@ -187,8 +187,8 @@ export const DataTable = <T extends Row>({
   );
 };
 
-const SKELETON_ROWS = Array.from({ length: 8 }, (_, i) => i);
-const SKELETON_CARDS = Array.from({ length: 4 }, (_, i) => i);
+const SKELETON_ROWS = Array.from({ length: 20 }, (_, i) => i);
+const SKELETON_CARDS = Array.from({ length: 6 }, (_, i) => i);
 const SKELETON_RATIOS = [0.8, 0.55, 0.7, 0.45];
 const skeletonRatio = (index: number) => SKELETON_RATIOS[index % SKELETON_RATIOS.length]!;
 

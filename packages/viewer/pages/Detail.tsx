@@ -188,8 +188,8 @@ const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => 
   );
 };
 
-const RESERVATION_SKELETON_ROWS = Array.from({ length: 8 }, (_, i) => i);
-const RESERVATION_SKELETON_CARDS = Array.from({ length: 4 }, (_, i) => i);
+const RESERVATION_SKELETON_ROWS = Array.from({ length: 20 }, (_, i) => i);
+const RESERVATION_SKELETON_CARDS = Array.from({ length: 6 }, (_, i) => i);
 const RESERVATION_SKELETON_DIVISIONS = Array.from({ length: 3 }, (_, i) => i);
 
 const headCell = (label: ReactNode, key: string | number) => (
