@@ -1,0 +1,112 @@
+[
+  {
+    "id": "85a56db1-156f-4af4-a59c-7d335dd7690d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "麻布区民センター",
+    "kana": "アザブクミンセンター",
+    "system_name": "麻布区民センター",
+    "address": "東京都港区六本木5-16-45 麻布地区総合支所2階",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "8f4bf23f-61cd-489b-bbbe-49864ae1c49e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "赤坂区民センター",
+    "kana": "アカサカクミンセンター",
+    "system_name": "赤坂区民センター",
+    "address": "東京都港区赤坂4-18-13 赤坂コミュニティーぷらざ3階",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "88a945e4-fa00-471b-bb50-986e5164b3c6",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "高輪区民センター",
+    "kana": "タカナワクミンセンター",
+    "system_name": "高輪区民センター",
+    "address": "東京都港区高輪1-16-25 高輪コミュニティーぷらざ3階",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "12619f0e-802a-4c7d-aca2-dae7aebca628",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "芝浦港南区民センター",
+    "kana": "シバウラコウナンクミンセンター",
+    "system_name": "芝浦港南区民センター",
+    "address": "東京都港区芝浦4-13-1 トリニティー芝浦1階",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "d3f5a4c9-9e67-41ee-8056-5d94d8341124",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "台場区民センター",
+    "kana": "ダイバクミンセンター",
+    "system_name": "台場区民センター",
+    "address": "東京都港区台場1-5-1 台場コミュニティーぷらざ1階",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "5ed30c17-c33a-4070-8da5-c01c3a555430",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "港区立産業振興センター",
+    "kana": "ミナトクリツサンギョウシンコウセンター",
+    "system_name": "港区立産業振興センター",
+    "address": "東京都港区芝5-36-4",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "e1d2ac06-432d-4109-87fe-73919a6a90ee",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "男女平等参画センター",
+    "kana": "ダンジョビョウドウサンカクセンター",
+    "system_name": "男女平等参画センター",
+    "address": "東京都港区芝浦1-16-1",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "984b891c-55f8-452c-b4f5-94c32477f10d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "神明いきいきプラザ",
+    "kana": "シンメイイキイキプラザ",
+    "system_name": "神明いきいきプラザ",
+    "address": "東京都港区浜松町1-6-7",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "89d8f2c1-b3f4-4085-9d06-796ee213f770",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "ありすいきいきプラザ",
+    "kana": "アリスイキイキプラザ",
+    "system_name": "ありすいきいきプラザ",
+    "address": "東京都港区南麻布4-6-7",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "6b0bf50b-d78e-46c0-9af3-41ffa98e3316",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "白金台いきいきプラザ",
+    "kana": "シロカネダイイキイキプラザ",
+    "system_name": "白金台いきいきプラザ",
+    "address": "東京都港区白金台4-8-5",
+    "reservation_system": "tokyo-minato"
+  },
+  {
+    "id": "985734f4-5c7e-46ff-81b6-32339fbd492d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_MINATO",
+    "name": "港南いきいきプラザ",
+    "kana": "コウナンイキイキプラザ",
+    "system_name": "港南いきいきプラザ",
+    "address": "東京都港区港南4-2-1",
+    "reservation_system": "tokyo-minato"
+  }
+]

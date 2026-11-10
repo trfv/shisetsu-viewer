@@ -1,13 +1,9 @@
 [
   {
     "id": "6f7fb2dd-e6de-4638-9786-41bd6ade1cb9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "桜丘区民センター",
+    "building_id": "23dc4206-5297-47a4-bf9b-41b5916dc639",
     "institution": "音楽室",
-    "building_kana": "サクラガオカクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "桜丘区民センター",
     "institution_system_name": "音楽室",
     "capacity": 25,
     "area": 56,
@@ -63,7 +59,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区桜丘5丁目14番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -77,13 +72,9 @@
   },
   {
     "id": "f0b8a97d-f1da-483c-a21d-d4e55f61151f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "桜丘区民センター",
+    "building_id": "23dc4206-5297-47a4-bf9b-41b5916dc639",
     "institution": "集会室兼体育室",
-    "building_kana": "サクラガオカクミンセンター",
     "institution_kana": "シュウカイシツケンタイイクシツ",
-    "building_system_name": "桜丘区民センター",
     "institution_system_name": "集会室兼体育室",
     "capacity": 200,
     "area": 222,
@@ -130,7 +121,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都世田谷区桜丘5丁目14番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -149,13 +139,9 @@
   },
   {
     "id": "78211c5e-17c9-47a7-ba04-bb5e6ef053c8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "太子堂区民センター",
+    "building_id": "d8294331-42eb-4a59-8148-914eb90ff062",
     "institution": "音楽室",
-    "building_kana": "タイシドウクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "太子堂区民センター",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 53.75,
@@ -211,7 +197,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区太子堂1丁目14番20号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -225,13 +210,9 @@
   },
   {
     "id": "bc992ce3-b740-4183-a05c-7a5c75d503f0",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "弦巻区民センター",
+    "building_id": "b5b04b37-0e7e-442d-a88f-9a0972e53fd8",
     "institution": "多目的室",
-    "building_kana": "ツルマキクミンセンター",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "弦巻区民センター",
     "institution_system_name": "多目的室",
     "capacity": 30,
     "area": 77.89,
@@ -287,7 +268,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区弦巻1丁目26番11号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -301,13 +281,9 @@
   },
   {
     "id": "dc38d0c5-654e-4e0a-9395-0f61e9945d44",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "弦巻区民センター",
+    "building_id": "b5b04b37-0e7e-442d-a88f-9a0972e53fd8",
     "institution": "第1音楽室",
-    "building_kana": "ツルマキクミンセンター",
     "institution_kana": "ダイイチオンガクシツ",
-    "building_system_name": "弦巻区民センター",
     "institution_system_name": "第１音楽室",
     "capacity": 30,
     "area": 72.25,
@@ -363,7 +339,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区弦巻1丁目26番11号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -377,13 +352,9 @@
   },
   {
     "id": "d80f94ea-ae14-4e8b-9f79-60c580d2a471",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "弦巻区民センター",
+    "building_id": "b5b04b37-0e7e-442d-a88f-9a0972e53fd8",
     "institution": "第2音楽室",
-    "building_kana": "ツルマキクミンセンター",
     "institution_kana": "ダイニオンガクシツ",
-    "building_system_name": "弦巻区民センター",
     "institution_system_name": "第２音楽室",
     "capacity": 30,
     "area": 72.25,
@@ -439,7 +410,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区弦巻1丁目26番11号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -453,13 +423,9 @@
   },
   {
     "id": "7c8f8e03-f131-41b9-8ee5-431b4a6d14e5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "宮坂区民センター",
+    "building_id": "ad313723-9330-4843-b197-76663c519e14",
     "institution": "多目的ホール",
-    "building_kana": "ミヤサカクミンセンター",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "宮坂区民センター",
     "institution_system_name": "多目的ホール",
     "capacity": 80,
     "area": 218.31,
@@ -506,7 +472,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "東京都世田谷区宮坂1丁目24番6号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -525,13 +490,9 @@
   },
   {
     "id": "bc497b34-0e8f-4651-a320-486db5d073d9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "代田区民センター",
+    "building_id": "11807da0-afd2-4cd1-8e17-047c06b136a3",
     "institution": "第4会議室",
-    "building_kana": "ダイタクミンセンター",
     "institution_kana": "ダイヨンカイギシツ",
-    "building_system_name": "代田区民センター",
     "institution_system_name": "第４会議室",
     "capacity": 18,
     "area": 30.2,
@@ -587,7 +548,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区代田6丁目34番13号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -601,13 +561,9 @@
   },
   {
     "id": "919ca896-5081-4fd5-adb7-9f318ffbddea",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "代田区民センター",
+    "building_id": "11807da0-afd2-4cd1-8e17-047c06b136a3",
     "institution": "音楽室",
-    "building_kana": "ダイタクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "代田区民センター",
     "institution_system_name": "音楽室",
     "capacity": 24,
     "area": 48.56,
@@ -663,7 +619,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区代田6丁目34番13号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -677,13 +632,9 @@
   },
   {
     "id": "84ca2d4b-21e6-4a24-9c9f-93769f9f7373",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "代田区民センター",
+    "building_id": "11807da0-afd2-4cd1-8e17-047c06b136a3",
     "institution": "多目的室",
-    "building_kana": "ダイタクミンセンター",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "代田区民センター",
     "institution_system_name": "多目的室",
     "capacity": 100,
     "area": 139.23,
@@ -739,7 +690,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区代田6丁目34番13号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -753,13 +703,9 @@
   },
   {
     "id": "4503148a-9438-4e6b-b537-3cd8d14b4287",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "玉川台区民センター",
+    "building_id": "c4562dc5-012c-46f5-98b2-368221c06a13",
     "institution": "音楽室",
-    "building_kana": "タマガワダイクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "玉川台区民センター",
     "institution_system_name": "音楽室",
     "capacity": 15,
     "area": 43,
@@ -815,7 +761,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区玉川台1丁目6番15号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -829,13 +774,9 @@
   },
   {
     "id": "279c6b66-b467-4f30-9b63-1bf136f37fbb",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "鎌田区民センター",
+    "building_id": "65a5f9bf-918d-453a-89c1-4a6a661d7591",
     "institution": "音楽室",
-    "building_kana": "カマタクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "鎌田区民センター",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 63,
@@ -891,7 +832,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区鎌田3丁目35番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -905,13 +845,9 @@
   },
   {
     "id": "dff6d810-4817-4a94-8558-09455057680c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "粕谷区民センター",
+    "building_id": "beed6789-f824-4ecb-94d4-ef30338cbf7c",
     "institution": "音楽室",
-    "building_kana": "カスヤクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "粕谷区民センター",
     "institution_system_name": "音楽室",
     "capacity": 18,
     "area": 30.24,
@@ -967,7 +903,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区粕谷4丁目13番6号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -981,13 +916,9 @@
   },
   {
     "id": "dbbaf866-27fb-410e-b3bf-0fc7acc94b02",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "上北沢区民センター",
+    "building_id": "970e12fa-fbd4-4189-a998-d0dc0298eb5f",
     "institution": "音楽室",
-    "building_kana": "カミキタザワクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "上北沢区民センター",
     "institution_system_name": "音楽室",
     "capacity": 25,
     "area": 41.3,
@@ -1043,7 +974,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区上北沢3丁目8番9号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1057,13 +987,9 @@
   },
   {
     "id": "6e18286d-0cc0-4f7b-abe4-1e5a96273bd3",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "烏山区民センター",
+    "building_id": "a1471ef8-6ffd-4317-adb8-e69b27b1befb",
     "institution": "音楽室",
-    "building_kana": "カラスヤマクミンセンター",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "烏山区民センター",
     "institution_system_name": "音楽室",
     "capacity": 50,
     "area": 95.46,
@@ -1071,7 +997,6 @@
     "fee_divisions": [],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "東京都世田谷区南烏山6丁目2番19号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1092,13 +1017,9 @@
   },
   {
     "id": "192a820e-f171-4f7e-8d6b-32afb5b3bdc6",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "上馬地区会館",
+    "building_id": "eaa4f339-a756-4ff8-aff4-d23681a249a8",
     "institution": "音楽室",
-    "building_kana": "カミウマチクカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "上馬地区会館",
     "institution_system_name": "音楽室",
     "capacity": 15,
     "area": 25.6,
@@ -1154,7 +1075,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区上馬4丁目10番17号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1168,13 +1088,9 @@
   },
   {
     "id": "d93f297f-a688-4b11-927a-d3c1efcde22d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "花見堂地区会館",
+    "building_id": "29842a4c-be7a-494f-9f96-e38b0fd4c62d",
     "institution": "音楽室",
-    "building_kana": "ハナミドウチクカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "花見堂地区会館",
     "institution_system_name": "音楽室",
     "capacity": 24,
     "area": 40.62,
@@ -1230,7 +1146,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区代田1丁目13番14号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1247,13 +1162,9 @@
   },
   {
     "id": "48e6e079-dc92-41e8-867f-0599c4ec9202",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "尾山台地区会館",
+    "building_id": "8a907148-abda-458d-9e6b-286e82645d2d",
     "institution": "音楽室",
-    "building_kana": "オヤマダイチクカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "尾山台地区会館",
     "institution_system_name": "音楽室",
     "capacity": 60,
     "area": 62,
@@ -1309,7 +1220,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区等々力2丁目17番14号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1323,13 +1233,9 @@
   },
   {
     "id": "f4f1921b-9d85-4ffb-b2a6-f1274c513276",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "新代田区民集会所",
+    "building_id": "c086ce14-4642-47ee-92a8-4c5c784db8db",
     "institution": "音楽室",
-    "building_kana": "シンダイタクミンシュウカイジョ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "新代田区民集会所",
     "institution_system_name": "音楽室",
     "capacity": 25,
     "area": 75.48,
@@ -1385,7 +1291,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区羽根木1丁目6番14号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1399,13 +1304,9 @@
   },
   {
     "id": "f4537af3-5d86-44fa-a272-3151ed713512",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "砧総合支所区民集会所",
+    "building_id": "0830955c-262b-4707-b622-f7230c5b134b",
     "institution": "音楽室",
-    "building_kana": "キヌタソウゴウシショクミンシュウカイジョ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "砧総合支所区民集会所",
     "institution_system_name": "音楽室",
     "capacity": 20,
     "area": 27,
@@ -1461,7 +1362,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区成城6丁目2番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1475,13 +1375,9 @@
   },
   {
     "id": "61981d06-9eec-4ed4-ab3d-70aa04bd9c81",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "希望丘区民集会所",
+    "building_id": "366c922a-0c46-48cc-8b63-46dcd02c42b6",
     "institution": "音楽室",
-    "building_kana": "キボウガオカクミンシュウカイジョ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "希望丘区民集会所",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 50,
@@ -1537,7 +1433,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区船橋6丁目25番1号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1551,13 +1446,9 @@
   },
   {
     "id": "cc9e2d54-8d48-449c-8940-028a06b0c725",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_SETAGAYA",
-    "building": "上馬高齢者集会所",
+    "building_id": "4cbac7a6-6f39-47b5-86e6-31dd47570139",
     "institution": "多目的ホール",
-    "building_kana": "カミウマコウレイシャシュウカイジョ",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "上馬高齢者集会所",
     "institution_system_name": "多目的ホール",
     "capacity": 150,
     "area": null,
@@ -1613,7 +1504,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "東京都世田谷区上馬4丁目36番9号",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",

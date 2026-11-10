@@ -13,7 +13,7 @@ const CALENDAR_PATH = "cal.do";
 export const VACANT_ID = "none";
 
 export interface AservTarget {
-  /** 施設 JSON の building_system_name と一致させる */
+  /** 建物 JSON の system_name と一致させる */
   facilityName: string;
   kanCode: string;
   skubunCode: string;

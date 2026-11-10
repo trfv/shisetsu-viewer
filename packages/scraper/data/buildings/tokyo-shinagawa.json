@@ -1,0 +1,122 @@
+[
+  {
+    "id": "fe1648c7-7b00-4373-9246-9309237afcd7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "五反田文化センター",
+    "kana": "ゴタンダブンカセンター",
+    "system_name": "五反田文化センター",
+    "address": "東京都品川区西五反田6-5-1",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "a82012bb-9e3d-4c1e-9a64-625859db0959",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "荏原文化センター",
+    "kana": "エバラブンカセンター",
+    "system_name": "荏原文化センター",
+    "address": "東京都品川区中延1-9-15",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "2d16d1bf-816b-4583-ae40-0355f3475005",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "スクエア荏原",
+    "kana": "スクエアエバラ",
+    "system_name": "スクエア荏原",
+    "address": "東京都品川区荏原4-5-28",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "2fc9f769-66e9-4f13-a645-f36f51685fe0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "きゅりあん",
+    "kana": "キュリアン",
+    "system_name": "きゅりあん",
+    "address": "東京都品川区東大井5-18-1",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "1a5036eb-5970-4408-a340-4eacc088bd10",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "品川健康Ｃホール",
+    "kana": "シナガワケンコウセンターホール",
+    "system_name": "品川健康Ｃホール",
+    "address": "東京都品川区北品川3-11-22",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "013d3d8c-7dfa-4f5e-89fa-fc2f4e466ef9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "中小企業センター",
+    "kana": "チュウショウキギョウセンター",
+    "system_name": "中小企業センター",
+    "address": "東京都品川区西品川1-28-3",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "da870dca-e29d-4539-b5c6-501d37797cca",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "八潮区民集会所",
+    "kana": "ヤシオクミンシュウカイジョ",
+    "system_name": "八潮区民集会所",
+    "address": "東京都品川区八潮5-10-27",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "afd21658-9576-41d4-913b-537a5a3436c4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "こみゅにてぃぷらざ八潮",
+    "kana": "コミュニティプラザヤシオ",
+    "system_name": "こみゅにてぃぷらざ八潮",
+    "address": "東京都品川区八潮5-9-11",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "35e32699-5232-4731-94f1-9d0f0bc23041",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "戸越台中学校",
+    "kana": "トゴシダイチュウガッコウ",
+    "system_name": "戸越台中学校",
+    "address": "東京都品川区戸越1-15-23",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "60596172-4b2e-4335-a202-9717703a4e33",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "荏原平塚学園",
+    "kana": "エバラヒラツカガクエン",
+    "system_name": "荏原平塚学園",
+    "address": "東京都品川区平塚3-16-26",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "c1d08c1d-b6b8-4ab1-b92e-37e4f68aeaf8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "山中小学校",
+    "kana": "ヤマナカショウガッコウ",
+    "system_name": "山中小学校",
+    "address": "東京都品川区大井3-7-19",
+    "reservation_system": "tokyo-shinagawa"
+  },
+  {
+    "id": "d503e36e-f93f-4eab-a7c9-0fd98acdfe48",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_SHINAGAWA",
+    "name": "旗台小学校",
+    "kana": "ハタダイショウガッコウ",
+    "system_name": "旗台小学校",
+    "address": "東京都品川区旗の台4-7-11",
+    "reservation_system": "tokyo-shinagawa"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "6bf2c354-373e-419b-a2eb-906957f0b65b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "池上文化センター",
+    "kana": "イケカミブンカセンター",
+    "system_name": "池上文化センター",
+    "address": "大田区池上四丁目21番13号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "c7c8fab5-97c5-4c71-96f8-d1678df7673e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "大田区民プラザ",
+    "kana": "オオタクミンプラザ",
+    "system_name": "大田区民プラザ",
+    "address": "大田区下丸子3-1-3",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "a6527295-c15e-4a13-8031-13b8d5a1b5ce",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "大田区民ホール・アプリコ",
+    "kana": "オオタクミンホール・アプリコ",
+    "system_name": "大田区民ホール・アプリコ",
+    "address": "大田区蒲田五丁目37番3号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "d463021d-e2cf-4c6d-a95a-f2f6b544bfe9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "大田文化の森",
+    "kana": "オオタブンカノモリ",
+    "system_name": "大田文化の森",
+    "address": "大田区中央二丁目10番1号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "d3cd0afd-c80e-453f-a5e6-7d463e12b158",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "糀谷文化センター",
+    "kana": "コウジヤブンカセンター",
+    "system_name": "糀谷文化センター",
+    "address": "大田区西糀谷二丁目14番5号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "e23b9966-bee3-45a9-bbc5-33e6d80733f7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "新蒲田区民活動施設",
+    "kana": "シンカマタクミンカツドウシセツ",
+    "system_name": "新蒲田区民活動施設",
+    "address": "大田区新蒲田一丁目18番16号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "affa7344-02dd-4d61-9ff1-af4d585f7dec",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "田園調布せせらぎ館",
+    "kana": "デンエンチョウフセセラギカン",
+    "system_name": "田園調布せせらぎ館",
+    "address": "大田区田園調布一丁目53番12号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "b0d8e2e6-7a54-4fc3-90b5-140f2066d227",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "萩中文化センター",
+    "kana": "ハギナカブンカセンター",
+    "system_name": "萩中文化センター",
+    "address": "大田区萩中一丁目7番30号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "cc1970f4-0b7c-43cd-b8bb-6c406d57ed6d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "嶺町文化センター",
+    "kana": "ミネマチブンカセンター",
+    "system_name": "嶺町文化センター",
+    "address": "大田区田園調布本町7番1号",
+    "reservation_system": "tokyo-ota"
+  },
+  {
+    "id": "db7539b8-a588-46e8-b9e9-4b0eb723c4db",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_OTA",
+    "name": "雪谷文化センター",
+    "kana": "ユキタニブンカセンター",
+    "system_name": "雪谷文化センター",
+    "address": "大田区南雪谷五丁目18番3号",
+    "reservation_system": "tokyo-ota"
+  }
+]

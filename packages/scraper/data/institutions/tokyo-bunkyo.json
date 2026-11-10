@@ -1,13 +1,9 @@
 [
   {
     "id": "06d4905b-18e0-4f0a-b423-6d9628be13aa",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "学習室A",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "ガクシュウシツA",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "学習室Ａ",
     "capacity": 36,
     "area": 72,
@@ -45,7 +41,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -59,13 +54,9 @@
   },
   {
     "id": "57d0ecbf-f728-4fdb-81e2-6c8d0a58cd53",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "学習室B",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "ガクシュウシツB",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "学習室Ｂ",
     "capacity": 30,
     "area": 64,
@@ -103,7 +94,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -117,13 +107,9 @@
   },
   {
     "id": "24b9e01e-a268-455b-8d6d-25c74d7710ff",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "多目的ホール",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "多目的ホール",
     "capacity": 80,
     "area": 132,
@@ -161,7 +147,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -175,13 +160,9 @@
   },
   {
     "id": "b8fe3e7a-c671-9a3e-fd40-6b6b5fd2a3ba",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "多目的ホール+洋室A",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "タモクテキホール ヨウシツA",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "多目的ホール＋洋室Ａ",
     "capacity": 92,
     "area": 154,
@@ -219,7 +200,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -233,13 +213,9 @@
   },
   {
     "id": "ce7ea8eb-11bf-4643-94c6-583084be3f71",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "洋室A",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "ヨウシツA",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "洋室Ａ",
     "capacity": 12,
     "area": 22,
@@ -277,7 +253,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -291,13 +266,9 @@
   },
   {
     "id": "c3e1ec73-eb87-4ebc-958e-a4c6d7aca9e8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー音羽",
+    "building_id": "63d49094-1241-4821-850c-d5a22eabba84",
     "institution": "洋室B",
-    "building_kana": "アカデミーオトワ",
     "institution_kana": "ヨウシツB",
-    "building_system_name": "アカデミー音羽",
     "institution_system_name": "洋室Ｂ",
     "capacity": 8,
     "area": 14,
@@ -335,7 +306,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区大塚5-40-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -349,13 +319,9 @@
   },
   {
     "id": "6291a051-569d-49cc-bafc-4207a1599880",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー文京",
+    "building_id": "2c2d9494-de97-44e3-9d46-ced832182581",
     "institution": "音楽室A",
-    "building_kana": "アカデミーブンキョウ",
     "institution_kana": "オンガクシツA",
-    "building_system_name": "アカデミー文京",
     "institution_system_name": "音楽室Ａ",
     "capacity": 10,
     "area": 33.8,
@@ -411,7 +377,6 @@
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -432,13 +397,9 @@
   },
   {
     "id": "45ab483a-d863-48c8-b63d-1b1fa7077813",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー文京",
+    "building_id": "2c2d9494-de97-44e3-9d46-ced832182581",
     "institution": "音楽室B",
-    "building_kana": "アカデミーブンキョウ",
     "institution_kana": "オンガクシツB",
-    "building_system_name": "アカデミー文京",
     "institution_system_name": "音楽室Ｂ",
     "capacity": 12,
     "area": 41.1,
@@ -494,7 +455,6 @@
         "division": "FEE_DIVISION_DIVISION_5"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -515,13 +475,9 @@
   },
   {
     "id": "98571d5c-1721-43d5-8f69-89ea2f1f17bc",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー文京",
+    "building_id": "2c2d9494-de97-44e3-9d46-ced832182581",
     "institution": "レクリエーションホール",
-    "building_kana": "アカデミーブンキョウ",
     "institution_kana": "レクリエーションホール",
-    "building_system_name": "アカデミー文京",
     "institution_system_name": "レクリエーションホール",
     "capacity": 160,
     "area": 199.5,
@@ -559,7 +515,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -573,13 +528,9 @@
   },
   {
     "id": "451d926e-aa05-4980-bb4c-d8cb7bbedab7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー向丘",
+    "building_id": "9c2d475f-15ab-4270-afed-64316dd2c34b",
     "institution": "音楽室",
-    "building_kana": "アカデミームコウガオカ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "アカデミー向丘",
     "institution_system_name": "音楽室",
     "capacity": 15,
     "area": 26,
@@ -617,7 +568,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区向丘1-20-8",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -631,13 +581,9 @@
   },
   {
     "id": "bc0a6231-0eae-4414-bee4-ba1c71c79a65",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー向丘",
+    "building_id": "9c2d475f-15ab-4270-afed-64316dd2c34b",
     "institution": "学習室",
-    "building_kana": "アカデミームコウガオカ",
     "institution_kana": "ガクシュウシツ",
-    "building_system_name": "アカデミー向丘",
     "institution_system_name": "学習室",
     "capacity": 35,
     "area": 68,
@@ -675,7 +621,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区向丘1-20-8",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -689,13 +634,9 @@
   },
   {
     "id": "5e191f9d-c353-4708-b87a-176ef436ef2f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー向丘",
+    "building_id": "9c2d475f-15ab-4270-afed-64316dd2c34b",
     "institution": "レクリエーションホール",
-    "building_kana": "アカデミームコウガオカ",
     "institution_kana": "レクリエーションホール",
-    "building_system_name": "アカデミー向丘",
     "institution_system_name": "レクリエーションホール",
     "capacity": 60,
     "area": 112,
@@ -733,7 +674,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区向丘1-20-8",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -747,13 +687,9 @@
   },
   {
     "id": "7728c4f9-ab10-43a7-9954-b6c5395905de",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー茗台",
+    "building_id": "2011f531-06ed-4597-9d0b-9805bf2ba78f",
     "institution": "レクリエーションホールA",
-    "building_kana": "アカデミーメイダイ",
     "institution_kana": "レクリエーションホールA",
-    "building_system_name": "アカデミー茗台",
     "institution_system_name": "レクリエーションホールＡ",
     "capacity": 108,
     "area": 164,
@@ -791,7 +727,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日2-9-5",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -805,13 +740,9 @@
   },
   {
     "id": "cbaad24e-a6ea-4063-b9cc-abd9dc38c0d9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー茗台",
+    "building_id": "2011f531-06ed-4597-9d0b-9805bf2ba78f",
     "institution": "レクリエーションホールB",
-    "building_kana": "アカデミーメイダイ",
     "institution_kana": "レクリエーションホールB",
-    "building_system_name": "アカデミー茗台",
     "institution_system_name": "レクリエーションホールＢ",
     "capacity": 120,
     "area": 251.4,
@@ -849,7 +780,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日2-9-5",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -863,13 +793,9 @@
   },
   {
     "id": "10152058-ca39-4125-b065-58b3b3a2d211",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "アカデミー湯島",
+    "building_id": "bedf11c7-89ee-4a38-8a0a-f8f496730b07",
     "institution": "視聴覚室",
-    "building_kana": "アカデミーユジマ",
     "institution_kana": "シチョウカクシツ",
-    "building_system_name": "アカデミー湯島",
     "institution_system_name": "視聴覚室",
     "capacity": 56,
     "area": 106,
@@ -907,7 +833,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区湯島2‐28‐14",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -921,13 +846,9 @@
   },
   {
     "id": "a7b76f6d-7489-4bcd-9525-9b6195179cd5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "大原地域活動センター",
+    "building_id": "c57f881b-3655-4e87-b06d-433f2d79a99a",
     "institution": "多目的室A",
-    "building_kana": "オオハラチイキカツドウセンター",
     "institution_kana": "タモクテキシツA",
-    "building_system_name": "大原地域活動センター",
     "institution_system_name": "多目的室Ａ",
     "capacity": 80,
     "area": 168,
@@ -965,7 +886,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区千石1-4-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -979,13 +899,9 @@
   },
   {
     "id": "87743200-2d23-4ed8-b857-6528aaeb0a9d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "大原地域活動センター",
+    "building_id": "c57f881b-3655-4e87-b06d-433f2d79a99a",
     "institution": "多目的室B",
-    "building_kana": "オオハラチイキカツドウセンター",
     "institution_kana": "タモクテキシツB",
-    "building_system_name": "大原地域活動センター",
     "institution_system_name": "多目的室Ｂ",
     "capacity": 30,
     "area": 66,
@@ -1023,7 +939,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区千石1-4-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1037,13 +952,9 @@
   },
   {
     "id": "5e9ddcd9-414b-4804-8579-57244787172e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "大原地域活動センター",
+    "building_id": "c57f881b-3655-4e87-b06d-433f2d79a99a",
     "institution": "多目的室C",
-    "building_kana": "オオハラチイキカツドウセンター",
     "institution_kana": "タモクテキシツC",
-    "building_system_name": "大原地域活動センター",
     "institution_system_name": "多目的室Ｃ",
     "capacity": 30,
     "area": 62,
@@ -1081,7 +992,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区千石1-4-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1095,13 +1005,9 @@
   },
   {
     "id": "312bafe6-2451-4e66-ba6a-5791db287582",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "駒込地域活動センター",
+    "building_id": "33ec1746-bd31-4db2-b821-f0191da151b3",
     "institution": "多目的室",
-    "building_kana": "コマゴメチイキカツドウセンター",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "駒込地域活動センター",
     "institution_system_name": "多目的室Ａ",
     "capacity": 80,
     "area": 123,
@@ -1139,7 +1045,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込3-22-4",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1153,13 +1058,9 @@
   },
   {
     "id": "0f6eb962-3058-4151-b665-80afaf47c10f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "駒込地域活動センター",
+    "building_id": "33ec1746-bd31-4db2-b821-f0191da151b3",
     "institution": "ホールA",
-    "building_kana": "コマゴメチイキカツドウセンター",
     "institution_kana": "ホールA",
-    "building_system_name": "駒込地域活動センター",
     "institution_system_name": "ホールＡ",
     "capacity": 80,
     "area": 144,
@@ -1197,7 +1098,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込3-22-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1211,13 +1111,9 @@
   },
   {
     "id": "7cd39244-2d6b-4b5c-9530-cee07bdef83e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "駒込地域活動センター",
+    "building_id": "33ec1746-bd31-4db2-b821-f0191da151b3",
     "institution": "ホールA+B",
-    "building_kana": "コマゴメチイキカツドウセンター",
     "institution_kana": "ホールA B",
-    "building_system_name": "駒込地域活動センター",
     "institution_system_name": "ホールＡ＋Ｂ",
     "capacity": 200,
     "area": 288,
@@ -1255,7 +1151,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込3-22-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1269,13 +1164,9 @@
   },
   {
     "id": "1987bb5f-7cd4-4509-83b5-18f0dc71d832",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "駒込地域活動センター",
+    "building_id": "33ec1746-bd31-4db2-b821-f0191da151b3",
     "institution": "ホールB",
-    "building_kana": "コマゴメチイキカツドウセンター",
     "institution_kana": "ホールB",
-    "building_system_name": "駒込地域活動センター",
     "institution_system_name": "ホールＢ",
     "capacity": 80,
     "area": 144,
@@ -1313,7 +1204,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込3-22-4",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1327,13 +1217,9 @@
   },
   {
     "id": "efdf9f12-5b36-42d1-94b5-05d2b1d94ea5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "汐見地域活動センター",
+    "building_id": "9d4687cc-17e4-4f29-840d-73e293678be1",
     "institution": "洋室A+B",
-    "building_kana": "シオミチイキカツドウセンター",
     "institution_kana": "ヨウシツA B",
-    "building_system_name": "汐見地域活動センター",
     "institution_system_name": "洋室Ａ＋Ｂ",
     "capacity": 60,
     "area": 116,
@@ -1371,7 +1257,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区千駄木3-2-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1385,13 +1270,9 @@
   },
   {
     "id": "c64c6cd1-048e-42e5-9437-aa6056681f26",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "汐見地域活動センター",
+    "building_id": "9d4687cc-17e4-4f29-840d-73e293678be1",
     "institution": "洋室C+D",
-    "building_kana": "シオミチイキカツドウセンター",
     "institution_kana": "ヨウシツC D",
-    "building_system_name": "汐見地域活動センター",
     "institution_system_name": "洋室Ｃ＋Ｄ",
     "capacity": 28,
     "area": 53,
@@ -1429,7 +1310,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区千駄木3-2-6",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -1443,13 +1323,9 @@
   },
   {
     "id": "7d0d649a-9919-46f2-a94d-f2618cf93f6b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "不忍通りふれあい館",
+    "building_id": "d77d5f71-c475-4a2b-82f0-3d87fe4c8802",
     "institution": "スタジオ",
-    "building_kana": "シノバズドオリフレアイカン",
     "institution_kana": "スタジオ",
-    "building_system_name": "不忍通りふれあい館",
     "institution_system_name": "スタジオ",
     "capacity": 8,
     "area": 27,
@@ -1487,7 +1363,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区根津2-20-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1501,13 +1376,9 @@
   },
   {
     "id": "701cff5b-4cbc-48b6-9547-b8b2f1733d82",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "不忍通りふれあい館",
+    "building_id": "d77d5f71-c475-4a2b-82f0-3d87fe4c8802",
     "institution": "ホール",
-    "building_kana": "シノバズドオリフレアイカン",
     "institution_kana": "ホール",
-    "building_system_name": "不忍通りふれあい館",
     "institution_system_name": "ホール",
     "capacity": 150,
     "area": 201,
@@ -1545,7 +1416,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区根津2-20-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1559,13 +1429,9 @@
   },
   {
     "id": "ebdd4283-c820-4d09-ab32-ccc7bc6785c8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "不忍通りふれあい館",
+    "building_id": "d77d5f71-c475-4a2b-82f0-3d87fe4c8802",
     "institution": "ホール+スタジオ",
-    "building_kana": "シノバズドオリフレアイカン",
     "institution_kana": "ホール スタジオ",
-    "building_system_name": "不忍通りふれあい館",
     "institution_system_name": "ホール＋スタジオ",
     "capacity": 158,
     "area": 228,
@@ -1603,7 +1469,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区根津2-20-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1617,13 +1482,9 @@
   },
   {
     "id": "e3832387-8fc0-4b64-886f-5fc361ca344d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "男女平等センター",
+    "building_id": "e415cfd8-5d6a-430b-b4d6-19014d710d20",
     "institution": "研修室A",
-    "building_kana": "ダンジョビョウドウセンター",
     "institution_kana": "ケンシュウシツA",
-    "building_system_name": "男女平等センター",
     "institution_system_name": "研修室Ａ",
     "capacity": 96,
     "area": 195.3,
@@ -1661,7 +1522,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本郷4-8-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1675,13 +1535,9 @@
   },
   {
     "id": "39558a3c-6df6-4f08-8139-dab9bff422c0",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "男女平等センター",
+    "building_id": "e415cfd8-5d6a-430b-b4d6-19014d710d20",
     "institution": "研修室B",
-    "building_kana": "ダンジョビョウドウセンター",
     "institution_kana": "ケンシュウシツB",
-    "building_system_name": "男女平等センター",
     "institution_system_name": "研修室Ｂ",
     "capacity": 43,
     "area": 74.1,
@@ -1719,7 +1575,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本郷4-8-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1733,13 +1588,9 @@
   },
   {
     "id": "54c016ab-f9c2-4ec1-a741-77a8708684a5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京区勤労福祉会館",
+    "building_id": "91f65c50-9277-4bd3-bfcc-0f4f0fd77216",
     "institution": "区民会議室",
-    "building_kana": "ブンキョウクキンロウフクシカイカン",
     "institution_kana": "クミンカイギシツ",
-    "building_system_name": "勤労福祉会館",
     "institution_system_name": "区民会議室",
     "capacity": 60,
     "area": 92,
@@ -1777,7 +1628,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込4-35-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1791,13 +1641,9 @@
   },
   {
     "id": "a0e1cfea-c26d-4dfd-ade9-71ee738cec57",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京区勤労福祉会館",
+    "building_id": "91f65c50-9277-4bd3-bfcc-0f4f0fd77216",
     "institution": "第2洋室",
-    "building_kana": "ブンキョウクキンロウフクシカイカン",
     "institution_kana": "ダイ2ヨウシツ",
-    "building_system_name": "勤労福祉会館",
     "institution_system_name": "第２洋室",
     "capacity": 24,
     "area": 61,
@@ -1835,7 +1681,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込4-35-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1849,13 +1694,9 @@
   },
   {
     "id": "1f847da4-ae71-0903-f752-6f61c4e7243b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京区勤労福祉会館",
+    "building_id": "91f65c50-9277-4bd3-bfcc-0f4f0fd77216",
     "institution": "第3洋室",
-    "building_kana": "ブンキョウクキンロウフクシカイカン",
     "institution_kana": "ダイ3ヨウシツ",
-    "building_system_name": "勤労福祉会館",
     "institution_system_name": "第３洋室",
     "capacity": 15,
     "area": 61,
@@ -1893,7 +1734,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区本駒込4-35-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1907,13 +1747,9 @@
   },
   {
     "id": "e07754db-d586-4cf4-be43-2381d64988c5",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京シビックホール",
+    "building_id": "b9446b49-1e86-4e4b-90f4-25ff6572f1ee",
     "institution": "多目的室",
-    "building_kana": "ブンキョウシビックホール",
     "institution_kana": "タモクテキシツ",
-    "building_system_name": "シビックホールその他施設",
     "institution_system_name": "多目的室",
     "capacity": 160,
     "area": 213.36,
@@ -1951,7 +1787,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1965,13 +1800,9 @@
   },
   {
     "id": "020e4cc8-8a12-496e-8963-e93369ddf18a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京シビックホール",
+    "building_id": "b9446b49-1e86-4e4b-90f4-25ff6572f1ee",
     "institution": "練習室1",
-    "building_kana": "ブンキョウシビックホール",
     "institution_kana": "レンシュウシツ1",
-    "building_system_name": "シビックホールその他施設",
     "institution_system_name": "練習室１",
     "capacity": 40,
     "area": 107.88,
@@ -2009,7 +1840,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2023,13 +1853,9 @@
   },
   {
     "id": "f48c4b7e-afa5-4868-9e4f-c6a924b11e59",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京シビックホール",
+    "building_id": "b9446b49-1e86-4e4b-90f4-25ff6572f1ee",
     "institution": "練習室2",
-    "building_kana": "ブンキョウシビックホール",
     "institution_kana": "レンシュウシツ2",
-    "building_system_name": "シビックホールその他施設",
     "institution_system_name": "練習室２",
     "capacity": 20,
     "area": 95.84,
@@ -2067,7 +1893,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区春日1-16-21",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2081,13 +1906,9 @@
   },
   {
     "id": "3d9568fe-e3f5-4d60-8455-913a4ec57403",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京福祉センター江戸川橋",
+    "building_id": "ac4e98d8-431b-43ab-bd87-b9c68c6da6fe",
     "institution": "学習室",
-    "building_kana": "ブンキョウフクシセンターエドガワバシ",
     "institution_kana": "ガクシュウシツ",
-    "building_system_name": "福祉センター江戸川橋",
     "institution_system_name": "学習室",
     "capacity": 30,
     "area": 51,
@@ -2107,7 +1928,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区小日向2-16-15",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -2121,13 +1941,9 @@
   },
   {
     "id": "f270e13d-be4e-430b-b6d8-451247c4dd39",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "文京福祉センター江戸川橋",
+    "building_id": "ac4e98d8-431b-43ab-bd87-b9c68c6da6fe",
     "institution": "視聴覚室",
-    "building_kana": "ブンキョウフクシセンターエドガワバシ",
     "institution_kana": "シチョウカクシツ",
-    "building_system_name": "福祉センター江戸川橋",
     "institution_system_name": "視聴覚室",
     "capacity": 105,
     "area": 171,
@@ -2165,7 +1981,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区小日向2-16-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2179,13 +1994,9 @@
   },
   {
     "id": "ca453826-ea31-40b1-8614-ae5ee0e82745",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "目白台交流館",
+    "building_id": "e8d74e91-b572-4601-9f60-2d78a3ccaa9c",
     "institution": "洋室A",
-    "building_kana": "メジロダイコウリュウカン",
     "institution_kana": "ヨウシツA",
-    "building_system_name": "目白台交流館",
     "institution_system_name": "洋室Ａ",
     "capacity": 56,
     "area": 98,
@@ -2223,7 +2034,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区目白台3-18-7",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",
@@ -2237,13 +2047,9 @@
   },
   {
     "id": "e042b76f-84d2-43ec-962a-bc19cef55393",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_BUNKYO",
-    "building": "目白台交流館",
+    "building_id": "e8d74e91-b572-4601-9f60-2d78a3ccaa9c",
     "institution": "洋室B",
-    "building_kana": "メジロダイコウリュウカン",
     "institution_kana": "ヨウシツB",
-    "building_system_name": "目白台交流館",
     "institution_system_name": "洋室Ｂ",
     "capacity": 16,
     "area": 41.3,
@@ -2281,7 +2087,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "文京区目白台3-18-7",
     "is_available_strings": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNKNOWN",
     "is_available_brass": "AVAILABILITY_DIVISION_UNKNOWN",

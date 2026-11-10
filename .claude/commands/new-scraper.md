@@ -256,7 +256,7 @@ export const scraper = defineScraper({
 **同じ自治体の別予約システム**（区の共通システムとは別に、文化会館の指定管理者が持つシステムなど）は、新しい自治体ではなく親自治体の追加スクレイパーにする（例: tokyo-kita-cocokita、tokyo-katsushika-symphony-hills）:
 
 - `RESERVATION_SYSTEMS` に `<prefecture>-<slug>-<name>` のエントリを親の `municipality` で足し、ディレクトリも同じ名前にする。`scraper.yml` の choice にも足す（`database.yml` は親だけ）
-- 施設は親の `data/institutions/<prefecture>-<slug>.json` に追記する。viewer・README の変更は要らない
+- 建物と部屋は親の `data/buildings/<prefecture>-<slug>.json` と `data/institutions/<prefecture>-<slug>.json` に追記し、建物の `reservation_system` を追加の予約システムにする。viewer・README の変更は要らない
 - 状態と区分のラベルは親と共有なので、親の STATUS / DIVISION の番号に合わせる。1 時間刻みのような時刻の区分は、両方の時間帯を覆う起点で番号を振ると自治体内でラベルが揃う。午前・午後・夜間の実時刻が親と違うときは施設 JSON の `division_labels` で出す
 - `maintenanceWindowJst` は毎日の窓なので、月 1 回のメンテナンスには使えない
 
@@ -285,11 +285,11 @@ for (const target of scraper.targets) {
 
 ### 2.5 （既存の institution データがない場合） institution データの作成
 
-`data/institutions/<prefecture>-<slug>.json` を作成。**形式は `Institution` レコード（`packages/shared/types.ts`）のフラットな配列**で、1 部屋 = 1 レコードの DB 完成形（ネストした facilities/rooms 形式ではない）。レコードの形は `data/institutions/tokyo-chuo.json` を写し、`id` は `uuidgen` で採番する。enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
+`data/buildings/<prefecture>-<slug>.json`（建物、`Building`）と `data/institutions/<prefecture>-<slug>.json`（部屋、`building_id` で建物を指す）を作成する。どちらもフラットな配列で、形は `tokyo-chuo.json` を写し、`id` は `uuidgen` で採番する。建物の `reservation_system` は `RESERVATION_SYSTEMS` のキー（予約システムの無い手動登録は `null`）。`common/buildingMaster.test.ts` が、建物と部屋の対応と、スクレイパーの施設名が自分の予約システムの建物を指していることを検査する。enum 値の判定基準はリポジトリ直下の `tasks/institution-data-prompt.md` を参照。
 
 部屋名に定員が付くサイト（`多目的ホール（１００）` など）は、`institution_system_name` にその文字列をそのまま入れ、`institution`（表示名）からは定員を外して英数字を半角にする。定員は `capacity` に持つ。
 
-`building_system_name` + `institution_system_name` はスクレイパー出力と施設レコードを突合するキーなので、予約システム上の表記と正確に一致させること。楽器利用可否はサイトに明示的な記載がある場合のみ設定する（推測禁止）。
+建物の `system_name` + 部屋の `institution_system_name` はスクレイパー出力と施設レコードを突合するキーなので、予約システム上の表記と正確に一致させること。楽器利用可否はサイトに明示的な記載がある場合のみ設定する（推測禁止）。
 
 雛形を作ったら、`tasks/institution-data-prompt.md` の手順で中身を埋める（UNKNOWN と空のままで済ませない）:
 
@@ -387,7 +387,7 @@ INVALID や `{}` は、マッピングされていない生テキストを DIVIS
   - `packages/scraper/<prefecture>-<slug>/index.ts` — スクレイパー本体
   - `packages/scraper/<prefecture>-<slug>/index.test.ts` — テスト
   - `packages/shared/registry.ts` — 自治体レジストリ追加
-  - `packages/scraper/data/institutions/<prefecture>-<slug>.json` — 施設マスタ（各項目の充填数と出典）
+  - `packages/scraper/data/buildings/<prefecture>-<slug>.json` と `data/institutions/<prefecture>-<slug>.json` — 施設マスタ（各項目の充填数と出典）
   - viewer・ドキュメント（2.6）
 - スクレイプ対象の施設・部屋数
 - テスト結果サマリー

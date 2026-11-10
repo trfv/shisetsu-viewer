@@ -1,0 +1,142 @@
+[
+  {
+    "id": "63d49094-1241-4821-850c-d5a22eabba84",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "アカデミー音羽",
+    "kana": "アカデミーオトワ",
+    "system_name": "アカデミー音羽",
+    "address": "文京区大塚5-40-15",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "2c2d9494-de97-44e3-9d46-ced832182581",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "アカデミー文京",
+    "kana": "アカデミーブンキョウ",
+    "system_name": "アカデミー文京",
+    "address": "文京区春日1-16-21",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "9c2d475f-15ab-4270-afed-64316dd2c34b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "アカデミー向丘",
+    "kana": "アカデミームコウガオカ",
+    "system_name": "アカデミー向丘",
+    "address": "文京区向丘1-20-8",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "2011f531-06ed-4597-9d0b-9805bf2ba78f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "アカデミー茗台",
+    "kana": "アカデミーメイダイ",
+    "system_name": "アカデミー茗台",
+    "address": "文京区春日2-9-5",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "bedf11c7-89ee-4a38-8a0a-f8f496730b07",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "アカデミー湯島",
+    "kana": "アカデミーユジマ",
+    "system_name": "アカデミー湯島",
+    "address": "文京区湯島2‐28‐14",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "c57f881b-3655-4e87-b06d-433f2d79a99a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "大原地域活動センター",
+    "kana": "オオハラチイキカツドウセンター",
+    "system_name": "大原地域活動センター",
+    "address": "文京区千石1-4-3",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "33ec1746-bd31-4db2-b821-f0191da151b3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "駒込地域活動センター",
+    "kana": "コマゴメチイキカツドウセンター",
+    "system_name": "駒込地域活動センター",
+    "address": "文京区本駒込3-22-4",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "9d4687cc-17e4-4f29-840d-73e293678be1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "汐見地域活動センター",
+    "kana": "シオミチイキカツドウセンター",
+    "system_name": "汐見地域活動センター",
+    "address": "文京区千駄木3-2-6",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "d77d5f71-c475-4a2b-82f0-3d87fe4c8802",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "不忍通りふれあい館",
+    "kana": "シノバズドオリフレアイカン",
+    "system_name": "不忍通りふれあい館",
+    "address": "文京区根津2-20-7",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "e415cfd8-5d6a-430b-b4d6-19014d710d20",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "男女平等センター",
+    "kana": "ダンジョビョウドウセンター",
+    "system_name": "男女平等センター",
+    "address": "文京区本郷4-8-3",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "91f65c50-9277-4bd3-bfcc-0f4f0fd77216",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "文京区勤労福祉会館",
+    "kana": "ブンキョウクキンロウフクシカイカン",
+    "system_name": "勤労福祉会館",
+    "address": "文京区本駒込4-35-15",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "b9446b49-1e86-4e4b-90f4-25ff6572f1ee",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "文京シビックホール",
+    "kana": "ブンキョウシビックホール",
+    "system_name": "シビックホールその他施設",
+    "address": "文京区春日1-16-21",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "ac4e98d8-431b-43ab-bd87-b9c68c6da6fe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "文京福祉センター江戸川橋",
+    "kana": "ブンキョウフクシセンターエドガワバシ",
+    "system_name": "福祉センター江戸川橋",
+    "address": "文京区小日向2-16-15",
+    "reservation_system": "tokyo-bunkyo"
+  },
+  {
+    "id": "e8d74e91-b572-4601-9f60-2d78a3ccaa9c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_BUNKYO",
+    "name": "目白台交流館",
+    "kana": "メジロダイコウリュウカン",
+    "system_name": "目白台交流館",
+    "address": "文京区目白台3-18-7",
+    "reservation_system": "tokyo-bunkyo"
+  }
+]

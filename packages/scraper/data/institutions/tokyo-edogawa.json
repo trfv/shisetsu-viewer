@@ -1,13 +1,9 @@
 [
   {
     "id": "5779ce8f-97b6-4dbb-8989-779d777fcccf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "一之江コミュニティ会館",
+    "building_id": "2a51bbf8-c78a-43ae-8004-b94f2bda2cc4",
     "institution": "集会室第1",
-    "building_kana": "イチノエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "一之江コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 50,
     "area": 81,
@@ -27,7 +23,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区一之江2-6-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -41,13 +36,9 @@
   },
   {
     "id": "c3906272-0948-4f43-a752-aef141395863",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "一之江コミュニティ会館",
+    "building_id": "2a51bbf8-c78a-43ae-8004-b94f2bda2cc4",
     "institution": "集会室第2",
-    "building_kana": "イチノエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "一之江コミュニティ会館",
     "institution_system_name": "集会室第２",
     "capacity": 50,
     "area": 81,
@@ -67,7 +58,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区一之江2-6-15",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -81,13 +71,9 @@
   },
   {
     "id": "7391fb87-8f53-44f8-ac6e-321707fa7d93",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "江戸川コミュニティ会館",
+    "building_id": "86ce80d5-15eb-4584-a965-7fc63f23ed95",
     "institution": "集会室第1",
-    "building_kana": "エドガワコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "江戸川コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 36,
     "area": 84,
@@ -107,7 +93,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区江戸川2-33-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -121,13 +106,9 @@
   },
   {
     "id": "08d6d088-20ed-4ad4-a46d-cce91f37e8bb",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "葛西区民館",
+    "building_id": "ea6d6a18-cba2-4550-9498-36f2a8d1146d",
     "institution": "ホール",
-    "building_kana": "カサイクミンカン",
     "institution_kana": "ホール",
-    "building_system_name": "葛西区民館",
     "institution_system_name": "ホール",
     "capacity": 501,
     "area": 714,
@@ -165,7 +146,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区中葛西3-10-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -179,13 +159,9 @@
   },
   {
     "id": "611d59d7-f428-429c-94a0-e3a4b747045b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "上一色コミュニティセンター",
+    "building_id": "05cb693e-dd32-48fb-9298-a9df21fbc214",
     "institution": "集会室",
-    "building_kana": "カミイッショクコミュニティセンター",
     "institution_kana": "シュウカイシツ",
-    "building_system_name": "上一色コミュニティセンター",
     "institution_system_name": "集会室",
     "capacity": 60,
     "area": 105,
@@ -205,7 +181,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区上一色2-6-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -219,13 +194,9 @@
   },
   {
     "id": "9ae9735c-bcd5-4849-839a-50884f922c28",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "上一色コミュニティセンター",
+    "building_id": "05cb693e-dd32-48fb-9298-a9df21fbc214",
     "institution": "ふれあいルーム",
-    "building_kana": "カミイッショクコミュニティセンター",
     "institution_kana": "フレアイルーム",
-    "building_system_name": "上一色コミュニティセンター",
     "institution_system_name": "ふれあいルーム",
     "capacity": 50,
     "area": 108,
@@ -245,7 +216,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区上一色2-6-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -259,13 +229,9 @@
   },
   {
     "id": "a6301f22-24e9-433f-bd75-9dc6f35f87b9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "北葛西コミュニティ会館",
+    "building_id": "5e23f5e1-dcb8-4e0c-a122-1c0526e81243",
     "institution": "音楽室",
-    "building_kana": "キタカサイコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "北葛西コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 24,
     "area": 51,
@@ -285,7 +251,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北葛西2-11-39",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -299,13 +264,9 @@
   },
   {
     "id": "1b81d9b1-e526-4b0b-bac4-5719aa7e58f1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "北小岩コミュニティ会館",
+    "building_id": "18f4f999-ec5b-452a-92db-5b2ecd714048",
     "institution": "音楽室",
-    "building_kana": "キタコイワコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "北小岩コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 20,
     "area": 52,
@@ -325,7 +286,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北小岩6-35-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -339,13 +299,9 @@
   },
   {
     "id": "e0f7e0b4-3dfa-4abf-bb7b-5cbecbcd7cf9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "北小岩コミュニティ会館",
+    "building_id": "18f4f999-ec5b-452a-92db-5b2ecd714048",
     "institution": "集会室第1",
-    "building_kana": "キタコイワコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "北小岩コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 36,
     "area": 86,
@@ -365,7 +321,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北小岩6-35-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -379,13 +334,9 @@
   },
   {
     "id": "6cb7c4c4-10b8-4b2e-ae61-349040130059",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "北小岩コミュニティ会館",
+    "building_id": "18f4f999-ec5b-452a-92db-5b2ecd714048",
     "institution": "集会室第2",
-    "building_kana": "キタコイワコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "北小岩コミュニティ会館",
     "institution_system_name": "集会室第２",
     "capacity": 36,
     "area": 80,
@@ -405,7 +356,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北小岩6-35-17",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -419,13 +369,9 @@
   },
   {
     "id": "f6f5f323-255a-4caa-8b93-6faf93b33e96",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "グリーンパレス",
+    "building_id": "9070beb6-6389-4c1d-8767-9b216010c0fd",
     "institution": "音楽室",
-    "building_kana": "グリーンパレス",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "グリーンパレス",
     "institution_system_name": "音楽室",
     "capacity": 40,
     "area": 73.04,
@@ -445,7 +391,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松島1-38-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -459,13 +404,9 @@
   },
   {
     "id": "14c5d045-af14-466e-837d-1872ac0632ec",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "グリーンパレス",
+    "building_id": "9070beb6-6389-4c1d-8767-9b216010c0fd",
     "institution": "こども音楽室",
-    "building_kana": "グリーンパレス",
     "institution_kana": "コドモオンガクシツ",
-    "building_system_name": "グリーンパレス",
     "institution_system_name": "こども音楽室",
     "capacity": 50,
     "area": 57.33,
@@ -485,7 +426,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松島1-38-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -499,13 +439,9 @@
   },
   {
     "id": "5aa90fda-9bc7-438f-a82c-a0659531930f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
+    "building_id": "43492bcf-608c-4654-a05d-08765ac23c41",
     "institution": "講習室",
-    "building_kana": "コイワアーバンプラザ",
     "institution_kana": "コウシュウシツ",
-    "building_system_name": "小岩アーバンプラザ",
     "institution_system_name": "講習室",
     "capacity": 48,
     "area": 121,
@@ -525,7 +461,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北小岩1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -539,13 +474,9 @@
   },
   {
     "id": "13b1f574-8997-4882-8287-d9ca37d93331",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
+    "building_id": "43492bcf-608c-4654-a05d-08765ac23c41",
     "institution": "集会室第1・2",
-    "building_kana": "コイワアーバンプラザ",
     "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "小岩アーバンプラザ",
     "institution_system_name": "集会室第１・２",
     "capacity": 84,
     "area": 221,
@@ -565,7 +496,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区北小岩1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -579,13 +509,9 @@
   },
   {
     "id": "6dc5f3ea-9092-4e74-9c24-443af098748c",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩アーバンプラザ",
+    "building_id": "43492bcf-608c-4654-a05d-08765ac23c41",
     "institution": "ホール",
-    "building_kana": "コイワアーバンプラザ",
     "institution_kana": "ホール",
-    "building_system_name": "小岩アーバンプラザ",
     "institution_system_name": "ホール",
     "capacity": 386,
     "area": null,
@@ -623,7 +549,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区北小岩1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -637,13 +562,9 @@
   },
   {
     "id": "130d4937-b14b-4ba8-9be5-b9cb81b24ec7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩図書館",
+    "building_id": "4da23b15-447a-47e0-b506-a7080b867267",
     "institution": "音楽室",
-    "building_kana": "コイワトショカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "小岩図書館",
     "institution_system_name": "音楽室",
     "capacity": 24,
     "area": 58,
@@ -663,7 +584,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東小岩3-6-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -677,13 +597,9 @@
   },
   {
     "id": "0d79c8a5-94cc-4a15-9634-b99d83355317",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小岩図書館",
+    "building_id": "4da23b15-447a-47e0-b506-a7080b867267",
     "institution": "集会室第1・2",
-    "building_kana": "コイワトショカン",
     "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "小岩図書館",
     "institution_system_name": "集会室第１・２",
     "capacity": 52,
     "area": 107,
@@ -703,7 +619,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東小岩3-6-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -717,13 +632,9 @@
   },
   {
     "id": "1b01954e-284f-4a48-8af0-1577774c04b0",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川区民館",
+    "building_id": "8364a2ec-3b06-4f6f-8c74-5f00a3c0f1de",
     "institution": "集会室第1",
-    "building_kana": "コマツガワクミンカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "小松川区民館",
     "institution_system_name": "集会室第１",
     "capacity": 42,
     "area": 89,
@@ -743,7 +654,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区平井4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -757,13 +667,9 @@
   },
   {
     "id": "4140577f-be98-44a3-901c-725e6094c013",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川区民館",
+    "building_id": "8364a2ec-3b06-4f6f-8c74-5f00a3c0f1de",
     "institution": "集会室第2・3",
-    "building_kana": "コマツガワクミンカン",
     "institution_kana": "シュウカイシツダイ2・3",
-    "building_system_name": "小松川区民館",
     "institution_system_name": "集会室第２・３",
     "capacity": 42,
     "area": 75,
@@ -783,7 +689,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区平井4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -797,13 +702,9 @@
   },
   {
     "id": "40972b5a-d0f1-4e80-94e0-ad45496b5f6b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川区民館",
+    "building_id": "8364a2ec-3b06-4f6f-8c74-5f00a3c0f1de",
     "institution": "ホール",
-    "building_kana": "コマツガワクミンカン",
     "institution_kana": "ホール",
-    "building_system_name": "小松川区民館",
     "institution_system_name": "ホール",
     "capacity": 300,
     "area": 501,
@@ -841,7 +742,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区平井4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -855,13 +755,9 @@
   },
   {
     "id": "f346b65a-a39e-4436-9ab3-c44dd861732b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川さくらホール",
+    "building_id": "ccc21531-4843-47bb-af7e-062304c76b99",
     "institution": "音楽室",
-    "building_kana": "コマツガワサクラホール",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "小松川さくらホール",
     "institution_system_name": "音楽室",
     "capacity": 20,
     "area": 73,
@@ -881,7 +777,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区小松川3-6-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -895,13 +790,9 @@
   },
   {
     "id": "b092beb6-11f3-4f10-aeab-f9ed0466616d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川さくらホール",
+    "building_id": "ccc21531-4843-47bb-af7e-062304c76b99",
     "institution": "多目的ホール",
-    "building_kana": "コマツガワサクラホール",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "小松川さくらホール",
     "institution_system_name": "多目的ホール",
     "capacity": 351,
     "area": null,
@@ -921,7 +812,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区小松川3-6-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -935,13 +825,9 @@
   },
   {
     "id": "4df188ed-72e6-4d55-9cba-a4f5db2abcc4",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "小松川さくらホール",
+    "building_id": "ccc21531-4843-47bb-af7e-062304c76b99",
     "institution": "多目的ホール（スポーツ利用）",
-    "building_kana": "コマツガワサクラホール",
     "institution_kana": "タモクテキホール（スポーツリヨウ）",
-    "building_system_name": "小松川さくらホール",
     "institution_system_name": "多目的ホール（スポーツ利用）",
     "capacity": null,
     "area": 416,
@@ -961,7 +847,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区小松川3-6-3",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -975,13 +860,9 @@
   },
   {
     "id": "80eeadfd-077d-4d26-9819-404ac07a787a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "コミュニティプラザ一之江",
+    "building_id": "f957b863-f131-417e-a1f0-1787a484679b",
     "institution": "集会室第1",
-    "building_kana": "コミュニティプラザイチノエ",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "コミュニティプラザ一之江",
     "institution_system_name": "集会室第１",
     "capacity": 30,
     "area": 61,
@@ -1001,7 +882,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区一之江7-35-22",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1015,13 +895,9 @@
   },
   {
     "id": "8f1bca63-0550-430c-be3b-02f9402d2f71",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "コミュニティプラザ一之江",
+    "building_id": "f957b863-f131-417e-a1f0-1787a484679b",
     "institution": "集会室第2",
-    "building_kana": "コミュニティプラザイチノエ",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "コミュニティプラザ一之江",
     "institution_system_name": "集会室第２",
     "capacity": 36,
     "area": 71,
@@ -1041,7 +917,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区一之江7-35-22",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1055,13 +930,9 @@
   },
   {
     "id": "6716ad77-f23e-49c8-b55c-41748476aa6d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "鹿骨区民館",
+    "building_id": "1ca8efb7-023f-4b7f-843e-10133fadba95",
     "institution": "音楽室",
-    "building_kana": "シシボネクミンカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "鹿骨区民館",
     "institution_system_name": "音楽室",
     "capacity": 15,
     "area": 47,
@@ -1081,7 +952,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区鹿骨1-54-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1095,13 +965,9 @@
   },
   {
     "id": "d31e6b4a-6e2b-4f56-b264-543b21df24c2",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "鹿骨区民館",
+    "building_id": "1ca8efb7-023f-4b7f-843e-10133fadba95",
     "institution": "ホール",
-    "building_kana": "シシボネクミンカン",
     "institution_kana": "ホール",
-    "building_system_name": "鹿骨区民館",
     "institution_system_name": "ホール",
     "capacity": 320,
     "area": 310,
@@ -1139,7 +1005,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区鹿骨1-54-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1153,13 +1018,9 @@
   },
   {
     "id": "27d0e2e0-3bf0-4536-9a5f-048f6c14c928",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "篠崎コミュニティ会館",
+    "building_id": "d5613bb8-3daf-42dd-81ef-ce1df3dca3e0",
     "institution": "集会室第1・2",
-    "building_kana": "シノザキコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "篠崎コミュニティ会館",
     "institution_system_name": "集会室第１・２",
     "capacity": 75,
     "area": 123,
@@ -1179,7 +1040,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区上篠崎4-21-8",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1193,13 +1053,9 @@
   },
   {
     "id": "807e7fd4-a0d6-45b7-a9c4-ca6773d7ecfc",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "篠崎コミュニティホール",
+    "building_id": "e3f46ce4-0617-4d38-b2e3-07c7b3d3f30e",
     "institution": "集会室第1・2",
-    "building_kana": "シノザキコミュニティホール",
     "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "篠崎コミュニティホール",
     "institution_system_name": "集会室第１・２",
     "capacity": 60,
     "area": 115,
@@ -1219,7 +1075,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区篠崎町7-27-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1233,13 +1088,9 @@
   },
   {
     "id": "09f16366-b13f-4da4-be6f-f0b052829adf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "篠崎コミュニティホール",
+    "building_id": "e3f46ce4-0617-4d38-b2e3-07c7b3d3f30e",
     "institution": "集会室第3",
-    "building_kana": "シノザキコミュニティホール",
     "institution_kana": "シュウカイシツダイ3",
-    "building_system_name": "篠崎コミュニティホール",
     "institution_system_name": "集会室第３",
     "capacity": 30,
     "area": 63,
@@ -1259,7 +1110,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区篠崎町7-27-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1273,13 +1123,9 @@
   },
   {
     "id": "da262c5d-dd13-47d8-bfc7-23d9dbf337a7",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "新川さくら館",
+    "building_id": "7e4c5385-d0ca-44ee-9f8f-0b719554f01a",
     "institution": "多目的ホール",
-    "building_kana": "シンカワサクラカン",
     "institution_kana": "タモクテキホール",
-    "building_system_name": "新川さくら館",
     "institution_system_name": "多目的ホール",
     "capacity": 90,
     "area": 110,
@@ -1299,7 +1145,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区船堀7-15-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1313,13 +1158,9 @@
   },
   {
     "id": "bc60d3d8-e2ff-4d49-987c-5c65f387f18a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "清新町コミュニティ会館",
+    "building_id": "30a27694-7894-4322-8688-527a47e8ba2a",
     "institution": "音楽室第1",
-    "building_kana": "セイシンマチコミュニティカイカン",
     "institution_kana": "オンガクシツダイ1",
-    "building_system_name": "清新町コミュニティ会館",
     "institution_system_name": "音楽室第１",
     "capacity": 13,
     "area": 23,
@@ -1339,7 +1180,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区清新町1-2-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1353,13 +1193,9 @@
   },
   {
     "id": "894bef5c-906f-4a76-8928-fd8ef7e5e550",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "清新町コミュニティ会館",
+    "building_id": "30a27694-7894-4322-8688-527a47e8ba2a",
     "institution": "ホール",
-    "building_kana": "セイシンマチコミュニティカイカン",
     "institution_kana": "ホール",
-    "building_system_name": "清新町コミュニティ会館",
     "institution_system_name": "ホール",
     "capacity": 210,
     "area": 301,
@@ -1379,7 +1215,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区清新町1-2-2",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1393,13 +1228,9 @@
   },
   {
     "id": "039b6aa4-2204-4f13-a972-3ee34d2de3c1",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
+    "building_id": "2313c9b9-4c10-4c5d-b654-8a7fb9e12b8b",
     "institution": "研修室",
-    "building_kana": "ソウゴウブンカセンター",
     "institution_kana": "ケンシュウシツ",
-    "building_system_name": "総合文化センター",
     "institution_system_name": "研修室",
     "capacity": 204,
     "area": 370,
@@ -1455,7 +1286,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "江戸川区中央4-14-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1469,13 +1299,9 @@
   },
   {
     "id": "6d549f16-ea74-48f5-9ca5-dd03c5f1f369",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
+    "building_id": "2313c9b9-4c10-4c5d-b654-8a7fb9e12b8b",
     "institution": "小ホール",
-    "building_kana": "ソウゴウブンカセンター",
     "institution_kana": "ショウホール",
-    "building_system_name": "総合文化センター",
     "institution_system_name": "小ホール",
     "capacity": 502,
     "area": null,
@@ -1513,7 +1339,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区中央4-14-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1527,13 +1352,9 @@
   },
   {
     "id": "e0564417-1513-4351-b52c-55d47fa11a61",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
+    "building_id": "2313c9b9-4c10-4c5d-b654-8a7fb9e12b8b",
     "institution": "大ホール",
-    "building_kana": "ソウゴウブンカセンター",
     "institution_kana": "ダイホール",
-    "building_system_name": "総合文化センター",
     "institution_system_name": "大ホール",
     "capacity": 1497,
     "area": null,
@@ -1571,7 +1392,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区中央4-14-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1585,13 +1405,9 @@
   },
   {
     "id": "0dd5f8ee-e798-4747-bef8-e7df5adc8298",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "総合文化センター",
+    "building_id": "2313c9b9-4c10-4c5d-b654-8a7fb9e12b8b",
     "institution": "リハーサルルーム",
-    "building_kana": "ソウゴウブンカセンター",
     "institution_kana": "リハーサルルーム",
-    "building_system_name": "総合文化センター",
     "institution_system_name": "リハーサル室",
     "capacity": 200,
     "area": 210,
@@ -1647,7 +1463,6 @@
         "division": "FEE_DIVISION_EVENING_TWO"
       }
     ],
-    "address": "江戸川区中央4-14-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1661,13 +1476,9 @@
   },
   {
     "id": "ddeb216f-7502-f1ab-e4ed-0ee6360683f3",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "タワーホール船堀",
+    "building_id": "805f0691-9ccf-48f6-98ab-31a9087a812b",
     "institution": "302会議室",
-    "building_kana": "タワーホールフナボリ",
     "institution_kana": "302カイギシツ",
-    "building_system_name": "タワーホール船堀",
     "institution_system_name": "３０２会議室",
     "capacity": 32,
     "area": 71,
@@ -1705,7 +1516,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区船堀4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_UNAVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1719,13 +1529,9 @@
   },
   {
     "id": "2014b8d3-8730-6419-27af-6b9c827e6125",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "タワーホール船堀",
+    "building_id": "805f0691-9ccf-48f6-98ab-31a9087a812b",
     "institution": "小ホール",
-    "building_kana": "タワーホールフナボリ",
     "institution_kana": "ショウホール",
-    "building_system_name": "タワーホール船堀",
     "institution_system_name": "小ホール",
     "capacity": 300,
     "area": null,
@@ -1763,7 +1569,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区船堀4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1777,13 +1582,9 @@
   },
   {
     "id": "9ba5c32f-df8e-ff23-0e2f-a36d7fea6e59",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "タワーホール船堀",
+    "building_id": "805f0691-9ccf-48f6-98ab-31a9087a812b",
     "institution": "大ホール",
-    "building_kana": "タワーホールフナボリ",
     "institution_kana": "ダイホール",
-    "building_system_name": "タワーホール船堀",
     "institution_system_name": "大ホール",
     "capacity": 750,
     "area": null,
@@ -1821,7 +1622,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区船堀4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1835,13 +1635,9 @@
   },
   {
     "id": "e7c11832-765e-479b-874d-75e30e60cd1e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "タワーホール船堀",
+    "building_id": "805f0691-9ccf-48f6-98ab-31a9087a812b",
     "institution": "リハーサル室",
-    "building_kana": "タワーホールフナボリ",
     "institution_kana": "リハーサルシツ",
-    "building_system_name": "タワーホール船堀",
     "institution_system_name": "リハーサル室",
     "capacity": null,
     "area": 198,
@@ -1879,7 +1675,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区船堀4-1-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -1893,13 +1688,9 @@
   },
   {
     "id": "5b55d1e2-8f9c-4520-9f1b-dca68e8be99d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部区民館",
+    "building_id": "c2a2b768-526d-4148-a040-d9b250ea304c",
     "institution": "集会室いちょう",
-    "building_kana": "トウブクミンカン",
     "institution_kana": "シュウカイシツイチョウ",
-    "building_system_name": "東部区民館",
     "institution_system_name": "集会室いちょう",
     "capacity": 45,
     "area": 78,
@@ -1919,7 +1710,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東瑞江1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1933,13 +1723,9 @@
   },
   {
     "id": "c4c2b798-6245-4d37-9c89-73f615a40f4a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部区民館",
+    "building_id": "c2a2b768-526d-4148-a040-d9b250ea304c",
     "institution": "集会室くすのき",
-    "building_kana": "トウブクミンカン",
     "institution_kana": "シュウカイシツクスノキ",
-    "building_system_name": "東部区民館",
     "institution_system_name": "集会室くすのき",
     "capacity": 39,
     "area": 66,
@@ -1959,7 +1745,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東瑞江1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -1973,13 +1758,9 @@
   },
   {
     "id": "b427df31-dde9-451b-80ad-84b8ff86d0c0",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部区民館",
+    "building_id": "c2a2b768-526d-4148-a040-d9b250ea304c",
     "institution": "ホール",
-    "building_kana": "トウブクミンカン",
     "institution_kana": "ホール",
-    "building_system_name": "東部区民館",
     "institution_system_name": "ホール",
     "capacity": 300,
     "area": 325,
@@ -2017,7 +1798,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区東瑞江1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2031,13 +1811,9 @@
   },
   {
     "id": "3e14464d-4d57-409a-8475-b517b3fa9c6b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部区民館",
+    "building_id": "c2a2b768-526d-4148-a040-d9b250ea304c",
     "institution": "ホール（客席のみ）",
-    "building_kana": "トウブクミンカン",
     "institution_kana": "ホール（キャクセキノミ）",
-    "building_system_name": "東部区民館",
     "institution_system_name": "ホール（客席のみ）",
     "capacity": null,
     "area": null,
@@ -2045,7 +1821,6 @@
     "fee_divisions": [],
     "weekday_usage_fee": [],
     "holiday_usage_fee": [],
-    "address": "江戸川区東瑞江1-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2059,13 +1834,9 @@
   },
   {
     "id": "ff7e0b9b-9fa2-49f9-a221-6c10c7faae4d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部フレンドホール",
+    "building_id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
     "institution": "音楽室第1",
-    "building_kana": "トウブフレンドホール",
     "institution_kana": "オンガクシツダイ1",
-    "building_system_name": "東部フレンドホール",
     "institution_system_name": "音楽室１",
     "capacity": 24,
     "area": 58,
@@ -2085,7 +1856,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区瑞江2-5-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2099,13 +1869,9 @@
   },
   {
     "id": "829e9b21-272c-439f-8231-14eff7989d69",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部フレンドホール",
+    "building_id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
     "institution": "音楽室第2",
-    "building_kana": "トウブフレンドホール",
     "institution_kana": "オンガクシツダイ2",
-    "building_system_name": "東部フレンドホール",
     "institution_system_name": "音楽室２",
     "capacity": 24,
     "area": 60,
@@ -2125,7 +1891,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区瑞江2-5-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2139,13 +1904,9 @@
   },
   {
     "id": "9506cfb7-5d72-4022-8eae-d1f1ff893abf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部フレンドホール",
+    "building_id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
     "institution": "集会室第1",
-    "building_kana": "トウブフレンドホール",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "東部フレンドホール",
     "institution_system_name": "集会室第１",
     "capacity": 36,
     "area": 76,
@@ -2165,7 +1926,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区瑞江2-5-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2179,13 +1939,9 @@
   },
   {
     "id": "ba677bc7-3ebc-4ea2-87ad-f234fda1eadb",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部フレンドホール",
+    "building_id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
     "institution": "集会室第2",
-    "building_kana": "トウブフレンドホール",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "東部フレンドホール",
     "institution_system_name": "集会室第２",
     "capacity": 36,
     "area": 76,
@@ -2205,7 +1961,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区瑞江2-5-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2219,13 +1974,9 @@
   },
   {
     "id": "8c4e1149-3ae3-4c7e-b73d-0dac4a08d797",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東部フレンドホール",
+    "building_id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
     "institution": "ホール",
-    "building_kana": "トウブフレンドホール",
     "institution_kana": "ホール",
-    "building_system_name": "東部フレンドホール",
     "institution_system_name": "ホール",
     "capacity": 348,
     "area": 80,
@@ -2263,7 +2014,6 @@
         "division": "FEE_DIVISION_EVENING"
       }
     ],
-    "address": "江戸川区瑞江2-5-7",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2277,13 +2027,9 @@
   },
   {
     "id": "8acc3a2e-a240-4a58-b54b-45789079db6f",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "長嶋桑川コミュニティ会館",
+    "building_id": "c0112fcc-acb0-465c-85a0-c2c3df61b895",
     "institution": "音楽室",
-    "building_kana": "ナガシマクワガワコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "長島桑川コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 55,
     "area": 93,
@@ -2303,7 +2049,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東葛西5-31-18",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2317,13 +2062,9 @@
   },
   {
     "id": "2791d4f5-8d66-42dd-be79-d166d7fdafff",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "中平井コミュニティ会館",
+    "building_id": "ba0de658-4150-40d4-8c6c-27ded390ff34",
     "institution": "音楽室",
-    "building_kana": "ナカヒライコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "中平井コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 24,
     "area": 56,
@@ -2343,7 +2084,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区平井7-1-6",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2357,13 +2097,9 @@
   },
   {
     "id": "f82b4e7d-bf6d-4e7f-960c-43279e5358fb",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "新田コミュニティ会館",
+    "building_id": "03813331-2f5b-4f46-bd5a-7489deea2f85",
     "institution": "集会室第1",
-    "building_kana": "ニッタコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "新田コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 30,
     "area": 50,
@@ -2383,7 +2119,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区中葛西7-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2397,13 +2132,9 @@
   },
   {
     "id": "2145b456-6c13-46f3-8d58-5d5ad290829a",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "新田コミュニティ会館",
+    "building_id": "03813331-2f5b-4f46-bd5a-7489deea2f85",
     "institution": "集会室第2・3",
-    "building_kana": "ニッタコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2・3",
-    "building_system_name": "新田コミュニティ会館",
     "institution_system_name": "集会室第２・３",
     "capacity": 60,
     "area": 99,
@@ -2423,7 +2154,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区中葛西7-17-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2437,13 +2167,9 @@
   },
   {
     "id": "d6a92706-b085-4639-8922-c8b15b0c0305",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "二之江コミュニティ会館",
+    "building_id": "9e78ea97-3f39-4e5f-be79-e8539671892d",
     "institution": "集会室第1",
-    "building_kana": "ニノエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "二之江コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 36,
     "area": 70,
@@ -2463,7 +2189,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区江戸川6-46",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2477,13 +2202,9 @@
   },
   {
     "id": "75df1e4f-6458-48c4-9374-531bba1838f8",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "二之江コミュニティ会館",
+    "building_id": "9e78ea97-3f39-4e5f-be79-e8539671892d",
     "institution": "集会室第2・3",
-    "building_kana": "ニノエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2・3",
-    "building_system_name": "二之江コミュニティ会館",
     "institution_system_name": "集会室第２・３",
     "capacity": 90,
     "area": 172,
@@ -2503,7 +2224,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区江戸川6-46",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2517,13 +2237,9 @@
   },
   {
     "id": "edf69e92-6d1d-4d1e-8a30-e4b793c5a206",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "東葛西コミュニティ会館",
+    "building_id": "e27c32de-cb9b-4cbb-89c5-eb4592fce8fa",
     "institution": "音楽室",
-    "building_kana": "ヒガシカサイコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "東葛西コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 75,
@@ -2543,7 +2259,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区東葛西8-22-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2557,13 +2272,9 @@
   },
   {
     "id": "be75dd71-d7f2-4533-b880-adf8f6494e7d",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "平井コミュニティ会館",
+    "building_id": "cbe45d1d-0918-4dc0-9a8c-e6364d7eb8c2",
     "institution": "集会室第1",
-    "building_kana": "ヒライコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "平井コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 36,
     "area": 71,
@@ -2583,7 +2294,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区平井4-18-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2597,13 +2307,9 @@
   },
   {
     "id": "948f5f9c-f591-457a-a148-d73c9d5a6644",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "平井コミュニティ会館",
+    "building_id": "cbe45d1d-0918-4dc0-9a8c-e6364d7eb8c2",
     "institution": "集会室第2",
-    "building_kana": "ヒライコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "平井コミュニティ会館",
     "institution_system_name": "集会室第２",
     "capacity": 36,
     "area": 72,
@@ -2623,7 +2329,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区平井4-18-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2637,13 +2342,9 @@
   },
   {
     "id": "e667b891-9403-4424-b009-82b559c66bfe",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "船堀コミュニティ会館",
+    "building_id": "1a6db9ea-0d93-403a-818f-e633037b74f8",
     "institution": "集会室第1・2",
-    "building_kana": "フナボリコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1・2",
-    "building_system_name": "船堀コミュニティ会館",
     "institution_system_name": "集会室第１・２",
     "capacity": 84,
     "area": 158,
@@ -2663,7 +2364,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区船堀1-3-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2677,13 +2377,9 @@
   },
   {
     "id": "287c1d1c-840f-49ef-a98b-4e51bc447b57",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "船堀コミュニティ会館",
+    "building_id": "1a6db9ea-0d93-403a-818f-e633037b74f8",
     "institution": "集会室第3",
-    "building_kana": "フナボリコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ3",
-    "building_system_name": "船堀コミュニティ会館",
     "institution_system_name": "集会室第３",
     "capacity": 24,
     "area": 48,
@@ -2703,7 +2399,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区船堀1-3-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2717,13 +2412,9 @@
   },
   {
     "id": "698da0b7-c5de-4e4e-92b9-6f035f838498",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "松江区民プラザ",
+    "building_id": "0446a8ae-5a19-4ff0-a2a8-2e12836da062",
     "institution": "音楽室",
-    "building_kana": "マツエクミンプラザ",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "松江区民プラザ",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 78,
@@ -2743,7 +2434,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松江2-1-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2757,13 +2447,9 @@
   },
   {
     "id": "be633281-4010-460d-b505-c649bf9dda73",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "松江コミュニティ会館",
+    "building_id": "4afdbfe0-c1f2-4112-b8fd-9064b76b7b95",
     "institution": "集会室第3",
-    "building_kana": "マツエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ3",
-    "building_system_name": "松江コミュニティ会館",
     "institution_system_name": "集会室第３",
     "capacity": 40,
     "area": 73,
@@ -2783,7 +2469,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松江7-5-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2797,13 +2482,9 @@
   },
   {
     "id": "69b9dd24-ef60-4f62-a0f6-00840d1ae1f9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "松江コミュニティ会館",
+    "building_id": "4afdbfe0-c1f2-4112-b8fd-9064b76b7b95",
     "institution": "ホール（スポーツルーム利用）",
-    "building_kana": "マツエコミュニティカイカン",
     "institution_kana": "ホール（スポーツルームリヨウ）",
-    "building_system_name": "松江コミュニティ会館",
     "institution_system_name": "ホール（スポーツルーム利用）",
     "capacity": null,
     "area": 170,
@@ -2823,7 +2504,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松江7-5-12",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2837,13 +2517,9 @@
   },
   {
     "id": "fb88389a-92a8-45a1-bef2-194cf1d94597",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "松島コミュニティ会館",
+    "building_id": "158873aa-b05a-481a-9202-d49c016f20b9",
     "institution": "音楽室第1",
-    "building_kana": "マツシマコミュニティカイカン",
     "institution_kana": "オンガクシツ1",
-    "building_system_name": "松島コミュニティ会館",
     "institution_system_name": "音楽室第１",
     "capacity": 14,
     "area": 34,
@@ -2863,7 +2539,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松島4-25-6",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2877,13 +2552,9 @@
   },
   {
     "id": "0752c8fd-d676-4a68-b069-f3bba047143b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "松島コミュニティ会館",
+    "building_id": "158873aa-b05a-481a-9202-d49c016f20b9",
     "institution": "音楽室第2",
-    "building_kana": "マツシマコミュニティカイカン",
     "institution_kana": "オンガクシツ2",
-    "building_system_name": "松島コミュニティ会館",
     "institution_system_name": "音楽室第２",
     "capacity": 14,
     "area": 31,
@@ -2903,7 +2574,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区松島4-25-6",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -2917,13 +2587,9 @@
   },
   {
     "id": "24f8c41a-5801-466e-9bea-33fd76d67346",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "瑞江コミュニティ会館",
+    "building_id": "10c36675-c26f-460e-b955-ab97f4b7573d",
     "institution": "集会室第1",
-    "building_kana": "ミズエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "瑞江コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 30,
     "area": 47,
@@ -2943,7 +2609,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区西瑞江3-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2957,13 +2622,9 @@
   },
   {
     "id": "3087875f-c505-4585-a3e7-b5d536abef7b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "瑞江コミュニティ会館",
+    "building_id": "10c36675-c26f-460e-b955-ab97f4b7573d",
     "institution": "集会室第2",
-    "building_kana": "ミズエコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ2",
-    "building_system_name": "瑞江コミュニティ会館",
     "institution_system_name": "集会室第２",
     "capacity": 30,
     "area": 49,
@@ -2983,7 +2644,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区西瑞江3-18-1",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -2997,13 +2657,9 @@
   },
   {
     "id": "cd842e81-9cd4-4121-aec3-38908764b74b",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "南葛西会館",
+    "building_id": "d2aa5f64-e251-493d-9974-001bfc3da9f4",
     "institution": "集会室第1",
-    "building_kana": "ミナミカサイカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "南葛西会館",
     "institution_system_name": "集会室第１",
     "capacity": 12,
     "area": 26,
@@ -3023,7 +2679,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区南葛西6-8-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -3037,13 +2692,9 @@
   },
   {
     "id": "49943247-9012-40c9-bcaa-9015344d76f9",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "南葛西会館",
+    "building_id": "d2aa5f64-e251-493d-9974-001bfc3da9f4",
     "institution": "集会室第2・3",
-    "building_kana": "ミナミカサイカイカン",
     "institution_kana": "シュウカイシツダイ2・3",
-    "building_system_name": "南葛西会館",
     "institution_system_name": "集会室第２・３",
     "capacity": 42,
     "area": 83,
@@ -3063,7 +2714,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区南葛西6-8-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -3077,13 +2727,9 @@
   },
   {
     "id": "ba0aeed9-fe5f-4cd5-b2c4-1764692b5e2e",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "南小岩コミュニティ会館",
+    "building_id": "7667c96c-9d82-42ec-93d3-434c857269c1",
     "institution": "集会室第1",
-    "building_kana": "ミナミコイワコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ1",
-    "building_system_name": "南小岩コミュニティ会館",
     "institution_system_name": "集会室第１",
     "capacity": 24,
     "area": 45,
@@ -3103,7 +2749,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区南小岩7-17-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -3117,13 +2762,9 @@
   },
   {
     "id": "ec43bcae-a8c0-4e3f-a803-5e86079df394",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "南小岩コミュニティ会館",
+    "building_id": "7667c96c-9d82-42ec-93d3-434c857269c1",
     "institution": "スポーツルーム",
-    "building_kana": "ミナミコイワコミュニティカイカン",
     "institution_kana": "スポーツルーム",
-    "building_system_name": "南小岩コミュニティ会館",
     "institution_system_name": "スポーツルーム",
     "capacity": 170,
     "area": 190,
@@ -3143,7 +2784,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区南小岩7-17-10",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",
@@ -3157,13 +2797,9 @@
   },
   {
     "id": "c0658eea-3d2f-4482-b3a1-a9ccaa553b86",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "臨海町コミュニティ会館",
+    "building_id": "e5378537-ae76-41cc-bdc0-5fd44c096eb1",
     "institution": "音楽室",
-    "building_kana": "リンカイマチコミュニティカイカン",
     "institution_kana": "オンガクシツ",
-    "building_system_name": "臨海町コミュニティ会館",
     "institution_system_name": "音楽室",
     "capacity": 30,
     "area": 62,
@@ -3183,7 +2819,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区臨海町2-2-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_AVAILABLE",
@@ -3197,13 +2832,9 @@
   },
   {
     "id": "3a679c61-b8ac-423a-ad27-bb874317b4cf",
-    "prefecture": "PREFECTURE_TOKYO",
-    "municipality": "MUNICIPALITY_EDOGAWA",
-    "building": "臨海町コミュニティ会館",
+    "building_id": "e5378537-ae76-41cc-bdc0-5fd44c096eb1",
     "institution": "集会室第6",
-    "building_kana": "リンカイマチコミュニティカイカン",
     "institution_kana": "シュウカイシツダイ6",
-    "building_system_name": "臨海町コミュニティ会館",
     "institution_system_name": "集会室第６",
     "capacity": 48,
     "area": 101,
@@ -3223,7 +2854,6 @@
         "division": "FEE_DIVISION_ONE_HOUR"
       }
     ],
-    "address": "江戸川区臨海町2-2-9",
     "is_available_strings": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_woodwind": "AVAILABILITY_DIVISION_AVAILABLE",
     "is_available_brass": "AVAILABILITY_DIVISION_UNAVAILABLE",

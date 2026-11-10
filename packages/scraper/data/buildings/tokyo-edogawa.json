@@ -1,0 +1,352 @@
+[
+  {
+    "id": "2a51bbf8-c78a-43ae-8004-b94f2bda2cc4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "一之江コミュニティ会館",
+    "kana": "イチノエコミュニティカイカン",
+    "system_name": "一之江コミュニティ会館",
+    "address": "江戸川区一之江2-6-15",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "86ce80d5-15eb-4584-a965-7fc63f23ed95",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "江戸川コミュニティ会館",
+    "kana": "エドガワコミュニティカイカン",
+    "system_name": "江戸川コミュニティ会館",
+    "address": "江戸川区江戸川2-33-9",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "ea6d6a18-cba2-4550-9498-36f2a8d1146d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "葛西区民館",
+    "kana": "カサイクミンカン",
+    "system_name": "葛西区民館",
+    "address": "江戸川区中葛西3-10-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "05cb693e-dd32-48fb-9298-a9df21fbc214",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "上一色コミュニティセンター",
+    "kana": "カミイッショクコミュニティセンター",
+    "system_name": "上一色コミュニティセンター",
+    "address": "江戸川区上一色2-6-10",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "5e23f5e1-dcb8-4e0c-a122-1c0526e81243",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "北葛西コミュニティ会館",
+    "kana": "キタカサイコミュニティカイカン",
+    "system_name": "北葛西コミュニティ会館",
+    "address": "江戸川区北葛西2-11-39",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "18f4f999-ec5b-452a-92db-5b2ecd714048",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "北小岩コミュニティ会館",
+    "kana": "キタコイワコミュニティカイカン",
+    "system_name": "北小岩コミュニティ会館",
+    "address": "江戸川区北小岩6-35-17",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "9070beb6-6389-4c1d-8767-9b216010c0fd",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "グリーンパレス",
+    "kana": "グリーンパレス",
+    "system_name": "グリーンパレス",
+    "address": "江戸川区松島1-38-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "43492bcf-608c-4654-a05d-08765ac23c41",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "小岩アーバンプラザ",
+    "kana": "コイワアーバンプラザ",
+    "system_name": "小岩アーバンプラザ",
+    "address": "江戸川区北小岩1-17-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "4da23b15-447a-47e0-b506-a7080b867267",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "小岩図書館",
+    "kana": "コイワトショカン",
+    "system_name": "小岩図書館",
+    "address": "江戸川区東小岩3-6-9",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "8364a2ec-3b06-4f6f-8c74-5f00a3c0f1de",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "小松川区民館",
+    "kana": "コマツガワクミンカン",
+    "system_name": "小松川区民館",
+    "address": "江戸川区平井4-1-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "ccc21531-4843-47bb-af7e-062304c76b99",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "小松川さくらホール",
+    "kana": "コマツガワサクラホール",
+    "system_name": "小松川さくらホール",
+    "address": "江戸川区小松川3-6-3",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "f957b863-f131-417e-a1f0-1787a484679b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "コミュニティプラザ一之江",
+    "kana": "コミュニティプラザイチノエ",
+    "system_name": "コミュニティプラザ一之江",
+    "address": "江戸川区一之江7-35-22",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "1ca8efb7-023f-4b7f-843e-10133fadba95",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "鹿骨区民館",
+    "kana": "シシボネクミンカン",
+    "system_name": "鹿骨区民館",
+    "address": "江戸川区鹿骨1-54-2",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "d5613bb8-3daf-42dd-81ef-ce1df3dca3e0",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "篠崎コミュニティ会館",
+    "kana": "シノザキコミュニティカイカン",
+    "system_name": "篠崎コミュニティ会館",
+    "address": "江戸川区上篠崎4-21-8",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "e3f46ce4-0617-4d38-b2e3-07c7b3d3f30e",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "篠崎コミュニティホール",
+    "kana": "シノザキコミュニティホール",
+    "system_name": "篠崎コミュニティホール",
+    "address": "江戸川区篠崎町7-27-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "7e4c5385-d0ca-44ee-9f8f-0b719554f01a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "新川さくら館",
+    "kana": "シンカワサクラカン",
+    "system_name": "新川さくら館",
+    "address": "江戸川区船堀7-15-12",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "30a27694-7894-4322-8688-527a47e8ba2a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "清新町コミュニティ会館",
+    "kana": "セイシンマチコミュニティカイカン",
+    "system_name": "清新町コミュニティ会館",
+    "address": "江戸川区清新町1-2-2",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "2313c9b9-4c10-4c5d-b654-8a7fb9e12b8b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "総合文化センター",
+    "kana": "ソウゴウブンカセンター",
+    "system_name": "総合文化センター",
+    "address": "江戸川区中央4-14-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "805f0691-9ccf-48f6-98ab-31a9087a812b",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "タワーホール船堀",
+    "kana": "タワーホールフナボリ",
+    "system_name": "タワーホール船堀",
+    "address": "江戸川区船堀4-1-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "c2a2b768-526d-4148-a040-d9b250ea304c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "東部区民館",
+    "kana": "トウブクミンカン",
+    "system_name": "東部区民館",
+    "address": "江戸川区東瑞江1-17-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "4c589f5d-2e57-4f72-9e7d-23b76c4ca826",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "東部フレンドホール",
+    "kana": "トウブフレンドホール",
+    "system_name": "東部フレンドホール",
+    "address": "江戸川区瑞江2-5-7",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "c0112fcc-acb0-465c-85a0-c2c3df61b895",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "長嶋桑川コミュニティ会館",
+    "kana": "ナガシマクワガワコミュニティカイカン",
+    "system_name": "長島桑川コミュニティ会館",
+    "address": "江戸川区東葛西5-31-18",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "ba0de658-4150-40d4-8c6c-27ded390ff34",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "中平井コミュニティ会館",
+    "kana": "ナカヒライコミュニティカイカン",
+    "system_name": "中平井コミュニティ会館",
+    "address": "江戸川区平井7-1-6",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "03813331-2f5b-4f46-bd5a-7489deea2f85",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "新田コミュニティ会館",
+    "kana": "ニッタコミュニティカイカン",
+    "system_name": "新田コミュニティ会館",
+    "address": "江戸川区中葛西7-17-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "9e78ea97-3f39-4e5f-be79-e8539671892d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "二之江コミュニティ会館",
+    "kana": "ニノエコミュニティカイカン",
+    "system_name": "二之江コミュニティ会館",
+    "address": "江戸川区江戸川6-46",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "e27c32de-cb9b-4cbb-89c5-eb4592fce8fa",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "東葛西コミュニティ会館",
+    "kana": "ヒガシカサイコミュニティカイカン",
+    "system_name": "東葛西コミュニティ会館",
+    "address": "江戸川区東葛西8-22-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "cbe45d1d-0918-4dc0-9a8c-e6364d7eb8c2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "平井コミュニティ会館",
+    "kana": "ヒライコミュニティカイカン",
+    "system_name": "平井コミュニティ会館",
+    "address": "江戸川区平井4-18-10",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "1a6db9ea-0d93-403a-818f-e633037b74f8",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "船堀コミュニティ会館",
+    "kana": "フナボリコミュニティカイカン",
+    "system_name": "船堀コミュニティ会館",
+    "address": "江戸川区船堀1-3-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "0446a8ae-5a19-4ff0-a2a8-2e12836da062",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "松江区民プラザ",
+    "kana": "マツエクミンプラザ",
+    "system_name": "松江区民プラザ",
+    "address": "江戸川区松江2-1-10",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "4afdbfe0-c1f2-4112-b8fd-9064b76b7b95",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "松江コミュニティ会館",
+    "kana": "マツエコミュニティカイカン",
+    "system_name": "松江コミュニティ会館",
+    "address": "江戸川区松江7-5-12",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "158873aa-b05a-481a-9202-d49c016f20b9",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "松島コミュニティ会館",
+    "kana": "マツシマコミュニティカイカン",
+    "system_name": "松島コミュニティ会館",
+    "address": "江戸川区松島4-25-6",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "10c36675-c26f-460e-b955-ab97f4b7573d",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "瑞江コミュニティ会館",
+    "kana": "ミズエコミュニティカイカン",
+    "system_name": "瑞江コミュニティ会館",
+    "address": "江戸川区西瑞江3-18-1",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "d2aa5f64-e251-493d-9974-001bfc3da9f4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "南葛西会館",
+    "kana": "ミナミカサイカイカン",
+    "system_name": "南葛西会館",
+    "address": "江戸川区南葛西6-8-9",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "7667c96c-9d82-42ec-93d3-434c857269c1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "南小岩コミュニティ会館",
+    "kana": "ミナミコイワコミュニティカイカン",
+    "system_name": "南小岩コミュニティ会館",
+    "address": "江戸川区南小岩7-17-10",
+    "reservation_system": "tokyo-edogawa"
+  },
+  {
+    "id": "e5378537-ae76-41cc-bdc0-5fd44c096eb1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_EDOGAWA",
+    "name": "臨海町コミュニティ会館",
+    "kana": "リンカイマチコミュニティカイカン",
+    "system_name": "臨海町コミュニティ会館",
+    "address": "江戸川区臨海町2-2-9",
+    "reservation_system": "tokyo-edogawa"
+  }
+]

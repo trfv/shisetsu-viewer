@@ -1,0 +1,52 @@
+[
+  {
+    "id": "c617b08b-ea40-4ea2-a7be-d09071cba774",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_NAKANO",
+    "name": "なかのZERO",
+    "kana": "ナカノゼロ",
+    "system_name": "なかのZERO",
+    "address": "中野区中野2-9-7",
+    "reservation_system": "tokyo-nakano"
+  },
+  {
+    "id": "9fe7ff6d-5f5e-42ae-a1ba-1588a5270bc4",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_NAKANO",
+    "name": "なかの芸能小劇場",
+    "kana": "ナカノゲイノウショウゲキジョウ",
+    "system_name": "なかの芸能小劇場",
+    "address": "中野区中野5-68-7",
+    "reservation_system": "tokyo-nakano"
+  },
+  {
+    "id": "3ac7786b-4d6f-42ec-b79c-e5a7fe273682",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_NAKANO",
+    "name": "野方区民ホール",
+    "kana": "ノガタクミンホール",
+    "system_name": "野方区民ホール",
+    "address": "中野区野方5-3-1",
+    "reservation_system": "tokyo-nakano"
+  },
+  {
+    "id": "e8a53afa-1e5f-4a1a-a4d8-0781189551a1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_NAKANO",
+    "name": "産業振興センター",
+    "kana": "サンギョウシンコウセンター",
+    "system_name": "産業振興センター",
+    "address": "中野区中野2-13-14",
+    "reservation_system": "tokyo-nakano"
+  },
+  {
+    "id": "ccb72f35-dd3b-407d-b330-fea11193fec1",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_NAKANO",
+    "name": "鷺宮スポーツ・コミュニティプラザ",
+    "kana": "サギノミヤスポーツコミュニティプラザ",
+    "system_name": "鷺宮スポーツ・コミュニティプラザ",
+    "address": "中野区白鷺3-1-13",
+    "reservation_system": "tokyo-nakano"
+  }
+]
