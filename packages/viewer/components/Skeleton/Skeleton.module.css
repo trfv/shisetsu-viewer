@@ -19,3 +19,8 @@
   background-size: 200% 100%;
   animation: skeleton-wave 1.6s ease-in-out infinite;
 }
+
+.text {
+  height: 1em;
+  margin-block: calc((1lh - 1em) / 2);
+}

@@ -1,10 +1,17 @@
 import type { InstitutionDetail } from "@shisetsu-viewer/shared";
 import { formatISO } from "date-fns";
-import { Suspense, use, useCallback, useState, ViewTransition, type ChangeEvent } from "react";
+import {
+  Suspense,
+  use,
+  useCallback,
+  useState,
+  ViewTransition,
+  type ChangeEvent,
+  type ReactNode,
+} from "react";
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
-import { DataTableSkeleton } from "../components/DataTable";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
@@ -181,11 +188,77 @@ const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => 
   );
 };
 
-const ReservationLoading = () => (
-  <div className={styles["reservationContainer"]}>
-    <DataTableSkeleton />
-  </div>
+const RESERVATION_SKELETON_ROWS = Array.from({ length: 8 }, (_, i) => i);
+const RESERVATION_SKELETON_CARDS = Array.from({ length: 4 }, (_, i) => i);
+const RESERVATION_SKELETON_DIVISIONS = Array.from({ length: 3 }, (_, i) => i);
+
+const headCell = (label: ReactNode, key: string | number) => (
+  <TableCell className={styles["reservationTableHeadCell"]} key={key} size="small" variant="head">
+    {label}
+  </TableCell>
 );
+
+const ReservationLoading = () => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className={styles["reservationContainer"]}>
+        <div aria-label="読み込み中" className={styles["reservationCardList"]} role="progressbar">
+          {RESERVATION_SKELETON_CARDS.map((card) => (
+            <div className={styles["reservationCard"]} key={card}>
+              <div className={styles["reservationCardDate"]}>
+                <Skeleton variant="text" width="6em" />
+              </div>
+              <div className={styles["reservationCardDivisions"]}>
+                {RESERVATION_SKELETON_DIVISIONS.map((division) => (
+                  <div className={styles["reservationCardDivisionItem"]} key={division}>
+                    <Skeleton variant="text" width="7em" />
+                  </div>
+                ))}
+              </div>
+              <div className={styles["reservationCardTimestamps"]}>
+                <Skeleton variant="text" width="8em" />
+                <Skeleton variant="text" width="8em" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles["reservationContainer"]}>
+      <TableContainer aria-label="読み込み中" role="progressbar">
+        <Table stickyHeader={true}>
+          <TableHead>
+            <TableRow>
+              {headCell("日付", "date")}
+              {RESERVATION_SKELETON_DIVISIONS.map((division) =>
+                headCell(<Skeleton variant="text" width="4em" />, division)
+              )}
+              {headCell("取得日時", "fetched_at")}
+              {headCell("更新日時", "updated_at")}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {RESERVATION_SKELETON_ROWS.map((row) => (
+              <TableRow key={row}>
+                {Array.from({ length: RESERVATION_SKELETON_DIVISIONS.length + 3 }, (_, i) => (
+                  // oxlint-disable-next-line react/no-array-index-key
+                  <TableCell className={styles["reservationTableBodyCell"]} key={i} size="small">
+                    <Skeleton variant="text" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
 
 const ReservationTabContent = ({
   id,

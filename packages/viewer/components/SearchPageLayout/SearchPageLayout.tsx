@@ -13,8 +13,9 @@ type ChipItem = {
   onDelete?: () => void;
 };
 
-type Props = {
+type Props<T extends Row> = {
   chips: ChipItem[];
+  columns: Columns<T>;
   controls: ReactNode;
   pending: boolean;
   resetKey: string;
@@ -23,7 +24,14 @@ type Props = {
 
 const renderError = (error: Error) => <Snackbar open={true} message={error.message} />;
 
-export const SearchPageLayout = ({ chips, controls, pending, resetKey, children }: Props) => {
+export const SearchPageLayout = <T extends Row>({
+  chips,
+  columns,
+  controls,
+  pending,
+  resetKey,
+  children,
+}: Props<T>) => {
   return (
     <main className={styles["pageBox"]}>
       <div className={styles["searchBox"]}>
@@ -37,7 +45,7 @@ export const SearchPageLayout = ({ chips, controls, pending, resetKey, children 
           className={`${styles["resultBox"]} ${pending ? styles["resultBoxPending"] : ""}`}
         >
           <ErrorBoundary fallback={renderError} resetKey={resetKey}>
-            <Suspense fallback={<DataTableSkeleton />}>{children}</Suspense>
+            <Suspense fallback={<DataTableSkeleton columns={columns} />}>{children}</Suspense>
           </ErrorBoundary>
         </div>
       </ViewTransition>
