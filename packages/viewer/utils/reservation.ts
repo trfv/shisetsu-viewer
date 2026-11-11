@@ -206,7 +206,9 @@ export const toReservationSearchQueryParams = ({
 }: ReservationSearchParams): ReservationSearchQueryParams => {
   return {
     limit: 100,
-    municipality: municipalities,
+    // 全選択でも IN を送ると api が LIMIT で止まれず日付範囲を全件読む。予約除外の自治体には予約行が無い。
+    municipality:
+      municipalities.length === RESERVATION_MUNICIPALITIES.length ? undefined : municipalities,
     isAvailableStrings: availableInstruments.includes(STRINGS) ? true : undefined,
     isAvailableWoodwind: availableInstruments.includes(WOODWIND) ? true : undefined,
     isAvailableBrass: availableInstruments.includes(BRASS) ? true : undefined,
