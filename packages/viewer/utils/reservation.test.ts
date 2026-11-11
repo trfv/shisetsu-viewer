@@ -366,6 +366,18 @@ describe("toReservationSearchQueryParams", () => {
     expect(result.municipality).toEqual(["MUNICIPALITY_KOUTOU"]);
   });
 
+  test("omits municipality when all reservation municipalities are selected", () => {
+    const result = toReservationSearchQueryParams({
+      municipalities: [...RESERVATION_MUNICIPALITIES],
+      startDate,
+      endDate,
+      filter: [],
+      availableInstruments: [],
+      institutionSizes: [],
+    });
+    expect(result.municipality).toBeUndefined();
+  });
+
   test("sets limit to 100", () => {
     const result = toReservationSearchQueryParams({
       municipalities: [],
