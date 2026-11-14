@@ -23,8 +23,8 @@
     "jose": "6.2.15"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "1.5.0",
+    "@cloudflare/vitest-plugin": "1.6.0",
     "vitest": "5.0.5",
-    "wrangler": "4.156.2"
+    "wrangler": "4.158.0"
   }
 }
