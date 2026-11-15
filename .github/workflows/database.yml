@@ -31,6 +31,7 @@ on:
           - tokyo-minato
           - tokyo-adachi
           - tokyo-katsushika
+          - tokyo-taito
           - kanagawa-kawasaki
   # 施設 JSON の変更がマージされたら全自治体を流す（upsert は差分だけ書くので、変わっていない施設は 0 行）
   push:

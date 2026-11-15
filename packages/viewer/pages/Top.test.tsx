@@ -83,6 +83,7 @@ describe("Top Page", () => {
         "墨田区",
         "豊島区",
         "中央区",
+        "台東区",
         "文京区",
         "目黒区",
         "川崎市",
@@ -188,7 +189,7 @@ describe("Top Page", () => {
       const areaHeading = screen.getByRole("heading", { name: "対応地区" }).element();
       const nextSibling = areaHeading.nextElementSibling;
       const listItems = nextSibling?.querySelectorAll("li");
-      expect(listItems).toHaveLength(19);
+      expect(listItems).toHaveLength(20);
 
       const unavailableAreas = screen.getByText(/※現在、予約状況が表示できません/).all();
       expect(unavailableAreas).toHaveLength(2);

@@ -19,6 +19,7 @@ export const SupportedMunicipalities = [
   "MUNICIPALITY_MINATO",
   "MUNICIPALITY_ADACHI",
   "MUNICIPALITY_KATSUSHIKA",
+  "MUNICIPALITY_TAITO",
   "MUNICIPALITY_KAWASAKI",
 ] as const satisfies readonly MunicipalityKey[];
 
