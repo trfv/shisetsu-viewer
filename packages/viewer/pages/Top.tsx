@@ -55,6 +55,7 @@ const TopPage = () => {
           <li>港区</li>
           <li>足立区</li>
           <li>葛飾区</li>
+          <li>台東区</li>
           <li>目黒区</li>
           <li>世田谷区</li>
           <li>川崎市</li>

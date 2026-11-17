@@ -89,14 +89,14 @@ describe("toMunicipalityUrlParam", () => {
 
 describe("RESERVATION_MUNICIPALITIES", () => {
   test("excludes reservation-excluded municipalities", () => {
-    expect(RESERVATION_MUNICIPALITIES).toHaveLength(17);
+    expect(RESERVATION_MUNICIPALITIES).toHaveLength(18);
     expect(RESERVATION_MUNICIPALITIES).not.toContain("MUNICIPALITY_SUGINAMI");
   });
 });
 
 describe("SupportedMunicipalities", () => {
   test("has 19 entries", () => {
-    expect(SupportedMunicipalities).toHaveLength(19);
+    expect(SupportedMunicipalities).toHaveLength(20);
   });
 
   test("contains all expected municipalities", () => {
@@ -117,6 +117,7 @@ describe("SupportedMunicipalities", () => {
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_MINATO");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_ADACHI");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_KATSUSHIKA");
+    expect(SupportedMunicipalities).toContain("MUNICIPALITY_TAITO");
     expect(SupportedMunicipalities).toContain("MUNICIPALITY_KAWASAKI");
   });
 });
@@ -128,7 +129,7 @@ describe("SupportedMunicipalityMap", () => {
   });
 
   test("has 19 entries matching SupportedMunicipalities", () => {
-    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(19);
+    expect(Object.keys(SupportedMunicipalityMap)).toHaveLength(20);
   });
 });
 

@@ -60,6 +60,7 @@ model: sonnet
 - snapshot でページ構造を確認
 - 「空き状況の確認」「空き状況」「施設予約」等のリンクを探す
 - 深く探索する前に、空き状況の画面を 1 つ開いて Cloudflare Turnstile（`div.turnstile`、「私はロボットではありません」）が出ないか確かめる。出たら回避（待ち時間の調整・指紋偽装・解決サービス）はせず、探索を止めてユーザーに見送るか確認する（杉並区は約 25 回の更新後、中野区は最初の表示で出た）。見送っても施設マスタだけ作ることはできる。その場合は registry を `reservationExcluded: true` にし、`RESERVATION_SYSTEMS` には `scraped: false` で足し、scraper のディレクトリと scraper.yml の choice は作らず、2.5・2.6 だけ行う。viewer の「※現在、予約状況が表示できません」の注記と、除外自治体の件数を固定したテスト（`utils/municipality.test.ts`・`pages/Top.test.tsx`・`packages/shared/registry.test.ts` の `excludedSlugs`）も更新する
+- トップのお知らせも読む。「自動プログラムによる予約はおやめください」のような注意書き（台東区）は、予約操作の話で空き状況の閲覧とは別だが、作り進める前に AskUserQuestion で確認する（閲覧のみ・1 日 1 回・直列で続けるか、施設マスタだけにするか）
 - 渡された URL がエラーページ（「ページがありません」など）なら、施設サイト側の入口が hidden 項目付きの form POST になっていないか見る（`page.$$eval('form', ...)` で action・hidden を列挙する）。団体の識別子が hidden にだけ載っていて、URL 単体では開けない共用基盤がある（reserve1.jp）。入口を通した後の画面は、識別子だけで cookie なしでも開けることが多いので、新しいコンテキストで確かめる
 
 ### 1.2 施設階層の探索
@@ -73,6 +74,7 @@ npm run discover -w @shisetsu-viewer/scraper -- --engine openreaf --url <baseUrl
 `data/targets/<prefecture>-<slug>.candidates.json` に全施設・全部屋の候補（`musicLikely` フラグ付き）が書き出されるので、手作業での一覧転記は不要。musicLikely を目印に音楽練習可能な対象をキュレーションし、各候補の `target` フィールドをそのまま targets に貼る。candidates.json は作業用でコミットしない（scratchpad に退避する）。
 
 `--engine` で選べるのは openreaf / webrGrand だけ。e-PRS など `discover` フックを持つエンジンは、targets を空にした `index.ts`（`eprsHooks` の設定だけ）を先に置き、`npm run discover -- <prefecture>-<slug>` で回す。
+`discover` が 0 件のときは、エンジンの対象が新 UI でないことが多い。`engines/webrGrand.ts` は新 UI（`getByRole("button")`、「次へ進む」リンク、`__doPostBack('period','next')`）前提で、旧 UI（`Wg_*.aspx`、ViewState、`次へ >>` の submit、`txtYear/txtMonth/txtDay`）には動かない（tokyo-taito）。旧 UI は自前で `prepare` / `extract` を書き、UI に依存しない `slotPagesToRawSlots` / `normalizeSlotHeader` だけエンジンから import する。
 
 discover の候補は利用目的の検索結果なので、**目的に合わない部屋と、期間内に満室の部屋は載らない**。館の全部屋は予約システムの「館・施設一覧」にあり、折りたたみの中身も DOM に最初から入っている（e-PRS は `div[data-area]` の `施設一覧` 行。クリック不要）。件数を突き合わせ、候補から外れた部屋がなぜ外れたかを確かめてから、ユーザーに対象を選んでもらう。
 
@@ -113,6 +115,8 @@ discover の候補は利用目的の検索結果なので、**目的に合わな
 - **束ねた表示と実際のコマ**: 「午前／午後／夜間」で絞る表示は、実際の予約単位（コマ）を束ねていることがある。区の施設ページの料金表で時間枠を確かめ、時間帯別の画面と同じ日を突き合わせる。tokyo-setagaya は実際は 5 コマで、夕方が「午後」と「夜間」の両方に数えられ、束ねた表示の「△」からはどのコマが空いているか分からなかった。コマ単位で取れるならそちらを選ぶ（`*_ONE` / `*_TWO` に載せれば D1 の「午後空き」検索にも載る）
 - **凡例に無い記号**: ステータス画像の src が凡例に無いときは、推測でマップせず、凡例の画像と `curl` で落として `cmp` で比べる（tokyo-katsushika の `lw_210.gif` は「一般予約」と同一だった）。サイトの案内ページに凡例の全一覧があることも多い。文字が無くアイコン（`<i class="fa ...">`）だけのセルは `innerText` が空になり、`STATUS_MAP` の `""` で `INVALID` に変わるので「Unmapped」の警告も出ない（tokyo-setagaya の時間帯別画面の「取消処理中」）。集計で INVALID が出たら、そのセルの HTML と画面の凡例を見る
 - **アクセス制限**: 全館を流す前に、1 館分の通信量を `page.on("response")` で数える。画面遷移のたびにアイコン画像や JS を取り直すサイトは、1 館で数千リクエストになり、IP ごと数分間 403 になりうる（tokyo-katsushika は 1 worker の逐次でも 7 館目で止まった）。状態を img の src 属性で読むなら画像本体は要らないので、`page.route` で画像・CSS・フォントを `abort` し、JS は初回の本文（`await response.body()` と `headers()`）を保持して `route.fulfill` で使い回す。`route.fetch()` の応答オブジェクトをそのまま 2 回目の `fulfill` に渡すと壊れる。探索中も MCP 側で同じ `page.route` を掛け、テストと探索を同時に走らせない。403 になったら、解除まで curl で 5 分おきに 1 回だけ確かめる
+- **全期間が休館の施設**: 全セルが「休館日」（改修中など）の施設は、時間帯別の画面を開けずコマの構成を学べないので、transform が空になって毎日失敗する。targets から外し、施設マスタには残す（再開したら targets に戻す）。1 館ずつ全期間を流して見つける
+- **旧 WebR Grand（ASP.NET WebForms）の操作**: 施設やセルの選択は `type=submit` のトグルで、押しても postback せず、状態は `check` 属性でなく隣の hidden（`h_<グリッド>$ctlNN$...`）に入る。`input[id$=...]` だけで探すと同名の hidden を拾ってクリックが「非表示」で止まるので `type=submit` を付ける。選択数に上限がある（台東区は 10 件。超えると alert で、Playwright は自動で閉じる）。同じ URL への postback でページ送りするサイトは、`waitForFunction` に「テーブルが存在する」条件を入れる。入れないと再描画の途中（テーブル無し）を `undefined !== prev` で通り抜け、空の見出しを読んで日付が飛ぶ。見出しが空なら握りつぶさず throw する
 
 #### WebReaf Grand 系の場合
 
@@ -295,6 +299,7 @@ for (const target of scraper.targets) {
 
 1. **予約システム自体の館情報を先に見る**。「館・施設一覧」等に住所・電話番号・館情報 PDF／公式ページへのリンクがあることが多い
 2. 定員・面積・ピアノ・料金は、区の施設ページ・指定管理者のサイト・館情報 PDF にある。館をいくつかのグループに分けて調査エージェント（Agent の `model: "haiku"`）を並列に立て、根拠 URL 付きの結果だけを返させる（ファイルは編集させない）。返った値は根拠 URL を開いて確かめてから書く。エージェントは圧縮された PDF を読めず「取得できず」と返すことがある。その PDF は `curl` で scratchpad に落とし、Read で直接読む（pdftotext は入っていない）。区の PDF は日本語フォントに文字の対応表が無く、Read でも館名・部屋名だけが抜け落ちる（数字だけ残る）ことがある。その場合と 10 ページを超える PDF は、pdftoppm が無く Read の `pages` も使えないので、`gs -sDEVICE=png16m -r110 -sOutputFile=p%02d.png` でページごとの PNG にして Read する。それでも読めなければ指定管理者のページを根拠にする
+   - 調査エージェントの返す面積は取り違えがある（台東区: 「トレーニング室 114㎡」を「プレイルーム」に当てた）。根拠ページを `curl` で落とし、`python3 -I` で HTML を剥がして、部屋名と面積の対を本文で突き合わせる。館ページの「所在地」の値と、フッターの区役所の住所（〒110-8615 など）を取り違えない。予約システム上の部屋と同じ部屋と断定できない値は null にする
 3. 楽器種別の可否は部屋単位で明記されていることがまず無い。「和太鼓不可」「ドラムセット常備」のような間接的な記述は UNKNOWN のまま `note` に文言を残すのが既定（迷ったらユーザーに確認）
 4. 料金はテンプレートでは「埋めない」項目だが、根拠付きで取れたら入れるかユーザーに確認する。土日祝が別料金なら holiday に分け、同額なら平日と同じ値を入れる
 5. 既存の JSON に `JSON.parse` → `JSON.stringify` で追記すると、`41.0` のような数値が `41` に変わる。追記後に `git diff | grep '^-[^-]'` で既存行が変わっていないか確かめる

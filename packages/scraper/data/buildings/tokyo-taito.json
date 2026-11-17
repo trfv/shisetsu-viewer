@@ -1,0 +1,172 @@
+[
+  {
+    "id": "3e1fd3ca-a6b9-47d9-ae87-74f190977037",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "学習館",
+    "kana": "ガクシュウカン",
+    "system_name": "学習館",
+    "address": "東京都台東区西浅草3丁目25番16号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "4fa671b5-e2b4-461f-8589-60c79ba7cfbe",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "ミレニアムホール",
+    "kana": "ミレニアムホール",
+    "system_name": "ミレニアムホール",
+    "address": "東京都台東区西浅草3丁目25番16号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "830bd336-c844-47b6-85d1-5ab03853295f",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "社会教育センター",
+    "kana": "シャカイキョウイクセンター",
+    "system_name": "社会教育センター",
+    "address": "東京都台東区東上野6丁目16番8号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "5f6b1a0d-fa71-4843-a86d-9e245489f2b3",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "千束社会教育館",
+    "kana": "センゾクシャカイキョウイクカン",
+    "system_name": "千束社会教育館",
+    "address": "東京都台東区浅草4丁目24番13号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "faf0b114-9ebf-4579-975e-03880ccf4574",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "小島社会教育館",
+    "kana": "コジマシャカイキョウイクカン",
+    "system_name": "小島社会教育館",
+    "address": "東京都台東区小島1丁目5番2号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "5efc6faf-0277-4bac-9669-7a26409aab5c",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "根岸社会教育館",
+    "kana": "ネギシシャカイキョウイクカン",
+    "system_name": "根岸社会教育館",
+    "address": "東京都台東区根岸5丁目18番13号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "b55a08d0-d1cb-4bc5-8639-e4664382eb37",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "今戸社会教育館",
+    "kana": "イマドシャカイキョウイクカン",
+    "system_name": "今戸社会教育館",
+    "address": "東京都台東区今戸2丁目26番12号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "7cd5b93b-f73a-4fd5-a2a8-f84d3a193aef",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "台東一丁目区民館",
+    "kana": "タイトウイッチョウメクミンカン",
+    "system_name": "台東一丁目区民館",
+    "address": "東京都台東区台東1丁目25番5号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "50e94c52-e699-4072-8a4b-9fad641486df",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "東上野区民館",
+    "kana": "ヒガシウエノクミンカン",
+    "system_name": "東上野区民館",
+    "address": "東京都台東区東上野3丁目24番6号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "9e82c138-f0f3-41d0-bb38-096a36578887",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "上野区民館",
+    "kana": "ウエノクミンカン",
+    "system_name": "上野区民館",
+    "address": "東京都台東区池之端1丁目1番12号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "1baafbcc-a830-4b56-8226-8fd0e17eff22",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "入谷区民館",
+    "kana": "イリヤクミンカン",
+    "system_name": "入谷区民館",
+    "address": "東京都台東区入谷1丁目15番6号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "fdbcd0e7-b1b4-4d58-ae19-d2f2226ce2b5",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "金杉区民館",
+    "kana": "カナスギクミンカン",
+    "system_name": "金杉区民館",
+    "address": "東京都台東区下谷3丁目1番30号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "9b896f8a-2d89-485c-bb5f-9ddfa8db5186",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "金杉区民館下谷分館",
+    "kana": "カナスギクミンカンシタヤブンカン",
+    "system_name": "金杉区民館下谷分館",
+    "address": "東京都台東区下谷3丁目14番3号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "58e68266-c728-4a99-9844-3fe1e5213db2",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "谷中区民館",
+    "kana": "ヤナカクミンカン",
+    "system_name": "谷中区民館",
+    "address": "東京都台東区谷中5丁目6番5号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "562856fe-13fb-4ca4-b1dc-6f87ec66f413",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "浅草橋区民館",
+    "kana": "アサクサバシクミンカン",
+    "system_name": "浅草橋区民館",
+    "address": "東京都台東区浅草橋2丁目8番7号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "60b036b2-9e2b-4eab-9d8b-f55a0d58566a",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "寿区民館",
+    "kana": "コトブキクミンカン",
+    "system_name": "寿区民館",
+    "address": "東京都台東区寿1丁目10番12号",
+    "reservation_system": "tokyo-taito"
+  },
+  {
+    "id": "7abd819f-298c-4206-9678-8963eae01df7",
+    "prefecture": "PREFECTURE_TOKYO",
+    "municipality": "MUNICIPALITY_TAITO",
+    "name": "雷門区民館",
+    "kana": "カミナリモンクミンカン",
+    "system_name": "雷門区民館",
+    "address": "東京都台東区浅草1丁目37番3号",
+    "reservation_system": "tokyo-taito"
+  }
+]
