@@ -1,18 +1,13 @@
 # 国内 proxy（Cloudflare Tunnel + tinyproxy）のセットアップ
 
-tokyo-sumida・tokyo-adachi・tokyo-kita-cocokita はサイト側が GitHub Actions からの接続を遮断しているため、
-CI は Cloudflare Tunnel で Mac の tinyproxy に接続し、住宅 IP からスクレイプする。
-
-Cloudflare が担うのは「CI ランナーから Mac の 8888 番へ到達する経路」だけである。
-住宅 IP から出るという肝心の性質は、従来どおり Mac の tinyproxy と自宅 ISP が担う。
+tokyo-sumida・tokyo-toshima・tokyo-adachi・tokyo-kita-cocokita はサイト側が GitHub Actions からの接続を遮断しているため、
+CI は Cloudflare Tunnel で jp-proxy IP からスクレイプする。
 
 ```
 GH Actions runner
   └─ cloudflared access tcp（ローカル 127.0.0.1:8888 で待受）
        └─ Cloudflare edge（Access の service token で認可）
-            └─ Mac の cloudflared
-                 └─ tinyproxy 127.0.0.1:8888
-                      └─ 自宅 ISP → yoyaku03.city.sumida.lg.jp
+            └─ jp-proxy → yoyaku03.city.sumida.lg.jp
 ```
 
 ## Mac 側
@@ -46,6 +41,7 @@ GH Actions runner
    ```
    ^yoyaku03\.city\.sumida\.lg\.jp$
    ^k5\.p-kashikan\.jp$
+   ^www2\.pf489\.com$
    ```
 
    proxy 経由の自治体を増やすときは、この filter に 1 行追加する。
