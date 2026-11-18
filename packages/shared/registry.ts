@@ -766,6 +766,7 @@ export const RESERVATION_SYSTEMS = {
     label: "豊島区施設予約システム",
     url: "https://www2.pf489.com/toshima/WebR/",
     scraped: true,
+    scraperViaJpProxy: true,
   },
   "tokyo-edogawa": {
     key: "tokyo-edogawa",
