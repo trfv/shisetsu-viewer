@@ -191,7 +191,8 @@ describe("Reservation Page", () => {
         initialEntries: ["/reservation"],
       });
 
-      await expect.poll(() => captured.requests.length).toBeGreaterThanOrEqual(1);
+      // 件数では待たない。前のテストの検索が遅れてこのハンドラに届くことがある。
+      await expect.poll(() => captured.requests.some((r) => !r.has("municipality"))).toBe(true);
       const requestCount = captured.requests.length;
       await user.click(screen.getByRole("button", { name: "絞り込み" }));
       await user.click(screen.getByRole("button", { name: /^地区/ }));
@@ -201,7 +202,7 @@ describe("Reservation Page", () => {
         .element(screen.getByRole("button", { name: /^地区/ }))
         .toHaveAccessibleName("地区 選択なし");
       await expect.element(screen.getByText("表示するデータが存在しません")).toBeInTheDocument();
-      expect(captured.requests).toHaveLength(requestCount);
+      expect(captured.requests.slice(requestCount).map(String)).toEqual([]);
     });
 
     it("URL に予約状況除外対象の自治体があってもチップに出ない", async () => {

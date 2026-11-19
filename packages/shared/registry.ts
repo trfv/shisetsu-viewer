@@ -759,7 +759,6 @@ export const RESERVATION_SYSTEMS = {
     label: "北区 ココキタ",
     url: "https://k5.p-kashikan.jp/cocokita/",
     scraped: true,
-    scraperViaJpProxy: true,
   },
   "tokyo-toshima": {
     key: "tokyo-toshima",
@@ -868,7 +867,6 @@ export const RESERVATION_SYSTEMS = {
     label: "足立区施設予約システム",
     url: "https://k5.p-kashikan.jp/adachi-ku/",
     scraped: true,
-    scraperViaJpProxy: true,
   },
   "tokyo-adachi-1010": {
     key: "tokyo-adachi-1010",
