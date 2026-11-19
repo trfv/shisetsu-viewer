@@ -14,11 +14,11 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/strictest": "2.0.9",
     "@types/node": "24.19.2",
-    "knip": "6.44.0",
-    "oxfmt": "0.75.0",
-    "oxlint": "1.90.0",
+    "knip": "6.45.1",
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
     "tsrs": "0.22.0-ts7.1.0-beta",
     "typescript": "7.0.2"
   },
