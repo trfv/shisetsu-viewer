@@ -115,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     # ブラウザと OS 依存入りのイメージ。タグは package-lock.json の @playwright/test と揃える（ずれると Playwright が更新を促して落ちる）
     container:
-      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
