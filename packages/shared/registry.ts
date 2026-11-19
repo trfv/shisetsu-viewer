@@ -895,6 +895,7 @@ export const RESERVATION_SYSTEMS = {
     label: "台東区公共施設予約システム",
     url: "https://shisetsu.city.taito.lg.jp/",
     scraped: true,
+    scraperViaJpProxy: true,
   },
   "kanagawa-kawasaki": {
     key: "kanagawa-kawasaki",
