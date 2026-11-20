@@ -759,6 +759,7 @@ export const RESERVATION_SYSTEMS = {
     label: "北区 ココキタ",
     url: "https://k5.p-kashikan.jp/cocokita/",
     scraped: true,
+    scraperViaJpProxy: true,
   },
   "tokyo-toshima": {
     key: "tokyo-toshima",
