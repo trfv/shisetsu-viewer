@@ -8,11 +8,9 @@ import { resetCache } from "../api/cache";
 let worker: any;
 
 beforeAll(async () => {
-  // 遷移中は ::view-transition が画面を覆い、userEvent のクリックが下の要素に届かない。
-  const style = document.createElement("style");
-  style.textContent =
-    "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }";
-  document.head.append(style);
+  // Chromium 159 はテストの iframe 内で View Transition を始めるとレンダラーごと落ちる（トップレベルでは落ちない）。
+  // 遷移中は ::view-transition がクリックも遮るので、アニメーションを止めるのではなく API ごと外す。
+  (Document.prototype as any).startViewTransition = undefined;
 
   if (typeof window !== "undefined") {
     try {
