@@ -56,7 +56,10 @@ describe("verifyGithubOidc", () => {
   });
 
   it("repository の名前が一致しても repository_id が無ければ false", async () => {
-    const token = await sign({ repository: "trfv/shisetsu-viewer", ref: "refs/heads/master" });
+    const token = await sign({
+      repository: "shisetsudb/shisetsu-viewer",
+      ref: "refs/heads/master",
+    });
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
   });
 

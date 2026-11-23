@@ -120,9 +120,9 @@ GH Actions runner
 ## GitHub 側
 
 ```bash
-gh secret set CF_ACCESS_CLIENT_ID --repo trfv/shisetsu-viewer
-gh secret set CF_ACCESS_CLIENT_SECRET --repo trfv/shisetsu-viewer
-gh variable set JP_PROXY_HOSTNAME --repo trfv/shisetsu-viewer --body "jp-proxy.shisetsudb.com"
+gh secret set CF_ACCESS_CLIENT_ID --repo shisetsudb/shisetsu-viewer
+gh secret set CF_ACCESS_CLIENT_SECRET --repo shisetsudb/shisetsu-viewer
+gh variable set JP_PROXY_HOSTNAME --repo shisetsudb/shisetsu-viewer --body "jp-proxy.shisetsudb.com"
 ```
 
 `JP_PROXY_HOSTNAME` はスキームもポートも付けないホスト名だけを入れる。

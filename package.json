@@ -6,7 +6,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/trfv/shisetsu-viewer/"
+    "url": "https://github.com/shisetsudb/shisetsu-viewer/"
   },
   "license": "MIT",
   "author": "trfv",
