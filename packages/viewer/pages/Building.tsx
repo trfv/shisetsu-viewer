@@ -78,15 +78,10 @@ const RESERVATION_COLUMNS: Columns<ReservationRow> = [
     wrap: true,
     type: "getter",
     valueGetter: (params) =>
-      formatReservationMap(
-        params.row.institution.municipality as SupportedMunicipality,
-        params.row.reservation.reservation,
-        params.row.institution.division_labels
-      ),
+      formatReservationMap(params.row.institution, params.row.reservation.reservation),
     renderCell: (params) => (
       <ReservationStatusList
-        divisionLabels={params.row.institution.division_labels}
-        municipality={params.row.institution.municipality as SupportedMunicipality}
+        institution={params.row.institution}
         newlyVacantDivisions={getNewlyVacantDivisions(params.row.reservation)}
         reservation={params.row.reservation.reservation}
       />
