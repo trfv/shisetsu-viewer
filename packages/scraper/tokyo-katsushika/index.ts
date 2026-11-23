@@ -238,7 +238,8 @@ export const scraper = defineScraper({
             `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${lastDate} の次の日まで送り直す`
           );
           // 送り直しの途中でもエラーページが出るので、その失敗も 1 回として数えて続ける
-          // エラーページのあとは同じセッションのまま入り直しても先へ進めないので、cookie を捨てる
+          // エラーページのあとはしばらく入り直してもエラーになるので、間を空けて cookie も捨てる
+          await page.waitForTimeout(60_000 * recoveries);
           await page.context().clearCookies();
           failed = await search(page, target.facilityName)
             .then(() => skipPast(page, lastDate ?? ""))
