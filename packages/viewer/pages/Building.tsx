@@ -199,15 +199,15 @@ const ReservationTabContent = ({
   const scrapeRuns = use(scrapeRunsPromise);
 
   const rows = useMemo<ReservationRow[]>(() => {
-    const fetchedAt = scrapeRuns.items.find(
-      (r) => r.municipality === detail.municipality
-    )?.fetched_at;
+    const fetchedAt = detail.reservation_system
+      ? scrapeRuns.items.find((r) => r.reservation_system === detail.reservation_system)?.fetched_at
+      : undefined;
     return items.map((hit) => ({
       id: `${hit.institution.id}_${hit.reservation.date}`,
       fetched_at: fetchedAt,
       ...hit,
     }));
-  }, [items, scrapeRuns, detail.municipality]);
+  }, [items, scrapeRuns, detail.reservation_system]);
 
   const [, setLocation] = useLocation();
   const handleRowClick = useCallback(
