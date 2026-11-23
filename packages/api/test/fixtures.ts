@@ -27,7 +27,6 @@ export const INSTITUTIONS = [
   {
     id: "11111111-1111-4111-8111-111111111111",
     building_id: BUILDINGS[0].id,
-    municipality: "MUNICIPALITY_KOUTOU",
     institution: "音楽室",
     institution_kana: "おんがくしつ",
     institution_system_name: "ongakushitsu",
@@ -37,7 +36,6 @@ export const INSTITUTIONS = [
   {
     id: "22222222-2222-4222-8222-222222222222",
     building_id: BUILDINGS[0].id,
-    municipality: "MUNICIPALITY_KOUTOU",
     institution: "ホール",
     institution_kana: "ほーる",
     institution_system_name: "hall",
@@ -48,7 +46,6 @@ export const INSTITUTIONS = [
     // 非 RFC UUID（version nibble 不正）
     id: "f4d8d9d8-8594-b8b4-0000-000000000001",
     building_id: BUILDINGS[1].id,
-    municipality: "MUNICIPALITY_TOSHIMA",
     institution: "練習室",
     institution_kana: "れんしゅうしつ",
     institution_system_name: "renshuushitsu",
@@ -85,20 +82,18 @@ export async function seed(db: D1Database): Promise<void> {
     );
   }
 
-  // 部屋の建物の欄（写し）は空のままにし、読み取りが buildings から引いていることを確かめる
   for (const i of INSTITUTIONS) {
     stmts.push(
       db
         .prepare(
           `INSERT INTO institutions
-             (id, building_id, prefecture, municipality, institution, institution_kana,
+             (id, building_id, institution, institution_kana,
               institution_system_name, institution_size, is_available_brass)
-           VALUES (?, ?, 'PREFECTURE_TOKYO', ?, ?, ?, ?, ?, ?)`
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
         )
         .bind(
           i.id,
           i.building_id,
-          i.municipality,
           i.institution,
           i.institution_kana,
           i.institution_system_name,

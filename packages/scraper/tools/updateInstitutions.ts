@@ -1,10 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
 
-import { getAllMunicipalityTargets, type Building } from "@shisetsu-viewer/shared";
+import {
+  getAllMunicipalityTargets,
+  type Building,
+  type Institution,
+} from "@shisetsu-viewer/shared";
 
 import { upsertBuildings, upsertInstitutions } from "./backend/api.ts";
-import type { InstitutionRecord } from "./backend/types.ts";
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data");
 
@@ -20,7 +23,7 @@ console.time("update institutions");
 
 for (const target of targets) {
   const buildings = await readJson<Building[]>("buildings", target);
-  const institutions = await readJson<InstitutionRecord[]>("institutions", target);
+  const institutions = await readJson<Institution[]>("institutions", target);
 
   if (institutions.length === 0) {
     console.log(`${target}: skipped (no data)`);

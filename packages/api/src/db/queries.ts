@@ -172,7 +172,6 @@ function pushIn(
   }
 }
 
-// 部屋の行にある建物の欄（building / address など）は写しなので読まない。b_ 接頭辞で buildings から引く
 const INSTITUTION_COLUMNS = `
   i.*, b.prefecture AS b_prefecture, b.municipality AS b_municipality, b.name AS b_name,
   b.kana AS b_kana, b.system_name AS b_system_name, b.address AS b_address,

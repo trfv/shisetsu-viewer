@@ -106,7 +106,6 @@ function divisionLabelsForTarget(target: string): string[] {
 
 interface InstitutionRow {
   id: string;
-  municipality: string;
   building_system_name: string;
   institution_system_name: string;
 }
@@ -149,9 +148,12 @@ if (shouldFillRandom) {
     // date('now') は UTC。JST 早朝に前日を拾うと、サイトは過去日を表示しないので
     // judge が SITE_NO_DATA_D1_STALE を誤検出する。
     const rows = d1Query<FallbackRow>(
-      `SELECT r.institution_id, r.date, r.reservation, i.building_system_name, i.institution_system_name
-       FROM reservations r JOIN institutions i ON i.id = r.institution_id
-       WHERE i.municipality = ${quote(municipalityValue(target))} AND r.date >= date('now', '+9 hours')
+      `SELECT r.institution_id, r.date, r.reservation,
+              b.system_name AS building_system_name, i.institution_system_name
+       FROM reservations r
+       JOIN institutions i ON i.id = r.institution_id
+       JOIN buildings b ON b.id = i.building_id
+       WHERE b.municipality = ${quote(municipalityValue(target))} AND r.date >= date('now', '+9 hours')
        ORDER BY r.institution_id, r.date LIMIT 1`
     );
     const row = rows[0];
@@ -169,8 +171,9 @@ if (keys.length === 0) fail("サンプルを 1 件も選べませんでした（
 const ids = [...new Set(keys.map((k) => k.institutionId))];
 const institutions = new Map(
   d1Query<InstitutionRow>(
-    `SELECT id, municipality, building_system_name, institution_system_name
-     FROM institutions WHERE id IN (${ids.map(quote).join(",")})`
+    `SELECT i.id, b.system_name AS building_system_name, i.institution_system_name
+     FROM institutions i JOIN buildings b ON b.id = i.building_id
+     WHERE i.id IN (${ids.map(quote).join(",")})`
   ).map((row) => [row.id, row])
 );
 const pairPredicate = keys

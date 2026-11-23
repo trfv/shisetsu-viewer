@@ -56,7 +56,7 @@ describe("listInstitutions", () => {
     expect(page.items.map((i) => i.id).sort()).toEqual([INSTITUTIONS[0].id, INSTITUTIONS[2].id]);
   });
 
-  it("建物の欄を部屋の行の写しではなく buildings から返す", async () => {
+  it("建物の欄を buildings から返す", async () => {
     const page = await listInstitutions(env.DB, { detail: true });
     expect(page.items[0]).toMatchObject({
       building_id: BUILDINGS[0].id,

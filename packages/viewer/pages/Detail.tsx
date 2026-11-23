@@ -185,9 +185,7 @@ const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => 
           { label: SupportedMunicipalityMap[detail.municipality] ?? "" },
           {
             label: detail.building,
-            href: detail.building_id
-              ? ROUTES.building.replace(":id", detail.building_id)
-              : undefined,
+            href: ROUTES.building.replace(":id", detail.building_id),
           },
         ].filter((item) => item.label)}
       />

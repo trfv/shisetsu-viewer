@@ -204,8 +204,7 @@ describe("行数上限", () => {
   it("institutions は上限(2000)超過で 400", async () => {
     const rows = Array.from({ length: 2001 }, (_, i) => ({
       id: `aaaaaaaa-aaaa-4aaa-8aaa-${String(i).padStart(12, "0")}`,
-      prefecture: "PREFECTURE_TOKYO",
-      municipality: "MUNICIPALITY_KOUTOU",
+      building_id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
     }));
     const res = await SELF.fetch(`${BASE}/v1/admin/institutions`, {
       method: "PUT",

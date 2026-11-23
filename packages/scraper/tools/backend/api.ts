@@ -1,6 +1,12 @@
-import type { Building, BuildingDto, InstitutionDetail, Page } from "@shisetsu-viewer/shared";
+import type {
+  Building,
+  BuildingDto,
+  Institution,
+  InstitutionDetail,
+  Page,
+} from "@shisetsu-viewer/shared";
 
-import type { InstitutionKeyMap, InstitutionRecord, ReservationRow } from "./types.ts";
+import type { InstitutionKeyMap, ReservationRow } from "./types.ts";
 
 const CHUNK = 500;
 const MAX_RETRIES = 3;
@@ -93,7 +99,7 @@ export async function upsertBuildings(rows: Building[]): Promise<number> {
   return res.rowsWritten;
 }
 
-export async function upsertInstitutions(rows: InstitutionRecord[]): Promise<number> {
+export async function upsertInstitutions(rows: Institution[]): Promise<number> {
   const res = await putJson<UpsertResponse>("/v1/admin/institutions", { rows });
   return res.rowsWritten;
 }
@@ -133,7 +139,7 @@ export async function fetchInstitutionKeyMap(
 
 export async function exportInstitutions(
   municipality: string
-): Promise<{ buildings: Building[]; institutions: InstitutionRecord[] }> {
+): Promise<{ buildings: Building[]; institutions: Institution[] }> {
   const buildings = await getAllPages<BuildingDto>("/v1/buildings", { municipality });
   const details = await getAllPages<InstitutionDetail>("/v1/institutions", {
     municipality,
@@ -143,9 +149,8 @@ export async function exportInstitutions(
     buildings: buildings.map(({ updated_at: _updatedAt, ...building }) => building),
     institutions: details.map(
       ({
-        id,
-        building_id: buildingId,
         updated_at: _updatedAt,
+        reservation_system: _reservationSystem,
         prefecture: _prefecture,
         municipality: _municipality,
         building: _building,
@@ -153,10 +158,7 @@ export async function exportInstitutions(
         building_system_name: _buildingSystemName,
         address: _address,
         ...room
-      }) => {
-        if (!buildingId) throw new Error(`institution ${id} に building_id がありません`);
-        return { id, building_id: buildingId, ...room };
-      }
+      }): Institution => room
     ),
   };
 }

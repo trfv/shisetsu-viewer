@@ -160,15 +160,23 @@ describe("upsertReservations の *_vacated_at", () => {
   });
 });
 
+const BUILDING_ID = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
+const building: Building = {
+  id: BUILDING_ID,
+  prefecture: "PREFECTURE_TOKYO",
+  municipality: "MUNICIPALITY_KITA",
+  name: "赤羽会館",
+  kana: "アカバネカイカン",
+  system_name: "赤羽会館",
+  address: "北区赤羽南1丁目13−1",
+  reservation_system: "tokyo-kita",
+};
+
 const base: Institution = {
   id: INST_ID,
-  prefecture: "PREFECTURE_TOKYO",
-  municipality: "MUNICIPALITY_KOUTOU",
-  building: "館",
+  building_id: BUILDING_ID,
   institution: "室",
-  building_kana: "かん",
   institution_kana: "しつ",
-  building_system_name: "bsys",
   institution_system_name: "isys",
   capacity: 100,
   area: 50.5,
@@ -176,7 +184,6 @@ const base: Institution = {
   fee_divisions: ["FEE_DIVISION_MORNING"],
   weekday_usage_fee: [{ division: "FEE_DIVISION_MORNING", fee: 1000 }],
   holiday_usage_fee: [],
-  address: "東京都",
   is_available_strings: "AVAILABILITY_DIVISION_AVAILABLE",
   is_available_woodwind: "AVAILABILITY_DIVISION_UNKNOWN",
   is_available_brass: "AVAILABILITY_DIVISION_UNKNOWN",
@@ -190,6 +197,10 @@ const base: Institution = {
 };
 
 describe("upsertInstitutions", () => {
+  beforeEach(async () => {
+    await upsertBuildings(env.DB, [building]);
+  });
+
   it("新規 insert 後、同一データ再送は rows_written = 0", async () => {
     const first = await upsertInstitutions(env.DB, [base]);
     expect(first.rowsWritten).toBeGreaterThanOrEqual(1);
@@ -207,6 +218,15 @@ describe("upsertInstitutions", () => {
     expect(row?.note).toBe("改定");
   });
 
+  it("別の建物へ移すと building_id が更新される", async () => {
+    const annexId = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
+    await upsertBuildings(env.DB, [{ ...building, id: annexId, name: "赤羽会館別館" }]);
+    await upsertInstitutions(env.DB, [base]);
+    const res = await upsertInstitutions(env.DB, [{ ...base, building_id: annexId }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+    expect((await getInstitutionDetail(env.DB, INST_ID))?.building).toBe("赤羽会館別館");
+  });
+
   it("JSON 列（fee_divisions 等）が round-trip する", async () => {
     await upsertInstitutions(env.DB, [base]);
     const row = await env.DB.prepare(
@@ -221,51 +241,35 @@ describe("upsertInstitutions", () => {
   });
 
   it("division_labels は未指定なら {}、指定すれば詳細 API まで round-trip する", async () => {
-    const buildingId = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
-    await upsertBuildings(env.DB, [
-      {
-        id: buildingId,
-        prefecture: "PREFECTURE_TOKYO",
-        municipality: "MUNICIPALITY_KOUTOU",
-        name: "館",
-        kana: "かん",
-        system_name: "bsys",
-        address: "",
-        reservation_system: "tokyo-koutou",
-      },
-    ]);
-    const room = { ...base, building_id: buildingId };
-    await upsertInstitutions(env.DB, [room]);
+    await upsertInstitutions(env.DB, [base]);
     expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual({});
 
     const labels = { RESERVATION_DIVISION_MORNING: "9:00-11:45" };
-    const res = await upsertInstitutions(env.DB, [{ ...room, division_labels: labels }]);
+    const res = await upsertInstitutions(env.DB, [{ ...base, division_labels: labels }]);
     expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
     expect((await getInstitutionDetail(env.DB, INST_ID))?.division_labels).toEqual(labels);
   });
+
+  it("建物の欄は buildings から引かれ、建物を更新すると部屋の詳細にも出る", async () => {
+    await upsertInstitutions(env.DB, [base]);
+    await upsertBuildings(env.DB, [{ ...building, address: "北区赤羽南1-13-1" }]);
+    expect(await getInstitutionDetail(env.DB, INST_ID)).toMatchObject({
+      prefecture: "PREFECTURE_TOKYO",
+      municipality: "MUNICIPALITY_KITA",
+      building: "赤羽会館",
+      building_kana: "アカバネカイカン",
+      building_system_name: "赤羽会館",
+      address: "北区赤羽南1-13-1",
+    });
+  });
+
+  it("建物の欄を送ってきても無視する", async () => {
+    await upsertInstitutions(env.DB, [{ ...base, building: "古い名前" } as Institution]);
+    expect((await getInstitutionDetail(env.DB, INST_ID))?.building).toBe("赤羽会館");
+  });
 });
 
-function legacyColumns(id = INST_ID) {
-  return env.DB.prepare(
-    `SELECT building_id, prefecture, municipality, building, building_kana, building_system_name, address
-     FROM institutions WHERE id = ?`
-  )
-    .bind(id)
-    .first();
-}
-
 describe("upsertBuildings", () => {
-  const BUILDING_ID = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
-  const building: Building = {
-    id: BUILDING_ID,
-    prefecture: "PREFECTURE_TOKYO",
-    municipality: "MUNICIPALITY_KITA",
-    name: "赤羽会館",
-    kana: "アカバネカイカン",
-    system_name: "赤羽会館",
-    address: "北区赤羽南1丁目13−1",
-    reservation_system: "tokyo-kita",
-  };
   it("新規 insert 後、同一データ再送は rows_written = 0", async () => {
     const first = await upsertBuildings(env.DB, [building]);
     expect(first.rowsWritten).toBeGreaterThanOrEqual(1);
@@ -287,72 +291,14 @@ describe("upsertBuildings", () => {
     const res = await upsertBuildings(env.DB, [annex]);
     expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
   });
-
-  it("building_id だけを持つ部屋は、建物の欄を buildings から写して入る", async () => {
-    await upsertBuildings(env.DB, [building]);
-    const {
-      prefecture: _p,
-      municipality: _m,
-      building: _b,
-      building_kana: _bk,
-      building_system_name: _bs,
-      address: _a,
-      ...room
-    } = base;
-    await upsertInstitutions(env.DB, [{ ...room, building_id: BUILDING_ID } as Institution]);
-    expect(await legacyColumns()).toEqual({
-      building_id: BUILDING_ID,
-      prefecture: "PREFECTURE_TOKYO",
-      municipality: "MUNICIPALITY_KITA",
-      building: "赤羽会館",
-      building_kana: "アカバネカイカン",
-      building_system_name: "赤羽会館",
-      address: "北区赤羽南1丁目13−1",
-    });
-    expect((await getInstitutionDetail(env.DB, INST_ID))?.building_id).toBe(BUILDING_ID);
-  });
-
-  it("building_id を持つ部屋は、送られた建物の欄より buildings を優先する", async () => {
-    await upsertBuildings(env.DB, [building]);
-    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
-    expect(await legacyColumns()).toMatchObject({
-      building: "赤羽会館",
-      address: building.address,
-    });
-  });
-
-  it("建物を更新すると、その建物の部屋の写しも更新される", async () => {
-    await upsertBuildings(env.DB, [building]);
-    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
-    const res = await upsertBuildings(env.DB, [{ ...building, address: "北区赤羽南1-13-1" }]);
-    expect(res.rowsWritten).toBeGreaterThanOrEqual(2);
-    expect(await legacyColumns()).toMatchObject({ address: "北区赤羽南1-13-1" });
-  });
-
-  it("building_id を送らない旧形式の再送で、入っている building_id を消さない", async () => {
-    await upsertBuildings(env.DB, [building]);
-    await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
-    await upsertInstitutions(env.DB, [{ ...base, note: "改定" }]);
-    expect(await legacyColumns()).toMatchObject({ building_id: BUILDING_ID });
-  });
-
-  it("旧形式の部屋に後から building_id を足すと更新される", async () => {
-    await upsertBuildings(env.DB, [building]);
-    await upsertInstitutions(env.DB, [base]);
-    const res = await upsertInstitutions(env.DB, [{ ...base, building_id: BUILDING_ID }]);
-    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
-    expect(await legacyColumns()).toMatchObject({ building_id: BUILDING_ID });
-  });
-
-  it("存在しない building_id を指す部屋は外部キーで拒否される", async () => {
-    await expect(
-      upsertInstitutions(env.DB, [{ ...base, building_id: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee" }])
-    ).rejects.toThrow();
-  });
 });
 
 describe("institutions の schema 制約", () => {
   const OTHER_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+
+  beforeEach(async () => {
+    await upsertBuildings(env.DB, [building]);
+  });
 
   it("enum 外の値は CHECK 制約で拒否される", async () => {
     await expect(
@@ -363,13 +309,32 @@ describe("institutions の schema 制約", () => {
     ).rejects.toThrow();
   });
 
-  it("同一自治体で解決キー（system_name の組）が重複する別 id は UNIQUE で拒否される", async () => {
+  it("存在しない building_id を指す部屋は外部キーで拒否される", async () => {
+    await expect(
+      upsertInstitutions(env.DB, [{ ...base, building_id: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee" }])
+    ).rejects.toThrow();
+  });
+
+  it("building_id の無い部屋は NOT NULL で拒否される", async () => {
+    const { building_id: _b, ...withoutBuilding } = base;
+    await expect(upsertInstitutions(env.DB, [withoutBuilding as Institution])).rejects.toThrow();
+  });
+
+  it("同じ建物で institution_system_name が重複する別 id は UNIQUE で拒否される", async () => {
     await upsertInstitutions(env.DB, [base]);
     await expect(upsertInstitutions(env.DB, [{ ...base, id: OTHER_ID }])).rejects.toThrow();
   });
 
+  it("別の建物なら institution_system_name が同じでも受け付ける", async () => {
+    const annexId = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
+    await upsertBuildings(env.DB, [{ ...building, id: annexId, name: "赤羽会館別館" }]);
+    await upsertInstitutions(env.DB, [base]);
+    const res = await upsertInstitutions(env.DB, [{ ...base, id: OTHER_ID, building_id: annexId }]);
+    expect(res.rowsWritten).toBeGreaterThanOrEqual(1);
+  });
+
   it("system_name が空の施設（スクレイプ対象外の手動登録）は重複しても許容される", async () => {
-    const manual = { ...base, building_system_name: "", institution_system_name: "" };
+    const manual = { ...base, institution_system_name: "" };
     await upsertInstitutions(env.DB, [manual]);
     const res = await upsertInstitutions(env.DB, [{ ...manual, id: OTHER_ID }]);
     expect(res.rowsWritten).toBeGreaterThanOrEqual(1);

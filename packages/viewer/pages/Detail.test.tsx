@@ -101,19 +101,6 @@ describe("Detail Page", () => {
         .toHaveAttribute("href", `/building/${MOCK_BUILDING_ID}`);
     });
 
-    it("建物 id の無い施設では、パンくずの建物名をリンクにしない", async () => {
-      useMswDetailMock(createMockInstitutionDetail({ building_id: null }));
-
-      await renderWithProviders(<DetailPage />, {
-        initialEntries: [`/institution/${VALID_UUID}`],
-        route: "/institution/:id",
-      });
-
-      const breadcrumbs = screen.getByRole("navigation", { name: "パンくずリスト" });
-      await expect.element(breadcrumbs).toHaveTextContent("江東区テスト文化センター");
-      await expect.element(breadcrumbs.getByRole("link")).not.toBeInTheDocument();
-    });
-
     it("website_urlがある場合にリンクアイコンが表示される", async () => {
       useMswDetailMock(createMockInstitutionDetail({ website_url: "https://example.com" }));
 

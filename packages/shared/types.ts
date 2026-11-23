@@ -138,14 +138,9 @@ export type Building = {
 
 export type Institution = {
   id: string;
-  building_id?: string | null;
-  prefecture: string;
-  municipality: string;
-  building: string;
+  building_id: string;
   institution: string;
-  building_kana: string;
   institution_kana: string;
-  building_system_name: string;
   institution_system_name: string;
   capacity?: number | null;
   area?: number | null;
@@ -153,7 +148,6 @@ export type Institution = {
   fee_divisions: string[];
   weekday_usage_fee: UsageFeeEntry[];
   holiday_usage_fee: UsageFeeEntry[];
-  address: string;
   is_available_strings: string;
   is_available_woodwind: string;
   is_available_brass: string;
