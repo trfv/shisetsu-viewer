@@ -10,6 +10,7 @@ import {
   getMunicipalityKeyByScraperTarget,
   getMunicipalityKeyBySlug,
   getPrimaryReservationSystem,
+  getReservationLabels,
   getReservationTargets,
   getReservationSystem,
   getScraperTargets,
@@ -162,6 +163,20 @@ describe("registry", () => {
       }
     });
 
+    it("ラベルのキーが区分・状態・料金それぞれの enum の値になっている", () => {
+      for (const [key, system] of systems) {
+        for (const k of Object.keys(system.reservationStatus)) {
+          assert.match(k, /^RESERVATION_STATUS_/, key);
+        }
+        for (const k of Object.keys(system.reservationDivision)) {
+          assert.match(k, /^RESERVATION_DIVISION_/, key);
+        }
+        for (const k of Object.keys(system.feeDivision)) {
+          assert.match(k, /^FEE_DIVISION_/, key);
+        }
+      }
+    });
+
     it("url が https で始まる", () => {
       for (const [key, system] of systems) {
         assert.match(system.url, /^https:\/\//, key);
@@ -183,6 +198,23 @@ describe("registry", () => {
     it("未知の自治体や Object のプロトタイプの名前には undefined を返す", () => {
       assert.equal(getPrimaryReservationSystem("MUNICIPALITY_UNKNOWN"), undefined);
       assert.equal(getPrimaryReservationSystem("toString"), undefined);
+    });
+  });
+
+  describe("getReservationLabels", () => {
+    it("予約システムのラベルを返す", () => {
+      assert.equal(
+        getReservationLabels("tokyo-kita-cocokita", "MUNICIPALITY_KITA")?.reservationDivision[
+          "RESERVATION_DIVISION_MORNING"
+        ],
+        "9:00-11:45"
+      );
+    });
+
+    it("予約システムが無いか未知なら、自治体と同名の予約システムのラベルを返す", () => {
+      const kita = RESERVATION_SYSTEMS["tokyo-kita"];
+      assert.equal(getReservationLabels(null, "MUNICIPALITY_KITA"), kita);
+      assert.equal(getReservationLabels("tokyo-unknown", "MUNICIPALITY_KITA"), kita);
     });
   });
 });

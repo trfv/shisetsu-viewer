@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { MUNICIPALITIES, type MunicipalityConfig } from "@shisetsu-viewer/shared";
+import { RESERVATION_SYSTEMS, type ReservationSystemConfig } from "@shisetsu-viewer/shared";
 
 import { categorizeLabel, categorizeSymbol } from "./symbolMap.ts";
 
@@ -49,13 +49,13 @@ test("categorizeSymbol は記号でなく文言が直接表示されるサイト
   assert.equal(categorizeSymbol(" 空き "), "AVAILABLE");
 });
 
-test("categorizeSymbol は全自治体（reservationExcluded を除く）の reservationStatus 表示ラベルを UNKNOWN にしない", () => {
+test("categorizeSymbol は取得している全予約システムの reservationStatus 表示ラベルを UNKNOWN にしない", () => {
   const unknown: string[] = [];
-  for (const municipality of Object.values<MunicipalityConfig>(MUNICIPALITIES)) {
-    if (municipality.reservationExcluded) continue;
-    for (const [status, label] of Object.entries(municipality.reservationStatus)) {
+  for (const system of Object.values<ReservationSystemConfig>(RESERVATION_SYSTEMS)) {
+    if (!system.scraped) continue;
+    for (const [status, label] of Object.entries(system.reservationStatus)) {
       if (categorizeSymbol(label) === "UNKNOWN") {
-        unknown.push(`${municipality.key}.${status} = ${JSON.stringify(label)}`);
+        unknown.push(`${system.key}.${status} = ${JSON.stringify(label)}`);
       }
     }
   }

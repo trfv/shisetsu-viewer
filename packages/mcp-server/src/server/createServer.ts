@@ -4,6 +4,7 @@ import type { DataSource, WritableDataSource } from "../data/dataSource.ts";
 import { registerGuidePrompt } from "./prompts/guide.ts";
 import { registerSearchAvailableRoomsPrompt } from "./prompts/searchAvailableRooms.ts";
 import { registerMunicipalitiesResource } from "./resources/municipalities.ts";
+import { registerReservationSystemsResource } from "./resources/reservationSystems.ts";
 import { registerGetInstitutionDetail } from "./tools/getInstitutionDetail.ts";
 import { registerGetInstitutionReservations } from "./tools/getInstitutionReservations.ts";
 import { registerListInstitutions } from "./tools/listInstitutions.ts";
@@ -22,6 +23,7 @@ export function createServer(options: {
   });
 
   registerMunicipalitiesResource(server);
+  registerReservationSystemsResource(server);
 
   registerGuidePrompt(server);
   registerSearchAvailableRoomsPrompt(server);

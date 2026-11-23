@@ -7,9 +7,6 @@ export interface MunicipalityConfig {
   readonly label: string;
   /** true = スクレイパーが存在しない */
   readonly reservationExcluded: boolean;
-  readonly reservationStatus: Readonly<Record<string, string>>;
-  readonly reservationDivision: Readonly<Record<string, string>>;
-  readonly feeDivision: Readonly<Record<string, string>>;
 }
 
 export const MUNICIPALITIES = {
@@ -19,36 +16,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "江東区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館日",
-      [ReservationStatus.STATUS_3]: "保守日",
-      [ReservationStatus.STATUS_4]: "期間外",
-      [ReservationStatus.STATUS_5]: "音出し予約",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.MORNING_ONE]: "①",
-      [ReservationDivision.MORNING_TWO]: "②",
-      [ReservationDivision.AFTERNOON_ONE]: "③",
-      [ReservationDivision.AFTERNOON_TWO]: "④",
-      [ReservationDivision.EVENING_ONE]: "⑤",
-      [ReservationDivision.EVENING_TWO]: "⑥",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.DIVISION_1]: "①",
-      [FeeDivision.DIVISION_2]: "②",
-      [FeeDivision.DIVISION_3]: "③",
-      [FeeDivision.DIVISION_4]: "④",
-      [FeeDivision.DIVISION_5]: "⑤",
-      [FeeDivision.DIVISION_6]: "⑥",
-    },
   },
   MUNICIPALITY_BUNKYO: {
     key: "MUNICIPALITY_BUNKYO",
@@ -56,37 +23,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "文京区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "公開対象外",
-      [ReservationStatus.STATUS_4]: "申込期間外",
-      [ReservationStatus.STATUS_5]: "施設保守",
-      [ReservationStatus.STATUS_6]: "休館",
-      [ReservationStatus.STATUS_7]: "工事",
-      [ReservationStatus.STATUS_8]: "抽選",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.DIVISION_1]: "1コマ",
-      [ReservationDivision.DIVISION_2]: "2コマ",
-      [ReservationDivision.DIVISION_3]: "3コマ",
-      [ReservationDivision.DIVISION_4]: "4コマ",
-      [ReservationDivision.DIVISION_5]: "5コマ",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.DIVISION_1]: "１コマ",
-      [FeeDivision.DIVISION_2]: "２コマ",
-      [FeeDivision.DIVISION_3]: "３コマ",
-      [FeeDivision.DIVISION_4]: "４コマ",
-      [FeeDivision.DIVISION_5]: "５コマ",
-    },
   },
   MUNICIPALITY_KITA: {
     key: "MUNICIPALITY_KITA",
@@ -94,59 +30,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "北区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "○",
-      [ReservationStatus.STATUS_1]: "△",
-      [ReservationStatus.STATUS_2]: "×",
-      [ReservationStatus.STATUS_3]: "-",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "なし",
-      [ReservationStatus.STATUS_6]: "公開対象外",
-      [ReservationStatus.STATUS_7]: "抽選",
-      [ReservationStatus.STATUS_8]: "整備",
-      [ReservationStatus.STATUS_9]: "抽選確認中",
-      [ReservationStatus.STATUS_10]: "保守",
-      [ReservationStatus.STATUS_11]: "開放",
-      [ReservationStatus.STATUS_12]: "使用禁止",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "9:00-12:00",
-      [ReservationDivision.AFTERNOON]: "13:00-17:00",
-      [ReservationDivision.AFTERNOON_ONE]: "12:00-14:45",
-      [ReservationDivision.AFTERNOON_TWO]: "15:00-17:45",
-      [ReservationDivision.EVENING]: "18:00-22:00",
-      [ReservationDivision.DIVISION_1]: "9:30-11:30",
-      [ReservationDivision.DIVISION_2]: "12:00-14:00",
-      [ReservationDivision.DIVISION_3]: "14:30-16:30",
-      [ReservationDivision.DIVISION_4]: "17:00-19:00",
-      [ReservationDivision.DIVISION_5]: "19:30-21:30",
-      // DIVISION_6 以降はココキタ
-      [ReservationDivision.DIVISION_6]: "9:00-10:45",
-      [ReservationDivision.DIVISION_7]: "11:00-12:45",
-      [ReservationDivision.DIVISION_8]: "13:00-14:45",
-      [ReservationDivision.DIVISION_9]: "15:00-16:45",
-      [ReservationDivision.DIVISION_10]: "17:00-18:45",
-      [ReservationDivision.DIVISION_11]: "9:00-10:00",
-      [ReservationDivision.DIVISION_12]: "10:15-11:15",
-      [ReservationDivision.DIVISION_13]: "11:30-12:30",
-      [ReservationDivision.DIVISION_14]: "12:45-13:45",
-      [ReservationDivision.DIVISION_15]: "14:00-15:00",
-      [ReservationDivision.DIVISION_16]: "15:15-16:15",
-      [ReservationDivision.DIVISION_17]: "16:30-17:30",
-      [ReservationDivision.DIVISION_18]: "17:45-18:45",
-      [ReservationDivision.DIVISION_19]: "19:00-20:45",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-      [FeeDivision.DIVISION_1]: "①",
-      [FeeDivision.DIVISION_2]: "②",
-      [FeeDivision.DIVISION_3]: "③",
-      [FeeDivision.DIVISION_4]: "④",
-      [FeeDivision.DIVISION_5]: "⑤",
-    },
   },
   MUNICIPALITY_TOSHIMA: {
     key: "MUNICIPALITY_TOSHIMA",
@@ -154,28 +37,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "豊島区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "休館日",
-      [ReservationStatus.STATUS_6]: "なし",
-      [ReservationStatus.STATUS_7]: "公開対象外",
-      [ReservationStatus.STATUS_8]: "抽選",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_EDOGAWA: {
     key: "MUNICIPALITY_EDOGAWA",
@@ -183,30 +44,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "江戸川区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "公開対象外",
-      [ReservationStatus.STATUS_5]: "抽選",
-      [ReservationStatus.STATUS_6]: "休館",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.EVENING_ONE]: "夜間1",
-      [FeeDivision.EVENING_TWO]: "夜間2",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_ARAKAWA: {
     key: "MUNICIPALITY_ARAKAWA",
@@ -214,27 +51,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "荒川区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "○",
-      [ReservationStatus.STATUS_1]: "×",
-      [ReservationStatus.STATUS_2]: "保守",
-      [ReservationStatus.STATUS_3]: "休館",
-      [ReservationStatus.STATUS_4]: "開放",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_SUMIDA: {
     key: "MUNICIPALITY_SUMIDA",
@@ -242,27 +58,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "墨田区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "なし",
-      [ReservationStatus.STATUS_6]: "公開対象外",
-      [ReservationStatus.STATUS_7]: "抽選",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_OTA: {
     key: "MUNICIPALITY_OTA",
@@ -270,31 +65,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "大田区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約済",
-      [ReservationStatus.STATUS_2]: "空枠なし",
-      [ReservationStatus.STATUS_3]: "休館日",
-      [ReservationStatus.STATUS_4]: "保守点検",
-      [ReservationStatus.STATUS_5]: "利用中止",
-      // STATUS_6 は欠番。詰めると保存データと scraper の STATUS_MAP の書き換えを伴う
-      [ReservationStatus.STATUS_7]: "利用不可",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.EVENING_ONE]: "夜間1",
-      [ReservationDivision.EVENING_TWO]: "夜間2",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.TWO_HOUR]: "1コマ",
-    },
   },
   MUNICIPALITY_SUGINAMI: {
     key: "MUNICIPALITY_SUGINAMI",
@@ -302,49 +72,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "杉並区",
     reservationExcluded: true,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "予約可",
-      [ReservationStatus.STATUS_1]: "予約不可",
-      [ReservationStatus.STATUS_2]: "期間外",
-      [ReservationStatus.STATUS_3]: "未確定/ホール未確定",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "施設保守",
-      [ReservationStatus.STATUS_6]: "その他",
-      [ReservationStatus.STATUS_7]: "悪天候",
-      [ReservationStatus.STATUS_8]: "工事",
-      [ReservationStatus.STATUS_9]: "閉鎖",
-      [ReservationStatus.STATUS_10]: "選挙",
-      [ReservationStatus.STATUS_11]: "イベント",
-      [ReservationStatus.STATUS_12]: "開放待ち",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.DIVISION_1]: "9時-",
-      [ReservationDivision.DIVISION_2]: "10時-",
-      [ReservationDivision.DIVISION_3]: "11時-",
-      [ReservationDivision.DIVISION_4]: "12時-",
-      [ReservationDivision.DIVISION_5]: "13時-",
-      [ReservationDivision.DIVISION_6]: "14時-",
-      [ReservationDivision.DIVISION_7]: "15時-",
-      [ReservationDivision.DIVISION_8]: "16時-",
-      [ReservationDivision.DIVISION_9]: "17時-",
-      [ReservationDivision.DIVISION_10]: "18時-",
-      [ReservationDivision.DIVISION_11]: "19時-",
-      [ReservationDivision.DIVISION_12]: "20時-",
-    },
-    // ReservationDivision キーを流用しない。data/institutions/tokyo-suginami.json は FEE_DIVISION_* キーを使う
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_CHUO: {
     key: "MUNICIPALITY_CHUO",
@@ -352,28 +79,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "中央区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "なし",
-      [ReservationStatus.STATUS_6]: "公開対象外",
-      [ReservationStatus.STATUS_7]: "抽選",
-      [ReservationStatus.STATUS_8]: "整備",
-      [ReservationStatus.STATUS_9]: "抽選確認中",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_NAKANO: {
     key: "MUNICIPALITY_NAKANO",
@@ -381,26 +86,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "中野区",
     reservationExcluded: true,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "休館",
-      [ReservationStatus.STATUS_5]: "公開対象外",
-      [ReservationStatus.STATUS_6]: "抽選",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_KAWASAKI: {
     key: "MUNICIPALITY_KAWASAKI",
@@ -408,32 +93,6 @@ export const MUNICIPALITIES = {
     prefecture: "kanagawa",
     label: "川崎市",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館日",
-      [ReservationStatus.STATUS_3]: "保守日・主催事業",
-      [ReservationStatus.STATUS_4]: "一般開放",
-      [ReservationStatus.STATUS_5]: "雨天",
-      [ReservationStatus.STATUS_6]: "受付期間外",
-      [ReservationStatus.STATUS_7]: "時間外",
-      [ReservationStatus.STATUS_8]: "取消処理中",
-      [ReservationStatus.STATUS_9]: "開放予定",
-      [ReservationStatus.STATUS_10]: "利用不可",
-      [ReservationStatus.STATUS_11]: "仮予約",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後１",
-      [ReservationDivision.AFTERNOON_TWO]: "午後２",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_MEGURO: {
     key: "MUNICIPALITY_MEGURO",
@@ -441,25 +100,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "目黒区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "公開対象外",
-      [ReservationStatus.STATUS_5]: "休館",
-      [ReservationStatus.STATUS_6]: "抽選",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_SETAGAYA: {
     key: "MUNICIPALITY_SETAGAYA",
@@ -467,36 +107,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "世田谷区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "申込期間外",
-      [ReservationStatus.STATUS_4]: "公開対象外",
-      [ReservationStatus.STATUS_5]: "休館",
-      [ReservationStatus.STATUS_6]: "なし",
-      [ReservationStatus.STATUS_7]: "個人開放",
-      [ReservationStatus.STATUS_8]: "施設保守",
-      [ReservationStatus.STATUS_9]: "取消処理中",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.MORNING_ONE]: "午前1",
-      [ReservationDivision.MORNING_TWO]: "午前2",
-      [ReservationDivision.AFTERNOON_ONE]: "午後A",
-      [ReservationDivision.AFTERNOON_TWO]: "午後B",
-      [ReservationDivision.EVENING_ONE]: "夕方",
-      [ReservationDivision.EVENING_TWO]: "夜間",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON_ONE]: "午後A",
-      [FeeDivision.AFTERNOON_TWO]: "午後B",
-      [FeeDivision.EVENING_ONE]: "夕方",
-      [FeeDivision.EVENING_TWO]: "夜間",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_TAITO: {
     key: "MUNICIPALITY_TAITO",
@@ -504,30 +114,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "台東区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "一部空き",
-      [ReservationStatus.STATUS_2]: "空きなし",
-      [ReservationStatus.STATUS_3]: "受付期間外",
-      [ReservationStatus.STATUS_4]: "休館日",
-      [ReservationStatus.STATUS_5]: "保守作業",
-      [ReservationStatus.STATUS_6]: "休館",
-      [ReservationStatus.STATUS_7]: "工事",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING_ONE]: "夜間1",
-      [ReservationDivision.EVENING_TWO]: "夜間2",
-      [ReservationDivision.DIVISION_1]: "全日",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING_ONE]: "夜間1",
-      [FeeDivision.EVENING_TWO]: "夜間2",
-      [FeeDivision.DIVISION_1]: "全日",
-    },
   },
   MUNICIPALITY_SHINAGAWA: {
     key: "MUNICIPALITY_SHINAGAWA",
@@ -535,23 +121,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "品川区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館日",
-      [ReservationStatus.STATUS_3]: "保守日",
-      [ReservationStatus.STATUS_4]: "受付期間外",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_SHINJUKU: {
     key: "MUNICIPALITY_SHINJUKU",
@@ -559,32 +128,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "新宿区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館日",
-      [ReservationStatus.STATUS_3]: "保守日",
-      [ReservationStatus.STATUS_4]: "受付期間外",
-      [ReservationStatus.STATUS_5]: "雨天",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING_ONE]: "夜間1",
-      [ReservationDivision.EVENING_TWO]: "夜間2",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING_ONE]: "夜間1",
-      [FeeDivision.EVENING_TWO]: "夜間2",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_MINATO: {
     key: "MUNICIPALITY_MINATO",
@@ -592,24 +135,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "港区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館日",
-      [ReservationStatus.STATUS_3]: "保守日",
-      [ReservationStatus.STATUS_4]: "受付期間外",
-      [ReservationStatus.STATUS_5]: "閉館",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.EVENING]: "夜間",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.EVENING]: "夜間",
-    },
   },
   MUNICIPALITY_ADACHI: {
     key: "MUNICIPALITY_ADACHI",
@@ -617,45 +142,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "足立区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "休館",
-      [ReservationStatus.STATUS_3]: "保守",
-      [ReservationStatus.STATUS_4]: "受付期間外",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.EVENING_ONE]: "夜間1",
-      [ReservationDivision.EVENING_TWO]: "夜間2",
-      [ReservationDivision.DIVISION_1]: "9:00-10:00",
-      [ReservationDivision.DIVISION_2]: "10:00-11:00",
-      [ReservationDivision.DIVISION_3]: "11:00-12:00",
-      [ReservationDivision.DIVISION_4]: "12:00-13:00",
-      [ReservationDivision.DIVISION_5]: "13:00-14:00",
-      [ReservationDivision.DIVISION_6]: "14:00-15:00",
-      [ReservationDivision.DIVISION_7]: "15:00-16:00",
-      [ReservationDivision.DIVISION_8]: "16:00-17:00",
-      [ReservationDivision.DIVISION_9]: "17:00-18:00",
-      [ReservationDivision.DIVISION_10]: "18:00-19:00",
-      [ReservationDivision.DIVISION_11]: "19:00-20:00",
-      [ReservationDivision.DIVISION_12]: "20:00-21:00",
-      [ReservationDivision.DIVISION_13]: "21:00-21:30",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.EVENING_ONE]: "夜間1",
-      [FeeDivision.EVENING_TWO]: "夜間2",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
   MUNICIPALITY_KATSUSHIKA: {
     key: "MUNICIPALITY_KATSUSHIKA",
@@ -663,46 +149,6 @@ export const MUNICIPALITIES = {
     prefecture: "tokyo",
     label: "葛飾区",
     reservationExcluded: false,
-    reservationStatus: {
-      [ReservationStatus.VACANT]: "空き",
-      [ReservationStatus.STATUS_1]: "予約あり",
-      [ReservationStatus.STATUS_2]: "選択不可",
-      [ReservationStatus.STATUS_3]: "休館",
-      [ReservationStatus.STATUS_4]: "保守点検",
-      [ReservationStatus.STATUS_5]: "悪天候",
-      [ReservationStatus.STATUS_6]: "受付期間外",
-      [ReservationStatus.STATUS_7]: "予約不可",
-    },
-    reservationDivision: {
-      [ReservationDivision.MORNING]: "午前",
-      [ReservationDivision.AFTERNOON]: "午後",
-      [ReservationDivision.AFTERNOON_ONE]: "午後1",
-      [ReservationDivision.AFTERNOON_TWO]: "午後2",
-      [ReservationDivision.EVENING]: "夜間",
-      [ReservationDivision.DIVISION_1]: "8:00-9:00",
-      [ReservationDivision.DIVISION_2]: "9:00-10:00",
-      [ReservationDivision.DIVISION_3]: "10:00-11:00",
-      [ReservationDivision.DIVISION_4]: "11:00-12:00",
-      [ReservationDivision.DIVISION_5]: "12:00-13:00",
-      [ReservationDivision.DIVISION_6]: "13:00-14:00",
-      [ReservationDivision.DIVISION_7]: "14:00-15:00",
-      [ReservationDivision.DIVISION_8]: "15:00-16:00",
-      [ReservationDivision.DIVISION_9]: "16:00-17:00",
-      [ReservationDivision.DIVISION_10]: "17:00-18:00",
-      [ReservationDivision.DIVISION_11]: "18:00-19:00",
-      [ReservationDivision.DIVISION_12]: "19:00-20:00",
-      [ReservationDivision.DIVISION_13]: "20:00-21:00",
-      [ReservationDivision.DIVISION_14]: "21:00-22:00",
-      [ReservationDivision.DIVISION_15]: "22:00-23:00",
-    },
-    feeDivision: {
-      [FeeDivision.MORNING]: "午前",
-      [FeeDivision.AFTERNOON]: "午後",
-      [FeeDivision.AFTERNOON_ONE]: "午後1",
-      [FeeDivision.AFTERNOON_TWO]: "午後2",
-      [FeeDivision.EVENING]: "夜間",
-      [FeeDivision.ONE_HOUR]: "1時間",
-    },
   },
 } as const satisfies Record<string, MunicipalityConfig>;
 
@@ -710,7 +156,643 @@ export type MunicipalityKey = keyof typeof MUNICIPALITIES;
 
 export const MUNICIPALITY_KEYS = Object.keys(MUNICIPALITIES) as MunicipalityKey[];
 
-export interface ReservationSystemConfig {
+export interface ReservationLabels {
+  readonly reservationStatus: Readonly<Record<string, string>>;
+  readonly reservationDivision: Readonly<Record<string, string>>;
+  readonly feeDivision: Readonly<Record<string, string>>;
+}
+
+const KOUTOU_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館日",
+    [ReservationStatus.STATUS_3]: "保守日",
+    [ReservationStatus.STATUS_4]: "期間外",
+    [ReservationStatus.STATUS_5]: "音出し予約",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.MORNING_ONE]: "①",
+    [ReservationDivision.MORNING_TWO]: "②",
+    [ReservationDivision.AFTERNOON_ONE]: "③",
+    [ReservationDivision.AFTERNOON_TWO]: "④",
+    [ReservationDivision.EVENING_ONE]: "⑤",
+    [ReservationDivision.EVENING_TWO]: "⑥",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.DIVISION_1]: "①",
+    [FeeDivision.DIVISION_2]: "②",
+    [FeeDivision.DIVISION_3]: "③",
+    [FeeDivision.DIVISION_4]: "④",
+    [FeeDivision.DIVISION_5]: "⑤",
+    [FeeDivision.DIVISION_6]: "⑥",
+  },
+} as const satisfies ReservationLabels;
+
+const BUNKYO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "公開対象外",
+    [ReservationStatus.STATUS_4]: "申込期間外",
+    [ReservationStatus.STATUS_5]: "施設保守",
+    [ReservationStatus.STATUS_6]: "休館",
+    [ReservationStatus.STATUS_7]: "工事",
+    [ReservationStatus.STATUS_8]: "抽選",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.DIVISION_1]: "1コマ",
+    [ReservationDivision.DIVISION_2]: "2コマ",
+    [ReservationDivision.DIVISION_3]: "3コマ",
+    [ReservationDivision.DIVISION_4]: "4コマ",
+    [ReservationDivision.DIVISION_5]: "5コマ",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.DIVISION_1]: "１コマ",
+    [FeeDivision.DIVISION_2]: "２コマ",
+    [FeeDivision.DIVISION_3]: "３コマ",
+    [FeeDivision.DIVISION_4]: "４コマ",
+    [FeeDivision.DIVISION_5]: "５コマ",
+  },
+} as const satisfies ReservationLabels;
+
+const KITA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "○",
+    [ReservationStatus.STATUS_1]: "△",
+    [ReservationStatus.STATUS_2]: "×",
+    [ReservationStatus.STATUS_3]: "-",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "なし",
+    [ReservationStatus.STATUS_6]: "公開対象外",
+    [ReservationStatus.STATUS_7]: "抽選",
+    [ReservationStatus.STATUS_8]: "整備",
+    [ReservationStatus.STATUS_9]: "抽選確認中",
+    [ReservationStatus.STATUS_10]: "保守",
+    [ReservationStatus.STATUS_11]: "開放",
+    [ReservationStatus.STATUS_12]: "使用禁止",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "9:00-12:00",
+    [ReservationDivision.AFTERNOON]: "13:00-17:00",
+    [ReservationDivision.EVENING]: "18:00-22:00",
+    [ReservationDivision.DIVISION_1]: "9:30-11:30",
+    [ReservationDivision.DIVISION_2]: "12:00-14:00",
+    [ReservationDivision.DIVISION_3]: "14:30-16:30",
+    [ReservationDivision.DIVISION_4]: "17:00-19:00",
+    [ReservationDivision.DIVISION_5]: "19:30-21:30",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+    [FeeDivision.DIVISION_1]: "①",
+    [FeeDivision.DIVISION_2]: "②",
+    [FeeDivision.DIVISION_3]: "③",
+    [FeeDivision.DIVISION_4]: "④",
+    [FeeDivision.DIVISION_5]: "⑤",
+  },
+} as const satisfies ReservationLabels;
+
+const KITA_COCOKITA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "○",
+    [ReservationStatus.STATUS_2]: "×",
+    [ReservationStatus.STATUS_3]: "-",
+    [ReservationStatus.STATUS_4]: "休館",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "9:00-11:45",
+    [ReservationDivision.AFTERNOON_ONE]: "12:00-14:45",
+    [ReservationDivision.AFTERNOON_TWO]: "15:00-17:45",
+    [ReservationDivision.EVENING]: "18:00-20:45",
+    [ReservationDivision.DIVISION_6]: "9:00-10:45",
+    [ReservationDivision.DIVISION_7]: "11:00-12:45",
+    [ReservationDivision.DIVISION_8]: "13:00-14:45",
+    [ReservationDivision.DIVISION_9]: "15:00-16:45",
+    [ReservationDivision.DIVISION_10]: "17:00-18:45",
+    [ReservationDivision.DIVISION_11]: "9:00-10:00",
+    [ReservationDivision.DIVISION_12]: "10:15-11:15",
+    [ReservationDivision.DIVISION_13]: "11:30-12:30",
+    [ReservationDivision.DIVISION_14]: "12:45-13:45",
+    [ReservationDivision.DIVISION_15]: "14:00-15:00",
+    [ReservationDivision.DIVISION_16]: "15:15-16:15",
+    [ReservationDivision.DIVISION_17]: "16:30-17:30",
+    [ReservationDivision.DIVISION_18]: "17:45-18:45",
+    [ReservationDivision.DIVISION_19]: "19:00-20:45",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const TOSHIMA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "休館日",
+    [ReservationStatus.STATUS_6]: "なし",
+    [ReservationStatus.STATUS_7]: "公開対象外",
+    [ReservationStatus.STATUS_8]: "抽選",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const EDOGAWA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "公開対象外",
+    [ReservationStatus.STATUS_5]: "抽選",
+    [ReservationStatus.STATUS_6]: "休館",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.EVENING_ONE]: "夜間1",
+    [FeeDivision.EVENING_TWO]: "夜間2",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const ARAKAWA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "○",
+    [ReservationStatus.STATUS_1]: "×",
+    [ReservationStatus.STATUS_2]: "保守",
+    [ReservationStatus.STATUS_3]: "休館",
+    [ReservationStatus.STATUS_4]: "開放",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const SUMIDA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "なし",
+    [ReservationStatus.STATUS_6]: "公開対象外",
+    [ReservationStatus.STATUS_7]: "抽選",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const OTA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約済",
+    [ReservationStatus.STATUS_2]: "空枠なし",
+    [ReservationStatus.STATUS_3]: "休館日",
+    [ReservationStatus.STATUS_4]: "保守点検",
+    [ReservationStatus.STATUS_5]: "利用中止",
+    // STATUS_6 は欠番。詰めると保存データと scraper の STATUS_MAP の書き換えを伴う
+    [ReservationStatus.STATUS_7]: "利用不可",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.EVENING_ONE]: "夜間1",
+    [ReservationDivision.EVENING_TWO]: "夜間2",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.TWO_HOUR]: "1コマ",
+  },
+} as const satisfies ReservationLabels;
+
+const SUGINAMI_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "予約可",
+    [ReservationStatus.STATUS_1]: "予約不可",
+    [ReservationStatus.STATUS_2]: "期間外",
+    [ReservationStatus.STATUS_3]: "未確定/ホール未確定",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "施設保守",
+    [ReservationStatus.STATUS_6]: "その他",
+    [ReservationStatus.STATUS_7]: "悪天候",
+    [ReservationStatus.STATUS_8]: "工事",
+    [ReservationStatus.STATUS_9]: "閉鎖",
+    [ReservationStatus.STATUS_10]: "選挙",
+    [ReservationStatus.STATUS_11]: "イベント",
+    [ReservationStatus.STATUS_12]: "開放待ち",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.DIVISION_1]: "9時-",
+    [ReservationDivision.DIVISION_2]: "10時-",
+    [ReservationDivision.DIVISION_3]: "11時-",
+    [ReservationDivision.DIVISION_4]: "12時-",
+    [ReservationDivision.DIVISION_5]: "13時-",
+    [ReservationDivision.DIVISION_6]: "14時-",
+    [ReservationDivision.DIVISION_7]: "15時-",
+    [ReservationDivision.DIVISION_8]: "16時-",
+    [ReservationDivision.DIVISION_9]: "17時-",
+    [ReservationDivision.DIVISION_10]: "18時-",
+    [ReservationDivision.DIVISION_11]: "19時-",
+    [ReservationDivision.DIVISION_12]: "20時-",
+  },
+  // ReservationDivision キーを流用しない。data/institutions/tokyo-suginami.json は FEE_DIVISION_* キーを使う
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const CHUO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "なし",
+    [ReservationStatus.STATUS_6]: "公開対象外",
+    [ReservationStatus.STATUS_7]: "抽選",
+    [ReservationStatus.STATUS_8]: "整備",
+    [ReservationStatus.STATUS_9]: "抽選確認中",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const NAKANO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "休館",
+    [ReservationStatus.STATUS_5]: "公開対象外",
+    [ReservationStatus.STATUS_6]: "抽選",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const KAWASAKI_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館日",
+    [ReservationStatus.STATUS_3]: "保守日・主催事業",
+    [ReservationStatus.STATUS_4]: "一般開放",
+    [ReservationStatus.STATUS_5]: "雨天",
+    [ReservationStatus.STATUS_6]: "受付期間外",
+    [ReservationStatus.STATUS_7]: "時間外",
+    [ReservationStatus.STATUS_8]: "取消処理中",
+    [ReservationStatus.STATUS_9]: "開放予定",
+    [ReservationStatus.STATUS_10]: "利用不可",
+    [ReservationStatus.STATUS_11]: "仮予約",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後１",
+    [ReservationDivision.AFTERNOON_TWO]: "午後２",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const MEGURO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "公開対象外",
+    [ReservationStatus.STATUS_5]: "休館",
+    [ReservationStatus.STATUS_6]: "抽選",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const SETAGAYA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "申込期間外",
+    [ReservationStatus.STATUS_4]: "公開対象外",
+    [ReservationStatus.STATUS_5]: "休館",
+    [ReservationStatus.STATUS_6]: "なし",
+    [ReservationStatus.STATUS_7]: "個人開放",
+    [ReservationStatus.STATUS_8]: "施設保守",
+    [ReservationStatus.STATUS_9]: "取消処理中",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.MORNING_ONE]: "午前1",
+    [ReservationDivision.MORNING_TWO]: "午前2",
+    [ReservationDivision.AFTERNOON_ONE]: "午後A",
+    [ReservationDivision.AFTERNOON_TWO]: "午後B",
+    [ReservationDivision.EVENING_ONE]: "夕方",
+    [ReservationDivision.EVENING_TWO]: "夜間",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON_ONE]: "午後A",
+    [FeeDivision.AFTERNOON_TWO]: "午後B",
+    [FeeDivision.EVENING_ONE]: "夕方",
+    [FeeDivision.EVENING_TWO]: "夜間",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const TAITO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "一部空き",
+    [ReservationStatus.STATUS_2]: "空きなし",
+    [ReservationStatus.STATUS_3]: "受付期間外",
+    [ReservationStatus.STATUS_4]: "休館日",
+    [ReservationStatus.STATUS_5]: "保守作業",
+    [ReservationStatus.STATUS_6]: "休館",
+    [ReservationStatus.STATUS_7]: "工事",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING_ONE]: "夜間1",
+    [ReservationDivision.EVENING_TWO]: "夜間2",
+    [ReservationDivision.DIVISION_1]: "全日",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING_ONE]: "夜間1",
+    [FeeDivision.EVENING_TWO]: "夜間2",
+    [FeeDivision.DIVISION_1]: "全日",
+  },
+} as const satisfies ReservationLabels;
+
+const SHINAGAWA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館日",
+    [ReservationStatus.STATUS_3]: "保守日",
+    [ReservationStatus.STATUS_4]: "受付期間外",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const SHINJUKU_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館日",
+    [ReservationStatus.STATUS_3]: "保守日",
+    [ReservationStatus.STATUS_4]: "受付期間外",
+    [ReservationStatus.STATUS_5]: "雨天",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING_ONE]: "夜間1",
+    [ReservationDivision.EVENING_TWO]: "夜間2",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING_ONE]: "夜間1",
+    [FeeDivision.EVENING_TWO]: "夜間2",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const MINATO_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館日",
+    [ReservationStatus.STATUS_3]: "保守日",
+    [ReservationStatus.STATUS_4]: "受付期間外",
+    [ReservationStatus.STATUS_5]: "閉館",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.EVENING]: "夜間",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.EVENING]: "夜間",
+  },
+} as const satisfies ReservationLabels;
+
+const ADACHI_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "休館",
+    [ReservationStatus.STATUS_3]: "保守",
+    [ReservationStatus.STATUS_4]: "受付期間外",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.EVENING_ONE]: "夜間1",
+    [ReservationDivision.EVENING_TWO]: "夜間2",
+    [ReservationDivision.DIVISION_1]: "9:00-10:00",
+    [ReservationDivision.DIVISION_2]: "10:00-11:00",
+    [ReservationDivision.DIVISION_3]: "11:00-12:00",
+    [ReservationDivision.DIVISION_4]: "12:00-13:00",
+    [ReservationDivision.DIVISION_5]: "13:00-14:00",
+    [ReservationDivision.DIVISION_6]: "14:00-15:00",
+    [ReservationDivision.DIVISION_7]: "15:00-16:00",
+    [ReservationDivision.DIVISION_8]: "16:00-17:00",
+    [ReservationDivision.DIVISION_9]: "17:00-18:00",
+    [ReservationDivision.DIVISION_10]: "18:00-19:00",
+    [ReservationDivision.DIVISION_11]: "19:00-20:00",
+    [ReservationDivision.DIVISION_12]: "20:00-21:00",
+    [ReservationDivision.DIVISION_13]: "21:00-21:30",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.EVENING_ONE]: "夜間1",
+    [FeeDivision.EVENING_TWO]: "夜間2",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+const KATSUSHIKA_LABELS = {
+  reservationStatus: {
+    [ReservationStatus.VACANT]: "空き",
+    [ReservationStatus.STATUS_1]: "予約あり",
+    [ReservationStatus.STATUS_2]: "選択不可",
+    [ReservationStatus.STATUS_3]: "休館",
+    [ReservationStatus.STATUS_4]: "保守点検",
+    [ReservationStatus.STATUS_5]: "悪天候",
+    [ReservationStatus.STATUS_6]: "受付期間外",
+    [ReservationStatus.STATUS_7]: "予約不可",
+  },
+  reservationDivision: {
+    [ReservationDivision.MORNING]: "午前",
+    [ReservationDivision.AFTERNOON]: "午後",
+    [ReservationDivision.AFTERNOON_ONE]: "午後1",
+    [ReservationDivision.AFTERNOON_TWO]: "午後2",
+    [ReservationDivision.EVENING]: "夜間",
+    [ReservationDivision.DIVISION_1]: "8:00-9:00",
+    [ReservationDivision.DIVISION_2]: "9:00-10:00",
+    [ReservationDivision.DIVISION_3]: "10:00-11:00",
+    [ReservationDivision.DIVISION_4]: "11:00-12:00",
+    [ReservationDivision.DIVISION_5]: "12:00-13:00",
+    [ReservationDivision.DIVISION_6]: "13:00-14:00",
+    [ReservationDivision.DIVISION_7]: "14:00-15:00",
+    [ReservationDivision.DIVISION_8]: "15:00-16:00",
+    [ReservationDivision.DIVISION_9]: "16:00-17:00",
+    [ReservationDivision.DIVISION_10]: "17:00-18:00",
+    [ReservationDivision.DIVISION_11]: "18:00-19:00",
+    [ReservationDivision.DIVISION_12]: "19:00-20:00",
+    [ReservationDivision.DIVISION_13]: "20:00-21:00",
+    [ReservationDivision.DIVISION_14]: "21:00-22:00",
+    [ReservationDivision.DIVISION_15]: "22:00-23:00",
+  },
+  feeDivision: {
+    [FeeDivision.MORNING]: "午前",
+    [FeeDivision.AFTERNOON]: "午後",
+    [FeeDivision.AFTERNOON_ONE]: "午後1",
+    [FeeDivision.AFTERNOON_TWO]: "午後2",
+    [FeeDivision.EVENING]: "夜間",
+    [FeeDivision.ONE_HOUR]: "1時間",
+  },
+} as const satisfies ReservationLabels;
+
+export interface ReservationSystemConfig extends ReservationLabels {
   /** scraper の target 名。scraped なら同名のディレクトリがある */
   readonly key: string;
   readonly municipality: MunicipalityKey;
@@ -728,6 +810,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-koutou": {
     key: "tokyo-koutou",
     municipality: "MUNICIPALITY_KOUTOU",
+    ...KOUTOU_LABELS,
     label: "江東区文化コミュニティ財団 施設予約システム",
     url: "https://www.kcf.or.jp/yoyaku/shisetsu/",
     scraped: true,
@@ -735,6 +818,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-bunkyo": {
     key: "tokyo-bunkyo",
     municipality: "MUNICIPALITY_BUNKYO",
+    ...BUNKYO_LABELS,
     label: "文京区施設予約システム",
     url: "https://www.shisetsu.city.bunkyo.lg.jp/user/Home",
     scraped: true,
@@ -742,6 +826,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-kita": {
     key: "tokyo-kita",
     municipality: "MUNICIPALITY_KITA",
+    ...KITA_LABELS,
     label: "北区施設予約システム",
     url: "https://kita-yoyaku.openreaf02.jp/",
     scraped: true,
@@ -749,6 +834,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-kita-genkiplaza": {
     key: "tokyo-kita-genkiplaza",
     municipality: "MUNICIPALITY_KITA",
+    ...KITA_LABELS,
     label: "北区立元気ぷらざ",
     url: "https://genkiplaza.tokyo.jp/yoyaku/user.cgi",
     scraped: true,
@@ -756,6 +842,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-kita-cocokita": {
     key: "tokyo-kita-cocokita",
     municipality: "MUNICIPALITY_KITA",
+    ...KITA_COCOKITA_LABELS,
     label: "北区 ココキタ",
     url: "https://k5.p-kashikan.jp/cocokita/",
     scraped: true,
@@ -764,6 +851,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-toshima": {
     key: "tokyo-toshima",
     municipality: "MUNICIPALITY_TOSHIMA",
+    ...TOSHIMA_LABELS,
     label: "豊島区施設予約システム",
     url: "https://www2.pf489.com/toshima/WebR/",
     scraped: true,
@@ -772,6 +860,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-edogawa": {
     key: "tokyo-edogawa",
     municipality: "MUNICIPALITY_EDOGAWA",
+    ...EDOGAWA_LABELS,
     label: "江戸川区施設予約システム",
     url: "https://www.shisetsuyoyaku.city.edogawa.tokyo.jp/user/Home",
     scraped: true,
@@ -779,6 +868,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-arakawa": {
     key: "tokyo-arakawa",
     municipality: "MUNICIPALITY_ARAKAWA",
+    ...ARAKAWA_LABELS,
     label: "荒川区施設予約システム",
     url: "https://shisetsu.city.arakawa.tokyo.jp/stagia/reserve/gin_menu",
     scraped: true,
@@ -786,6 +876,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-sumida": {
     key: "tokyo-sumida",
     municipality: "MUNICIPALITY_SUMIDA",
+    ...SUMIDA_LABELS,
     label: "墨田区施設予約システム",
     url: "https://yoyaku03.city.sumida.lg.jp/user/Home",
     scraped: true,
@@ -794,6 +885,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-ota": {
     key: "tokyo-ota",
     municipality: "MUNICIPALITY_OTA",
+    ...OTA_LABELS,
     label: "うぐいすネット",
     url: "https://www.yoyaku.city.ota.tokyo.jp/eshisetsu/menu/Welcome.cgi",
     scraped: true,
@@ -802,6 +894,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-suginami": {
     key: "tokyo-suginami",
     municipality: "MUNICIPALITY_SUGINAMI",
+    ...SUGINAMI_LABELS,
     label: "杉並区施設予約システム",
     url: "https://www.shisetsuyoyaku.city.suginami.tokyo.jp/user/Home",
     scraped: false,
@@ -809,6 +902,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-nakano": {
     key: "tokyo-nakano",
     municipality: "MUNICIPALITY_NAKANO",
+    ...NAKANO_LABELS,
     label: "中野区施設予約システム",
     url: "https://www3.11489.jp/nakano/user/Home",
     scraped: false,
@@ -816,6 +910,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-chuo": {
     key: "tokyo-chuo",
     municipality: "MUNICIPALITY_CHUO",
+    ...CHUO_LABELS,
     label: "中央区施設予約システム",
     url: "https://chuo-yoyaku.openreaf02.jp/",
     scraped: true,
@@ -823,6 +918,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-shinagawa": {
     key: "tokyo-shinagawa",
     municipality: "MUNICIPALITY_SHINAGAWA",
+    ...SHINAGAWA_LABELS,
     label: "品川区施設予約システム",
     url: "https://www.cm9.eprs.jp/shinagawa/web/",
     scraped: true,
@@ -830,6 +926,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-shinjuku": {
     key: "tokyo-shinjuku",
     municipality: "MUNICIPALITY_SHINJUKU",
+    ...SHINJUKU_LABELS,
     label: "新宿区施設予約システム",
     url: "https://www.shinjuku.eprs.jp/chiiki/web/",
     scraped: true,
@@ -837,6 +934,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-shinjuku-regasu": {
     key: "tokyo-shinjuku-regasu",
     municipality: "MUNICIPALITY_SHINJUKU",
+    ...SHINJUKU_LABELS,
     label: "新宿未来創造財団 施設予約システム",
     url: "https://www.shinjuku.eprs.jp/regasu/web/",
     scraped: true,
@@ -844,6 +942,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-meguro": {
     key: "tokyo-meguro",
     municipality: "MUNICIPALITY_MEGURO",
+    ...MEGURO_LABELS,
     label: "目黒区施設予約システム",
     url: "https://resv.city.meguro.tokyo.jp/Web/Home/WgR_ModeSelect",
     scraped: true,
@@ -851,6 +950,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-setagaya": {
     key: "tokyo-setagaya",
     municipality: "MUNICIPALITY_SETAGAYA",
+    ...SETAGAYA_LABELS,
     label: "せたがやiちば",
     url: "https://setagaya.keyakinet.net/Web/Home",
     scraped: true,
@@ -858,6 +958,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-minato": {
     key: "tokyo-minato",
     municipality: "MUNICIPALITY_MINATO",
+    ...MINATO_LABELS,
     label: "港区施設予約システム",
     url: "https://web101.rsv.ws-scs.jp/web/",
     scraped: true,
@@ -865,6 +966,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-adachi": {
     key: "tokyo-adachi",
     municipality: "MUNICIPALITY_ADACHI",
+    ...ADACHI_LABELS,
     label: "足立区施設予約システム",
     url: "https://k5.p-kashikan.jp/adachi-ku/",
     scraped: true,
@@ -873,6 +975,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-adachi-1010": {
     key: "tokyo-adachi-1010",
     municipality: "MUNICIPALITY_ADACHI",
+    ...ADACHI_LABELS,
     label: "シアター1010",
     url: "https://theatre1010.com/Client/ReservationCalendar.aspx",
     scraped: true,
@@ -880,6 +983,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-katsushika": {
     key: "tokyo-katsushika",
     municipality: "MUNICIPALITY_KATSUSHIKA",
+    ...KATSUSHIKA_LABELS,
     label: "葛飾区施設予約システム",
     url: "https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/",
     scraped: true,
@@ -887,6 +991,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-katsushika-symphony-hills": {
     key: "tokyo-katsushika-symphony-hills",
     municipality: "MUNICIPALITY_KATSUSHIKA",
+    ...KATSUSHIKA_LABELS,
     label: "かつしかシンフォニーヒルズ・リリオホール",
     url: "https://reserve.aserv.jp/k-mil/",
     scraped: true,
@@ -894,6 +999,7 @@ export const RESERVATION_SYSTEMS = {
   "tokyo-taito": {
     key: "tokyo-taito",
     municipality: "MUNICIPALITY_TAITO",
+    ...TAITO_LABELS,
     label: "台東区公共施設予約システム",
     url: "https://shisetsu.city.taito.lg.jp/",
     scraped: true,
@@ -902,6 +1008,7 @@ export const RESERVATION_SYSTEMS = {
   "kanagawa-kawasaki": {
     key: "kanagawa-kawasaki",
     municipality: "MUNICIPALITY_KAWASAKI",
+    ...KAWASAKI_LABELS,
     label: "ふれあいネット",
     url: "https://www.fureai-net.city.kawasaki.jp/web/index.jsp",
     scraped: true,
@@ -909,6 +1016,7 @@ export const RESERVATION_SYSTEMS = {
   "kanagawa-kawasaki-jichi": {
     key: "kanagawa-kawasaki-jichi",
     municipality: "MUNICIPALITY_KAWASAKI",
+    ...KAWASAKI_LABELS,
     label: "川崎市総合自治会館",
     url: "https://www.reserve1.jp/studio/member/VisitorLogin.php",
     scraped: true,
@@ -953,6 +1061,17 @@ export function getPrimaryReservationSystem(
   if (!Object.hasOwn(MUNICIPALITIES, municipality)) return undefined;
   const m = MUNICIPALITIES[municipality as MunicipalityKey];
   return getReservationSystem(`${m.prefecture}-${m.slug}`);
+}
+
+// 予約システムを持たない手動登録の建物の部屋も料金を出すので、自治体と同名の予約システムに落とす
+export function getReservationLabels(
+  reservationSystem: string | null | undefined,
+  municipality: string
+): ReservationLabels | undefined {
+  return (
+    (reservationSystem ? getReservationSystem(reservationSystem) : undefined) ??
+    getPrimaryReservationSystem(municipality)
+  );
 }
 
 export function getMunicipalityKeyByScraperTarget(target: string): MunicipalityKey | undefined {

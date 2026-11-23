@@ -1,24 +1,22 @@
 import { ReservationStatus } from "../../constants/enums";
 import {
-  ReservationStatusMap,
   getReservationDivisionLabel,
-  type SupportedMunicipality,
+  getReservationStatusLabel,
+  type LabelSource,
 } from "../../utils/municipality";
 import { sortByReservationDivision } from "../../utils/reservation";
 
 import styles from "./ReservationStatusList.module.css";
 
 type Props = {
-  municipality: SupportedMunicipality;
+  institution: LabelSource;
   reservation: Record<string, string>;
-  divisionLabels?: Partial<Record<string, string>> | undefined;
   newlyVacantDivisions?: ReadonlySet<string> | undefined;
 };
 
 export const ReservationStatusList = ({
-  municipality,
+  institution,
   reservation,
-  divisionLabels,
   newlyVacantDivisions,
 }: Props) => (
   <ul className={styles["list"]}>
@@ -28,9 +26,9 @@ export const ReservationStatusList = ({
         key={division}
       >
         <span className={styles["division"]}>
-          {getReservationDivisionLabel(municipality, division, divisionLabels)}
+          {getReservationDivisionLabel(institution, division)}
         </span>
-        <span>{ReservationStatusMap[municipality]?.[status]}</span>
+        <span>{getReservationStatusLabel(institution, status)}</span>
         {newlyVacantDivisions?.has(division) && <span className={styles["new"]}>NEW</span>}
       </li>
     ))}

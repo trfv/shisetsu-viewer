@@ -90,15 +90,11 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     maxWidth: 400,
     wrap: true,
     type: "getter",
-    valueGetter: (params) => {
-      const municipality = params.row.institution.municipality as SupportedMunicipality;
-      const obj = params.row.reservation.reservation;
-      return formatReservationMap(municipality, obj, params.row.institution.division_labels);
-    },
+    valueGetter: (params) =>
+      formatReservationMap(params.row.institution, params.row.reservation.reservation),
     renderCell: (params) => (
       <ReservationStatusList
-        divisionLabels={params.row.institution.division_labels}
-        municipality={params.row.institution.municipality as SupportedMunicipality}
+        institution={params.row.institution}
         newlyVacantDivisions={getNewlyVacantDivisions(params.row.reservation)}
         reservation={params.row.reservation.reservation}
       />

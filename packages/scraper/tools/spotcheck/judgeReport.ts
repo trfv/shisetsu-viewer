@@ -1,5 +1,5 @@
 // scraper の STATUS_MAP は import しない。同じ誤りを再現して MATCH を出してしまう。
-import { getMunicipalityBySlug } from "@shisetsu-viewer/shared";
+import { getReservationSystem } from "@shisetsu-viewer/shared";
 
 import { bandFromDivisionEnum, bandFromHour, parseStartHour, type Band } from "./divisionBand.ts";
 import { categorizeSymbol, type SlotCategory } from "./symbolMap.ts";
@@ -137,13 +137,12 @@ export function judgeSample(
     );
   }
 
-  const slug = plan.target.split("-")[1];
-  const municipality = slug !== undefined ? getMunicipalityBySlug(slug) : undefined;
-  if (!municipality) {
-    return judgement("UNMAPPED", `未知の自治体: ${plan.target}`);
+  const labels = getReservationSystem(plan.target);
+  if (!labels) {
+    return judgement("UNMAPPED", `未知の予約システム: ${plan.target}`);
   }
   const labelToDivision = new Map(
-    Object.entries(municipality.reservationDivision).map(([division, label]) => [
+    Object.entries(labels.reservationDivision).map(([division, label]) => [
       normalizeDivisionLabel(label),
       division,
     ])
@@ -158,7 +157,7 @@ export function judgeSample(
       observed.cells,
       observed.legend ?? undefined,
       reservation,
-      municipality.reservationStatus
+      labels.reservationStatus
     );
     if ("unmapped" in result) return judgement("UNMAPPED", result.unmapped);
     return result.mismatches.length === 0
@@ -182,7 +181,7 @@ export function judgeSample(
       return judgement("UNMAPPED", `記号不明: ${cell.symbol}（凡例にも無い）`);
     }
     // 凡例はサイト側の情報なので期待側には渡さない。
-    const expectedCategory = categorizeSymbol(municipality.reservationStatus[enumValue] ?? "");
+    const expectedCategory = categorizeSymbol(labels.reservationStatus[enumValue] ?? "");
     if (expectedCategory === "UNKNOWN") {
       return judgement("UNMAPPED", `enum の表示ラベルをカテゴリ化できない: ${enumValue}`);
     }

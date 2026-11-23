@@ -30,11 +30,13 @@ export {
   RESERVATION_SYSTEMS,
   getReservationSystem,
   getPrimaryReservationSystem,
+  getReservationLabels,
 } from "./registry.ts";
 
 export type {
   MunicipalityConfig,
   MunicipalityKey,
+  ReservationLabels,
   ReservationSystemConfig,
   ReservationSystemKey,
 } from "./registry.ts";

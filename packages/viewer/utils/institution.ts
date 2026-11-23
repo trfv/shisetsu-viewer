@@ -2,8 +2,9 @@ import type { InstitutionsQueryParams, UsageFeeEntry } from "@shisetsu-viewer/sh
 
 import { formatPrice } from "./format";
 import {
-  FeeDivisionMap,
+  getFeeDivisionLabel,
   getMunicipalitiesFromUrlParam,
+  type LabelSource,
   SupportedMunicipalities,
   SupportedMunicipalityMap,
 } from "./municipality";
@@ -18,16 +19,15 @@ import {
 } from "./search";
 
 export const formatUsageFee = (
-  municipality: string | undefined,
+  source: LabelSource | undefined,
   usageFee: UsageFeeEntry[] | undefined
 ): string => {
-  if (!municipality || !usageFee?.length) {
+  if (!source || !usageFee?.length) {
     return "";
   }
   return usageFee
     .map(
-      ({ division, fee }) =>
-        `${FeeDivisionMap[municipality]?.[division] ?? ""}: ${formatPrice(fee)}`
+      ({ division, fee }) => `${getFeeDivisionLabel(source, division) ?? ""}: ${formatPrice(fee)}`
     )
     .join(" ");
 };

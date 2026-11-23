@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { getMunicipalityByScraperTarget, getScraperTargets } from "@shisetsu-viewer/shared";
+import { getReservationSystem, getScraperTargets } from "@shisetsu-viewer/shared";
 
 // マップの値域が registry の表示ラベル定義と一致していることが viewer 表示の前提
 interface ScraperModule {
@@ -16,8 +16,8 @@ describe("registry contract", () => {
   for (const target of getScraperTargets()) {
     it(`${target}: municipality とマップ値域が registry と整合している`, async () => {
       const mod = (await import(`../${target}/index.ts`)) as ScraperModule;
-      const config = getMunicipalityByScraperTarget(target);
-      assert.ok(config, `registry に scraper target=${target} の自治体がありません`);
+      const config = getReservationSystem(target);
+      assert.ok(config, `registry に scraper target=${target} の予約システムがありません`);
 
       assert.equal(
         mod.scraper?.municipality,

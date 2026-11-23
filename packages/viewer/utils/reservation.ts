@@ -3,10 +3,10 @@ import { addMonths, format, isAfter, isBefore, isSameDay } from "date-fns";
 
 import { ReservationDivision } from "../constants/enums";
 import {
-  ReservationStatusMap,
   getMunicipalitiesFromUrlParam,
   getReservationDivisionLabel,
-  type SupportedMunicipality,
+  getReservationStatusLabel,
+  type LabelSource,
   RESERVATION_MUNICIPALITIES,
 } from "./municipality";
 import {
@@ -104,11 +104,10 @@ export const getNewlyVacantDivisions = (
 };
 
 export const formatReservationMap = (
-  municipality: SupportedMunicipality | undefined,
-  obj: Record<string, string> | undefined,
-  divisionLabels?: Partial<Record<string, string>>
+  source: LabelSource | undefined,
+  obj: Record<string, string> | undefined
 ): string => {
-  if (!municipality || !obj) {
+  if (!source || !obj) {
     return "";
   }
   const sorted = sortByReservationDivision(obj);
@@ -119,8 +118,8 @@ export const formatReservationMap = (
       part
         .map(([division, status]) =>
           [
-            getReservationDivisionLabel(municipality, division, divisionLabels),
-            ReservationStatusMap[municipality]?.[status],
+            getReservationDivisionLabel(source, division),
+            getReservationStatusLabel(source, status),
           ].join(": ")
         )
         .join(" ")

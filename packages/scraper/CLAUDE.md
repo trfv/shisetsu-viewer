@@ -11,7 +11,7 @@ Node が TS を直接実行する（ビルドなし）。1 予約システム = 
 
 ## 罠
 
-- 同じ enum 値に自治体内で別ラベルが要るとき、空いている `DIVISION_n` に逃がさない。D1 の生成列（`is_morning_vacant` など）が `RESERVATION_DIVISION_MORNING` を名指ししているため、「午前空き」検索から静かに漏れる。施設 JSON の `division_labels` でその施設だけ表示名を上書きする（例: tokyo-kita-cocokita）。
+- 同じ enum 値に予約システム内で別ラベルが要るとき、空いている `DIVISION_n` に逃がさない。D1 の生成列（`is_morning_vacant` など）が `RESERVATION_DIVISION_MORNING` を名指ししているため、「午前空き」検索から静かに漏れる。ラベルは registry の `RESERVATION_SYSTEMS` に予約システムごとに持ち、部屋ごとに時刻が違うときだけ施設 JSON の `division_labels` で上書きする（例: tokyo-adachi）。
 - `npx playwright test <target>` の位置引数はパスの正規表現。`tokyo-kita` は `tokyo-kita-genkiplaza/` にも一致するので末尾に `/` を付ける。
 - `export:institutions` の並びは D1 の BINARY 照合で、Postgres 時代と前後が入れ替わる箇所がある。差分が並び替えだけなら取り込まなくてよい。
 - 解決キー（`facility_name-room_name`）が空の施設がある（予約を持たない施設マスタ）。キーマップ上は `"-"` に潰れるが実害はない。
