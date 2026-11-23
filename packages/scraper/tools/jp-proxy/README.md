@@ -1,6 +1,6 @@
 # 国内 proxy（Cloudflare Tunnel + tinyproxy）のセットアップ
 
-tokyo-sumida・tokyo-toshima・tokyo-taito・tokyo-kita-cocokita はサイト側が GitHub Actions からの接続を遮断しているため、
+tokyo-sumida・tokyo-toshima・tokyo-taito・tokyo-adachi・tokyo-kita-cocokita はサイト側が GitHub Actions からの接続を遮断しているため、
 CI は Cloudflare Tunnel で Mac の tinyproxy に接続し、住宅 IP からスクレイプする。
 
 Cloudflare が担うのは「CI ランナーから Mac の 8888 番へ到達する経路」だけである。
