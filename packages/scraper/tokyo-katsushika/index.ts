@@ -170,6 +170,8 @@ async function goNextDay(page: Page): Promise<void> {
     (previous) => document.querySelector("table.akitablelist th")?.textContent !== previous,
     before
   );
+  // 見出しが変わった時点では表の HTML が届ききっていないことがあり、回線が遅い CI では後ろの部屋が欠ける
+  await page.waitForLoadState("load");
 }
 
 export const scraper = defineScraper({
