@@ -238,11 +238,15 @@ export const scraper = defineScraper({
             `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${lastDate} の次の日まで送り直す`
           );
           // 送り直しの途中でもエラーページが出るので、その失敗も 1 回として数えて続ける
+          // エラーページのあとは同じセッションのまま入り直しても先へ進めないので、cookie を捨てる
+          await page.context().clearCookies();
           failed = await search(page, target.facilityName)
             .then(() => skipPast(page, lastDate ?? ""))
             .then(() => false)
             .catch((e: unknown) => {
-              console.warn(`[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]}`);
+              console.warn(
+                `[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]} url=${page.url()}`
+              );
               return true;
             });
         }
