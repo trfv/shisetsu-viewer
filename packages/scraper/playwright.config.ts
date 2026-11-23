@@ -34,7 +34,16 @@ export default defineConfig({
   use: {
     actionTimeout: 10 * 1000,
     navigationTimeout: 30 * 1000,
-    ...(scraperProxy ? { proxy: { server: scraperProxy } } : {}),
+    // サイトが読む公開 CDN は proxy を通さない。tinyproxy の filter で拒否された script が
+    // tunnel 越しだと即失敗せず待たされ、後続の script の関数が定義されないまま進む（ココキタ）。
+    ...(scraperProxy
+      ? {
+          proxy: {
+            server: scraperProxy,
+            bypass: ".googleapis.com,fonts.gstatic.com,cdnjs.cloudflare.com,code.jquery.com",
+          },
+        }
+      : {}),
     launchOptions: {
       args: [
         "--disable-application-cache",
