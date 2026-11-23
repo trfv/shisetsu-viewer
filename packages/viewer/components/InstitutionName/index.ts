@@ -1,1 +1,0 @@
-export { InstitutionName } from "./InstitutionName";

@@ -12,10 +12,10 @@ import {
 import { Redirect, useParams } from "wouter";
 
 import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/endpoints";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
-import { InstitutionName } from "../components/InstitutionName";
 import { Skeleton } from "../components/Skeleton";
 import { Tab } from "../components/Tab";
 import { TabGroup, TabPanel } from "../components/TabGroup";
@@ -44,6 +44,7 @@ import {
   getReservationDivisionLabel,
   ReservationStatusMap,
   SupportedMunicipality,
+  SupportedMunicipalityMap,
 } from "../utils/municipality";
 import { sortByReservationDivision } from "../utils/reservation";
 
@@ -178,19 +179,27 @@ const InstitutionTabContent = ({ institution }: { institution: Promise<Instituti
 const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => {
   const detail = use(institution);
   return (
-    <h2>
-      <InstitutionName
-        building={detail.building}
-        buildingId={detail.building_id}
-        institution={detail.institution}
-        municipality={detail.municipality}
+    <>
+      <Breadcrumbs
+        items={[
+          { label: SupportedMunicipalityMap[detail.municipality] ?? "" },
+          {
+            label: detail.building,
+            href: detail.building_id
+              ? ROUTES.building.replace(":id", detail.building_id)
+              : undefined,
+          },
+        ].filter((item) => item.label)}
       />
-      {detail.website_url && (
-        <IconButton href={detail.website_url} target="_blank">
-          <OpenInNewIcon />
-        </IconButton>
-      )}
-    </h2>
+      <h2>
+        {detail.institution}
+        {detail.website_url && (
+          <IconButton href={detail.website_url} target="_blank">
+            <OpenInNewIcon />
+          </IconButton>
+        )}
+      </h2>
+    </>
   );
 };
 

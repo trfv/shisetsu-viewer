@@ -75,14 +75,17 @@ describe("Building Page", () => {
     await expect.element(screen.getByText("施設情報")).not.toBeInTheDocument();
   });
 
-  it("見出しに地区と建物名を出し、予約システムへのリンクを付ける", async () => {
+  it("見出しに建物名を、その上のパンくずに地区を出し、予約システムへのリンクを付ける", async () => {
     useMswBuildingMock();
 
     await renderBuilding();
 
     await expect
-      .element(screen.getByRole("heading", { name: /江東区 テスト文化センター/ }))
+      .element(screen.getByRole("heading", { name: /^テスト文化センター/ }))
       .toBeInTheDocument();
+    await expect
+      .element(screen.getByRole("navigation", { name: "パンくずリスト" }))
+      .toHaveTextContent("江東区");
     await expect
       .element(screen.getByRole("link", { name: "江東区文化コミュニティ財団 施設予約システム" }))
       .toHaveAttribute("href", "https://www.kcf.or.jp/yoyaku/shisetsu/");
@@ -94,7 +97,7 @@ describe("Building Page", () => {
     await renderBuilding();
 
     await expect
-      .element(screen.getByRole("heading", { name: /江東区 テスト文化センター/ }))
+      .element(screen.getByRole("heading", { name: "テスト文化センター" }))
       .toBeInTheDocument();
     await expect.element(screen.getByRole("heading").getByRole("link")).not.toBeInTheDocument();
   });

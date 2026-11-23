@@ -73,7 +73,7 @@ describe("Detail Page", () => {
   });
 
   describe("有効なUUID", () => {
-    it("施設名（建物名＋施設名）を表示する", async () => {
+    it("見出しに施設名を、その上のパンくずに地区と建物名を表示する", async () => {
       useMswDetailMock();
 
       await renderWithProviders(<DetailPage />, {
@@ -82,11 +82,11 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
     });
 
-    it("見出しの建物名を建物ページへのリンクにする", async () => {
+    it("パンくずの建物名から建物ページへ移れる", async () => {
       useMswDetailMock();
 
       await renderWithProviders(<DetailPage />, {
@@ -94,9 +94,24 @@ describe("Detail Page", () => {
         route: "/institution/:id",
       });
 
+      const breadcrumbs = screen.getByRole("navigation", { name: "パンくずリスト" });
+      await expect.element(breadcrumbs).toHaveTextContent("江東区テスト文化センター");
       await expect
-        .element(screen.getByRole("link", { name: "テスト文化センター" }))
+        .element(breadcrumbs.getByRole("link", { name: "テスト文化センター" }))
         .toHaveAttribute("href", `/building/${MOCK_BUILDING_ID}`);
+    });
+
+    it("建物 id の無い施設では、パンくずの建物名をリンクにしない", async () => {
+      useMswDetailMock(createMockInstitutionDetail({ building_id: null }));
+
+      await renderWithProviders(<DetailPage />, {
+        initialEntries: [`/institution/${VALID_UUID}`],
+        route: "/institution/:id",
+      });
+
+      const breadcrumbs = screen.getByRole("navigation", { name: "パンくずリスト" });
+      await expect.element(breadcrumbs).toHaveTextContent("江東区テスト文化センター");
+      await expect.element(breadcrumbs.getByRole("link")).not.toBeInTheDocument();
     });
 
     it("website_urlがある場合にリンクアイコンが表示される", async () => {
@@ -224,7 +239,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -279,7 +294,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -299,7 +314,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -319,7 +334,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -337,7 +352,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -365,7 +380,7 @@ describe("Detail Page", () => {
       );
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
@@ -441,7 +456,7 @@ describe("Detail Page", () => {
       });
 
       await expect
-        .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
+        .element(screen.getByRole("heading", { name: "音楽練習室A" }))
         .toBeInTheDocument();
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));

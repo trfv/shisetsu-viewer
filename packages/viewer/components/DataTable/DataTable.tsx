@@ -105,9 +105,7 @@ export const DataTable = <T extends Row>({
               ref={index === sentinelIndex ? sentinelRef : undefined}
             >
               {titleCol && (
-                <div className={styles["cardTitle"]}>
-                  {renderCellContent(titleCol, row, columns, getCellValue(titleCol, row, columns))}
-                </div>
+                <div className={styles["cardTitle"]}>{getCellValue(titleCol, row, columns)}</div>
               )}
               {detailCols.map((col) => (
                 <div className={styles["cardRow"]} key={`${row.id}-${col.field}`}>

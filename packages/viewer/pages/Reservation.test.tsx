@@ -7,7 +7,6 @@ import {
   createMockReservationDto,
   createMockReservationSearchHit,
   createMockReservationSearchPage,
-  MOCK_BUILDING_ID,
 } from "../test/mocks/data";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import ReservationPage, { COLUMNS } from "./Reservation";
@@ -576,18 +575,6 @@ describe("Reservation Page", () => {
   });
 
   describe("データが返却された場合", () => {
-    it("施設名のうち建物名を建物ページへのリンクにする", async () => {
-      useMswMock([createMockReservationSearchHit()]);
-
-      await renderWithProviders(<ReservationPage />, {
-        initialEntries: ["/reservation?m=koutou"],
-      });
-
-      await expect
-        .element(screen.getByRole("link", { name: "テスト文化センター" }))
-        .toHaveAttribute("href", `/building/${MOCK_BUILDING_ID}`);
-    });
-
     it("DataTableに予約データを表示する", async () => {
       const hit1 = createMockReservationSearchHit({
         institution: {

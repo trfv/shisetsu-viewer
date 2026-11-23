@@ -17,6 +17,7 @@ import {
 import { Redirect, useLocation, useParams } from "wouter";
 
 import { fetchBuildingDetail, searchReservations } from "../api/endpoints";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 import { DataTableSkeleton, type Columns, type RowParams } from "../components/DataTable";
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
@@ -110,15 +111,19 @@ const Title = ({ building }: { building: Promise<BuildingDetail> }) => {
   const system = detail.reservation_system
     ? getReservationSystem(detail.reservation_system)
     : undefined;
+  const municipality = SupportedMunicipalityMap[detail.municipality];
   return (
-    <h2>
-      {[SupportedMunicipalityMap[detail.municipality], detail.name].filter(Boolean).join(" ")}
-      {system?.url && (
-        <IconButton aria-label={system.label} href={system.url} target="_blank">
-          <OpenInNewIcon />
-        </IconButton>
-      )}
-    </h2>
+    <>
+      <Breadcrumbs items={municipality ? [{ label: municipality }] : []} />
+      <h2>
+        {detail.name}
+        {system?.url && (
+          <IconButton aria-label={system.label} href={system.url} target="_blank">
+            <OpenInNewIcon />
+          </IconButton>
+        )}
+      </h2>
+    </>
   );
 };
 

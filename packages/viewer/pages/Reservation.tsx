@@ -21,7 +21,6 @@ import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns, type RowParams } from "../components/DataTable";
 import { DateRangePicker, type DateRangeValue } from "../components/DateRangePicker";
-import { InstitutionName } from "../components/InstitutionName";
 import { MultiSelect } from "../components/MultiSelect";
 import { ReservationStatusList } from "../components/ReservationStatusList";
 import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
@@ -72,14 +71,6 @@ export const COLUMNS: Columns<ReservationSearchRow> = [
     maxWidth: 400,
     wrap: true,
     valueGetter: (params) => formatInstitutionName(params.row.institution),
-    renderCell: (params) => (
-      <InstitutionName
-        building={params.row.institution.building}
-        buildingId={params.row.institution.building_id}
-        institution={params.row.institution.institution}
-        municipality={params.row.institution.municipality}
-      />
-    ),
   },
   {
     field: "institution_size",
