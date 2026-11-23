@@ -35,6 +35,22 @@
       "simple": { "limit": 20, "period": 60 },
     },
   ],
+  // Worker Previews は上の vars・services・ratelimits を引き継がない。本番側を変えたらここも合わせる。
+  "previews": {
+    "vars": {
+      "AUTH0_DOMAIN": "auth.shisetsudb.com",
+      "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
+    },
+    "services": [{ "binding": "API", "service": "shisetsu-api" }],
+    "ratelimits": [
+      {
+        "name": "AUTH_RATE_LIMITER",
+        // 本番と別の namespace にして、プレビューの試行で本番の枠を消費しない。
+        "namespace_id": "1003",
+        "simple": { "limit": 20, "period": 60 },
+      },
+    ],
+  },
   "dev": {
     "port": 3000,
   },
