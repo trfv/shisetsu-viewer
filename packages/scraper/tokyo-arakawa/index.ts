@@ -67,9 +67,52 @@ interface ArakawaTarget {
 
 type ArakawaDay = { date: string; header: string[]; rows: string[][] };
 
+const DATE_HEADER = '//*[@id="contents"]/div[2]/div/h3';
+const ERROR_PAGE_TEXT = "お探しのページを表示できません";
+const MAX_CONSECUTIVE_RECOVERIES = 3;
+
+// startDate は YYYY-MM-DD
+async function search(page: Page, facilityName: string, startDate?: string): Promise<void> {
+  await page.goto("https://shisetsu.city.arakawa.tokyo.jp/stagia/reserve/gin_menu");
+  await page.getByRole("button", { name: "多機能操作" }).click();
+  await page.getByRole("link", { name: "空き状況の確認" }).click();
+  await selectAllOptions(page.locator("#selectBunrui1"));
+  await page.locator("#buttonSetBunrui1").click();
+  await selectAllOptions(page.locator("#selectBunrui2"));
+  await page.locator("#buttonSetBunrui2").click();
+  await selectAllOptions(page.locator("#selectBunrui3"));
+  await page.locator("#buttonSetBunrui3").click();
+  await page.locator("#selectItem").selectOption({ label: "楽器演奏" });
+  await page.locator("#buttonSetItem").click();
+  await page.locator("#selectShisetsu").selectOption([{ label: facilityName }]);
+  await page.locator("#buttonSetShisetsu").click();
+  await selectAllOptions(page.locator("#selectRoom"));
+  await page.locator("#buttonSetRoom").click();
+  if (startDate !== undefined) {
+    // 月を選ぶと日の選択肢が作り直されるので、年 → 月 → 日の順に選ぶ
+    const [year, month, day] = startDate.split("-").map(Number);
+    await page.locator("#YYYY").selectOption(String(year));
+    await page.locator("#MM").selectOption(String(month));
+    await page.locator("#DD").selectOption(String(day));
+  }
+  await page.getByRole("button", { name: "検索" }).click();
+}
+
+function nextDate(isoDate: string): string {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + 1);
+  return date.toISOString().slice(0, 10);
+}
+
+// 「次へ」の遷移が actionTimeout の 10 秒を超えることがあるので、navigationTimeout に揃える
+async function isErrorPage(page: Page): Promise<boolean> {
+  const errorText = page.getByText(ERROR_PAGE_TEXT);
+  await page.locator(DATE_HEADER).or(errorText).waitFor({ timeout: 30_000 });
+  return errorText.isVisible();
+}
+
 async function extractDay(page: Page): Promise<ArakawaDay[]> {
-  const dateHeader = page.locator('//*[@id="contents"]/div[2]/div/h3');
-  // 「次へ」の遷移が actionTimeout の 10 秒を超えることがあるので、navigationTimeout に揃える
+  const dateHeader = page.locator(DATE_HEADER);
   await dateHeader.waitFor({ timeout: 30_000 });
   const date = await dateHeader.innerText();
   const table = page.locator('//*[@id="contents"]/div[2]/div/div/table');
@@ -114,30 +157,45 @@ export const scraper = defineScraper({
   facility: (t) => t.facilityName,
 
   async prepare(page, target) {
-    await page.goto("https://shisetsu.city.arakawa.tokyo.jp/stagia/reserve/gin_menu");
-    await page.getByRole("button", { name: "多機能操作" }).click();
-    await page.getByRole("link", { name: "空き状況の確認" }).click();
-    await selectAllOptions(page.locator("#selectBunrui1"));
-    await page.locator("#buttonSetBunrui1").click();
-    await selectAllOptions(page.locator("#selectBunrui2"));
-    await page.locator("#buttonSetBunrui2").click();
-    await selectAllOptions(page.locator("#selectBunrui3"));
-    await page.locator("#buttonSetBunrui3").click();
-    await page.locator("#selectItem").selectOption({ label: "楽器演奏" });
-    await page.locator("#buttonSetItem").click();
-    await page.locator("#selectShisetsu").selectOption([{ label: target.facilityName }]);
-    await page.locator("#buttonSetShisetsu").click();
-    await selectAllOptions(page.locator("#selectRoom"));
-    await page.locator("#buttonSetRoom").click();
-    await page.getByRole("button", { name: "検索" }).click();
+    await search(page, target.facilityName);
     return page;
   },
 
   async extract(page, target, pageCount) {
+    let lastDate: string | undefined;
+    let recoveries = 0;
     return collectPaginated({
       maxPages: pageCount,
       label: target.facilityName,
-      extractPage: () => extractDay(page),
+      // 長く送っていると、サーバが途中で時々エラーページを返す。その日から検索し直して続ける
+      extractPage: async () => {
+        let failed = await isErrorPage(page);
+        while (failed) {
+          if (lastDate === undefined || recoveries >= MAX_CONSECUTIVE_RECOVERIES) {
+            throw new Error(
+              `${target.facilityName}: ${ERROR_PAGE_TEXT}（続けて ${recoveries} 回検索し直した）`
+            );
+          }
+          recoveries++;
+          console.warn(
+            `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${nextDate(lastDate)} から検索し直す`
+          );
+          // 検索条件画面も時々選択肢の読み込みが間に合わないので、検索し直しの失敗も 1 回として数えて続ける
+          failed = await search(page, target.facilityName, nextDate(lastDate))
+            .then(() => isErrorPage(page))
+            .catch((e: unknown) => {
+              console.warn(
+                `[${target.facilityName}] 検索し直しに失敗: ${String(e).split("\n")[0]}`
+              );
+              return true;
+            });
+        }
+        const days = await extractDay(page);
+        lastDate = toISODateString(days[0]?.date ?? "");
+        // 1 年分を送る館ではエラーが何度も出るので、館全体ではなく連続の回数で打ち切る
+        recoveries = 0;
+        return days;
+      },
       goNext: async () => {
         const nextLink = page.getByRole("link", { name: "次へ" });
         if ((await nextLink.count()) === 0) return false;
