@@ -80,12 +80,15 @@ type EdogawaPeriod = {
   rows: { roomName: string; statuses: string[] }[];
 };
 
-function toISODate(year: string, dateStr: string): string {
+// 年は表の左上にしか出ないので、期間が年をまたぐと 1 月の列は翌年にする
+function toISODate(year: string, dateStr: string, firstDateStr: string): string {
   const match = dateStr.match(/(\d+)\/(\d+)/);
   if (!match?.[1] || !match[2]) return "";
+  const firstMonth = Number(firstDateStr.match(/(\d+)\//)?.[1] ?? match[1]);
+  const fullYear = Number(match[1]) < firstMonth ? Number(year) + 1 : Number(year);
   const month = match[1].padStart(2, "0");
   const day = match[2].padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return `${fullYear}-${month}-${day}`;
 }
 
 async function extractPeriod(page: Page, division: string): Promise<EdogawaPeriod> {
@@ -128,6 +131,16 @@ async function extractPeriod(page: Page, division: string): Promise<EdogawaPerio
   }
 
   return { division, year, dates, rows };
+}
+
+// 表は前の期間のものが残ったまま差し替わるので、表の有無では読み込み完了を判定できない。
+// 読み込み中は body の loading-indicator が次のクリックを奪う
+async function waitForLoaded(page: Page): Promise<void> {
+  await page.waitForFunction(
+    () => !document.body.classList.contains("loading-indicator"),
+    undefined,
+    { timeout: 30_000 }
+  );
 }
 
 export const scraper = defineScraper({
@@ -179,6 +192,7 @@ export const scraper = defineScraper({
       // Bootstrap custom-radio は input が隠れているため label を直接クリックする
       await filterSection.getByText(label, { exact: true }).click();
       await page.locator('button:has-text("表示")').click();
+      await waitForLoaded(page);
       await page.locator("table thead th").first().waitFor();
 
       let coveredDays = 0;
@@ -195,6 +209,7 @@ export const scraper = defineScraper({
           const nextButton = page.locator('button:has-text("次の期間")');
           if ((await nextButton.count()) === 0) return false;
           await nextButton.click();
+          await waitForLoaded(page);
           await page.locator("table thead th").first().waitFor();
           return true;
         },
@@ -209,7 +224,7 @@ export const scraper = defineScraper({
     const slots: RawSlot[] = extracted.flatMap(({ division, year, dates, rows }) =>
       rows.flatMap(({ roomName, statuses }) =>
         dates.flatMap((dateStr, i) => {
-          const date = toISODate(year, dateStr);
+          const date = toISODate(year, dateStr, dates[0] ?? dateStr);
           if (!date) return [];
           return [{ roomName, date, division, status: statuses[i] ?? "" }];
         })
