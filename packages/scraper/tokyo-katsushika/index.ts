@@ -170,6 +170,8 @@ async function goNextDay(page: Page): Promise<void> {
     (previous) => document.querySelector("table.akitablelist th")?.textContent !== previous,
     before
   );
+  // 見出しが変わった時点では表の HTML が届ききっていないことがあり、回線が遅い CI では後ろの部屋が欠ける
+  await page.waitForLoadState("load");
 }
 
 export const scraper = defineScraper({
@@ -203,9 +205,7 @@ export const scraper = defineScraper({
         const cells = day.cells.filter((cell) => target.roomNames.includes(cell.room));
         const missing = target.roomNames.filter((name) => !cells.some((c) => c.room === name));
         if (missing.length > 0) {
-          throw new Error(
-            `${target.facilityName}: 部屋が見つかりません: ${missing.join(", ")}（${day.date} ${page.url()} 表の部屋: ${[...new Set(day.cells.map((c) => c.room))].join(", ")}）`
-          );
+          throw new Error(`${target.facilityName}: 部屋が見つかりません: ${missing.join(", ")}`);
         }
         if (pageIndex > 0 && cells.every((cell) => cell.status === OUT_OF_PERIOD_STATUS)) {
           return null;
