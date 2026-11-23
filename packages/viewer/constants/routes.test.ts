@@ -8,5 +8,6 @@ describe("ROUTES", () => {
     expect(ROUTES.reservation).toBe("/reservation");
     expect(ROUTES.institution).toBe("/institution");
     expect(ROUTES.detail).toBe("/institution/:id");
+    expect(ROUTES.building).toBe("/building/:id");
   });
 });

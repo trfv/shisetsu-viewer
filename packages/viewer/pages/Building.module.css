@@ -1,0 +1,79 @@
+.pageBox {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+  margin-inline: auto;
+  padding: 0 24px;
+  width: 100%;
+  min-height: 80px;
+  max-width: 1280px;
+}
+
+.tabGroup {
+  margin-inline: auto;
+  padding: 0 24px;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.tabPanel {
+  margin-top: 40px;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.infoContainer {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 40px;
+}
+
+.reservationContainer {
+  padding: 0 24px;
+}
+
+@media (max-width: 679px) {
+  .pageBox {
+    padding: 24px 0;
+  }
+
+  .tabGroup {
+    margin-inline: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .tabGroup button {
+    width: 50%;
+  }
+
+  .tabPanel {
+    margin-top: 24px;
+  }
+
+  .infoContainer {
+    padding: 0;
+    gap: 24px;
+  }
+
+  .infoRow {
+    padding: 0 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .reservationContainer {
+    padding: 0;
+  }
+}

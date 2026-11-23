@@ -1,4 +1,5 @@
 import type {
+  BuildingDetail,
   Holiday,
   InstitutionDetail,
   InstitutionsQueryParams,
@@ -31,6 +32,10 @@ export function fetchInstitutions(
 
 export function fetchInstitutionDetail(id: string): Promise<InstitutionDetail> {
   return apiGet(`${BASE}/v1/institutions/${id}`, {});
+}
+
+export function fetchBuildingDetail(id: string): Promise<BuildingDetail> {
+  return apiGet(`${BASE}/v1/buildings/${id}`, {});
 }
 
 export function fetchInstitutionReservations(

@@ -15,6 +15,7 @@ import { fetchInstitutionDetail, fetchInstitutionReservations } from "../api/end
 import { IconButton } from "../components/IconButton";
 import { OpenInNewIcon } from "../components/icons";
 import { Input } from "../components/Input";
+import { InstitutionName } from "../components/InstitutionName";
 import { Skeleton } from "../components/Skeleton";
 import { Tab } from "../components/Tab";
 import { TabGroup, TabPanel } from "../components/TabGroup";
@@ -37,7 +38,7 @@ import { useScrapeRuns } from "../hooks/useScrapeRuns";
 import { AvailabilityDivisionMap, EquipmentDivisionMap } from "../utils/enums";
 import { formatMonthDate, formatShortDatetime } from "../utils/format";
 import { isValidUuid } from "../utils/id";
-import { formatInstitutionName, formatUsageFee } from "../utils/institution";
+import { formatUsageFee } from "../utils/institution";
 import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
   getReservationDivisionLabel,
@@ -178,7 +179,12 @@ const Title = ({ institution }: { institution: Promise<InstitutionDetail> }) => 
   const detail = use(institution);
   return (
     <h2>
-      {formatInstitutionName(detail)}
+      <InstitutionName
+        building={detail.building}
+        buildingId={detail.building_id}
+        institution={detail.institution}
+        municipality={detail.municipality}
+      />
       {detail.website_url && (
         <IconButton href={detail.website_url} target="_blank">
           <OpenInNewIcon />

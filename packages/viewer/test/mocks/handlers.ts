@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw";
 
 import {
+  createMockBuildingDetail,
   createMockInstitutionDetail,
   createMockInstitutionsPage,
   createMockInstitutionSummary,
@@ -49,6 +50,8 @@ export const handlers = [
   ),
 
   http.get(`${BASE}/v1/institutions/:id`, () => HttpResponse.json(createMockInstitutionDetail())),
+
+  http.get(`${BASE}/v1/buildings/:id`, () => HttpResponse.json(createMockBuildingDetail())),
 
   http.get(`${BASE}/v1/reservations/search`, () =>
     HttpResponse.json(createMockReservationSearchPage([createMockReservationSearchHit()]))

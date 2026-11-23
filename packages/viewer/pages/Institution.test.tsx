@@ -3,7 +3,11 @@ import { http, HttpResponse } from "msw";
 import { describe, expect, it, vi } from "vitest";
 
 import { worker } from "../test/mocks/browser";
-import { createMockInstitutionsPage, createMockInstitutionSummary } from "../test/mocks/data";
+import {
+  createMockInstitutionsPage,
+  createMockInstitutionSummary,
+  MOCK_BUILDING_ID,
+} from "../test/mocks/data";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import InstitutionPage, { COLUMNS } from "./Institution";
 
@@ -351,6 +355,18 @@ describe("Institution Page", () => {
   });
 
   describe("データが返却された場合", () => {
+    it("施設名のうち建物名を建物ページへのリンクにする", async () => {
+      useMswMock([createMockInstitutionSummary()]);
+
+      await renderWithProviders(<InstitutionPage />, {
+        initialEntries: ["/institution?m=koutou"],
+      });
+
+      await expect
+        .element(screen.getByRole("link", { name: "テスト文化センター" }))
+        .toHaveAttribute("href", `/building/${MOCK_BUILDING_ID}`);
+    });
+
     it("DataTableに施設データを表示する", async () => {
       const item1 = createMockInstitutionSummary({
         building: "テスト文化センター",

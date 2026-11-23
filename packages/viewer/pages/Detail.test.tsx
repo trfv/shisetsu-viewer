@@ -8,6 +8,7 @@ import {
   createMockInstitutionDetail,
   createMockReservationDto,
   createMockReservationsPage,
+  MOCK_BUILDING_ID,
 } from "../test/mocks/data";
 import { renderWithProviders, screen } from "../test/utils/test-utils";
 import DetailPage from "./Detail";
@@ -83,6 +84,19 @@ describe("Detail Page", () => {
       await expect
         .element(screen.getByRole("heading", { name: /テスト文化センター 音楽練習室A/ }))
         .toBeInTheDocument();
+    });
+
+    it("見出しの建物名を建物ページへのリンクにする", async () => {
+      useMswDetailMock();
+
+      await renderWithProviders(<DetailPage />, {
+        initialEntries: [`/institution/${VALID_UUID}`],
+        route: "/institution/:id",
+      });
+
+      await expect
+        .element(screen.getByRole("link", { name: "テスト文化センター" }))
+        .toHaveAttribute("href", `/building/${MOCK_BUILDING_ID}`);
     });
 
     it("website_urlがある場合にリンクアイコンが表示される", async () => {

@@ -6,6 +6,7 @@ import { fetchInstitutions } from "../api/endpoints";
 import { Checkbox } from "../components/Checkbox";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { type Columns, type RowParams } from "../components/DataTable";
+import { InstitutionName } from "../components/InstitutionName";
 import { MultiSelect } from "../components/MultiSelect";
 import { SearchPageLayout, SearchResults } from "../components/SearchPageLayout";
 import { ROUTES } from "../constants/routes";
@@ -43,6 +44,14 @@ export const COLUMNS: Columns<InstitutionSummary> = [
     maxWidth: 400,
     wrap: true,
     valueGetter: (params) => formatInstitutionName(params.row),
+    renderCell: (params) => (
+      <InstitutionName
+        building={params.row.building}
+        buildingId={params.row.building_id}
+        institution={params.row.institution}
+        municipality={params.row.municipality}
+      />
+    ),
   },
   {
     field: "institution_size",

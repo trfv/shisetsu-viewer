@@ -12,6 +12,8 @@ import { Loading } from "./pages/Loading";
 /* istanbul ignore next -- lazy imports are exercised at runtime, not in unit tests */
 const Institution = lazy(() => import("./pages/Institution"));
 /* istanbul ignore next */
+const Building = lazy(() => import("./pages/Building"));
+/* istanbul ignore next */
 const Detail = lazy(() => import("./pages/Detail"));
 /* istanbul ignore next */
 const Reservation = lazy(() => import("./pages/Reservation"));
@@ -25,6 +27,9 @@ const Routes = () => {
         <Switch>
           <Route path={ROUTES.reservation}>
             <AuthGuard Component={<Reservation />} />
+          </Route>
+          <Route path={ROUTES.building}>
+            <Building />
           </Route>
           <Route path={ROUTES.detail}>
             <Detail />
