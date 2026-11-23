@@ -28,7 +28,7 @@ const TopPage = () => {
             Claude などの AI
             アシスタントから、施設の検索や予約状況の確認を自然言語で行えます。接続方法や使い方の詳細は
             <a
-              href="https://github.com/trfv/shisetsu-viewer/blob/master/packages/mcp-server/README.md"
+              href="https://github.com/shisetsudb/shisetsu-viewer/blob/master/packages/mcp-server/README.md"
               target="_blank"
               rel="noopener noreferrer"
             >
