@@ -172,7 +172,7 @@ const ReservationPage = () => {
 
   // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [minDate] = useState(() => new Date());
-  const [maxDate] = useState(() => addMonths(endOfMonth(new Date()), 6));
+  const [maxDate] = useState(() => endOfMonth(addMonths(new Date(), 6)));
   const holidaysPromise = useHolidays(minDate, maxDate);
 
   const [values, setQueryParams] = useQueryParams(
