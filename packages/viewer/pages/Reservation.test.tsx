@@ -484,6 +484,17 @@ describe("Reservation Page", () => {
       await expect.element(dayButton(/2025年6月14日/)).toBeDisabled();
     });
 
+    it("6 か月先の月末まで検索できる", async () => {
+      const captured = captureSearchParams();
+
+      await renderWithProviders(<ReservationPage />, {
+        initialEntries: ["/reservation?m=koutou&df=2025-12-31&dt=2025-12-31"],
+      });
+
+      await expect.poll(() => captured.params?.get("endDate")).toBe("2025-12-31");
+      expect(captured.params?.get("startDate")).toBe("2025-12-31");
+    });
+
     it("土日祝のみを選ぶと isHoliday 付きで検索する", async () => {
       const captured = captureSearchParams();
 
