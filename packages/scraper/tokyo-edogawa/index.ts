@@ -80,12 +80,15 @@ type EdogawaPeriod = {
   rows: { roomName: string; statuses: string[] }[];
 };
 
-function toISODate(year: string, dateStr: string): string {
+// 年は表の左上にしか出ないので、期間が年をまたぐと 1 月の列は翌年にする
+function toISODate(year: string, dateStr: string, firstDateStr: string): string {
   const match = dateStr.match(/(\d+)\/(\d+)/);
   if (!match?.[1] || !match[2]) return "";
+  const firstMonth = Number(firstDateStr.match(/(\d+)\//)?.[1] ?? match[1]);
+  const fullYear = Number(match[1]) < firstMonth ? Number(year) + 1 : Number(year);
   const month = match[1].padStart(2, "0");
   const day = match[2].padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return `${fullYear}-${month}-${day}`;
 }
 
 async function extractPeriod(page: Page, division: string): Promise<EdogawaPeriod> {
@@ -221,7 +224,7 @@ export const scraper = defineScraper({
     const slots: RawSlot[] = extracted.flatMap(({ division, year, dates, rows }) =>
       rows.flatMap(({ roomName, statuses }) =>
         dates.flatMap((dateStr, i) => {
-          const date = toISODate(year, dateStr);
+          const date = toISODate(year, dateStr, dates[0] ?? dateStr);
           if (!date) return [];
           return [{ roomName, date, division, status: statuses[i] ?? "" }];
         })
