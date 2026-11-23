@@ -987,6 +987,7 @@ export const RESERVATION_SYSTEMS = {
     label: "葛飾区施設予約システム",
     url: "https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/",
     scraped: true,
+    maintenanceWindowJst: [0, 7],
   },
   "tokyo-katsushika-symphony-hills": {
     key: "tokyo-katsushika-symphony-hills",
