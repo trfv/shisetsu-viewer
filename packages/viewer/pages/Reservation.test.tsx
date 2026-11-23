@@ -65,6 +65,7 @@ describe("COLUMNS定義", () => {
     const hit = createMockReservationSearchHit({
       institution: {
         id: "test-id",
+        building_id: "test-building-id",
         municipality: "MUNICIPALITY_KOUTOU",
         building: "",
         institution: "",
@@ -80,6 +81,7 @@ describe("COLUMNS定義", () => {
     const hit = createMockReservationSearchHit({
       institution: {
         id: "test-id",
+        building_id: "test-building-id",
         municipality: "MUNICIPALITY_KOUTOU",
         building: "テスト",
         institution: "テスト施設",
@@ -503,6 +505,7 @@ describe("Reservation Page", () => {
         createMockReservationSearchHit({
           institution: {
             id: `b3ed861c-${String(i).padStart(4, "0")}-4b71-8678-93b7fea06202`,
+            building_id: "test-building-id",
             municipality: "MUNICIPALITY_KOUTOU",
             building: `テスト文化センター${i}`,
             institution: "音楽練習室A",
@@ -554,6 +557,7 @@ describe("Reservation Page", () => {
         createMockReservationSearchHit({
           institution: {
             id: `ffffffff-${String(i).padStart(4, "0")}-4b71-8678-93b7fea06202`,
+            building_id: "test-building-id",
             municipality: "MUNICIPALITY_KOUTOU",
             building: `施設${i}`,
             institution: "練習室",
@@ -583,6 +587,7 @@ describe("Reservation Page", () => {
       const hit1 = createMockReservationSearchHit({
         institution: {
           id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+          building_id: "test-building-id",
           municipality: "MUNICIPALITY_KOUTOU",
           building: "テスト文化センター",
           institution: "音楽練習室A",
@@ -593,6 +598,7 @@ describe("Reservation Page", () => {
       const hit2 = createMockReservationSearchHit({
         institution: {
           id: "a1234567-b890-cdef-1234-567890abcdef",
+          building_id: "test-building-id",
           municipality: "MUNICIPALITY_KOUTOU",
           building: "サンプル会館",
           institution: "リハーサル室B",
@@ -629,6 +635,7 @@ describe("Reservation Page", () => {
         createMockReservationSearchHit({
           institution: {
             id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+            building_id: "test-building-id",
             municipality: "MUNICIPALITY_KITA",
             building: "ココキタ",
             institution: "音楽スタジオ",
@@ -669,6 +676,7 @@ describe("Reservation Page", () => {
       const hit = createMockReservationSearchHit({
         institution: {
           id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+          building_id: "test-building-id",
           municipality: "MUNICIPALITY_KOUTOU",
           building: "テスト文化センター",
           institution: "音楽練習室A",
@@ -698,6 +706,7 @@ describe("Reservation Page", () => {
       const hit = createMockReservationSearchHit({
         institution: {
           id: "",
+          building_id: "test-building-id",
           municipality: "MUNICIPALITY_KOUTOU",
           building: "テスト施設",
           institution: "音楽室",

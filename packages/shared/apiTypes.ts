@@ -10,8 +10,17 @@ export interface Page<T> {
   pageInfo: PageInfo;
 }
 
+type InstitutionWithBuilding = Institution & {
+  prefecture: string;
+  municipality: string;
+  building: string;
+  building_kana: string;
+  building_system_name: string;
+  address: string;
+};
+
 export type InstitutionSummary = Pick<
-  Institution,
+  InstitutionWithBuilding,
   | "id"
   | "building_id"
   | "municipality"
@@ -26,7 +35,7 @@ export type InstitutionSummary = Pick<
   | "is_equipped_piano"
 > & { updated_at: string };
 
-export type InstitutionDetail = Institution & {
+export type InstitutionDetail = InstitutionWithBuilding & {
   reservation_system: string | null;
   updated_at: string;
 };
@@ -53,7 +62,7 @@ export interface ReservationDto {
 export interface ReservationSearchHit {
   reservation: ReservationDto;
   institution: Pick<
-    Institution,
+    InstitutionWithBuilding,
     | "id"
     | "building_id"
     | "municipality"

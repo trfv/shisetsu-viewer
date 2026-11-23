@@ -55,24 +55,10 @@ const BUILDING_COLUMNS = [
   "reservation_system",
 ] as const;
 
-// 部屋の建物の欄は buildings の写し。building_id を持つ行は送られてきた値より buildings を優先する
-const COPIED_FROM_BUILDING: Readonly<Record<string, string>> = {
-  prefecture: "prefecture",
-  municipality: "municipality",
-  building: "name",
-  building_kana: "kana",
-  building_system_name: "system_name",
-  address: "address",
-};
-
 const INSTITUTION_COLUMNS = [
-  "prefecture",
-  "municipality",
-  "building",
+  "building_id",
   "institution",
-  "building_kana",
   "institution_kana",
-  "building_system_name",
   "institution_system_name",
   "capacity",
   "area",
@@ -80,7 +66,6 @@ const INSTITUTION_COLUMNS = [
   "fee_divisions",
   "weekday_usage_fee",
   "holiday_usage_fee",
-  "address",
   "is_available_strings",
   "is_available_woodwind",
   "is_available_brass",
@@ -101,14 +86,14 @@ const JSON_COLUMN_DEFAULTS: Readonly<Record<string, unknown>> = {
   division_labels: {},
 };
 
-const BUILDING_UPSERT_SQL = (() => {
-  const insertCols = ["id", ...BUILDING_COLUMNS];
+function upsertSql(table: string, columns: readonly string[]): string {
+  const insertCols = ["id", ...columns];
   const selectExprs = insertCols.map((c) => `je.value ->> '$.${c}'`);
-  const setClause = BUILDING_COLUMNS.map((c) => `${c} = excluded.${c}`).join(",\n         ");
-  const changeGuard = BUILDING_COLUMNS.map((c) => `buildings.${c} IS NOT excluded.${c}`).join(
-    "\n          OR "
-  );
-  return `INSERT INTO buildings (${insertCols.join(", ")})
+  const setClause = columns.map((c) => `${c} = excluded.${c}`).join(",\n         ");
+  const changeGuard = columns
+    .map((c) => `${table}.${c} IS NOT excluded.${c}`)
+    .join("\n          OR ");
+  return `INSERT INTO ${table} (${insertCols.join(", ")})
        SELECT ${selectExprs.join(", ")}
        FROM json_each(?1) AS je
        WHERE TRUE
@@ -116,48 +101,10 @@ const BUILDING_UPSERT_SQL = (() => {
          ${setClause},
          updated_at = ${NOW}
        WHERE ${changeGuard}`;
-})();
+}
 
-const SYNC_INSTITUTIONS_FROM_BUILDINGS_SQL = (() => {
-  const entries = Object.entries(COPIED_FROM_BUILDING);
-  const setClause = entries.map(([i, b]) => `${i} = b.${b}`).join(",\n         ");
-  const changeGuard = entries
-    .map(([i, b]) => `institutions.${i} IS NOT b.${b}`)
-    .join("\n          OR ");
-  return `UPDATE institutions SET
-         ${setClause},
-         updated_at = ${NOW}
-       FROM buildings AS b
-       WHERE b.id = institutions.building_id
-         AND b.id IN (SELECT je.value ->> '$.id' FROM json_each(?1) AS je)
-         AND (${changeGuard})`;
-})();
-
-const INSTITUTION_UPSERT_SQL = (() => {
-  const insertCols = ["id", "building_id", ...INSTITUTION_COLUMNS];
-  const selectExprs = insertCols.map((c) => {
-    const fromBuilding = COPIED_FROM_BUILDING[c];
-    return fromBuilding
-      ? `COALESCE(b.${fromBuilding}, je.value ->> '$.${c}')`
-      : `je.value ->> '$.${c}'`;
-  });
-  const setClause = INSTITUTION_COLUMNS.map((c) => `${c} = excluded.${c}`).join(",\n         ");
-  const changeGuard = INSTITUTION_COLUMNS.map((c) => `institutions.${c} IS NOT excluded.${c}`).join(
-    "\n          OR "
-  );
-  // building_id を送らない旧形式の行で、入っている building_id を消さない
-  return `INSERT INTO institutions (${insertCols.join(", ")})
-       SELECT ${selectExprs.join(", ")}
-       FROM json_each(?1) AS je
-       LEFT JOIN buildings AS b ON b.id = je.value ->> '$.building_id'
-       WHERE TRUE
-       ON CONFLICT (id) DO UPDATE SET
-         ${setClause},
-         building_id = COALESCE(excluded.building_id, institutions.building_id),
-         updated_at = ${NOW}
-       WHERE ${changeGuard}
-          OR institutions.building_id IS NOT COALESCE(excluded.building_id, institutions.building_id)`;
-})();
+const BUILDING_UPSERT_SQL = upsertSql("buildings", BUILDING_COLUMNS);
+const INSTITUTION_UPSERT_SQL = upsertSql("institutions", INSTITUTION_COLUMNS);
 
 export async function upsertBuildings(db: D1Database, rows: Building[]): Promise<UpsertResult> {
   if (rows.length === 0) return { rowsWritten: 0 };
@@ -168,11 +115,8 @@ export async function upsertBuildings(db: D1Database, rows: Building[]): Promise
       return record;
     })
   );
-  const results = await db.batch([
-    db.prepare(BUILDING_UPSERT_SQL).bind(payload),
-    db.prepare(SYNC_INSTITUTIONS_FROM_BUILDINGS_SQL).bind(payload),
-  ]);
-  return { rowsWritten: results.reduce((sum, r) => sum + rowsWritten(r), 0) };
+  const result = await db.prepare(BUILDING_UPSERT_SQL).bind(payload).run();
+  return { rowsWritten: rowsWritten(result) };
 }
 
 export async function upsertInstitutions(
@@ -182,9 +126,9 @@ export async function upsertInstitutions(
   if (rows.length === 0) return { rowsWritten: 0 };
   const payload = JSON.stringify(
     rows.map((row) => {
-      const record: Record<string, unknown> = { id: row.id, building_id: row.building_id ?? null };
+      const record: Record<string, unknown> = { id: row.id };
       for (const c of INSTITUTION_COLUMNS) {
-        const value = (row as Record<string, unknown>)[c];
+        const value = row[c];
         record[c] =
           c in JSON_COLUMN_DEFAULTS
             ? JSON.stringify(value ?? JSON_COLUMN_DEFAULTS[c])

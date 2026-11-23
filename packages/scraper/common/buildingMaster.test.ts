@@ -11,10 +11,10 @@ import {
   getMunicipalityKeyByScraperTarget,
   getReservationSystem,
   type Building,
+  type Institution,
   type ReservationSystemConfig,
 } from "@shisetsu-viewer/shared";
 
-import type { InstitutionRecord } from "../tools/backend/types.ts";
 import type { ScraperDefinition } from "./defineScraper.ts";
 
 const dataRoot = fileURLToPath(new URL("../data", import.meta.url));
@@ -68,7 +68,7 @@ describe("建物マスタ", () => {
     it(`${target}: 部屋はすべて同じファイル群の建物を指し、建物はすべて部屋を持つ`, () => {
       const ids = new Set((buildingsByTarget.get(target) ?? []).map((b) => b.id));
       const used = new Set<string>();
-      for (const room of readData<InstitutionRecord>("institutions", target)) {
+      for (const room of readData<Institution>("institutions", target)) {
         assert.ok(ids.has(room.building_id), `${room.id} の building_id が見つかりません`);
         used.add(room.building_id);
       }

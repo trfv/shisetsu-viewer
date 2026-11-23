@@ -138,6 +138,7 @@ describe("search_reservations", () => {
             reservation,
             institution: {
               id: INSTITUTION_ID,
+              building_id: "building-id",
               municipality: "MUNICIPALITY_KOUTOU",
               building: "建物",
               institution: "施設",
