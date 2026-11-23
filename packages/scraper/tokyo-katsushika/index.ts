@@ -203,7 +203,9 @@ export const scraper = defineScraper({
         const cells = day.cells.filter((cell) => target.roomNames.includes(cell.room));
         const missing = target.roomNames.filter((name) => !cells.some((c) => c.room === name));
         if (missing.length > 0) {
-          throw new Error(`${target.facilityName}: 部屋が見つかりません: ${missing.join(", ")}`);
+          throw new Error(
+            `${target.facilityName}: 部屋が見つかりません: ${missing.join(", ")}（${day.date} ${page.url()} 表の部屋: ${[...new Set(day.cells.map((c) => c.room))].join(", ")}）`
+          );
         }
         if (pageIndex > 0 && cells.every((cell) => cell.status === OUT_OF_PERIOD_STATUS)) {
           return null;
