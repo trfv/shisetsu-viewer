@@ -30,7 +30,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
       FACTORY_MODE: ${{ vars.FACTORY_MODE || 'observe' }}
-      FACTORY_OWNER: ${{ github.repository_owner }}
+      # Issue の担当者は人。github.repository_owner は Organization 名になり assign できない
+      FACTORY_OWNER: trfv
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

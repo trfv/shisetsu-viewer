@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { verifyGithubOidc } from "../src/auth/githubOidc.ts";
 
 const ENV = {
-  GITHUB_REPOSITORY: "trfv/shisetsu-viewer",
+  GITHUB_REPOSITORY_ID: "260482567",
   OIDC_AUDIENCE: "https://api.shisetsudb.com",
 };
 const ISSUER = "https://token.actions.githubusercontent.com";
@@ -36,24 +36,38 @@ async function sign(
 }
 
 describe("verifyGithubOidc", () => {
-  it("正しい repository + refs/heads/* → true", async () => {
-    const token = await sign({ repository: ENV.GITHUB_REPOSITORY, ref: "refs/heads/master" });
+  it("正しい repository_id + refs/heads/* → true", async () => {
+    const token = await sign({ repository_id: ENV.GITHUB_REPOSITORY_ID, ref: "refs/heads/master" });
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(true);
   });
 
-  it("repository 不一致 → false", async () => {
-    const token = await sign({ repository: "evil/repo", ref: "refs/heads/master" });
+  it("repository_id 不一致 → false", async () => {
+    const token = await sign({ repository_id: "1", ref: "refs/heads/master" });
+    expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
+  });
+
+  it("移転や改名で repository の名前が変わっても repository_id が一致すれば通る", async () => {
+    const token = await sign({
+      repository: "shisetsudb/shisetsu-viewer",
+      repository_id: ENV.GITHUB_REPOSITORY_ID,
+      ref: "refs/heads/master",
+    });
+    expect(await verifyGithubOidc(token, ENV, getKey)).toBe(true);
+  });
+
+  it("repository の名前が一致しても repository_id が無ければ false", async () => {
+    const token = await sign({ repository: "trfv/shisetsu-viewer", ref: "refs/heads/master" });
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
   });
 
   it("ref が refs/heads/ でない（PR merge ref）→ false", async () => {
-    const token = await sign({ repository: ENV.GITHUB_REPOSITORY, ref: "refs/pull/1/merge" });
+    const token = await sign({ repository_id: ENV.GITHUB_REPOSITORY_ID, ref: "refs/pull/1/merge" });
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
   });
 
   it("issuer 不一致 → false", async () => {
     const token = await sign(
-      { repository: ENV.GITHUB_REPOSITORY, ref: "refs/heads/master" },
+      { repository_id: ENV.GITHUB_REPOSITORY_ID, ref: "refs/heads/master" },
       { iss: "https://evil/" }
     );
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
@@ -61,7 +75,7 @@ describe("verifyGithubOidc", () => {
 
   it("audience 不一致 → false", async () => {
     const token = await sign(
-      { repository: ENV.GITHUB_REPOSITORY, ref: "refs/heads/master" },
+      { repository_id: ENV.GITHUB_REPOSITORY_ID, ref: "refs/heads/master" },
       { aud: "https://wrong/" }
     );
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
@@ -69,14 +83,17 @@ describe("verifyGithubOidc", () => {
 
   it("期限切れ → false", async () => {
     const token = await sign(
-      { repository: ENV.GITHUB_REPOSITORY, ref: "refs/heads/master" },
+      { repository_id: ENV.GITHUB_REPOSITORY_ID, ref: "refs/heads/master" },
       { expired: true }
     );
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(false);
   });
 
   it("workflow_dispatch のブランチ ref も通る", async () => {
-    const token = await sign({ repository: ENV.GITHUB_REPOSITORY, ref: "refs/heads/feature-x" });
+    const token = await sign({
+      repository_id: ENV.GITHUB_REPOSITORY_ID,
+      ref: "refs/heads/feature-x",
+    });
     expect(await verifyGithubOidc(token, ENV, getKey)).toBe(true);
   });
 });
