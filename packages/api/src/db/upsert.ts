@@ -219,20 +219,20 @@ export async function upsertHolidays(
 
 export async function recordScrapeRun(
   db: D1Database,
-  municipality: string,
+  reservationSystem: string,
   runId: string,
   written: number
 ): Promise<void> {
   await db.batch([
     db
       .prepare(
-        `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written)
+        `INSERT INTO scrape_runs (reservation_system, run_id, run_date, fetched_at, rows_written)
        VALUES (?1, ?2, date('now'), ${NOW}, ?3)
-       ON CONFLICT (municipality, run_id) DO UPDATE SET
+       ON CONFLICT (reservation_system, run_id) DO UPDATE SET
          rows_written = scrape_runs.rows_written + excluded.rows_written,
          fetched_at   = excluded.fetched_at`
       )
-      .bind(municipality, runId, written),
+      .bind(reservationSystem, runId, written),
     // 剪定しないと todayRowsWritten と /v1/scrape-runs の全表スキャンが線形に太る
     db.prepare(`DELETE FROM scrape_runs WHERE run_date < date('now', '-35 days')`),
   ]);

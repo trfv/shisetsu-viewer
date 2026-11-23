@@ -38,12 +38,23 @@ async function githubToken(ref = "refs/heads/master"): Promise<string> {
     .sign(githubPrivateKey);
 }
 
-function putReservations(headers: HeadersInit, rows: unknown[], runId = "run-1") {
+function putReservations(
+  headers: HeadersInit,
+  rows: unknown[],
+  target: Record<string, string> = { reservationSystem: "tokyo-kita-cocokita" }
+) {
   return SELF.fetch(`${BASE}/v1/admin/reservations`, {
     method: "PUT",
     headers,
-    body: JSON.stringify({ municipality: "MUNICIPALITY_KOUTOU", runId, rows }),
+    body: JSON.stringify({ ...target, runId: "run-1", rows }),
   });
+}
+
+async function scrapeRunSystems(): Promise<string[]> {
+  const { results } = await env.DB.prepare(
+    `SELECT reservation_system FROM scrape_runs ORDER BY reservation_system`
+  ).all<{ reservation_system: string }>();
+  return results.map((r) => r.reservation_system);
 }
 
 const sampleRows = (n: number) =>
@@ -74,9 +85,39 @@ describe("PUT /v1/admin/reservations 認可", () => {
     expect(body.received).toBe(3);
     expect(body.rowsWritten).toBeGreaterThanOrEqual(3);
     expect(body.deferred).toBe(false);
-    const runs = await SELF.fetch(`${BASE}/v1/scrape-runs`);
-    const runsBody = (await runs.json()) as { items: { municipality: string }[] };
-    expect(runsBody.items.map((r) => r.municipality)).toContain("MUNICIPALITY_KOUTOU");
+    expect(await scrapeRunSystems()).toEqual(["tokyo-kita-cocokita"]);
+  });
+
+  it("reservationSystem が無い旧来の body は自治体と同名の予約システムとして記録する", async () => {
+    const res = await putReservations(adminHeaders(), sampleRows(1), {
+      municipality: "MUNICIPALITY_KITA",
+    });
+    expect(res.status).toBe(200);
+    expect(await scrapeRunSystems()).toEqual(["tokyo-kita"]);
+  });
+
+  it("reservationSystem と municipality の両方があれば reservationSystem で記録する", async () => {
+    const res = await putReservations(adminHeaders(), sampleRows(1), {
+      reservationSystem: "tokyo-kita-cocokita",
+      municipality: "MUNICIPALITY_KITA",
+    });
+    expect(res.status).toBe(200);
+    expect(await scrapeRunSystems()).toEqual(["tokyo-kita-cocokita"]);
+  });
+
+  it("registry に無い予約システムや自治体は 400 で書かない", async () => {
+    for (const target of [
+      { reservationSystem: "tokyo-unknown" },
+      { municipality: "MUNICIPALITY_UNKNOWN" },
+      {},
+    ]) {
+      const res = await putReservations(adminHeaders(), sampleRows(1), target);
+      expect(res.status).toBe(400);
+    }
+    const count = await env.DB.prepare(`SELECT COUNT(*) AS c FROM reservations`).first<{
+      c: number;
+    }>();
+    expect(count?.c).toBe(0);
   });
 
   it("GitHub OIDC Bearer でも 200", async () => {
@@ -103,9 +144,9 @@ describe("PUT /v1/admin/reservations 認可", () => {
 describe("書き込み予算ガード", () => {
   it("当日 rows_written が予算超過なら 202 deferred で書かない", async () => {
     await env.DB.prepare(
-      `INSERT INTO scrape_runs (municipality, run_id, run_date, rows_written) VALUES (?, ?, date('now'), ?)`
+      `INSERT INTO scrape_runs (reservation_system, run_id, run_date, rows_written) VALUES (?, ?, date('now'), ?)`
     )
-      .bind("MUNICIPALITY_KOUTOU", "seed", 90000)
+      .bind("tokyo-koutou", "seed", 90000)
       .run();
     const res = await putReservations(adminHeaders(), sampleRows(3));
     expect(res.status).toBe(202);

@@ -97,7 +97,7 @@ describe("createHttpDataSource", () => {
     fetchMock.mockResolvedValue(jsonResponse({ received: 1, rowsWritten: 1, deferred: false }));
     const ds = createHttpDataSource(ENDPOINT, { adminKey: "secret" });
     const res = await ds.upsertReservations({
-      municipality: "MUNICIPALITY_KITA",
+      reservationSystem: "tokyo-kita",
       runId: "run1",
       rows: [{ institution_id: "i1", date: "2026-08-01", reservation: {} }],
     });

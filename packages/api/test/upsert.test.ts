@@ -384,21 +384,21 @@ describe("holidays / scrape_runs / 予算台帳", () => {
       .first<{ name: string }>();
     expect(h?.name).toBe("山の日");
 
-    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 100);
-    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 20);
-    await recordScrapeRun(env.DB, "MUNICIPALITY_BUNKYO", "run-1", 50);
+    await recordScrapeRun(env.DB, "tokyo-koutou", "run-1", 100);
+    await recordScrapeRun(env.DB, "tokyo-koutou", "run-1", 20);
+    await recordScrapeRun(env.DB, "tokyo-bunkyo", "run-1", 50);
     expect(await todayRowsWritten(env.DB)).toBe(170);
   });
 
   it("recordScrapeRun は 35 日より古い台帳行を剪定し、新しい行は残す", async () => {
-    const insert = `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written)
+    const insert = `INSERT INTO scrape_runs (reservation_system, run_id, run_date, fetched_at, rows_written)
                     VALUES (?, ?, ?, ?, ?)`;
     await env.DB.prepare(insert)
-      .bind("MUNICIPALITY_KOUTOU", "old-run", "2026-01-01", "2026-01-01T05:00:00.000Z", 10)
+      .bind("tokyo-koutou", "old-run", "2026-01-01", "2026-01-01T05:00:00.000Z", 10)
       .run();
     await env.DB.prepare(insert)
       .bind(
-        "MUNICIPALITY_KOUTOU",
+        "tokyo-koutou",
         "recent-run",
         new Date(Date.now() - 10 * 86400_000).toISOString().slice(0, 10),
         "2026-07-05T05:00:00.000Z",
@@ -406,7 +406,7 @@ describe("holidays / scrape_runs / 予算台帳", () => {
       )
       .run();
 
-    await recordScrapeRun(env.DB, "MUNICIPALITY_KOUTOU", "run-1", 100);
+    await recordScrapeRun(env.DB, "tokyo-koutou", "run-1", 100);
 
     const { results } = await env.DB.prepare(`SELECT run_id FROM scrape_runs ORDER BY run_id`).all<{
       run_id: string;

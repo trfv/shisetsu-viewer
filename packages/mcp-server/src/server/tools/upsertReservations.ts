@@ -22,7 +22,9 @@ export function registerUpsertReservations(server: McpServer, write: WritableDat
         openWorldHint: false,
       },
       inputSchema: {
-        municipality: z.string().describe("自治体キー (MUNICIPALITY_*)。scrape_runs 記録に使用"),
+        reservationSystem: z
+          .string()
+          .describe("予約システムのキー (例: tokyo-kita-cocokita)。scrape_runs 記録に使用"),
         runId: z
           .string()
           .optional()
@@ -49,7 +51,7 @@ export function registerUpsertReservations(server: McpServer, write: WritableDat
       for (let i = 0; i < args.data.length; i += CHUNK_SIZE) {
         const chunk = args.data.slice(i, i + CHUNK_SIZE);
         const res = await write.upsertReservations({
-          municipality: args.municipality,
+          reservationSystem: args.reservationSystem,
           runId,
           rows: chunk,
         });

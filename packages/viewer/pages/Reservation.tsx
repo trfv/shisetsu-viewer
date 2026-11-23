@@ -149,10 +149,12 @@ const ReservationResults = ({
   const scrapeRuns = use(scrapeRunsPromise);
 
   const rows = useMemo<ReservationSearchRow[]>(() => {
-    const fetchedAt = new Map(scrapeRuns.items.map((r) => [r.municipality, r.fetched_at]));
+    const fetchedAt = new Map(scrapeRuns.items.map((r) => [r.reservation_system, r.fetched_at]));
     return items.map((hit) => ({
       id: `${hit.institution.id}_${hit.reservation.date}`,
-      fetched_at: fetchedAt.get(hit.institution.municipality),
+      fetched_at: hit.institution.reservation_system
+        ? fetchedAt.get(hit.institution.reservation_system)
+        : undefined,
       ...hit,
     }));
   }, [items, scrapeRuns]);

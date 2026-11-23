@@ -29,6 +29,7 @@ export {
   getAllMunicipalityTargets,
   RESERVATION_SYSTEMS,
   getReservationSystem,
+  getPrimaryReservationSystem,
 } from "./registry.ts";
 
 export type {

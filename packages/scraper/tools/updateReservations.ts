@@ -44,7 +44,7 @@ for (const target of targets) {
   console.log(`${target}: total: ${rows.length}`);
 
   const runId = process.env["GITHUB_RUN_ID"] ?? new Date().toISOString();
-  const written = await upsertReservations(rows, municipality, runId);
+  const written = await upsertReservations(rows, target, municipality, runId);
   console.log(`${target}: rows_written: ${written}`);
 }
 

@@ -287,6 +287,7 @@ const ReservationTabContent = ({
     <ReservationTab
       id={id}
       municipality={detail.municipality as SupportedMunicipality}
+      reservationSystem={detail.reservation_system}
       divisionLabels={detail.division_labels}
     />
   );
@@ -295,10 +296,12 @@ const ReservationTabContent = ({
 const ReservationTab = ({
   id,
   municipality,
+  reservationSystem,
   divisionLabels,
 }: {
   id: string;
   municipality: SupportedMunicipality;
+  reservationSystem: string | null;
   divisionLabels: Partial<Record<string, string>> | undefined;
 }) => {
   const isMobile = useIsMobile();
@@ -322,7 +325,9 @@ const ReservationTab = ({
   const { sentinelRef, sentinelIndex } = useInfiniteScroll(fetchMore, reservations.length);
 
   const fetchedAt = formatShortDatetime(
-    scrapeRuns.items.find((r) => r.municipality === municipality)?.fetched_at
+    reservationSystem
+      ? scrapeRuns.items.find((r) => r.reservation_system === reservationSystem)?.fetched_at
+      : undefined
   );
 
   return (

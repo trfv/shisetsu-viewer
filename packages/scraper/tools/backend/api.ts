@@ -65,6 +65,7 @@ async function putJson<T>(path: string, body: unknown): Promise<T> {
 
 export async function upsertReservations(
   rows: ReservationRow[],
+  reservationSystem: string,
   municipality: string,
   runId: string
 ): Promise<number> {
@@ -72,6 +73,7 @@ export async function upsertReservations(
   for (let i = 0; i < rows.length; i += CHUNK) {
     const chunk = rows.slice(i, i + CHUNK);
     const res = await putJson<UpsertResponse>("/v1/admin/reservations", {
+      reservationSystem,
       municipality,
       runId,
       rows: chunk,

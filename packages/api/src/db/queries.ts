@@ -1,18 +1,19 @@
-import type {
-  BuildingDetail,
-  BuildingDto,
-  BuildingsQueryParams,
-  InstitutionDetail,
-  InstitutionSummary,
-  InstitutionsQueryParams,
-  Page,
-  ReservationDto,
-  ReservationExportRow,
-  ReservationSearchHit,
-  ReservationSearchQueryParams,
-  Holiday,
-  ScrapeRun,
-  UsageFeeEntry,
+import {
+  getReservationSystem,
+  type BuildingDetail,
+  type BuildingDto,
+  type BuildingsQueryParams,
+  type InstitutionDetail,
+  type InstitutionSummary,
+  type InstitutionsQueryParams,
+  type Page,
+  type ReservationDto,
+  type ReservationExportRow,
+  type ReservationSearchHit,
+  type ReservationSearchQueryParams,
+  type Holiday,
+  type ScrapeRun,
+  type UsageFeeEntry,
 } from "@shisetsu-viewer/shared";
 
 import { decodeCursor, encodeCursor } from "./cursor.ts";
@@ -69,6 +70,7 @@ interface InstitutionRow {
   b_kana: string;
   b_system_name: string;
   b_address: string;
+  b_reservation_system: string | null;
   institution: string;
   institution_kana: string;
   institution_system_name: string;
@@ -122,6 +124,7 @@ function toInstitutionDetail(row: InstitutionRow): InstitutionDetail {
     lottery_period: row.lottery_period,
     note: row.note,
     division_labels: parseJsonObject(row.division_labels),
+    reservation_system: row.b_reservation_system,
     updated_at: row.updated_at,
   };
 }
@@ -172,7 +175,8 @@ function pushIn(
 // 部屋の行にある建物の欄（building / address など）は写しなので読まない。b_ 接頭辞で buildings から引く
 const INSTITUTION_COLUMNS = `
   i.*, b.prefecture AS b_prefecture, b.municipality AS b_municipality, b.name AS b_name,
-  b.kana AS b_kana, b.system_name AS b_system_name, b.address AS b_address`;
+  b.kana AS b_kana, b.system_name AS b_system_name, b.address AS b_address,
+  b.reservation_system AS b_reservation_system`;
 
 // CROSS JOIN で建物を外側に固定する。統計が無いとプランナーが部屋を外側に選び、全件を並べ替えて LIMIT で止まらない
 const INSTITUTION_LIST_FROM = `
@@ -489,6 +493,7 @@ interface SearchRow extends ReservationRow {
   i_institution: string;
   i_institution_size: string;
   i_division_labels: string;
+  i_reservation_system: string | null;
 }
 
 export async function searchReservations(
@@ -550,7 +555,8 @@ export async function searchReservations(
            ${IS_HOLIDAY_EXPR("r.date")} AS is_holiday,
            i.id AS i_id, i.building_id AS i_building_id, b.municipality AS i_municipality,
            b.name AS i_building, i.institution AS i_institution,
-           i.institution_size AS i_institution_size, i.division_labels AS i_division_labels
+           i.institution_size AS i_institution_size, i.division_labels AS i_division_labels,
+           b.reservation_system AS i_reservation_system
     FROM reservations r
     JOIN institutions i ON i.id = r.institution_id
     JOIN buildings b ON b.id = i.building_id
@@ -577,6 +583,7 @@ export async function searchReservations(
         institution: row.i_institution,
         institution_size: row.i_institution_size,
         division_labels: parseJsonObject(row.i_division_labels),
+        reservation_system: row.i_reservation_system,
       },
     })),
     pageInfo: {
@@ -644,8 +651,19 @@ export async function exportReservations(
 export async function listScrapeRuns(db: D1Database): Promise<ScrapeRun[]> {
   const { results } = await db
     .prepare(
-      `SELECT municipality, MAX(fetched_at) AS fetched_at FROM scrape_runs GROUP BY municipality`
+      `SELECT reservation_system, MAX(fetched_at) AS fetched_at FROM scrape_runs GROUP BY reservation_system`
     )
-    .all<{ municipality: string; fetched_at: string }>();
-  return results.map((r) => ({ municipality: r.municipality, fetched_at: r.fetched_at }));
+    .all<{ reservation_system: string; fetched_at: string }>();
+  return results.flatMap((r) => {
+    const system = getReservationSystem(r.reservation_system);
+    return system
+      ? [
+          {
+            reservation_system: r.reservation_system,
+            municipality: system.municipality,
+            fetched_at: r.fetched_at,
+          },
+        ]
+      : [];
+  });
 }

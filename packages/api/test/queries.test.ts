@@ -136,6 +136,11 @@ describe("getInstitutionDetail", () => {
     expect(detail?.division_labels).toEqual({});
   });
 
+  it("建物の予約システムを返す", async () => {
+    const detail = await getInstitutionDetail(env.DB, INSTITUTIONS[2].id);
+    expect(detail?.reservation_system).toBe("tokyo-toshima");
+  });
+
   it("存在しない ID は null", async () => {
     const detail = await getInstitutionDetail(env.DB, "99999999-9999-4999-8999-999999999999");
     expect(detail).toBeNull();
@@ -215,6 +220,7 @@ describe("searchReservations", () => {
     expect(byBuilding.items[0]?.institution).toMatchObject({
       building_id: BUILDINGS[0].id,
       building: "会館A",
+      reservation_system: "tokyo-koutou",
     });
     const byOtherBuilding = await searchReservations(
       env.DB,
@@ -400,11 +406,27 @@ describe("生成列のセマンティクス（IMMV 同値）", () => {
 });
 
 describe("listScrapeRuns", () => {
-  it("自治体ごとに最新の fetched_at を返す", async () => {
+  it("予約システムごとに最新の fetched_at と自治体を返し、registry に無い予約システムは返さない", async () => {
     const runs = await listScrapeRuns(env.DB);
-    const byMuni = new Map(runs.map((r) => [r.municipality, r.fetched_at]));
-    expect(byMuni.get("MUNICIPALITY_KOUTOU")).toBe("2026-08-01T17:23:00.000Z");
-    expect(byMuni.get("MUNICIPALITY_TOSHIMA")).toBe("2026-08-01T05:25:00.000Z");
+    expect(
+      runs.toSorted((a, b) => a.reservation_system.localeCompare(b.reservation_system))
+    ).toEqual([
+      {
+        reservation_system: "tokyo-kita",
+        municipality: "MUNICIPALITY_KITA",
+        fetched_at: "2026-08-01T05:25:00.000Z",
+      },
+      {
+        reservation_system: "tokyo-kita-cocokita",
+        municipality: "MUNICIPALITY_KITA",
+        fetched_at: "2026-08-01T06:10:00.000Z",
+      },
+      {
+        reservation_system: "tokyo-koutou",
+        municipality: "MUNICIPALITY_KOUTOU",
+        fetched_at: "2026-08-01T17:23:00.000Z",
+      },
+    ]);
   });
 });
 

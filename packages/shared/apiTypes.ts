@@ -26,7 +26,10 @@ export type InstitutionSummary = Pick<
   | "is_equipped_piano"
 > & { updated_at: string };
 
-export type InstitutionDetail = Institution & { updated_at: string };
+export type InstitutionDetail = Institution & {
+  reservation_system: string | null;
+  updated_at: string;
+};
 
 export type BuildingDto = Building & { updated_at: string };
 
@@ -58,7 +61,7 @@ export interface ReservationSearchHit {
     | "institution"
     | "institution_size"
     | "division_labels"
-  >;
+  > & { reservation_system: string | null };
 }
 
 /** 導出値と JOIN 結果を持たない。parity 突合は institution_id / date / reservation しか見ない */
@@ -74,13 +77,16 @@ export interface Holiday {
 }
 
 export interface ScrapeRun {
+  reservation_system: string;
   municipality: string; // MUNICIPALITY_*
   fetched_at: string; // ISO 8601
 }
 
 /** is_holiday / 空き 3 フラグは送らない（前者はクエリ時導出、後者は D1 の生成列） */
 export interface UpsertReservationsRequest {
-  municipality: string; // MUNICIPALITY_*
+  reservationSystem?: string;
+  /** reservationSystem を送らない旧クライアント用。自治体の主の予約システムとして記録する */
+  municipality?: string; // MUNICIPALITY_*
   runId: string; // GitHub run id またはローカル実行のタイムスタンプ
   rows: {
     institution_id: string;

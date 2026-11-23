@@ -947,6 +947,14 @@ export function getScraperTargets(): string[] {
     .map((s) => s.key);
 }
 
+export function getPrimaryReservationSystem(
+  municipality: string
+): ReservationSystemConfig | undefined {
+  if (!Object.hasOwn(MUNICIPALITIES, municipality)) return undefined;
+  const m = MUNICIPALITIES[municipality as MunicipalityKey];
+  return getReservationSystem(`${m.prefecture}-${m.slug}`);
+}
+
 export function getMunicipalityKeyByScraperTarget(target: string): MunicipalityKey | undefined {
   return getReservationSystem(target)?.municipality;
 }

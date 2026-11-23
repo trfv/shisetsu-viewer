@@ -249,17 +249,28 @@ describe("Detail Page", () => {
       await expect.element(screen.getByText("更新日時")).toBeInTheDocument();
     });
 
-    it("施設の地区の最終取得日時を各行に表示する", async () => {
-      useMswDetailMock(defaultDetail, [
-        createMockReservationDto(),
-        createMockReservationDto({ date: "2025-06-20" }),
-      ]);
+    it("施設の予約システムの最終取得日時を各行に表示し、同じ自治体の別の予約システムの日時は出さない", async () => {
+      useMswDetailMock(
+        createMockInstitutionDetail({
+          municipality: "MUNICIPALITY_KITA",
+          reservation_system: "tokyo-kita-cocokita",
+        }),
+        [createMockReservationDto(), createMockReservationDto({ date: "2025-06-20" })]
+      );
       worker.use(
         http.get(`${BASE}/v1/scrape-runs`, () =>
           HttpResponse.json({
             items: [
-              { municipality: "MUNICIPALITY_KOUTOU", fetched_at: "2025-06-15T01:23:45.000Z" },
-              { municipality: "MUNICIPALITY_KITA", fetched_at: "2025-06-14T00:00:00.000Z" },
+              {
+                reservation_system: "tokyo-kita",
+                municipality: "MUNICIPALITY_KITA",
+                fetched_at: "2025-06-15T01:23:45.000Z",
+              },
+              {
+                reservation_system: "tokyo-kita-cocokita",
+                municipality: "MUNICIPALITY_KITA",
+                fetched_at: "2025-06-14T00:00:00.000Z",
+              },
             ],
           })
         )
@@ -273,8 +284,8 @@ describe("Detail Page", () => {
 
       await user.click(screen.getByRole("tab", { name: "予約状況" }));
 
-      await expect.element(screen.getByText("06/15 10:23").nth(1)).toBeInTheDocument();
-      expect(screen.getByText("06/14 09:00").elements()).toHaveLength(0);
+      await expect.element(screen.getByText("06/14 09:00").nth(1)).toBeInTheDocument();
+      expect(screen.getByText("06/15 10:23").elements()).toHaveLength(0);
     });
 
     it("予約クエリの startDate にレンダ時点の本日を渡す", async () => {
