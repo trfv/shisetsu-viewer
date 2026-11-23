@@ -182,6 +182,7 @@ describe("Building Page", () => {
           building: "テスト文化センター",
           institution: "音楽練習室B",
           institution_size: "INSTITUTION_SIZE_MEDIUM",
+          reservation_system: "tokyo-koutou",
         },
       }),
     ]);
