@@ -218,7 +218,8 @@ export const scraper = defineScraper({
     return page;
   },
 
-  async extract(page, target, pageCount) {
+  async extract(firstPage, target, pageCount) {
+    let page = firstPage;
     let lastDate: string | undefined;
     let recoveries = 0;
     return collectPaginated({
@@ -238,15 +239,23 @@ export const scraper = defineScraper({
             `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${lastDate} の次の日まで送り直す`
           );
           // 送り直しの途中でもエラーページが出るので、その失敗も 1 回として数えて続ける
-          // エラーページのあとはしばらく入り直してもエラーになるので、間を空けて cookie も捨てる
-          await page.waitForTimeout(60_000 * recoveries);
+          // エラーページを出したタブでは、cookie を捨てて間を空けても入り直した先がまたエラーになる
           await page.context().clearCookies();
+          page = await page.context().newPage();
+          await reduceRequests(page);
           failed = await search(page, target.facilityName)
             .then(() => skipPast(page, lastDate ?? ""))
             .then(() => false)
-            .catch((e: unknown) => {
+            .catch(async (e: unknown) => {
               console.warn(
-                `[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]} url=${page.url()}`
+                `[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]} url=${page.url()} body=${JSON.stringify(
+                  (
+                    await page
+                      .locator("body")
+                      .innerText()
+                      .catch(() => "")
+                  ).slice(0, 80)
+                )}`
               );
               return true;
             });
