@@ -169,7 +169,8 @@ export const scraper = defineScraper({
       label: target.facilityName,
       // 長く送っていると、サーバが途中で時々エラーページを返す。その日から検索し直して続ける
       extractPage: async () => {
-        while (await isErrorPage(page)) {
+        let failed = await isErrorPage(page);
+        while (failed) {
           if (lastDate === undefined || recoveries >= MAX_RECOVERIES) {
             throw new Error(
               `${target.facilityName}: ${ERROR_PAGE_TEXT}（検索し直し ${recoveries} 回）`
@@ -179,7 +180,15 @@ export const scraper = defineScraper({
           console.warn(
             `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${nextDate(lastDate)} から検索し直す`
           );
-          await search(page, target.facilityName, nextDate(lastDate));
+          // 検索条件画面も時々選択肢の読み込みが間に合わないので、検索し直しの失敗も 1 回として数えて続ける
+          failed = await search(page, target.facilityName, nextDate(lastDate))
+            .then(() => isErrorPage(page))
+            .catch((e: unknown) => {
+              console.warn(
+                `[${target.facilityName}] 検索し直しに失敗: ${String(e).split("\n")[0]}`
+              );
+              return true;
+            });
         }
         const days = await extractDay(page);
         lastDate = toISODateString(days[0]?.date ?? "");
