@@ -41,7 +41,7 @@ import { formatInstitutionName, formatUsageFee } from "../utils/institution";
 import {
   RESERVATION_EXCLUDED_MUNICIPALITIES,
   getReservationDivisionLabel,
-  ReservationStatusMap,
+  getReservationStatusLabel,
   SupportedMunicipality,
 } from "../utils/municipality";
 import { sortByReservationDivision } from "../utils/reservation";
@@ -80,7 +80,7 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(institution?.municipality, institution?.weekday_usage_fee)}
+            value={formatUsageFee(institution, institution?.weekday_usage_fee)}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -89,7 +89,7 @@ const InstitutionTab = ({
             loading={loading}
             readOnly={true}
             size="full"
-            value={formatUsageFee(institution?.municipality, institution?.holiday_usage_fee)}
+            value={formatUsageFee(institution, institution?.holiday_usage_fee)}
           />
         </div>
         <div className={styles["institutionRow"]}>
@@ -268,27 +268,12 @@ const ReservationTabContent = ({
   institution: Promise<InstitutionDetail>;
 }) => {
   const detail = use(institution);
-  return (
-    <ReservationTab
-      id={id}
-      municipality={detail.municipality as SupportedMunicipality}
-      reservationSystem={detail.reservation_system}
-      divisionLabels={detail.division_labels}
-    />
-  );
+  return <ReservationTab id={id} institution={detail} />;
 };
 
-const ReservationTab = ({
-  id,
-  municipality,
-  reservationSystem,
-  divisionLabels,
-}: {
-  id: string;
-  municipality: SupportedMunicipality;
-  reservationSystem: string | null;
-  divisionLabels: Partial<Record<string, string>> | undefined;
-}) => {
+const ReservationTab = ({ id, institution }: { id: string; institution: InstitutionDetail }) => {
+  const municipality = institution.municipality as SupportedMunicipality;
+  const reservationSystem = institution.reservation_system;
   const isMobile = useIsMobile();
   // モジュール読み込み時に確定させると、長寿命タブで日付がずれる。
   const [today] = useState(() => new Date());
@@ -336,10 +321,8 @@ const ReservationTab = ({
                     // oxlint-disable-next-line react/no-array-index-key
                     key={i}
                   >
-                    <span>
-                      {getReservationDivisionLabel(municipality, division, divisionLabels)}
-                    </span>
-                    <span>{ReservationStatusMap[municipality]?.[status]}</span>
+                    <span>{getReservationDivisionLabel(institution, division)}</span>
+                    <span>{getReservationStatusLabel(institution, status)}</span>
                   </div>
                 ))}
               </div>
@@ -375,7 +358,7 @@ const ReservationTab = ({
                     size="small"
                     variant="head"
                   >
-                    {getReservationDivisionLabel(municipality, division, divisionLabels)}
+                    {getReservationDivisionLabel(institution, division)}
                   </TableCell>
                 ))}
                 <TableCell
@@ -412,7 +395,7 @@ const ReservationTab = ({
                       key={i}
                       size="small"
                     >
-                      {ReservationStatusMap[municipality]?.[status]}
+                      {getReservationStatusLabel(institution, status)}
                     </TableCell>
                   ))}
                   <TableCell className={styles["reservationTableBodyCell"]} size="small">

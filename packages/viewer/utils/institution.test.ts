@@ -33,38 +33,68 @@ describe("formatUsageFee", () => {
   });
 
   test("returns empty string for undefined usageFee", () => {
-    expect(formatUsageFee("MUNICIPALITY_KOUTOU", undefined)).toBe("");
+    expect(
+      formatUsageFee(
+        { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+        undefined
+      )
+    ).toBe("");
   });
 
   test("returns empty string for empty usageFee array", () => {
-    expect(formatUsageFee("MUNICIPALITY_KOUTOU", [])).toBe("");
+    expect(
+      formatUsageFee(
+        { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+        []
+      )
+    ).toBe("");
   });
 
   test("formats single fee entry for KOUTOU", () => {
-    const result = formatUsageFee("MUNICIPALITY_KOUTOU", [
+    const result = formatUsageFee(
+      { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+      [{ division: FeeDivision.MORNING, fee: 1000 }]
+    );
+    expect(result).toBe("午前: ¥1,000");
+  });
+
+  test("formats multiple fee entries joined with space", () => {
+    const result = formatUsageFee(
+      { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+      [
+        { division: FeeDivision.MORNING, fee: 1000 },
+        { division: FeeDivision.AFTERNOON, fee: 2000 },
+        { division: FeeDivision.EVENING, fee: 1500 },
+      ]
+    );
+    expect(result).toBe("午前: ¥1,000 午後: ¥2,000 夜間: ¥1,500");
+  });
+
+  test("handles unknown fee division gracefully", () => {
+    const result = formatUsageFee(
+      { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+      [{ division: "UNKNOWN_DIVISION", fee: 500 }]
+    );
+    expect(result).toBe(": ¥500");
+  });
+
+  test("予約システムのラベルで出す", () => {
+    const result = formatUsageFee(
+      { municipality: "MUNICIPALITY_KITA", reservation_system: "tokyo-kita-cocokita" },
+      [{ division: FeeDivision.AFTERNOON_ONE, fee: 1000 }]
+    );
+    expect(result).toBe("午後1: ¥1,000");
+  });
+
+  test("予約システムを持たない部屋は自治体と同名の予約システムのラベルで出す", () => {
+    const result = formatUsageFee({ municipality: "MUNICIPALITY_KITA", reservation_system: null }, [
       { division: FeeDivision.MORNING, fee: 1000 },
     ]);
     expect(result).toBe("午前: ¥1,000");
   });
 
-  test("formats multiple fee entries joined with space", () => {
-    const result = formatUsageFee("MUNICIPALITY_KOUTOU", [
-      { division: FeeDivision.MORNING, fee: 1000 },
-      { division: FeeDivision.AFTERNOON, fee: 2000 },
-      { division: FeeDivision.EVENING, fee: 1500 },
-    ]);
-    expect(result).toBe("午前: ¥1,000 午後: ¥2,000 夜間: ¥1,500");
-  });
-
-  test("handles unknown fee division gracefully", () => {
-    const result = formatUsageFee("MUNICIPALITY_KOUTOU", [
-      { division: "UNKNOWN_DIVISION", fee: 500 },
-    ]);
-    expect(result).toBe(": ¥500");
-  });
-
   test("handles unknown municipality gracefully", () => {
-    const result = formatUsageFee("UNKNOWN_MUNICIPALITY", [
+    const result = formatUsageFee({ municipality: "UNKNOWN_MUNICIPALITY" }, [
       { division: FeeDivision.MORNING, fee: 1000 },
     ]);
     expect(result).toBe(": ¥1,000");

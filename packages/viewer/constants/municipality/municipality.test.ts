@@ -1,11 +1,11 @@
-import { MUNICIPALITIES, ReservationStatus } from "@shisetsu-viewer/shared";
+import { RESERVATION_SYSTEMS, ReservationStatus } from "@shisetsu-viewer/shared";
 import { describe, it, expect } from "vitest";
 
-const municipalities = Object.values(MUNICIPALITIES).map((m) => ({
-  name: m.label,
-  status: m.reservationStatus,
-  division: m.reservationDivision,
-  fee: m.feeDivision,
+const municipalities = Object.values(RESERVATION_SYSTEMS).map((s) => ({
+  name: s.label,
+  status: s.reservationStatus,
+  division: s.reservationDivision,
+  fee: s.feeDivision,
 }));
 
 describe("municipality constants", () => {

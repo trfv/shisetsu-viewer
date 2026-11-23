@@ -66,14 +66,22 @@ describe("formatReservationMap", () => {
   });
 
   test("returns empty string for undefined obj", () => {
-    expect(formatReservationMap("MUNICIPALITY_KOUTOU", undefined)).toBe("");
+    expect(
+      formatReservationMap(
+        { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+        undefined
+      )
+    ).toBe("");
   });
 
   test("formats single reservation entry for KOUTOU", () => {
     const obj = {
       [ReservationDivision.MORNING]: "RESERVATION_STATUS_VACANT",
     };
-    const result = formatReservationMap("MUNICIPALITY_KOUTOU", obj);
+    const result = formatReservationMap(
+      { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+      obj
+    );
     expect(result).toBe("午前: 空き");
   });
 
@@ -84,7 +92,10 @@ describe("formatReservationMap", () => {
       [ReservationDivision.EVENING]: "RESERVATION_STATUS_STATUS_2",
       [ReservationDivision.MORNING_ONE]: "RESERVATION_STATUS_VACANT",
     };
-    const result = formatReservationMap("MUNICIPALITY_KOUTOU", obj);
+    const result = formatReservationMap(
+      { municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" },
+      obj
+    );
     const lines = result.split("\n");
     expect(lines).toHaveLength(2);
     expect(lines[0]).toContain("午前: 空き");
@@ -97,15 +108,20 @@ describe("formatReservationMap", () => {
     expect(formatReservationMap(undefined, undefined)).toBe("");
   });
 
-  test("施設単位ラベルを優先し、キーに無い区分は自治体ラベルに落ちる", () => {
+  test("部屋の区分ラベルを優先し、キーに無い区分は予約システムのラベルに落ちる", () => {
     const obj = {
       [ReservationDivision.MORNING]: "RESERVATION_STATUS_VACANT",
       [ReservationDivision.AFTERNOON]: "RESERVATION_STATUS_VACANT",
     };
-    const result = formatReservationMap("MUNICIPALITY_KITA", obj, {
-      [ReservationDivision.MORNING]: "9:00-11:45",
-    });
-    expect(result).toBe("9:00-11:45: ○ 13:00-17:00: ○");
+    const result = formatReservationMap(
+      {
+        municipality: "MUNICIPALITY_KITA",
+        reservation_system: "tokyo-kita",
+        division_labels: { [ReservationDivision.MORNING]: "9:00-11:30" },
+      },
+      obj
+    );
+    expect(result).toBe("9:00-11:30: ○ 13:00-17:00: ○");
   });
 });
 

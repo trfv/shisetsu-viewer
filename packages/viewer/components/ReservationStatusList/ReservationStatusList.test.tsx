@@ -9,7 +9,7 @@ describe("ReservationStatusList", () => {
   it("区分を午前・午後・夜間の順に、区分名とステータスの組で並べる", async () => {
     await renderWithProviders(
       <ReservationStatusList
-        municipality="MUNICIPALITY_KOUTOU"
+        institution={{ municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" }}
         reservation={{
           [ReservationDivision.EVENING]: ReservationStatus.VACANT,
           [ReservationDivision.MORNING]: ReservationStatus.STATUS_1,
@@ -29,7 +29,7 @@ describe("ReservationStatusList", () => {
   it("空きの区分だけを強調する", async () => {
     await renderWithProviders(
       <ReservationStatusList
-        municipality="MUNICIPALITY_KOUTOU"
+        institution={{ municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" }}
         reservation={{
           [ReservationDivision.MORNING]: ReservationStatus.VACANT,
           [ReservationDivision.AFTERNOON]: ReservationStatus.STATUS_1,
@@ -45,19 +45,37 @@ describe("ReservationStatusList", () => {
   it("施設単位の区分ラベルを優先する", async () => {
     await renderWithProviders(
       <ReservationStatusList
-        divisionLabels={{ [ReservationDivision.MORNING]: "9:00-11:45" }}
-        municipality="MUNICIPALITY_KITA"
+        institution={{
+          municipality: "MUNICIPALITY_KITA",
+          reservation_system: "tokyo-kita",
+          division_labels: { [ReservationDivision.MORNING]: "9:00-11:30" },
+        }}
         reservation={{ [ReservationDivision.MORNING]: ReservationStatus.VACANT }}
       />
     );
 
-    await expect.element(screen.getByText("9:00-11:45")).toBeInTheDocument();
+    await expect.element(screen.getByText("9:00-11:30")).toBeInTheDocument();
+  });
+
+  it("同じ自治体でも予約システムのラベルで出す", async () => {
+    await renderWithProviders(
+      <ReservationStatusList
+        institution={{
+          municipality: "MUNICIPALITY_KITA",
+          reservation_system: "tokyo-kita-cocokita",
+        }}
+        reservation={{ [ReservationDivision.MORNING]: ReservationStatus.VACANT }}
+      />
+    );
+
+    const items = document.querySelectorAll("li");
+    expect([...items].map((li) => li.textContent)).toEqual(["9:00-11:45○"]);
   });
 
   it("新しく空いた区分に NEW を付ける。午前①②のような分割区分にも付く", async () => {
     await renderWithProviders(
       <ReservationStatusList
-        municipality="MUNICIPALITY_KOUTOU"
+        institution={{ municipality: "MUNICIPALITY_KOUTOU", reservation_system: "tokyo-koutou" }}
         newlyVacantDivisions={getNewlyVacantDivisions({
           is_morning_newly_vacant: true,
           is_afternoon_newly_vacant: false,

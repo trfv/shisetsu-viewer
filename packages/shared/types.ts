@@ -164,7 +164,7 @@ export type Institution = {
   layout_image_url: string;
   lottery_period: string;
   note: string;
-  /** キーに無い区分は registry の reservationDivision に落ちる。同じ自治体の別予約システムが同じ enum 値に別の時刻を持つとき用 */
+  /** キーに無い区分は予約システムの reservationDivision に落ちる。同じ予約システムでも部屋ごとに時刻が違うとき用 */
   division_labels?: Partial<Record<string, string>>;
 };
 

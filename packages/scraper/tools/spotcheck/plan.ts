@@ -6,7 +6,6 @@ import { parseArgs } from "node:util";
 
 import {
   MUNICIPALITIES,
-  getMunicipalityBySlug,
   getReservationSystem,
   type MunicipalityConfig,
 } from "@shisetsu-viewer/shared";
@@ -101,9 +100,8 @@ function municipalityValue(target: string): string {
 }
 
 function divisionLabelsForTarget(target: string): string[] {
-  const slug = target.split("-")[1];
-  const municipality = slug !== undefined ? getMunicipalityBySlug(slug) : undefined;
-  return municipality ? Object.values(municipality.reservationDivision) : [];
+  const system = getReservationSystem(target);
+  return system ? Object.values(system.reservationDivision) : [];
 }
 
 interface InstitutionRow {

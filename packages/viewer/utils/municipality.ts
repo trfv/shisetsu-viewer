@@ -1,4 +1,8 @@
-import { MUNICIPALITIES, type MunicipalityKey } from "@shisetsu-viewer/shared";
+import {
+  getReservationLabels,
+  MUNICIPALITIES,
+  type MunicipalityKey,
+} from "@shisetsu-viewer/shared";
 
 export const SupportedMunicipalities = [
   "MUNICIPALITY_KOUTOU",
@@ -38,24 +42,29 @@ export const RESERVATION_MUNICIPALITIES: SupportedMunicipality[] = SupportedMuni
   (k) => !RESERVATION_EXCLUDED_MUNICIPALITIES.includes(k)
 );
 
-const ReservationDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
-  SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationDivision])
-);
+export type LabelSource = {
+  municipality: string;
+  reservation_system?: string | null | undefined;
+  division_labels?: Partial<Record<string, string>> | undefined;
+};
 
-// 施設単位ラベルを優先する。同じ自治体の別予約システムが同じ区分に別の時刻を持つことがある。
+const labelsOf = (source: LabelSource) =>
+  getReservationLabels(source.reservation_system, source.municipality);
+
+// 部屋の division_labels を先に見る。同じ予約システムでも部屋ごとに時刻が違う館がある。
 export const getReservationDivisionLabel = (
-  municipality: string,
-  division: string,
-  divisionLabels?: Partial<Record<string, string>>
+  source: LabelSource,
+  division: string
 ): string | undefined =>
-  divisionLabels?.[division] ?? ReservationDivisionMap[municipality]?.[division];
+  source.division_labels?.[division] ?? labelsOf(source)?.reservationDivision[division];
 
-export const FeeDivisionMap: Readonly<Record<string, Record<string, string>>> = Object.fromEntries(
-  SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].feeDivision])
-);
+export const getReservationStatusLabel = (
+  source: LabelSource,
+  status: string
+): string | undefined => labelsOf(source)?.reservationStatus[status];
 
-export const ReservationStatusMap: Readonly<Record<string, Record<string, string>>> =
-  Object.fromEntries(SupportedMunicipalities.map((k) => [k, MUNICIPALITIES[k].reservationStatus]));
+export const getFeeDivisionLabel = (source: LabelSource, division: string): string | undefined =>
+  labelsOf(source)?.feeDivision[division];
 
 // 全部外した状態を空配列で表すと m ごと消え、全地区に戻ってしまう。
 const NO_MUNICIPALITY = "none";

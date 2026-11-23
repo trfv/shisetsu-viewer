@@ -4,7 +4,6 @@ import { pKashikanHooks, type PKashikanTarget } from "../engines/pKashikan.ts";
 
 // 4 コマ部屋は午前・午後・夜間に寄せる（「午前空き」等の検索に載せるため）。
 // 午後の 2 コマは AFTERNOON_ONE / _TWO（D1 の is_afternoon_vacant は両方空きで真）。
-// 午前・夜間は北区で共有する registry ラベル（OpenReaf の時刻）と違うため、施設 JSON の division_labels で実時刻を出す。
 // viewer は enum 順に並べるため、6 コマ・9 コマ部屋で共有する 19:00-20:45 は最後の DIVISION_19 に置く
 export const DIVISION_MAP: Record<string, Division> = {
   "": "RESERVATION_DIVISION_INVALID",

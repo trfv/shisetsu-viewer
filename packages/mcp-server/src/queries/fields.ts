@@ -46,6 +46,8 @@ export const INSTITUTION_DETAIL_FIELDS = [
   "layout_image_url",
   "lottery_period",
   "note",
+  "reservation_system",
+  "division_labels",
 ] as const satisfies readonly (keyof InstitutionDetail)[];
 
 export const RESERVATION_FIELDS = [
@@ -61,4 +63,6 @@ export const SEARCH_INSTITUTION_FIELDS = [
   "building",
   "institution",
   "institution_size",
+  "reservation_system",
+  "division_labels",
 ] as const satisfies readonly (keyof ReservationSearchHit["institution"])[];

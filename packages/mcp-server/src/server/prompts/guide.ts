@@ -43,7 +43,12 @@ ${buildMunicipalityTable()}
 レスポンスの \`pageInfo.hasNextPage\` が \`true\` の場合、\`pageInfo.endCursor\` を次回リクエストの \`after\` に渡すと次ページを取得できます。
 
 ## 予約ステータスについて
-\`reservation\` フィールドは \`{ 時間区分キー: ステータスキー }\` のマッピングです。ステータスの意味は自治体ごとに異なります（例: 江東区では STATUS_1 = "予約あり"、文京区では STATUS_1 = "一部空き"）。`;
+\`reservation\` フィールドは \`{ 時間区分キー: ステータスキー }\` のマッピングです。ステータスの意味は予約システムごとに異なります（例: tokyo-koutou では STATUS_1 = "予約あり"、tokyo-bunkyo では STATUS_1 = "一部空き"）。
+
+ラベルは次の順に引きます。
+1. 部屋の \`division_labels\`（時間区分だけ。同じ予約システムでも部屋ごとに時刻が違うときに入っている）
+2. 部屋の \`reservation_system\` に対応する \`shisetsu://reservation-systems\` の \`reservationStatus\` / \`reservationDivision\` / \`feeDivision\`
+3. \`reservation_system\` が null の部屋は、自治体と同名の予約システム（例: MUNICIPALITY_KITA → tokyo-kita）`;
 
 export function registerGuidePrompt(server: McpServer): void {
   server.registerPrompt(
