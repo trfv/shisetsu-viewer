@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { worker } from "../test/mocks/browser";
 import {
+  fetchBuildingDetail,
   fetchHolidays,
   fetchInstitutionDetail,
   fetchInstitutionReservations,
@@ -71,6 +72,20 @@ describe("endpoints", () => {
     );
 
     await fetchInstitutionDetail("abc-123");
+
+    expect(captured).toBe("abc-123");
+  });
+
+  it("fetchBuildingDetail は id をパスに埋める", async () => {
+    let captured = "";
+    worker.use(
+      http.get(`${BASE}/v1/buildings/:id`, ({ params }) => {
+        captured = params["id"] as string;
+        return HttpResponse.json({});
+      })
+    );
+
+    await fetchBuildingDetail("abc-123");
 
     expect(captured).toBe("abc-123");
   });

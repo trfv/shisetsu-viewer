@@ -1,0 +1,22 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.item + .item::before {
+  content: "›";
+  padding: 0 0.5em;
+}
+
+.link {
+  color: inherit;
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}

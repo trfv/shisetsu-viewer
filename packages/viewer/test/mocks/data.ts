@@ -1,4 +1,5 @@
 import type {
+  BuildingDetail,
   InstitutionDetail,
   InstitutionSummary,
   Page,
@@ -6,10 +7,13 @@ import type {
   ReservationSearchHit,
 } from "@shisetsu-viewer/shared";
 
+export const MOCK_BUILDING_ID = "5d8f2a1e-3c4b-4e6f-9a7b-1c2d3e4f5a6b";
+
 export const createMockInstitutionSummary = (
   overrides?: Partial<InstitutionSummary>
 ): InstitutionSummary => ({
   id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+  building_id: MOCK_BUILDING_ID,
   municipality: "MUNICIPALITY_KOUTOU",
   building: "テスト文化センター",
   institution: "音楽練習室A",
@@ -39,6 +43,7 @@ export const createMockInstitutionDetail = (
   overrides?: Partial<InstitutionDetail>
 ): InstitutionDetail => ({
   id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+  building_id: MOCK_BUILDING_ID,
   prefecture: "PREFECTURE_TOKYO",
   municipality: "MUNICIPALITY_KOUTOU",
   building: "テスト文化センター",
@@ -71,6 +76,20 @@ export const createMockInstitutionDetail = (
   lottery_period: "利用月の2ヶ月前",
   note: "テスト備考",
   updated_at: "2024-09-25T00:00:00",
+  ...overrides,
+});
+
+export const createMockBuildingDetail = (overrides?: Partial<BuildingDetail>): BuildingDetail => ({
+  id: MOCK_BUILDING_ID,
+  prefecture: "PREFECTURE_TOKYO",
+  municipality: "MUNICIPALITY_KOUTOU",
+  name: "テスト文化センター",
+  kana: "テストブンカセンター",
+  system_name: "test-center",
+  address: "東京都江東区東陽1-1-1",
+  reservation_system: "tokyo-koutou",
+  updated_at: "2024-09-25T00:00:00",
+  institutions: [createMockInstitutionSummary()],
   ...overrides,
 });
 
@@ -115,6 +134,7 @@ export const createMockReservationSearchHit = (
   }),
   institution: {
     id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+    building_id: MOCK_BUILDING_ID,
     municipality: "MUNICIPALITY_KOUTOU",
     building: "テスト文化センター",
     institution: "音楽練習室A",
