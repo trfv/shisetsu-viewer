@@ -67,6 +67,8 @@ export const STATUS_MAP: Record<string, Status> = {
 
 const BASE_URL = "https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/";
 const OUT_OF_PERIOD_STATUS = "image/lw_kikangais.gif";
+const ERROR_PAGE_TEXT = "お探しのページを表示できません";
+const MAX_CONSECUTIVE_RECOVERIES = 3;
 const BLOCKED_RESOURCE_TYPES = new Set(["image", "stylesheet", "font"]);
 
 interface KatsushikaTarget {
@@ -174,6 +176,34 @@ async function goNextDay(page: Page): Promise<void> {
   await page.waitForLoadState("load");
 }
 
+async function search(page: Page, facilityName: string): Promise<void> {
+  await page.goto(new URL("index.jsp", BASE_URL).href);
+  await page.getByRole("link", { name: "施設の空き状況" }).click();
+  await page.getByRole("link", { name: "複合検索" }).click();
+  await page.getByRole("link", { name: "館", exact: true }).click();
+  await page.getByRole("link", { name: facilityName, exact: true }).click();
+  await page.getByRole("link", { name: "検索を開始する" }).click();
+  await page.locator("table.akitablelist").waitFor();
+  // 検索結果は今日から始まる
+  await goNextDay(page);
+}
+
+async function isErrorPage(page: Page): Promise<boolean> {
+  const errorText = page.getByText(ERROR_PAGE_TEXT);
+  await page.locator("table.akitablelist").or(errorText).first().waitFor({ timeout: 30_000 });
+  return errorText.isVisible();
+}
+
+// lastDate は YYYY-MM-DD
+async function skipPast(page: Page, lastDate: string): Promise<void> {
+  for (;;) {
+    if (await isErrorPage(page)) throw new Error(ERROR_PAGE_TEXT);
+    const header = await page.locator("table.akitablelist th").first().textContent();
+    if (toISODateString((header ?? "").replace(/\s+/g, "")) > lastDate) return;
+    await goNextDay(page);
+  }
+}
+
 export const scraper = defineScraper({
   municipality: "tokyo-katsushika",
   targets,
@@ -184,24 +214,41 @@ export const scraper = defineScraper({
 
   async prepare(page, target) {
     await reduceRequests(page);
-    await page.goto(new URL("index.jsp", BASE_URL).href);
-    await page.getByRole("link", { name: "施設の空き状況" }).click();
-    await page.getByRole("link", { name: "複合検索" }).click();
-    await page.getByRole("link", { name: "館", exact: true }).click();
-    await page.getByRole("link", { name: target.facilityName, exact: true }).click();
-    await page.getByRole("link", { name: "検索を開始する" }).click();
-    await page.locator("table.akitablelist").waitFor();
-    // 検索結果は今日から始まる
-    await goNextDay(page);
+    await search(page, target.facilityName);
     return page;
   },
 
   async extract(page, target, pageCount) {
+    let lastDate: string | undefined;
+    let recoveries = 0;
     return collectPaginated({
       maxPages: pageCount,
       label: target.facilityName,
+      // 長く送っていると、サーバが途中で時々エラーページを返す。検索し直して続きの日まで送る
       extractPage: async (pageIndex) => {
+        let failed = await isErrorPage(page);
+        while (failed) {
+          if (lastDate === undefined || recoveries >= MAX_CONSECUTIVE_RECOVERIES) {
+            throw new Error(
+              `${target.facilityName}: ${ERROR_PAGE_TEXT}（続けて ${recoveries} 回検索し直した）`
+            );
+          }
+          recoveries++;
+          console.warn(
+            `[${target.facilityName}] ${ERROR_PAGE_TEXT}。${lastDate} の次の日まで送り直す`
+          );
+          // 送り直しの途中でもエラーページが出るので、その失敗も 1 回として数えて続ける
+          failed = await search(page, target.facilityName)
+            .then(() => skipPast(page, lastDate ?? ""))
+            .then(() => false)
+            .catch((e: unknown) => {
+              console.warn(`[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]}`);
+              return true;
+            });
+        }
+        recoveries = 0;
         const day = await extractDay(page);
+        lastDate = toISODateString(day.date);
         const cells = day.cells.filter((cell) => target.roomNames.includes(cell.room));
         const missing = target.roomNames.filter((name) => !cells.some((c) => c.room === name));
         if (missing.length > 0) {
