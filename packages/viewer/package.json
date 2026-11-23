@@ -30,6 +30,7 @@
     "start": "vite --port 3000",
     "build": "npm run typecheck && vite build",
     "serve": "vite preview --port 3000",
+    "preview:ci": "case \"$WORKERS_CI_BRANCH\" in gh-readonly-queue/*) echo \"merge queue: skip preview\" ;; *) wrangler preview ;; esac",
     "typecheck": "tsc && wrangler types && tsc -p worker",
     "typecheck:tsrs": "tsrs && tsrs -p worker",
     "test": "TZ=Asia/Tokyo vitest",
