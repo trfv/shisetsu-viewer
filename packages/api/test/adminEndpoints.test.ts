@@ -29,7 +29,7 @@ function adminHeaders(): HeadersInit {
 
 async function githubToken(ref = "refs/heads/master"): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
-  return new SignJWT({ repository: env.GITHUB_REPOSITORY, ref })
+  return new SignJWT({ repository_id: env.GITHUB_REPOSITORY_ID, ref })
     .setProtectedHeader({ alg: "RS256", kid: "gh-key" })
     .setIssuer("https://token.actions.githubusercontent.com")
     .setAudience(env.OIDC_AUDIENCE)

@@ -34,7 +34,7 @@ export interface Env {
   DB: D1Database;
   AUTH0_DOMAIN: string;
   AUTH0_AUDIENCE: string;
-  GITHUB_REPOSITORY: string;
+  GITHUB_REPOSITORY_ID: string;
   OIDC_AUDIENCE: string;
   ADMIN_API_KEY?: string;
   // テスト環境では未定義になりうる

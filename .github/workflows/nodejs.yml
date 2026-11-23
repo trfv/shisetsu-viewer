@@ -7,6 +7,7 @@ on:
   # factory の master-red が master 上の結果を読む
   push:
     branches: [master]
+  merge_group:
   workflow_call:
   workflow_dispatch:
 

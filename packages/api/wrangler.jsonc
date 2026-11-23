@@ -32,7 +32,7 @@
     "AUTH0_DOMAIN": "auth.shisetsudb.com",
     // 末尾スラッシュ付き（OIDC_AUDIENCE とは違う）
     "AUTH0_AUDIENCE": "https://api.shisetsudb.com/",
-    "GITHUB_REPOSITORY": "trfv/shisetsu-viewer",
+    "GITHUB_REPOSITORY_ID": "260482567",
     "OIDC_AUDIENCE": "https://api.shisetsudb.com",
   },
 }

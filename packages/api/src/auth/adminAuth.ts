@@ -3,7 +3,7 @@ import type { JWTVerifyGetKey } from "jose";
 import { verifyGithubOidc } from "./githubOidc.ts";
 
 interface AdminEnv {
-  GITHUB_REPOSITORY: string;
+  GITHUB_REPOSITORY_ID: string;
   OIDC_AUDIENCE: string;
   ADMIN_API_KEY?: string | undefined;
 }
