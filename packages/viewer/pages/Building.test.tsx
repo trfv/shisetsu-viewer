@@ -202,6 +202,41 @@ describe("Building Page", () => {
       .toHaveTextContent("/institution/a1b2c3d4-e5f6-7890-abcd-ef1234567890");
   });
 
+  it("取得日時には建物の予約システムの最終取得日時を出し、同じ自治体の別の予約システムの日時は出さない", async () => {
+    useMswBuildingMock(
+      createMockBuildingDetail({
+        municipality: "MUNICIPALITY_KITA",
+        reservation_system: "tokyo-kita-cocokita",
+      }),
+      [createMockReservationSearchHit()]
+    );
+    worker.use(
+      http.get(`${BASE}/v1/scrape-runs`, () =>
+        HttpResponse.json({
+          items: [
+            {
+              reservation_system: "tokyo-kita",
+              municipality: "MUNICIPALITY_KITA",
+              fetched_at: "2025-06-15T01:23:45.000Z",
+            },
+            {
+              reservation_system: "tokyo-kita-cocokita",
+              municipality: "MUNICIPALITY_KITA",
+              fetched_at: "2025-06-14T00:00:00.000Z",
+            },
+          ],
+        })
+      )
+    );
+
+    const { user } = await renderBuilding();
+
+    await user.click(screen.getByRole("tab", { name: "予約状況" }));
+
+    await expect.element(screen.getByText("06/14 09:00")).toBeInTheDocument();
+    expect(screen.getByText("06/15 10:23").elements()).toHaveLength(0);
+  });
+
   it("予約状況を扱わない自治体の建物では、データなしメッセージを表示する", async () => {
     useMswBuildingMock(createMockBuildingDetail({ municipality: "MUNICIPALITY_SUGINAMI" }), [
       createMockReservationSearchHit(),
