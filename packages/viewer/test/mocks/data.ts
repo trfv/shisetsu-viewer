@@ -50,6 +50,7 @@ export const createMockInstitutionDetail = (
   capacity: 30,
   area: 65.5,
   institution_size: "INSTITUTION_SIZE_MEDIUM",
+  reservation_system: "tokyo-koutou",
   fee_divisions: ["FEE_DIVISION_MORNING", "FEE_DIVISION_AFTERNOON", "FEE_DIVISION_EVENING"],
   weekday_usage_fee: [
     { division: "FEE_DIVISION_MORNING", fee: 1000 },
@@ -119,6 +120,7 @@ export const createMockReservationSearchHit = (
     building: "テスト文化センター",
     institution: "音楽練習室A",
     institution_size: "INSTITUTION_SIZE_MEDIUM",
+    reservation_system: "tokyo-koutou",
   },
   ...overrides,
 });

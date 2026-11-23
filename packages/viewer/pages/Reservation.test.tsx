@@ -69,6 +69,7 @@ describe("COLUMNS定義", () => {
         building: "",
         institution: "",
         institution_size: "INSTITUTION_SIZE_MEDIUM",
+        reservation_system: "tokyo-koutou",
       },
     });
     const col = COLUMNS.find((c) => c.field === "building_and_institution");
@@ -83,6 +84,7 @@ describe("COLUMNS定義", () => {
         building: "テスト",
         institution: "テスト施設",
         institution_size: "INVALID",
+        reservation_system: "tokyo-koutou",
       },
     });
     const col = COLUMNS.find((c) => c.field === "institution_size");
@@ -505,6 +507,7 @@ describe("Reservation Page", () => {
             building: `テスト文化センター${i}`,
             institution: "音楽練習室A",
             institution_size: "INSTITUTION_SIZE_MEDIUM",
+            reservation_system: "tokyo-koutou",
           },
         })
       );
@@ -555,6 +558,7 @@ describe("Reservation Page", () => {
             building: `施設${i}`,
             institution: "練習室",
             institution_size: "INSTITUTION_SIZE_MEDIUM",
+            reservation_system: "tokyo-koutou",
           },
         })
       );
@@ -583,6 +587,7 @@ describe("Reservation Page", () => {
           building: "テスト文化センター",
           institution: "音楽練習室A",
           institution_size: "INSTITUTION_SIZE_MEDIUM",
+          reservation_system: "tokyo-koutou",
         },
       });
       const hit2 = createMockReservationSearchHit({
@@ -592,6 +597,7 @@ describe("Reservation Page", () => {
           building: "サンプル会館",
           institution: "リハーサル室B",
           institution_size: "INSTITUTION_SIZE_LARGE",
+          reservation_system: "tokyo-koutou",
         },
         reservation: createMockReservationDto({
           date: "2025-07-01",
@@ -618,17 +624,30 @@ describe("Reservation Page", () => {
         .toBeInTheDocument();
     });
 
-    it("地区ごとの最終取得日時を取得日時列に表示する", async () => {
-      useMswMock([createMockReservationSearchHit()]);
+    it("予約システムごとの最終取得日時を取得日時列に表示する", async () => {
+      useMswMock([
+        createMockReservationSearchHit({
+          institution: {
+            id: "b3ed861c-c057-4b71-8678-93b7fea06202",
+            municipality: "MUNICIPALITY_KITA",
+            building: "ココキタ",
+            institution: "音楽スタジオ",
+            institution_size: "INSTITUTION_SIZE_MEDIUM",
+            reservation_system: "tokyo-kita-cocokita",
+          },
+        }),
+      ]);
       worker.use(
         http.get(`${BASE}/v1/scrape-runs`, () =>
           HttpResponse.json({
             items: [
               {
-                municipality: "MUNICIPALITY_KOUTOU",
+                reservation_system: "tokyo-kita",
+                municipality: "MUNICIPALITY_KITA",
                 fetched_at: "2025-06-15T01:23:45.000Z",
               },
               {
+                reservation_system: "tokyo-kita-cocokita",
                 municipality: "MUNICIPALITY_KITA",
                 fetched_at: "2025-06-14T00:00:00.000Z",
               },
@@ -638,11 +657,12 @@ describe("Reservation Page", () => {
       );
 
       await renderWithProviders(<ReservationPage />, {
-        initialEntries: ["/reservation?m=koutou"],
+        initialEntries: ["/reservation?m=kita"],
       });
 
       await expect.element(screen.getByText("取得日時")).toBeInTheDocument();
-      await expect.element(screen.getByText("06/15 10:23")).toBeInTheDocument();
+      await expect.element(screen.getByText("06/14 09:00")).toBeInTheDocument();
+      expect(screen.getByText("06/15 10:23").elements()).toHaveLength(0);
     });
 
     it("予約行はクリック可能で、クリック時にonRowClickが実行される", async () => {
@@ -653,6 +673,7 @@ describe("Reservation Page", () => {
           building: "テスト文化センター",
           institution: "音楽練習室A",
           institution_size: "INSTITUTION_SIZE_MEDIUM",
+          reservation_system: "tokyo-koutou",
         },
       });
 
@@ -681,6 +702,7 @@ describe("Reservation Page", () => {
           building: "テスト施設",
           institution: "音楽室",
           institution_size: "INSTITUTION_SIZE_MEDIUM",
+          reservation_system: "tokyo-koutou",
         },
       });
 

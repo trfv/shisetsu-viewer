@@ -142,6 +142,7 @@ describe("search_reservations", () => {
               building: "建物",
               institution: "施設",
               institution_size: "INSTITUTION_SIZE_LARGE",
+              reservation_system: "tokyo-koutou",
               division_labels: {},
             },
           },

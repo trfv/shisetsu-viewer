@@ -129,27 +129,22 @@ export async function seed(db: D1Database): Promise<void> {
     db.prepare(`INSERT INTO holidays (date, name) VALUES (?, ?)`).bind("2026-08-11", "山の日")
   );
 
-  stmts.push(
-    db
-      .prepare(
-        `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written) VALUES (?, ?, ?, ?, ?)`
-      )
-      .bind("MUNICIPALITY_KOUTOU", "run-1", "2026-08-01", "2026-08-01T05:23:00.000Z", 100)
-  );
-  stmts.push(
-    db
-      .prepare(
-        `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written) VALUES (?, ?, ?, ?, ?)`
-      )
-      .bind("MUNICIPALITY_KOUTOU", "run-2", "2026-08-01", "2026-08-01T17:23:00.000Z", 20)
-  );
-  stmts.push(
-    db
-      .prepare(
-        `INSERT INTO scrape_runs (municipality, run_id, run_date, fetched_at, rows_written) VALUES (?, ?, ?, ?, ?)`
-      )
-      .bind("MUNICIPALITY_TOSHIMA", "run-1", "2026-08-01", "2026-08-01T05:25:00.000Z", 50)
-  );
+  const scrapeRuns: [string, string, string, string, number][] = [
+    ["tokyo-koutou", "run-1", "2026-08-01", "2026-08-01T05:23:00.000Z", 100],
+    ["tokyo-koutou", "run-2", "2026-08-01", "2026-08-01T17:23:00.000Z", 20],
+    ["tokyo-kita", "run-1", "2026-08-01", "2026-08-01T05:25:00.000Z", 50],
+    ["tokyo-kita-cocokita", "run-1", "2026-08-01", "2026-08-01T06:10:00.000Z", 30],
+    ["tokyo-removed", "run-1", "2026-08-01", "2026-08-01T06:20:00.000Z", 1],
+  ];
+  for (const run of scrapeRuns) {
+    stmts.push(
+      db
+        .prepare(
+          `INSERT INTO scrape_runs (reservation_system, run_id, run_date, fetched_at, rows_written) VALUES (?, ?, ?, ?, ?)`
+        )
+        .bind(...run)
+    );
+  }
 
   await db.batch(stmts);
 }

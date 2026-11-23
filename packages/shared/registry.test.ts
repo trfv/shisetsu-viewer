@@ -9,6 +9,7 @@ import {
   getMunicipalityBySlug,
   getMunicipalityKeyByScraperTarget,
   getMunicipalityKeyBySlug,
+  getPrimaryReservationSystem,
   getReservationTargets,
   getReservationSystem,
   getScraperTargets,
@@ -171,6 +172,17 @@ describe("registry", () => {
   describe("getReservationSystem", () => {
     it("Object のプロトタイプの名前では解決しない", () => {
       assert.equal(getReservationSystem("toString"), undefined);
+    });
+  });
+
+  describe("getPrimaryReservationSystem", () => {
+    it("自治体と同名の予約システムを返す", () => {
+      assert.equal(getPrimaryReservationSystem("MUNICIPALITY_KITA")?.key, "tokyo-kita");
+    });
+
+    it("未知の自治体や Object のプロトタイプの名前には undefined を返す", () => {
+      assert.equal(getPrimaryReservationSystem("MUNICIPALITY_UNKNOWN"), undefined);
+      assert.equal(getPrimaryReservationSystem("toString"), undefined);
     });
   });
 });

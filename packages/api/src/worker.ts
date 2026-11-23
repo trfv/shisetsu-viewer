@@ -1,4 +1,10 @@
-import type { Building, Institution, UpsertReservationsRequest } from "@shisetsu-viewer/shared";
+import {
+  getPrimaryReservationSystem,
+  getReservationSystem,
+  type Building,
+  type Institution,
+  type UpsertReservationsRequest,
+} from "@shisetsu-viewer/shared";
 import { createLocalJWKSet, type JWTVerifyGetKey } from "jose";
 
 import { authorizeAdmin } from "./auth/adminAuth.ts";
@@ -238,9 +244,11 @@ async function handleHolidays(url: URL, env: Env): Promise<Response> {
 async function handleAdminReservations(request: Request, env: Env): Promise<Response> {
   if (!(await authorizeAdmin(request, env, testGithubJwks(env)))) return error(401, "unauthorized");
   const body = (await request.json().catch(() => null)) as UpsertReservationsRequest | null;
-  if (!body || !Array.isArray(body.rows) || !body.municipality || !body.runId) {
-    return error(400, "invalid body");
-  }
+  if (!body || !Array.isArray(body.rows) || !body.runId) return error(400, "invalid body");
+  const reservationSystem = body.reservationSystem
+    ? getReservationSystem(body.reservationSystem)
+    : getPrimaryReservationSystem(body.municipality ?? "");
+  if (!reservationSystem) return error(400, "invalid body");
   if (body.rows.length > MAX_RESERVATION_ROWS) return error(400, "too many rows");
 
   if ((await todayRowsWritten(env.DB)) > DAILY_WRITE_BUDGET) {
@@ -248,7 +256,7 @@ async function handleAdminReservations(request: Request, env: Env): Promise<Resp
   }
 
   const { rowsWritten } = await upsertReservations(env.DB, body.rows);
-  await recordScrapeRun(env.DB, body.municipality, body.runId, rowsWritten);
+  await recordScrapeRun(env.DB, reservationSystem.key, body.runId, rowsWritten);
   return json({ received: body.rows.length, rowsWritten, deferred: false });
 }
 
