@@ -246,17 +246,8 @@ export const scraper = defineScraper({
           failed = await search(page, target.facilityName)
             .then(() => skipPast(page, lastDate ?? ""))
             .then(() => false)
-            .catch(async (e: unknown) => {
-              console.warn(
-                `[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]} url=${page.url()} body=${JSON.stringify(
-                  (
-                    await page
-                      .locator("body")
-                      .innerText()
-                      .catch(() => "")
-                  ).slice(0, 80)
-                )}`
-              );
+            .catch((e: unknown) => {
+              console.warn(`[${target.facilityName}] 送り直しに失敗: ${String(e).split("\n")[0]}`);
               return true;
             });
         }
