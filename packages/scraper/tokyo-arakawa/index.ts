@@ -69,7 +69,7 @@ type ArakawaDay = { date: string; header: string[]; rows: string[][] };
 
 const DATE_HEADER = '//*[@id="contents"]/div[2]/div/h3';
 const ERROR_PAGE_TEXT = "お探しのページを表示できません";
-const MAX_RECOVERIES = 3;
+const MAX_CONSECUTIVE_RECOVERIES = 3;
 
 // startDate は YYYY-MM-DD
 async function search(page: Page, facilityName: string, startDate?: string): Promise<void> {
@@ -171,9 +171,9 @@ export const scraper = defineScraper({
       extractPage: async () => {
         let failed = await isErrorPage(page);
         while (failed) {
-          if (lastDate === undefined || recoveries >= MAX_RECOVERIES) {
+          if (lastDate === undefined || recoveries >= MAX_CONSECUTIVE_RECOVERIES) {
             throw new Error(
-              `${target.facilityName}: ${ERROR_PAGE_TEXT}（検索し直し ${recoveries} 回）`
+              `${target.facilityName}: ${ERROR_PAGE_TEXT}（続けて ${recoveries} 回検索し直した）`
             );
           }
           recoveries++;
@@ -192,6 +192,8 @@ export const scraper = defineScraper({
         }
         const days = await extractDay(page);
         lastDate = toISODateString(days[0]?.date ?? "");
+        // 1 年分を送る館ではエラーが何度も出るので、館全体ではなく連続の回数で打ち切る
+        recoveries = 0;
         return days;
       },
       goNext: async () => {
