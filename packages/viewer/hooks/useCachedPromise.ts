@@ -8,6 +8,6 @@ export function useCachedPromise<T>(key: string, fetcher: () => Promise<T>): Pro
   useAuth();
   // 同じ key の再 render で TTL 切れの Promise に差し替えると、再サスペンドしてちらつく。
   // fetcher は呼び出し側がインラインで書くので、依存は key だけにする。
-  // oxlint-disable-next-line react/exhaustive-deps
+  // oxlint-disable-next-line react/exhaustive-deps, react/memo-dependencies
   return useMemo(() => cached(key, fetcher), [key]);
 }
